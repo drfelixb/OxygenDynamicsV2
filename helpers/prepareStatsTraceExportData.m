@@ -1,0 +1,26 @@
+function [ExportTraces,ExportTraceCorrs,LeftPawBinnedTraces,RightPawBinnedTraces,PupilBinnedTraces] = ...
+    prepareStatsTraceExportData(IsBLI,TraceInputs,TimeSeriesInputs,BinnedInputs)
+%PREPARESTATSTRACEEXPORTDATA Prepare grouped trace and binned-trace exports.
+
+if nargin<4 || isempty(BinnedInputs)
+    BinnedInputs = struct();
+end
+
+TraceCorrs = TraceInputs.TraceCorrs;
+if isempty(TraceCorrs)
+    TraceCorrs = {};
+end
+
+CommonTraceSources = {TimeSeriesInputs.NumOngoingOxysinks, ...
+    TimeSeriesInputs.NumOngoingOxysinksPerMm2,TimeSeriesInputs.TotalSinkAreaNorm, ...
+    TimeSeriesInputs.NumOngoingOxysurges,TimeSeriesInputs.TotalSurgeArea, ...
+    TimeSeriesInputs.TotalSinkAreaUm};
+[ExportTraces,ExportTraceCorrs] = createStatsTraceExports(TraceInputs.GroupHeaders, ...
+    TraceInputs.Titles1,TraceInputs.Titles2,TraceInputs.FiltersROIsAndEvents, ...
+    TraceInputs.ROIsTraces,CommonTraceSources,TraceCorrs,IsBLI);
+
+[LeftPawBinnedTraces,RightPawBinnedTraces,PupilBinnedTraces] = createStatsBinnedTraceExports( ...
+    TraceInputs.GroupHeaders,TraceInputs.Titles1,BinnedInputs.BinsLeftPaw, ...
+    BinnedInputs.BinsRightPaw,BinnedInputs.BinsPupil,TraceInputs.FiltersROIsAndEvents,IsBLI);
+
+end

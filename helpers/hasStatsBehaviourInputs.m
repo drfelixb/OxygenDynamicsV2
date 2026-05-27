@@ -1,0 +1,9 @@
+function HasInputs = hasStatsBehaviourInputs(BehaviourInputs)
+%HASSTATSBEHAVIOURINPUTS True when any optional behaviour input is configured.
+
+HasInputs = isStatsOptionalInputConfigured(BehaviourInputs.Posture) || ...
+    isStatsOptionalInputConfigured(BehaviourInputs.Pupil) || ...
+    isStatsOptionalInputConfigured(BehaviourInputs.Puff) || ...
+    isStatsOptionalInputConfigured(BehaviourInputs.Whisking);
+
+end

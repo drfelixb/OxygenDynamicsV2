@@ -1,0 +1,66 @@
+function AcceptanceRows = buildOxygenStatsAcceptanceRows(StatsResult)
+%BUILDOXYGENSTATSACCEPTANCEROWS Summarize whether a stats run is ready to accept.
+
+QcRows = buildOxygenStatsQcRows(StatsResult);
+
+Item = strings(0,1);
+Status = strings(0,1);
+Message = strings(0,1);
+WhereToLook = strings(0,1);
+RecommendedAction = strings(0,1);
+
+[Item,Status,Message,WhereToLook,RecommendedAction] = appendOverallAcceptanceRow( ...
+    Item,Status,Message,WhereToLook,RecommendedAction,QcRows);
+
+for RowIdx = 1:height(QcRows)
+    [Item,Status,Message,WhereToLook,RecommendedAction] = appendAcceptanceRow( ...
+        Item,Status,Message,WhereToLook,RecommendedAction, ...
+        "QC: " + QcRows.Check(RowIdx),QcRows.Status(RowIdx), ...
+        QcRows.Message(RowIdx),QcRows.WhereToLook(RowIdx),QcRows.RecommendedAction(RowIdx));
+end
+
+AcceptanceRows = table(Item,Status,Message,WhereToLook,RecommendedAction);
+
+end
+
+function [Item,Status,Message,WhereToLook,RecommendedAction] = appendOverallAcceptanceRow( ...
+    Item,Status,Message,WhereToLook,RecommendedAction,QcRows)
+
+if isempty(QcRows) || height(QcRows)==0
+    [Item,Status,Message,WhereToLook,RecommendedAction] = appendAcceptanceRow( ...
+        Item,Status,Message,WhereToLook,RecommendedAction, ...
+        "Overall stats acceptance","INFO","No QC rows were available for this stats result.", ...
+        "FilteredData_<inputcsv>.xlsx: StatsAcceptance", ...
+        "Run stats with current outputs before accepting the result as a baseline.");
+    return
+end
+
+ReviewRows = QcRows(QcRows.Status=="REVIEW",:);
+if isempty(ReviewRows)
+    [Item,Status,Message,WhereToLook,RecommendedAction] = appendAcceptanceRow( ...
+        Item,Status,Message,WhereToLook,RecommendedAction, ...
+        "Overall stats acceptance","PASS", ...
+        sprintf('%d QC checks passed or were informational.',height(QcRows)), ...
+        "FilteredData_<inputcsv>.xlsx: StatsAcceptance", ...
+        "The stats run is ready for scientific review or regression-baseline refresh.");
+else
+    [Item,Status,Message,WhereToLook,RecommendedAction] = appendAcceptanceRow( ...
+        Item,Status,Message,WhereToLook,RecommendedAction, ...
+        "Overall stats acceptance","REVIEW", ...
+        sprintf('%d QC checks require review before accepting this stats run.',height(ReviewRows)), ...
+        "FilteredData_<inputcsv>.xlsx: StatsAcceptance", ...
+        "Inspect REVIEW rows and the referenced workbook sheets before refreshing a baseline.");
+end
+
+end
+
+function [Item,Status,Message,WhereToLook,RecommendedAction] = appendAcceptanceRow( ...
+    Item,Status,Message,WhereToLook,RecommendedAction,ThisItem,ThisStatus,ThisMessage,ThisWhereToLook,ThisAction)
+
+Item(end+1,1) = string(ThisItem);
+Status(end+1,1) = string(ThisStatus);
+Message(end+1,1) = string(ThisMessage);
+WhereToLook(end+1,1) = string(ThisWhereToLook);
+RecommendedAction(end+1,1) = string(ThisAction);
+
+end

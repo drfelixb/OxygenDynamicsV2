@@ -1,0 +1,40 @@
+function SaveResult = saveiOSMasterOutputs(OutputData)
+%SAVEIOSMASTEROUTPUTS Save iOS master TIFF and MAT outputs.
+
+disp('Saving manipulated data matrices');
+
+OutputFolders = createOxygenOutputFolders(OutputData.RecordingFolder,OutputData.OverwriteOutputs);
+AnalysisInfo = OutputData.AnalysisInfo;
+AnalysisInfo.OutputFolders = OutputFolders;
+
+saveMasterImageStacks(OutputFolders,OutputData.DatafileID,OutputData.IM_Notrend, ...
+    OutputData.IM_Zframetime_smoothed,OutputData.IM_OxySinks_BW,OutputData.IM_OxySurges_BW);
+
+Table_OxygenSinks_Out = OutputData.Table_OxygenSinks_Out;
+OxySinkArea_all = OutputData.OxySinkArea_all;
+Mean_OxySink_TraceZ = OutputData.Mean_OxySink_TraceZ;
+Mean_OxySink_Trace_Convo = OutputData.Mean_OxySink_Trace_Convo;
+OxySink_Map = OutputData.OxySink_Map;
+Trace_PotentialNoise = OutputData.Trace_PotentialNoise;
+
+save(fullfile(OutputFolders.OxySinksPath,['OxygenSinks_Urefined',OutputData.DatafileID,'.mat']), ...
+    'Table_OxygenSinks_Out','OxySinkArea_all','Mean_OxySink_TraceZ','Mean_OxySink_Trace_Convo', ...
+    'OxySink_Map','Trace_PotentialNoise','AnalysisInfo');
+
+Table_OxygenSurges_Out = OutputData.Table_OxygenSurges_Out;
+OxySurgeArea_all = OutputData.OxySurgeArea_all;
+Mean_OxySurge_TraceZ = OutputData.Mean_OxySurge_TraceZ;
+OxySurge_Map = OutputData.OxySurge_Map;
+
+save(fullfile(OutputFolders.OxySurgesPath,['OxygenSurges',OutputData.DatafileID,'.mat']), ...
+    'Table_OxygenSurges_Out','OxySurgeArea_all','Mean_OxySurge_TraceZ','OxySurge_Map','AnalysisInfo');
+
+save(fullfile(OutputFolders.ManualCurOxySinksPath,['ManualCuration',OutputData.DatafileID,'.mat']), ...
+    'Table_OxygenSinks_Out','OxySinkArea_all','Mean_OxySink_TraceZ','Mean_OxySink_Trace_Convo', ...
+    'OxySink_Map','Trace_PotentialNoise','AnalysisInfo');
+
+SaveResult = struct();
+SaveResult.OutputFolders = OutputFolders;
+SaveResult.AnalysisInfo = AnalysisInfo;
+
+end

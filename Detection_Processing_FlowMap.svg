@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1900 1760">
+  <!-- Generator: Adobe Illustrator 30.4.0, SVG Export Plug-In . SVG Version: 2.1.4 Build 226)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+      }
+
+      .st1 {
+        font-family: CourierNewPSMT, 'Courier New';
+        font-size: 12px;
+      }
+
+      .st1, .st2 {
+        fill: #243b53;
+      }
+
+      .st1, .st2, .st3, .st4, .st5, .st6, .st7 {
+        isolation: isolate;
+      }
+
+      .st2 {
+        font-size: 13px;
+      }
+
+      .st2, .st3, .st4 {
+        font-family: ArialMT, Arial;
+      }
+
+      .st3 {
+        font-size: 17px;
+      }
+
+      .st3, .st4 {
+        fill: #52606d;
+      }
+
+      .st8 {
+        fill: #f8fafc;
+        stroke: #d9e2ec;
+      }
+
+      .st8, .st9, .st10, .st11, .st12, .st13, .st14 {
+        stroke-width: 2px;
+      }
+
+      .st9 {
+        fill: #ecfdf5;
+        stroke: #059669;
+      }
+
+      .st15 {
+        stroke: #94a3b8;
+        stroke-width: 1.5px;
+      }
+
+      .st15, .st16 {
+        fill: #fff;
+      }
+
+      .st4 {
+        font-size: 11px;
+      }
+
+      .st5 {
+        font-size: 22px;
+      }
+
+      .st5, .st6 {
+        fill: #102a43;
+      }
+
+      .st5, .st6, .st7 {
+        font-family: Arial-BoldMT, Arial;
+        font-weight: 700;
+      }
+
+      .st6 {
+        font-size: 16px;
+      }
+
+      .st17 {
+        fill: #829ab1;
+      }
+
+      .st7 {
+        fill: #1f2933;
+        font-size: 34px;
+      }
+
+      .st10 {
+        fill: #fce7f3;
+        stroke: #db2777;
+      }
+
+      .st18 {
+        fill: #4f46e5;
+      }
+
+      .st11 {
+        fill: #fff7ed;
+        stroke: #ea580c;
+      }
+
+      .st12 {
+        fill: #e0f2fe;
+        stroke: #0284c7;
+      }
+
+      .st13 {
+        fill: #fef3c7;
+        stroke: #d97706;
+      }
+
+      .st14 {
+        fill: #eef2ff;
+        stroke: #4f46e5;
+      }
+
+      .st19 {
+        fill: #0284c7;
+      }
+
+      .st20 {
+        fill: #334e68;
+      }
+    </style>
+  </defs>
+  <rect class="st16" width="1900" height="1760"/>
+  <text class="st7" transform="translate(55 58)"><tspan x="0" y="0">Oxygen Sink Detection, Tracking, Refinement, And Raw Quantification</tspan></text>
+  <text class="st3" transform="translate(55 88)"><tspan x="0" y="0">Detailed coded flow for how hypoxic signal changes are found on the detection stack, converted into tracked events, and quantified on the original raw TIFF</tspan></text>
+  <text class="st3" transform="translate(1550 58)"><tspan x="0" y="0">Pipeline GUI build 2026-05-27</tspan></text>
+  <rect class="st8" x="40" y="120" width="1820" height="180"/>
+  <rect class="st8" x="40" y="325" width="1820" height="275"/>
+  <rect class="st8" x="40" y="625" width="1820" height="310"/>
+  <rect class="st8" x="40" y="960" width="1820" height="395"/>
+  <rect class="st8" x="40" y="1380" width="1820" height="300"/>
+  <text class="st5" transform="translate(65 153)"><tspan x="0" y="0">1. TIFF Sources And Raw/Denoised Split</tspan></text>
+  <text class="st5" transform="translate(65 358)"><tspan x="0" y="0">2. Detection-Stack Preprocessing: Make Local Signal Drops Detectable</tspan></text>
+  <text class="st5" transform="translate(65 658)"><tspan x="0" y="0">3. Frame-Wise Candidate Detection: Convert Intensity Changes Into Region Masks</tspan></text>
+  <text class="st5" transform="translate(65 993)"><tspan x="0" y="0">4. Track And Refine Events: Convert Frame Masks Into Hypoxic Pocket Loci</tspan></text>
+  <text class="st5" transform="translate(65 1413)"><tspan x="0" y="0">5. Raw Quantification: Measure Event Amplitude On The Original Recording</tspan></text>
+  <rect class="st12" x="90" y="180" width="285" height="82"/>
+  <text class="st6" transform="translate(112 205)"><tspan x="0" y="0">Original/raw TIFF</tspan></text>
+  <text class="st2" transform="translate(112 227)"><tspan x="0" y="0">Loaded as IM_Raw by loadOxygenStacks</tspan></text>
+  <text class="st2" transform="translate(112 245)"><tspan x="0" y="0">Required for every recording</tspan></text>
+  <text class="st2" transform="translate(112 263)"><tspan x="0" y="0">Preserves true fluorescence amplitude</tspan></text>
+  <rect class="st14" x="445" y="180" width="310" height="82"/>
+  <text class="st6" transform="translate(467 205)"><tspan x="0" y="0">Optional denoised TIFF</tspan></text>
+  <text class="st2" transform="translate(467 227)"><tspan x="0" y="0">Loaded as IM_NoNoise when present</tspan></text>
+  <text class="st2" transform="translate(467 245)"><tspan x="0" y="0">Used only as detection source</tspan></text>
+  <text class="st2" transform="translate(467 263)"><tspan x="0" y="0">Never used for final NormOxySinkAmp</tspan></text>
+  <rect class="st15" x="825" y="180" width="315" height="82"/>
+  <text class="st6" transform="translate(847 205)"><tspan x="0" y="0">Source choice</tspan></text>
+  <text class="st1" transform="translate(847 227)"><tspan x="0" y="0">if denoised exists: IM_Notrend = detrend(IM_NoNoise)</tspan></text>
+  <text class="st1" transform="translate(847 245)"><tspan x="0" y="0">else: IM_Notrend = detrend(IM_Raw)</tspan></text>
+  <text class="st1" transform="translate(847 263)"><tspan x="0" y="0">always: IM_Raw_Notrend = detrend(IM_Raw)</tspan></text>
+  <rect class="st9" x="1210" y="180" width="285" height="82"/>
+  <text class="st6" transform="translate(1232 205)"><tspan x="0" y="0">Recording-area mask</tspan></text>
+  <text class="st2" transform="translate(1232 227)"><tspan x="0" y="0">computeRecordingArea(IM_Notrend)</tspan></text>
+  <text class="st2" transform="translate(1232 245)"><tspan x="0" y="0">background percentile: 30</tspan></text>
+  <text class="st2" transform="translate(1232 263)"><tspan x="0" y="0">coverage threshold: 0.9</tspan></text>
+  <rect class="st15" x="1565" y="180" width="235" height="82"/>
+  <text class="st6" transform="translate(1587 205)"><tspan x="0" y="0">Design principle</tspan></text>
+  <text class="st2" transform="translate(1587 227)"><tspan x="0" y="0">Denoised data improves detection.</tspan></text>
+  <text class="st2" transform="translate(1587 245)"><tspan x="0" y="0">Raw data protects biological</tspan></text>
+  <text class="st2" transform="translate(1587 263)"><tspan x="0" y="0">amplitude and percent change.</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st20" d="M421,212.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M445,222"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M801,212.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M825,222"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M1186,212.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M1210,222"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M1541,212.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M1565,222"/>
+  <rect class="st14" x="90" y="395" width="270" height="118"/>
+  <text class="st6" transform="translate(112 420)"><tspan x="0" y="0">Detection stack after detrending</tspan></text>
+  <text class="st2" transform="translate(112 442)"><tspan x="0" y="0">Variable: IM_Notrend</tspan></text>
+  <text class="st2" transform="translate(112 460)"><tspan x="0" y="0">Source: denoised if present, otherwise raw</tspan></text>
+  <text class="st2" transform="translate(112 478)"><tspan x="0" y="0">Function: detrend_custom(stack,3)</tspan></text>
+  <text class="st2" transform="translate(112 496)"><tspan x="0" y="0">Goal: remove slow baseline drift before z-scoring</tspan></text>
+  <rect class="st14" x="430" y="395" width="315" height="118"/>
+  <text class="st6" transform="translate(452 420)"><tspan x="0" y="0">Two-stage normalization</tspan></text>
+  <text class="st2" transform="translate(452 442)"><tspan x="0" y="0">Function: normalizeToZStat</tspan></text>
+  <text class="st1" transform="translate(452 462)"><tspan x="0" y="0">frame z = (pixel - frameMean) / frameStd</tspan></text>
+  <text class="st1" transform="translate(452 480)"><tspan x="0" y="0">time z = (frame z - pixelMean) / sqrt(pixelStd)</tspan></text>
+  <text class="st2" transform="translate(452 498)"><tspan x="0" y="0">Output: IM_Zframetime</tspan></text>
+  <rect class="st14" x="815" y="395" width="315" height="118"/>
+  <text class="st6" transform="translate(837 420)"><tspan x="0" y="0">Spatial convolution</tspan></text>
+  <text class="st2" transform="translate(837 442)"><tspan x="0" y="0">Function: preprocessDetectionStack</tspan></text>
+  <text class="st1" transform="translate(837 462)"><tspan x="0" y="0">smooth = 10 pixels</tspan></text>
+  <text class="st1" transform="translate(837 480)"><tspan x="0" y="0">kernel = ones(21,21) / 21^2</tspan></text>
+  <text class="st2" transform="translate(837 498)"><tspan x="0" y="0">Each frame is convolved with conv2(...,&apos;same&apos;)</tspan></text>
+  <rect class="st14" x="1200" y="395" width="315" height="118"/>
+  <text class="st6" transform="translate(1222 420)"><tspan x="0" y="0">Temporal smoothing</tspan></text>
+  <text class="st2" transform="translate(1222 442)"><tspan x="0" y="0">Gaussian smoothing along frame/time axis</tspan></text>
+  <text class="st1" transform="translate(1222 462)"><tspan x="0" y="0">smoothdata(stack,3,&apos;gaussian&apos;,smooth/2)</tspan></text>
+  <text class="st2" transform="translate(1222 480)"><tspan x="0" y="0">Output: IM_Zframetime_smoothed</tspan></text>
+  <text class="st2" transform="translate(1222 498)"><tspan x="0" y="0">Used for thresholding and trace correlation</tspan></text>
+  <rect class="st15" x="1585" y="395" width="225" height="118"/>
+  <text class="st6" transform="translate(1607 420)"><tspan x="0" y="0">Meaning</tspan></text>
+  <text class="st2" transform="translate(1607 442)"><tspan x="0" y="0">A local darkening becomes</tspan></text>
+  <text class="st2" transform="translate(1607 460)"><tspan x="0" y="0">a spatially coherent negative</tspan></text>
+  <text class="st2" transform="translate(1607 478)"><tspan x="0" y="0">z-score excursion, easier to</tspan></text>
+  <text class="st2" transform="translate(1607 496)"><tspan x="0" y="0">separate from pixel noise.</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st18" d="M406,444.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M430,454"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M791,444.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M815,454"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M1176,444.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M1200,454"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M1561,444.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M1585,454"/>
+  <text class="st4" transform="translate(95 552)"><tspan x="0" y="0">Main code path: OxygenDynamics_Master.m -&gt; preprocessDetectionStack.m -&gt; normalizeToZStat.m. Detection preprocessing is performed before any raw-domain amplitude calculation.</tspan></text>
+  <rect class="st14" x="90" y="695" width="280" height="142"/>
+  <text class="st6" transform="translate(112 720)"><tspan x="0" y="0">Clip motion-correction border</tspan></text>
+  <text class="st2" transform="translate(112 742)"><tspan x="0" y="0">Sink detection avoids edge artifacts</tspan></text>
+  <text class="st1" transform="translate(112 762)"><tspan x="0" y="0">Pixel_frame = smooth * 2 = 20 px</tspan></text>
+  <text class="st1" transform="translate(112 780)"><tspan x="0" y="0">IMclip = smoothed(21:end-20,21:end-20,:)</tspan></text>
+  <text class="st2" transform="translate(112 798)"><tspan x="0" y="0">Recording-area mask is clipped identically</tspan></text>
+  <text class="st2" transform="translate(112 816)"><tspan x="0" y="0">Output indices are later mapped back to full frame</tspan></text>
+  <rect class="st9" x="435" y="695" width="310" height="142"/>
+  <text class="st6" transform="translate(457 720)"><tspan x="0" y="0">Invert frame to detect dark sinks</tspan></text>
+  <text class="st2" transform="translate(457 742)"><tspan x="0" y="0">Function: detectFrameRegionCandidates</tspan></text>
+  <text class="st1" transform="translate(457 762)"><tspan x="0" y="0">Frame = imcomplement(Frame)</tspan></text>
+  <text class="st1" transform="translate(457 780)"><tspan x="0" y="0">BW = Frame &gt; prctile(Frame(:),99)</tspan></text>
+  <text class="st2" transform="translate(457 798)"><tspan x="0" y="0">Because the image is inverted, the brightest</tspan></text>
+  <text class="st2" transform="translate(457 816)"><tspan x="0" y="0">1 percent corresponds to strongest local drops</tspan></text>
+  <rect class="st9" x="810" y="695" width="330" height="142"/>
+  <text class="st6" transform="translate(832 720)"><tspan x="0" y="0">Filter candidate regions</tspan></text>
+  <text class="st2" transform="translate(832 742)"><tspan x="0" y="0">Function: filterRegionCandidates</tspan></text>
+  <text class="st1" transform="translate(832 762)"><tspan x="0" y="0">Area: 100 to 6400 px</tspan></text>
+  <text class="st1" transform="translate(832 780)"><tspan x="0" y="0">Circularity: &gt;= 0.3</tspan></text>
+  <text class="st1" transform="translate(832 798)"><tspan x="0" y="0">Outside recording area: &lt;= 0.5</tspan></text>
+  <text class="st2" transform="translate(832 816)"><tspan x="0" y="0">Remaining components become frame candidates</tspan></text>
+  <rect class="st9" x="1205" y="695" width="285" height="142"/>
+  <text class="st6" transform="translate(1227 720)"><tspan x="0" y="0">Per-frame region list</tspan></text>
+  <text class="st2" transform="translate(1227 742)"><tspan x="0" y="0">regionprops(BW,&apos;Area&apos;,&apos;PixelIdxList&apos;)</tspan></text>
+  <text class="st2" transform="translate(1227 762)"><tspan x="0" y="0">Output variable:</tspan></text>
+  <text class="st1" transform="translate(1227 782)"><tspan x="0" y="0">OxygenSinksInfo_all{frame}</tspan></text>
+  <text class="st2" transform="translate(1227 800)"><tspan x="0" y="0">Each entry is a region detected in one frame</tspan></text>
+  <text class="st2" transform="translate(1227 818)"><tspan x="0" y="0">No event duration is known yet</tspan></text>
+  <rect class="st15" x="1555" y="695" width="260" height="142"/>
+  <text class="st6" transform="translate(1577 720)"><tspan x="0" y="0">Interpretation</tspan></text>
+  <text class="st2" transform="translate(1577 742)"><tspan x="0" y="0">This step answers:</tspan></text>
+  <text class="st2" transform="translate(1577 762)"><tspan x="0" y="0">&quot;Which compact tissue areas are</tspan></text>
+  <text class="st2" transform="translate(1577 780)"><tspan x="0" y="0">dark enough in this single frame</tspan></text>
+  <text class="st2" transform="translate(1577 798)"><tspan x="0" y="0">to be possible hypoxic pockets?&quot;</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st20" d="M411,756.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M435,766"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M786,756.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M810,766"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M1181,756.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M1205,766"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M1531,756.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M1555,766"/>
+  <rect class="st15" x="90" y="858" width="1725" height="45"/>
+  <text class="st2" transform="translate(112 884)"><tspan x="0" y="0">For oxygen surges the same helper is reused, but without inversion: frameTransform = &apos;mat2gray&apos;, percentile threshold = 90, minimum area = 400 px, maximum area = Inf, circularity threshold = 0.1.</tspan></text>
+  <rect class="st13" x="90" y="1030" width="300" height="142"/>
+  <text class="st6" transform="translate(112 1055)"><tspan x="0" y="0">Track candidates across frames</tspan></text>
+  <text class="st2" transform="translate(112 1077)"><tspan x="0" y="0">Function: trackSinkCandidates</tspan></text>
+  <text class="st1" transform="translate(112 1097)"><tspan x="0" y="0">sink_overlap_thres = 0.6</tspan></text>
+  <text class="st2" transform="translate(112 1115)"><tspan x="0" y="0">For each candidate, search later frames.</tspan></text>
+  <text class="st2" transform="translate(112 1133)"><tspan x="0" y="0">If pixel overlap exceeds 60 percent of</tspan></text>
+  <text class="st2" transform="translate(112 1151)"><tspan x="0" y="0">either region, link it into the same row.</tspan></text>
+  <rect class="st13" x="455" y="1030" width="300" height="142"/>
+  <text class="st6" transform="translate(477 1055)"><tspan x="0" y="0">Build tracked logical event rows</tspan></text>
+  <text class="st2" transform="translate(477 1077)"><tspan x="0" y="0">Variable shape:</tspan></text>
+  <text class="st1" transform="translate(477 1097)"><tspan x="0" y="0">Overall_OxygenSinks_Pxllist(region,frame)</tspan></text>
+  <text class="st1" transform="translate(477 1115)"><tspan x="0" y="0">Overall_OxySinks_logical(region,frame)</tspan></text>
+  <text class="st2" transform="translate(477 1133)"><tspan x="0" y="0">Rows are putative pocket loci.</tspan></text>
+  <text class="st2" transform="translate(477 1151)"><tspan x="0" y="0">Contiguous true frames are events.</tspan></text>
+  <rect class="st13" x="820" y="1030" width="310" height="142"/>
+  <text class="st6" transform="translate(842 1055)"><tspan x="0" y="0">Duration and spacing refinement</tspan></text>
+  <text class="st2" transform="translate(842 1077)"><tspan x="0" y="0">Function: refineTrackedSinkCandidates</tspan></text>
+  <text class="st1" transform="translate(842 1097)"><tspan x="0" y="0">min duration = 3 * fs frames</tspan></text>
+  <text class="st1" transform="translate(842 1115)"><tspan x="0" y="0">max duration = 150 * fs frames</tspan></text>
+  <text class="st1" transform="translate(842 1133)"><tspan x="0" y="0">min event separation = 20 * fs frames</tspan></text>
+  <text class="st2" transform="translate(842 1151)"><tspan x="0" y="0">Too-short, too-long, or too-close events are removed.</tspan></text>
+  <rect class="st13" x="1195" y="1030" width="300" height="142"/>
+  <text class="st6" transform="translate(1217 1055)"><tspan x="0" y="0">Extract detection-domain traces</tspan></text>
+  <text class="st2" transform="translate(1217 1077)"><tspan x="0" y="0">Function: extractSinkTraces</tspan></text>
+  <text class="st1" transform="translate(1217 1097)"><tspan x="0" y="0">Mean_OxySink_Trace_Convo</tspan></text>
+  <text class="st2" transform="translate(1217 1115)"><tspan x="0" y="0">Mean over all unique pixels of each locus</tspan></text>
+  <text class="st2" transform="translate(1217 1133)"><tspan x="0" y="0">Trace is detrended again:</tspan></text>
+  <text class="st1" transform="translate(1217 1151)"><tspan x="0" y="0">detrend_custom(trace,2)</tspan></text>
+  <rect class="st13" x="1560" y="1030" width="255" height="142"/>
+  <text class="st6" transform="translate(1582 1055)"><tspan x="0" y="0">Correlation merge pass</tspan></text>
+  <text class="st2" transform="translate(1582 1077)"><tspan x="0" y="0">Function: refineSinkRegionsByTraceCorrelation</tspan></text>
+  <text class="st1" transform="translate(1582 1097)"><tspan x="0" y="0">corr threshold = 0.8</tspan></text>
+  <text class="st1" transform="translate(1582 1115)"><tspan x="0" y="0">spatial overlap = 0.7</tspan></text>
+  <text class="st2" transform="translate(1582 1133)"><tspan x="0" y="0">Highly correlated and overlapping rows</tspan></text>
+  <text class="st2" transform="translate(1582 1151)"><tspan x="0" y="0">are merged into one locus.</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st20" d="M431,1091.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M455,1101"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M796,1091.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M820,1101"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M1171,1091.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M1195,1101"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M1536,1091.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M1560,1101"/>
+  <rect class="st13" x="220" y="1212" width="380" height="92"/>
+  <text class="st6" transform="translate(242 1237)"><tspan x="0" y="0">Repeat refinement loop three times</tspan></text>
+  <text class="st2" transform="translate(242 1259)"><tspan x="0" y="0">After each merge, traces are re-extracted and detrended.</tspan></text>
+  <text class="st2" transform="translate(242 1277)"><tspan x="0" y="0">This lets merged regions change the mean trace before the next</tspan></text>
+  <text class="st2" transform="translate(242 1295)"><tspan x="0" y="0">correlation pass.</tspan></text>
+  <rect class="st13" x="720" y="1212" width="420" height="92"/>
+  <text class="st6" transform="translate(742 1237)"><tspan x="0" y="0">Potential-noise flag</tspan></text>
+  <text class="st1" transform="translate(742 1259)"><tspan x="0" y="0">Trace_CrossCorrelation = safeCorrMatrix(traces&apos;)</tspan></text>
+  <text class="st1" transform="translate(742 1277)"><tspan x="0" y="0">HighCorrelationCount = sum(corr &gt; 0.8,2)</tspan></text>
+  <text class="st2" transform="translate(742 1295)"><tspan x="0" y="0">Rows correlating with unusually many traces are flagged.</tspan></text>
+  <rect class="st13" x="1260" y="1212" width="420" height="92"/>
+  <text class="st6" transform="translate(1282 1237)"><tspan x="0" y="0">Final tracked sink objects</tspan></text>
+  <text class="st2" transform="translate(1282 1259)"><tspan x="0" y="0">Each row is a hypoxic pocket locus.</tspan></text>
+  <text class="st2" transform="translate(1282 1277)"><tspan x="0" y="0">Each contiguous block of active frames is one event.</tspan></text>
+  <text class="st2" transform="translate(1282 1295)"><tspan x="0" y="0">These rows drive masks, traces, tables, and event metrics.</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st17" d="M418,1192l-8,24-8-24h16Z"/>
+  <path class="st17" d="M410-512"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M696,1248.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M720,1258"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M1236,1248.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M1260,1258"/>
+  <rect class="st12" x="90" y="1450" width="320" height="150"/>
+  <text class="st6" transform="translate(112 1475)"><tspan x="0" y="0">Final trace extraction includes raw stack</tspan></text>
+  <text class="st2" transform="translate(112 1497)"><tspan x="0" y="0">Function: extractSinkTraces(..., IM_Raw, Pixel_frame)</tspan></text>
+  <text class="st1" transform="translate(112 1517)"><tspan x="0" y="0">Mean_OxySink_Trace_Raw(region,:) =</tspan></text>
+  <text class="st1" transform="translate(112 1535)"><tspan x="0" y="0">mean(raw pixels in final locus)</tspan></text>
+  <text class="st2" transform="translate(112 1553)"><tspan x="0" y="0">The locus geometry comes from detection.</tspan></text>
+  <text class="st2" transform="translate(112 1571)"><tspan x="0" y="0">The intensity trace comes from original/raw TIFF.</tspan></text>
+  <rect class="st11" x="475" y="1450" width="330" height="150"/>
+  <text class="st6" transform="translate(497 1475)"><tspan x="0" y="0">Extend event start/end using detection trace</tspan></text>
+  <text class="st2" transform="translate(497 1497)"><tspan x="0" y="0">Function: quantifyOxygenSinkEvent</tspan></text>
+  <text class="st1" transform="translate(497 1517)"><tspan x="0" y="0">TraceTrend = polyfit(temptrace, order 7)</tspan></text>
+  <text class="st1" transform="translate(497 1535)"><tspan x="0" y="0">event tolerance = 0.015</tspan></text>
+  <text class="st2" transform="translate(497 1553)"><tspan x="0" y="0">Start/end are moved until temptrace returns</tspan></text>
+  <text class="st2" transform="translate(497 1571)"><tspan x="0" y="0">near the trend line.</tspan></text>
+  <rect class="st11" x="870" y="1450" width="345" height="150"/>
+  <text class="st6" transform="translate(892 1475)"><tspan x="0" y="0">Raw baseline and raw minimum</tspan></text>
+  <text class="st2" transform="translate(892 1497)"><tspan x="0" y="0">Baseline window: 20 seconds x fs</tspan></text>
+  <text class="st2" transform="translate(892 1517)"><tspan x="0" y="0">Normally baseline is immediately before StartFrame.</tspan></text>
+  <text class="st2" transform="translate(892 1535)"><tspan x="0" y="0">If event starts at frame 1, baseline is after EndFrame.</tspan></text>
+  <text class="st1" transform="translate(892 1555)"><tspan x="0" y="0">Baseline = mean(rawtrace(baselineWindow))</tspan></text>
+  <text class="st1" transform="translate(892 1573)"><tspan x="0" y="0">EventMin = min(rawtrace(StartFrame:EndFrame))</tspan></text>
+  <rect class="st11" x="1280" y="1450" width="310" height="150"/>
+  <text class="st6" transform="translate(1302 1475)"><tspan x="0" y="0">Raw normalized amplitude</tspan></text>
+  <text class="st2" transform="translate(1302 1497)"><tspan x="0" y="0">Saved as NormOxySinkAmp and percent outputs</tspan></text>
+  <text class="st1" transform="translate(1302 1517)"><tspan x="0" y="0">NormAmp = (Baseline - EventMin) / Baseline</tspan></text>
+  <text class="st1" transform="translate(1302 1535)"><tspan x="0" y="0">NormAmpPercent = NormAmp * 100</tspan></text>
+  <text class="st2" transform="translate(1302 1553)"><tspan x="0" y="0">Detection amplitude is saved separately as</tspan></text>
+  <text class="st1" transform="translate(1302 1571)"><tspan x="0" y="0">DetectionOxySinkAmp</tspan></text>
+  <rect class="st10" x="1650" y="1450" width="165" height="150"/>
+  <text class="st6" transform="translate(1672 1475)"><tspan x="0" y="0">Outputs</tspan></text>
+  <text class="st2" transform="translate(1672 1497)"><tspan x="0" y="0">Table_OxygenSinks_Out</tspan></text>
+  <text class="st2" transform="translate(1672 1515)"><tspan x="0" y="0">Table_OxygenSinkEvents_Out</tspan></text>
+  <text class="st2" transform="translate(1672 1533)"><tspan x="0" y="0">Mean_OxySink_Trace_Raw</tspan></text>
+  <text class="st2" transform="translate(1672 1551)"><tspan x="0" y="0">IM_OxySinks_BW</tspan></text>
+  <text class="st2" transform="translate(1672 1569)"><tspan x="0" y="0">OxySinkArea_all</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st19" d="M451,1515.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st19" d="M475,1525"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M846,1515.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M870,1525"/>
+  <path class="st0" d=""/>
+  <path class="st19" d="M1256,1515.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st19" d="M1280,1525"/>
+  <path class="st0" d=""/>
+  <path class="st20" d="M1626,1515.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st20" d="M1650,1525"/>
+  <rect class="st15" x="90" y="1622" width="1725" height="36"/>
+  <text class="st2" transform="translate(112 1645)"><tspan x="0" y="0">Event-specific morphology for burden is reconstructed later from IM_OxySinks_BW + OxySinkArea_all + event timing; the preferred burden area is true event-specific Area_um, not the ROI mean area.</tspan></text>
+  <rect class="st15" x="55" y="1695" width="1790" height="42"/>
+  <rect class="st12" x="75" y="1707" width="24" height="16"/>
+  <text class="st4" transform="translate(108 1720)"><tspan x="0" y="0">Raw-domain data or raw quantification</tspan></text>
+  <rect class="st14" x="330" y="1707" width="24" height="16"/>
+  <text class="st4" transform="translate(363 1720)"><tspan x="0" y="0">Detection-domain preprocessing</tspan></text>
+  <rect class="st9" x="590" y="1707" width="24" height="16"/>
+  <text class="st4" transform="translate(623 1720)"><tspan x="0" y="0">Spatial mask / frame candidates</tspan></text>
+  <rect class="st13" x="850" y="1707" width="24" height="16"/>
+  <text class="st4" transform="translate(883 1720)"><tspan x="0" y="0">Tracking and refinement</tspan></text>
+  <rect class="st11" x="1100" y="1707" width="24" height="16"/>
+  <text class="st4" transform="translate(1133 1720)"><tspan x="0" y="0">Event quantification</tspan></text>
+  <rect class="st10" x="1320" y="1707" width="24" height="16"/>
+  <text class="st4" transform="translate(1353 1720)"><tspan x="0" y="0">Saved outputs</tspan></text>
+  <text class="st4" transform="translate(1575 1720)"><tspan x="0" y="0">Key files: OxygenDynamics_Master.m and helpers/*.m</tspan></text>
+</svg>

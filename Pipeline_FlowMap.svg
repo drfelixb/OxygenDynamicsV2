@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1800 1280">
+  <!-- Generator: Adobe Illustrator 30.4.0, SVG Export Plug-In . SVG Version: 2.1.4 Build 226)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+      }
+
+      .st1 {
+        font-family: CourierNewPSMT, 'Courier New';
+        font-size: 13px;
+      }
+
+      .st1, .st2 {
+        fill: #243b53;
+      }
+
+      .st1, .st2, .st3, .st4, .st5, .st6, .st7 {
+        isolation: isolate;
+      }
+
+      .st8 {
+        fill: #ecfdf5;
+        stroke: #059669;
+      }
+
+      .st8, .st9, .st10, .st11, .st12, .st13, .st14 {
+        stroke-width: 2px;
+      }
+
+      .st2 {
+        font-size: 14px;
+      }
+
+      .st2, .st5, .st7 {
+        font-family: ArialMT, Arial;
+      }
+
+      .st15 {
+        stroke: #94a3b8;
+        stroke-width: 1.5px;
+      }
+
+      .st15, .st16 {
+        fill: #fff;
+      }
+
+      .st3 {
+        font-size: 22px;
+      }
+
+      .st3, .st4 {
+        fill: #102a43;
+      }
+
+      .st3, .st4, .st6 {
+        font-family: Arial-BoldMT, Arial;
+        font-weight: 700;
+      }
+
+      .st9 {
+        fill: #f7f9fb;
+        stroke: #d9e2ec;
+      }
+
+      .st4 {
+        font-size: 17px;
+      }
+
+      .st17 {
+        fill: #829ab1;
+      }
+
+      .st5 {
+        font-size: 12px;
+      }
+
+      .st5, .st7 {
+        fill: #52606d;
+      }
+
+      .st6 {
+        fill: #1f2933;
+        font-size: 34px;
+      }
+
+      .st10 {
+        fill: #fce7f3;
+        stroke: #db2777;
+      }
+
+      .st11 {
+        fill: #fff7ed;
+        stroke: #ea580c;
+      }
+
+      .st12 {
+        fill: #e0f2fe;
+        stroke: #0284c7;
+      }
+
+      .st13 {
+        fill: #fef3c7;
+        stroke: #d97706;
+      }
+
+      .st14 {
+        fill: #eef2ff;
+        stroke: #4f46e5;
+      }
+
+      .st7 {
+        font-size: 18px;
+      }
+
+      .st18 {
+        fill: #334e68;
+      }
+    </style>
+  </defs>
+  <rect class="st16" width="1800" height="1280"/>
+  <text class="st6" transform="translate(60 58)"><tspan x="0" y="0">Oxygen Dynamics Pipeline Flow Map</tspan></text>
+  <text class="st7" transform="translate(60 88)"><tspan x="0" y="0">Software workflow for denoised detection, raw quantification, event-based hypoxic burden, statistics, QC, regression, and first-pass figures</tspan></text>
+  <text class="st7" transform="translate(1520 58)"><tspan x="0" y="0">GUI build 2026-05-27</tspan></text>
+  <rect class="st9" x="40" y="125" width="1720" height="165"/>
+  <rect class="st9" x="40" y="315" width="1720" height="350"/>
+  <rect class="st9" x="40" y="690" width="1720" height="285"/>
+  <rect class="st9" x="40" y="1000" width="1720" height="210"/>
+  <text class="st3" transform="translate(65 158)"><tspan x="0" y="0">1. Dataset Setup And Verification</tspan></text>
+  <text class="st3" transform="translate(65 348)"><tspan x="0" y="0">2. Per-Recording Wrapper Analysis</tspan></text>
+  <text class="st3" transform="translate(65 723)"><tspan x="0" y="0">3. Statistics, Event Metrics, And Scientific Calculations</tspan></text>
+  <text class="st3" transform="translate(65 1033)"><tspan x="0" y="0">4. Acceptance, Regression, And Summary Figures</tspan></text>
+  <rect class="st12" x="90" y="182" width="250" height="75"/>
+  <text class="st4" transform="translate(112 207)"><tspan x="0" y="0">Input metadata CSV</tspan></text>
+  <text class="st2" transform="translate(112 229)"><tspan x="0" y="0">Paths, Mouse, Condition, DrugID,</tspan></text>
+  <text class="st2" transform="translate(112 247)"><tspan x="0" y="0">Genotype, Promoter, SampleF, Pixelsize</tspan></text>
+  <rect class="st14" x="410" y="182" width="260" height="75"/>
+  <text class="st4" transform="translate(432 207)"><tspan x="0" y="0">Start_OxygenPipeline / GUI</tspan></text>
+  <text class="st2" transform="translate(432 229)"><tspan x="0" y="0">Choose CSV; CSV folder becomes</tspan></text>
+  <text class="st2" transform="translate(432 247)"><tspan x="0" y="0">dataset working folder</tspan></text>
+  <rect class="st13" x="740" y="182" width="295" height="75"/>
+  <text class="st4" transform="translate(762 207)"><tspan x="0" y="0">Preflight verification</tspan></text>
+  <text class="st2" transform="translate(762 229)"><tspan x="0" y="0">TIFF pairing, output folders, metadata,</tspan></text>
+  <text class="st2" transform="translate(762 247)"><tspan x="0" y="0">optional behaviour and vascular readiness</tspan></text>
+  <rect class="st10" x="1105" y="182" width="280" height="75"/>
+  <text class="st4" transform="translate(1127 207)"><tspan x="0" y="0">Verification report</tspan></text>
+  <text class="st2" transform="translate(1127 229)"><tspan x="0" y="0">Ready / Partial / Blocked</tspan></text>
+  <text class="st2" transform="translate(1127 247)"><tspan x="0" y="0">IssueSummary + RecommendedAction</tspan></text>
+  <rect class="st13" x="1460" y="182" width="245" height="75"/>
+  <text class="st4" transform="translate(1482 207)"><tspan x="0" y="0">Gate long runs</tspan></text>
+  <text class="st2" transform="translate(1482 229)"><tspan x="0" y="0">Wrapper/stats proceed only when</tspan></text>
+  <text class="st2" transform="translate(1482 247)"><tspan x="0" y="0">no recording is blocked</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st18" d="M386,210.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M410,220"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M716,210.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M740,220"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M1081,210.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M1105,220"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M1436,210.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M1460,220"/>
+  <rect class="st12" x="90" y="382" width="260" height="92"/>
+  <text class="st4" transform="translate(112 407)"><tspan x="0" y="0">Recording folder</tspan></text>
+  <text class="st2" transform="translate(112 429)"><tspan x="0" y="0">Original/raw TIFF required</tspan></text>
+  <text class="st2" transform="translate(112 447)"><tspan x="0" y="0">Optional denoised TIFF in same folder</tspan></text>
+  <text class="st2" transform="translate(112 465)"><tspan x="0" y="0">Optional behaviour files</tspan></text>
+  <rect class="st14" x="420" y="382" width="270" height="92"/>
+  <text class="st4" transform="translate(442 407)"><tspan x="0" y="0">TIFF source selection</tspan></text>
+  <text class="st2" transform="translate(442 429)"><tspan x="0" y="0">Detection source: denoised if found</tspan></text>
+  <text class="st2" transform="translate(442 447)"><tspan x="0" y="0">Quantification source: original/raw</tspan></text>
+  <text class="st2" transform="translate(442 465)"><tspan x="0" y="0">iOS ignores denoised TIFF</tspan></text>
+  <rect class="st8" x="760" y="382" width="290" height="92"/>
+  <text class="st4" transform="translate(782 407)"><tspan x="0" y="0">Detection preprocessing</tspan></text>
+  <text class="st2" transform="translate(782 429)"><tspan x="0" y="0">Detrend, z-score, convolution, smoothing</tspan></text>
+  <text class="st2" transform="translate(782 447)"><tspan x="0" y="0">Candidate masks from detection stack</tspan></text>
+  <text class="st2" transform="translate(782 465)"><tspan x="0" y="0">Area/circularity/edge/recording-mask filters</tspan></text>
+  <rect class="st8" x="1120" y="382" width="270" height="92"/>
+  <text class="st4" transform="translate(1142 407)"><tspan x="0" y="0">Track and refine events</tspan></text>
+  <text class="st2" transform="translate(1142 429)"><tspan x="0" y="0">Track candidate pixels across frames</tspan></text>
+  <text class="st2" transform="translate(1142 447)"><tspan x="0" y="0">Apply duration thresholds</tspan></text>
+  <text class="st2" transform="translate(1142 465)"><tspan x="0" y="0">Refine by trace correlation</tspan></text>
+  <rect class="st8" x="1460" y="382" width="245" height="92"/>
+  <text class="st4" transform="translate(1482 407)"><tspan x="0" y="0">Raw quantification</tspan></text>
+  <text class="st2" transform="translate(1482 429)"><tspan x="0" y="0">Mean sink/surge traces from raw TIFF</tspan></text>
+  <text class="st2" transform="translate(1482 447)"><tspan x="0" y="0">Amplitude and normalized metrics</tspan></text>
+  <text class="st2" transform="translate(1482 465)"><tspan x="0" y="0">avoid denoised intensity artifacts</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st18" d="M396,418.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M420,428"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M736,418.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M760,428"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M1096,418.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M1120,428"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M1436,418.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M1460,428"/>
+  <rect class="st10" x="240" y="535" width="270" height="88"/>
+  <text class="st4" transform="translate(262 560)"><tspan x="0" y="0">Per-recording outputs</tspan></text>
+  <text class="st2" transform="translate(262 582)"><tspan x="0" y="0">OxygenSinks_Output*</tspan></text>
+  <text class="st2" transform="translate(262 600)"><tspan x="0" y="0">OxygenSurges_Output*</tspan></text>
+  <text class="st2" transform="translate(262 618)"><tspan x="0" y="0">Images_Processed*, ManualCur*</tspan></text>
+  <rect class="st10" x="590" y="535" width="320" height="88"/>
+  <text class="st4" transform="translate(612 560)"><tspan x="0" y="0">Sink/surge tables and masks</tspan></text>
+  <text class="st2" transform="translate(612 582)"><tspan x="0" y="0">ROI/site summary tables</tspan></text>
+  <text class="st2" transform="translate(612 600)"><tspan x="0" y="0">Event tables and binary TIFF masks</tspan></text>
+  <text class="st2" transform="translate(612 618)"><tspan x="0" y="0">Raw traces + detection provenance</tspan></text>
+  <rect class="st13" x="990" y="535" width="285" height="88"/>
+  <text class="st4" transform="translate(1012 560)"><tspan x="0" y="0">Raw/denoised QC</tspan></text>
+  <text class="st2" transform="translate(1012 582)"><tspan x="0" y="0">Compare event counts and amplitudes</tspan></text>
+  <text class="st2" transform="translate(1012 600)"><tspan x="0" y="0">Flag unusually large normalized drops</tspan></text>
+  <text class="st2" transform="translate(1012 618)"><tspan x="0" y="0">Save RawDenoisedQC_*.xlsx</tspan></text>
+  <rect class="st15" x="1360" y="535" width="260" height="88"/>
+  <text class="st4" transform="translate(1382 560)"><tspan x="0" y="0">Behaviour data</tspan></text>
+  <text class="st2" transform="translate(1382 582)"><tspan x="0" y="0">Optional branch only</tspan></text>
+  <text class="st2" transform="translate(1382 600)"><tspan x="0" y="0">Current datasets can run without it</tspan></text>
+  <text class="st2" transform="translate(1382 618)"><tspan x="0" y="0">Stats QC notes missing configured traces</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st17" d="M383,515l-8,24-8-24h16Z"/>
+  <path class="st17" d="M375,165"/>
+  <path class="st0" d=""/>
+  <path class="st17" d="M758,515l-8,24-8-24h16Z"/>
+  <path class="st17" d="M750,165"/>
+  <path class="st0" d=""/>
+  <path class="st17" d="M1143,515l-8,24-8-24h16Z"/>
+  <path class="st17" d="M1135,165"/>
+  <path class="st0" d=""/>
+  <path class="st17" d="M1498,515l-8,24-8-24h16Z"/>
+  <path class="st17" d="M1490,165"/>
+  <rect class="st11" x="90" y="755" width="260" height="92"/>
+  <text class="st4" transform="translate(112 780)"><tspan x="0" y="0">Stats input loading</tspan></text>
+  <text class="st2" transform="translate(112 802)"><tspan x="0" y="0">Use same metadata CSV</tspan></text>
+  <text class="st2" transform="translate(112 820)"><tspan x="0" y="0">Select newest/oldest output folders</tspan></text>
+  <text class="st2" transform="translate(112 838)"><tspan x="0" y="0">Collate sinks, surges, optional behaviour</tspan></text>
+  <rect class="st11" x="420" y="755" width="300" height="92"/>
+  <text class="st4" transform="translate(442 780)"><tspan x="0" y="0">Event-specific hypoxic metrics</tspan></text>
+  <text class="st2" transform="translate(442 802)"><tspan x="0" y="0">Reconstruct true individual events</tspan></text>
+  <text class="st2" transform="translate(442 820)"><tspan x="0" y="0">from event table + binary sink masks</tspan></text>
+  <text class="st2" transform="translate(442 838)"><tspan x="0" y="0">Event area, amplitude, duration</tspan></text>
+  <rect class="st11" x="790" y="755" width="335" height="92"/>
+  <text class="st4" transform="translate(812 780)"><tspan x="0" y="0">Per-event burden</tspan></text>
+  <text class="st1" transform="translate(812 802)"><tspan x="0" y="0">Amplitude = MeanOxySinkEvent_NormAmp * -1</tspan></text>
+  <text class="st1" transform="translate(812 820)"><tspan x="0" y="0">Contribution = amplitude * area * duration</tspan></text>
+  <text class="st2" transform="translate(812 838)"><tspan x="0" y="0">Preferred area: true event-specific Area_um</tspan></text>
+  <rect class="st11" x="1195" y="755" width="250" height="92"/>
+  <text class="st4" transform="translate(1217 780)"><tspan x="0" y="0">Recording and group burden</tspan></text>
+  <text class="st1" transform="translate(1217 802)"><tspan x="0" y="0">HypoxicBurden = sum(contributions)</tspan></text>
+  <text class="st2" transform="translate(1217 820)"><tspan x="0" y="0">Summed per recording/FOV</tspan></text>
+  <text class="st2" transform="translate(1217 838)"><tspan x="0" y="0">Grouped by metadata columns</tspan></text>
+  <rect class="st11" x="1510" y="755" width="210" height="92"/>
+  <text class="st4" transform="translate(1532 780)"><tspan x="0" y="0">Area-normalized counts</tspan></text>
+  <text class="st1" transform="translate(1532 802)"><tspan x="0" y="0">FOVedge = sqrt(area)</tspan></text>
+  <text class="st1" transform="translate(1532 820)"><tspan x="0" y="0">kappa = 1000 / FOVedge</tspan></text>
+  <text class="st1" transform="translate(1532 838)"><tspan x="0" y="0">per1mm2 = count * kappa^2</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st18" d="M396,791.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M420,801"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M766,791.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M790,801"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M1171,791.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M1195,801"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M1486,791.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M1510,801"/>
+  <rect class="st10" x="210" y="890" width="315" height="58"/>
+  <text class="st4" transform="translate(232 915)"><tspan x="0" y="0">Stats workbook</tspan></text>
+  <text class="st2" transform="translate(232 937)"><tspan x="0" y="0">FilteredData_&lt;inputcsv&gt;.xlsx + DataOutput.mat</tspan></text>
+  <rect class="st10" x="600" y="890" width="400" height="58"/>
+  <text class="st4" transform="translate(622 915)"><tspan x="0" y="0">Key sheets</tspan></text>
+  <text class="st2" transform="translate(622 937)"><tspan x="0" y="0">StatsAcceptance, HypoxicBurden_EventBased, ByRecording, GroupSummary, SinkCountNormFactors</tspan></text>
+  <rect class="st10" x="1080" y="890" width="330" height="58"/>
+  <text class="st4" transform="translate(1102 915)"><tspan x="0" y="0">Event exports</tspan></text>
+  <text class="st2" transform="translate(1102 937)"><tspan x="0" y="0">SortedSinkEventMetrics.xlsx + HypoxicEventSpecificMetrics4LME.mat</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st17" d="M376,870l-8,24-8-24h16Z"/>
+  <path class="st17" d="M368-190"/>
+  <path class="st0" d=""/>
+  <path class="st17" d="M808,870l-8,24-8-24h16Z"/>
+  <path class="st17" d="M800-190"/>
+  <path class="st0" d=""/>
+  <path class="st17" d="M1253,870l-8,24-8-24h16Z"/>
+  <path class="st17" d="M1245-190"/>
+  <rect class="st13" x="90" y="1060" width="315" height="92"/>
+  <text class="st4" transform="translate(112 1085)"><tspan x="0" y="0">Stats acceptance</tspan></text>
+  <text class="st2" transform="translate(112 1107)"><tspan x="0" y="0">PASS / REVIEW rows</tspan></text>
+  <text class="st2" transform="translate(112 1125)"><tspan x="0" y="0">Checks event-specific area matching,</tspan></text>
+  <text class="st2" transform="translate(112 1143)"><tspan x="0" y="0">finite burden, area-normalization factors</tspan></text>
+  <rect class="st13" x="480" y="1060" width="330" height="92"/>
+  <text class="st4" transform="translate(502 1085)"><tspan x="0" y="0">Regression baseline and guardrails</tspan></text>
+  <text class="st2" transform="translate(502 1107)"><tspan x="0" y="0">Lock known-good stats output</tspan></text>
+  <text class="st2" transform="translate(502 1125)"><tspan x="0" y="0">Compare future output and code manifest</tspan></text>
+  <text class="st2" transform="translate(502 1143)"><tspan x="0" y="0">Guardrails require event-specific burden area</tspan></text>
+  <rect class="st10" x="885" y="1060" width="345" height="92"/>
+  <text class="st4" transform="translate(907 1085)"><tspan x="0" y="0">First-pass figures</tspan></text>
+  <text class="st2" transform="translate(907 1107)"><tspan x="0" y="0">Sink metrics, event burden, group burden</tspan></text>
+  <text class="st2" transform="translate(907 1125)"><tspan x="0" y="0">Area/amplitude/duration scatter</tspan></text>
+  <text class="st2" transform="translate(907 1143)"><tspan x="0" y="0">OxySinksPer1mm2 summaries + time courses</tspan></text>
+  <rect class="st10" x="1305" y="1060" width="355" height="92"/>
+  <text class="st4" transform="translate(1327 1085)"><tspan x="0" y="0">User-facing review</tspan></text>
+  <text class="st2" transform="translate(1327 1107)"><tspan x="0" y="0">GUI Results Preview and Open Acceptance</tspan></text>
+  <text class="st2" transform="translate(1327 1125)"><tspan x="0" y="0">reviewLatestStatsAcceptance()</tspan></text>
+  <text class="st2" transform="translate(1327 1143)"><tspan x="0" y="0">checkOxygenPipelineHealth()</tspan></text>
+  <path class="st0" d=""/>
+  <path class="st18" d="M259.6,1036l-9.6,28.8-9.6-28.8h19.2Z"/>
+  <path class="st18" d="M250-360"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M456,1096.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M480,1106"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M861,1096.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M885,1106"/>
+  <path class="st0" d=""/>
+  <path class="st18" d="M1281,1096.4l28.8,9.6-28.8,9.6v-19.2Z"/>
+  <path class="st18" d="M1305,1106"/>
+  <rect class="st15" x="90" y="1218" width="1570" height="38"/>
+  <text class="st5" transform="translate(112 1242)"><tspan x="0" y="0">Core design principle: denoised recordings may improve detection, but all final oxygen-signal quantification and burden calculations are derived from the original/raw TIFF and true event-level rows whenever available.</tspan></text>
+</svg>
