@@ -24,7 +24,7 @@ SurgesRaster = cell(NumRecordings,6);
 SurgesRaster(:,1:5) = SurgesArea(:,1:5);
 
 for RecordingIdx = 1:NumRecordings
-    SinkIndex = strcmp(TableOxygenSinks.Experiment,SinksTraces{RecordingIdx,1});
+    SinkIndex = selectRowsForRecording(TableOxygenSinks,SinksTraces,RecordingIdx);
     RecDuration = inferRecordingDuration(TableOxygenSinks,SinkIndex,SinksTraces,ROIsTraces,RecordingIdx);
     SinkSeries = computeOngoingSinkTimeSeries(TableOxygenSinks(SinkIndex,:),RecDuration,Pixelsizes{RecordingIdx});
     AreaNorm = computeFovAreaNormalization(TableOxygenSinks(SinkIndex,:));
@@ -42,7 +42,7 @@ for RecordingIdx = 1:NumRecordings
         TraceCorrs{RecordingIdx,13} = safeCorr(SinkSeries.AreaNorm,ROIsTraces{RecordingIdx,9});
     end
 
-    SurgeIndex = strcmp(TableOxygenSurges.Experiment,ROIsTraces{RecordingIdx,1});
+    SurgeIndex = selectRowsForRecording(TableOxygenSurges,ROIsTraces,RecordingIdx);
     SurgeSeries = computeOngoingSurgeTimeSeries(TableOxygenSurges(SurgeIndex,:),RecDuration);
 
     NumOngoingOxysurges{RecordingIdx,6} = SurgeSeries.Count;
@@ -53,6 +53,16 @@ for RecordingIdx = 1:NumRecordings
         TraceCorrs{RecordingIdx,14} = safeCorr(SurgeSeries.AreaNorm,ROIsTraces{RecordingIdx,8});
         TraceCorrs{RecordingIdx,15} = safeCorr(SurgeSeries.AreaNorm,ROIsTraces{RecordingIdx,9});
     end
+end
+
+end
+
+function RowIndex = selectRowsForRecording(DataTable,RecordingCells,RecordingIdx)
+
+if ismember('StatsRecordingIndex',DataTable.Properties.VariableNames)
+    RowIndex = DataTable.StatsRecordingIndex==RecordingIdx;
+else
+    RowIndex = strcmp(DataTable.Experiment,RecordingCells{RecordingIdx,1});
 end
 
 end

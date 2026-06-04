@@ -211,14 +211,24 @@ ManualEvents=StatsRecordingCells.ManualEvents;
 FolderSelection = struct('Mode',Choosespecific,'Sinks',SinkFold_OldORNew, ...
     'Surges',SurgeFold_OldORNew,'Behaviour',BehFold_OldORNew);
 %%
+StatsRunTimer = tic;
+fprintf('[Stats %s] Loading recording outputs from %d CSV rows...\n', ...
+    char(datetime('now','Format','HH:mm:ss')),length(Paths));
 for datai=1:length(Paths)
+    fprintf('[Stats %s] Loading recording %d/%d: mouse %s, condition %s, path %s\n', ...
+        char(datetime('now','Format','HH:mm:ss')),datai,length(Paths), ...
+        string(Mice{datai}),string(Conditions{datai}),string(Paths{datai}));
+    RecordingTimer = tic;
     RecordingInput = createStatsRecordingInput(Paths{datai},Mice{datai},Conditions{datai}, ...
         Genotypes{datai},Promoters{datai},DrugIDs{datai},Postures{datai}, ...
         Pupils{datai},Puffs{datai},Whiskings{datai},Pixelsizes{datai});
     [StatsRecordingCells,StatsInfo] = loadStatsRecordingIntoCells( ...
         StatsRecordingCells,StatsInfo,datai,RecordingInput,Masterfolder,FolderSelection,Currated,iOS,BehFs);
+    fprintf('[Stats %s] Finished recording %d/%d in %.1f s\n', ...
+        char(datetime('now','Format','HH:mm:ss')),datai,length(Paths),toc(RecordingTimer));
 end
 
+fprintf('[Stats %s] Combining loaded recording tables...\n',char(datetime('now','Format','HH:mm:ss')));
 StatsInfo.LoadSummary = warnStatsLoadedDataIssues(StatsInfo,StatsRecordingCells,IsBLI);
 StatsLoadedData=createStatsLoadedRecordingData(StatsRecordingCells);
 Table_OxygenSinks_OutCombo=StatsLoadedData.TableOxygenSinks;
@@ -235,6 +245,7 @@ clear RecordingInput FolderSelection StatsLoadedData
 
 %% (2) Check metadata and define levels for grouping variables
 
+fprintf('[Stats %s] Summarizing metadata and grouping levels...\n',char(datetime('now','Format','HH:mm:ss')));
 [Table_OxygenSinks_OutCombo,StatsGroupingLevels]=summarizeStatsGroupingLevels( ...
     Table_OxygenSinks_OutCombo,length(Paths));
 Conditions_unique=StatsGroupingLevels.Conditions;
@@ -256,6 +267,7 @@ clear StatsGroupingLevels
 %% (4) Calculate additional metrics for each oxygen sink and surge locus
 
 % These are metrics that can be calculated for each oxygen sink and surge.
+fprintf('[Stats %s] Calculating additional sink/surge metrics...\n',char(datetime('now','Format','HH:mm:ss')));
 [Table_OxygenSinks_OutCombo,Table_OxygenSurges_OutCombo,AdditionalOxySinkMetrics, ...
     AdditionalOxySurgeMetrics]=augmentStatsOxygenMetricTables( ...
     Table_OxygenSinks_OutCombo,Table_OxygenSurges_OutCombo);
@@ -274,6 +286,7 @@ clear StatsGroupingLevels
 %ROIs signal differential covariance coeffient
 %These last three will tell me if the increase or decrease in oxygen (dynamics) exhibit spatial organisation (high entropy/cov coef) or not 
 
+fprintf('[Stats %s] Preparing ROI trace features...\n',char(datetime('now','Format','HH:mm:ss')));
 [ROIs_Traces,TraceCorrs]=prepareStatsROITraceFeatures(ROIs_Traces,IsBLI);
 
 %Another thing I can calculate is the deferential of each ROI and then the mean differential
@@ -281,6 +294,7 @@ clear StatsGroupingLevels
 %%
 
 % Number and area of ongoing sink/surge events at each imaging time point.
+fprintf('[Stats %s] Building ongoing sink/surge time series...\n',char(datetime('now','Format','HH:mm:ss')));
 [NumOngoingOxysinks,NumOngoingOxysinksPerMm2,SinkCountAreaNormalization, ...
     TotalSinkArea_Norm,TotalSinkArea_um,NumOngoingOxysurges, ...
     TotalSurgeArea,SinksRaster,SurgesRaster,TraceCorrs] = createOngoingStatsTimeSeries( ...
@@ -322,6 +336,7 @@ StatsTimeSeriesInputs.NumOngoingOxysurges = NumOngoingOxysurges;
 StatsTimeSeriesInputs.TotalSurgeArea = TotalSurgeArea;
 StatsTimeSeriesInputs.TotalSinkAreaUm = TotalSinkArea_um;
 
+fprintf('[Stats %s] Preparing behaviour-linked analysis inputs...\n',char(datetime('now','Format','HH:mm:ss')));
 StatsBehaviourAnalysis = prepareStatsBehaviourAnalysisData(IsBLI,StatsBehaviourInputs,StatsTimeSeriesInputs);
 Twindows = StatsBehaviourAnalysis.TimeWindows;
 Behaviouraldatalogical = StatsBehaviourAnalysis.BehaviourLogicals;
@@ -337,11 +352,13 @@ BinsPupil_10percentiles = StatsBehaviourAnalysis.BinsPupil;
 % start with the manual events 
 StatsEventSnips = struct();
 if IsBLI
+    fprintf('[Stats %s] Extracting BLI event snippets...\n',char(datetime('now','Format','HH:mm:ss')));
     StatsEventSnips = extractStatsBLIEventSnippets(ROIs_Traces,ManualEvents, ...
         Behaviouraldatalogical,SampleFs,BehFs,PuffsSFs,Twindows);
 end
 %% Alligning the traces of all oxygen sink events for each recording
 
+fprintf('[Stats %s] Aligning oxygen sink event traces...\n',char(datetime('now','Format','HH:mm:ss')));
 Sinks_Traces=addAlignedSinkEventTraces(Sinks_Traces,Table_OxygenSinks_OutCombo,3,150);
 %% (5)  Creating filters for the different conditions
 
@@ -358,12 +375,14 @@ Sinks_Traces=addAlignedSinkEventTraces(Sinks_Traces,Table_OxygenSinks_OutCombo,3
 %
 %
 
+fprintf('[Stats %s] Creating condition/group filters...\n',char(datetime('now','Format','HH:mm:ss')));
 [FiltersOxySinksMetrics,FiltersOxySurgesMetrics,Filters_ROIsandEvents] = ...
     createStatsAnalysisFilters(Table_OxygenSinks_OutCombo,Table_OxygenSurges_OutCombo, ...
     ROIs_Traces,Drugs_unique,Conditions_unique,StimCond_unique);
 
 %% (6) Now using the filters generated in (5) divide the dataset and prepare the tables for export
 
+fprintf('[Stats %s] Preparing grouped metric workbook tables...\n',char(datetime('now','Format','HH:mm:ss')));
 [ExportReady,GroupHeaders] = createStatsMetricWorkbookData(Table_OxygenSinks_OutCombo, ...
     Table_OxygenSurges_OutCombo,AdditionalOxySinkMetrics,AdditionalOxySurgeMetrics, ...
     FiltersOxySinksMetrics,FiltersOxySurgesMetrics);
@@ -376,6 +395,7 @@ StatsPooledInputs.SampleFs = SampleFs;
 StatsPooledInputs.Mice = Mice;
 StatsPooledInputs.ROIsTraces = ROIs_Traces;
 StatsPooledInputs.PuffsFs = PuffsSFs;
+fprintf('[Stats %s] Preparing pooled trace exports...\n',char(datetime('now','Format','HH:mm:ss')));
 [Pooled_Traces,Titles1,Titles2] = prepareStatsPooledTraceExports( ...
     IsBLI,StatsPooledInputs,StatsTimeSeriesInputs);
 StatsTraceInputs = struct();
@@ -391,6 +411,7 @@ StatsBinnedInputs.BinsLeftPaw = BinsLPaw_10percentiles;
 StatsBinnedInputs.BinsRightPaw = BinsRPaw_10percentiles;
 StatsBinnedInputs.BinsPupil = BinsPupil_10percentiles;
 
+fprintf('[Stats %s] Preparing trace export tables...\n',char(datetime('now','Format','HH:mm:ss')));
 [ExportTraces,ExportTraceCorrs,ExportLPawBinnedTraces,ExportRPawBinnedTraces, ...
     ExportPupilBinnedTraces] = prepareStatsTraceExportData(IsBLI,StatsTraceInputs, ...
     StatsTimeSeriesInputs,StatsBinnedInputs);
@@ -411,6 +432,7 @@ EventSnippetTables = {};
 EventSnippetSheetNames = {};
 ExportreadySinksalligned = {};
 if IsBLI
+    fprintf('[Stats %s] Preparing BLI workbook-specific exports...\n',char(datetime('now','Format','HH:mm:ss')));
     [EventSnippetTables,EventSnippetSheetNames,ExportreadySinksalligned] = prepareStatsBLIExportData( ...
         Filters_ROIsandEvents,Sinks_Traces,StatsEventSnips);
 end
@@ -461,11 +483,15 @@ StatsBLIWorkbookInputs.FiguresOutputFolder = FiguresoutputfolderPath;
 [StatsCoreData,StatsBLIData,StatsBLIWorkbookData] = prepareStatsExportBundles( ...
     IsBLI,StatsCoreInputs,StatsBLIInputs,StatsBLIWorkbookInputs);
 StatsCoreData.HypoxicEventSpecificMetrics = HypoxicEventSpecificMetrics;
+fprintf('[Stats %s] Calculating hypoxic burden metrics...\n',char(datetime('now','Format','HH:mm:ss')));
 StatsCoreData.HypoxicBurden = createHypoxicBurdenMetrics( ...
-    Table_OxygenSinkEvents_OutCombo,HypoxicEventSpecificMetrics);
+    Table_OxygenSinkEvents_OutCombo,HypoxicEventSpecificMetrics,Table_OxygenSinks_OutCombo);
+fprintf('[Stats %s] Exporting stats results and workbook...\n',char(datetime('now','Format','HH:mm:ss')));
 StatsExportInfo = exportStatsResults(StatsoutputfolderPath,StatsConfig.inputCsv, ...
     IsBLI,StatsCoreData,StatsBLIData,StatsBLIWorkbookData,ExportReady, ...
     EventSnippetTables,EventSnippetSheetNames);
+fprintf('[Stats %s] Stats completed in %.1f min.\n', ...
+    char(datetime('now','Format','HH:mm:ss')),toc(StatsRunTimer)/60);
 
 %% (8) Linear Mix effects modeling analysis 
 

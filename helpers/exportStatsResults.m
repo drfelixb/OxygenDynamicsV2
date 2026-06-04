@@ -9,28 +9,35 @@ if isfield(CoreData,'HypoxicBurden')
 else
     if isfield(CoreData,'HypoxicEventSpecificMetrics')
         HypoxicBurden = createHypoxicBurdenMetrics( ...
-            CoreData.TableOxygenSinkEvents,CoreData.HypoxicEventSpecificMetrics);
+            CoreData.TableOxygenSinkEvents,CoreData.HypoxicEventSpecificMetrics,CoreData.TableOxygenSinks);
     else
-        HypoxicBurden = createHypoxicBurdenMetrics(CoreData.TableOxygenSinkEvents);
+        HypoxicBurden = createHypoxicBurdenMetrics(CoreData.TableOxygenSinkEvents,table(),CoreData.TableOxygenSinks);
     end
 end
 CoreData.HypoxicBurden = HypoxicBurden;
 
 StatsDataOutput = createStatsDataOutput(CoreData,IsBLI,BLIData);
+fprintf('[Stats %s] Saving DataOutput.mat...\n',char(datetime('now','Format','HH:mm:ss')));
 saveStatsDataOutput(StatsOutputFolderPath,StatsDataOutput,IsBLI);
+fprintf('[Stats %s] Saving core stats MAT tables...\n',char(datetime('now','Format','HH:mm:ss')));
 saveStatsCoreTables(StatsOutputFolderPath,CoreData.TableOxygenSinks,CoreData.TableOxygenSinkEvents, ...
     CoreData.TableOxygenSurges,CoreData.TableOxygenSurgeEvents);
 
 OutputXlsx = createStatsExcelOutputPath(StatsOutputFolderPath,InputCsv);
+fprintf('[Stats %s] Writing acceptance and run summary sheets...\n',char(datetime('now','Format','HH:mm:ss')));
 writeStatsAcceptanceSheet(OutputXlsx,struct('StatsInfo',CoreData.StatsInfo, ...
     'DataOutputMat',fullfile(StatsOutputFolderPath,'DataOutput.mat')));
 writeStatsRunSummarySheets(OutputXlsx,CoreData.StatsInfo);
 writeStatsMetricBasisSheet(OutputXlsx);
 writeStatsMetricDefinitionsSheet(OutputXlsx);
+writeStatsNormalizationGuideSheet(OutputXlsx);
+fprintf('[Stats %s] Writing event and hypoxic burden sheets...\n',char(datetime('now','Format','HH:mm:ss')));
 writeStatsEventTables(OutputXlsx,CoreData.TableOxygenSinkEvents,CoreData.TableOxygenSurgeEvents);
 writeHypoxicBurdenWorkbookSheets(OutputXlsx,HypoxicBurden);
+fprintf('[Stats %s] Writing grouped metric sheets...\n',char(datetime('now','Format','HH:mm:ss')));
 writeStatsMetricWorkbookSheets(OutputXlsx,ExportReady);
 if isfield(CoreData,'HypoxicEventSpecificMetrics')
+    fprintf('[Stats %s] Exporting event-specific hypoxic metrics...\n',char(datetime('now','Format','HH:mm:ss')));
     EventSpecificExportInfo = exportHypoxicEventSpecificMetrics( ...
         StatsOutputFolderPath,CoreData.HypoxicEventSpecificMetrics);
 else
@@ -38,8 +45,10 @@ else
 end
 
 StatsWorkbookOptions = createStatsWorkbookOptions(IsBLI,BLIWorkbookData);
+fprintf('[Stats %s] Writing trace/event-snippet workbook sheets...\n',char(datetime('now','Format','HH:mm:ss')));
 writeStatsAnalysisWorkbookOutputs(OutputXlsx,CoreData.ExportTraces,EventSnippetTables, ...
     EventSnippetSheetNames,IsBLI,StatsWorkbookOptions);
+fprintf('[Stats %s] Finished workbook export: %s\n',char(datetime('now','Format','HH:mm:ss')),OutputXlsx);
 
 ExportInfo = struct();
 ExportInfo.OutputXlsx = OutputXlsx;
@@ -47,5 +56,6 @@ ExportInfo.DataOutputMat = fullfile(StatsOutputFolderPath,'DataOutput.mat');
 ExportInfo.EventSpecificOutputXlsx = EventSpecificExportInfo.OutputXlsx;
 ExportInfo.EventSpecificDataMat = EventSpecificExportInfo.DataMat;
 ExportInfo.HypoxicBurden = HypoxicBurden;
+ExportInfo.AnalysisManifest = writeOxygenAnalysisManifest(ExportInfo);
 
 end

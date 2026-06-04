@@ -66,6 +66,14 @@ If the preview looks correct, run:
 archiveOldOutputs
 ```
 
+To build a clean release copy without raw data or generated outputs, run:
+
+```matlab
+createOxygenReleasePackage
+```
+
+This creates `Release_Packages/OxygenDynamics_Release_<timestamp>/`, a matching ZIP file, and `RELEASE_MANIFEST.txt`. The release contains the user-facing scripts, `helpers/`, `external/`, documentation, flow maps, and smoke test, but excludes `Data/`, stats outputs, QC outputs, run logs, verification reports, regression baselines, legacy archives, and previous release packages.
+
 ## 3. Recording Folder Requirements
 
 Each recording folder should contain exactly one original/raw TIFF stack.
@@ -208,10 +216,22 @@ The GUI lets you:
 - run stats when no recording is blocked
 - generate first-pass summary figures after stats
 - open the latest verification report, wrapper log, stats workbook, and figure folder
+- open `AnalysisManifest.md` from each stats output folder for a compact review report
 - inspect the `Results Preview` tab for recording/table counts, generated figure previews, and lightweight stats QC rows
 - open this manual
 
 This is the recommended entry point for users who do not want to edit working folders manually.
+
+Recommended GUI review sequence:
+
+1. Choose the input CSV.
+2. Run verification and resolve blocked recordings.
+3. Run the wrapper analysis.
+4. Run stats.
+5. Inspect `StatsAcceptance`, `NormalizationGuide`, `MetricDefinitions`, `HypoxicBurden_EventBased`, `HypoxicBurden_ByRecording`, and `HypoxicBurden_TimeSeries`.
+6. Generate summary figures and inspect `HypoxicBurdenPerMm2OverTime_TimeCourse.png` when time-resolved burden matters.
+7. Open `AnalysisManifest.md` in the stats output folder to confirm paths, acceptance/QC status, burden summaries, and figure outputs.
+8. Refresh the regression baseline only after the output has been scientifically accepted.
 
 ### Lock A Known-Good Reference Run
 
@@ -222,6 +242,14 @@ createOxygenRegressionBaseline('Stats_Runs/Stats_Output_YYYYMMDDTHHMMSS')
 ```
 
 This writes both a `.mat` baseline used by the regression checker and an `.xlsx` workbook that can be inspected manually. If a previous baseline already exists, it is archived under `Regression_Baselines/Archive/<timestamp>/` before the new baseline is written.
+
+For routine command-line use, prefer:
+
+```matlab
+refreshAcceptedOxygenRegressionBaseline('Stats_Runs/Stats_Output_YYYYMMDDTHHMMSS')
+```
+
+This checks the stats acceptance status first and refuses to refresh the baseline if the selected stats output still has `REVIEW` rows.
 
 After future edits, run stats again and compare the new output:
 
@@ -416,6 +444,8 @@ Stats outputs are written under:
 Stats_Runs/Stats_Output_YYYYMMDDTHHMMSS/
 ```
 
+Each stats output folder also contains `AnalysisManifest.md`. This Markdown file is a compact run report that lists the stats workbook, `DataOutput.mat`, figures folder, acceptance/QC rows, core table counts, hypoxic-burden summaries, and the recommended review order. It is written after stats export and refreshed after summary figures are generated.
+
 #### Step 7: Optional Vascular Analysis
 
 ROI-level vascular distance:
@@ -461,7 +491,7 @@ runOxygenSummaryFigures('Stats_Runs/Stats_Output_YYYYMMDDTHHMMSS')
 
 The GUI runs this from the `4. Figures` button after stats.
 
-When the required stats tables are present, the first-pass figures include sink summary metrics, event-level hypoxic burden distributions, recording/group-level hypoxic burden summaries, an event area vs amplitude plot with duration encoded by marker size and burden contribution encoded by color, `OxySinksPer1mm2` summaries, and `OxySinksPer1mm2` group time courses with SEM bands. The time-course x-axis uses seconds or minutes when `SampleF` is available in the stats metadata; otherwise it uses frame number.
+When the required stats tables are present, the first-pass figures include sink summary metrics, event-level hypoxic burden distributions, recording/group-level hypoxic burden summaries, FOV-normalized hypoxic burden per 1 mm2, an event area vs amplitude plot with duration encoded by marker size and burden contribution encoded by color, `OxySinksPer1mm2` summaries, and `OxySinksPer1mm2` group time courses with SEM bands. The time-course x-axis uses seconds or minutes when `SampleF` is available in the stats metadata; otherwise it uses frame number.
 
 Current first-pass figures include supported sink metrics such as:
 
@@ -485,6 +515,8 @@ If `NumOngoingOxysinksPerMm2` traces are present, it also writes:
 - `OxySinksPer1mm2_Sum`
 
 Figures are grouped by available `DrugID`, `Condition`, and `PuffStim` columns and saved as PNG/FIG files. `OxygenSummaryFigureMetrics.xlsx` includes a `MetricSummary` sheet and a `FigureManifest` sheet listing figure type, metric, label, and file path.
+
+After figures are generated, `AnalysisManifest.md` is refreshed so the figure list is included in the same per-run review report as the stats acceptance and burden summaries.
 
 ## 7. Denoised TIFF Handling
 
@@ -548,16 +580,25 @@ Inside `Stats_Runs/Stats_Output_*`:
 
 `FilteredData_<inputcsv>.xlsx` includes a `MetricBasis` sheet to clarify whether outputs are ROI/sink-based, ROI event summaries, or true event-based metrics. It also includes a `MetricDefinitions` sheet with formulas, units, output locations, and analysis basis for key values such as `PerEventBurdenContribution`, `HypoxicBurden`, and `OxySinksPer1mm2`.
 
+The workbook also includes a `NormalizationGuide` sheet. Use this sheet to check whether each major output is a raw total, area-normalized, time-normalized, both area- and time-normalized, only partly normalized, or not applicable. It also lists recommended use for comparisons across different FOV sizes, recording durations, or analysis units.
+
 The same workbook includes hypoxic burden sheets:
 
 - `HypoxicBurden_Basis`: formula and metric basis.
 - `HypoxicBurden_EventBased`: true individual oxygen-sink event rows with burden contribution.
 - `HypoxicBurden_ByRecording`: summed hypoxic burden per recording/FOV.
 - `HypoxicBurden_GroupSummary`: grouped recording summaries by available `DrugID`, `Condition`, `PuffStim`, `Genotype`, and `Promoter`, including recording count, event count, mean/SEM/median/sum burden, and event-specific area match rate.
+- `HypoxicBurden_TimeBasis` and `HypoxicBurden_TimeSeries`: frame-wise burden over time for alignment to EEG/ECG or sleep-state annotations.
 
 `PerEventBurdenContribution` is calculated as positive drop amplitude percent x event area in um^2 x event duration in seconds. The preferred area source is the true event-specific `Area_um` from the event-specific hypoxic metrics table. If that event-specific table is unavailable or cannot be matched, the workbook marks the area source as a fallback to the site-level `MeanOxySinkArea_um`. `HypoxicBurden` is the sum of event contributions within each recording/FOV.
 
 The hypoxic burden sheets include provenance columns such as `BurdenAmplitudeSource`, `BurdenAreaSource`, `BurdenDurationSource`, `BurdenAreaEventSpecificMatched`, and `BurdenContributionFormula`.
+
+For recordings with different fields of view, use the FOV-normalized burden outputs. `PerEventBurdenContribution_per_mm2` is `PerEventBurdenContribution * (1e6 / BurdenRecordingArea_um2)`, and `HypoxicBurden_per_mm2` is the recording-level sum of those normalized event contributions. The unnormalized `HypoxicBurden` remains useful as total burden observed in the recorded FOV, but it is not corrected for FOV size.
+
+For recordings with different durations, use the time-normalized burden-rate outputs. `HypoxicBurden_per_sec` and `HypoxicBurden_per_min` divide the total FOV burden by recording duration. `HypoxicBurden_per_mm2_per_sec` and `HypoxicBurden_per_mm2_per_min` normalize both for FOV size and recording duration; these are the most comparable burden-rate metrics when recordings differ in both area and duration.
+
+For analyses that need burden over time, use `HypoxicBurden_TimeSeries`. It is a long-format table with `Frame`, `TimeSec`, `ActiveHypoxicEvents`, `HypoxicBurdenOverTime`, and `HypoxicBurdenPerMm2OverTime`. The trace is built from true individual event rows by summing active event contributions at each frame. `HypoxicBurdenPerMm2OverTime` is normalized to a 1 mm2 FOV, but it is not converted to a per-minute rate, making it suitable for frame/time alignment to EEG/ECG or sleep-state labels.
 
 The workbook also includes `SinkCountNormFactors`, which documents the recording-area correction used for the `OxySinksPer1mm2` time-series export. The correction uses `FOVEdge_um = sqrt(RecordingArea_um2)`, `kappa = 1000 / FOVEdge_um`, and `AreaCorrectionFactor_1mm2 = kappa^2`. The normalized trace is `NumOngoingOxysinksPerMm2 = NumOngoingOxysinks * AreaCorrectionFactor_1mm2`. This sheet also includes provenance columns such as `NormalizationSource`, `NormalizedTrace`, and `Formula`.
 

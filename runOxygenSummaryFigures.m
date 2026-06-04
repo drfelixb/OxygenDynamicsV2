@@ -74,6 +74,9 @@ FigureResult.FigureFiles = FigureFiles;
 FigureResult.FigureManifest = FigureManifest;
 FigureResult.MetricSummary = MetricSummary;
 FigureResult.SummaryXlsx = SummaryXlsx;
+FigureResult.AnalysisManifest = writeOxygenAnalysisManifest( ...
+    struct('DataOutputMat',DataOutputMat,'OutputFolder',OutputFolder), ...
+    'figuresFolder',OutputFolder);
 
 fprintf('Summary figures saved to:\n%s\n',OutputFolder);
 
@@ -209,13 +212,11 @@ AxesHandle.XTickLabel = cellstr(GroupNames);
 AxesHandle.XTickLabelRotation = 25;
 ylabel(AxesHandle,Spec.Label,'Interpreter','none');
 title(AxesHandle,Spec.Label,'Interpreter','none');
-box(AxesHandle,'off');
-grid(AxesHandle,'on');
+applySummaryAxesStyle(AxesHandle);
 
 FigurePng = fullfile(OutputFolder,[Spec.FileStem,'.png']);
 FigureFig = fullfile(OutputFolder,[Spec.FileStem,'.fig']);
-saveas(Fig,FigurePng);
-savefig(Fig,FigureFig);
+saveSummaryFigure(Fig,FigurePng,FigureFig);
 close(Fig);
 
 end
@@ -231,11 +232,13 @@ end
 
 if isfield(Data.HypoxicBurden,'EventTable') && istable(Data.HypoxicBurden.EventTable)
     EventSpecs = struct( ...
-        'Variable',{'PerEventBurdenContribution','BurdenAmplitudePercent','BurdenArea_um2','BurdenDuration_sec'}, ...
-        'Label',{'Per-event hypoxic burden contribution','Hypoxic burden event amplitude', ...
+        'Variable',{'PerEventBurdenContribution','PerEventBurdenContribution_per_mm2', ...
+        'BurdenAmplitudePercent','BurdenArea_um2','BurdenDuration_sec'}, ...
+        'Label',{'Per-event hypoxic burden contribution', ...
+        'Per-event hypoxic burden contribution per 1 mm2','Hypoxic burden event amplitude', ...
         'Hypoxic burden event area','Hypoxic burden event duration'}, ...
-        'FileStem',{'HypoxicBurden_PerEventContribution','HypoxicBurden_EventAmplitude', ...
-        'HypoxicBurden_EventArea','HypoxicBurden_EventDuration'});
+        'FileStem',{'HypoxicBurden_PerEventContribution','HypoxicBurden_PerEventContribution_per_mm2', ...
+        'HypoxicBurden_EventAmplitude','HypoxicBurden_EventArea','HypoxicBurden_EventDuration'});
     [FigureFiles,SummaryRows,FigureManifestRows] = appendTableMetricFigures(FigureFiles,SummaryRows, ...
         FigureManifestRows,Data.HypoxicBurden.EventTable,EventSpecs,OutputFolder,"HypoxicBurdenEvent");
     [FigureFiles,SummaryRows,FigureManifestRows] = appendHypoxicBurdenEventScatterFigure( ...
@@ -244,9 +247,12 @@ end
 
 if isfield(Data.HypoxicBurden,'RecordingTable') && istable(Data.HypoxicBurden.RecordingTable)
     RecordingSpecs = struct( ...
-        'Variable',{'HypoxicBurden'}, ...
-        'Label',{'Recording hypoxic burden'}, ...
-        'FileStem',{'HypoxicBurden_ByRecording'});
+        'Variable',{'HypoxicBurden','HypoxicBurden_per_mm2','HypoxicBurden_per_min', ...
+        'HypoxicBurden_per_mm2_per_min'}, ...
+        'Label',{'Recording hypoxic burden','Recording hypoxic burden per 1 mm2', ...
+        'Recording hypoxic burden per min','Recording hypoxic burden per 1 mm2 per min'}, ...
+        'FileStem',{'HypoxicBurden_ByRecording','HypoxicBurden_ByRecording_per_mm2', ...
+        'HypoxicBurden_ByRecording_per_min','HypoxicBurden_ByRecording_per_mm2_per_min'});
     [FigureFiles,SummaryRows,FigureManifestRows] = appendTableMetricFigures(FigureFiles,SummaryRows, ...
         FigureManifestRows,Data.HypoxicBurden.RecordingTable,RecordingSpecs,OutputFolder, ...
         "HypoxicBurdenRecording");
@@ -254,15 +260,196 @@ end
 
 if isfield(Data.HypoxicBurden,'GroupSummaryTable') && istable(Data.HypoxicBurden.GroupSummaryTable)
     GroupSpecs = struct( ...
-        'Variable',{'HypoxicBurden_Mean','HypoxicBurden_Sum','EventSpecificAreaMatchRate'}, ...
-        'Label',{'Grouped mean hypoxic burden','Grouped summed hypoxic burden', ...
+        'Variable',{'HypoxicBurden_Mean','HypoxicBurden_per_mm2_Mean', ...
+        'HypoxicBurden_per_min_Mean','HypoxicBurden_per_mm2_per_min_Mean', ...
+        'HypoxicBurden_Sum','HypoxicBurden_per_mm2_Sum','EventSpecificAreaMatchRate'}, ...
+        'Label',{'Grouped mean hypoxic burden','Grouped mean hypoxic burden per 1 mm2', ...
+        'Grouped mean hypoxic burden per min','Grouped mean hypoxic burden per 1 mm2 per min', ...
+        'Grouped summed hypoxic burden','Grouped summed hypoxic burden per 1 mm2', ...
         'Grouped event-specific area match rate'}, ...
-        'FileStem',{'HypoxicBurden_GroupMean','HypoxicBurden_GroupSum', ...
-        'HypoxicBurden_GroupAreaMatchRate'});
+        'FileStem',{'HypoxicBurden_GroupMean','HypoxicBurden_GroupMean_per_mm2', ...
+        'HypoxicBurden_GroupMean_per_min','HypoxicBurden_GroupMean_per_mm2_per_min', ...
+        'HypoxicBurden_GroupSum','HypoxicBurden_GroupSum_per_mm2','HypoxicBurden_GroupAreaMatchRate'});
     [FigureFiles,SummaryRows,FigureManifestRows] = appendTableMetricFigures(FigureFiles,SummaryRows, ...
         FigureManifestRows,Data.HypoxicBurden.GroupSummaryTable,GroupSpecs,OutputFolder, ...
         "HypoxicBurdenGroupSummary");
 end
+
+if isfield(Data.HypoxicBurden,'TimeSeriesTable') && istable(Data.HypoxicBurden.TimeSeriesTable)
+    [FigureFile,SummaryTable] = writeHypoxicBurdenTimeSeriesFigure( ...
+        Data.HypoxicBurden.TimeSeriesTable,OutputFolder);
+    if ~isempty(FigureFile)
+        FigureFiles{end+1,1} = FigureFile;
+        SummaryRows{end+1,1} = SummaryTable;
+        Spec = struct('Variable','HypoxicBurdenPerMm2OverTime', ...
+            'Label','Hypoxic burden per 1 mm2 over time', ...
+            'FileStem','HypoxicBurdenPerMm2OverTime_TimeCourse');
+        FigureManifestRows{end+1,1} = createFigureManifestRow("HypoxicBurdenTimeCourse", ...
+            Spec,FigureFile);
+    end
+end
+
+end
+
+function [FigurePng,SummaryTable] = writeHypoxicBurdenTimeSeriesFigure(TimeSeriesTable,OutputFolder)
+
+FigurePng = '';
+SummaryTable = table();
+RequiredColumns = {'RecordingIndex','TimeSec','HypoxicBurdenPerMm2OverTime'};
+if isempty(TimeSeriesTable) || ~all(ismember(RequiredColumns,TimeSeriesTable.Properties.VariableNames))
+    return
+end
+
+[TraceMatrix,GroupLabels,SampleFs] = extractBurdenTimeSeriesMatrix(TimeSeriesTable);
+if isempty(TraceMatrix)
+    return
+end
+
+[GroupNames,~,GroupIdx] = unique(GroupLabels,'stable');
+[Time,TimeLabel] = createTraceTimeAxis(size(TraceMatrix,2),SampleFs);
+Fig = figure('Visible','off','Color','w','Position',[100 100 1040 620]);
+AxesHandle = axes(Fig);
+hold(AxesHandle,'on');
+ColorOrder = lines(max(numel(GroupNames),1));
+for GroupI = 1:numel(GroupNames)
+    GroupTrace = TraceMatrix(GroupIdx==GroupI,:);
+    MeanTrace = mean(GroupTrace,1,'omitnan')';
+    SemTrace = std(GroupTrace,0,1,'omitnan')' ./ sqrt(max(sum(isfinite(GroupTrace),1)',1));
+    Color = ColorOrder(GroupI,:);
+    fill(AxesHandle,[Time; flipud(Time)],[MeanTrace-SemTrace; flipud(MeanTrace+SemTrace)], ...
+        Color,'FaceAlpha',0.18,'EdgeColor','none','HandleVisibility','off');
+    plot(AxesHandle,Time,MeanTrace,'Color',Color,'LineWidth',2, ...
+        'DisplayName',char(GroupNames(GroupI)));
+end
+hold(AxesHandle,'off');
+xlabel(AxesHandle,TimeLabel,'Interpreter','none');
+ylabel(AxesHandle,'Burden density (% drop * um^2 per 1 mm^2)','Interpreter','none');
+title(AxesHandle,'Hypoxic burden per 1 mm2 over time','Interpreter','none');
+legend(AxesHandle,'Location','bestoutside','Interpreter','none');
+applySummaryAxesStyle(AxesHandle);
+
+FigurePng = fullfile(OutputFolder,'HypoxicBurdenPerMm2OverTime_TimeCourse.png');
+FigureFig = fullfile(OutputFolder,'HypoxicBurdenPerMm2OverTime_TimeCourse.fig');
+saveSummaryFigure(Fig,FigurePng,FigureFig);
+close(Fig);
+
+SummaryTable = summarizeBurdenTimeSeriesGroups(GroupNames,GroupIdx,TraceMatrix,SampleFs,TimeLabel);
+
+end
+
+function [TraceMatrix,GroupLabels,SampleFs] = extractBurdenTimeSeriesMatrix(TimeSeriesTable)
+
+TraceMatrix = [];
+GroupLabels = strings(0,1);
+SampleFs = NaN;
+RecordingIndex = tableColumnToNumeric(TimeSeriesTable.RecordingIndex);
+ValidRecordingRows = isfinite(RecordingIndex);
+if ~any(ValidRecordingRows)
+    return
+end
+
+RecordingIDs = unique(RecordingIndex(ValidRecordingRows),'stable');
+TraceList = cell(numel(RecordingIDs),1);
+TraceLengths = zeros(numel(RecordingIDs),1);
+RecordingLabels = strings(numel(RecordingIDs),1);
+SampleFsValues = nan(numel(RecordingIDs),1);
+for RecordingIdx = 1:numel(RecordingIDs)
+    Mask = RecordingIndex==RecordingIDs(RecordingIdx);
+    Frames = tableColumnToNumeric(TimeSeriesTable.Frame(Mask));
+    Values = tableColumnToNumeric(TimeSeriesTable.HypoxicBurdenPerMm2OverTime(Mask));
+    [Frames,SortIdx] = sort(Frames);
+    Values = Values(SortIdx);
+    Valid = isfinite(Frames) & Frames>0;
+    Frames = round(Frames(Valid));
+    Values = Values(Valid);
+    if isempty(Frames)
+        continue
+    end
+    Trace = nan(1,max(Frames));
+    Trace(Frames) = Values;
+    TraceList{RecordingIdx} = Trace;
+    TraceLengths(RecordingIdx) = numel(Trace);
+    RecordingLabels(RecordingIdx) = createSingleRecordingLabel(TimeSeriesTable(Mask,:));
+    if ismember('SampleFs',TimeSeriesTable.Properties.VariableNames)
+        FsValues = tableColumnToNumeric(TimeSeriesTable.SampleFs(Mask));
+        FsValues = FsValues(isfinite(FsValues) & FsValues>0);
+        if ~isempty(FsValues)
+            SampleFsValues(RecordingIdx) = median(FsValues,'omitnan');
+        end
+    end
+end
+
+Keep = TraceLengths>0 & RecordingLabels~="";
+TraceList = TraceList(Keep);
+TraceLengths = TraceLengths(Keep);
+RecordingLabels = RecordingLabels(Keep);
+SampleFsValues = SampleFsValues(Keep);
+if isempty(TraceList)
+    return
+end
+
+TraceMatrix = nan(numel(TraceList),max(TraceLengths));
+for RecordingIdx = 1:numel(TraceList)
+    Trace = TraceList{RecordingIdx};
+    TraceMatrix(RecordingIdx,1:numel(Trace)) = Trace;
+end
+
+GroupLabels = RecordingLabels;
+SampleFsValues = SampleFsValues(isfinite(SampleFsValues) & SampleFsValues>0);
+if ~isempty(SampleFsValues)
+    if max(SampleFsValues)-min(SampleFsValues) > max(eps(max(SampleFsValues)),1e-9)
+        warning('OxygenDynamics:SummaryFigureMixedBurdenSampleFs', ...
+            'Hypoxic burden time-course figure has mixed SampleF values; using the median sample frequency.');
+    end
+    SampleFs = median(SampleFsValues,'omitnan');
+end
+
+end
+
+function Label = createSingleRecordingLabel(RecordingRows)
+
+Parts = strings(1,0);
+CandidateColumns = {'DrugID','Condition','PuffStim'};
+for ColIdx = 1:numel(CandidateColumns)
+    ColumnName = CandidateColumns{ColIdx};
+    if ismember(ColumnName,RecordingRows.Properties.VariableNames)
+        Value = string(RecordingRows.(ColumnName)(1));
+        if strlength(Value)>0 && Value~="missing"
+            Parts(1,end+1) = Value; %#ok<AGROW>
+        end
+    end
+end
+
+if isempty(Parts)
+    Label = "All";
+else
+    Label = Parts(1);
+    for PartIdx = 2:numel(Parts)
+        Label = Label + " | " + Parts(PartIdx);
+    end
+end
+
+end
+
+function SummaryTable = summarizeBurdenTimeSeriesGroups(GroupNames,GroupIdx,TraceMatrix,SampleFs,TimeLabel)
+
+Metric = repmat("HypoxicBurdenPerMm2OverTime_TimeCourseMean",numel(GroupNames),1);
+Group = GroupNames(:);
+N = zeros(numel(GroupNames),1);
+Mean = nan(numel(GroupNames),1);
+SEM = nan(numel(GroupNames),1);
+
+for GroupI = 1:numel(GroupNames)
+    GroupTrace = TraceMatrix(GroupIdx==GroupI,:);
+    PerRecordingMean = mean(GroupTrace,2,'omitnan');
+    N(GroupI) = sum(isfinite(PerRecordingMean));
+    Mean(GroupI) = mean(PerRecordingMean,'omitnan');
+    SEM(GroupI) = std(PerRecordingMean,'omitnan') ./ sqrt(max(N(GroupI),1));
+end
+
+SummaryTable = table(Metric,Group,N,Mean,SEM);
+SummaryTable.SampleF = repmat(SampleFs,height(SummaryTable),1);
+SummaryTable.TimeAxis = repmat(string(TimeLabel),height(SummaryTable),1);
 
 end
 
@@ -326,13 +513,11 @@ xlabel(AxesHandle,'Event area (um^2)','Interpreter','none');
 ylabel(AxesHandle,'Amplitude drop (%)','Interpreter','none');
 title(AxesHandle,Spec.Label,'Interpreter','none');
 legend(AxesHandle,'Location','bestoutside','Interpreter','none');
-box(AxesHandle,'off');
-grid(AxesHandle,'on');
+applySummaryAxesStyle(AxesHandle);
 
 FigurePng = fullfile(OutputFolder,[Spec.FileStem,'.png']);
 FigureFig = fullfile(OutputFolder,[Spec.FileStem,'.fig']);
-saveas(Fig,FigurePng);
-savefig(Fig,FigureFig);
+saveSummaryFigure(Fig,FigurePng,FigureFig);
 close(Fig);
 
 end
@@ -432,15 +617,13 @@ end
 hold(AxesHandle,'off');
 xlabel(AxesHandle,TimeLabel,'Interpreter','none');
 ylabel(AxesHandle,'Ongoing oxygen sinks per 1 mm2','Interpreter','none');
-title(AxesHandle,'OxySinksPer1mm2 group time course','Interpreter','none');
+title(AxesHandle,'Oxygen sinks per 1 mm2 over time','Interpreter','none');
 legend(AxesHandle,'Location','bestoutside','Interpreter','none');
-box(AxesHandle,'off');
-grid(AxesHandle,'on');
+applySummaryAxesStyle(AxesHandle);
 
 FigurePng = fullfile(OutputFolder,'OxySinksPer1mm2_TimeCourse.png');
 FigureFig = fullfile(OutputFolder,'OxySinksPer1mm2_TimeCourse.fig');
-saveas(Fig,FigurePng);
-savefig(Fig,FigureFig);
+saveSummaryFigure(Fig,FigurePng,FigureFig);
 close(Fig);
 
 SummaryTable = summarizeTraceTimeCourseGroups(GroupNames,GroupIdx,TraceMatrix,SampleFs,TimeLabel);
@@ -640,6 +823,28 @@ else
     Trace = str2double(string(Value));
     Trace = Trace(:);
 end
+
+end
+
+function applySummaryAxesStyle(AxesHandle)
+
+box(AxesHandle,'off');
+grid(AxesHandle,'on');
+AxesHandle.FontName = 'Arial';
+AxesHandle.FontSize = 11;
+AxesHandle.LineWidth = 1;
+AxesHandle.TickDir = 'out';
+
+end
+
+function saveSummaryFigure(Fig,FigurePng,FigureFig)
+
+try
+    exportgraphics(Fig,FigurePng,'Resolution',300);
+catch
+    saveas(Fig,FigurePng);
+end
+savefig(Fig,FigureFig);
 
 end
 

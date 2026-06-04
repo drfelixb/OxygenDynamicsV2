@@ -2,8 +2,8 @@ function OxygenDynamics_GUI()
 %OXYGENDYNAMICS_GUI Stepwise launcher for the Oxygen Dynamics pipeline.
 
 ProjectRoot = setupOxygenDynamicsPath();
-PipelineVersion = '2026-05-27';
-PipelineBuildTimestamp = '2026-05-27 11:00';
+PipelineVersion = '2026-06-04';
+PipelineBuildTimestamp = '2026-06-04 13:55';
 
 State = struct();
 State.ProjectRoot = ProjectRoot;
@@ -15,6 +15,7 @@ State.LastStatsResult = [];
 State.LastVerificationFile = '';
 State.LastWrapperRunInfoFile = '';
 State.LastStatsWorkbook = '';
+State.LastAnalysisManifest = '';
 State.LastFiguresFolder = '';
 State.LastRegressionBaseline = '';
 State.LastRegressionBaselineWorkbook = '';
@@ -90,8 +91,8 @@ ResultsGrid.ColumnWidth = {360,'1x'};
 ResultsGrid.Padding = [8 8 8 8];
 ResultsGrid.ColumnSpacing = 10;
 
-ResultsLeftGrid = uigridlayout(ResultsGrid,[4 1]);
-ResultsLeftGrid.RowHeight = {22,'1x',22,90};
+ResultsLeftGrid = uigridlayout(ResultsGrid,[5 1]);
+ResultsLeftGrid.RowHeight = {22,'1x',22,90,30};
 ResultsLeftGrid.Padding = [0 0 0 0];
 ResultsLeftGrid.RowSpacing = 6;
 ResultsLeftGrid.Layout.Row = 1;
@@ -109,6 +110,22 @@ FigureListLabel.Layout.Row = 3;
 
 FigureListBox = uilistbox(ResultsLeftGrid,'Items',{},'ValueChangedFcn',@previewSelectedFigure);
 FigureListBox.Layout.Row = 4;
+
+FigureActionGrid = uigridlayout(ResultsLeftGrid,[1 2]);
+FigureActionGrid.ColumnWidth = {'1x','1x'};
+FigureActionGrid.Padding = [0 0 0 0];
+FigureActionGrid.ColumnSpacing = 6;
+FigureActionGrid.Layout.Row = 5;
+
+OpenSelectedFigureButton = uibutton(FigureActionGrid,'Text','Open Selected','Enable','off', ...
+    'ButtonPushedFcn',@openSelectedFigure);
+OpenSelectedFigureButton.Layout.Row = 1;
+OpenSelectedFigureButton.Layout.Column = 1;
+
+OpenBurdenTimeFigureButton = uibutton(FigureActionGrid,'Text','Open Burden Time','Enable','off', ...
+    'ButtonPushedFcn',@openBurdenTimeFigure);
+OpenBurdenTimeFigureButton.Layout.Row = 1;
+OpenBurdenTimeFigureButton.Layout.Column = 2;
 
 FigurePreviewAxes = uiaxes(ResultsGrid);
 FigurePreviewAxes.Layout.Row = 1;
@@ -244,6 +261,11 @@ OpenRegressionButton = uibutton(OutputGrid,'Text','Open Regression','Enable','of
 OpenRegressionButton.Layout.Row = 2;
 OpenRegressionButton.Layout.Column = 5;
 
+OpenManifestButton = uibutton(OutputGrid,'Text','Open Manifest','Enable','off', ...
+    'ButtonPushedFcn',@openAnalysisManifest);
+OpenManifestButton.Layout.Row = 3;
+OpenManifestButton.Layout.Column = 2;
+
 OpenStatsAcceptanceButton = uibutton(OutputGrid,'Text','Open Acceptance','Enable','off', ...
     'ButtonPushedFcn',@openStatsAcceptanceOutput);
 OpenStatsAcceptanceButton.Layout.Row = 3;
@@ -300,6 +322,7 @@ ManualButton.Layout.Column = 5;
         State.LastVerificationFile = '';
         State.LastWrapperRunInfoFile = '';
         State.LastStatsWorkbook = '';
+        State.LastAnalysisManifest = '';
         State.LastFiguresFolder = '';
         State.LastRegressionBaseline = defaultRegressionBaselinePath();
         State.LastRegressionBaselineWorkbook = defaultRegressionBaselineWorkbookPath();
@@ -379,6 +402,12 @@ ManualButton.Layout.Column = 5;
             if isfield(State.LastStatsResult,'OutputXlsx')
                 State.LastStatsWorkbook = State.LastStatsResult.OutputXlsx;
                 appendLog(sprintf('Stats workbook: %s',State.LastStatsResult.OutputXlsx));
+            end
+            if isfield(State.LastStatsResult,'AnalysisManifest')
+                State.LastAnalysisManifest = State.LastStatsResult.AnalysisManifest;
+                appendLog(sprintf('Analysis manifest: %s',State.LastAnalysisManifest));
+            else
+                State.LastAnalysisManifest = analysisManifestPath();
             end
             updateStatsPreview();
             refreshRegressionStatus();
@@ -503,6 +532,7 @@ ManualButton.Layout.Column = 5;
         end
         State.SelectedRegressionStatsFolder = SelectedFolder;
         State.LastStatsWorkbook = findStatsWorkbookInFolder(SelectedFolder);
+        State.LastAnalysisManifest = fullfile(SelectedFolder,'AnalysisManifest.md');
         appendLog(sprintf('Selected regression stats output: %s',SelectedFolder));
         refreshRegressionStatus();
         MainTabs.SelectedTab = RegressionTab;
@@ -521,6 +551,10 @@ ManualButton.Layout.Column = 5;
             FigureResult = runOxygenSummaryFigures(State.LastStatsResult);
             State.LastFiguresFolder = FigureResult.OutputFolder;
             State.FigureFiles = FigureResult.FigureFiles;
+            if isfield(FigureResult,'AnalysisManifest')
+                State.LastAnalysisManifest = FigureResult.AnalysisManifest;
+                appendLog(sprintf('Analysis manifest refreshed: %s',State.LastAnalysisManifest));
+            end
             if isfield(FigureResult,'FigureManifest') && istable(FigureResult.FigureManifest)
                 State.FigureManifest = FigureResult.FigureManifest;
             else
@@ -790,6 +824,7 @@ ManualButton.Layout.Column = 5;
             FigureListBox.Value = FigureList.Files{1};
             previewFigureFile(FigureList.Files{1});
         end
+        updateOutputLinks();
     end
 
     function previewSelectedFigure(~,~)
@@ -797,6 +832,7 @@ ManualButton.Layout.Column = 5;
             return
         end
         previewFigureFile(FigureListBox.Value);
+        updateOutputLinks();
     end
 
     function previewFigureFile(FigureFile)
@@ -807,9 +843,9 @@ ManualButton.Layout.Column = 5;
         cla(FigurePreviewAxes);
         image(FigurePreviewAxes,ImageData);
         FigurePreviewAxes.XTick = [];
-FigurePreviewAxes.YTick = [];
-axis(FigurePreviewAxes,'image');
-title(FigurePreviewAxes,getFileLabel(FigureFile),'Interpreter','none');
+        FigurePreviewAxes.YTick = [];
+        axis(FigurePreviewAxes,'image');
+        title(FigurePreviewAxes,getFileLabel(FigureFile),'Interpreter','none');
     end
 
     function LabelText = getFileLabel(FilePath)
@@ -829,6 +865,7 @@ title(FigurePreviewAxes,getFileLabel(FigureFile),'Interpreter','none');
     function setBusy(IsBusy,Message)
         Buttons = [ChooseCsvButton,VerifyButton,WrapperButton,StatsButton,FiguresButton,ManualButton, ...
             OpenFolderButton,OpenVerificationButton,OpenWrapperButton,OpenStatsButton,OpenFiguresButton, ...
+            OpenSelectedFigureButton,OpenBurdenTimeFigureButton, ...
             OpenRegressionButton,OpenStatsAcceptanceButton,CreateBaselineButton,RegressionButton,RefreshRegressionButton, ...
             CreateBaselineTabButton,ChooseStatsOutputButton,RunRegressionTabButton, ...
             OpenBaselineTabButton,OpenReportTabButton,OpenRegressionFolderButton, ...
@@ -894,8 +931,11 @@ title(FigurePreviewAxes,getFileLabel(FigureFile),'Interpreter','none');
         OpenVerificationButton.Enable = enabledIf(isOpenablePath(State.LastVerificationFile));
         OpenWrapperButton.Enable = enabledIf(isOpenablePath(State.LastWrapperRunInfoFile));
         OpenStatsButton.Enable = enabledIf(isOpenablePath(State.LastStatsWorkbook));
+        OpenManifestButton.Enable = enabledIf(isOpenablePath(analysisManifestPath()));
         OpenStatsAcceptanceButton.Enable = enabledIf(isOpenablePath(getStatsWorkbookForCurrentOutput()));
         OpenFiguresButton.Enable = enabledIf(isOpenablePath(State.LastFiguresFolder));
+        OpenSelectedFigureButton.Enable = enabledIf(isOpenablePath(selectedFigurePath()));
+        OpenBurdenTimeFigureButton.Enable = enabledIf(isOpenablePath(burdenTimeFigurePath()));
         OpenRegressionButton.Enable = enabledIf(isOpenablePath(latestRegressionOutputPath()));
         CreateBaselineButton.Enable = enabledIf(~isempty(getCurrentStatsOutputFolder()));
         RegressionButton.Enable = enabledIf(~isempty(getCurrentStatsOutputFolder()) && ...
@@ -924,6 +964,52 @@ title(FigurePreviewAxes,getFileLabel(FigureFile),'Interpreter','none');
     function tf = isOpenablePath(PathValue)
         PathValue = asCharPath(PathValue);
         tf = ~isempty(PathValue) && (isfile(PathValue) || isfolder(PathValue));
+    end
+
+    function FigurePath = selectedFigurePath()
+        FigurePath = '';
+        if ~isempty(FigureListBox.Value)
+            FigurePath = asCharPath(FigureListBox.Value);
+        end
+        if ~isOpenablePath(FigurePath)
+            FigurePath = '';
+        end
+    end
+
+    function FigurePath = burdenTimeFigurePath()
+        FigurePath = '';
+        if ~isempty(State.FigureManifest) && istable(State.FigureManifest) && ...
+                all(ismember({'Metric','FilePath'},State.FigureManifest.Properties.VariableNames))
+            MatchIdx = find(string(State.FigureManifest.Metric)=="HypoxicBurdenPerMm2OverTime",1,'first');
+            if isempty(MatchIdx)
+                MatchIdx = find(string(State.FigureManifest.Metric)=="HypoxicBurdenPerMm2OverTime_TimeCourse",1,'first');
+            end
+            if ~isempty(MatchIdx)
+                FigurePath = asCharPath(State.FigureManifest.FilePath(MatchIdx));
+            end
+        end
+        if ~isOpenablePath(FigurePath) && ~isempty(State.LastFiguresFolder)
+            CandidatePath = fullfile(State.LastFiguresFolder,'HypoxicBurdenPerMm2OverTime_TimeCourse.png');
+            if isOpenablePath(CandidatePath)
+                FigurePath = CandidatePath;
+            end
+        end
+        if ~isOpenablePath(FigurePath)
+            FigurePath = '';
+        end
+    end
+
+    function ManifestPath = analysisManifestPath()
+        ManifestPath = asCharPath(State.LastAnalysisManifest);
+        if isOpenablePath(ManifestPath)
+            return
+        end
+        StatsFolder = getCurrentStatsOutputFolder();
+        if ~isempty(StatsFolder)
+            ManifestPath = fullfile(StatsFolder,'AnalysisManifest.md');
+        else
+            ManifestPath = '';
+        end
     end
 
     function PathValue = asCharPath(PathValue)
@@ -955,6 +1041,17 @@ title(FigurePreviewAxes,getFileLabel(FigureFile),'Interpreter','none');
         openPath(State.LastStatsWorkbook);
     end
 
+    function openAnalysisManifest(~,~)
+        ManifestPath = analysisManifestPath();
+        if isempty(ManifestPath) || ~isfile(ManifestPath)
+            uialert(Fig,'No AnalysisManifest.md was found for the current stats output. Run stats with the current code, or generate summary figures to refresh it.', ...
+                'Analysis manifest missing');
+            return
+        end
+        appendLog(sprintf('Opening analysis manifest: %s',ManifestPath));
+        openPath(ManifestPath);
+    end
+
     function openStatsAcceptanceOutput(~,~)
         WorkbookPath = getStatsWorkbookForCurrentOutput();
         if isempty(WorkbookPath) || ~isfile(WorkbookPath)
@@ -975,6 +1072,27 @@ title(FigurePreviewAxes,getFileLabel(FigureFile),'Interpreter','none');
 
     function openFiguresOutput(~,~)
         openPath(State.LastFiguresFolder);
+    end
+
+    function openSelectedFigure(~,~)
+        FigurePath = selectedFigurePath();
+        if isempty(FigurePath)
+            uialert(Fig,'No generated figure is currently selected.','No figure selected');
+            return
+        end
+        appendLog(sprintf('Opening selected figure: %s',FigurePath));
+        openPath(FigurePath);
+    end
+
+    function openBurdenTimeFigure(~,~)
+        FigurePath = burdenTimeFigurePath();
+        if isempty(FigurePath)
+            uialert(Fig,'The burden-over-time figure was not found. Generate figures first.', ...
+                'Burden figure missing');
+            return
+        end
+        appendLog(sprintf('Opening burden-over-time figure: %s',FigurePath));
+        openPath(FigurePath);
     end
 
     function openRegressionOutput(~,~)

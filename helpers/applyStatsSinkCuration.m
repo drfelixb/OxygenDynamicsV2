@@ -15,6 +15,23 @@ end
 
 TableOxygenSinks = TableOxygenSinks(IncludedPocs,:);
 if ~isempty(TableOxygenSinkEvents)
-    TableOxygenSinkEvents = TableOxygenSinkEvents(IncludedPocs(TableOxygenSinkEvents.SinkID),:);
+    OriginalSinkIDs = includedPocsToOriginalSinkIDs(IncludedPocs);
+    EventOriginalSinkID = TableOxygenSinkEvents.SinkID;
+    KeepEvent = ismember(EventOriginalSinkID,OriginalSinkIDs);
+    TableOxygenSinkEvents = TableOxygenSinkEvents(KeepEvent,:);
+    EventOriginalSinkID = EventOriginalSinkID(KeepEvent);
+    [~,RemappedSinkID] = ismember(EventOriginalSinkID,OriginalSinkIDs);
+    TableOxygenSinkEvents.OriginalSinkID = EventOriginalSinkID;
+    TableOxygenSinkEvents.SinkID = RemappedSinkID;
 end
+end
+
+function OriginalSinkIDs = includedPocsToOriginalSinkIDs(IncludedPocs)
+
+if islogical(IncludedPocs)
+    OriginalSinkIDs = find(IncludedPocs);
+else
+    OriginalSinkIDs = IncludedPocs(:)';
+end
+
 end

@@ -21,4 +21,12 @@ if isfield(HypoxicBurden,'GroupSummaryTable') && ~isempty(HypoxicBurden.GroupSum
     writetable(HypoxicBurden.GroupSummaryTable,OutputXlsx,'Sheet','HypoxicBurden_GroupSummary');
 end
 
+if isfield(HypoxicBurden,'TimeSeriesBasis') && ~isempty(HypoxicBurden.TimeSeriesBasis)
+    writetable(HypoxicBurden.TimeSeriesBasis,OutputXlsx,'Sheet','HypoxicBurden_TimeBasis');
+end
+
+if isfield(HypoxicBurden,'TimeSeriesTable') && ~isempty(HypoxicBurden.TimeSeriesTable)
+    writetable(HypoxicBurden.TimeSeriesTable,OutputXlsx,'Sheet','HypoxicBurden_TimeSeries');
+end
+
 end

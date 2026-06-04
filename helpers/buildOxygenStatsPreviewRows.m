@@ -104,6 +104,8 @@ if isfield(Data.HypoxicBurden,'EventTable') && istable(Data.HypoxicBurden.EventT
     PreviewRows(end+1,:) = {'Hypoxic burden event rows',num2str(height(EventTable))};
     PreviewRows = appendTableColumnSum(PreviewRows,EventTable, ...
         'PerEventBurdenContribution','Hypoxic burden event sum');
+    PreviewRows = appendTableColumnSum(PreviewRows,EventTable, ...
+        'PerEventBurdenContribution_per_mm2','Hypoxic burden event sum per 1 mm2');
     if ismember('BurdenAreaEventSpecificMatched',EventTable.Properties.VariableNames)
         PreviewRows(end+1,:) = {'Event-specific area matches', ...
             sprintf('%d / %d',sum(logical(EventTable.BurdenAreaEventSpecificMatched)),height(EventTable))};
@@ -114,6 +116,12 @@ if isfield(Data.HypoxicBurden,'RecordingTable') && istable(Data.HypoxicBurden.Re
     RecordingTable = Data.HypoxicBurden.RecordingTable;
     PreviewRows(end+1,:) = {'Hypoxic burden recordings',num2str(height(RecordingTable))};
     PreviewRows = appendTableColumnSum(PreviewRows,RecordingTable,'HypoxicBurden','Hypoxic burden total');
+    PreviewRows = appendTableColumnSum(PreviewRows,RecordingTable,'HypoxicBurden_per_mm2', ...
+        'Hypoxic burden total per 1 mm2');
+    PreviewRows = appendTableColumnMean(PreviewRows,RecordingTable,'HypoxicBurden_per_min', ...
+        'Mean hypoxic burden per min');
+    PreviewRows = appendTableColumnMean(PreviewRows,RecordingTable,'HypoxicBurden_per_mm2_per_min', ...
+        'Mean hypoxic burden per 1 mm2 per min');
 end
 
 if isfield(Data.HypoxicBurden,'GroupSummaryTable') && istable(Data.HypoxicBurden.GroupSummaryTable)
@@ -122,7 +130,22 @@ if isfield(Data.HypoxicBurden,'GroupSummaryTable') && istable(Data.HypoxicBurden
     PreviewRows = appendTableColumnMean(PreviewRows,GroupSummaryTable, ...
         'HypoxicBurden_Mean','Mean grouped burden');
     PreviewRows = appendTableColumnMean(PreviewRows,GroupSummaryTable, ...
+        'HypoxicBurden_per_mm2_Mean','Mean grouped burden per 1 mm2');
+    PreviewRows = appendTableColumnMean(PreviewRows,GroupSummaryTable, ...
+        'HypoxicBurden_per_mm2_per_min_Mean','Mean grouped burden per 1 mm2 per min');
+    PreviewRows = appendTableColumnMean(PreviewRows,GroupSummaryTable, ...
         'EventSpecificAreaMatchRate','Mean area match rate');
+end
+
+if isfield(Data.HypoxicBurden,'TimeSeriesTable') && istable(Data.HypoxicBurden.TimeSeriesTable)
+    TimeSeriesTable = Data.HypoxicBurden.TimeSeriesTable;
+    PreviewRows(end+1,:) = {'Hypoxic burden time-series rows',num2str(height(TimeSeriesTable))};
+    PreviewRows = appendUniqueCount(PreviewRows,TimeSeriesTable,'RecordingIndex', ...
+        'Hypoxic burden time-series recordings');
+    PreviewRows = appendTableColumnMean(PreviewRows,TimeSeriesTable, ...
+        'HypoxicBurdenPerMm2OverTime','Mean burden over time per 1 mm2');
+    PreviewRows = appendTableColumnMax(PreviewRows,TimeSeriesTable, ...
+        'HypoxicBurdenPerMm2OverTime','Max burden over time per 1 mm2');
 end
 
 end
@@ -162,6 +185,15 @@ function PreviewRows = appendTableColumnMean(PreviewRows,TableData,ColumnName,La
 if ismember(ColumnName,TableData.Properties.VariableNames)
     Values = tableColumnToDouble(TableData.(ColumnName));
     PreviewRows(end+1,:) = {LabelText,sprintf('%.6g',mean(Values,'omitnan'))};
+end
+
+end
+
+function PreviewRows = appendTableColumnMax(PreviewRows,TableData,ColumnName,LabelText)
+
+if ismember(ColumnName,TableData.Properties.VariableNames)
+    Values = tableColumnToDouble(TableData.(ColumnName));
+    PreviewRows(end+1,:) = {LabelText,sprintf('%.6g',max(Values,[],'omitnan'))};
 end
 
 end

@@ -20,6 +20,7 @@ end
 
 SinkEventTablePath = fullfile(statsOutputFolder,'SinkEventTable.mat');
 EventSpecificPath = fullfile(statsOutputFolder,'HypoxicEventSpecificMetrics4LME.mat');
+DataOutputPath = fullfile(statsOutputFolder,'DataOutput.mat');
 WorkbookPath = findStatsWorkbook(statsOutputFolder);
 
 if ~isfile(SinkEventTablePath)
@@ -45,7 +46,15 @@ if isfile(EventSpecificPath)
     end
 end
 
-HypoxicBurden = createHypoxicBurdenMetrics(TableOxygenSinkEvents,EventSpecificMetrics);
+TableOxygenSinks = table();
+if isfile(DataOutputPath)
+    DataOutput = load(DataOutputPath,'Table_OxygenSinks_OutCombo');
+    if isfield(DataOutput,'Table_OxygenSinks_OutCombo')
+        TableOxygenSinks = DataOutput.Table_OxygenSinks_OutCombo;
+    end
+end
+
+HypoxicBurden = createHypoxicBurdenMetrics(TableOxygenSinkEvents,EventSpecificMetrics,TableOxygenSinks);
 try
     writeHypoxicBurdenWorkbookSheets(WorkbookPath,HypoxicBurden);
     WrittenWorkbookPath = WorkbookPath;
@@ -61,7 +70,6 @@ catch ME
     writeHypoxicBurdenWorkbookSheets(WrittenWorkbookPath,HypoxicBurden);
 end
 
-DataOutputPath = fullfile(statsOutputFolder,'DataOutput.mat');
 if isfile(DataOutputPath)
     save(DataOutputPath,'HypoxicBurden','-append');
 end

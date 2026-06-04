@@ -274,10 +274,13 @@
   <text class="st2" transform="translate(232 937)"><tspan x="0" y="0">FilteredData_&lt;inputcsv&gt;.xlsx + DataOutput.mat</tspan></text>
   <rect class="st10" x="600" y="890" width="400" height="58"/>
   <text class="st4" transform="translate(622 915)"><tspan x="0" y="0">Key sheets</tspan></text>
-  <text class="st2" transform="translate(622 937)"><tspan x="0" y="0">StatsAcceptance, HypoxicBurden_EventBased, ByRecording, GroupSummary, SinkCountNormFactors</tspan></text>
+  <text class="st2" transform="translate(622 937)"><tspan x="0" y="0">StatsAcceptance, burden sheets, SinkCountNormFactors, NormalizationGuide</tspan></text>
   <rect class="st10" x="1080" y="890" width="330" height="58"/>
   <text class="st4" transform="translate(1102 915)"><tspan x="0" y="0">Event exports</tspan></text>
   <text class="st2" transform="translate(1102 937)"><tspan x="0" y="0">SortedSinkEventMetrics.xlsx + HypoxicEventSpecificMetrics4LME.mat</tspan></text>
+  <rect class="st10" x="1460" y="890" width="260" height="58"/>
+  <text class="st4" transform="translate(1482 915)"><tspan x="0" y="0">Burden time series</tspan></text>
+  <text class="st2" transform="translate(1482 937)"><tspan x="0" y="0">HypoxicBurden_TimeSeries: frame-wise + per1mm2</tspan></text>
   <path class="st0" d=""/>
   <path class="st17" d="M376,870l-8,24-8-24h16Z"/>
   <path class="st17" d="M368-190"/>
@@ -287,6 +290,9 @@
   <path class="st0" d=""/>
   <path class="st17" d="M1253,870l-8,24-8-24h16Z"/>
   <path class="st17" d="M1245-190"/>
+  <path class="st0" d=""/>
+  <path class="st17" d="M1600,870l-8,24-8-24h16Z"/>
+  <path class="st17" d="M1592-190"/>
   <rect class="st13" x="90" y="1060" width="315" height="92"/>
   <text class="st4" transform="translate(112 1085)"><tspan x="0" y="0">Stats acceptance</tspan></text>
   <text class="st2" transform="translate(112 1107)"><tspan x="0" y="0">PASS / REVIEW rows</tspan></text>

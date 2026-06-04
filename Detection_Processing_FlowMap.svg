@@ -387,8 +387,9 @@
   <path class="st0" d=""/>
   <path class="st20" d="M1626,1515.4l28.8,9.6-28.8,9.6v-19.2Z"/>
   <path class="st20" d="M1650,1525"/>
-  <rect class="st15" x="90" y="1622" width="1725" height="36"/>
-  <text class="st2" transform="translate(112 1645)"><tspan x="0" y="0">Event-specific morphology for burden is reconstructed later from IM_OxySinks_BW + OxySinkArea_all + event timing; the preferred burden area is true event-specific Area_um, not the ROI mean area.</tspan></text>
+  <rect class="st15" x="90" y="1622" width="1725" height="54"/>
+  <text class="st2" transform="translate(112 1641)"><tspan x="0" y="0">Event-specific morphology for burden is reconstructed later from IM_OxySinks_BW + OxySinkArea_all + event timing; preferred burden area is true event-specific Area_um.</tspan></text>
+  <text class="st2" transform="translate(112 1660)"><tspan x="0" y="0">HypoxicBurden_TimeSeries marks each event active from StartFrame to EndFrame, then sums contribution/duration per frame; HypoxicBurdenPerMm2OverTime applies FOV normalization.</tspan></text>
   <rect class="st15" x="55" y="1695" width="1790" height="42"/>
   <rect class="st12" x="75" y="1707" width="24" height="16"/>
   <text class="st4" transform="translate(108 1720)"><tspan x="0" y="0">Raw-domain data or raw quantification</tspan></text>

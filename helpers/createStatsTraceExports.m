@@ -37,28 +37,6 @@ for GroupIdx = 1:size(ExportTraces,2)
                     CorrHeader,TraceCorrs(GroupMask,CorrMapIdx+5));
             end
         end
-    else
-        TraceHeader = ExportTraces(1:3,GroupIdx);
-
-        if IsBLI
-            for TraceMapIdx = 1:numel(BLITraceExportRows)
-                ExportTraces{BLITraceExportRows(TraceMapIdx),GroupIdx} = createNanTraceExportTable( ...
-                    TraceHeader,size(ROIsTraces{1,BLITraceSourceCols(TraceMapIdx)},2));
-            end
-        end
-
-        for TraceMapIdx = 1:numel(CommonTraceExportRows)
-            ExportTraces{CommonTraceExportRows(TraceMapIdx),GroupIdx} = createNanTraceExportTable( ...
-                TraceHeader,size(CommonTraceSources{TraceMapIdx}{1,6},2));
-        end
-
-        if IsBLI
-            CorrHeader = ExportTraceCorrs(1:3,GroupIdx);
-            for CorrMapIdx = 1:10
-                ExportTraceCorrs{CorrMapIdx+3,GroupIdx} = createNanTraceExportTable( ...
-                    CorrHeader,size(TraceCorrs(1,CorrMapIdx+5),1));
-            end
-        end
     end
 end
 
