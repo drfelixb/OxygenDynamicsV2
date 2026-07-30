@@ -1,12 +1,146 @@
-# OxygenDynamics_Public
+# OxygenDynamicsV2
 
-Optical investigation of oxygen dynamics in the murine cortex.
+[![MATLAB CI](https://github.com/drfelixb/OxygenDynamicsV2/actions/workflows/matlab-ci.yml/badge.svg)](https://github.com/drfelixb/OxygenDynamicsV2/actions/workflows/matlab-ci.yml)
 
-This repository contains MATLAB routines for detecting and analysing spatiotemporal oxygen dynamics in mouse cortex imaging recordings. The pipeline analyses oxygen sinks and oxygen surges, optionally combines these outputs with behavioural data, and exports summary tables for downstream statistics and plotting.
+OxygenDynamicsV2 is a MATLAB pipeline for detecting, curating, quantifying, and
+summarising spatiotemporal oxygen dynamics recorded in the murine cortex with
+bioluminescence oxygen imaging.
 
-For step-by-step usage instructions, see [USER_MANUAL.md](USER_MANUAL.md).
+> **Research software notice:** This software is intended for research use. Its
+> outputs require scientific review and should not be treated as clinical or
+> diagnostic results.
 
-For a graphical software overview, see [Pipeline_FlowMap.svg](Pipeline_FlowMap.svg). This flow map summarizes how input metadata, TIFF sources, detection, raw quantification, event-level burden, area normalization, acceptance checks, regression, and summary figures connect. For a more detailed map of how signal changes are detected, tracked/refined, and quantified on raw data, see [Detection_Processing_FlowMap.svg](Detection_Processing_FlowMap.svg).
+## Overview
+
+The pipeline detects oxygen sinks and oxygen surges, quantifies signal changes
+on the original image data, supports optional behavioural and vascular
+analyses, and exports event-level and recording-level results for statistics
+and visualisation. It includes preflight validation, manual sink curation,
+acceptance checks, regression baselines, and a synthetic smoke test.
+
+The software was originally developed by Felix R. M. Beinlich and Antonios
+Asiminas. The current repository is maintained as a research codebase and is
+being prepared for broader reuse and contribution.
+
+## Why This Project Exists
+
+Oxygen dynamics in awake cortex can be spatially localised and brief. Analysing
+these events requires consistent handling of large TIFF recordings, metadata,
+event tracking, raw-signal quantification, manual review, and reproducible
+summary exports. OxygenDynamicsV2 brings those steps into one traceable
+workflow.
+
+## Key Capabilities
+
+- Detect oxygen sinks and surges in imaging recordings.
+- Use denoised TIFFs for detection while retaining raw TIFFs for amplitude
+  quantification.
+- Curate putative oxygen sinks with a MATLAB app.
+- Calculate event-level metrics and hypoxic-burden summaries.
+- Integrate optional behaviour, vascular-distance, and amyloid-distance data.
+- Generate readiness, acceptance, QC, regression, and summary-figure outputs.
+
+## Scientific Context
+
+The software builds on the analysis developed for:
+
+Beinlich, F. R. M., et al. (2024). Oxygen imaging of hypoxic pockets in the
+mouse cerebral cortex. *Science*, 383(6690), 1471-1478.
+[https://doi.org/10.1126/science.adn1011](https://doi.org/10.1126/science.adn1011)
+
+## Compatibility With the 2024 Publication Analysis
+
+The current amplitude definition differs from the public script associated
+with the 2024 *Science* paper. In the current pipeline, `NormOxySinkAmp`
+represents raw percent-change amplitude; the older detection-domain quantity
+is retained as `DetectionOxySinkAmp`. Do not compare identically named
+`NormOxySinkAmp` values across those code versions without accounting for this
+change.
+
+Read [Amplitude_Definition_Comparison.pdf](Amplitude_Definition_Comparison.pdf)
+and
+[Science_vs_Current_Analysis_Differences_20260601.pdf](Science_vs_Current_Analysis_Differences_20260601.pdf)
+before comparing results. The detailed mapping is also repeated in
+[Important Amplitude Definition Change](#important-amplitude-definition-change).
+
+## Quick Start
+
+Clone the repository, open MATLAB in the repository root, and run:
+
+```matlab
+setupOxygenDynamicsPath
+checkOxygenPipelineHealth
+runOxygenPipelineSmokeTest
+Start_OxygenPipeline
+```
+
+`Start_OxygenPipeline` opens the stepwise GUI. See
+[USER_MANUAL.md](USER_MANUAL.md) before analysing experimental data.
+
+## Requirements
+
+- MATLAB. The current repository and CI workflow are tested with R2025b.
+- Image Processing Toolbox for the core imaging workflow.
+- Statistics and Machine Learning Toolbox for selected optional statistical,
+  vascular, and hypoxia-amyloid analyses.
+- A desktop MATLAB session for the App Designer curation and pipeline GUI.
+- Windows is required only for optional Outlook COM email notifications.
+  Core MATLAB analysis is not intended to depend on Outlook.
+
+No Python, ImageJ, or external command-line runtime is required by the main
+pipeline. ABF and multipage-TIFF helpers are bundled; see
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Inputs and Outputs
+
+The main input is a metadata CSV containing recording paths and acquisition
+metadata. Each recording folder must contain an original motion-corrected TIFF;
+an optional denoised TIFF can be used for detection. Outputs include per-event
+MAT/TIFF data, curated sink data, verification reports, statistics workbooks,
+hypoxic-burden tables, regression reports, and summary figures.
+
+Experimental recordings and generated results are intentionally excluded from
+version control by [.gitignore](.gitignore).
+
+## Validation and Reproducibility
+
+Run `runOxygenPipelineSmokeTest` locally for the synthetic end-to-end smoke
+test and `runRepositoryChecks` for repository-level checks. GitHub Actions runs
+the repository checks automatically. For experimental datasets, use the
+verification and acceptance reports before accepting results or refreshing a
+regression baseline.
+
+## Documentation
+
+- [User manual](USER_MANUAL.md)
+- [Pipeline flow map](Pipeline_FlowMap.svg)
+- [Detection and processing flow map](Detection_Processing_FlowMap.svg)
+- [Contributing guide](CONTRIBUTING.md)
+- [Release process](RELEASING.md)
+- [Changelog](CHANGELOG.md)
+
+## Citation
+
+Use the metadata in [CITATION.cff](CITATION.cff) to cite the software. Cite the
+2024 *Science* article as well when the software is used in work that builds on
+the published oxygen-dynamics analysis.
+
+## Licence Status
+
+The project-level licence is under review by the original developers. Until a
+top-level `LICENSE` file is added, the repository is publicly viewable source
+code but should not be described as open-source software. Bundled third-party
+components retain their own licences and notices; see
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Contributing and Support
+
+Please use GitHub issues for reproducible bugs, feature proposals, and
+documentation gaps. Read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a
+pull request. Security-sensitive reports should follow
+[SECURITY.md](SECURITY.md).
+
+## Detailed Pipeline Documentation
 
 ## Current Version Highlights
 
@@ -163,7 +297,7 @@ Support functions have been moved out of the root folder:
 
 - `helpers/` contains project helper functions for validation, TIFF inspection, wrapper manifests, output-folder handling, path resolution, statistics utilities, GUI preview/acceptance table construction, lower-level per-recording run functions, and failure logging.
 - `external/` contains bundled third-party/shared file I/O helpers such as `abfload.m`, `loadtiff.m`, and `saveastiff.m`.
-- `Legacy_Archive/` contains old version snapshots, MATLAB autosave backups, and the former standalone `GetHypoxicEventsStats.m` script now that its event-based export has been integrated into the normal stats run. A OneDrive-protected empty `V2b/` placeholder may remain locally after archiving and can be ignored.
+- `Legacy_Archive/` contains old version snapshots, MATLAB autosave backups, and the former standalone `GetHypoxicEventsStats.m` script now that its event-based export has been integrated into the normal stats run.
 - `Run_Logs/` contains wrapper run manifests and failure logs generated by batch wrapper runs.
 - `QC_Output/` contains raw/denoised QC summary MAT/XLSX files generated by `compareRawDenoisedOutputs.m` or by the oxygen wrapper QC step.
 - `setupOxygenDynamicsPath.m` adds the root, `helpers/`, and `external/` folders to the MATLAB path.
