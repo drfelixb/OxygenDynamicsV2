@@ -31,7 +31,8 @@ end
 
 [SinkBinaryStack,~,~] = loadtiff(SinkBinaryPath);
 SinkBinaryStack = logical(SinkBinaryStack);
-TrackedEventPixels = reconstructTrackedSinkEventPixels(SinkBinaryStack,OxySinkAreaAll,SinkTable);
+[~,TrackedEventPixels] = reconstructHypoxicEventFootprints( ...
+    SinkBinaryStack,OxySinkAreaAll,SinkTable);
 EventMetricsTable = buildHypoxicEventSpecificTable(TrackedEventPixels,size(SinkBinaryStack(:,:,1)), ...
     SinkTable,RecordingMetadata);
 end
@@ -49,69 +50,6 @@ end
 
 [~,NewestIdx] = max([TiffFiles.datenum]);
 SinkBinaryPath = fullfile(TiffFiles(NewestIdx).folder,TiffFiles(NewestIdx).name);
-end
-
-function TrackedEventPixels = reconstructTrackedSinkEventPixels(SinkBinaryStack,OxySinkAreaAll,SinkTable)
-
-FrameRegionInfo = cell(size(SinkBinaryStack,3),1);
-for FrameIdx = 1:size(SinkBinaryStack,3)
-    FrameRegionInfo{FrameIdx} = regionprops(SinkBinaryStack(:,:,FrameIdx),'Area','PixelIdxList');
-end
-
-TrackedEventPixels = cell(size(OxySinkAreaAll));
-for SinkIdx = 1:size(OxySinkAreaAll,1)
-    for FrameIdx = 1:size(OxySinkAreaAll,2)
-        if isempty(OxySinkAreaAll{SinkIdx,FrameIdx})
-            continue
-        end
-
-        TargetArea = OxySinkAreaAll{SinkIdx,FrameIdx};
-        [TrackedEventPixels{SinkIdx,FrameIdx},FrameRegionInfo{FrameIdx}] = ...
-            matchSinkEventPixelsInFrame(FrameRegionInfo{FrameIdx},TargetArea,SinkTable.OxySink_Pxls_all{SinkIdx}, ...
-            nnz(~cellfun(@isempty,OxySinkAreaAll(:,FrameIdx))));
-    end
-end
-end
-
-function [Pixels,FrameRegions] = matchSinkEventPixelsInFrame(FrameRegions,TargetArea,SinkPixelsAll,NumActiveSinks)
-
-Pixels = [];
-if isempty(FrameRegions)
-    return
-end
-
-Areas = [FrameRegions.Area];
-AreaMatch = find(Areas==TargetArea);
-if isscalar(AreaMatch)
-    Pixels = FrameRegions(AreaMatch).PixelIdxList;
-    FrameRegions(AreaMatch).Area = NaN;
-    return
-end
-
-if numel(FrameRegions)>NumActiveSinks && numel(FrameRegions)>=2
-    PairIdx = nchoosek(1:numel(FrameRegions),2);
-    PairAreas = Areas(PairIdx(:,1))+Areas(PairIdx(:,2));
-    PairMatch = find(PairAreas==TargetArea);
-    if isscalar(PairMatch)
-        ConstituentIdx = PairIdx(PairMatch,:);
-        Pixels = vertcat(FrameRegions(ConstituentIdx).PixelIdxList);
-        for Idx = ConstituentIdx
-            FrameRegions(Idx).Area = NaN;
-        end
-        return
-    end
-end
-
-OverlapCounts = nan(numel(FrameRegions),1);
-for RegionIdx = 1:numel(FrameRegions)
-    OverlapCounts(RegionIdx) = numel(intersect(FrameRegions(RegionIdx).PixelIdxList,SinkPixelsAll));
-end
-
-if any(OverlapCounts>0)
-    BestIdx = find(OverlapCounts==max(OverlapCounts),1,'first');
-    Pixels = FrameRegions(BestIdx).PixelIdxList;
-    FrameRegions(BestIdx).Area = NaN;
-end
 end
 
 function EventMetricsTable = buildHypoxicEventSpecificTable(TrackedEventPixels,FrameSize,SinkTable,RecordingMetadata)

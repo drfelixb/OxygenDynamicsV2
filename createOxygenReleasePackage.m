@@ -5,6 +5,7 @@ function ReleaseInfo = createOxygenReleasePackage(varargin)
 % ReleaseInfo = createOxygenReleasePackage('outputRoot','Release_Packages')
 
 ProjectRoot = setupOxygenDynamicsPath();
+VersionInfo = getOxygenPipelineVersion();
 
 Config = struct();
 Config.outputRoot = fullfile(ProjectRoot,'Release_Packages');
@@ -19,6 +20,7 @@ end
 mkdirIfMissing(ReleaseFolder);
 
 ReleaseInfo = struct();
+ReleaseInfo.PipelineVersion = VersionInfo;
 ReleaseInfo.ProjectRoot = ProjectRoot;
 ReleaseInfo.ReleaseFolder = ReleaseFolder;
 ReleaseInfo.Created = char(datetime('now','Format','yyyy-MM-dd HH:mm:ss'));
@@ -83,6 +85,7 @@ RootFiles = [ ...
     "Science_vs_Current_Analysis_Differences_20260601.pdf"
     "Start_OxygenPipeline.m"
     "setupOxygenDynamicsPath.m"
+    "getOxygenPipelineVersion.m"
     "OxygenDynamics_Config.m"
     "OxygenDynamics_GUI.m"
     "OxygenDynamics_Wrapper.m"
@@ -119,6 +122,8 @@ RootFiles = [ ...
     "createOxygenReleasePackage.m"
     "compareRawDenoisedOutputs.m"
     "auditOxygenSinkAmplitudeSource.m"
+    "analyzeHypoxiaAmyloidPair.m"
+    "testHypoxiaAmyloidAnalysis.m"
     "updateHypoxicBurdenStatsOutput.m"
     "findLatestStatsOutputFolder.m"
     "MakeRecording_3D.m"
@@ -138,6 +143,8 @@ if FileId < 0
 end
 Cleaner = onCleanup(@() fclose(FileId));
 fprintf(FileId,'Oxygen Dynamics Pipeline Release\n');
+fprintf(FileId,'Version: %s\n',ReleaseInfo.PipelineVersion.Version);
+fprintf(FileId,'Build: %s\n',ReleaseInfo.PipelineVersion.BuildTimestamp);
 fprintf(FileId,'Created: %s\n',ReleaseInfo.Created);
 fprintf(FileId,'Source root: %s\n',ReleaseInfo.ProjectRoot);
 fprintf(FileId,'Release folder: %s\n\n',ReleaseInfo.ReleaseFolder);

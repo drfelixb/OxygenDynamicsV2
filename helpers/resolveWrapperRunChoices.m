@@ -28,7 +28,7 @@ if RunConfig.interactive
 
     AnalysisMode = questdlg('Which wrapper mode do you want to run?', ...
         'What data', ...
-        'Preflight only','Only df/f tifs','All analysis','All analysis');
+        'Hypoxia-amyloid only','Preflight only','All analysis','All analysis');
 else
     if RunConfig.reanalyseExisting
         strAgain = 'Y';
@@ -45,9 +45,10 @@ else
     AnalysisMode = RunConfig.analysisMode;
 end
 
-AllowedModes = {'Preflight only','Only df/f tifs','All analysis'};
+AllowedModes = {'Preflight only','Only df/f tifs','Hypoxia-amyloid only','All analysis'};
 if ~ismember(AnalysisMode,AllowedModes)
-    error('RunConfig.analysisMode must be "Preflight only", "Only df/f tifs", or "All analysis".');
+    error(['RunConfig.analysisMode must be "Preflight only", "Only df/f tifs", ', ...
+        '"Hypoxia-amyloid only", or "All analysis".']);
 end
 
 end

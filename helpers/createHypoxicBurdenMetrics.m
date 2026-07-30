@@ -75,6 +75,15 @@ EventTable.PerEventBurdenContribution_per_mm2_per_min = ...
 EventTable.BurdenContributionRateFormula = repmat( ...
     {'PerEventBurdenContribution divided by BurdenRecordingDuration_sec, optionally multiplied by 60 for per-minute rates'}, ...
     height(EventTable),1);
+EventTable.BurdenRankAmplitudeQuantile = computeWithinRecordingAmplitudeQuantile(EventTable);
+EventTable.PerEventBurdenOccupancy_per_mm2_per_min = EventTable.BurdenDuration_sec .* ...
+    (1e6 ./ EventTable.BurdenRecordingArea_um2) .* (60 ./ EventTable.BurdenRecordingDuration_sec);
+EventTable.PerEventBurdenRankAmplitude_per_mm2_per_min = ...
+    EventTable.PerEventBurdenOccupancy_per_mm2_per_min .* EventTable.BurdenRankAmplitudeQuantile;
+EventTable.PerEventBurdenAmplitudeComposite = EventTable.PerEventBurdenContribution;
+EventTable.BurdenInterfaceFormula = repmat( ...
+    {'Recording outputs: Burden_Occupancy=sum(duration)*1e6/area*60/recordingDuration; Burden_RankAmplitude=sum(duration*within-recording amplitude quantile)*1e6/area*60/recordingDuration; Burden_AmplitudeComposite=sum(amplitude*area*duration)'}, ...
+    height(EventTable),1);
 
 Burden.EventTable = EventTable;
 Burden.RecordingTable = createRecordingBurdenTable(EventTable);
@@ -313,11 +322,20 @@ MedianEventBurdenContribution_per_mm2 = nan(NumGroups,1);
 MeanBurdenAmplitudePercent = nan(NumGroups,1);
 MeanBurdenArea_um2 = nan(NumGroups,1);
 MeanBurdenDuration_sec = nan(NumGroups,1);
+Burden_Occupancy = nan(NumGroups,1);
+Burden_RankAmplitude = nan(NumGroups,1);
+Burden_AmplitudeComposite = nan(NumGroups,1);
 MetricBasis = repmat({'RecordingEventSum'},NumGroups,1);
+Burden_Occupancy_Units = repmat({'event-seconds per 1 mm^2 per minute'},NumGroups,1);
+Burden_RankAmplitude_Units = repmat({'rank-weighted event-seconds per 1 mm^2 per minute'},NumGroups,1);
+Burden_AmplitudeComposite_Units = repmat({'percent * um^2 * seconds'},NumGroups,1);
 HypoxicBurdenFormula = repmat({'sum(PerEventBurdenContribution)'},NumGroups,1);
 HypoxicBurdenPerMm2Formula = repmat({'sum(PerEventBurdenContribution_per_mm2)'},NumGroups,1);
 HypoxicBurdenRateFormula = repmat({'HypoxicBurden divided by RecordingDuration_sec'},NumGroups,1);
 HypoxicBurdenPerMm2RateFormula = repmat({'HypoxicBurden_per_mm2 divided by RecordingDuration_sec'},NumGroups,1);
+Burden_Occupancy_Formula = repmat({'sum(BurdenDuration_sec) * (1e6 / RecordingArea_um2) * (60 / RecordingDuration_sec)'},NumGroups,1);
+Burden_RankAmplitude_Formula = repmat({'sum(BurdenDuration_sec * within-recording amplitude quantile) * (1e6 / RecordingArea_um2) * (60 / RecordingDuration_sec)'},NumGroups,1);
+Burden_AmplitudeComposite_Formula = repmat({'sum(BurdenAmplitudePercent * BurdenArea_um2 * BurdenDuration_sec)'},NumGroups,1);
 
 for GroupI = 1:NumGroups
     Mask = GroupIdx==GroupI;
@@ -340,16 +358,22 @@ for GroupI = 1:NumGroups
     MeanBurdenAmplitudePercent(GroupI) = mean(EventTable.BurdenAmplitudePercent(Mask),'omitnan');
     MeanBurdenArea_um2(GroupI) = mean(EventTable.BurdenArea_um2(Mask),'omitnan');
     MeanBurdenDuration_sec(GroupI) = mean(EventTable.BurdenDuration_sec(Mask),'omitnan');
+    Burden_Occupancy(GroupI) = sum(EventTable.PerEventBurdenOccupancy_per_mm2_per_min(Mask),'omitnan');
+    Burden_RankAmplitude(GroupI) = sum(EventTable.PerEventBurdenRankAmplitude_per_mm2_per_min(Mask),'omitnan');
+    Burden_AmplitudeComposite(GroupI) = HypoxicBurden(GroupI);
 end
 
 RecordingTable = [GroupValues,table(NumEvents,NumSinkSites,RecordingArea_um2,RecordingDuration_sec, ...
     HypoxicBurden,HypoxicBurden_per_mm2,HypoxicBurden_per_sec,HypoxicBurden_per_min, ...
     HypoxicBurden_per_mm2_per_sec,HypoxicBurden_per_mm2_per_min, ...
+    Burden_Occupancy,Burden_RankAmplitude,Burden_AmplitudeComposite, ...
+    Burden_Occupancy_Units,Burden_RankAmplitude_Units,Burden_AmplitudeComposite_Units, ...
     MeanEventBurdenContribution,MedianEventBurdenContribution, ...
     MeanEventBurdenContribution_per_mm2,MedianEventBurdenContribution_per_mm2, ...
     MeanBurdenAmplitudePercent,MeanBurdenArea_um2,MeanBurdenDuration_sec,MetricBasis, ...
     HypoxicBurdenFormula,HypoxicBurdenPerMm2Formula,HypoxicBurdenRateFormula, ...
-    HypoxicBurdenPerMm2RateFormula)];
+    HypoxicBurdenPerMm2RateFormula,Burden_Occupancy_Formula, ...
+    Burden_RankAmplitude_Formula,Burden_AmplitudeComposite_Formula)];
 
 end
 
@@ -384,6 +408,12 @@ HypoxicBurden_per_mm2_per_sec_Mean = nan(NumGroups,1);
 HypoxicBurden_per_mm2_per_sec_SEM = nan(NumGroups,1);
 HypoxicBurden_per_mm2_per_min_Mean = nan(NumGroups,1);
 HypoxicBurden_per_mm2_per_min_SEM = nan(NumGroups,1);
+Burden_Occupancy_Mean = nan(NumGroups,1);
+Burden_Occupancy_SEM = nan(NumGroups,1);
+Burden_RankAmplitude_Mean = nan(NumGroups,1);
+Burden_RankAmplitude_SEM = nan(NumGroups,1);
+Burden_AmplitudeComposite_Mean = nan(NumGroups,1);
+Burden_AmplitudeComposite_SEM = nan(NumGroups,1);
 MeanEventBurdenContribution = nan(NumGroups,1);
 MedianEventBurdenContribution = nan(NumGroups,1);
 MeanEventBurdenContribution_per_mm2 = nan(NumGroups,1);
@@ -403,6 +433,9 @@ for GroupIdx = 1:NumGroups
     BurdenPerMinValues = RecordingTable.HypoxicBurden_per_min(RecordingMask);
     BurdenPerMm2PerSecValues = RecordingTable.HypoxicBurden_per_mm2_per_sec(RecordingMask);
     BurdenPerMm2PerMinValues = RecordingTable.HypoxicBurden_per_mm2_per_min(RecordingMask);
+    OccupancyValues = RecordingTable.Burden_Occupancy(RecordingMask);
+    RankAmplitudeValues = RecordingTable.Burden_RankAmplitude(RecordingMask);
+    AmplitudeCompositeValues = RecordingTable.Burden_AmplitudeComposite(RecordingMask);
     Contributions = EventTable.PerEventBurdenContribution(EventMask);
     ContributionsPerMm2 = EventTable.PerEventBurdenContribution_per_mm2(EventMask);
 
@@ -430,6 +463,15 @@ for GroupIdx = 1:NumGroups
     HypoxicBurden_per_mm2_per_min_Mean(GroupIdx) = mean(BurdenPerMm2PerMinValues,'omitnan');
     HypoxicBurden_per_mm2_per_min_SEM(GroupIdx) = std(BurdenPerMm2PerMinValues,'omitnan') ./ ...
         sqrt(max(sum(isfinite(BurdenPerMm2PerMinValues)),1));
+    Burden_Occupancy_Mean(GroupIdx) = mean(OccupancyValues,'omitnan');
+    Burden_Occupancy_SEM(GroupIdx) = std(OccupancyValues,'omitnan') ./ ...
+        sqrt(max(sum(isfinite(OccupancyValues)),1));
+    Burden_RankAmplitude_Mean(GroupIdx) = mean(RankAmplitudeValues,'omitnan');
+    Burden_RankAmplitude_SEM(GroupIdx) = std(RankAmplitudeValues,'omitnan') ./ ...
+        sqrt(max(sum(isfinite(RankAmplitudeValues)),1));
+    Burden_AmplitudeComposite_Mean(GroupIdx) = mean(AmplitudeCompositeValues,'omitnan');
+    Burden_AmplitudeComposite_SEM(GroupIdx) = std(AmplitudeCompositeValues,'omitnan') ./ ...
+        sqrt(max(sum(isfinite(AmplitudeCompositeValues)),1));
     MeanEventBurdenContribution(GroupIdx) = mean(Contributions,'omitnan');
     MedianEventBurdenContribution(GroupIdx) = median(Contributions,'omitnan');
     MeanEventBurdenContribution_per_mm2(GroupIdx) = mean(ContributionsPerMm2,'omitnan');
@@ -447,6 +489,9 @@ GroupSummaryTable = [GroupValues,table(NumRecordings,NumEvents,NumSinkSites, ...
     HypoxicBurden_per_min_Mean,HypoxicBurden_per_min_SEM, ...
     HypoxicBurden_per_mm2_per_sec_Mean,HypoxicBurden_per_mm2_per_sec_SEM, ...
     HypoxicBurden_per_mm2_per_min_Mean,HypoxicBurden_per_mm2_per_min_SEM, ...
+    Burden_Occupancy_Mean,Burden_Occupancy_SEM, ...
+    Burden_RankAmplitude_Mean,Burden_RankAmplitude_SEM, ...
+    Burden_AmplitudeComposite_Mean,Burden_AmplitudeComposite_SEM, ...
     MeanEventBurdenContribution,MedianEventBurdenContribution, ...
     MeanEventBurdenContribution_per_mm2,MedianEventBurdenContribution_per_mm2, ...
     MeanBurdenAmplitudePercent,MeanBurdenArea_um2,MeanBurdenDuration_sec, ...
@@ -674,6 +719,55 @@ end
 
 end
 
+function Quantile = computeWithinRecordingAmplitudeQuantile(EventTable)
+
+Quantile = nan(height(EventTable),1);
+GroupColumns = {'Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'};
+GroupColumns = GroupColumns(ismember(GroupColumns,EventTable.Properties.VariableNames));
+if isempty(GroupColumns)
+    Quantile = tiedQuantile(EventTable.BurdenAmplitudePercent);
+    return
+end
+
+Keys = makeTableGroupKeys(EventTable,GroupColumns);
+UniqueKeys = unique(Keys,'stable');
+for KeyIdx = 1:numel(UniqueKeys)
+    Mask = Keys==UniqueKeys(KeyIdx);
+    Quantile(Mask) = tiedQuantile(EventTable.BurdenAmplitudePercent(Mask));
+end
+
+end
+
+function Quantile = tiedQuantile(Values)
+
+Values = double(Values(:));
+Quantile = nan(size(Values));
+FiniteMask = isfinite(Values);
+FiniteValues = Values(FiniteMask);
+NumValues = numel(FiniteValues);
+if NumValues==0
+    return
+end
+
+[SortedValues,SortIdx] = sort(FiniteValues);
+AverageRanks = nan(NumValues,1);
+StartIdx = 1;
+while StartIdx<=NumValues
+    EndIdx = StartIdx;
+    while EndIdx<NumValues && SortedValues(EndIdx+1)==SortedValues(StartIdx)
+        EndIdx = EndIdx + 1;
+    end
+    AverageRanks(StartIdx:EndIdx) = mean(StartIdx:EndIdx);
+    StartIdx = EndIdx + 1;
+end
+
+RankValues = nan(NumValues,1);
+RankValues(SortIdx) = AverageRanks;
+FiniteQuantile = (RankValues - 0.5) ./ NumValues;
+Quantile(FiniteMask) = FiniteQuantile;
+
+end
+
 function Values = tableColumnToDouble(Column)
 
 if isnumeric(Column) || islogical(Column)
@@ -695,7 +789,8 @@ WorkbookItem = {'HypoxicBurden_EventBased'; 'HypoxicBurden_ByRecording'; ...
     'HypoxicBurden'; 'HypoxicBurden_per_mm2'; 'HypoxicBurden_per_sec'; ...
     'HypoxicBurden_per_min'; 'HypoxicBurden_per_mm2_per_sec'; ...
     'HypoxicBurden_per_mm2_per_min'; 'HypoxicBurden_TimeSeries'; ...
-    'HypoxicBurdenOverTime'; 'HypoxicBurdenPerMm2OverTime'};
+    'HypoxicBurdenOverTime'; 'HypoxicBurdenPerMm2OverTime'; ...
+    'Burden_Occupancy'; 'Burden_RankAmplitude'; 'Burden_AmplitudeComposite'};
 MetricBasis = {'Event-based'; 'Recording-level sum of true event rows'; ...
     'True event-specific area from EventSpecificMetrics.Area_um when available'; ...
     'Recording/FOV area used for 1 mm^2 burden normalization'; ...
@@ -710,7 +805,10 @@ MetricBasis = {'Event-based'; 'Recording-level sum of true event rows'; ...
     'HypoxicBurden_per_mm2 * 60 / BurdenRecordingDuration_sec'; ...
     'Frame-wise burden trace from active individual event rows'; ...
     'sum(active PerEventBurdenContribution / event duration)'; ...
-    'sum(active PerEventBurdenContribution_per_mm2 / event duration)'};
+    'sum(active PerEventBurdenContribution_per_mm2 / event duration)'; ...
+    'event frequency x mean event duration, normalized per mm2 and per minute'; ...
+    'count x duration x within-recording rank/quantile-transformed amplitude, normalized per mm2 and per minute'; ...
+    'original amplitude x area x duration composite'};
 Notes = {'One row per oxygen sink event from OxySinkEvents'; ...
     'Grouped by available recording metadata'; ...
     'Falls back to site-level MeanOxySinkArea_um only when event-specific Area_um cannot be matched'; ...
@@ -726,7 +824,10 @@ Notes = {'One row per oxygen sink event from OxySinkEvents'; ...
     'Recommended compact burden-rate metric for mixed FOV and recording durations'; ...
     'Long-format sheet: one row per recording frame/time point for EEG/ECG/sleep-state alignment'; ...
     'Raw recorded-FOV burden signal over time; not FOV-normalized and not per-minute normalized'; ...
-    'Recommended frame-aligned burden signal for recordings with different FOV sizes'};
+    'Recommended frame-aligned burden signal for recordings with different FOV sizes'; ...
+    'Interface-contract default burden variant for cross-genotype/cross-cohort comparisons; amplitude-free.'; ...
+    'Interface-contract sensitivity variant; relative within recording only, not absolutely comparable across animals.'; ...
+    'Interface-contract original composite; valid within matched-acquisition cohorts only.'};
 
 BasisTable = table(WorkbookItem,MetricBasis,Notes);
 
