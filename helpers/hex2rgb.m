@@ -1,5 +1,8 @@
 function rgb = hex2rgb(hex,range)
 % hex2rgb converts hex color values to RGB arrays.
+% Copyright (c) 2014, Chad Greene.
+% Distributed under upstream BSD-3-Clause terms; see
+% ../THIRD_PARTY_NOTICES.md.
 
 assert(nargin>0 && nargin<3,'hex2rgb function must have one or two inputs.') 
 if nargin==2

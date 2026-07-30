@@ -11,13 +11,13 @@ function [d,si,h]=abfload(fn,varargin)
 %
 % OPERATION
 % If the second input variable is the char array 'info' as in 
-%         [d,si,h]=abfload('d:\data01.abf','info') 
+%         [d,si,h]=abfload('data01.abf','info')
 % abfload will not load any data but return detailed information (header
 % parameters) on the file in output variable h. d and si will be empty.
 % In all other cases abfload will load data. Optional input parameters
 % listed below (= all except the file name) must be specified as
 % parameter/value pairs, e.g. as in 
-%         d=abfload('d:\data01.abf','start',100,'stop','e');
+%         d=abfload('data01.abf','start',100,'stop','e');
 %
 % >>> INPUT VARIABLES >>>
 % NAME        TYPE, DEFAULT      DESCRIPTION
@@ -91,6 +91,7 @@ function [d,si,h]=abfload(fn,varargin)
 %   Original version by Harald Hentschke (harald.hentschke@uni-tuebingen.de)
 %   Extended to abf version 2.0 by Forrest Collman (fcollman@Princeton.edu)
 %   pvpmod.m by Ulrich Egert (egert@bccn.uni-freiburg.de)
+%   Distributed under BSD-2-Clause terms; see ../THIRD_PARTY_NOTICES.md.
 % -------------------------------------------------------------------------
 %                       PART 1: check of input vars
 % -------------------------------------------------------------------------
