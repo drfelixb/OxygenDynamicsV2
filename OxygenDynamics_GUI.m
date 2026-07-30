@@ -2,8 +2,9 @@ function OxygenDynamics_GUI()
 %OXYGENDYNAMICS_GUI Stepwise launcher for the Oxygen Dynamics pipeline.
 
 ProjectRoot = setupOxygenDynamicsPath();
-PipelineVersion = '2026-06-04';
-PipelineBuildTimestamp = '2026-06-04 13:55';
+VersionInfo = getOxygenPipelineVersion();
+PipelineVersion = VersionInfo.Version;
+PipelineBuildTimestamp = VersionInfo.BuildTimestamp;
 
 State = struct();
 State.ProjectRoot = ProjectRoot;
@@ -26,7 +27,7 @@ State.SelectedRegressionStatsFolder = '';
 State.FigureFiles = {};
 State.FigureManifest = table();
 
-Fig = uifigure('Name',sprintf('Oxygen Dynamics Pipeline %s',PipelineVersion), ...
+Fig = uifigure('Name',sprintf('Oxygen Dynamics Pipeline v%s',PipelineVersion), ...
     'Position',[100 100 1240 740]);
 Grid = uigridlayout(Fig,[7 5]);
 Grid.RowHeight = {38,38,44,'1x',120,120,34};
@@ -35,7 +36,7 @@ Grid.Padding = [12 12 12 12];
 Grid.RowSpacing = 8;
 Grid.ColumnSpacing = 8;
 
-Title = uilabel(Grid,'Text',sprintf('Oxygen Dynamics Pipeline %s',PipelineVersion), ...
+Title = uilabel(Grid,'Text',sprintf('Oxygen Dynamics Pipeline v%s',PipelineVersion), ...
     'FontSize',20,'FontWeight','bold');
 Title.Layout.Row = 1;
 Title.Layout.Column = [1 2];
@@ -61,7 +62,7 @@ ModeLabel = uilabel(Grid,'Text','Analysis mode');
 ModeLabel.Layout.Row = 3;
 ModeLabel.Layout.Column = 1;
 
-ModeDropdown = uidropdown(Grid,'Items',{'All analysis','Only df/f tifs','Preflight only'}, ...
+ModeDropdown = uidropdown(Grid,'Items',{'All analysis','Hypoxia-amyloid only','Only df/f tifs','Preflight only'}, ...
     'Value','All analysis');
 ModeDropdown.Layout.Row = 3;
 ModeDropdown.Layout.Column = 2;
@@ -282,7 +283,7 @@ RegressionButton.Layout.Row = 3;
 RegressionButton.Layout.Column = 5;
 
 LogArea = uitextarea(Grid,'Editable','off','Value',{ ...
-    sprintf('Oxygen Dynamics Pipeline %s, build %s',PipelineVersion,PipelineBuildTimestamp); ...
+    sprintf('Oxygen Dynamics Pipeline v%s, build %s',PipelineVersion,PipelineBuildTimestamp); ...
     'Choose an input CSV to begin.'});
 LogArea.Layout.Row = 6;
 LogArea.Layout.Column = [1 5];

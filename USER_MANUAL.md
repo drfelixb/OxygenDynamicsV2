@@ -72,6 +72,10 @@ To build a clean release copy without raw data or generated outputs, run:
 createOxygenReleasePackage
 ```
 
+The current pipeline release is `v1.01`, build
+`2026-06-15 09:50:08 +02:00`. Version metadata is maintained in
+`getOxygenPipelineVersion.m`.
+
 This creates `Release_Packages/OxygenDynamics_Release_<timestamp>/`, a matching ZIP file, and `RELEASE_MANIFEST.txt`. The release contains the user-facing scripts, `helpers/`, `external/`, documentation, flow maps, and smoke test, but excludes `Data/`, stats outputs, QC outputs, run logs, verification reports, regression baselines, legacy archives, and previous release packages.
 
 ## 3. Recording Folder Requirements
@@ -124,6 +128,18 @@ SampleF
 Pixelsize
 ```
 
+Optional methoxy-X04 column:
+
+```text
+AmyloidFile
+```
+
+`AmyloidFile` should contain the registered 2-D methoxy-X04 TIFF filename or
+path for recordings with plaque imaging. A relative filename is resolved
+inside that recording folder. Leave the cell blank for recordings without
+methoxy-X04. A separate yes/no column is not needed: a nonblank file path is
+the availability flag and also records the exact analysis input.
+
 Column meaning:
 
 - `Paths`: recording folder path, relative to the project root or absolute.
@@ -137,12 +153,13 @@ Column meaning:
 - `Promoter`: promoter/virus label.
 - `SampleF`: imaging sampling frequency in Hz.
 - `Pixelsize`: micrometers per pixel.
+- `AmyloidFile`: optional registered methoxy-X04 plaque image.
 
 Example row:
 
 ```text
-Paths,PostureFile,PupilFile,PuffsFile,Mouse,Genotype,Condition,DrugID,Promoter,SampleF,Pixelsize
-Data/control/FB237,Posture,Pupil,Puffs,FB237,WT,Anesthetized,KX,GFAP,1,2.5
+Paths,PostureFile,PupilFile,PuffsFile,Mouse,Genotype,Condition,DrugID,Promoter,SampleF,Pixelsize,AmyloidFile
+Data/APP/FB237,Posture,Pupil,Puffs,FB237,APP,Anesthetized,KX,GFAP,1,2.5,methoxy_x04.tif
 ```
 
 ## 5. Central Configuration
@@ -162,7 +179,29 @@ Config.OxygenWrapper.reanalyseExisting = true;
 Config.OxygenWrapper.overwritePreviousAnalysis = false;
 Config.OxygenWrapper.analysisMode = 'All analysis';
 Config.OxygenWrapper.runRawDenoisedQC = true;
+Config.OxygenWrapper.runHypoxiaAmyloidAnalysis = true;
+Config.OxygenWrapper.hypoxiaAmyloidNearThresholdMicrometers = 50;
+Config.OxygenWrapper.hypoxiaAmyloidSensitivityThresholdsMicrometers = [25 50 75 100];
 ```
+
+The amyloid analysis runs after oxygen-pocket detection or against the newest
+existing `OxygenSinks_Output*` folder. The methoxy image and oxygen field must
+already be spatially registered and have matching dimensions.
+
+Primary amplitude-independent outputs:
+
+- `DurationSec`: event duration.
+- `Area_um2`: mean event footprint area.
+- `RecurrenceCount`: number of events at a tracked pocket, analyzed once per pocket.
+- `EdgeDistance_um`: nearest event/pocket edge to plaque edge; overlap is 0 um.
+- `CentroidDistance_um`: centroid to nearest plaque pixel, retained as a secondary distance.
+- Within-animal Spearman rho for duration, area, and recurrence versus distance.
+- Per-animal near/far medians at 50 um and sensitivity thresholds 25, 50, 75, and 100 um.
+
+The animal is the inferential unit in `HypoxiaAmyloid_Cohort_*`. Cohort tests
+use animal-level rho values or animal-level near-minus-far median differences,
+with sign-flip permutation p values and FDR correction across the three primary
+properties.
 
 Stats:
 
@@ -407,8 +446,14 @@ OxygenDynamics_Wrapper
 Wrapper modes are controlled by `Config.OxygenWrapper.analysisMode`:
 
 - `All analysis`: imaging analysis plus TIFF output/behaviour depending on settings.
+- `Hypoxia-amyloid only`: load existing oxygen-sink outputs and run only the methoxy-X04 analysis.
 - `Only df/f tifs`: only TIFF output step.
 - `Preflight only`: validation without heavy analysis.
+
+For an existing analyzed cohort, choose `Hypoxia-amyloid only` in the GUI.
+This mode ignores whether oxygen outputs are already analyzed. It requires the
+selected CSV to contain at least one nonblank `AmyloidFile` value and prints a
+completed/failed/skipped summary when finished.
 
 #### Step 5: Manual Curation
 
@@ -593,6 +638,14 @@ The same workbook includes hypoxic burden sheets:
 `PerEventBurdenContribution` is calculated as positive drop amplitude percent x event area in um^2 x event duration in seconds. The preferred area source is the true event-specific `Area_um` from the event-specific hypoxic metrics table. If that event-specific table is unavailable or cannot be matched, the workbook marks the area source as a fallback to the site-level `MeanOxySinkArea_um`. `HypoxicBurden` is the sum of event contributions within each recording/FOV.
 
 The hypoxic burden sheets include provenance columns such as `BurdenAmplitudeSource`, `BurdenAreaSource`, `BurdenDurationSource`, `BurdenAreaEventSpecificMatched`, and `BurdenContributionFormula`.
+
+`HypoxicBurden_ByRecording` also contains the fixed burden-interface contract used by downstream statistics:
+
+- `Burden_Occupancy`: event frequency x mean event duration, normalized per mm2 and per minute. This is amplitude-free and is the default variant for cross-genotype or cross-cohort comparisons.
+- `Burden_RankAmplitude`: count x duration x within-recording rank/quantile-transformed amplitude, normalized per mm2 and per minute. This is a sensitivity variant and is only relative within animal/recording.
+- `Burden_AmplitudeComposite`: original amplitude x area x duration composite. This matches the original composite burden idea and should only be compared within matched-acquisition cohorts.
+
+Each row also contains `Burden_Occupancy_Units`, `Burden_RankAmplitude_Units`, and `Burden_AmplitudeComposite_Units`.
 
 For recordings with different fields of view, use the FOV-normalized burden outputs. `PerEventBurdenContribution_per_mm2` is `PerEventBurdenContribution * (1e6 / BurdenRecordingArea_um2)`, and `HypoxicBurden_per_mm2` is the recording-level sum of those normalized event contributions. The unnormalized `HypoxicBurden` remains useful as total burden observed in the recorded FOV, but it is not corrected for FOV size.
 

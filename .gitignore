@@ -1,0 +1,52 @@
+# MATLAB generated files
+*.asv
+*.autosave
+*.m~
+*.mex*
+*.p
+slprj/
+codegen/
+
+# Local analysis inputs and generated outputs
+Data/
+QC_Output/
+Regression_Baselines/
+Release_Packages/
+Run_Logs/
+Stats_Runs/
+Verification_Reports/
+Legacy_Archive/
+old Versions/
+**/output*/
+**/Output*/
+
+# Research data and generated artifacts
+*.tif
+*.tiff
+*.mat
+*.csv
+*.xls
+*.xlsx
+*.prism
+*.fig
+*.png
+*.avi
+*.mp4
+*.zip
+
+# Credentials and local configuration
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Operating system, editor, and Python caches
+.DS_Store
+Thumbs.db
+desktop.ini
+__pycache__/
+*.py[cod]
+.idea/
+.vscode/

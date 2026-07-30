@@ -1,4 +1,4 @@
-function [Paths,Postures,Pupils,Puffs,Mice,Genotypes,Conditions,DrugIDs,Promoters,SampleFs,Pixelsizes] = unpackWrapperInputTable(InputD)
+function [Paths,Postures,Pupils,Puffs,Mice,Genotypes,Conditions,DrugIDs,Promoters,SampleFs,Pixelsizes,AmyloidFiles] = unpackWrapperInputTable(InputD)
 %UNPACKWRAPPERINPUTTABLE Convert wrapper metadata table columns to cell arrays.
 
 Paths = table2cell(InputD(:,{'Paths'}));
@@ -12,5 +12,6 @@ DrugIDs = table2cell(InputD(:,{'DrugID'}));
 Promoters = table2cell(InputD(:,{'Promoter'}));
 SampleFs = table2cell(InputD(:,{'SampleF'}));
 Pixelsizes = table2cell(InputD(:,{'Pixelsize'}));
+AmyloidFiles = optionalWrapperInputColumn(InputD,'AmyloidFile');
 
 end
