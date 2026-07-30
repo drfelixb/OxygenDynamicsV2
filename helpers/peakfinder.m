@@ -79,6 +79,8 @@ function varargout = peakfinder(x0, sel, thresh, extrema, includeEndpoints, inte
 % set(p(2:end), 'linewidth', 2); % Show the markers more clearly
 % legend('Actual Data', 'Input Data', 'Estimated Peaks');
 % Copyright Nathanael C. Yoder 2015 (nyoder@gmail.com)
+% Distributed under upstream BSD-2-Clause terms; see
+% ../THIRD_PARTY_NOTICES.md.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 % Perform error checking and set defaults if not passed in
@@ -294,4 +296,3 @@ else
     varargout = {peakInds,peakMags};
 end
 end
-

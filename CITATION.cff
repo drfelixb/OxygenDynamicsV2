@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it and the related Science article."
+title: "OxygenDynamicsV2"
+type: software
+authors:
+  - family-names: "Beinlich"
+    given-names: "Felix R. M."
+  - family-names: "Asiminas"
+    given-names: "Antonios"
+repository-code: "https://github.com/drfelixb/OxygenDynamicsV2"
+url: "https://github.com/drfelixb/OxygenDynamicsV2"
+abstract: >-
+  MATLAB pipeline for detecting, curating, quantifying, and summarising
+  spatiotemporal oxygen dynamics recorded in the murine cortex with
+  bioluminescence oxygen imaging.
+keywords:
+  - oxygen dynamics
+  - hypoxia
+  - cerebral cortex
+  - bioluminescence imaging
+  - MATLAB
+references:
+  - type: article
+    authors:
+      - family-names: "Beinlich"
+        given-names: "Felix R. M."
+      - family-names: "Asiminas"
+        given-names: "Antonios"
+      - family-names: "Untiet"
+        given-names: "Verena"
+      - family-names: "Bojarowska"
+        given-names: "Zuzanna"
+      - family-names: "Pla"
+        given-names: "Virginia"
+      - family-names: "Sigurdsson"
+        given-names: "Bjorn"
+      - family-names: "Timmel"
+        given-names: "Vincenzo"
+      - family-names: "Gehrig"
+        given-names: "Lukas"
+      - family-names: "Graber"
+        given-names: "Michael H."
+      - family-names: "Hirase"
+        given-names: "Hajime"
+      - family-names: "Nedergaard"
+        given-names: "Maiken"
+    title: "Oxygen imaging of hypoxic pockets in the mouse cerebral cortex"
+    journal: "Science"
+    volume: "383"
+    issue: "6690"
+    start: "1471"
+    end: "1478"
+    date-published: 2024-03-29
+    doi: "10.1126/science.adn1011"

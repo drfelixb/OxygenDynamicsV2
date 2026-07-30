@@ -45,7 +45,7 @@ RootFiles = releaseRootFiles(Config.includeSmokeTest);
 for FileIdx = 1:numel(RootFiles)
     Source = fullfile(ProjectRoot,RootFiles(FileIdx));
     if ~isfile(Source)
-        ReleaseInfo.Skipped(end+1,1) = Source;
+        ReleaseInfo.Skipped(end+1,1) = releaseRelativePath(ProjectRoot,Source);
         continue
     end
     Destination = fullfile(ReleaseFolder,RootFiles(FileIdx));
@@ -58,7 +58,7 @@ Folders = ["helpers","external"];
 for FolderIdx = 1:numel(Folders)
     Source = fullfile(ProjectRoot,Folders(FolderIdx));
     if ~isfolder(Source)
-        ReleaseInfo.Skipped(end+1,1) = Source;
+        ReleaseInfo.Skipped(end+1,1) = releaseRelativePath(ProjectRoot,Source);
         continue
     end
     Destination = fullfile(ReleaseFolder,Folders(FolderIdx));
@@ -79,6 +79,12 @@ function RootFiles = releaseRootFiles(IncludeSmokeTest)
 RootFiles = [ ...
     "README.md"
     "USER_MANUAL.md"
+    "CITATION.cff"
+    "CONTRIBUTING.md"
+    "CHANGELOG.md"
+    "RELEASING.md"
+    "SECURITY.md"
+    "THIRD_PARTY_NOTICES.md"
     "Pipeline_FlowMap.svg"
     "Detection_Processing_FlowMap.svg"
     "Amplitude_Definition_Comparison.pdf"
@@ -146,8 +152,7 @@ fprintf(FileId,'Oxygen Dynamics Pipeline Release\n');
 fprintf(FileId,'Version: %s\n',ReleaseInfo.PipelineVersion.Version);
 fprintf(FileId,'Build: %s\n',ReleaseInfo.PipelineVersion.BuildTimestamp);
 fprintf(FileId,'Created: %s\n',ReleaseInfo.Created);
-fprintf(FileId,'Source root: %s\n',ReleaseInfo.ProjectRoot);
-fprintf(FileId,'Release folder: %s\n\n',ReleaseInfo.ReleaseFolder);
+fprintf(FileId,'Paths are relative to the repository root.\n\n');
 fprintf(FileId,'Included files and folders are source/documentation only.\n');
 fprintf(FileId,'Excluded generated folders include Data, Stats_Runs, QC_Output, Run_Logs, Verification_Reports, Regression_Baselines, Legacy_Archive, and Release_Packages.\n\n');
 fprintf(FileId,'Included file manifest:\n');
@@ -167,13 +172,26 @@ end
 function Row = manifestRow(ProjectRoot,FilePath,FileType)
 
 Info = dir(FilePath);
-RelativePath = erase(string(FilePath),string(ProjectRoot) + filesep);
+RelativePath = releaseRelativePath(ProjectRoot,FilePath);
 if isempty(Info)
     Row = sprintf('%s\t%s\tmissing',FileType,RelativePath);
 else
     Row = sprintf('%s\t%s\t%d bytes\t%s',FileType,RelativePath,Info(1).bytes, ...
         char(datetime(Info(1).datenum,'ConvertFrom','datenum','Format','yyyy-MM-dd HH:mm:ss')));
 end
+
+end
+
+function RelativePath = releaseRelativePath(ProjectRoot,FilePath)
+
+RootWithSeparator = string(ProjectRoot) + filesep;
+FilePath = string(FilePath);
+if startsWith(FilePath,RootWithSeparator,'IgnoreCase',ispc)
+    RelativePath = extractAfter(FilePath,strlength(RootWithSeparator));
+else
+    RelativePath = FilePath;
+end
+RelativePath = replace(RelativePath,filesep,'/');
 
 end
 
