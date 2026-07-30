@@ -1,0 +1,114 @@
+name: Bug report
+description: Report a reproducible problem in the pipeline.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not upload experimental recordings, personal information, secrets,
+        or identifiable local paths. A synthetic example is preferred.
+  - type: input
+    id: matlab
+    attributes:
+      label: MATLAB release and operating system
+      placeholder: "MATLAB R2025b on Windows 11"
+    validations:
+      required: true
+  - type: textarea
+    id: toolboxes
+    attributes:
+      label: Relevant installed toolboxes
+      description: Paste the relevant lines from `ver`, without licence numbers.
+    validations:
+      required: true
+  - type: input
+    id: entrypoint
+    attributes:
+      label: Entry point or command used
+      placeholder: "Start_OxygenPipeline or runOxygenDynamicsStats"
+    validations:
+      required: true
+  - type: dropdown
+    id: workflow
+    attributes:
+      label: Affected workflow
+      options:
+        - Setup or health check
+        - Verification or preflight
+        - Wrapper analysis
+        - Manual curation
+        - Statistics or burden analysis
+        - Regression
+        - Summary figures
+        - Optional vascular, behaviour, or amyloid analysis
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: verification
+    attributes:
+      label: Verification status
+      options:
+        - PASS or READY
+        - REVIEW or PARTIAL
+        - BLOCKED
+        - Verification not run
+        - Not applicable
+    validations:
+      required: true
+  - type: dropdown
+    id: tiff
+    attributes:
+      label: TIFF input used
+      options:
+        - Raw TIFF only
+        - Denoised detection and raw quantification
+        - Denoised TIFF only
+        - Not applicable
+        - Unsure
+    validations:
+      required: true
+  - type: dropdown
+    id: smoke
+    attributes:
+      label: Synthetic smoke test
+      options:
+        - Passes
+        - Fails
+        - Not run
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: Include the complete error identifier and a sanitised stack trace.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest synthetic example that reproduces the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: Validation results
+      description: Summarise checkOxygenPipelineHealth and runRepositoryChecks results.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Data handling
+      options:
+        - label: I removed sensitive data, secrets, and identifiable local paths.
+          required: true
