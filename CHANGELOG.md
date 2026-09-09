@@ -6,6 +6,21 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Multi-recording reference validation and tracking performance
+
+- Add a pinned eight-recording reference set across six animals, with two
+  awake/isoflurane pairs, finer spatial sampling, KX, awake-mobile and a
+  separately reported fluorescence control.
+- Add lossless NWB conversion with explicit axes, checksum/calibration checks,
+  complete pixel roundtrip verification and failure-preserving batch reports.
+- Cache surge pixel membership instead of repeatedly sorting intersections.
+  Preserve strict overlap thresholds, first-match order, start-footprint
+  matching and returned pixel lists. Exact equivalence tests cover randomized
+  inputs, duplicate pixels, removed regions and threshold ties.
+- All 32 focused tests, full smoke and repository checks passed before the
+  replacement reference batch. Document physical-scale and intensity-provenance
+  limitations separately from runtime/numerical success.
+
 ### DANDI metadata reconciliation (2026-09-09)
 
 - Inspect acquisition/subject headers for all 87 assets in the pinned release.

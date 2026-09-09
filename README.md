@@ -33,14 +33,15 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Development validation: 28 focused tests, synthetic master-to-statistics
+Development validation: 32 focused tests, synthetic master-to-statistics
 integration and a full 600-frame DANDI reference run passed in MATLAB R2025a.
 DANDI outputs are unlabelled reference results, not ground-truth accuracy.
 Default detection thresholds remain provisional after the SD correction.
 See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
 [validation evidence](docs/EXISTING_ANALYSIS_VALIDATION.md),
 [remaining work](docs/PUBLICATION_READINESS.md),
-[DANDI metadata audit](docs/DANDI_METADATA_RECONCILIATION.md) and [changelog](CHANGELOG.md).
+[DANDI metadata audit](docs/DANDI_METADATA_RECONCILIATION.md),
+[multi-recording reference protocol](docs/REFERENCE_SET_PHASE1.md) and [changelog](CHANGELOG.md).
 
 ## Overview
 
