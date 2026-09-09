@@ -33,7 +33,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Development validation: 32 focused tests, synthetic master-to-statistics
+Development validation: 37 focused tests, synthetic master-to-statistics
 integration and eight complete DANDI recordings from six animals passed in
 MATLAB R2025a (seven BOI recordings and a separate fluorescence control).
 DANDI outputs are unlabelled reference results, not ground-truth accuracy.
@@ -43,7 +43,8 @@ See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
 [remaining work](docs/PUBLICATION_READINESS.md),
 [DANDI metadata audit](docs/DANDI_METADATA_RECONCILIATION.md),
 [multi-recording reference protocol](docs/REFERENCE_SET_PHASE1.md),
-[per-recording results and limitations](docs/reference-results/phase1-20260909/README.md)
+[per-recording results and limitations](docs/reference-results/phase1-20260909/README.md),
+[signal-audit findings and timing priorities](docs/reference-results/signal-audit-20260909/README.md)
 and [changelog](CHANGELOG.md).
 
 ## Overview
@@ -686,7 +687,9 @@ For a plain-language summary of this change, see `Amplitude_Definition_Compariso
 - Use the original TIFF outputs for amplitude interpretation.
 - Use `DetectionOxySinkAmp` only when you specifically want the denoised/detection-domain amplitude.
 - After analysing a small batch with denoised detection, run `compareRawDenoisedOutputs('metadata.csv')` to verify that each recording used the expected raw and denoised files and that raw-normalized amplitude summaries are in a plausible range.
-- To audit one saved sink output directly, run `auditOxygenSinkAmplitudeSource(recordingFolder,'writeXlsx',true)`. This reloads `Mean_OxySink_Trace_Raw`, recomputes every event `NormOxySinkAmp` from the original/raw trace, and writes the raw file, denoised file, detection source, quantification source, baseline window, stored amplitude, and recomputed raw amplitude.
+- To independently audit both signs, run `auditOxygenEventAmplitudeSource(recordingFolder)`. It verifies the source TIFF checksum and independently reconstructs each event footprint, clean pre-event baseline, missingness status and signed amplitude. Both saved sink and surge outputs are required to check contamination.
+- For diagnostic plots and full-precision detection reconstruction, use `auditOxygenEventAmplitudeSource(recordingFolder,'reconstructDetection',true,'outputFolder','/path/to/new/audit')`. The saved processed TIFFs are display-scaled and are not numerical audit inputs. See [signal audit definitions](docs/EVENT_SIGNAL_AUDIT.md).
+- `auditOxygenSinkAmplitudeSource(recordingFolder,'writeXlsx',true)` uses the same corrected audit and exports sink rows to a new workbook. It no longer uses whole-site raw traces or post-event fallback baselines.
 - If passing recording folders directly to `compareRawDenoisedOutputs.m`, use the optional `baseFolder` setting when the paths are relative to a folder other than the current MATLAB folder. QC files are written to `QC_Output/` by default unless you pass an explicit `outputFolder`.
 - For batch runs, configure `RunConfig` in `OxygenDynamics_Wrapper.m` or `iOSDynamics_Wrapper.m`, and stats settings in `OxygenDynamics_Config.m`. Advanced batch code can also call `runOxygenDynamicsStats(configStruct)` directly.
 - For routine batch runs, prefer editing `OxygenDynamics_Config.m`; use `analysisMode = 'Preflight only'` to validate a dataset before a full run.

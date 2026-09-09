@@ -1,0 +1,17 @@
+Session,Kind,Events,ChangedTimingEvents,MaxEarlierStartSec,StartsOver20SecEarlier,CurrentFinite,NativeFinite,CurrentWrongDirection,NativeWrongDirection,FlaggedNowNonnegative
+M400-01-baseline-awake,sink,137,133,55,15,92,102,1,1,1
+M400-01-baseline-awake,surge,40,0,0,0,21,21,0,0,0
+M400-03-baseline-iso,sink,84,81,34,3,72,72,0,0,0
+M400-03-baseline-iso,surge,2,0,0,0,1,1,0,0,0
+M401-01-baseline-awake,sink,92,87,23,1,74,75,1,3,0
+M401-01-baseline-awake,surge,1,0,0,0,0,0,0,0,0
+M401-03-baseline-iso,sink,43,41,33,1,33,37,0,0,0
+M401-03-baseline-iso,surge,3,0,0,0,2,2,1,1,0
+FB2312-baseline-awake,sink,192,192,185,59,149,169,3,3,2
+FB2312-baseline-awake,surge,58,0,0,0,36,36,6,6,0
+FB2316-baseline,sink,193,186,176,50,134,154,1,1,0
+FB2316-baseline,surge,62,0,0,0,31,31,3,3,0
+ID13-20200917,sink,235,235,229,78,169,181,1,2,1
+ID13-20200917,surge,131,0,0,0,53,53,0,0,0
+FB2411,sink,26,25,47,1,24,23,0,0,0
+FB2411,surge,1,0,0,0,0,0,0,0,0

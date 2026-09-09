@@ -4,17 +4,23 @@ The target is a single reanalyzed cohort using a frozen, reliable pipeline. Back
 
 ## Immediate next investigation
 
-The [eight-recording reference batch](reference-results/phase1-20260909/README.md)
-now passes conversion, master analysis, statistics and numerical QC. Next inspect
-wrong-direction amplitudes against both preserved-input and detection-domain
-traces, and explain missing baselines using event timing and overlap. Include the
-fluorescence control, which also produces detections. Resolve archived intensity
-preparation before quantitative cross-acquisition amplitude comparisons.
+The [completed signal audit](reference-results/signal-audit-20260909/README.md)
+reproduced all 1,300 reference-event measurements, but exposed a priority timing
+problem: repeated native sink events can receive identical, nonlocal measurement
+windows. Replace the unbounded sink timing search with a locally constrained,
+sign-aware rule, retaining native identity and explicit unresolved-boundary QC.
+Test recurring events and trend crossings before rerunning the reference set.
 
-Then assess smoothing and candidate-area thresholds in physical units through
-controlled resampling and seeded injection/recovery. Keep the unchanged-setting
-reference frozen. Do not remove flagged events or relax baseline criteria simply
-to increase coverage, and do not equate technical checks with biological accuracy.
+The six flagged FB2312 surges also change sign between the detrended input and
+frame-wise spatial normalization. Define normalized spatial contrast separately
+from preserved-input baseline change before deciding acceptance rules and
+publication endpoints. Neither arithmetic consistency nor agreement between
+two signal representations establishes biological accuracy.
+
+After timing and signal definitions are explicit, perform controlled global/local
+signal perturbations, injection/recovery and physical-scale resampling. Keep the
+current reference frozen and resolve archived intensity preparation before
+cross-acquisition amplitude interpretation.
 
 ## Work in dependency order
 

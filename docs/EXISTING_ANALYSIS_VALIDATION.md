@@ -4,9 +4,9 @@ Runtime: MATLAB R2025a on macOS. Base: upstream main `8cf3f036b41e16b2c472bcee7e
 
 | Check | Latest completed result |
 |---|---|
-| Focused calculation/regression tests | 32 passed |
+| Focused calculation/regression tests | 37 passed |
 | Full `runOxygenPipelineSmokeTest` | Passed with schema 3.0-dev and statistics identity mouse-strict-2 |
-| `runRepositoryChecks` | Passed: 329 MATLAB files; 51 Code Analyzer messages remain |
+| `runRepositoryChecks` | Passed: 335 MATLAB files; 51 Code Analyzer messages remain |
 | Master → statistics synthetic integration | Passed at 2 Hz; includes known measurements and a zero-event recording |
 
 Smoke-suite printed FAIL rows are deliberate negative regression fixtures; the suite itself passed. The DANDI results below distinguish the first reference run from subsequent validation.
@@ -60,3 +60,14 @@ intensity diagnostics and exact original-versus-optimized tracking comparisons.
 Both ID400 recordings matched native masks and tested event measurement columns
 exactly. These results supersede single-recording coverage, but do not establish
 biological detection accuracy or comparability across acquisition preparations.
+
+## Independent signal audit
+
+All 1,300 events across the eight-recording reference matched independent
+amplitude, baseline-value, missingness and clean-sample calculations. Saved
+normalized traces and sink timing traces were reconstructed successfully.
+However, the [signal audit](reference-results/signal-audit-20260909/README.md)
+identified substantial nonlocal sink timing and direction disagreements between
+preserved-input change and normalized spatial contrast. Numerical agreement
+must not be interpreted as validation of these event definitions. Address
+bounded event-local timing before publication comparisons of durations/amplitudes.

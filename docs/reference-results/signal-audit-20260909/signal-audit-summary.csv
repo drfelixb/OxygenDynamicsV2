@@ -1,0 +1,9 @@
+Session,Role,Status,Events,MeasurementMismatches,WrongDirectionEvents,ElapsedSeconds,Error
+M400-01-baseline-awake,BOI_reference,passed,177,0,1,67.584379625,
+M400-03-baseline-iso,BOI_reference,passed,86,0,0,39.5165093333333,
+M401-01-baseline-awake,BOI_reference,passed,93,0,1,40.8574349166667,
+M401-03-baseline-iso,BOI_reference,passed,46,0,1,40.1792215,
+FB2312-baseline-awake,BOI_reference,passed,250,0,9,84.7694114166667,
+FB2316-baseline,BOI_reference,passed,255,0,4,56.660282375,
+ID13-20200917,BOI_reference,passed,366,0,1,57.3853033333333,
+FB2411,fluorescence_control,passed,27,0,0,30.4558357083333,

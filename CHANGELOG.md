@@ -6,6 +6,23 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Independent event signal audit and timing findings
+
+- Replace the stale sink amplitude audit (whole-site traces and fallback
+  baselines) with independent event-footprint reconstruction for both signs.
+  Check source hashes, full clean pre-event baselines, missingness and amplitudes.
+- Add exact-stage reconstruction, saved-site trace checks, readable diagnostic
+  plots and a native-window counterfactual harness. Preserve the original outputs.
+- Audit all 1,300 reference events with zero measurement mismatches. Document
+  17 raw/detection direction disagreements and the spatial-normalization sign
+  reversal in the six flagged FB2312 surges.
+- Identify unbounded sink timing as the next correction: 207/976 BOI sink starts
+  extend more than 20 seconds before native detection; 111 events overlap another
+  measurement window at the same site, with 60 sharing identical windows.
+- All 37 focused tests and full smoke passed; final repository checks inspected
+  335 MATLAB files with 51 Code Analyzer messages. Update publication priorities
+  around event-local timing and explicit signal definitions.
+
 ### Multi-recording reference validation and tracking performance
 
 - Add a pinned eight-recording reference set across six animals, with two
