@@ -4,22 +4,25 @@ The target is a single reanalyzed cohort using a frozen, reliable pipeline. Back
 
 ## Immediate next investigation
 
-The full ID400 rerun with `mouse-strict-2` exposes one wrong-direction sink
-amplitude and 64 unavailable baselines (45 sinks, 19 surges). First identify the
-flagged event and diagnose baseline failures separately as recording-start
-truncation, detected-event overlap, nonfinite signal or other causes. Compare
-raw and detection-domain traces using the saved event footprint and time bounds.
-Do not remove the event or relax baseline criteria simply to increase coverage.
-Then implement seeded injection/recovery and controlled-perturbation tests,
-reporting conditional recovery, timing/mask error and measurement availability.
+The [eight-recording reference batch](reference-results/phase1-20260909/README.md)
+now passes conversion, master analysis, statistics and numerical QC. Next inspect
+wrong-direction amplitudes against both preserved-input and detection-domain
+traces, and explain missing baselines using event timing and overlap. Include the
+fluorescence control, which also produces detections. Resolve archived intensity
+preparation before quantitative cross-acquisition amplitude comparisons.
+
+Then assess smoothing and candidate-area thresholds in physical units through
+controlled resampling and seeded injection/recovery. Keep the unchanged-setting
+reference frozen. Do not remove flagged events or relax baseline criteria simply
+to increase coverage, and do not equate technical checks with biological accuracy.
 
 ## Work in dependency order
 
 | Priority | Work | Dependency / completion criterion |
 |---|---|---|
 | 1 | Establish calculation and provenance contracts | Implemented development boundary: correct temporal SD; distinct events/sites/recordings; source checksums; strict baseline/missingness rules. Finish audit of remaining historical column names and units. |
-| 2 | Run archived biological references | First case: full awake ID400 recording. Require completed master and statistics, finite/valid exposure, bounded occupied fractions, event/site counts, amplitude-availability reasons and inspectable overlays. Preserve failures as reports. |
-| 3 | Expand reference coverage | Inventory the published archive and select independent animals, relevant acquisition/condition strata and available controls. Verify each asset's preprocessing, scaling, sampling and calibration before pooling. One recording cannot cover these conditions. |
+| 2 | Run archived biological references | Eight complete recordings now pass master/statistics and numerical QC. Event/site counts and amplitude availability are retained separately. Targeted trace/overlay review and recovery tests remain outstanding. |
+| 3 | Expand reference coverage | All 87 archive assets inventoried; eight complete recordings from six animals cover two paired awake/isoflurane cases, finer sampling, KX, awake-mobile and a separate fluorescence control. Four metadata mappings remain unresolved. Intensity preprocessing remains incompletely established; do not pool acquisitions on that assumption. |
 | 4 | Test existing-detector sensitivity to settings | After reproducible runtime, vary thresholds, smoothing, duration and correlation rejection in controlled runs. Record changed event identities, timing, masks and measurement availability. Review physical units across pixel sizes and sampling rates. Do not tune merely to reproduce old counts. |
 | 5 | Assess recovery and failure modes without exhaustive labels | Use known-signal injections and controlled perturbations across sink/surge amplitudes, durations, sizes, overlap and background conditions. Optional targeted blinded inspection may resolve specific failures. Reviewing candidates alone cannot estimate missed events. |
 | 6 | Resolve ambiguity and freeze detection rules | Keep evaluation recordings separate from tuning recordings. If annotations are collected, record criteria and reviewer uncertainty. Otherwise leave biological accuracy unestablished and freeze rules against documented numerical, simulation and robustness criteria. |

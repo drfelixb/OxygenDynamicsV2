@@ -17,9 +17,13 @@ reconstructed into releases.
   Preserve strict overlap thresholds, first-match order, start-footprint
   matching and returned pixel lists. Exact equivalence tests cover randomized
   inputs, duplicate pixels, removed regions and threshold ties.
-- All 32 focused tests, full smoke and repository checks passed before the
-  replacement reference batch. Document physical-scale and intensity-provenance
-  limitations separately from runtime/numerical success.
+- All 32 focused tests, full smoke and repository checks passed; all eight
+  reference recordings then completed conversion, master, statistics and numerical
+  QC with an unchanged MATLAB source manifest. Both ID400 recordings matched
+  original-tracker masks and event measurements exactly.
+- Retain per-recording counts, amplitude availability, wrong-direction flags and
+  separate fluorescence-control results. Document physical-scale and intensity
+  provenance limitations separately from runtime/numerical success.
 
 ### DANDI metadata reconciliation (2026-09-09)
 

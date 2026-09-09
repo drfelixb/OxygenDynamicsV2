@@ -1,0 +1,17 @@
+Session,Kind,Events,UnavailableBaselines,TruncatedWindow,OwnEventOverlap,OtherSameSignOverlap,OppositeSignOverlap,Unexplained
+M400-01-baseline-awake,Sink,137,45,7,0,15,24,0
+M400-01-baseline-awake,Surge,40,19,1,0,9,11,0
+M400-03-baseline-iso,Sink,84,12,5,0,7,0,0
+M400-03-baseline-iso,Surge,2,1,0,0,0,1,0
+M401-01-baseline-awake,Sink,92,18,8,0,11,0,0
+M401-01-baseline-awake,Surge,1,1,1,0,0,0,0
+M401-03-baseline-iso,Sink,43,10,5,0,4,1,0
+M401-03-baseline-iso,Surge,3,1,0,0,1,0,0
+FB2312-baseline-awake,Sink,192,43,3,0,27,13,0
+FB2312-baseline-awake,Surge,58,22,4,0,9,11,0
+FB2316-baseline,Sink,193,59,3,0,37,23,0
+FB2316-baseline,Surge,62,31,0,0,23,10,0
+ID13-20200917,Sink,235,66,6,0,27,39,0
+ID13-20200917,Surge,131,78,4,0,60,32,0
+FB2411,Sink,26,2,2,0,0,0,0
+FB2411,Surge,1,1,1,0,0,0,0

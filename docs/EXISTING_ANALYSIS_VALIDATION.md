@@ -4,9 +4,9 @@ Runtime: MATLAB R2025a on macOS. Base: upstream main `8cf3f036b41e16b2c472bcee7e
 
 | Check | Latest completed result |
 |---|---|
-| Focused calculation/regression tests | 28 passed |
+| Focused calculation/regression tests | 32 passed |
 | Full `runOxygenPipelineSmokeTest` | Passed with schema 3.0-dev and statistics identity mouse-strict-2 |
-| `runRepositoryChecks` | Passed: 325 MATLAB files; 51 Code Analyzer messages remain |
+| `runRepositoryChecks` | Passed: 329 MATLAB files; 51 Code Analyzer messages remain |
 | Master → statistics synthetic integration | Passed at 2 Hz; includes known measurements and a zero-event recording |
 
 Smoke-suite printed FAIL rows are deliberate negative regression fixtures; the suite itself passed. The DANDI results below distinguish the first reference run from subsequent validation.
@@ -45,3 +45,18 @@ Small provenance and QC records are retained in `docs/reference-results/ID400-aw
 Statistics identity `mouse-strict-2` standardizes site recurrence to events/minute for both sinks and surges and exports recording-level baseline/amplitude availability. All **28 focused tests passed**, the full smoke suite passed, and repository checks passed with **325 MATLAB files and 51 Code Analyzer messages**. The synthetic integration verified new QC counts, zero-event handling, MAT export and the renamed surge recurrence sheet.
 
 The full DANDI reference was rerun under `mouse-strict-2` and completed master, statistics, pixel verification and numerical QC. Counts remained 56 sink sites / 137 sink events and 14 surge sites / 40 surge events; 92 sink and 21 surge amplitudes were finite. One of the 92 finite sink amplitudes was wrong-direction; it remains visible in QC and is excluded from the hypoxic amplitude composite by the existing sign guard. No wrong-direction surge amplitude was found. The 45 sink / 19 surge unavailable baselines need further cause-specific investigation, not automatic imputation. New records are in `docs/reference-results/ID400-awake-stats2-20260909/`.
+
+## Eight-recording reference expansion
+
+All eight selected recordings from six animals completed lossless NWB conversion,
+master analysis, statistics export and numerical QC under commit `95ef10c`.
+The MATLAB source manifest was unchanged at batch completion. Results include
+seven BOI recordings and one separately analyzed fluorescence control, covering
+600-, 1200- and 301-frame inputs at their native spatial dimensions.
+
+[Per-recording results and machine-readable evidence](reference-results/phase1-20260909/README.md)
+include sites/events, amplitude availability, direction flags, baseline exclusions,
+intensity diagnostics and exact original-versus-optimized tracking comparisons.
+Both ID400 recordings matched native masks and tested event measurement columns
+exactly. These results supersede single-recording coverage, but do not establish
+biological detection accuracy or comparability across acquisition preparations.

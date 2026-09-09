@@ -1,0 +1,98 @@
+[
+  {
+    "Session": "M400-01-baseline-awake",
+    "PixelClass": "uint16",
+    "Minimum": 0,
+    "Maximum": 255,
+    "FramesWithMaximum255": 600,
+    "FramesWithMaximum65535": 0,
+    "FramesWithMinimumZero": 45,
+    "Frames": 600,
+    "FirstFrameMean": 85.08021926879883,
+    "LastFrameMean": 76.64645385742188
+  },
+  {
+    "Session": "M400-03-baseline-iso",
+    "PixelClass": "uint16",
+    "Minimum": 0,
+    "Maximum": 255,
+    "FramesWithMaximum255": 600,
+    "FramesWithMaximum65535": 0,
+    "FramesWithMinimumZero": 550,
+    "Frames": 600,
+    "FirstFrameMean": 83.5567626953125,
+    "LastFrameMean": 70.40890884399414
+  },
+  {
+    "Session": "M401-01-baseline-awake",
+    "PixelClass": "uint16",
+    "Minimum": 0,
+    "Maximum": 255,
+    "FramesWithMaximum255": 600,
+    "FramesWithMaximum65535": 0,
+    "FramesWithMinimumZero": 27,
+    "Frames": 600,
+    "FirstFrameMean": 99.86446762084961,
+    "LastFrameMean": 116.91045761108398
+  },
+  {
+    "Session": "M401-03-baseline-iso",
+    "PixelClass": "uint16",
+    "Minimum": 0,
+    "Maximum": 255,
+    "FramesWithMaximum255": 600,
+    "FramesWithMaximum65535": 0,
+    "FramesWithMinimumZero": 270,
+    "Frames": 600,
+    "FirstFrameMean": 87.23984146118164,
+    "LastFrameMean": 74.5799560546875
+  },
+  {
+    "Session": "FB2312-baseline-awake",
+    "PixelClass": "uint16",
+    "Minimum": 125,
+    "Maximum": 61192,
+    "FramesWithMaximum255": 0,
+    "FramesWithMaximum65535": 0,
+    "FramesWithMinimumZero": 0,
+    "Frames": 1200,
+    "FirstFrameMean": 1813.3799743652344,
+    "LastFrameMean": 2707.502151489258
+  },
+  {
+    "Session": "FB2316-baseline",
+    "PixelClass": "uint16",
+    "Minimum": 169,
+    "Maximum": 62483,
+    "FramesWithMaximum255": 0,
+    "FramesWithMaximum65535": 0,
+    "FramesWithMinimumZero": 0,
+    "Frames": 1200,
+    "FirstFrameMean": 1762.076084136963,
+    "LastFrameMean": 2096.0609092712402
+  },
+  {
+    "Session": "ID13-20200917",
+    "PixelClass": "uint16",
+    "Minimum": 0,
+    "Maximum": 255,
+    "FramesWithMaximum255": 1,
+    "FramesWithMaximum65535": 0,
+    "FramesWithMinimumZero": 1200,
+    "Frames": 1200,
+    "FirstFrameMean": 6.193382263183594,
+    "LastFrameMean": 5.403358459472656
+  },
+  {
+    "Session": "FB2411",
+    "PixelClass": "uint16",
+    "Minimum": 9450,
+    "Maximum": 31414,
+    "FramesWithMaximum255": 0,
+    "FramesWithMaximum65535": 0,
+    "FramesWithMinimumZero": 0,
+    "Frames": 301,
+    "FirstFrameMean": 21514.604853343135,
+    "LastFrameMean": 21344.112375680455
+  }
+]

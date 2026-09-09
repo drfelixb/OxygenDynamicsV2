@@ -44,3 +44,30 @@ QC checks recording exposure, positive eligible area, occupied-tissue fraction b
 Thus, area-normalizing outputs alone does not equalize detection sensitivity across these acquisitions. Differences in animal, condition, intensity scaling and optical resolution are also confounded with sampling. Do not interpret the reference counts as isolated effects of pixel size or anesthesia. All selected recordings are 1 Hz, so this set does not exercise cross-frequency detector equivalence; fractional-frequency calculation tests are separate.
 
 After this baseline is complete, use controlled resampling and known-signal injections to evaluate physical-unit parameterization, baseline availability and event matching. Preserve these unchanged-setting results for comparison before modifying detector rules.
+
+## Archived intensity provenance
+
+Independent inspection of the selected NWB series found uint16 storage in all
+cases, but very different value ranges. Every frame of all four ID400/ID401
+movies reaches exactly 255. ID13 spans 0–255 but reaches 255 in only one frame.
+FB2312 and FB2316 reach 61192 and 62483 respectively; the fluorescence control
+spans 9450–31414. These observations suggest differing preparation/scaling,
+but do not distinguish clipping, fixed scaling or per-frame rescaling. A uint16
+container alone does not establish original camera dynamic range.
+
+The converter preserves these archived values exactly. Until preprocessing
+provenance is resolved, qualify amplitude interpretation and avoid treating
+cross-acquisition amplitude comparisons as validation. A larger numeric range
+also does not by itself prove unprocessed camera data. BOI relative optical
+changes are not calibrated oxygen concentration changes.
+
+## Tracking optimization evidence
+
+The cache optimization preserves the original overlap rule and matching order.
+Both ID400 awake and isoflurane outputs were compared against a preserved run
+of the original tracker: native sink/surge masks and event timing, duration,
+area, baseline and amplitude columns matched exactly. A seeded 60-frame,
+five-regions-per-frame microbenchmark also matched exactly and took 0.727 s
+with the original tracker versus 0.061 s with cached membership (11.9× in this
+fixture). This is not a whole-pipeline speedup estimate. Focused tests include
+40 randomized fixtures plus explicit strict-threshold/first-match cases.

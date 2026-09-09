@@ -34,14 +34,17 @@ maintained separately.
   before statistics. Output schema is currently `3.0-dev`.
 
 Development validation: 32 focused tests, synthetic master-to-statistics
-integration and a full 600-frame DANDI reference run passed in MATLAB R2025a.
+integration and eight complete DANDI recordings from six animals passed in
+MATLAB R2025a (seven BOI recordings and a separate fluorescence control).
 DANDI outputs are unlabelled reference results, not ground-truth accuracy.
 Default detection thresholds remain provisional after the SD correction.
 See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
 [validation evidence](docs/EXISTING_ANALYSIS_VALIDATION.md),
 [remaining work](docs/PUBLICATION_READINESS.md),
 [DANDI metadata audit](docs/DANDI_METADATA_RECONCILIATION.md),
-[multi-recording reference protocol](docs/REFERENCE_SET_PHASE1.md) and [changelog](CHANGELOG.md).
+[multi-recording reference protocol](docs/REFERENCE_SET_PHASE1.md),
+[per-recording results and limitations](docs/reference-results/phase1-20260909/README.md)
+and [changelog](CHANGELOG.md).
 
 ## Overview
 
