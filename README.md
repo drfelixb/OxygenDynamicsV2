@@ -75,6 +75,11 @@ primary rule. All candidate branches, including rejected siblings, are exported
 in the comparison evidence. Production linking remains unchanged; explicit
 contact provenance and candidate separation are the next development steps.
 
+The branch verifier also passes **10 Python regression tests**, including
+deliberately corrupted exports under normal and optimized Python. It requires
+the complete six-movie/four-policy comparison matrix. All archived graph results
+pass in all three execution modes; saved detections and support scores are unchanged.
+
 **Surge detection remains provisional.** Geometry tests support the tracking
 correction, but full-movie results are mixed. Stage reconstruction identifies
 candidate geometry/dropouts and the ten-second minimum as causes of missed

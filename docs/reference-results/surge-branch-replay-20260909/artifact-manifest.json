@@ -311,8 +311,8 @@
   },
   {
     "Path": "graph-verification.json",
-    "SHA256": "6fd55d95d7f076085fa114896ad12b752e2019b06073bfe8c270c1c232c199b0",
-    "Bytes": 509
+    "SHA256": "d0761e806a4dc63537c7ddfb49510c6f149b244234fb682b10878c8b49fceafa",
+    "Bytes": 545
   },
   {
     "Path": "policy-summary.csv",
@@ -328,5 +328,10 @@
     "Path": "test-verification.json",
     "SHA256": "50933c3c1e92e86398317999639c96b660c3e5dece33ebb5d215d5a89bb7f791",
     "Bytes": 240
+  },
+  {
+    "Path": "verifier-regression-verification.json",
+    "SHA256": "153149c07a4a766553bea00ad2f79171301c686266d92ad1372bd2813217c3e8",
+    "Bytes": 577
   }
 ]

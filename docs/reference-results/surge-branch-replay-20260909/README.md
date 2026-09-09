@@ -52,6 +52,15 @@ held-out biological validation set.
   partner counts, contact flags, run durations and qualification. It does not
   independently establish image segmentation or biological identity.
 
+After review, the verifier replaces all optimization-sensitive assertions with
+explicit validation errors and checks the exact six-movie/four-policy matrix.
+Ten Python regression tests pass (28 CLI executions), including corrupted
+durations/flags, duplicated comparisons, missing movies/policies and unexpected
+identities. The complete archived graph passes identically under normal Python,
+`-O` and `PYTHONOPTIMIZE=1`. See `verifier-regression-verification.json` for source
+hashes and scope. This correction does not rerun MATLAB or change saved detection
+ledgers and support scores; the 94 MATLAB tests above retain their original run.
+
 The original production detector contract remains
 `existing-v2-surge-shape-continuity-5`; measurement/statistics identities are also
 unchanged. Production calculations are unchanged from `03bdce8`.
@@ -117,6 +126,8 @@ not be confused with the 17-frame duration of the single best match.
   ledgers and all nonzero overlap connections. Run IDs are policy-local.
 - `completion.json`, `test-verification.json`, `graph-verification.json`:
   machine-readable verification and its limits.
+- `verifier-regression-verification.json`: subsequent verifier fixes, regression
+  test evidence and agreement across normal/optimized execution modes.
 - `code-manifest.csv`, `artifact-manifest.json`: MATLAB source and compact
   machine-artifact hashes. The artifact manifest excludes itself and this README.
 
@@ -141,6 +152,7 @@ compact artifacts, reading gzip ledgers automatically:
 
 ```sh
 python3 tests/analysis/verify_surge_branch_replay.py docs/reference-results/surge-branch-replay-20260909
+python3 -B -m unittest discover -s tests/analysis -p 'test_verify_surge_branch_replay.py' -v
 ```
 
 This writes `graph-verification.json`. Its verifier source hash records the exact

@@ -6,6 +6,20 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Branch verifier review corrections
+
+- Replace optimization-sensitive Python assertions with explicit validation
+  errors. Checks remain active with `-O` and `PYTHONOPTIMIZE=1`.
+- Require the exact frozen six-movie/four-policy comparison matrix, unique
+  recording/case/policy identities and consistent completion counts. Reject
+  duplicate, missing or unexpected comparisons before checking their ledgers.
+- Add ten Python regression tests (28 CLI executions), including corrupted
+  durations and flags, incomplete matrices, compressed input and valid exports.
+- Reverify the archived graph in normal and both optimized execution modes:
+  identical results for 24 comparisons, 44,193 run rows and 69,508 edge rows.
+  Refresh verification provenance and artifact hashes; detector outputs,
+  support scores and production calculations are unchanged.
+
 ### Explicit surge branch-policy evidence
 
 - Compare the existing tracker with a strict-majority shape extension, a

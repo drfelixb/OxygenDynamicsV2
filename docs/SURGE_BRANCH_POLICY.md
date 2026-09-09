@@ -83,6 +83,13 @@ ownership and contiguous durations. A separate Python audit recomputes graph
 arithmetic, eligibility, partner counts, durations, qualification and ambiguity
 from CSV without importing the MATLAB implementation.
 
+The verifier requires the exact frozen six-movie/four-policy matrix, including
+unique recording/case/policy identities and consistent completion counts. Its
+checks remain active in optimized Python. Ten Python regression tests exercise
+valid exports and deliberately broken input; these complement the MATLAB
+tracking tests. Changing the experimental matrix requires an explicit update
+to both the replay protocol and the verifier's independent specification.
+
 ## Decision and dependency order
 
 **Do not promote the majority extension solely because it recovers the selected

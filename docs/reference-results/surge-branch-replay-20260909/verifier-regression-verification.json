@@ -1,0 +1,18 @@
+{
+  "PythonRegressionTests": 10,
+  "VerifierCLIRegressionExecutions": 28,
+  "AllRegressionTestsPassed": true,
+  "ArchivedGraphExecutionModes": [
+    "normal",
+    "-O",
+    "PYTHONOPTIMIZE=1"
+  ],
+  "ArchivedGraphReportsIdentical": true,
+  "PolicyComparisons": 24,
+  "CandidateRunRows": 44193,
+  "OverlapEdgeRows": 69508,
+  "SavedDetectionAndScoreDataUnchanged": true,
+  "MatlabRerun": false,
+  "VerifierSHA256": "48cbfaa16714e34e965fbd0877d0888bb6a6960b98ec91b571710f4b2f4e30f6",
+  "RegressionTestsSHA256": "57f6ec70f9e7ac01d885ae372e3ec9fe4fc6fdc2828242d716b6deb792ec03eb"
+}
