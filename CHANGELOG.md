@@ -6,6 +6,24 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Full-movie shape and signal-attribution audit
+
+- Add fixed-support traces through detrending, both SD normalization steps and
+  smoothing, per-region rejection evidence, and an independent explanation of
+  candidate tracking edges, including rejected runs.
+- Add growing/shrinking full-movie challenges, rescoring of unchanged controls,
+  independent pixel and space-time-score verification, and source-versus-injected
+  baseline/footprint diagnostics. Production rules and contracts are unchanged.
+- Complete eight new master runs on four previously used sources, with 1,508
+  event measurements independently checked and zero mismatches; verify 1.31
+  billion constructed pixels and 32 support-score rows. Reconstruct three prior
+  failures with exact saved-mask and candidate-ledger agreement.
+- Pass 85 focused tests. A post-experiment decomposition verifies twelve matched
+  surge footprints and rules out imposed sink cancellation in those examples.
+- Document candidate identity breaks, event-footprint dilution and known rising
+  tails inside production-valid baselines. Rank proposed corrections and their
+  dependencies in [the signal evidence report](docs/SURGE_SIGNAL_EVIDENCE.md).
+
 ### Bounded surge shape continuity and rejected-candidate provenance
 
 - Allow an isolated surge to expand or contract when mutual coverage fails,

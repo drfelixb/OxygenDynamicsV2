@@ -10,13 +10,19 @@ ledger of short rejected candidates. Missing frames are never automatically
 bridged. The same twenty full-movie reference inputs are used to compare each
 tracking revision; see [current rules and validation](SURGE_TRACKING.md).
 
-Remaining surge signal-definition work has priority over count-based threshold
-tuning: native threshold bounds can truncate a smooth rise, contaminate its
-pre-event baseline and dilute amplitude when a moving event is averaged across
-its fixed union footprint. Determine onset/recovery and measurement-support
-behavior with known stationary, growing and moving signals before declaring a
-publication endpoint. Rejected-candidate QC localizes gaps without establishing
-whether they are detection dropouts or real returns.
+The [full-movie signal evidence](SURGE_SIGNAL_EVIDENCE.md) now reproduces an
+ID401 missed pulse with 14 consecutive accepted-pixel frames split into two
+seven-frame runs. Eight growing/shrinking challenges show partial detection,
+large-footprint dilution and undetected rising tails in nominally valid
+baselines. The three BOI sources and separate fluorescence control are the same
+recordings as before, not an independent held-out cohort.
+
+Next evaluate candidate separation and a clearly specified split/merge policy
+against independent neighboring signals and true branching/crossing scenarios.
+Preserve siblings and ambiguity rather than silently absorbing them. Then settle
+the spatial amplitude endpoint and validate event-local onset/baseline together.
+Production settings remain unchanged during this investigation. Statistical
+surge parity and final cohort reanalysis follow those definitions.
 
 The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
 with disjoint searches, a provisional 20-second bound and unresolved-boundary

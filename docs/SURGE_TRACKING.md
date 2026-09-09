@@ -179,6 +179,11 @@ The preceding mutual-coverage-only results are retained as a [historical report]
 The shape-continuity rerun and controlled gap/size checks are documented in the
 [current report](reference-results/surge-shape-continuity-20260909/README.md).
 
+The same-contract [full-movie growth/shrinkage and signal-stage audit](SURGE_SIGNAL_EVIDENCE.md)
+now localizes a missed ID401 pulse to a competing split and documents spatial
+averaging and undetected-tail contributions to baseline measurements. It adds
+validation tools without changing these production rules.
+
 ## Versioning
 
 Reanalysis is required. The current contract is:

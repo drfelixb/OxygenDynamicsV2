@@ -48,7 +48,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **78 focused tests**, smoke checks and synthetic
+Current development validation: **85 focused tests**, smoke checks and synthetic
 master-to-statistics integration passed in MATLAB R2025a. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
 adds 117 prescribed size-change/gap scenarios and repeats twenty full-movie cases
@@ -59,6 +59,13 @@ recalculation; all twenty same-input comparisons preserve sink masks/timing.
 These are four source recordings, not twenty independent samples.
 The preceding [physical tracking sweep](docs/reference-results/surge-physical-adjacent-20260909/README.md)
 remains a historical-contract result.
+
+The [expanding/contracting signal audit](docs/SURGE_SIGNAL_EVIDENCE.md) adds eight
+full-movie challenges on those same four sources. All 1,508 additional event
+measurements match independent arithmetic. Detailed reconstruction identifies
+candidate split/merge identity, spatial averaging and undetected rising tails
+inside nominally valid baselines as separate limitations. Production rules remain
+unchanged during this experiment; see its [results](docs/reference-results/surge-shape-evidence-20260909/README.md).
 
 **Surge detection remains provisional.** Geometry tests support the tracking
 correction, but full-movie results are mixed. Stage reconstruction identifies
