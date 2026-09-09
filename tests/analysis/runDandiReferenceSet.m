@@ -1,6 +1,11 @@
 function Summary=runDandiReferenceSet(profileFile,cacheRoot,outputRoot)
 % Run each explicitly selected reference independently, retaining all failures.
 setupOxygenDynamicsPath;
+% Statistics resolves CSV paths from its own working directory.
+% Pin all roots before any stage can change the working directory.
+j=java.io.File(char(profileFile));profileFile=char(j.getCanonicalPath());
+j=java.io.File(char(cacheRoot));cacheRoot=char(j.getCanonicalPath());
+j=java.io.File(char(outputRoot));outputRoot=char(j.getCanonicalPath());
 assert(~isfolder(outputRoot),'Use a new output folder for every batch.');
 P=jsondecode(fileread(profileFile));mkdir(outputRoot);Summary=table();
 copyfile(profileFile,fullfile(outputRoot,'reference-set-profile.json'));
