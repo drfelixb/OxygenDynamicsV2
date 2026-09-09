@@ -1,7 +1,7 @@
 function [SinkTable,GroupingLevels] = summarizeStatsGroupingLevels(SinkTable,NumRecordings)
 %SUMMARIZESTATSGROUPINGLEVELS Normalize and report stats grouping levels.
 
-if ~ischar(SinkTable.Mouse{1})
+if height(SinkTable)>0 && ~ischar(SinkTable.Mouse{1})
     SinkTable.Mouse = cellfun(@num2str,SinkTable.Mouse,'UniformOutput',false);
 end
 

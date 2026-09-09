@@ -84,6 +84,9 @@ StatsConfig.behaviourFolderSelection = 'Recent'; % 'Recent' or 'Oldest'
 StatsConfig.outputRoot = 'Stats_Runs';
 StatsConfig.behaviourTimeWindows = {'3','3','3','3'}; % manual, movement/whisking, pupil, puff
 StatsConfig.masterFolder = pwd;
+StatsConfig.baselinePairsCsv = '';
+StatsConfig.analysisWindowsCsv = '';
+StatsConfig.windowPairsCsv = '';
 StatsConfig = applyOxygenDynamicsConfig(StatsConfig,'Stats');
 if nargin > 0
     if nargin ~= 1 || ~isstruct(varargin{1})
@@ -120,6 +123,9 @@ PuffsSFs=1000;
 
 %% Inputs from the user to check if curated oxygensink data should be used and what folders
 
+SinkFold_OldORNew = StatsConfig.sinkFolderSelection;
+SurgeFold_OldORNew = StatsConfig.surgeFolderSelection;
+BehFold_OldORNew = StatsConfig.behaviourFolderSelection;
 if StatsConfig.interactive
     Currated = questdlg('Do you have curated Oxygen sinks data ready for analysis?',...
         'What data',...
@@ -169,6 +175,7 @@ elseif ~StatsConfig.interactive
 end
 
 StatsInfo = struct();
+StatsInfo.PipelineContract=oxygenPipelineContract();
 StatsInfo.AnalysisDate = char(datetime('now','Format','yyyy-MM-dd HH:mm:ss'));
 StatsInfo.Masterfolder = Masterfolder;
 StatsInfo.InputCsv = StatsConfig.inputCsv;
@@ -222,6 +229,10 @@ for datai=1:length(Paths)
     RecordingInput = createStatsRecordingInput(Paths{datai},Mice{datai},Conditions{datai}, ...
         Genotypes{datai},Promoters{datai},DrugIDs{datai},Postures{datai}, ...
         Pupils{datai},Puffs{datai},Whiskings{datai},Pixelsizes{datai});
+    RecordingInput.SampleF = SampleFs{datai};
+    if ismember('RecordingID',InputD.Properties.VariableNames)
+        RecordingInput.RecordingID = string(InputD.RecordingID(datai));
+    end
     [StatsRecordingCells,StatsInfo] = loadStatsRecordingIntoCells( ...
         StatsRecordingCells,StatsInfo,datai,RecordingInput,Masterfolder,FolderSelection,Currated,iOS,BehFs);
     fprintf('[Stats %s] Finished recording %d/%d in %.1f s\n', ...
@@ -231,6 +242,8 @@ end
 fprintf('[Stats %s] Combining loaded recording tables...\n',char(datetime('now','Format','HH:mm:ss')));
 StatsInfo.LoadSummary = warnStatsLoadedDataIssues(StatsInfo,StatsRecordingCells,IsBLI);
 StatsLoadedData=createStatsLoadedRecordingData(StatsRecordingCells);
+RecordingRegistry=vertcatCellTables(StatsRecordingCells.RecordingRegistry);
+assert(numel(unique(RecordingRegistry.RecordingID))==height(RecordingRegistry),'Duplicate recording IDs in input.');
 Table_OxygenSinks_OutCombo=StatsLoadedData.TableOxygenSinks;
 Table_OxygenSinkEvents_OutCombo=StatsLoadedData.TableOxygenSinkEvents;
 HypoxicEventSpecificMetrics=StatsLoadedData.HypoxicEventSpecificMetrics;
@@ -299,7 +312,7 @@ fprintf('[Stats %s] Building ongoing sink/surge time series...\n',char(datetime(
     TotalSinkArea_Norm,TotalSinkArea_um,NumOngoingOxysurges, ...
     TotalSurgeArea,SinksRaster,SurgesRaster,TraceCorrs] = createOngoingStatsTimeSeries( ...
     Sinks_Traces,Surges_Area,ROIs_Traces,Table_OxygenSinks_OutCombo, ...
-    Table_OxygenSurges_OutCombo,Pixelsizes,TraceCorrs,IsBLI);
+    Table_OxygenSurges_OutCombo,Pixelsizes,TraceCorrs,IsBLI,RecordingRegistry);
 StatsInfo.SinkCountAreaNormalization = SinkCountAreaNormalization;
 
 
@@ -378,7 +391,7 @@ Sinks_Traces=addAlignedSinkEventTraces(Sinks_Traces,Table_OxygenSinks_OutCombo,3
 fprintf('[Stats %s] Creating condition/group filters...\n',char(datetime('now','Format','HH:mm:ss')));
 [FiltersOxySinksMetrics,FiltersOxySurgesMetrics,Filters_ROIsandEvents] = ...
     createStatsAnalysisFilters(Table_OxygenSinks_OutCombo,Table_OxygenSurges_OutCombo, ...
-    ROIs_Traces,Drugs_unique,Conditions_unique,StimCond_unique);
+    ROIs_Traces,Drugs_unique,Conditions_unique,StimCond_unique,RecordingRegistry);
 
 %% (6) Now using the filters generated in (5) divide the dataset and prepare the tables for export
 
@@ -485,7 +498,22 @@ StatsBLIWorkbookInputs.FiguresOutputFolder = FiguresoutputfolderPath;
 StatsCoreData.HypoxicEventSpecificMetrics = HypoxicEventSpecificMetrics;
 fprintf('[Stats %s] Calculating hypoxic burden metrics...\n',char(datetime('now','Format','HH:mm:ss')));
 StatsCoreData.HypoxicBurden = createHypoxicBurdenMetrics( ...
-    Table_OxygenSinkEvents_OutCombo,HypoxicEventSpecificMetrics,Table_OxygenSinks_OutCombo);
+    Table_OxygenSinkEvents_OutCombo,HypoxicEventSpecificMetrics,Table_OxygenSinks_OutCombo,RecordingRegistry);
+Windows=table(); WindowPairs=table();
+if isfield(StatsConfig,'analysisWindowsCsv') && strlength(string(StatsConfig.analysisWindowsCsv))>0
+    Windows=readtable(StatsConfig.analysisWindowsCsv,'TextType','string');
+end
+if isfield(StatsConfig,'windowPairsCsv') && strlength(string(StatsConfig.windowPairsCsv))>0
+    WindowPairs=readtable(StatsConfig.windowPairsCsv,'TextType','string');
+end
+StatsCoreData.RecordingWindowMetrics=createOxygenAnalysisWindows(RecordingRegistry,Table_OxygenSinks_OutCombo,Table_OxygenSinkEvents_OutCombo,Windows);
+StatsCoreData.WindowBaselineContrasts=createOxygenWindowContrasts(StatsCoreData.RecordingWindowMetrics,WindowPairs);
+StatsCoreData.RecordingRegistry = RecordingRegistry;
+Pairs=table();
+if isfield(StatsConfig,'baselinePairsCsv') && strlength(string(StatsConfig.baselinePairsCsv))>0
+    Pairs=readtable(StatsConfig.baselinePairsCsv,'TextType','string');
+end
+StatsCoreData.BaselineContrasts=createOxygenBaselineContrasts(StatsCoreData.HypoxicBurden.RecordingTable,Pairs);
 fprintf('[Stats %s] Exporting stats results and workbook...\n',char(datetime('now','Format','HH:mm:ss')));
 StatsExportInfo = exportStatsResults(StatsoutputfolderPath,StatsConfig.inputCsv, ...
     IsBLI,StatsCoreData,StatsBLIData,StatsBLIWorkbookData,ExportReady, ...

@@ -50,6 +50,9 @@ Config.Stats.sinkFolderSelection = 'Recent'; % 'Recent' or 'Oldest'
 Config.Stats.surgeFolderSelection = 'Recent'; % 'Recent' or 'Oldest'
 Config.Stats.behaviourFolderSelection = 'Recent'; % 'Recent' or 'Oldest'
 Config.Stats.outputRoot = 'Stats_Runs';
+Config.Stats.analysisWindowsCsv = '';
+Config.Stats.windowPairsCsv = '';
+Config.Stats.baselinePairsCsv = ''; % Explicit BaselineRecordingID,ComparisonRecordingID pairs
 Config.Stats.behaviourTimeWindows = {'3','3','3','3'}; % manual, movement/whisking, pupil, puff
 
 Config.Verification = struct();

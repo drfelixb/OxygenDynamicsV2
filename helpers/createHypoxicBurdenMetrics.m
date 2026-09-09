@@ -1,9 +1,10 @@
-function Burden = createHypoxicBurdenMetrics(TableOxygenSinkEvents,EventSpecificMetrics,TableOxygenSinks)
+function Burden = createHypoxicBurdenMetrics(TableOxygenSinkEvents,EventSpecificMetrics,TableOxygenSinks,RecordingRegistry)
 %CREATEHYPOXICBURDENMETRICS Compute event and recording hypoxic burden.
 %
 % The primary metric is true event-level:
 %   burden = positive drop amplitude (%) * event area (um^2) * duration (s)
 
+if nargin<4, RecordingRegistry=table(); end
 if nargin<2
     EventSpecificMetrics = table();
 end
@@ -17,6 +18,10 @@ Burden.RecordingTable = table();
 Burden.MetricBasis = createHypoxicBurdenBasisTable();
 
 if isempty(TableOxygenSinkEvents)
+    Burden.RecordingTable=aggregateOxygenRecordingBurden(table(),RecordingRegistry);
+    Burden.GroupSummaryTable=summarizeOxygenMouseMetrics(Burden.RecordingTable);
+    Burden.TimeSeriesTable=completeOxygenBurdenTimeSeries(table(),RecordingRegistry);
+    Burden.TimeSeriesBasis=createBurdenTimeSeriesBasisTable();
     return
 end
 
@@ -87,8 +92,10 @@ EventTable.BurdenInterfaceFormula = repmat( ...
 
 Burden.EventTable = EventTable;
 Burden.RecordingTable = createRecordingBurdenTable(EventTable);
-Burden.GroupSummaryTable = createGroupedBurdenSummaryTable(EventTable,Burden.RecordingTable);
+if ~isempty(RecordingRegistry), Burden.RecordingTable=aggregateOxygenRecordingBurden(EventTable,RecordingRegistry); end
+Burden.GroupSummaryTable = summarizeOxygenMouseMetrics(Burden.RecordingTable);
 [Burden.TimeSeriesTable,Burden.TimeSeriesBasis] = createBurdenTimeSeriesTable(EventTable);
+if ~isempty(RecordingRegistry),Burden.TimeSeriesTable=completeOxygenBurdenTimeSeries(Burden.TimeSeriesTable,RecordingRegistry);end
 
 end
 
@@ -108,130 +115,36 @@ else
     return
 end
 
-FiniteAmplitude = RawAmplitude(isfinite(RawAmplitude));
-if isempty(FiniteAmplitude) || median(FiniteAmplitude,'omitnan')<0
-    AmplitudePercent = -RawAmplitude;
-    SignConvention = 'negative_drop_flipped_to_positive_percent';
-else
-    AmplitudePercent = RawAmplitude;
-    SignConvention = 'positive_drop_percent';
+AmplitudePercent = RawAmplitude;
+SignConvention = 'positive_drop_percent';
+if ismember('AmplitudeSignConvention',EventTable.Properties.VariableNames)
+    Negative = string(EventTable.AmplitudeSignConvention)=="negative_drop_percent";
+    AmplitudePercent(Negative) = -AmplitudePercent(Negative);
 end
+AmplitudePercent(AmplitudePercent<0) = NaN; % wrong direction, not hypoxic deficit
 
 end
 
 function [BurdenArea,AreaSource,EventSpecificMatched] = getEventSpecificBurdenArea(EventTable,EventSpecificMetrics)
 
-BurdenArea = [];
-AreaSource = '';
-EventSpecificMatched = false(height(EventTable),1);
-
-if ~isempty(EventSpecificMetrics) && istable(EventSpecificMetrics) && ...
-        all(ismember({'EventID','Area_um'},EventSpecificMetrics.Properties.VariableNames))
-    [MatchedArea,EventSpecificMatched] = matchEventSpecificArea(EventTable,EventSpecificMetrics);
-    if any(EventSpecificMatched)
-        BurdenArea = MatchedArea;
-        AreaSource = 'EventSpecificMetrics.Area_um';
-        return
-    end
+BurdenArea=nan(height(EventTable),1);
+AreaSource='NativeEventArea_or_unavailable';
+EventSpecificMatched=false(height(EventTable),1);
+if ismember('EventArea_um2',EventTable.Properties.VariableNames),BurdenArea=tableColumnToDouble(EventTable.EventArea_um2);end
+if istable(EventSpecificMetrics) && ~isempty(EventSpecificMetrics) && all(ismember({'EventID','Area_um'},EventSpecificMetrics.Properties.VariableNames))
+    [matched,EventSpecificMatched]=matchEventSpecificArea(EventTable,EventSpecificMetrics);
+    BurdenArea(EventSpecificMatched)=matched(EventSpecificMatched);
+    AreaSource='EventSpecificMetrics_or_NativeEventArea_or_unavailable';
+end
 end
 
-if ismember('MeanOxySinkArea_um',EventTable.Properties.VariableNames)
-    BurdenArea = tableColumnToDouble(EventTable.MeanOxySinkArea_um);
-    AreaSource = 'Fallback_TableOxygenSinkEvents.MeanOxySinkArea_um_site_level';
-    EventSpecificMatched = false(height(EventTable),1);
+function [A,source]=getBurdenRecordingArea(E,~)
+assert(ismember('RecAreaSize',E.Properties.VariableNames),'OxygenDynamics:MissingExposure','Event rows require saved recording area.');
+A=tableColumnToDouble(E.RecAreaSize);source='OxySinkEvents.RecAreaSize';
 end
-
-end
-
-function [RecordingArea_um2,RecordingAreaSource] = getBurdenRecordingArea(EventTable,EventSpecificMetrics)
-
-RecordingArea_um2 = nan(height(EventTable),1);
-
-if ~isempty(EventSpecificMetrics) && istable(EventSpecificMetrics) && ...
-        all(ismember({'EventID','Area_um','Area_norm'},EventSpecificMetrics.Properties.VariableNames))
-    SpecificArea = tableColumnToDouble(EventSpecificMetrics.Area_um);
-    SpecificAreaNorm = tableColumnToDouble(EventSpecificMetrics.Area_norm);
-    SpecificRecordingArea = nan(size(SpecificArea));
-    Valid = isfinite(SpecificArea) & isfinite(SpecificAreaNorm) & SpecificAreaNorm>0;
-    SpecificRecordingArea(Valid) = SpecificArea(Valid) ./ SpecificAreaNorm(Valid);
-    [RecordingArea_um2,Matched] = matchEventSpecificNumericColumn(EventTable,EventSpecificMetrics,SpecificRecordingArea);
-    if any(Matched)
-        RecordingAreaSource = 'EventSpecificMetrics.Area_um / EventSpecificMetrics.Area_norm';
-        return
-    end
-end
-
-if ismember('RecAreaSize',EventTable.Properties.VariableNames)
-    RecordingArea_um2 = tableColumnToDouble(EventTable.RecAreaSize);
-    RecordingAreaSource = 'OxySinkEvents.RecAreaSize';
-elseif ismember('RecordingArea_um2',EventTable.Properties.VariableNames)
-    RecordingArea_um2 = tableColumnToDouble(EventTable.RecordingArea_um2);
-    RecordingAreaSource = 'OxySinkEvents.RecordingArea_um2';
-else
-    RecordingAreaSource = 'Unavailable';
-end
-
-end
-
-function [RecordingDuration_sec,RecordingDurationSource] = getBurdenRecordingDuration(EventTable,TableOxygenSinks)
-
-RecordingDuration_sec = nan(height(EventTable),1);
-
-if ~isempty(TableOxygenSinks) && istable(TableOxygenSinks) && ...
-        ismember('RecDuration',TableOxygenSinks.Properties.VariableNames)
-    [RecordingDuration_sec,Matched] = matchSinkRecordingNumericColumn(EventTable,TableOxygenSinks,'RecDuration');
-    if any(Matched)
-        RecordingDurationSource = 'TableOxygenSinks.RecDuration';
-        return
-    end
-end
-
-if ismember('RecDuration',EventTable.Properties.VariableNames)
-    RecordingDuration_sec = tableColumnToDouble(EventTable.RecDuration);
-    RecordingDurationSource = 'OxySinkEvents.RecDuration';
-elseif ismember('EndSec',EventTable.Properties.VariableNames)
-    RecordingDuration_sec(:) = max(tableColumnToDouble(EventTable.EndSec),[],'omitnan');
-    RecordingDurationSource = 'Fallback_max(OxySinkEvents.EndSec)';
-else
-    RecordingDurationSource = 'Unavailable';
-end
-
-end
-
-function [MatchedValues,Matched] = matchSinkRecordingNumericColumn(EventTable,SinkTable,columnName)
-
-MatchedValues = nan(height(EventTable),1);
-Matched = false(height(EventTable),1);
-GroupColumns = {'Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'};
-GroupColumns = GroupColumns(ismember(GroupColumns,EventTable.Properties.VariableNames) & ...
-    ismember(GroupColumns,SinkTable.Properties.VariableNames));
-if isempty(GroupColumns)
-    return
-end
-
-EventKeys = makeTableGroupKeys(EventTable,GroupColumns);
-SinkKeys = makeTableGroupKeys(SinkTable,GroupColumns);
-SinkValues = tableColumnToDouble(SinkTable.(columnName));
-UniqueEventKeys = unique(EventKeys,'stable');
-for KeyIdx = 1:numel(UniqueEventKeys)
-    CurrentKey = UniqueEventKeys(KeyIdx);
-    EventMask = EventKeys==CurrentKey;
-    SinkMask = SinkKeys==CurrentKey;
-    if any(SinkMask)
-        MatchedValues(EventMask) = median(SinkValues(SinkMask),'omitnan');
-        Matched(EventMask) = true;
-    end
-end
-
-end
-
-function Keys = makeTableGroupKeys(DataTable,GroupColumns)
-
-Keys = strings(height(DataTable),1);
-for ColumnIdx = 1:numel(GroupColumns)
-    Keys = Keys + "|" + tableColumnToString(DataTable.(GroupColumns{ColumnIdx}));
-end
-
+function [D,source]=getBurdenRecordingDuration(E,~)
+assert(ismember('RecDuration',E.Properties.VariableNames),'OxygenDynamics:MissingExposure','Event rows require independent recording duration.');
+D=tableColumnToDouble(E.RecDuration);source='OxySinkEvents.RecDuration';
 end
 
 function [MatchedArea,Matched] = matchEventSpecificArea(EventTable,EventSpecificMetrics)
@@ -243,39 +156,20 @@ end
 
 function [MatchedValues,Matched] = matchEventSpecificNumericColumn(EventTable,EventSpecificMetrics,SpecificValues)
 
-EventKeys = makeSinkEventKeys(EventTable);
-SpecificKeys = makeEventSpecificKeys(EventSpecificMetrics);
+[EventKeys,SpecificKeys] = oxygenEventJoinKeys(EventTable,EventSpecificMetrics);
 MatchedValues = nan(height(EventTable),1);
 Matched = false(height(EventTable),1);
 
 for EventIdx = 1:numel(EventKeys)
-    MatchIdx = find(SpecificKeys==EventKeys(EventIdx),1,'first');
+    MatchIdx = find(SpecificKeys==EventKeys(EventIdx));
+    if numel(MatchIdx)>1
+        error('OxygenDynamics:AmbiguousEventKey','Duplicate event-specific key: %s',EventKeys(EventIdx));
+    end
     if ~isempty(MatchIdx)
         MatchedValues(EventIdx) = SpecificValues(MatchIdx);
         Matched(EventIdx) = true;
     end
 end
-
-end
-
-function Keys = makeSinkEventKeys(EventTable)
-
-NumRows = height(EventTable);
-Keys = strings(NumRows,1);
-if ~all(ismember({'Mouse','SinkID','EventID'},EventTable.Properties.VariableNames))
-    return
-end
-
-Mouse = tableColumnToString(EventTable.Mouse);
-SinkID = tableColumnToString(EventTable.SinkID);
-EventID = tableColumnToString(EventTable.EventID);
-Keys = Mouse + "_" + SinkID + "_" + EventID;
-
-end
-
-function Keys = makeEventSpecificKeys(EventSpecificMetrics)
-
-Keys = tableColumnToString(EventSpecificMetrics.EventID);
 
 end
 
@@ -296,7 +190,7 @@ end
 
 function RecordingTable = createRecordingBurdenTable(EventTable)
 
-GroupColumns = {'Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'};
+GroupColumns = {'RecordingID','Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'};
 GroupColumns = GroupColumns(ismember(GroupColumns,EventTable.Properties.VariableNames));
 if isempty(GroupColumns)
     GroupColumns = {'Mouse'};
@@ -341,15 +235,15 @@ for GroupI = 1:NumGroups
     Mask = GroupIdx==GroupI;
     Contributions = EventTable.PerEventBurdenContribution(Mask);
     ContributionsPerMm2 = EventTable.PerEventBurdenContribution_per_mm2(Mask);
-    HypoxicBurden(GroupI) = sum(Contributions,'omitnan');
-    HypoxicBurden_per_mm2(GroupI) = sum(ContributionsPerMm2,'omitnan');
+    HypoxicBurden(GroupI) = sum(Contributions);
+    HypoxicBurden_per_mm2(GroupI) = sum(ContributionsPerMm2);
     RecordingArea_um2(GroupI) = median(EventTable.BurdenRecordingArea_um2(Mask),'omitnan');
     RecordingDuration_sec(GroupI) = median(EventTable.BurdenRecordingDuration_sec(Mask),'omitnan');
     HypoxicBurden_per_sec(GroupI) = HypoxicBurden(GroupI) ./ RecordingDuration_sec(GroupI);
     HypoxicBurden_per_min(GroupI) = HypoxicBurden(GroupI) .* 60 ./ RecordingDuration_sec(GroupI);
     HypoxicBurden_per_mm2_per_sec(GroupI) = HypoxicBurden_per_mm2(GroupI) ./ RecordingDuration_sec(GroupI);
     HypoxicBurden_per_mm2_per_min(GroupI) = HypoxicBurden_per_mm2(GroupI) .* 60 ./ RecordingDuration_sec(GroupI);
-    NumEvents(GroupI) = sum(isfinite(Contributions));
+    NumEvents(GroupI) = sum(Mask);
     NumSinkSites(GroupI) = countUniqueSinkSites(EventTable,Mask);
     MeanEventBurdenContribution(GroupI) = mean(Contributions,'omitnan');
     MedianEventBurdenContribution(GroupI) = median(Contributions,'omitnan');
@@ -358,8 +252,8 @@ for GroupI = 1:NumGroups
     MeanBurdenAmplitudePercent(GroupI) = mean(EventTable.BurdenAmplitudePercent(Mask),'omitnan');
     MeanBurdenArea_um2(GroupI) = mean(EventTable.BurdenArea_um2(Mask),'omitnan');
     MeanBurdenDuration_sec(GroupI) = mean(EventTable.BurdenDuration_sec(Mask),'omitnan');
-    Burden_Occupancy(GroupI) = sum(EventTable.PerEventBurdenOccupancy_per_mm2_per_min(Mask),'omitnan');
-    Burden_RankAmplitude(GroupI) = sum(EventTable.PerEventBurdenRankAmplitude_per_mm2_per_min(Mask),'omitnan');
+    Burden_Occupancy(GroupI) = sum(EventTable.PerEventBurdenOccupancy_per_mm2_per_min(Mask));
+    Burden_RankAmplitude(GroupI) = sum(EventTable.PerEventBurdenRankAmplitude_per_mm2_per_min(Mask));
     Burden_AmplitudeComposite(GroupI) = HypoxicBurden(GroupI);
 end
 
@@ -377,128 +271,6 @@ RecordingTable = [GroupValues,table(NumEvents,NumSinkSites,RecordingArea_um2,Rec
 
 end
 
-function GroupSummaryTable = createGroupedBurdenSummaryTable(EventTable,RecordingTable)
-
-GroupSummaryTable = table();
-GroupColumns = {'DrugID','Condition','PuffStim','Genotype','Promoter'};
-GroupColumns = GroupColumns(ismember(GroupColumns,RecordingTable.Properties.VariableNames));
-if isempty(GroupColumns) || isempty(RecordingTable)
-    return
-end
-
-[GroupValues,~,RecordingGroupIdx] = unique(RecordingTable(:,GroupColumns),'rows','stable');
-[~,~,EventGroupIdx] = unique(EventTable(:,GroupColumns),'rows','stable');
-NumGroups = height(GroupValues);
-NumRecordings = zeros(NumGroups,1);
-NumEvents = zeros(NumGroups,1);
-NumSinkSites = zeros(NumGroups,1);
-HypoxicBurden_Mean = nan(NumGroups,1);
-HypoxicBurden_SEM = nan(NumGroups,1);
-HypoxicBurden_Median = nan(NumGroups,1);
-HypoxicBurden_Sum = nan(NumGroups,1);
-HypoxicBurden_per_mm2_Mean = nan(NumGroups,1);
-HypoxicBurden_per_mm2_SEM = nan(NumGroups,1);
-HypoxicBurden_per_mm2_Median = nan(NumGroups,1);
-HypoxicBurden_per_mm2_Sum = nan(NumGroups,1);
-HypoxicBurden_per_sec_Mean = nan(NumGroups,1);
-HypoxicBurden_per_sec_SEM = nan(NumGroups,1);
-HypoxicBurden_per_min_Mean = nan(NumGroups,1);
-HypoxicBurden_per_min_SEM = nan(NumGroups,1);
-HypoxicBurden_per_mm2_per_sec_Mean = nan(NumGroups,1);
-HypoxicBurden_per_mm2_per_sec_SEM = nan(NumGroups,1);
-HypoxicBurden_per_mm2_per_min_Mean = nan(NumGroups,1);
-HypoxicBurden_per_mm2_per_min_SEM = nan(NumGroups,1);
-Burden_Occupancy_Mean = nan(NumGroups,1);
-Burden_Occupancy_SEM = nan(NumGroups,1);
-Burden_RankAmplitude_Mean = nan(NumGroups,1);
-Burden_RankAmplitude_SEM = nan(NumGroups,1);
-Burden_AmplitudeComposite_Mean = nan(NumGroups,1);
-Burden_AmplitudeComposite_SEM = nan(NumGroups,1);
-MeanEventBurdenContribution = nan(NumGroups,1);
-MedianEventBurdenContribution = nan(NumGroups,1);
-MeanEventBurdenContribution_per_mm2 = nan(NumGroups,1);
-MedianEventBurdenContribution_per_mm2 = nan(NumGroups,1);
-MeanBurdenAmplitudePercent = nan(NumGroups,1);
-MeanBurdenArea_um2 = nan(NumGroups,1);
-MeanBurdenDuration_sec = nan(NumGroups,1);
-EventSpecificAreaMatchRate = nan(NumGroups,1);
-MetricBasis = repmat({'GroupedRecordingSummary'},NumGroups,1);
-
-for GroupIdx = 1:NumGroups
-    RecordingMask = RecordingGroupIdx==GroupIdx;
-    EventMask = EventGroupIdx==GroupIdx;
-    BurdenValues = RecordingTable.HypoxicBurden(RecordingMask);
-    BurdenPerMm2Values = RecordingTable.HypoxicBurden_per_mm2(RecordingMask);
-    BurdenPerSecValues = RecordingTable.HypoxicBurden_per_sec(RecordingMask);
-    BurdenPerMinValues = RecordingTable.HypoxicBurden_per_min(RecordingMask);
-    BurdenPerMm2PerSecValues = RecordingTable.HypoxicBurden_per_mm2_per_sec(RecordingMask);
-    BurdenPerMm2PerMinValues = RecordingTable.HypoxicBurden_per_mm2_per_min(RecordingMask);
-    OccupancyValues = RecordingTable.Burden_Occupancy(RecordingMask);
-    RankAmplitudeValues = RecordingTable.Burden_RankAmplitude(RecordingMask);
-    AmplitudeCompositeValues = RecordingTable.Burden_AmplitudeComposite(RecordingMask);
-    Contributions = EventTable.PerEventBurdenContribution(EventMask);
-    ContributionsPerMm2 = EventTable.PerEventBurdenContribution_per_mm2(EventMask);
-
-    NumRecordings(GroupIdx) = sum(RecordingMask);
-    NumEvents(GroupIdx) = sum(isfinite(Contributions));
-    NumSinkSites(GroupIdx) = countUniqueSinkSites(EventTable,EventMask);
-    HypoxicBurden_Mean(GroupIdx) = mean(BurdenValues,'omitnan');
-    HypoxicBurden_SEM(GroupIdx) = std(BurdenValues,'omitnan') ./ sqrt(max(sum(isfinite(BurdenValues)),1));
-    HypoxicBurden_Median(GroupIdx) = median(BurdenValues,'omitnan');
-    HypoxicBurden_Sum(GroupIdx) = sum(BurdenValues,'omitnan');
-    HypoxicBurden_per_mm2_Mean(GroupIdx) = mean(BurdenPerMm2Values,'omitnan');
-    HypoxicBurden_per_mm2_SEM(GroupIdx) = std(BurdenPerMm2Values,'omitnan') ./ ...
-        sqrt(max(sum(isfinite(BurdenPerMm2Values)),1));
-    HypoxicBurden_per_mm2_Median(GroupIdx) = median(BurdenPerMm2Values,'omitnan');
-    HypoxicBurden_per_mm2_Sum(GroupIdx) = sum(BurdenPerMm2Values,'omitnan');
-    HypoxicBurden_per_sec_Mean(GroupIdx) = mean(BurdenPerSecValues,'omitnan');
-    HypoxicBurden_per_sec_SEM(GroupIdx) = std(BurdenPerSecValues,'omitnan') ./ ...
-        sqrt(max(sum(isfinite(BurdenPerSecValues)),1));
-    HypoxicBurden_per_min_Mean(GroupIdx) = mean(BurdenPerMinValues,'omitnan');
-    HypoxicBurden_per_min_SEM(GroupIdx) = std(BurdenPerMinValues,'omitnan') ./ ...
-        sqrt(max(sum(isfinite(BurdenPerMinValues)),1));
-    HypoxicBurden_per_mm2_per_sec_Mean(GroupIdx) = mean(BurdenPerMm2PerSecValues,'omitnan');
-    HypoxicBurden_per_mm2_per_sec_SEM(GroupIdx) = std(BurdenPerMm2PerSecValues,'omitnan') ./ ...
-        sqrt(max(sum(isfinite(BurdenPerMm2PerSecValues)),1));
-    HypoxicBurden_per_mm2_per_min_Mean(GroupIdx) = mean(BurdenPerMm2PerMinValues,'omitnan');
-    HypoxicBurden_per_mm2_per_min_SEM(GroupIdx) = std(BurdenPerMm2PerMinValues,'omitnan') ./ ...
-        sqrt(max(sum(isfinite(BurdenPerMm2PerMinValues)),1));
-    Burden_Occupancy_Mean(GroupIdx) = mean(OccupancyValues,'omitnan');
-    Burden_Occupancy_SEM(GroupIdx) = std(OccupancyValues,'omitnan') ./ ...
-        sqrt(max(sum(isfinite(OccupancyValues)),1));
-    Burden_RankAmplitude_Mean(GroupIdx) = mean(RankAmplitudeValues,'omitnan');
-    Burden_RankAmplitude_SEM(GroupIdx) = std(RankAmplitudeValues,'omitnan') ./ ...
-        sqrt(max(sum(isfinite(RankAmplitudeValues)),1));
-    Burden_AmplitudeComposite_Mean(GroupIdx) = mean(AmplitudeCompositeValues,'omitnan');
-    Burden_AmplitudeComposite_SEM(GroupIdx) = std(AmplitudeCompositeValues,'omitnan') ./ ...
-        sqrt(max(sum(isfinite(AmplitudeCompositeValues)),1));
-    MeanEventBurdenContribution(GroupIdx) = mean(Contributions,'omitnan');
-    MedianEventBurdenContribution(GroupIdx) = median(Contributions,'omitnan');
-    MeanEventBurdenContribution_per_mm2(GroupIdx) = mean(ContributionsPerMm2,'omitnan');
-    MedianEventBurdenContribution_per_mm2(GroupIdx) = median(ContributionsPerMm2,'omitnan');
-    MeanBurdenAmplitudePercent(GroupIdx) = mean(EventTable.BurdenAmplitudePercent(EventMask),'omitnan');
-    MeanBurdenArea_um2(GroupIdx) = mean(EventTable.BurdenArea_um2(EventMask),'omitnan');
-    MeanBurdenDuration_sec(GroupIdx) = mean(EventTable.BurdenDuration_sec(EventMask),'omitnan');
-    EventSpecificAreaMatchRate(GroupIdx) = mean(double(EventTable.BurdenAreaEventSpecificMatched(EventMask)),'omitnan');
-end
-
-GroupSummaryTable = [GroupValues,table(NumRecordings,NumEvents,NumSinkSites, ...
-    HypoxicBurden_Mean,HypoxicBurden_SEM,HypoxicBurden_Median,HypoxicBurden_Sum, ...
-    HypoxicBurden_per_mm2_Mean,HypoxicBurden_per_mm2_SEM,HypoxicBurden_per_mm2_Median, ...
-    HypoxicBurden_per_mm2_Sum,HypoxicBurden_per_sec_Mean,HypoxicBurden_per_sec_SEM, ...
-    HypoxicBurden_per_min_Mean,HypoxicBurden_per_min_SEM, ...
-    HypoxicBurden_per_mm2_per_sec_Mean,HypoxicBurden_per_mm2_per_sec_SEM, ...
-    HypoxicBurden_per_mm2_per_min_Mean,HypoxicBurden_per_mm2_per_min_SEM, ...
-    Burden_Occupancy_Mean,Burden_Occupancy_SEM, ...
-    Burden_RankAmplitude_Mean,Burden_RankAmplitude_SEM, ...
-    Burden_AmplitudeComposite_Mean,Burden_AmplitudeComposite_SEM, ...
-    MeanEventBurdenContribution,MedianEventBurdenContribution, ...
-    MeanEventBurdenContribution_per_mm2,MedianEventBurdenContribution_per_mm2, ...
-    MeanBurdenAmplitudePercent,MeanBurdenArea_um2,MeanBurdenDuration_sec, ...
-    EventSpecificAreaMatchRate,MetricBasis)];
-
-end
-
 function [TimeSeriesTable,BasisTable] = createBurdenTimeSeriesTable(EventTable)
 
 TimeSeriesTable = table();
@@ -509,7 +281,7 @@ if isempty(EventTable) || ~all(ismember(RequiredColumns,EventTable.Properties.Va
     return
 end
 
-GroupColumns = {'Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'};
+GroupColumns = {'RecordingID','Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'};
 GroupColumns = GroupColumns(ismember(GroupColumns,EventTable.Properties.VariableNames));
 if isempty(GroupColumns)
     GroupColumns = {'Mouse'};
@@ -529,7 +301,7 @@ RecordingDuration_sec = [];
 Formula = {};
 Units = {};
 UnitsPerMm2 = {};
-AllMetaColumns = {'Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'};
+AllMetaColumns = {'RecordingID','Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'};
 Meta = struct();
 for MetaIdx = 1:numel(AllMetaColumns)
     Meta.(AllMetaColumns{MetaIdx}) = strings(0,1);
@@ -552,7 +324,7 @@ for GroupI = 1:NumGroups
     EndFrame = round(tableColumnToDouble(EventRows.EndFrame));
     EventContribution = tableColumnToDouble(EventRows.PerEventBurdenContribution);
     EventContributionPerMm2 = tableColumnToDouble(EventRows.PerEventBurdenContribution_per_mm2);
-    EventDuration = getBurdenEventDurationForTrace(EventRows,Fs,StartFrame,EndFrame);
+
 
     for EventIdx = 1:height(EventRows)
         FirstFrame = max(1,StartFrame(EventIdx));
@@ -561,7 +333,7 @@ for GroupI = 1:NumGroups
             continue
         end
         FrameIdx = FirstFrame:LastFrame;
-        DurationSec = EventDuration(EventIdx);
+        DurationSec = numel(FrameIdx)/Fs; % integrate exactly over the exported frame intervals
         if ~isfinite(DurationSec) || DurationSec<=0
             DurationSec = numel(FrameIdx) ./ Fs;
         end
@@ -598,11 +370,11 @@ if isempty(RecordingIndex)
     return
 end
 
-TimeSeriesTable = table(RecordingIndex,Meta.Experiment,Meta.Mouse,Meta.Condition, ...
+TimeSeriesTable = table(RecordingIndex,Meta.RecordingID,Meta.Experiment,Meta.Mouse,Meta.Condition, ...
     Meta.DrugID,Meta.Genotype,Meta.Promoter,Meta.PuffStim,Frame,TimeSec,SampleFs, ...
     RecordingDuration_sec,ActiveHypoxicEvents,HypoxicBurdenOverTime, ...
     HypoxicBurdenPerMm2OverTime,Formula,Units,UnitsPerMm2, ...
-    'VariableNames',{'RecordingIndex','Experiment','Mouse','Condition','DrugID', ...
+    'VariableNames',{'RecordingIndex','RecordingID','Experiment','Mouse','Condition','DrugID', ...
     'Genotype','Promoter','PuffStim','Frame','TimeSec','SampleFs', ...
     'RecordingDuration_sec','ActiveHypoxicEvents','HypoxicBurdenOverTime', ...
     'HypoxicBurdenPerMm2OverTime','Formula','Units','UnitsPerMm2'});
@@ -634,85 +406,26 @@ BasisTable = table(Metric,OutputSheet,AnalysisUnit,Formula,Normalization,Recomme
 
 end
 
-function Fs = inferBurdenSampleFrequency(EventRows)
-
-Fs = NaN;
-if all(ismember({'StartFrame','EndFrame','DurationSec'},EventRows.Properties.VariableNames))
-    StartFrame = tableColumnToDouble(EventRows.StartFrame);
-    EndFrame = tableColumnToDouble(EventRows.EndFrame);
-    DurationSec = tableColumnToDouble(EventRows.DurationSec);
-    FrameSpan = abs(EndFrame-StartFrame);
-    if ismember('DurationFrames',EventRows.Properties.VariableNames)
-        FrameSpan = tableColumnToDouble(EventRows.DurationFrames);
-    end
-    Rate = FrameSpan ./ DurationSec;
-    Rate = Rate(isfinite(Rate) & Rate>0);
-    if ~isempty(Rate)
-        Fs = median(Rate,'omitnan');
-    end
+function Fs=inferBurdenSampleFrequency(E)
+assert(ismember('SampleF',E.Properties.VariableNames),'OxygenDynamics:MissingSampleRate','Saved sampling rate is required.');
+v=unique(E.SampleF);assert(isscalar(v)&&isfinite(v)&&v>0,'OxygenDynamics:InvalidExposure','Inconsistent recording sampling rates.');Fs=v;
 end
-if ~isfinite(Fs) || Fs<=0
-    Fs = 1;
-end
-
-end
-
-function RecordingDuration = inferBurdenRecordingDuration(EventRows,Fs)
-
-RecordingDuration = NaN;
-if ismember('BurdenRecordingDuration_sec',EventRows.Properties.VariableNames)
-    Durations = tableColumnToDouble(EventRows.BurdenRecordingDuration_sec);
-    Durations = Durations(isfinite(Durations) & Durations>0);
-    if ~isempty(Durations)
-        RecordingDuration = median(Durations,'omitnan');
-    end
-end
-if (~isfinite(RecordingDuration) || RecordingDuration<=0) && ismember('EndSec',EventRows.Properties.VariableNames)
-    EndSec = tableColumnToDouble(EventRows.EndSec);
-    EndSec = EndSec(isfinite(EndSec) & EndSec>0);
-    if ~isempty(EndSec)
-        RecordingDuration = max(EndSec);
-    end
-end
-if ~isfinite(RecordingDuration) || RecordingDuration<=0
-    EndFrame = tableColumnToDouble(EventRows.EndFrame);
-    EndFrame = EndFrame(isfinite(EndFrame) & EndFrame>0);
-    if ~isempty(EndFrame)
-        RecordingDuration = max(EndFrame) ./ Fs;
-    end
-end
-
+function D=inferBurdenRecordingDuration(E,~)
+v=unique(E.BurdenRecordingDuration_sec);assert(isscalar(v)&&isfinite(v)&&v>0,'OxygenDynamics:InvalidExposure','Independent recording duration is required.');D=v;
 end
 
 function NumFrames = inferBurdenNumFrames(EventRows,Fs,RecordingDuration)
 
-EndFrame = tableColumnToDouble(EventRows.EndFrame);
-EndFrame = EndFrame(isfinite(EndFrame) & EndFrame>0);
-MaxEndFrame = 0;
-if ~isempty(EndFrame)
-    MaxEndFrame = max(EndFrame);
-end
-NumFrames = max(MaxEndFrame,ceil(RecordingDuration .* Fs));
-NumFrames = round(NumFrames);
-
-end
-
-function EventDuration = getBurdenEventDurationForTrace(EventRows,Fs,StartFrame,EndFrame)
-
-if ismember('DurationSec',EventRows.Properties.VariableNames)
-    EventDuration = tableColumnToDouble(EventRows.DurationSec);
-else
-    EventDuration = nan(height(EventRows),1);
-end
-Invalid = ~isfinite(EventDuration) | EventDuration<=0;
-EventDuration(Invalid) = max(1,EndFrame(Invalid)-StartFrame(Invalid)+1) ./ Fs;
-
+NumFrames=round(RecordingDuration*Fs);
+assert(abs(NumFrames-RecordingDuration*Fs)<1e-6 && all(EventRows.StartFrame>=1) && all(EventRows.EndFrame<=NumFrames), ...
+    'OxygenDynamics:InvalidExposure','Event bounds are inconsistent with the independent recording exposure.');
 end
 
 function Count = countUniqueSinkSites(EventTable,Mask)
 
 if ismember('SinkID',EventTable.Properties.VariableNames)
-    Count = numel(unique(string(EventTable.SinkID(Mask))));
+    cols=intersect({'RecordingID','Experiment','Mouse','SinkID'},EventTable.Properties.VariableNames,'stable');
+    Count=height(unique(EventTable(Mask,cols),'rows'));
 else
     Count = NaN;
 end
@@ -722,14 +435,8 @@ end
 function Quantile = computeWithinRecordingAmplitudeQuantile(EventTable)
 
 Quantile = nan(height(EventTable),1);
-GroupColumns = {'Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'};
-GroupColumns = GroupColumns(ismember(GroupColumns,EventTable.Properties.VariableNames));
-if isempty(GroupColumns)
-    Quantile = tiedQuantile(EventTable.BurdenAmplitudePercent);
-    return
-end
-
-Keys = makeTableGroupKeys(EventTable,GroupColumns);
+assert(ismember('RecordingID',EventTable.Properties.VariableNames),'OxygenDynamics:MissingRecordingIdentity','RecordingID is required.');
+Keys=string(EventTable.RecordingID);
 UniqueKeys = unique(Keys,'stable');
 for KeyIdx = 1:numel(UniqueKeys)
     Mask = Keys==UniqueKeys(KeyIdx);
@@ -811,8 +518,8 @@ MetricBasis = {'Event-based'; 'Recording-level sum of true event rows'; ...
     'original amplitude x area x duration composite'};
 Notes = {'One row per oxygen sink event from OxySinkEvents'; ...
     'Grouped by available recording metadata'; ...
-    'Falls back to site-level MeanOxySinkArea_um only when event-specific Area_um cannot be matched'; ...
-    'Preferred source is EventSpecificMetrics.Area_um / EventSpecificMetrics.Area_norm'; ...
+    'Uses native EventArea_um2 when unmatched; missing native morphology remains NaN'; ...
+    'Eligible analyzed tissue area from the event table or recording registry'; ...
     'Amplitude is converted to positive drop percent from the event amplitude column'; ...
     'Units are percent * um^2 * seconds per 1 mm^2 recording area'; ...
     'Preferred source is TableOxygenSinks.RecDuration'; ...
@@ -825,7 +532,7 @@ Notes = {'One row per oxygen sink event from OxySinkEvents'; ...
     'Long-format sheet: one row per recording frame/time point for EEG/ECG/sleep-state alignment'; ...
     'Raw recorded-FOV burden signal over time; not FOV-normalized and not per-minute normalized'; ...
     'Recommended frame-aligned burden signal for recordings with different FOV sizes'; ...
-    'Interface-contract default burden variant for cross-genotype/cross-cohort comparisons; amplitude-free.'; ...
+    'Concurrent event-time density; not tissue occupancy or a calibrated oxygen deficit.'; ...
     'Interface-contract sensitivity variant; relative within recording only, not absolutely comparable across animals.'; ...
     'Interface-contract original composite; valid within matched-acquisition cohorts only.'};
 

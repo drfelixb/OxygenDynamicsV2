@@ -10,6 +10,13 @@ RecordingId = RecordingInfo.DatafileID;
 RecordingMetadata = createStatsRecordingMetadata(RecordingId,RecordingInput.Mouse, ...
     RecordingInput.Condition,RecordingInput.DrugID,RecordingInput.Genotype, ...
     RecordingInput.Promoter,RecordingInput.Puff,RecordingInput.PixelSize,RecordingIndex);
+RecordingMetadata.RecordingID = char(java.io.File(RecordingFolder).getCanonicalPath());
+if isfield(RecordingInput,'RecordingID') && strlength(string(RecordingInput.RecordingID))>0
+    RecordingMetadata.RecordingID = char(string(RecordingInput.RecordingID));
+end
+assert(isfield(RecordingInput,'SampleF') && isfinite(RecordingInput.SampleF) && RecordingInput.SampleF>0, ...
+    'OxygenDynamics:MissingSampleRate','A positive recording SampleF is required.');
+RecordingMetadata.SampleF = RecordingInput.SampleF;
 BehaviourInputs = createStatsBehaviourInputs(RecordingInput.Posture,RecordingInput.Pupil, ...
     RecordingInput.Puff,RecordingInput.Whisking);
 RecordingInfo.HasConfiguredBehaviourInputs = hasStatsBehaviourInputs(BehaviourInputs);
@@ -27,6 +34,8 @@ end
 StatsInfo.Recordings(RecordingIndex) = RecordingInfo;
 
 SinkData = loadStatsSinkRecordingData(RecordingInfo.SinksDataFolder,UseCurated,RecordingFolder,RecordingMetadata);
+SourceInfo=loadRequiredMatVar(SinkData.MatFile,'AnalysisInfo');
+validateOxygenSourceFiles(SourceInfo,RecordingFolder);
 StatsInfo.Recordings(RecordingIndex).SinksMatFile = SinkData.MatFile;
 StatsInfo.Recordings(RecordingIndex).HasSinks = SinkData.HasSinks;
 [RecordingCells.TableOxygenSinks,RecordingCells.TableOxygenSinkEvents, ...
@@ -39,6 +48,9 @@ end
 
 IncludeROITraces = strcmp(ImagingMode,'BLI');
 SurgeData = loadStatsSurgeRecordingData(RecordingInfo.SurgesDataFolder,RecordingMetadata,IncludeROITraces);
+SurgeInfo=loadRequiredMatVar(SurgeData.MatFile,'AnalysisInfo');
+assert(strcmp(SourceInfo.RawSHA256,SurgeInfo.RawSHA256) && strcmp(SourceInfo.DenoisedSHA256,SurgeInfo.DenoisedSHA256), ...
+    'OxygenDynamics:MixedSourceRuns','Sink and surge outputs refer to different source data. Rerun the master.');
 StatsInfo.Recordings(RecordingIndex).SurgesMatFile = SurgeData.MatFile;
 StatsInfo.Recordings(RecordingIndex).HasSurges = SurgeData.HasSurges;
 [RecordingCells.TableOxygenSurges,RecordingCells.TableOxygenSurgeEvents, ...
@@ -48,6 +60,8 @@ StatsInfo.Recordings(RecordingIndex).HasSurges = SurgeData.HasSurges;
 if IncludeROITraces && size(RecordingCells.ROIsTraces,2)>=6 && ~isempty(RecordingCells.ROIsTraces{RecordingIndex,6})
     StatsInfo.Recordings(RecordingIndex).HasROITraces = true;
 end
+
+RecordingCells.RecordingRegistry{RecordingIndex} = createAnalysisRecordingRow(RecordingMetadata,SinkData,SurgeData);
 
 if RecordingInfo.HasBehaviourData
     RecordingCells.BehaviourDataCombo(RecordingIndex,:) = loadStatsBehaviourRow( ...

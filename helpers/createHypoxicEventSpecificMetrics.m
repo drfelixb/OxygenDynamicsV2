@@ -12,44 +12,12 @@ if ~isnumeric(SinkTable.NumOxySinkEvents) || ~all(ismember( ...
     return
 end
 
-SinkBinaryPath = findSinkBinaryTiff(SinksDataFolder);
-if isempty(SinkBinaryPath)
-    warning('No IM_OxySinks_BW TIFF found in %s. Event-specific morphology will be skipped.', ...
-        SinksDataFolder);
+if ismember('FramePixels',SinkTable.Properties.VariableNames)
+    TrackedEventPixels = vertcat(SinkTable.FramePixels{:});
+    EventMetricsTable = buildHypoxicEventSpecificTable(TrackedEventPixels,SinkTable.FrameSize{1},SinkTable,RecordingMetadata);
     return
 end
-
-OxySinkAreaAll = loadOptionalMatVar(SinksMatFile,'OxySinkArea_all',[]);
-if isempty(OxySinkAreaAll)
-    warning('No OxySinkArea_all variable found in %s. Event-specific morphology will be skipped.', ...
-        SinksMatFile);
-    return
-end
-if ~isempty(IncludedPocs)
-    OxySinkAreaAll = OxySinkAreaAll(IncludedPocs,:);
-end
-
-[SinkBinaryStack,~,~] = loadtiff(SinkBinaryPath);
-SinkBinaryStack = logical(SinkBinaryStack);
-[~,TrackedEventPixels] = reconstructHypoxicEventFootprints( ...
-    SinkBinaryStack,OxySinkAreaAll,SinkTable);
-EventMetricsTable = buildHypoxicEventSpecificTable(TrackedEventPixels,size(SinkBinaryStack(:,:,1)), ...
-    SinkTable,RecordingMetadata);
-end
-
-function SinkBinaryPath = findSinkBinaryTiff(SinksDataFolder)
-
-TiffFiles = dir(fullfile(SinksDataFolder,'IM_OxySinks_BW*.tif'));
-if isempty(TiffFiles)
-    TiffFiles = dir(fullfile(SinksDataFolder,'*OxySinks*BW*.tif'));
-end
-if isempty(TiffFiles)
-    SinkBinaryPath = '';
-    return
-end
-
-[~,NewestIdx] = max([TiffFiles.datenum]);
-SinkBinaryPath = fullfile(TiffFiles(NewestIdx).folder,TiffFiles(NewestIdx).name);
+warning('OxygenDynamics:NativeMasksUnavailable','Event morphology requires rerunning the master to save native masks.');
 end
 
 function EventMetricsTable = buildHypoxicEventSpecificTable(TrackedEventPixels,FrameSize,SinkTable,RecordingMetadata)
@@ -121,12 +89,12 @@ for FrameIdx = EventFrames(:)'
     end
     Area(end+1,1) = sum([Props.Area]); %#ok<AGROW>
     FilledArea(end+1,1) = sum([Props.FilledArea]); %#ok<AGROW>
-    Diameter(end+1,1) = mean([Props.EquivDiameter]); %#ok<AGROW>
+    Diameter(end+1,1) = sqrt(4*sum([Props.Area])/pi); %#ok<AGROW>
     Perimeter(end+1,1) = sum([Props.Perimeter]); %#ok<AGROW>
     Circularity(end+1,1) = mean([Props.Circularity]); %#ok<AGROW>
     Centroids = [Props.Centroid];
-    CentroidX(end+1,1) = mean(Centroids(1:2:end)); %#ok<AGROW>
-    CentroidY(end+1,1) = mean(Centroids(2:2:end)); %#ok<AGROW>
+    CentroidX(end+1,1) = sum(Centroids(1:2:end).*[Props.Area])/sum([Props.Area]); %#ok<AGROW>
+    CentroidY(end+1,1) = sum(Centroids(2:2:end).*[Props.Area])/sum([Props.Area]); %#ok<AGROW>
 end
 
 Morphology = struct();
@@ -151,14 +119,18 @@ Genotype = SinkTable.Genotype(SinkIdx);
 PuffStim = SinkTable.PuffStim(SinkIdx);
 Promoter = SinkTable.Promoter(SinkIdx);
 Pixelsize = PixelSize;
-PocketID = {[RecordingMetadata.Mouse,'_',num2str(SinkIdx)]};
+SiteIndex = SinkIdx;
+if ismember('SiteID',SinkTable.Properties.VariableNames), SiteIndex=SinkTable.SiteID(SinkIdx); end
+PocketID = {[RecordingMetadata.Mouse,'_',num2str(SiteIndex)]};
 EventID = {[PocketID{1},'_',num2str(EventIdx)]};
 NormOxySinkAmp = SinkTable.NormOxySinkAmp{SinkIdx}(EventIdx);
-Start = SinkTable.Start{SinkIdx}(EventIdx);
-Duration = SinkTable.Duration{SinkIdx}(EventIdx);
+Start = (SinkTable.Start{SinkIdx}(EventIdx)-1)/SinkTable.SampleF(SinkIdx);
+Duration = SinkTable.Duration{SinkIdx}(EventIdx)/SinkTable.SampleF(SinkIdx);
 Size_modulation = SinkTable.Size_modulation{SinkIdx}(EventIdx);
-StartFrame = EventInfo.PixelIdxList(1);
-EndFrame = EventInfo.PixelIdxList(end);
+DetectionStartFrame = EventInfo.PixelIdxList(1);
+DetectionEndFrame = EventInfo.PixelIdxList(end);
+StartFrame=SinkTable.Start{SinkIdx}(EventIdx);
+EndFrame=StartFrame+SinkTable.Duration{SinkIdx}(EventIdx)-1;
 MetricBasis = {'EventBased'};
 
 Area_um = Morphology.AreaUm;
@@ -171,8 +143,10 @@ Circularity = Morphology.Circularity;
 Perimeter_um = Morphology.PerimeterUm;
 Diameter_um = Morphology.DiameterUm;
 
-Row = table(Experiment,Mouse,Condition,DrugID,Genotype,PuffStim,Promoter,Pixelsize, ...
-    PocketID,EventID,StartFrame,EndFrame,NormOxySinkAmp,Start,Duration,Size_modulation, ...
+RecordingID = string(RecordingMetadata.RecordingID);
+SinkID = SiteIndex; EventIndex = EventIdx;
+Row = table(RecordingID,SinkID,EventIndex,Experiment,Mouse,Condition,DrugID,Genotype,PuffStim,Promoter,Pixelsize, ...
+    PocketID,EventID,StartFrame,EndFrame,DetectionStartFrame,DetectionEndFrame,NormOxySinkAmp,Start,Duration,Size_modulation, ...
     Area_um,Area_norm,FilledArea_um,FilledArea_norm,Centroid_x,Centroid_y,Circularity, ...
     Perimeter_um,Diameter_um,MetricBasis);
 end

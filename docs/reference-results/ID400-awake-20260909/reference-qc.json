@@ -1,0 +1,10 @@
+{
+  "MeanOccupiedTissueFraction": 0.0050455035325110767,
+  "LabelsAvailable": false,
+  "SinkSites": 56,
+  "SinkEvents": 137,
+  "SinkValidBaselines": 92,
+  "SurgeSites": 14,
+  "SurgeEvents": 40,
+  "SurgeValidBaselines": 21
+}

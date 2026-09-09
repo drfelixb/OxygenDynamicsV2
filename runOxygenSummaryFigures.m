@@ -21,7 +21,7 @@ end
 mkdirIfMissing(OutputFolder);
 
 Data = load(DataOutputMat);
-if ~isfield(Data,'Table_OxygenSinks_OutCombo') || isempty(Data.Table_OxygenSinks_OutCombo)
+if ~isfield(Data,'Table_OxygenSinks_OutCombo')
     error('No Table_OxygenSinks_OutCombo table found in %s.',DataOutputMat);
 end
 
@@ -34,8 +34,9 @@ FigureManifestRows = cell(0,1);
 for MetricIdx = 1:numel(MetricSpecs)
     Spec = MetricSpecs(MetricIdx);
     [FigureFile,SummaryTable] = writeMetricSummaryFigure(SinkTable,Spec,OutputFolder);
-    FigureFiles{end+1,1} = FigureFile; %#ok<AGROW>
     SummaryRows{end+1,1} = SummaryTable; %#ok<AGROW>
+    if isempty(FigureFile),continue;end
+    FigureFiles{end+1,1} = FigureFile; %#ok<AGROW>
     FigureManifestRows{end+1,1} = createFigureManifestRow("SinkSummary",Spec,FigureFile); %#ok<AGROW>
 end
 
@@ -110,7 +111,7 @@ for VarIdx = 1:numel(AllVariables)
         continue
     end
     switch VarName
-        case {'Metric','Group','TimeAxis'}
+        case {'Metric','Group','TimeAxis','ObservationUnit','UnavailableReason'}
             SummaryTable.(VarName) = strings(NumRows,1);
         otherwise
             SummaryTable.(VarName) = nan(NumRows,1);
@@ -170,13 +171,13 @@ function MetricSpecs = createSummaryMetricSpecs(SinkTable)
 
 CandidateSpecs = struct( ...
     'Variable',{'MeanOxySinkEvent_NormAmp','MeanOxySinkEvent_Duration','NumOxySinkEvents_Norm','MeanOxySinkArea_um'}, ...
-    'Label',{'Mean sink event normalized amplitude','Mean sink event duration','Normalized sink event count','Mean sink area'}, ...
+    'Label',{'Site mean event BLI drop (fraction)','Site mean event duration (s)','Site recurrence (events/min)','Site mean detected area (um2)'}, ...
     'FileStem',{'MeanOxySinkEvent_NormAmp','MeanOxySinkEvent_Duration','NumOxySinkEvents_Norm','MeanOxySinkArea_um'});
 
 Keep = ismember({CandidateSpecs.Variable},SinkTable.Properties.VariableNames);
 MetricSpecs = CandidateSpecs(Keep);
 if isempty(MetricSpecs)
-    error('No supported summary metrics were found in Table_OxygenSinks_OutCombo.');
+    warning('OxygenDynamics:NoSiteMetrics','No site metrics are available; continuing with recording outputs.');
 end
 
 end
@@ -185,16 +186,38 @@ function [FigurePng,SummaryTable] = writeMetricSummaryFigure(SinkTable,Spec,Outp
 
 Values = tableColumnToNumeric(SinkTable.(Spec.Variable));
 GroupLabels = createSummaryGroupLabels(SinkTable);
-ValidRows = isfinite(Values) & GroupLabels~="";
+ValidRows = GroupLabels~="";
 Values = Values(ValidRows);
 GroupLabels = GroupLabels(ValidRows);
+ObservationUnit="GroupSummaryRow";
+if ismember('Mouse',SinkTable.Properties.VariableNames)
+ObservationUnit="MouseMean";
+MouseLabels=string(SinkTable.Mouse(ValidRows));
+if ismember('RecordingID',SinkTable.Properties.VariableNames)
+    rec=string(SinkTable.RecordingID(ValidRows));
+else
+    rec=string(SinkTable.Experiment(ValidRows));
+end
+keys=table(GroupLabels,MouseLabels,rec);
+if ~isempty(keys)
+[recordKeys,~,ix]=unique(keys,'rows','stable');
+recordValues=splitapply(@mean,Values,ix);
+[mouseKeys,~,ix]=unique(recordKeys(:,{'GroupLabels','MouseLabels'}),'rows','stable');
+Values=splitapply(@mean,recordValues,ix); GroupLabels=mouseKeys.GroupLabels;
+end
+end
 
+keep=isfinite(Values);Values=Values(keep);GroupLabels=GroupLabels(keep);
 if isempty(Values)
-    error('No finite values available for metric %s.',Spec.Variable);
+    FigurePng='';
+    SummaryTable=table(string(Spec.Variable),"All",0,NaN,NaN,ObservationUnit,"No valid mouse measurements", ...
+        'VariableNames',{'Metric','Group','N','Mean','SEM','ObservationUnit','UnavailableReason'});
+    return
 end
 
 [GroupNames,~,GroupIdx] = unique(GroupLabels,'stable');
 SummaryTable = summarizeMetricGroups(Spec.Variable,GroupNames,GroupIdx,Values);
+SummaryTable.ObservationUnit(:)=ObservationUnit;
 
 Fig = figure('Visible','off','Color','w','Position',[100 100 960 540]);
 AxesHandle = axes(Fig);
@@ -399,28 +422,21 @@ if isempty(TraceList)
     return
 end
 
-TraceMatrix = nan(numel(TraceList),max(TraceLengths));
-for RecordingIdx = 1:numel(TraceList)
-    Trace = TraceList{RecordingIdx};
-    TraceMatrix(RecordingIdx,1:numel(Trace)) = Trace;
-end
-
+[TraceMatrix,SampleFs,coverage]=alignOxygenTraceSamples(TraceList,SampleFsValues);
 GroupLabels = RecordingLabels;
-SampleFsValues = SampleFsValues(isfinite(SampleFsValues) & SampleFsValues>0);
-if ~isempty(SampleFsValues)
-    if max(SampleFsValues)-min(SampleFsValues) > max(eps(max(SampleFsValues)),1e-9)
-        warning('OxygenDynamics:SummaryFigureMixedBurdenSampleFs', ...
-            'Hypoxic burden time-course figure has mixed SampleF values; using the median sample frequency.');
-    end
-    SampleFs = median(SampleFsValues,'omitnan');
+mice=strings(numel(RecordingIDs),1);
+for i=1:numel(RecordingIDs)
+    rows=find(RecordingIndex==RecordingIDs(i),1);
+    mice(i)=string(TimeSeriesTable.Mouse(rows));
 end
+[TraceMatrix,GroupLabels]=averageOxygenTracesByMouse(TraceMatrix,GroupLabels,mice(Keep),coverage);
 
 end
 
 function Label = createSingleRecordingLabel(RecordingRows)
 
 Parts = strings(1,0);
-CandidateColumns = {'DrugID','Condition','PuffStim'};
+CandidateColumns = {'DrugID','Condition','Genotype','Promoter','PuffStim'};
 for ColIdx = 1:numel(CandidateColumns)
     ColumnName = CandidateColumns{ColIdx};
     if ismember(ColumnName,RecordingRows.Properties.VariableNames)
@@ -455,10 +471,11 @@ for GroupI = 1:numel(GroupNames)
     PerRecordingMean = mean(GroupTrace,2,'omitnan');
     N(GroupI) = sum(isfinite(PerRecordingMean));
     Mean(GroupI) = mean(PerRecordingMean,'omitnan');
-    SEM(GroupI) = std(PerRecordingMean,'omitnan') ./ sqrt(max(N(GroupI),1));
+    if N(GroupI)>1, SEM(GroupI) = std(PerRecordingMean,'omitnan') / sqrt(N(GroupI)); end
 end
 
 SummaryTable = table(Metric,Group,N,Mean,SEM);
+SummaryTable.ObservationUnit=repmat("MouseMean",height(SummaryTable),1);
 SummaryTable.SampleF = repmat(SampleFs,height(SummaryTable),1);
 SummaryTable.TimeAxis = repmat(string(TimeLabel),height(SummaryTable),1);
 
@@ -560,6 +577,7 @@ N = [numel(Area); numel(Duration)];
 Mean = [safeCorr(Area,Amplitude); safeCorr(Duration,Contribution)];
 SEM = [NaN; NaN];
 SummaryTable = table(Metric,Group,N,Mean,SEM);
+SummaryTable.ObservationUnit=repmat("Event_DescriptiveOnly",height(SummaryTable),1);
 
 end
 
@@ -573,6 +591,13 @@ if ~isfield(Data,'NumOngoingOxysinksPerMm2') || isempty(Data.NumOngoingOxysinksP
 end
 
 TraceSummaryTable = createNormalizedSinkTraceSummaryTable(Data.NumOngoingOxysinksPerMm2);
+if isfield(Data,'RecordingRegistry') && height(Data.RecordingRegistry)==height(TraceSummaryTable)
+    for f={'RecordingID','Genotype','Promoter','PuffStim'}
+        TraceSummaryTable.(f{1})=Data.RecordingRegistry.(f{1});
+    end
+end
+rates=sampleFsToNumeric(Data.StatsInfo.SampleFs);
+TraceSummaryTable.SumOxySinksPer1mm2=TraceSummaryTable.SumOxySinksPer1mm2./rates;
 if isempty(TraceSummaryTable)
     return
 end
@@ -581,7 +606,7 @@ TraceSpecs = struct( ...
     'Variable',{'MeanOxySinksPer1mm2','MaxOxySinksPer1mm2','SumOxySinksPer1mm2'}, ...
     'Label',{'Mean ongoing oxygen sinks per 1 mm2', ...
     'Maximum ongoing oxygen sinks per 1 mm2', ...
-    'Summed ongoing oxygen sinks per 1 mm2'}, ...
+    'Integrated ongoing events (event-seconds per mm2)'}, ...
     'FileStem',{'OxySinksPer1mm2_Mean','OxySinksPer1mm2_Max','OxySinksPer1mm2_Sum'});
 [FigureFiles,SummaryRows,FigureManifestRows] = appendTableMetricFigures(FigureFiles,SummaryRows, ...
     FigureManifestRows,TraceSummaryTable,TraceSpecs,OutputFolder,"AreaNormalizedSinkCount");
@@ -658,22 +683,18 @@ for RowIdx = 1:size(TraceCells,1)
     TraceLengths(RowIdx) = numel(Trace);
 end
 
-MaxLength = max(TraceLengths);
-if MaxLength==0
-    return
+if ~any(TraceLengths), return; end
+GroupLabels=createTraceGroupLabels(TraceCells);
+mice=string(TraceCells(:,2));
+if isfield(Data,'RecordingRegistry') && height(Data.RecordingRegistry)==numel(TraceList)
+    rates=Data.RecordingRegistry.SampleF;
+    for i=1:numel(TraceList),GroupLabels(i)=createSingleRecordingLabel(Data.RecordingRegistry(i,:));end
+else
+    rates=sampleFsToNumeric(Data.StatsInfo.SampleFs);
 end
-
-TraceMatrix = nan(size(TraceCells,1),MaxLength);
-for RowIdx = 1:size(TraceCells,1)
-    Trace = TraceList{RowIdx};
-    TraceMatrix(RowIdx,1:numel(Trace)) = Trace;
-end
-
-GroupLabels = createTraceGroupLabels(TraceCells);
-ValidRows = any(isfinite(TraceMatrix),2) & GroupLabels~="";
-TraceMatrix = TraceMatrix(ValidRows,:);
-GroupLabels = GroupLabels(ValidRows);
-SampleFs = getStatsFigureSampleFrequency(Data,ValidRows);
+[TraceMatrix,SampleFs,coverage]=alignOxygenTraceSamples(TraceList,rates);
+ValidRows=GroupLabels~="";
+[TraceMatrix,GroupLabels]=averageOxygenTracesByMouse(TraceMatrix(ValidRows,:),GroupLabels(ValidRows),mice(ValidRows),coverage(ValidRows,:));
 
 end
 
@@ -780,10 +801,11 @@ for GroupI = 1:numel(GroupNames)
     PerRecordingMean = mean(GroupTrace,2,'omitnan');
     N(GroupI) = sum(isfinite(PerRecordingMean));
     Mean(GroupI) = mean(PerRecordingMean,'omitnan');
-    SEM(GroupI) = std(PerRecordingMean,'omitnan') ./ sqrt(max(N(GroupI),1));
+    if N(GroupI)>1, SEM(GroupI) = std(PerRecordingMean,'omitnan') / sqrt(N(GroupI)); end
 end
 
 SummaryTable = table(Metric,Group,N,Mean,SEM);
+SummaryTable.ObservationUnit=repmat("MouseMean",height(SummaryTable),1);
 SummaryTable.SampleF = repmat(SampleFs,height(SummaryTable),1);
 SummaryTable.TimeAxis = repmat(string(TimeLabel),height(SummaryTable),1);
 
@@ -813,9 +835,10 @@ for RowIdx = 1:NumRows
     DrugID(RowIdx) = string(TraceCells{RowIdx,4});
     Genotype(RowIdx) = string(TraceCells{RowIdx,5});
     Trace = traceCellToNumeric(TraceCells{RowIdx,6});
-    MeanOxySinksPer1mm2(RowIdx) = mean(Trace,'omitnan');
+    MeanOxySinksPer1mm2(RowIdx) = mean(Trace);
     MaxOxySinksPer1mm2(RowIdx) = max(Trace,[],'omitnan');
-    SumOxySinksPer1mm2(RowIdx) = sum(Trace,'omitnan');
+    SumOxySinksPer1mm2(RowIdx) = sum(Trace);
+    if any(~isfinite(Trace)),MaxOxySinksPer1mm2(RowIdx)=NaN;end
 end
 
 TraceSummaryTable = table(Experiment,Mouse,Condition,DrugID,Genotype, ...
@@ -869,8 +892,9 @@ Keep = ismember({Specs.Variable},TableData.Properties.VariableNames);
 Specs = Specs(Keep);
 for SpecIdx = 1:numel(Specs)
     [FigureFile,SummaryTable] = writeMetricSummaryFigure(TableData,Specs(SpecIdx),OutputFolder);
-    FigureFiles{end+1,1} = FigureFile; %#ok<AGROW>
     SummaryRows{end+1,1} = SummaryTable; %#ok<AGROW>
+    if isempty(FigureFile),continue;end
+    FigureFiles{end+1,1} = FigureFile; %#ok<AGROW>
     FigureManifestRows{end+1,1} = createFigureManifestRow(FigureType,Specs(SpecIdx),FigureFile); %#ok<AGROW>
 end
 
@@ -910,7 +934,7 @@ function GroupLabels = createSummaryGroupLabels(SinkTable)
 
 NumRows = height(SinkTable);
 Parts = strings(NumRows,0);
-CandidateColumns = {'DrugID','Condition','PuffStim'};
+CandidateColumns = {'DrugID','Condition','Genotype','Promoter','PuffStim'};
 for ColIdx = 1:numel(CandidateColumns)
     ColumnName = CandidateColumns{ColIdx};
     if ismember(ColumnName,SinkTable.Properties.VariableNames)
@@ -939,11 +963,12 @@ SEM = nan(numel(GroupNames),1);
 
 for GroupI = 1:numel(GroupNames)
     ThisGroup = Values(GroupIdx==GroupI);
-    N(GroupI) = numel(ThisGroup);
+    N(GroupI) = sum(isfinite(ThisGroup));
     Mean(GroupI) = mean(ThisGroup,'omitnan');
-    SEM(GroupI) = std(ThisGroup,'omitnan') ./ sqrt(max(N(GroupI),1));
+    if N(GroupI)>1, SEM(GroupI) = std(ThisGroup,'omitnan') / sqrt(N(GroupI)); end
 end
 
 SummaryTable = table(Metric,Group,N,Mean,SEM);
+SummaryTable.ObservationUnit=repmat("MouseMean",height(SummaryTable),1);
 
 end

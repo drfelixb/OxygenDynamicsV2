@@ -14,7 +14,7 @@ end
 
 RecordingMetadata = struct('DatafileID',DatafileID,'Mouse',Mouse,'Condition',Condition, ...
     'DrugID',DrugID,'Genotype',Genotype,'Promoter',Promoter, ...
-    'PuffStim',hasPuffStimulus(Puff),'PixelSize',PixelSize,'RecordingIndex',RecordingIndex);
+    'RecordingID',char(string(DatafileID)), 'PuffStim',hasPuffStimulus(Puff),'PixelSize',PixelSize,'RecordingIndex',RecordingIndex);
 end
 
 function HasPuffStimulus = hasPuffStimulus(Puff)

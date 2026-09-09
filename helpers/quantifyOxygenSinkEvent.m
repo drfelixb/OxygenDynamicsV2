@@ -27,25 +27,20 @@ else
 end
 
 DetectionAmp = abs(abs(min(temptrace(StartIndx:EndIndx)))-abs(min(tracetrend(StartIndx:EndIndx))));
-if EventStart == 1
-    BaselineStartIndx = min(size(rawtrace,2),EndIndx+1);
-    BaselineEndIndx = min(size(rawtrace,2),EndIndx+baselineWindowFrames);
-else
-    BaselineStartIndx = max(1,StartIndx-baselineWindowFrames);
-    BaselineEndIndx = max(1,StartIndx-1);
+BaselineStartIndx = StartIndx-baselineWindowFrames;
+BaselineEndIndx = StartIndx-1;
+Baseline=NaN; NormAmp=NaN;
+if BaselineStartIndx>=1 && BaselineEndIndx>=BaselineStartIndx
+    baselineValues=rawtrace(BaselineStartIndx:BaselineEndIndx);
+    if all(isfinite(baselineValues)), Baseline=mean(baselineValues); end
 end
-
-Baseline = mean(rawtrace(BaselineStartIndx:BaselineEndIndx),'omitnan');
-EventMin = min(rawtrace(StartIndx:EndIndx),[],'omitnan');
-NormAmp = NaN;
-if isfinite(Baseline) && Baseline ~= 0
-    NormAmp = (Baseline-EventMin)/Baseline;
-end
+EventMin=min(rawtrace(StartIndx:EndIndx),[],'omitnan');
+if isfinite(Baseline) && Baseline>0, NormAmp=(Baseline-EventMin)/Baseline; end
 
 EventMetrics = struct();
 EventMetrics.StartFrame = StartIndx;
 EventMetrics.EndFrame = EndIndx;
-EventMetrics.DurationFrames = EndIndx-StartIndx;
+EventMetrics.DurationFrames = EndIndx-StartIndx+1;
 EventMetrics.NormAmp = NormAmp;
 EventMetrics.DetectionAmp = DetectionAmp;
 

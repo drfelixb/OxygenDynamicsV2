@@ -4,15 +4,13 @@ function [SinkTable,SinkEventTable,RecordingDuration,HasSinks] = prepareStatsSin
 
 RecordingDuration = nan;
 HasSinks = size(SinkTable,1)>0;
-if ~HasSinks
-    return
-end
+
 
 SinkTable = selectStatsSinkSummaryColumns(SinkTable);
 SinkTable = addStatsRecordingMetadata(SinkTable,RecordingMetadata,'RecDuration');
-RecordingDuration = SinkTable.RecDuration{end};
+if HasSinks, RecordingDuration = SinkTable.RecDuration{end}; end
 
-if ~isempty(SinkEventTable)
-    SinkEventTable = ensureStatsEventPuffStim(SinkEventTable,RecordingMetadata.PuffStim);
+if istable(SinkEventTable)
+    SinkEventTable = refreshStatsEventMetadata(SinkEventTable,RecordingMetadata);
 end
 end

@@ -24,6 +24,15 @@ saveStatsCoreTables(StatsOutputFolderPath,CoreData.TableOxygenSinks,CoreData.Tab
     CoreData.TableOxygenSurges,CoreData.TableOxygenSurgeEvents);
 
 OutputXlsx = createStatsExcelOutputPath(StatsOutputFolderPath,InputCsv);
+if isfield(CoreData,'RecordingRegistry')
+    RecordingRegistry=CoreData.RecordingRegistry; BaselineContrasts=CoreData.BaselineContrasts;
+    RecordingWindowMetrics=CoreData.RecordingWindowMetrics;WindowBaselineContrasts=CoreData.WindowBaselineContrasts;
+    save(fullfile(StatsOutputFolderPath,'DataOutput.mat'),'RecordingRegistry','BaselineContrasts','RecordingWindowMetrics','WindowBaselineContrasts','-append');
+    writetable(RecordingRegistry,OutputXlsx,'Sheet','RecordingRegistry');
+    writetable(RecordingWindowMetrics,OutputXlsx,'Sheet','RecordingWindowMetrics');
+    if ~isempty(WindowBaselineContrasts), writetable(WindowBaselineContrasts,OutputXlsx,'Sheet','WindowBaselineContrasts'); end
+    if ~isempty(BaselineContrasts), writetable(BaselineContrasts,OutputXlsx,'Sheet','PairedBaselineContrasts'); end
+end
 fprintf('[Stats %s] Writing acceptance and run summary sheets...\n',char(datetime('now','Format','HH:mm:ss')));
 writeStatsAcceptanceSheet(OutputXlsx,struct('StatsInfo',CoreData.StatsInfo, ...
     'DataOutputMat',fullfile(StatsOutputFolderPath,'DataOutput.mat')));

@@ -5,6 +5,7 @@ SinksMatFile = selectStatsMatFile(SinksDataFolder,'Urefined','Urefined oxygen si
 SinkTable = loadRequiredMatVar(SinksMatFile,'Table_OxygenSinks_Out');
 SinkEventTable = loadOptionalMatVar(SinksMatFile,'Table_OxygenSinkEvents_Out',[]);
 
+[SinkTable,SinkEventTable] = upgradeStatsAnalysisTables(SinkTable,SinkEventTable,RecordingMetadata,SinksMatFile,'sink');
 [SinkTable,SinkEventTable,IncludedPocs] = applyStatsSinkCuration( ...
     SinkTable,SinkEventTable,SinksMatFile,UseCurated,RecordingFolder);
 [SinkTable,SinkEventTable,RecordingDuration,HasSinks] = prepareStatsSinkTables( ...
@@ -20,9 +21,10 @@ SinkData.AreaRow = [];
 SinkData.TraceRow = [];
 SinkData.HypoxicEventSpecificMetrics = [];
 
-if HasSinks
+if true
     [SinkData.AreaRow,SinkData.TraceRow] = loadStatsSinkArrayRows( ...
         SinksMatFile,IncludedPocs,RecordingMetadata);
+    if ~HasSinks, SinkData.RecordingDuration=size(SinkData.TraceRow{6},2)/RecordingMetadata.SampleF; end
     SinkData.HypoxicEventSpecificMetrics = createHypoxicEventSpecificMetrics( ...
         SinksDataFolder,SinksMatFile,SinkTable,IncludedPocs,RecordingMetadata);
 end

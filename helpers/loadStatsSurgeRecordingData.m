@@ -4,6 +4,7 @@ function SurgeData = loadStatsSurgeRecordingData(SurgesDataFolder,RecordingMetad
 SurgesMatFile = selectStatsMatFile(SurgesDataFolder,'Surges','oxygen surges',RecordingMetadata.DatafileID);
 SurgeTable = loadRequiredMatVar(SurgesMatFile,'Table_OxygenSurges_Out');
 SurgeEventTable = loadOptionalMatVar(SurgesMatFile,'Table_OxygenSurgeEvents_Out',[]);
+[SurgeTable,SurgeEventTable] = upgradeStatsAnalysisTables(SurgeTable,SurgeEventTable,RecordingMetadata,SurgesMatFile,'surge');
 [SurgeTable,SurgeEventTable,HasSurges] = prepareStatsSurgeTables( ...
     SurgeTable,SurgeEventTable,RecordingMetadata);
 
@@ -15,7 +16,7 @@ SurgeData.HasSurges = HasSurges;
 SurgeData.AreaRow = [];
 SurgeData.ROITraceRow = [];
 
-if HasSurges
+if true
     [SurgeData.AreaRow,~] = loadStatsSurgeArrayRows(SurgesMatFile,RecordingMetadata,false);
 end
 

@@ -10,6 +10,34 @@ bioluminescence oxygen imaging.
 > outputs require scientific review and should not be treated as clinical or
 > diagnostic results.
 
+## Development version: existing analysis V3
+
+Development branch: `development/existing-analysis-v3`. This is an unpublished,
+breaking revision of the existing V2 detector and analysis. Reanalyze all input
+recordings; earlier saved analyses are rejected. The alternative detector is
+maintained separately.
+
+- Temporal standardization now divides by SD, correcting the former sqrt(SD).
+- Individual events, recurring spatial sites, recordings and animals have
+  distinct identities and aggregation rules, including zero-event recordings.
+- Amplitudes use each event's fixed footprint in the preserved input movie and
+  a complete, uncontaminated pre-event baseline. Missing baselines produce
+  unavailable amplitudes while retaining detections.
+- Native masks determine event morphology and occupied eligible tissue.
+  Inclusive frame timing uses N/fs recording exposure.
+- Recording/window baseline comparisons are explicit; animal summaries give
+  equal weight to mice and expose missing measurements.
+- Source hashes, calibration, settings and pipeline identities are checked
+  before statistics. Output schema is currently `3.0-dev`.
+
+Development validation: 24 focused tests, synthetic master-to-statistics
+integration and a full 600-frame DANDI reference run passed in MATLAB R2025a.
+DANDI outputs are unlabelled reference results, not ground-truth accuracy.
+Default detection thresholds remain provisional after the SD correction.
+See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
+[validation evidence](docs/EXISTING_ANALYSIS_VALIDATION.md),
+[remaining work](docs/PUBLICATION_READINESS.md) and [changelog](CHANGELOG.md).
+
 ## Overview
 
 The pipeline detects oxygen sinks and oxygen surges, quantifies signal changes
@@ -52,7 +80,7 @@ mouse cerebral cortex. *Science*, 383(6690), 1471-1478.
 
 The current amplitude definition differs from the public script associated
 with the 2024 *Science* paper. In the current pipeline, `NormOxySinkAmp`
-represents raw percent-change amplitude; the older detection-domain quantity
+represents fractional raw-signal change (0.10 means 10%); the older detection-domain quantity
 is retained as `DetectionOxySinkAmp`. Do not compare identically named
 `NormOxySinkAmp` values across those code versions without accounting for this
 change.
@@ -79,7 +107,7 @@ Start_OxygenPipeline
 
 ## Requirements
 
-- MATLAB. The current repository and CI workflow are tested with R2025b.
+- MATLAB. Development validation used R2025a; the existing CI targets R2025b.
 - Image Processing Toolbox for the core imaging workflow.
 - Statistics and Machine Learning Toolbox for selected optional statistical,
   vascular, and hypoxia-amyloid analyses.
@@ -318,9 +346,9 @@ Batch configuration can now be edited in `OxygenDynamics_Config.m`. The wrappers
 
 The same config file now also contains `Config.Verification`, which controls the default input CSV, report output folder, selected sink/surge/behaviour output age, overwrite-preflight assumption, and whether behaviour output or vascular annotations are required rather than optional notes.
 
-## Version Update: Denoised Detection, Raw Quantification, And Pipeline Robustness
+## Earlier V2 Update: Denoised Detection, Raw Quantification, And Pipeline Robustness
 
-This version introduces a major change to how denoised recordings are handled. A denoised TIFF can now be used for event detection, while all signal-amplitude quantification is performed on the original raw TIFF. This avoids inflated percent-change or normalized-amplitude outputs caused by denoising/scaling while still allowing denoised data to improve event detection.
+The earlier V2 update introduced a major change to how denoised recordings are handled. The development-version definitions above and linked methods document supersede its baseline and aggregation details. A denoised TIFF can now be used for event detection, while all signal-amplitude quantification is performed on the original raw TIFF. This avoids inflated percent-change or normalized-amplitude outputs caused by denoising/scaling while still allowing denoised data to improve event detection.
 
 ### Important Amplitude Definition Change
 
