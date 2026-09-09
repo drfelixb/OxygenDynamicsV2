@@ -23,6 +23,7 @@ AnalysisParams.recAreaMinCoverageFraction = 0.9;
 AnalysisParams.sinkTraceCorrelationThreshold = 0.8;
 AnalysisParams.sinkNoiseCorrelationPercentile = 90;
 AnalysisParams.eventBaselineReturnTolerance = 0.015;
+AnalysisParams.sinkTimingMaxExtensionSec = 20;
 AnalysisParams.sinkDetectionNoiseAmpThreshold = 2.5;
 AnalysisParams.surgeBaselineWindowSec = 20;
 AnalysisParams.surgeOverlapSizeMarginPixels = AnalysisParams.smooth;

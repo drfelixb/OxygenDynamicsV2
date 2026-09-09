@@ -10,6 +10,11 @@ function [NumOxySinkEvents,Start,Duration,NormOxySinkAmp,Size_modulation, ...
 TotalSinkEvents = countTrackedEvents(Overall_OxySinks_logical);
 SinkEventVectors = initializeOxygenSinkEventVectors(TotalSinkEvents);
 SinkEventRow = 0;
+TimingSummary=table('Size',[TotalSinkEvents 9],'VariableTypes', ...
+    {'double','double','double','double','string','string','logical','logical','double'}, ...
+    'VariableNames',{'NativeStartFrame','NativeEndFrame','TimingSearchStartFrame','TimingSearchEndFrame', ...
+    'StartBoundaryStatus','EndBoundaryStatus','TimingResolved','NativeTraceCrossesReturnLevel','TimingMaxExtensionFrames'});
+MaxExtensionFrames=floor(analysisParams.sinkTimingMaxExtensionSec*fs);
 BaselineWindowFrames = round(analysisParams.quantBaselineWindowSec*fs);
 
 for i = 1:size(Overall_OxygenSinks_Pxllist,1)
@@ -27,8 +32,12 @@ for i = 1:size(Overall_OxygenSinks_Pxllist,1)
     DetectionOxySinkAmp = NaN(1,length(EventsTemp));
 
     for q = 1:length(EventsTemp)
+        % Split each inter-event gap once. Neighboring searches cannot overlap.
+        leftLimit=1;rightLimit=numel(TempTrace);
+        if q>1,leftLimit=floor((EventsTemp(q-1).PixelIdxList(end)+EventsTemp(q).PixelIdxList(1))/2)+1;end
+        if q<numel(EventsTemp),rightLimit=floor((EventsTemp(q).PixelIdxList(end)+EventsTemp(q+1).PixelIdxList(1))/2);end
         EventMetrics = quantifyOxygenSinkEvent(EventsTemp(q).PixelIdxList,TempTrace,TraceTrend, ...
-            RawTrace,eventBaselineReturnTolerance,BaselineWindowFrames);
+            RawTrace,eventBaselineReturnTolerance,BaselineWindowFrames,MaxExtensionFrames,leftLimit,rightLimit);
         Start{i}(q) = EventMetrics.StartFrame;
         Duration{i}(q) = EventMetrics.DurationFrames;
         NormOxySinkAmp{i}(q) = EventMetrics.NormAmp;
@@ -37,6 +46,7 @@ for i = 1:size(Overall_OxygenSinks_Pxllist,1)
             EventsTemp(q).PixelIdxList);
 
         SinkEventRow = SinkEventRow+1;
+        TimingSummary(SinkEventRow,:)=struct2table(rmfield(EventMetrics.Timing,{'StartFrame','EndFrame'}));
         SinkEventVectors = setOxygenSinkEventVectorRow(SinkEventVectors,SinkEventRow,i,q, ...
             metadata,EventMetrics,Size_modulation{i}(q),DetectionOxySinkAmp(q),morphology,fs);
     end
@@ -57,5 +67,7 @@ Table_OxygenSinkEvents_Out = createOxygenSinkEventTable(SinkEventVectors.EventEx
     SinkEventVectors.EventMeanOxySinkFilledArea_um,SinkEventVectors.EventMeanOxySinkDiameter_um, ...
     SinkEventVectors.EventMeanOxySinkPerimeter_um,SinkEventVectors.EventMeanCircularity, ...
     SinkEventVectors.EventMeanCentroid_x,SinkEventVectors.EventMeanCentroid_y);
+
+Table_OxygenSinkEvents_Out=[Table_OxygenSinkEvents_Out TimingSummary];
 
 end

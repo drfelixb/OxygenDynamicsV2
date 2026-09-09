@@ -6,6 +6,21 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Event-local sink timing
+
+- Replace the unbounded whole-record search with connected, sign-aware edge
+  searches. Split gaps between neighboring native events and apply an explicit
+  20-second development search limit per side. Retain native edges when
+  unresolved; preserve native event identities and masks.
+- Export native bounds, search bounds and boundary-resolution statuses. Add
+  timing-resolved/unresolved/not-assessed counts to EventMeasurementQC without
+  conflating timing quality with baseline availability.
+- Advance measurement identity to `event-footprint-local-timing-2` and statistics
+  identity to `mouse-strict-3`; require reanalysis and reject mixed old outputs.
+- Add nine timing/QC tests and reference-run invariants for containment,
+  extension limits and nonoverlap. Document that retained unresolved windows
+  must not be interpreted as complete physiological event durations.
+
 ### Independent event signal audit and timing findings
 
 - Replace the stale sink amplitude audit (whole-site traces and fallback

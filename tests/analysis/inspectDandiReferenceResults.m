@@ -20,6 +20,19 @@ for kind=["Sink","Surge"]
     assert(height(row)==1 && row.DetectedEvents==height(events));
     qc.(char(kind+"FiniteAmplitudes"))=row.FiniteAmplitudeEvents;
     qc.(char(kind+"WrongDirectionAmplitudes"))=row.WrongDirectionAmplitudeEvents;
+    if kind=="Sink"
+        assert(ismember('TimingResolved',events.Properties.VariableNames));
+        assert(all(events.StartFrame<=events.NativeStartFrame & events.EndFrame>=events.NativeEndFrame));
+        assert(all(events.NativeStartFrame-events.StartFrame<=events.TimingMaxExtensionFrames));
+        assert(all(events.EndFrame-events.NativeEndFrame<=events.TimingMaxExtensionFrames));
+        for s=reshape(unique(events.SinkID),1,[])
+            E=sortrows(events(events.SinkID==s,:),'NativeStartFrame');
+            assert(all(E.EndFrame(1:end-1)<E.StartFrame(2:end)),'Same-site measurement windows overlap.');
+        end
+        qc.SinkTimingResolved=sum(events.TimingResolved);
+        qc.SinkTimingUnresolved=sum(~events.TimingResolved);
+        assert(row.TimingResolvedEvents==qc.SinkTimingResolved && row.TimingUnresolvedEvents==qc.SinkTimingUnresolved);
+    end
     if ~isempty(events)
         assert(all(events.StartFrame>=1 & events.EndFrame<=n & events.EndFrame>=events.StartFrame));
         assert(all(abs(events.DurationSec-(events.EndFrame-events.StartFrame+1)/fs)<1e-10));

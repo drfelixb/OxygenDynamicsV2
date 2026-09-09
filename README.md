@@ -33,7 +33,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Development validation: 37 focused tests, synthetic master-to-statistics
+Development validation: 46 focused tests, synthetic master-to-statistics
 integration and eight complete DANDI recordings from six animals passed in
 MATLAB R2025a (seven BOI recordings and a separate fluorescence control).
 DANDI outputs are unlabelled reference results, not ground-truth accuracy.
@@ -44,7 +44,8 @@ See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
 [DANDI metadata audit](docs/DANDI_METADATA_RECONCILIATION.md),
 [multi-recording reference protocol](docs/REFERENCE_SET_PHASE1.md),
 [per-recording results and limitations](docs/reference-results/phase1-20260909/README.md),
-[signal-audit findings and timing priorities](docs/reference-results/signal-audit-20260909/README.md)
+[signal-audit findings](docs/reference-results/signal-audit-20260909/README.md),
+[event-local timing rules and limitations](docs/LOCAL_SINK_TIMING.md)
 and [changelog](CHANGELOG.md).
 
 ## Overview
