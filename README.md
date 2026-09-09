@@ -48,7 +48,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **102 focused tests**, smoke checks and synthetic
+Current development validation: **114 focused tests**, smoke checks and synthetic
 master-to-statistics integration passed in MATLAB R2025a. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
 adds 117 prescribed size-change/gap scenarios and repeats twenty full-movie cases
@@ -81,7 +81,20 @@ case replays preserve previous masks and identities; one full ID401 challenge
 rerun preserves both-sign measurements, with 141 event records independently
 checked. See the [integration evidence](docs/reference-results/surge-contact-provenance-20260909/README.md).
 Measurement/statistics contracts advance, so reanalysis is required before
-pooling. Local candidate separation is the next development step.
+pooling.
+
+The [local candidate-separation experiment](docs/SURGE_CONTACT_SEPARATION.md)
+tests persistent, spatially resolved intensity peaks inside merged surge regions.
+It preserves all admitted pixels and keeps partition exposure explicit. The
+prototype is confined to validation code; it is not enabled in normal analysis.
+Full-image challenges compare stationary, approaching and crossing pairs with a
+single expanding profile and unchanged recordings. The scores describe imposed
+optical signals, not independently labelled physiological events.
+The [completed comparison](docs/reference-results/surge-separation-20260909/README.md)
+covers twenty full movies on four sources. Stationary-pair gains in ID400/ID401
+do not generalize across the tested geometries/acquisitions. Independent Python
+checks verify 2.62 billion constructed pixels and all 112 coverage records;
+nineteen Python tests pass. The prototype remains experimental.
 
 The branch verifier also passes **10 Python regression tests**, including
 deliberately corrupted exports under normal and optimized Python. It requires

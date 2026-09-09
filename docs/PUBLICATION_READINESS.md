@@ -30,11 +30,21 @@ frames, native-event exposure and explicit assessment coverage. Tracking,
 amplitude and baseline rules remain unchanged; output contracts advance so old
 analyses cannot be silently treated as contact-free.
 
-Next test local candidate separation against independent neighboring injected
-signals. Preserve unresolved contact status when identity cannot be established.
-Then settle the spatial amplitude endpoint and validate event-local
-onset/baseline together. Statistical surge parity and final cohort reanalysis
-follow those definitions.
+The [local candidate-separation experiment](SURGE_CONTACT_SEPARATION.md) tests
+persistent resolved peaks within accepted regions against stationary, approaching
+and crossing Gaussian pairs, single expanding profiles and unchanged controls.
+Stationary-pair improvements in ID400/ID401 do not generalize to all tested
+geometries or the finer-resolution source. The prototype remains validation-only;
+contact provenance remains necessary. See the
+[full comparison](reference-results/surge-separation-20260909/README.md).
+
+Next settle the spatial amplitude endpoint and validate event-local onset/baseline
+together. Use the known imposed optical changes to compare full-event footprint
+averaging with a prespecified central-support measurement, and quantify how
+undetected rising tails affect the pre-event reference. Preserve the full
+footprint measurement while evaluating any proposed additional endpoint; do not
+silently change the meaning of amplitude. Statistical surge parity and final
+cohort reanalysis follow those definitions.
 
 The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
 with disjoint searches, a provisional 20-second bound and unresolved-boundary

@@ -6,6 +6,27 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Experimental local surge separation
+
+- Add a validation-only candidate partition requiring two persistent predecessors,
+  separated peaks, a connecting intensity valley and valid child regions. Preserve
+  every admitted pixel and retain partition exposure separately from graph contact.
+  Normal detection, measurement and statistics rules are unchanged.
+- Add a prespecified full-image protocol with stationary, approaching and crossing
+  Gaussian pairs, a single expanding profile, and unchanged source controls. Score
+  distinct retained runs against imposed light; one merged event cannot count as
+  recovery of both sources. See the [protocol](docs/SURGE_CONTACT_SEPARATION.md).
+- Add twelve MATLAB checks and nine Python verifier tests. Independently rebuild
+  challenge pixels, check full-frame candidate conservation and native run bounds,
+  recalculate light inside saved masks, and verify distinct-run score assignment.
+- Complete twenty full-movie evaluations on four source recordings, with zero
+  master/statistics reruns. All 114 MATLAB and 19 Python tests pass; independent
+  checks verify 2,621,419,496 constructed pixels and 112 coverage records. Trace
+  960 prescribed peak-location frames. Stationary-pair gains do not generalize
+  to contact trajectories or the finer source, so the prototype is not promoted.
+  Document controls, admission limitations and the
+  [full comparison](docs/reference-results/surge-separation-20260909/README.md).
+
 ### Production surge contact provenance
 
 - Export `SurgeTrackingEdges` and `SurgeContactFrames` in normal per-recording

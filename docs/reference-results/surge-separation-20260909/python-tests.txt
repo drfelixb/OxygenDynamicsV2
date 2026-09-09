@@ -1,0 +1,24 @@
+test_compressed_exports_remain_supported (test_verify_surge_branch_replay.BranchVerifierTests.test_compressed_exports_remain_supported) ... ok
+test_duplicate_rows_cannot_replace_comparison_matrix (test_verify_surge_branch_replay.BranchVerifierTests.test_duplicate_rows_cannot_replace_comparison_matrix) ... ok
+test_invalid_boolean_rejected_in_all_modes (test_verify_surge_branch_replay.BranchVerifierTests.test_invalid_boolean_rejected_in_all_modes) ... ok
+test_invalid_duration_rejected_in_all_modes (test_verify_surge_branch_replay.BranchVerifierTests.test_invalid_duration_rejected_in_all_modes) ... ok
+test_missing_movie_rejected_even_when_totals_are_reduced (test_verify_surge_branch_replay.BranchVerifierTests.test_missing_movie_rejected_even_when_totals_are_reduced) ... ok
+test_missing_policy_rejected_even_when_totals_are_reduced (test_verify_surge_branch_replay.BranchVerifierTests.test_missing_policy_rejected_even_when_totals_are_reduced) ... ok
+test_unknown_movie_cannot_replace_expected_movie (test_verify_surge_branch_replay.BranchVerifierTests.test_unknown_movie_cannot_replace_expected_movie) ... ok
+test_unknown_policy_cannot_replace_expected_policy (test_verify_surge_branch_replay.BranchVerifierTests.test_unknown_policy_cannot_replace_expected_policy) ... ok
+test_valid_exports_pass_in_all_modes (test_verify_surge_branch_replay.BranchVerifierTests.test_valid_exports_pass_in_all_modes) ... ok
+test_wrong_completion_source_count_rejected (test_verify_surge_branch_replay.BranchVerifierTests.test_wrong_completion_source_count_rejected) ... ok
+test_checks_survive_optimization (test_verify_surge_separation.SeparationVerifierTests.test_checks_survive_optimization) ... ok
+test_corrupt_coverage (test_verify_surge_separation.SeparationVerifierTests.test_corrupt_coverage) ... ok
+test_duplicate_source (test_verify_surge_separation.SeparationVerifierTests.test_duplicate_source) ... ok
+test_empty_retained_set (test_verify_surge_separation.SeparationVerifierTests.test_empty_retained_set) ... ok
+test_nonfinite_mass (test_verify_surge_separation.SeparationVerifierTests.test_nonfinite_mass) ... ok
+test_recipe_excludes_outside_window (test_verify_surge_separation.SeparationVerifierTests.test_recipe_excludes_outside_window) ... ok
+test_reused_run (test_verify_surge_separation.SeparationVerifierTests.test_reused_run) ... ok
+test_suboptimal_assignment (test_verify_surge_separation.SeparationVerifierTests.test_suboptimal_assignment) ... ok
+test_valid (test_verify_surge_separation.SeparationVerifierTests.test_valid) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 2.571s
+
+OK

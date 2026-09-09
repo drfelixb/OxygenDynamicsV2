@@ -1,0 +1,52 @@
+{
+  "Session": "FB2312-baseline-awake",
+  "Case": "crossing_pair",
+  "SourceTiff": "../reference-validation/phase1-optimized-20260909/FB2312-baseline-awake/Recording/archive_original.tif",
+  "SourceSHA256": "d2e65164f5640b4b97649714fbbd3e5ab5bc26c3243e44683d98e840ef89b657",
+  "InputTiff": "../reference-validation/surge-separation-20260909/FB2312-baseline-awake/crossing_pair/challenge_original.tif",
+  "InputSHA256": "f3f5ed2bd425034731fe4c2b71abcc6396a1da07c92da210ea694dd294e24053",
+  "SourceProfile": {
+    "Session": "FB2312-baseline-awake",
+    "AssetID": "1dff98d5-540a-4ff5-a9d1-a610c0de0e1d",
+    "ArchivePath": "sub-FB2312/sub-FB2312_ses-FB2312-baseline-awake_image.nwb",
+    "Mouse": "FB2312",
+    "PixelSize": 2.35,
+    "SampleHz": 1,
+    "Condition": "Awake_immobile",
+    "DrugID": "awake",
+    "Promoter": "GFAP.PHP",
+    "Genotype": "WT",
+    "Series": "/acquisition/01_FB2312_bin2_950ms_2x_1Hz_awake_baseline_1_MMStack_Default.ome_mcor.tif",
+    "NwbShape": [
+      512,
+      512,
+      1200
+    ],
+    "TimeAxisHdf5": 3,
+    "Frames": 1200,
+    "ArchiveSHA256": "6fbcc9a586cf59dd274ce1191b8e1148ef1a69412affaf138c453805889e21b5",
+    "Bytes": 6.18721123E+8,
+    "Role": "BOI_reference",
+    "URL": "https://dandiarchive.s3.amazonaws.com/blobs/6f1/2f7/6f12f79f-900c-4c8e-964c-43acc62f4a53"
+  },
+  "Height": 512,
+  "Width": 512,
+  "Frames": 1200,
+  "Window": [
+    101,
+    180
+  ],
+  "RecipeVersion": "gaussian-contact-1",
+  "Options": {
+    "MinimumHistorySec": 3,
+    "MinimumMarkerDistanceUm": 107.1960208740737,
+    "MinimumSaddleDropFraction": 0.2
+  },
+  "PipelineContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-surge-shape-continuity-5",
+    "Measurement": "event-footprint-contact-ledger-7",
+    "Statistics": "mouse-strict-contact-qc-8",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "Session": "FB2411",
+  "Case": "source_control",
+  "SourceTiff": "../reference-validation/phase1-optimized-20260909/FB2411/Recording/archive_original.tif",
+  "SourceSHA256": "15edc9f8854a50d1fc478841d8cefd717043cb4ebbf5471a58f017870915a5db",
+  "InputTiff": "../reference-validation/phase1-optimized-20260909/FB2411/Recording/archive_original.tif",
+  "InputSHA256": "15edc9f8854a50d1fc478841d8cefd717043cb4ebbf5471a58f017870915a5db",
+  "SourceProfile": {
+    "Session": "FB2411",
+    "AssetID": "8129a280-f117-4d54-b509-8a3ea7ad7647",
+    "ArchivePath": "sub-FB2411/sub-FB2411_ses-FB2411_image.nwb",
+    "Mouse": "FB2411",
+    "PixelSize": 6.75,
+    "SampleHz": 1,
+    "Condition": "mNeongreen KX",
+    "DrugID": "KX",
+    "Promoter": "GFAP.PHP",
+    "Genotype": "WT",
+    "Series": "/acquisition/01_FB2411_2x_bin2_1Hz_490nm_20per_1_MMStack_Default.ome-2.tif",
+    "NwbShape": [
+      221,
+      394,
+      301
+    ],
+    "TimeAxisHdf5": 3,
+    "Frames": 301,
+    "ArchiveSHA256": "9176d54535b44e9f6c23eddcd400b4bdfcdfb6f1bf01421406ac069f40ba0d79",
+    "Bytes": 4.8316398E+7,
+    "Role": "fluorescence_control",
+    "URL": "https://dandiarchive.s3.amazonaws.com/blobs/52a/f49/52af49ca-98d1-458a-9669-0bb115272b88"
+  },
+  "Height": 394,
+  "Width": 221,
+  "Frames": 301,
+  "Window": [
+    101,
+    180
+  ],
+  "RecipeVersion": "gaussian-contact-1",
+  "Options": {
+    "MinimumHistorySec": 3,
+    "MinimumMarkerDistanceUm": 107.1960208740737,
+    "MinimumSaddleDropFraction": 0.2
+  },
+  "PipelineContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-surge-shape-continuity-5",
+    "Measurement": "event-footprint-contact-ledger-7",
+    "Statistics": "mouse-strict-contact-qc-8",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  }
+}

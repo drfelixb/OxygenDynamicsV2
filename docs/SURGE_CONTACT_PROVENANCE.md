@@ -92,10 +92,11 @@ contracts, even though this update changes annotation rather than the numerical
 amplitude formula. Old saved outputs are not silently upgraded or treated as
 contact-free.
 
-Next test local separation of neighboring signals within the existing detector's
-connected components, using these explicit contacts and controlled overlapping
-injections. Preserve unresolved identity when separation is unsupported. Then
-settle amplitude support and event-local surge onset/baseline together. The
+The [local-separation experiment](SURGE_CONTACT_SEPARATION.md) now tests neighboring
+imposed signals inside the existing detector's connected components. It remains
+validation-only: partial spatial separation does not establish independent event
+identities, and contact provenance remains necessary. Next settle amplitude
+support and event-local surge onset/baseline together. The
 [branch-policy comparison](SURGE_BRANCH_POLICY.md) and
 [signal-stage audit](SURGE_SIGNAL_EVIDENCE.md) explain why relaxing overlap alone
 does not resolve these issues.
