@@ -51,7 +51,6 @@ ThresholdMinsize = ParamVars.ThresholdMinsize;
 ThresholdMaxsize = ParamVars.ThresholdMaxsize;
 CircularityThres = ParamVars.CircularityThres;
 ThresholdMinsize_Surges = ParamVars.ThresholdMinsize_Surges;
-Thesholdtime = ParamVars.Thesholdtime;
 ThresholMinddur = ParamVars.ThresholMinddur;
 ThresholMaxddur = ParamVars.ThresholMaxddur;
 ThresholMinddur_Surges = ParamVars.ThresholMinddur_Surges;
@@ -161,8 +160,8 @@ toc;
 
 fprintf('Refining putative oxygen sinks based on event duration thresholds... \n'); 
 tic;
-[Overall_OxygenSinks_Pxllist,Overall_OxySinks_logical] = refineTrackedSinkCandidates( ...
-    Overall_OxygenSinks_Pxllist,ThresholMinddur,ThresholMaxddur,Thesholdtime);
+[Overall_OxygenSinks_Pxllist,Overall_OxySinks_logical] = filterSinkRunsByDuration( ...
+    Overall_OxygenSinks_Pxllist,ThresholMinddur,ThresholMaxddur);
 toc;
 
 %% STEP 10 Extracting the mean trace for each identified pocket

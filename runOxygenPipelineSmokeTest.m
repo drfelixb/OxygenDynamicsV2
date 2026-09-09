@@ -1186,7 +1186,9 @@ SmokeTrackedList(1,1:2) = {1};
 SmokeTrackedList(1,4:5) = {1};
 [RefinedSinkList,RefinedSinkLogical] = refineTrackedSinkCandidates(SmokeTrackedList,2,10,5);
 assert(size(RefinedSinkList,1)==1 && nnz(RefinedSinkLogical)==2, ...
-    'Sink refinement helper returned an unexpected close-event result.');
+    'Legacy iOS sink refinement helper returned an unexpected close-event result.');
+[~,RetainedSinkLogical]=filterSinkRunsByDuration(SmokeTrackedList,2,10);
+assert(nnz(RetainedSinkLogical)==4,'BOI duration filtering discarded a close event.');
 SmokeTrackedList(2,7) = {2};
 [~,RefinedSurgeLogical] = refineTrackedSurgeCandidates(SmokeTrackedList,2);
 assert(size(RefinedSurgeLogical,1)==1,'Surge refinement helper did not remove the short event row.');
@@ -1218,7 +1220,7 @@ assert(SurgeEventMetrics.StartFrame==5 && SurgeEventMetrics.DurationFrames==2 &&
     abs(SurgeEventMetrics.NormAmp-(8/3))<eps, ...
     'Oxygen surge event quantification helper returned unexpected metrics.');
 
-AnalysisParamsSmoke = struct('quantBaselineWindowSec',1,'sinkTimingMaxExtensionSec',20);
+AnalysisParamsSmoke = struct('quantBaselineWindowSec',1,'sinkTimingMaxExtensionSec',20,'sinkCloseNativeGapSec',20);
 CollateList = cell(1,20);
 CollateList(1,8:9) = {[1; 2]};
 CollateLogical = ~cellfun(@isempty,CollateList);

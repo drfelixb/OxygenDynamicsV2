@@ -83,7 +83,7 @@ All recordings must be reanalyzed. The statistics loader requires the exact curr
 
 Temporal standardization now divides by temporal SD rather than sqrt(SD), after spatial standardization. Finite constant inputs produce neutral detector values; nonfinite inputs are rejected. Tests establish unit temporal SD on nonconstant synthetic signals and invariance to a positive global gain and offset. This correction changes detector scores and potentially the detected event population. Default thresholds have **not yet been scientifically revalidated**. Spatial/temporal filtering, thresholding and correlation rejection otherwise remain the existing V2 path.
 
-The saved contract is currently `3.0-dev`, detector `existing-v2-sd-1`, measurement `event-footprint-local-timing-2`, statistics `mouse-strict-3`. These are development identities, not a frozen publication release. Rule changes require contract updates. The current identity is manually maintained; it is not a source-code checksum.
+The saved contract is currently `3.0-dev`, detector `existing-v2-sd-retain-close-2`, measurement `event-footprint-local-timing-recurrence-3`, statistics `mouse-strict-recurrence-4`. These are development identities, not a frozen publication release. Rule changes require contract updates. The current identity is manually maintained; it is not a source-code checksum.
 
 Standardized ROI mean/CV/entropy and derivative descriptors remain exploratory signal features, not oxygen concentration measurements. No new inferential model, ground-truth sensitivity validation, depth reconstruction or correction for motion/illumination drift is claimed. Historical names and low-level helper conventions still require a final consistency audit even though the main loader rejects old analyses.
 
@@ -104,3 +104,5 @@ runExistingAnalysisIntegration;
 ```
 
 The integration check first runs the actual master on a synthetic movie. It then injects explicitly known event masks and raw signals into temporary saved outputs to test measurement/export independently of detector sensitivity. It pools two events in one site with a second, zero-event recording and verifies 25%/40% amplitudes, exposure, zero-event trace coverage, paired -100% change and workbook creation. This is a runtime and calculation check, not validation against biological ground truth.
+
+The [close-run correction](SINK_RECURRENCE.md) removes minimum-spacing deletion from BOI detection and retains explicit recurrence uncertainty in events and recording QC.

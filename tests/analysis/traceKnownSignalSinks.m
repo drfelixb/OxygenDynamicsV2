@@ -3,6 +3,7 @@ function Summary=traceKnownSignalSinks(pilotRoot,caseName,outputRoot)
 setupOxygenDynamicsPath;
 assert(~isfolder(outputRoot),'Use a fresh trace output folder.');mkdir(outputRoot);
 M=jsondecode(fileread(fullfile(pilotRoot,'manifest.json')));
+assert(isequaln(M.PipelineContract,oxygenPipelineContract()),'Trace requires current-contract outputs.');
 rec=fullfile(pilotRoot,caseName);[P,~]=createOxygenMasterParams(M.PixelSizeUm,M.SampleHz);
 [Input,~]=loadOxygenMasterInputs(rec,P);
 assert(isempty(Input.IM_NoNoise),'Pilot must use original input only.');
@@ -27,10 +28,8 @@ clear clip;
 Summary=[summarize(threshold,"percentile",mask,M);summarize(accepted,"candidate_geometry_tissue",mask,M)];
 Tracked=trackSinkCandidates(Candidates,P.ThresholMinddur,.6);clear Candidates;
 Summary=[Summary;summarize(Tracked,"tracking",mask,M)];
-DurationOnly=refineTrackedSinkCandidates(Tracked,P.ThresholMinddur,P.ThresholMaxddur,0);
-Summary=[Summary;summarize(DurationOnly,"duration_only_diagnostic",mask,M)];
-[Tracked,Logical]=refineTrackedSinkCandidates(Tracked,P.ThresholMinddur,P.ThresholMaxddur,P.Thesholdtime);
-Summary=[Summary;summarize(Tracked,"duration_and_spacing",mask,M)];
+[Tracked,Logical]=filterSinkRunsByDuration(Tracked,P.ThresholMinddur,P.ThresholMaxddur);
+Summary=[Summary;summarize(Tracked,"duration_filter_retain_close",mask,M)];
 for pass=1:3
  [~,trace]=extractSinkTraces(Tracked,Logical,Z,F,[],border);
  trace=detrend_custom(trace,2);

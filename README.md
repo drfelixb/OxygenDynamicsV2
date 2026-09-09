@@ -20,6 +20,9 @@ recordings; earlier saved analyses are rejected. The alternative detector is
 maintained separately.
 
 - Temporal standardization now divides by SD, correcting the former sqrt(SD).
+- [Close sink runs are retained and flagged](docs/SINK_RECURRENCE.md); a short
+  gap no longer deletes an otherwise duration-qualified BOI detection. Counts
+  describe native runs, with recurrence uncertainty separate from baseline QC.
 - Individual events, recurring spatial sites, recordings and animals have
   distinct identities and aggregation rules, including zero-event recordings.
 - Amplitudes use each event's fixed footprint in the preserved input movie and

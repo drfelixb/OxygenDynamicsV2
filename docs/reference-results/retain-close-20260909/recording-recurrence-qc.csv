@@ -1,0 +1,15 @@
+RecordingID,EventType,DetectedEvents,ValidBaselineEvents,FiniteAmplitudeEvents,UnavailableAmplitudeEvents,WrongDirectionAmplitudeEvents,ValidBaselineFraction,FiniteAmplitudeFraction,TimingResolvedEvents,TimingUnresolvedEvents,TimingNotAssessedEvents,CloseNativeRunEvents,RecurrenceNotAssessedEvents,Case
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/control,sink,196,97,97,99,0,0.494897959183673,0.494897959183673,104,92,0,104,0,control
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/control,surge,40,19,19,21,0,0.475,0.475,0,0,40,0,40,control
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/sink05,sink,198,97,97,101,0,0.48989898989899,0.48989898989899,105,93,0,104,0,sink05
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/sink05,surge,40,18,18,22,0,0.45,0.45,0,0,40,0,40,sink05
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/sink20,sink,178,89,89,89,0,0.5,0.5,94,84,0,95,0,sink20
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/sink20,surge,36,17,17,19,0,0.472222222222222,0.472222222222222,0,0,36,0,36,sink20
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/surge05,sink,196,97,97,99,0,0.494897959183673,0.494897959183673,104,92,0,104,0,surge05
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/surge05,surge,39,18,18,21,0,0.461538461538462,0.461538461538462,0,0,39,0,39,surge05
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/surge20,sink,203,99,99,104,0,0.487684729064039,0.487684729064039,103,100,0,111,0,surge20
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/surge20,surge,41,17,17,24,0,0.414634146341463,0.414634146341463,0,0,41,0,41,surge20
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/global_drop20,sink,176,80,80,96,1,0.454545454545455,0.454545454545455,94,82,0,97,0,global_drop20
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/global_drop20,surge,42,12,12,30,1,0.285714285714286,0.285714285714286,0,0,42,0,42,global_drop20
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/global20_local05,sink,158,65,65,93,2,0.411392405063291,0.411392405063291,83,75,0,91,0,global20_local05
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/retain-close-full-20260909/global20_local05,surge,44,14,14,30,1,0.318181818181818,0.318181818181818,0,0,44,0,44,global20_local05

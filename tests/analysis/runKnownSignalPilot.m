@@ -67,17 +67,19 @@ for c=1:height(Cases)
     iou=intersection/(volume+truthVolume-intersection);
     if iou>best,best=iou;bestRow=e;bestA=frames(1);bestB=frames(end);end
    end
-   onset=NaN;offset=NaN;amplitude=NaN;resolved=NaN;
+   onset=NaN;offset=NaN;amplitude=NaN;resolved=NaN;closeRun=NaN;baselineStatus="no_intersection";
    if bestRow>0
     onset=E.StartFrame(bestRow)-a;offset=E.EndFrame(bestRow)-b;amplitude=E.(amp)(bestRow);
     if ismember('TimingResolved',E.Properties.VariableNames),resolved=double(E.TimingResolved(bestRow));end
+    if ismember('CloseNativeRun',E.Properties.VariableNames),closeRun=double(E.CloseNativeRun(bestRow));end
+    baselineStatus=string(E.BaselineStatus(bestRow));
    end
    raw=double(X(:,:,a:b));changed=double(Y(:,:,a:b));sel=repmat(mask,1,1,b-a+1);
    actual=mean(changed(sel))/mean(raw(sel))-1;
-   row=table(Cases.Case(c),kind,w,height(E),hits,best,bestRow,bestA,bestB,onset,offset,amplitude,resolved,actual,rounding, ...
+   row=table(Cases.Case(c),kind,w,height(E),hits,best,bestRow,bestA,bestB,onset,offset,amplitude,resolved,actual,rounding,closeRun,baselineStatus, ...
     'VariableNames',{'Case','DetectionSign','Window','TotalDetectedEvents','OverlappingEvents','BestNativeSpacetimeIoU', ...
     'BestEventRow','NativeStartFrame','NativeEndFrame','MeasuredOnsetErrorSec','MeasuredOffsetErrorSec', ...
-    'MeasuredAmplitudeFraction','TimingResolved','ActualInjectedLocalFraction','MaxRoundingError'});
+    'MeasuredAmplitudeFraction','TimingResolved','ActualInjectedLocalFraction','MaxRoundingError','CloseNativeRun','BaselineStatus'});
    Results=[Results;row]; %#ok<AGROW>
   end
  end

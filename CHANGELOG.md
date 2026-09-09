@@ -6,6 +6,28 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Retain close native BOI sink runs
+
+- Remove spacing-based deletion from the BOI master. Preserve native runs that
+  pass duration filtering and annotate close neighbors after site merging.
+- Export previous/next empty-frame gaps in seconds, a 20-second development
+  proximity flag and recurrence review status. Add close-run and unassessed
+  recurrence counts to recording measurement QC without excluding flagged runs
+  from descriptive totals or conflating them with invalid baselines.
+- Advance detector, measurement and statistics identities; require reanalysis.
+  Keep the separate iOS path unchanged.
+- Add a gap/frame-rate sweep and controlled true-recurrence versus single-pulse
+  fragmentation fixtures, plus saved-table/statistics export assertions and
+  workbook definitions explaining native-run counts and recurrence uncertainty.
+- Complete seven fixed full-recording reruns: both known strong sinks now survive
+  with exact native/measurement bounds and close-run flags; missing amplitudes
+  remain unavailable. The unmodified ID400 recording changes from 137 to 196
+  sink runs, 104 flagged, with 97 finite amplitudes. This is not biological truth.
+- Independently verify constructed inputs, all overlap rows, every saved native
+  gap/flag, nonoverlapping same-site windows, and unchanged surge native masks.
+
+
+
 ### Full-recording known-signal comparison and sink-stage tracing
 
 - Extend the fixed paired-input runner to all source pixels/frames while keeping

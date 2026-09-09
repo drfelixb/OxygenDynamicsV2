@@ -2,7 +2,12 @@
 
 Runtime: MATLAB R2025a on macOS. Base: upstream main `8cf3f036b41e16b2c472bcee7e5cfaeab41433eb`. Development branch: `development-existing-analysis-v3` on GitHub.
 
-| Check | Latest completed result |
+The table and biological-reference results below describe the earlier local-timing
+contract. For the current recurrence-preserving detector, see
+[the recurrence correction and its validation](SINK_RECURRENCE.md). The earlier
+eight-recording results must not be presented as current-contract reruns.
+
+| Check | Completed result before recurrence correction |
 |---|---|
 | Focused calculation/regression tests | 46 passed |
 | Full `runOxygenPipelineSmokeTest` | Passed with schema 3.0-dev and statistics identity mouse-strict-3 |

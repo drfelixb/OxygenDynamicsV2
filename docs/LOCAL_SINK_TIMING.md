@@ -65,8 +65,8 @@ retain their existing definitions.
 
 ## Version boundary and validation
 
-Measurement identity is `event-footprint-local-timing-2`; statistics identity is
-`mouse-strict-3`. Old and new saved analyses cannot be mixed. Reanalysis is
+Current measurement identity is `event-footprint-local-timing-recurrence-3`; statistics identity is
+`mouse-strict-recurrence-4` after the [close-run correction](SINK_RECURRENCE.md). Old and new saved analyses cannot be mixed. Reanalysis is
 required before using this version's statistics. Prior reference results remain
 frozen for comparison.
 

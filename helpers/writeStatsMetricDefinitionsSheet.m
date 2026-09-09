@@ -147,6 +147,16 @@ Notes = { ...
     'Multiplies raw frame-level counts to a 1 mm^2 area basis.'};
 
 Definitions = table(MetricName,OutputLocation,MetricBasis,Formula,Units,Notes);
+RecurrenceDefinitions = {
+    'DetectedEvents','EventMeasurementQC','Native detection runs','Number of retained runs','runs','Includes flagged close runs; not a count of confirmed independent physiological episodes.';
+    'CloseNativeRun','OxySinkEvents','Native run proximity','Either neighboring empty-frame gap < CloseNativeGapThresholdSec','Boolean','Both neighbors are flagged; no automatic deletion, merging or amplitude exclusion.';
+    'PreviousNativeGapSec / NextNativeGapSec','OxySinkEvents','Same final site within recording','(Next native start - preceding native end - 1) / SampleF','seconds','Uses native masks, not refined timing. No neighbor is NaN; other sites do not trigger the flag.';
+    'CloseNativeGapThresholdSec','OxySinkEvents','Development review threshold','sinkCloseNativeGapSec (default 20)','seconds','Strictly shorter gaps are flagged. This is not a validated biological separation threshold.';
+    'RecurrenceStatus','OxySinkEvents','Review status','close_native_runs_review or no_close_native_neighbor','text','Neither status confirms separate physiological events; candidate fragmentation remains possible.';
+    'CloseNativeRunEvents','EventMeasurementQC','Recording sink-run count','sum(CloseNativeRun)','runs','Counts both members of a close pair. These runs remain in descriptive event totals.';
+    'RecurrenceNotAssessedEvents','EventMeasurementQC','Assessment coverage','Number of runs lacking recurrence assessment','runs','Surges are not assessed by this sink proximity rule. Zero-event recordings have zero unassessed events.';
+    'TimingResolved','OxySinkEvents','Algorithmic boundary resolution','Both return crossings found and native trace below return level','Boolean','Does not confirm physiological independence. Close runs can have resolved timing; amplitude baseline QC is separate.'};
+Definitions = [Definitions;cell2table(RecurrenceDefinitions,'VariableNames',Definitions.Properties.VariableNames)];
 writetable(Definitions,OutputXlsx,'Sheet','MetricDefinitions');
 
 end
