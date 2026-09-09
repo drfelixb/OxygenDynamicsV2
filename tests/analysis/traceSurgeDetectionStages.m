@@ -26,7 +26,7 @@ for t=1:N
 end
 clear F;
 Summary=[summarize(threshold,"percentile_only",masks,M);summarize(areaOnly,"physical_area_only",masks,M);summarize(accepted,"candidate_geometry_tissue",masks,M)];
-[R,Info]=trackSurgeCandidates(C,P.ThresholMinddur_Surges,P.surgeTrackingOverlapFraction);
+[R,Info]=trackSurgeCandidates(C,P.ThresholMinddur_Surges,P.surgeTrackingOverlapFraction,P.surgeTrackingContainmentFraction,P.surgeTrackingMaxAreaRatio);
 Summary=[Summary;summarize(R,"adjacent_tracks_before_duration",masks,M)];
 keep=Info.NativeEndFrame-Info.NativeStartFrame+1>=ceil(P.ThresholMinddur_Surges);R=R(keep,:);
 Summary=[Summary;summarize(R,"ten_second_duration",masks,M)];

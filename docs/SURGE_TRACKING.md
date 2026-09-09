@@ -1,4 +1,4 @@
-# Existing BOI surge tracking: physical size, motion and recurring sites
+# Existing BOI surge tracking: size, shape continuity and recurring sites
 
 This change replaces the BOI surge tracker's fixed initial seed and absolute
 390-pixel overlap rule. It remains the existing normalized-image detector;
@@ -21,9 +21,16 @@ the separately developed alternative detector is not incorporated here.
    most recent region, allowing cumulative motion away from the original seed.
    Candidates have at most one predecessor and one successor. Eligible links
    use decreasing coverage, with canonical pixel order for deterministic ties.
+   If this primary test fails, an **isolated shape-change** link is permitted
+   only when intersection / smaller area is at least 0.8, larger / smaller area
+   is at most 2, and each endpoint has exactly one nonzero-overlapping candidate
+   partner. This handles bounded expansion/contraction. Even a small contact
+   with a second admitted candidate blocks the fallback. These development
+   limits were specified before the current reference rerun.
 4. **Duration:** keep contiguous native runs of at least 10 seconds, using
    `ceil(10 * fs)` frames. No missing frame is filled, and separate short runs
-   cannot accumulate enough duration to pass. The last valid start is included.
+   cannot accumulate enough duration to pass. All tracked candidates, including
+   terminal fragments too short to qualify, remain in a separate QC ledger.
 5. **Recurring sites:** after duration filtering, compare each retained event's
    union footprint with the first retained event footprint of an existing site.
    The same mutual-overlap threshold, 0.6, applies. That anchor never expands
@@ -31,8 +38,9 @@ the separately developed alternative detector is not incorporated here.
    assigned to a site, so grouping cannot join adjacent runs or change event count.
    The best eligible site is used; equal scores use the earliest site ID.
 
-The two overlap settings are separate parameters: `surgeTrackingOverlapFraction`
-and `surgeSiteOverlapFraction`. Neither was tuned to maximize the challenge scores.
+Tracking and site grouping have separate settings: `surgeTrackingOverlapFraction`,
+`surgeTrackingContainmentFraction`, `surgeTrackingMaxAreaRatio` and
+`surgeSiteOverlapFraction`. They were not tuned to maximize the challenge scores.
 At the default >50% mutual coverage, disjoint candidates cannot have two eligible
 links to the same region; deterministic conflict resolution also supports the
 lower thresholds used in sensitivity checks.
@@ -47,7 +55,16 @@ not proof of an anatomical or physiological unit.
 
 The final event table adds:
 
-- `TrackingMethod = adjacent_frame_mutual_overlap` and `TrackingOverlapFraction`.
+- `TrackingMethod = adjacent_mutual_or_isolated_containment`,
+  `TrackingOverlapFraction`, `TrackingContainmentFraction` and `TrackingMaxAreaRatio`.
+- `ShapeChangeLinkCount` and `ShapeChangeLinkFrames`: fallback links and their
+  right-hand frame numbers. `MinimumMatchedMutualCoverage` and
+  `MaximumMatchedAreaRatio` describe the observed adjacent links.
+- `CandidateRunID`: joins a retained event to the complete candidate-run ledger.
+- `PotentialGapContinuation`: an endpoint overlaps another candidate run across
+  one or more empty frames up to `surgeGapReviewMaxSec` (default two seconds).
+  The endpoint mutual-coverage threshold is the tracking threshold (0.6).
+  This can involve rejected short runs or different final sites.
 - `SiteAssignmentMethod = first_retained_event_footprint_overlap` and
   `SiteOverlapFraction`.
 - `AmbiguousTracking`: a run participated in a possible split/merge contact,
@@ -57,19 +74,54 @@ The final event table adds:
 - `SiteAssignmentAmbiguous`: more than one fixed site anchor was eligible at
   assignment. An unflagged assignment is not proof of biological identity.
 
-Both flags are descriptive; they do not remove events or their otherwise usable
+These flags are descriptive; they do not remove events or their otherwise usable
 amplitudes. `EventMeasurementQC` reports ambiguous counts and missing-assessment
 counts separately, by recording and sign. Current surge outputs are assessed;
-sink tracking/site assignment is not assessed by these new rules. Zero-event
+sink tracking/site assignment, shape linking and gap review are not assessed
+by these surge rules. Zero-event
 recordings have zero event counts and unavailable measurement fractions.
+
+## Candidate runs are not pooled events
+
+Every recording saves `SurgeCandidateRunQC` and `SurgeGapReview` in its surge MAT,
+with matching CSV files in `OxygenSurges_Output`. The first has one row per
+contiguous candidate run before duration filtering: recording/local candidate ID,
+native bounds, duration, keep/reject reason, tracking flags and shape-link frames.
+Only retained runs have `SurgeID` and `EventID`; rejected rows contain NaN for
+those IDs and never enter pooled event counts. The second table identifies
+possible short-gap pairs by local candidate IDs, empty-frame gap and endpoint
+coverage. Both IDs require the source recording identity when comparing recordings.
+Within a saved recording, the event and candidate tables share `RecordingID`.
+Pooled statistics can assign a custom `RecordingID` from the metadata CSV.
+To trace a pooled event back, use its `StatsRecordingIndex` to select
+`StatsInfo.Recordings(index).SurgesMatFile`, then join that source ledger by
+`CandidateRunID`. Do not assume a custom pooled ID equals the original path ID.
+
+A six-second fragment, one blank second and another six-second fragment remain
+**two rejected candidates and zero retained events**. Two ten-second runs with
+the same gap remain two retained events, potentially grouped at one site.
+The masks alone cannot determine whether the gap is a missed observation or a
+real return between events. The QC flag records that uncertainty without
+filling masks, adding duration, merging runs or excluding usable amplitudes.
+This two-second candidate review is distinct from `CloseNativeRun`, which uses
+retained runs at the same final site and the separate 20-second review threshold.
+
+`EventMeasurementQC` adds retained-event counts for shape links and possible
+short-gap continuation, with separate missing-assessment counts. Complete
+rejected-run ledgers remain per recording; they are not pooled into event or
+mouse summary tables. Candidate pixel masks are not saved in the ledger; exact
+reconstruction of rejected geometry requires rerunning the recorded input and
+contract. Saved native masks still cover retained events.
 
 ## Dependencies and limitations
 
 Surge timing still uses native threshold bounds. This update does not establish
 physiological onset/return, resolve one-frame detection dropouts, reconstruct
 split/merge lineages, or distinguish events from noise with biological labels.
-A conservative mutual-overlap rule can split abrupt expansion/contraction into
-separate runs, potentially rejecting pieces shorter than ten seconds. Broad
+Abrupt changes beyond the bounded fallback, overlapping neighbors, or missing
+candidate frames can still split runs and cause pieces shorter than ten seconds
+to be rejected. A linked shape change is algorithmic continuity, not proof of a
+single physiological event. Broad
 regions can tolerate a greater absolute translation than small regions. A
 region with no overlap in consecutive sampled frames cannot be linked by this
 rule; motion tolerance therefore depends on frame rate as well as region size.
@@ -123,25 +175,26 @@ checked for adjacent coverage, physical area, fixed site anchor coverage,
 duration and unique per-frame pixel ownership. Earlier identical-input sink
 masks/timing are compared separately from amplitude availability.
 
-Completed counts, comparisons and verification files are in the [validation
-report](reference-results/surge-physical-adjacent-20260909/README.md).
+The preceding mutual-coverage-only results are retained as a [historical report](reference-results/surge-physical-adjacent-20260909/README.md).
+The shape-continuity rerun and controlled gap/size checks are documented in the
+[current report](reference-results/surge-shape-continuity-20260909/README.md).
 
 ## Versioning
 
 Reanalysis is required. The current contract is:
 
-- Detector: `existing-v2-surge-physical-adjacent-4`
-- Measurement: `event-footprint-surge-tracking-qc-5`
-- Statistics: `mouse-strict-tracking-qc-6`
+- Detector: `existing-v2-surge-shape-continuity-5`
+- Measurement: `event-footprint-candidate-ledger-6`
+- Statistics: `mouse-strict-shape-gap-qc-7`
 - Schema: `3.0-dev`; normalization remains `spatial-sd_then_temporal-sd`.
 
 The separate iOS path retains the previous fixed-seed tracker under an explicitly
 iOS-specific helper name. Earlier reference results retain their original
 contracts and must not be pooled as current outputs.
 
-## Remaining failures localized by stage reconstruction
+## Historical stage diagnosis that motivated shape continuity
 
-Reconstructing ID400 and ID401 smooth pairs and ID400 moving input reproduces the
+Under the preceding mutual-coverage-only contract, reconstructing ID400 and ID401 smooth pairs and ID400 moving input reproduces the
 saved final surge masks exactly. These traces reuse production preprocessing;
 they locate losses rather than independently validate the detector.
 
@@ -156,7 +209,4 @@ For the ID400 moving singleton, percentile selection intersects all 60 imposed
 frames; geometry/tissue filtering leaves intersections in 50. Tracking produces
 18 intersecting pieces, of which only one ten-frame run survives. Post-detection
 amplitude or timing refinement cannot recover an event discarded at this stage.
-The next development step should evaluate continuity through candidate shape
-changes and short dropouts together with duration qualification, reporting
-observed support and any inferred gaps separately. Simply reducing the minimum
-duration or increasing count is not sufficient evidence of improvement.
+The current change tests bounded shape continuity and explicitly reports short-gap candidates. It does not infer missing observations. Simply reducing the minimum duration or increasing count is not sufficient evidence of improvement.

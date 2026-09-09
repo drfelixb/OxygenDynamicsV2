@@ -6,6 +6,33 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Bounded surge shape continuity and rejected-candidate provenance
+
+- Allow an isolated surge to expand or contract when mutual coverage fails,
+  provided at least 80% of the smaller region is covered, area changes by no
+  more than a factor of two, and neither endpoint has another overlapping
+  candidate. Keep one-to-one ownership and the existing primary 60% rule.
+- Record every contiguous candidate run, including short terminal fragments,
+  before the ten-second duration filter. Export recording-local candidate IDs,
+  keep/reject reasons and exact fallback-link frames in per-recording MAT/CSV.
+  Rejected candidates remain outside retained-event and site statistics.
+- Flag possible continuations across up to two empty seconds in a separate
+  candidate-pair table. Never fill missing masks or combine short runs to meet
+  duration. Export retained-event shape/gap counts and explicit assessment
+  coverage in measurement QC; document their distinction from same-site
+  20-second native-recurrence review.
+- Advance detector, measurement and statistics contracts; reanalysis is required.
+  Keep README, workbook definitions and the publication-readiness plan aligned.
+- Pass 78 focused tests, smoke, saved-output/statistics integration and 117
+  prescribed geometry/gap scenarios at three pixel sizes and three sampling
+  rates. Bounded rapid changes stay continuous; neighboring candidates block
+  the fallback; dropout and real-return fixtures remain deliberately ambiguous.
+- Repeat the twenty complete movie cases on the same four archived sources;
+  retain independent arithmetic, native-mask, candidate-ledger and overlap
+  checks (3,905 event records, zero arithmetic mismatches; unchanged sink masks
+  and timing in all twenty comparisons) in the [continuity report](docs/reference-results/surge-shape-continuity-20260909/README.md).
+  This is development validation, not an estimate of biological accuracy.
+
 ### Physical surge tracking and explicit recurring sites
 
 - Replace the BOI fixed-seed, 390-pixel surge tracker with adjacent-frame mutual

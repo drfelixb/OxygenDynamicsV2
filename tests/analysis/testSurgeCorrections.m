@@ -10,13 +10,13 @@ for minimum=[3 3.03 10]
  for f=first:N,F{f}=struct('PixelIdxList',[1;2;3]);end
  A=trackSinkCandidates(F,minimum,.6);[~,L]=filterSinkRunsByDuration(A,minimum,150);
  verifyEqual(t,find(L),first:N);
- A=trackSurgeCandidates(F,minimum,0);[~,L]=refineTrackedSurgeCandidates(A,minimum);
+ A=trackSurgeCandidates(F,minimum,0,.8,2);[~,L]=refineTrackedSurgeCandidates(A,minimum);
  verifyEqual(t,find(L),first:N);
 end
 end
 function testWholeRecordingExactlyMinimumDuration(t)
 F=repmat({struct('PixelIdxList',[1;2;3])},10,1);
-A=trackSurgeCandidates(F,10,0);[~,L]=refineTrackedSurgeCandidates(A,10);
+A=trackSurgeCandidates(F,10,0,.8,2);[~,L]=refineTrackedSurgeCandidates(A,10);
 verifyEqual(t,nnz(L),10);
 end
 function testSurgeFootprintFractionSignAndNoLegacyExport(t)

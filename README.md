@@ -30,7 +30,10 @@ maintained separately.
   unavailable amplitudes while retaining detections.
 - [Surge tracking follows motion and groups recurring sites explicitly](docs/SURGE_TRACKING.md).
   The minimum surge area is in µm²; adjacent-frame matching uses fractional
-  coverage. Outputs flag possible split/merge contacts and ambiguous site assignment.
+  coverage with bounded isolated growth/contraction. Outputs distinguish retained
+  events from rejected short candidates and flag possible short-gap continuations
+  without filling gaps. Possible split/merge contacts and ambiguous site assignments
+  remain visible.
 - [Surge amplitude and detection audit](docs/SURGE_ANALYSIS_AUDIT.md): remove the
   obsolete normalized-trace ratio export, correct terminal-event seeding for
   both trackers, and expose surge native timing/boundary and recurrence status.
@@ -45,15 +48,17 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **67 focused tests**, smoke checks and synthetic
-master-to-statistics integration passed in MATLAB R2025a. The [physical surge
-tracking validation](docs/reference-results/surge-physical-adjacent-20260909/README.md)
-includes 720 prescribed candidate-mask cases and twenty full-movie runs on four
-source recordings: ID400, ID401, FB2312 and the separate FB2411 fluorescence
-control. All 3,773 baseline/amplitude records match independent recalculation,
-including unavailable measurements. Thirteen identical-input comparisons preserve
-sink native masks, timing and identities; sink amplitude availability can change
-through both-sign baseline exclusion.
+Current development validation: **78 focused tests**, smoke checks and synthetic
+master-to-statistics integration passed in MATLAB R2025a. The
+[shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
+adds 117 prescribed size-change/gap scenarios and repeats twenty full-movie cases
+on four source recordings: ID400, ID401, FB2312 and the separate FB2411
+fluorescence control. Candidate ledgers are retained separately from event
+statistics. All 3,905 event baseline/amplitude records agree with independent
+recalculation; all twenty same-input comparisons preserve sink masks/timing.
+These are four source recordings, not twenty independent samples.
+The preceding [physical tracking sweep](docs/reference-results/surge-physical-adjacent-20260909/README.md)
+remains a historical-contract result.
 
 **Surge detection remains provisional.** Geometry tests support the tracking
 correction, but full-movie results are mixed. Stage reconstruction identifies

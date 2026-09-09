@@ -3,11 +3,11 @@ function [Summary,Statuses]=createOxygenMeasurementQC(Registry,Sinks,Surges)
 assert(ismember('RecordingID',Registry.Properties.VariableNames));
 ids=string(Registry.RecordingID);
 assert(numel(unique(ids))==numel(ids),'Duplicate registry RecordingID.');
-Summary=table('Size',[0 18],'VariableTypes', ...
-    [{'string','string'} repmat({'double'},1,16)], ...
+Summary=table('Size',[0 22],'VariableTypes', ...
+    [{'string','string'} repmat({'double'},1,20)], ...
     'VariableNames',{'RecordingID','EventType','DetectedEvents','ValidBaselineEvents', ...
     'FiniteAmplitudeEvents','UnavailableAmplitudeEvents','WrongDirectionAmplitudeEvents', ...
-    'ValidBaselineFraction','FiniteAmplitudeFraction','TimingResolvedEvents','TimingUnresolvedEvents','TimingNotAssessedEvents','CloseNativeRunEvents','RecurrenceNotAssessedEvents','AmbiguousTrackingEvents','TrackingNotAssessedEvents','AmbiguousSiteAssignmentEvents','SiteAssignmentNotAssessedEvents'});
+    'ValidBaselineFraction','FiniteAmplitudeFraction','TimingResolvedEvents','TimingUnresolvedEvents','TimingNotAssessedEvents','CloseNativeRunEvents','RecurrenceNotAssessedEvents','AmbiguousTrackingEvents','TrackingNotAssessedEvents','AmbiguousSiteAssignmentEvents','SiteAssignmentNotAssessedEvents','ShapeChangeLinkedEvents','ShapeChangeTrackingNotAssessedEvents','PotentialGapContinuationEvents','GapReviewNotAssessedEvents'});
 Statuses=table('Size',[0 4],'VariableTypes',{'string','string','string','double'}, ...
     'VariableNames',{'RecordingID','EventType','BaselineStatus','EventCount'});
 inputs={Sinks,Surges};kinds=["sink","surge"];
@@ -23,7 +23,7 @@ for k=1:2
     for r=1:numel(ids)
         rows=false(height(E),1);
         if ~isempty(E),rows=string(E.RecordingID)==ids(r);end
-        T=E(rows,:);n=height(T);valid=0;finite=0;wrong=0;resolved=0;unresolved=0;notAssessed=n;closeRuns=0;recurrenceNotAssessed=n;ambiguousTracking=0;trackingNotAssessed=n;ambiguousSite=0;siteNotAssessed=n;
+        T=E(rows,:);n=height(T);valid=0;finite=0;wrong=0;resolved=0;unresolved=0;notAssessed=n;closeRuns=0;recurrenceNotAssessed=n;ambiguousTracking=0;trackingNotAssessed=n;ambiguousSite=0;siteNotAssessed=n;shapeEvents=0;shapeNotAssessed=n;gapEvents=0;gapNotAssessed=n;
         if n>0
             if ismember('TimingResolved',T.Properties.VariableNames)
                 assert(all(ismember(T.TimingResolved,[0 1])),'OxygenDynamics:InvalidTimingQC','TimingResolved must be Boolean.');
@@ -41,6 +41,14 @@ for k=1:2
                 assert(all(ismember(T.SiteAssignmentAmbiguous,[0 1])),'Site assignment QC must be Boolean.');
                 ambiguousSite=sum(T.SiteAssignmentAmbiguous);siteNotAssessed=0;
             end
+            if ismember('ShapeChangeLinkCount',T.Properties.VariableNames)
+                assert(all(isfinite(T.ShapeChangeLinkCount)&T.ShapeChangeLinkCount>=0&T.ShapeChangeLinkCount==fix(T.ShapeChangeLinkCount)));
+                shapeEvents=sum(T.ShapeChangeLinkCount>0);shapeNotAssessed=0;
+            end
+            if ismember('PotentialGapContinuation',T.Properties.VariableNames)
+                assert(all(ismember(T.PotentialGapContinuation,[0 1])));
+                gapEvents=sum(T.PotentialGapContinuation);gapNotAssessed=0;
+            end
             status=string(T.BaselineStatus);
             assert(all(~ismissing(status) & strlength(status)>0),'Missing event baseline status.');
             valid=sum(status=="valid");finite=sum(isfinite(T.(amp)));
@@ -53,7 +61,7 @@ for k=1:2
         end
         denom=n;if n==0,denom=NaN;end
         Summary(end+1,:)={ids(r),kinds(k),n,valid,finite,n-finite,wrong, ...
-            valid/denom,finite/denom,resolved,unresolved,notAssessed,closeRuns,recurrenceNotAssessed,ambiguousTracking,trackingNotAssessed,ambiguousSite,siteNotAssessed}; %#ok<AGROW>
+            valid/denom,finite/denom,resolved,unresolved,notAssessed,closeRuns,recurrenceNotAssessed,ambiguousTracking,trackingNotAssessed,ambiguousSite,siteNotAssessed,shapeEvents,shapeNotAssessed,gapEvents,gapNotAssessed}; %#ok<AGROW>
     end
 end
 end

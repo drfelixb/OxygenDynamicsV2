@@ -30,10 +30,14 @@ Table_OxygenSurgeEvents_Out = OutputData.Table_OxygenSurgeEvents_Out;
 OxySurgeArea_all = OutputData.OxySurgeArea_all;
 Mean_OxySurge_TraceZ = OutputData.Mean_OxySurge_TraceZ;
 OxySurge_Map = OutputData.OxySurge_Map;
+SurgeCandidateRunQC=OutputData.SurgeCandidateRunQC;
+SurgeGapReview=OutputData.SurgeGapReview;
+writetable(SurgeCandidateRunQC,fullfile(OutputFolders.OxySurgesPath,'SurgeCandidateRunQC.csv'));
+writetable(SurgeGapReview,fullfile(OutputFolders.OxySurgesPath,'SurgeGapReview.csv'));
 
 save(fullfile(OutputFolders.OxySurgesPath,['OxygenSurges',OutputData.DatafileID,'.mat']), ...
     'Table_OxygenSurges_Out','Table_OxygenSurgeEvents_Out','OxySurgeArea_all','Mean_ROI_TraceZ', ...
-    'Mean_OxySurge_TraceZ','OxySurge_Map','AnalysisInfo');
+    'Mean_OxySurge_TraceZ','OxySurge_Map','AnalysisInfo','SurgeCandidateRunQC','SurgeGapReview');
 
 save(fullfile(OutputFolders.ManualCurOxySinksPath,['ManualCuration',OutputData.DatafileID,'.mat']), ...
     'Table_OxygenSinks_Out','Table_OxygenSinkEvents_Out','OxySinkArea_all','Mean_OxySink_TraceZ', ...

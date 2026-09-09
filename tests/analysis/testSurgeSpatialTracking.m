@@ -15,7 +15,7 @@ end
 function testMovingMinimumSquareDoesNotDependOnInitialSeed(t)
 F=cell(30,1);
 for f=1:30,M=false(20,60);M(:,f:f+19)=true;F{f}=struct('PixelIdxList',find(M));end
-[R,I]=trackSurgeCandidates(F,10,.6);
+[R,I]=trackSurgeCandidates(F,10,.6,.8,2);
 verifySize(t,R,[1 30]);verifyEqual(t,[I.NativeStartFrame I.NativeEndFrame],[1 30]);
 verifyFalse(t,I.AmbiguousTracking);
 end
@@ -41,14 +41,14 @@ R=cell(2,20);R(1,1:10)={(1:100)'};R(2,11:20)={(1:100)'};
 end
 function testMutualOverlapRejectsTinyContainedCandidate(t)
 F={struct('PixelIdxList',(1:100)');struct('PixelIdxList',(1:20)')};
-[R,~]=trackSurgeCandidates(F,1,.6);verifyEqual(t,nnz(~cellfun(@isempty,R)),2);verifySize(t,R,[2 2]);
+[R,~]=trackSurgeCandidates(F,1,.6,.8,2);verifyEqual(t,nnz(~cellfun(@isempty,R)),2);verifySize(t,R,[2 2]);
 end
 function testSplitMergeFlagsAndNoDuplicateOwnership(t)
 F={struct('PixelIdxList',(1:100)');struct('PixelIdxList',{(1:50)',(51:100)'});struct('PixelIdxList',(1:100)')};
-[R,I]=trackSurgeCandidates(F,1,.6);verifyTrue(t,all(I.AmbiguousTracking));
+[R,I]=trackSurgeCandidates(F,1,.6,.8,2);verifyTrue(t,all(I.AmbiguousTracking));
 for f=1:3,px=vertcat(R{:,f});verifyEqual(t,sort(px),(1:100)');end
 % Exact threshold ties use the same canonical candidate regardless of input order.
-[A,~]=trackSurgeCandidates(F,1,.5);F{2}=F{2}([2 1]);[B,~]=trackSurgeCandidates(F,1,.5);
+[A,~]=trackSurgeCandidates(F,1,.5,.8,2);F{2}=F{2}([2 1]);[B,~]=trackSurgeCandidates(F,1,.5,.8,2);
 verifyEqual(t,A,B);
 end
 function testRandomizedOwnershipAndPermutation(t)
@@ -59,16 +59,16 @@ for trial=1:20
   labels=randi([0 5],60,1);F{f}=struct('PixelIdxList',{});
   for k=1:5,px=find(labels==k);if ~isempty(px),F{f}(end+1).PixelIdxList=px;end;end
  end
- [A,I]=trackSurgeCandidates(F,1,.2);
+ [A,I]=trackSurgeCandidates(F,1,.2,.8,2);
  for f=1:20
   verifyEqual(t,sort(vertcat(A{:,f})),sort(vertcat(F{f}.PixelIdxList)));
   F{f}=F{f}(randperm(numel(F{f})));
  end
- [B,J]=trackSurgeCandidates(F,1,.2);verifyEqual(t,A,B);verifyEqual(t,I,J);
+ [B,J]=trackSurgeCandidates(F,1,.2,.8,2);verifyEqual(t,A,B);verifyEqual(t,I,J);
 end
 end
 function testEmptyAndTerminalRuns(t)
-[R,I]=trackSurgeCandidates(cell(5,1),3,.6);verifySize(t,R,[0 5]);verifyEqual(t,height(I),0);
+[R,I]=trackSurgeCandidates(cell(5,1),3,.6,.8,2);verifySize(t,R,[0 5]);verifyEqual(t,height(I),0);
 P=createOxygenMasterParams(4.75,2.03);F=cell(50,1);first=51-ceil(P.ThresholMinddur_Surges);
 for f=first:50,F{f}=struct('PixelIdxList',(1:400)');end
 [~,~,M]=buildTrackedOxygenSurgeSites(F,P);verifyEqual(t,[M.NativeStartFrame M.NativeEndFrame],[first 50]);
@@ -77,6 +77,8 @@ function testTrackingMetadataMatchesIdentityAndQC(t)
 P=createOxygenMasterParams(4.75,1);
 M=table([2;1],[1;1],[21;1],[30;10],[false;true],[true;false], ...
  'VariableNames',{'SurgeID','EventID','NativeStartFrame','NativeEndFrame','SiteAssignmentAmbiguous','AmbiguousTracking'});
+M.CandidateRunID=[1;2];M.ShapeChangeLinkCount=[0;1];M.ShapeChangeLinkFrames=["";"2"];
+M.MinimumMatchedMutualCoverage=[.7;.5];M.MaximumMatchedAreaRatio=[1;2];M.PotentialGapContinuation=[false;false];
 E=M([2 1],1:4);E=attachSurgeTrackingMetadata(E,M,P);
 verifyEqual(t,E.AmbiguousTracking,[false;true]);verifyEqual(t,E.SiteAssignmentAmbiguous,[true;false]);
 E.RecordingID=["R";"R"];E.BaselineStatus=["valid";"valid"];E.NormOxySurgeAmp=[.2;.1];

@@ -4,32 +4,34 @@ The target is a single reanalyzed cohort using a frozen, reliable pipeline. Back
 
 ## Immediate next investigation
 
-The unbounded sink timing search has been replaced by an
-[event-local rule](LOCAL_SINK_TIMING.md), with native identity, disjoint searches
-between neighboring events, a provisional 20-second limit and explicit unresolved
-boundary flags. Old timing outputs are rejected by the new measurement/statistics
-contract. The frozen-trace 5/10/20/40-second sweep demonstrates substantial
-parameter sensitivity; resolution counts are not accuracy labels.
+The existing surge path now uses a physical area cutoff, adjacent-frame tracking
+with bounded isolated shape continuity, explicit recurring sites and a separate
+ledger of short rejected candidates. Missing frames are never automatically
+bridged. The same twenty full-movie reference inputs are used to compare each
+tracking revision; see [current rules and validation](SURGE_TRACKING.md).
 
-Next validate onset/recovery with known injected signal shapes, recurrences,
-slow trends and mixed-sign changes. Include whole-site versus event-footprint
-trace support and test the return level/search limit without tuning to reference
-event counts. Native fallback windows remain in descriptive summaries; specify
-how unresolved timing enters publication endpoints before inferential analysis.
+Remaining surge signal-definition work has priority over count-based threshold
+tuning: native threshold bounds can truncate a smooth rise, contaminate its
+pre-event baseline and dilute amplitude when a moving event is averaged across
+its fixed union footprint. Determine onset/recovery and measurement-support
+behavior with known stationary, growing and moving signals before declaring a
+publication endpoint. Rejected-candidate QC localizes gaps without establishing
+whether they are detection dropouts or real returns.
 
-The six flagged FB2312 surges in the earlier signal audit changed sign between
-detrended input and frame-wise spatial normalization. Define normalized spatial
-contrast separately from preserved-input baseline change. Neither arithmetic
-consistency nor sign agreement establishes biological accuracy. Physical-scale
-resampling follows these timing/signal-definition tests; archived intensity
-preparation still needs resolution before cross-acquisition amplitude comparisons.
+The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
+with disjoint searches, a provisional 20-second bound and unresolved-boundary
+flags. Timing sensitivity and raw-versus-normalized sign changes remain relevant
+for both signs. Surge-specific experimental-baseline contrasts and equal-mouse
+summaries still need implementation after the event measurement definition is
+settled. Archived intensity preparation and physical scaling of smoothing also
+remain unresolved before cross-acquisition comparisons.
 
 ## Work in dependency order
 
 | Priority | Work | Dependency / completion criterion |
 |---|---|---|
 | 1 | Establish calculation and provenance contracts | Implemented development boundary: correct temporal SD; distinct events/sites/recordings; source checksums; strict baseline/missingness rules. Finish audit of remaining historical column names and units. |
-| 2 | Run archived biological references | Eight complete recordings now pass master/statistics and numerical QC. Event/site counts and amplitude availability are retained separately. Targeted trace/overlay review and recovery tests remain outstanding. |
+| 2 | Run archived biological references | Eight complete recordings passed master/statistics under an earlier contract. Current surge continuity validation covers twenty master runs on four sources plus synthetic master/statistics integration. Event/site counts and amplitude availability remain separate; the broader cohort must be rerun under the final contract. |
 | 3 | Expand reference coverage | All 87 archive assets inventoried; eight complete recordings from six animals cover two paired awake/isoflurane cases, finer sampling, KX, awake-mobile and a separate fluorescence control. Four metadata mappings remain unresolved. Intensity preprocessing remains incompletely established; do not pool acquisitions on that assumption. |
 | 4 | Test existing-detector sensitivity to settings | After reproducible runtime, vary thresholds, smoothing, duration and correlation rejection in controlled runs. Record changed event identities, timing, masks and measurement availability. Review physical units across pixel sizes and sampling rates. Do not tune merely to reproduce old counts. |
 | 5 | Assess recovery and failure modes without exhaustive labels | Use known-signal injections and controlled perturbations across sink/surge amplitudes, durations, sizes, overlap and background conditions. Optional targeted blinded inspection may resolve specific failures. Reviewing candidates alone cannot estimate missed events. |

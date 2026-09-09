@@ -1178,7 +1178,7 @@ SmokeRegionInfo{3} = struct('Area',1,'PixelIdxList',9);
 SmokeTrackedSinks = trackSinkCandidates(SmokeRegionInfo,1,0.5);
 assert(~isempty(SmokeTrackedSinks{1,1}) && ~isempty(SmokeTrackedSinks{1,2}), ...
     'Sink tracking helper did not connect overlapping regions across frames.');
-SmokeTrackedSurges = trackSurgeCandidates(SmokeRegionInfo,1,0);
+SmokeTrackedSurges = trackSurgeCandidates(SmokeRegionInfo,1,0,.8,2);
 assert(~isempty(SmokeTrackedSurges{1,1}) && ~isempty(SmokeTrackedSurges{1,2}), ...
     'Surge tracking helper did not connect overlapping regions across frames.');
 SmokeTrackedList = cell(1,8);
@@ -2190,6 +2190,7 @@ if includeEventTables
     OutputData.Mean_ROI_TraceZ = single([1 2 3]);
     OutputData.Mean_OxySink_Trace_Raw = single([1 2 3]);
     OutputData.Table_OxygenSurgeEvents_Out = table({'Smoke'},'VariableNames',{'Experiment_Surge'});
+    [~,~,~,OutputData.SurgeCandidateRunQC,OutputData.SurgeGapReview]=buildTrackedOxygenSurgeSites(cell(0,1),createOxygenMasterParams(4.75,1));
 end
 
 end

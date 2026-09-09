@@ -1,0 +1,10 @@
+{
+  "PrescribedCases": 117,
+  "MethodsCompared": 2,
+  "CandidateOwnershipVerified": true,
+  "NoGapBridging": true,
+  "ShortFragmentsRemainRejected": true,
+  "NeighborContactsCannotUseFallback": true,
+  "AllBoundedGrowthAndContractionCasesContinuous": true,
+  "Interpretation": "Prescribed masks only. Dropout and true-pair cases deliberately have identical masks. No biological sensitivity or specificity estimate."
+}
