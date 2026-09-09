@@ -27,10 +27,13 @@ maintained separately.
   Inclusive frame timing uses N/fs recording exposure.
 - Recording/window baseline comparisons are explicit; animal summaries give
   equal weight to mice and expose missing measurements.
+- Sink and surge site recurrence both use explicit events/minute columns.
+  `EventMeasurementQC` and `EventBaselineStatusCounts` expose amplitude
+  availability per recording and event type, including zero-event recordings.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Development validation: 24 focused tests, synthetic master-to-statistics
+Development validation: 28 focused tests, synthetic master-to-statistics
 integration and a full 600-frame DANDI reference run passed in MATLAB R2025a.
 DANDI outputs are unlabelled reference results, not ground-truth accuracy.
 Default detection thresholds remain provisional after the SD correction.

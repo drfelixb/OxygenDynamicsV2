@@ -27,7 +27,12 @@ OutputXlsx = createStatsExcelOutputPath(StatsOutputFolderPath,InputCsv);
 if isfield(CoreData,'RecordingRegistry')
     RecordingRegistry=CoreData.RecordingRegistry; BaselineContrasts=CoreData.BaselineContrasts;
     RecordingWindowMetrics=CoreData.RecordingWindowMetrics;WindowBaselineContrasts=CoreData.WindowBaselineContrasts;
-    save(fullfile(StatsOutputFolderPath,'DataOutput.mat'),'RecordingRegistry','BaselineContrasts','RecordingWindowMetrics','WindowBaselineContrasts','-append');
+    [EventMeasurementQC,EventBaselineStatusCounts]=createOxygenMeasurementQC( ...
+        RecordingRegistry,CoreData.TableOxygenSinkEvents,CoreData.TableOxygenSurgeEvents);
+    save(fullfile(StatsOutputFolderPath,'DataOutput.mat'),'RecordingRegistry','BaselineContrasts','RecordingWindowMetrics','WindowBaselineContrasts', ...
+        'EventMeasurementQC','EventBaselineStatusCounts','-append');
+    writetable(EventMeasurementQC,OutputXlsx,'Sheet','EventMeasurementQC');
+    writetable(EventBaselineStatusCounts,OutputXlsx,'Sheet','EventBaselineStatusCounts');
     writetable(RecordingRegistry,OutputXlsx,'Sheet','RecordingRegistry');
     writetable(RecordingWindowMetrics,OutputXlsx,'Sheet','RecordingWindowMetrics');
     if ~isempty(WindowBaselineContrasts), writetable(WindowBaselineContrasts,OutputXlsx,'Sheet','WindowBaselineContrasts'); end

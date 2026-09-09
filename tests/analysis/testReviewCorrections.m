@@ -52,7 +52,7 @@ verifyEqual(t,F.MetricSummary.Mean,40);
 end
 function testUnavailableAndZeroEventFigures(t)
 S=table("R1","M1","C",NaN,2,'VariableNames', ...
-    {'RecordingID','Mouse','Condition','MeanOxySinkEvent_NormAmp','NumOxySinkEvents_Norm'});
+    {'RecordingID','Mouse','Condition','MeanOxySinkEvent_NormAmp','SinkSiteEventRate_per_min'});
 F=figures(t,S,struct());
 verifyEqual(t,numel(F.FigureFiles),1);
 missing=F.MetricSummary.Metric=="MeanOxySinkEvent_NormAmp";

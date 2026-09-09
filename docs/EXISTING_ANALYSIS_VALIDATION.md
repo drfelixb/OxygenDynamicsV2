@@ -1,15 +1,15 @@
 # Validation status — 9 September 2026
 
-Runtime: MATLAB R2025a on macOS. Base: upstream main `8cf3f036b41e16b2c472bcee7e5cfaeab41433eb`. Changes are local and uncommitted.
+Runtime: MATLAB R2025a on macOS. Base: upstream main `8cf3f036b41e16b2c472bcee7e5cfaeab41433eb`. Development branch: `development-existing-analysis-v3` on GitHub.
 
 | Check | Latest completed result |
 |---|---|
-| Focused calculation/regression tests | 24 passed |
-| Full `runOxygenPipelineSmokeTest` | Passed after schema 3.0-dev boundary and temporal SD correction |
-| `runRepositoryChecks` | Passed: 321 MATLAB files; 51 Code Analyzer messages remain |
+| Focused calculation/regression tests | 28 passed |
+| Full `runOxygenPipelineSmokeTest` | Passed with schema 3.0-dev and statistics identity mouse-strict-2 |
+| `runRepositoryChecks` | Passed: 325 MATLAB files; 51 Code Analyzer messages remain |
 | Master → statistics synthetic integration | Passed at 2 Hz; includes known measurements and a zero-event recording |
 
-These results precede the addition of the DANDI reference harness. Smoke-suite printed FAIL rows are deliberate negative regression fixtures; the suite itself passed.
+Smoke-suite printed FAIL rows are deliberate negative regression fixtures; the suite itself passed. The DANDI results below distinguish the first reference run from subsequent validation.
 
 Tests cover recording-aware joins, missing composite measurements, native occupied area, inclusive timing, zero-event exposure, explicit paired baselines, event-specific raw footprints, equal mouse weighting, mixed sampling rates, window overlap, contaminated baselines, calibration rejection, unavailable figures, fractional-frequency puff timestamps, temporal SD normalization, affine invariance, constant inputs, source hashing and incompatible contract rejection.
 
@@ -39,3 +39,9 @@ The 600-frame reference completed master and statistics export on 9 September 20
 All unavailable baselines were labelled `insufficient_clean_prebaseline`. These events remain detected; their amplitude is unavailable. This substantial missingness requires visual review and assessment by recurrence, timing and condition before amplitude comparisons. It must not be resolved by silently averaging only conveniently measurable events or relaxing baseline rules solely to increase coverage. The single-reference run does not establish representative missingness for the eventual cohort.
 
 Small provenance and QC records are retained in `docs/reference-results/ID400-awake-20260909/`. Large derived outputs remain in `/private/tmp/oxygen-dandi-reference-v3/` and can be recreated with the harness. No manually reviewed accuracy labels were introduced. This milestone is full runtime and numerical QC on one biological recording; broader reference selection, parameter sweeps and visual validation remain outstanding.
+
+## Consistent site rates and measurement availability
+
+Statistics identity `mouse-strict-2` standardizes site recurrence to events/minute for both sinks and surges and exports recording-level baseline/amplitude availability. All **28 focused tests passed**, the full smoke suite passed, and repository checks passed with **325 MATLAB files and 51 Code Analyzer messages**. The synthetic integration verified new QC counts, zero-event handling, MAT export and the renamed surge recurrence sheet.
+
+The full DANDI reference was rerun under `mouse-strict-2` and completed master, statistics, pixel verification and numerical QC. Counts remained 56 sink sites / 137 sink events and 14 surge sites / 40 surge events; 92 sink and 21 surge amplitudes were finite. One of the 92 finite sink amplitudes was wrong-direction; it remains visible in QC and is excluded from the hypoxic amplitude composite by the existing sign guard. No wrong-direction surge amplitude was found. The 45 sink / 19 surge unavailable baselines need further cause-specific investigation, not automatic imputation. New records are in `docs/reference-results/ID400-awake-stats2-20260909/`.

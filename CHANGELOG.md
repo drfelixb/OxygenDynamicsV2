@@ -21,6 +21,24 @@ reconstructed into releases.
 - Add explicit recording/window baseline comparisons, physical puff timestamps
   and graceful handling of unavailable summary figures.
 
+### Consistent recurrence units and measurement availability (2026-09-09)
+
+- Replace ambiguous `NumOxySinkEvents_Norm` / `NumOxySurgeEvents_Norm`
+  columns and sheets with `SinkSiteEventRate_per_min` /
+  `SurgeSiteEventRate_per_min`. Both are events/minute; the previous surge
+  metric was events/second. Update figure and workbook consumers.
+- Export per-recording/per-event-type `EventMeasurementQC` and
+  `EventBaselineStatusCounts` in MAT and Excel, including zero-event rows.
+  Count unavailable and wrong-direction amplitudes separately.
+- Advance statistics identity to `mouse-strict-2`; mixed contracts are rejected.
+- Add recurrence-unit and measurement-provenance regression tests; extend the
+  synthetic integration to verify QC and renamed workbook sheets. All 28 tests,
+  full smoke, repository checks and synthetic integration passed.
+- Repeat the full DANDI reference: detection counts unchanged; QC exposes one
+  wrong-direction sink amplitude and 64 events lacking clean baselines.
+- Define a validation route without exhaustive manual labels. Simulation and
+  robustness evidence do not establish biological detection accuracy.
+
 ### Development validation and documentation
 
 - Add 24 focused calculation/regression tests and synthetic integration.

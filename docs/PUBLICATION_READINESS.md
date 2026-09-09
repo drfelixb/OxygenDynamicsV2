@@ -2,6 +2,17 @@
 
 The target is a single reanalyzed cohort using a frozen, reliable pipeline. Backwards compatibility is not a requirement. The alternative detector is maintained separately. Passing numerical tests or processing an unlabelled movie does not establish biological detection accuracy.
 
+## Immediate next investigation
+
+The full ID400 rerun with `mouse-strict-2` exposes one wrong-direction sink
+amplitude and 64 unavailable baselines (45 sinks, 19 surges). First identify the
+flagged event and diagnose baseline failures separately as recording-start
+truncation, detected-event overlap, nonfinite signal or other causes. Compare
+raw and detection-domain traces using the saved event footprint and time bounds.
+Do not remove the event or relax baseline criteria simply to increase coverage.
+Then implement seeded injection/recovery and controlled-perturbation tests,
+reporting conditional recovery, timing/mask error and measurement availability.
+
 ## Work in dependency order
 
 | Priority | Work | Dependency / completion criterion |
@@ -10,8 +21,8 @@ The target is a single reanalyzed cohort using a frozen, reliable pipeline. Back
 | 2 | Run archived biological references | First case: full awake ID400 recording. Require completed master and statistics, finite/valid exposure, bounded occupied fractions, event/site counts, amplitude-availability reasons and inspectable overlays. Preserve failures as reports. |
 | 3 | Expand reference coverage | Inventory the published archive and select independent animals, relevant acquisition/condition strata and available controls. Verify each asset's preprocessing, scaling, sampling and calibration before pooling. One recording cannot cover these conditions. |
 | 4 | Test existing-detector sensitivity to settings | After reproducible runtime, vary thresholds, smoothing, duration and correlation rejection in controlled runs. Record changed event identities, timing, masks and measurement availability. Review physical units across pixel sizes and sampling rates. Do not tune merely to reproduce old counts. |
-| 5 | Create a reviewed validation subset | No labels are currently available. Sample both detected candidates and randomly selected recording intervals, including intervals with no detection. Include sinks and surges, small/large and short/long events, edge regions, overlap, movement and illumination changes. Reviewing candidates alone cannot estimate missed events. |
-| 6 | Resolve ambiguity and freeze detection rules | Establish annotation criteria, record uncertain cases, preferably assess independent reviewer agreement. Keep evaluation recordings separate from tuning recordings. Report uncertainty and failure modes rather than a single unsupported accuracy number. |
+| 5 | Assess recovery and failure modes without exhaustive labels | Use known-signal injections and controlled perturbations across sink/surge amplitudes, durations, sizes, overlap and background conditions. Optional targeted blinded inspection may resolve specific failures. Reviewing candidates alone cannot estimate missed events. |
+| 6 | Resolve ambiguity and freeze detection rules | Keep evaluation recordings separate from tuning recordings. If annotations are collected, record criteria and reviewer uncertainty. Otherwise leave biological accuracy unestablished and freeze rules against documented numerical, simulation and robustness criteria. |
 | 7 | Finalize publication statistics | Prespecify outcomes, baseline windows and exclusions. Separate optical amplitude from oxygen concentration. Choose inferential models appropriate to animals, repeated recordings and conditions; existing equal-mouse summaries are descriptive, not a complete inference plan. Check equivalent sink/surge coverage. |
 | 8 | Freeze and reanalyze | Save code revision, contract, parameters, environment/toolboxes, input hashes and curation decisions. Rerun the complete cohort under that release. Require QC and exclusion reports before biological effect interpretation. |
 
@@ -43,4 +54,4 @@ cannot prove that detected events correspond to oxygen changes.
 
 ## Outstanding engineering details
 
-Historical site-frequency columns currently differ in units between sinks and surges; standardize names and units before the release. Some low-level helper conventions remain historical even though old saved analyses are rejected. Current development contract identities are maintained manually; archive the actual code revision at release. Sampling-rate and pixel-size changes require a physical-units audit of detector smoothing. Correcting SD normalization changes score distributions, so existing default thresholds are provisional. The new window/composite outputs currently cover sinks; equivalent surge recording/window outputs remain to be specified.
+Site recurrence now uses explicit events/minute columns for both signs; recording-level measurement-availability tables expose missing amplitudes. Some low-level helper conventions remain historical even though old saved analyses are rejected. Current development contract identities are maintained manually; archive the actual code revision at release. Sampling-rate and pixel-size changes require a physical-units audit of detector smoothing. Correcting SD normalization changes score distributions, so existing default thresholds are provisional. The new window/composite outputs currently cover sinks; equivalent surge recording/window outputs remain to be specified.

@@ -25,7 +25,7 @@ For N frames at fs Hz, recording duration is N/fs seconds. MATLAB frame f repres
 
 Sink normalization uses eligible tissue within the detector's border crop. Surge normalization uses its own eligible tissue search area. Count density is count × 1e6/area_um2. Occupied area is the union of native active masks intersected with the saved eligible tissue support, counted once per pixel and scaled by pixel_size². Accepted detector regions can extend outside tissue; those pixels are excluded from occupancy, while event morphology continues to describe the full detected region. Dividing that union area by tissue area yields a tissue fraction. A missing or nonpositive area cannot support a normalized result.
 
-Historical site frequency column names still need standardization: `NumOxySinkEvents_Norm` is events/minute and `NumOxySurgeEvents_Norm` is events/second. They are site recurrence rates, not recording event density. Site mean durations now use seconds.
+`SinkSiteEventRate_per_min` and `SurgeSiteEventRate_per_min` both equal site event count × 60 / recording duration in seconds. They are site recurrence rates, not recording event density. The ambiguous `NumOxySinkEvents_Norm` and `NumOxySurgeEvents_Norm` columns/sheets have been removed; the former surge value was per second and differs by a factor of 60. Site mean durations use seconds.
 
 ## Local amplitude baseline
 
@@ -55,6 +55,12 @@ Overlapping events contribute separately to event-time density and the composite
 
 A valid zero-event recording has zero counts and total burden. Mean event amplitude is undefined when there are no events. If a detected event lacks a required composite measurement, the recording's composite total is NaN, not the sum of the remaining events. Valid-event counts accompany totals. Group summaries report separate animal, recording, site and event counts and valid animal counts per metric; SEM needs at least two valid animals. Scalar figures use the same strict within-mouse missingness policy as the tables. Unavailable site metrics are skipped and recorded in the figure metrics workbook with `UnavailableReason`; zero-event recordings can still produce valid recording-level figures.
 
+## Measurement availability
+
+`EventMeasurementQC` in the workbook and `DataOutput.mat` contains one row per recording and event type, including zero-event rows. It reports detected event count, valid baseline count, finite/unavailable amplitude counts, wrong-direction finite amplitude count, and fractions of all detected events with valid baselines/finite amplitudes. For zero detected events, counts are zero and availability fractions are undefined (NaN), not 100%. `EventBaselineStatusCounts` reports the reasons assigned by the event quantifier. A finite amplitude requires a valid baseline. Wrong-direction amplitude is counted separately from missing amplitude and is not relabelled as missing by QC.
+
+These tables describe measurement availability among detections. They do not estimate true/false detections, sensitivity or specificity. Missingness may depend on event recurrence, time or experimental condition; site means of available amplitudes must be interpreted alongside these counts.
+
 ## Explicit baseline comparisons
 
 Three optional `Config.Stats` fields (also accepted by `runOxygenDynamicsStats`) accept CSV paths:
@@ -77,7 +83,7 @@ All recordings must be reanalyzed. The statistics loader requires the exact curr
 
 Temporal standardization now divides by temporal SD rather than sqrt(SD), after spatial standardization. Finite constant inputs produce neutral detector values; nonfinite inputs are rejected. Tests establish unit temporal SD on nonconstant synthetic signals and invariance to a positive global gain and offset. This correction changes detector scores and potentially the detected event population. Default thresholds have **not yet been scientifically revalidated**. Spatial/temporal filtering, thresholding and correlation rejection otherwise remain the existing V2 path.
 
-The saved contract is currently `3.0-dev`, detector `existing-v2-sd-1`, measurement `event-footprint-1`, statistics `mouse-strict-1`. These are development identities, not a frozen publication release. Rule changes require contract updates. The current identity is manually maintained; it is not a source-code checksum.
+The saved contract is currently `3.0-dev`, detector `existing-v2-sd-1`, measurement `event-footprint-1`, statistics `mouse-strict-2`. These are development identities, not a frozen publication release. Rule changes require contract updates. The current identity is manually maintained; it is not a source-code checksum.
 
 Standardized ROI mean/CV/entropy and derivative descriptors remain exploratory signal features, not oxygen concentration measurements. No new inferential model, ground-truth sensitivity validation, depth reconstruction or correction for motion/illumination drift is claimed. Historical names and low-level helper conventions still require a final consistency audit even though the main loader rejects old analyses.
 

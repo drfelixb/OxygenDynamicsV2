@@ -3,7 +3,7 @@ function qc=inspectDandiReferenceResults(outputRoot)
 R=load(fullfile(outputRoot,'reference-report.mat'),'report');
 assert(strcmp(R.report.Status,'master_and_stats_completed'));
 folder=fileparts(R.report.StatsOutput);
-D=load(R.report.StatsOutput,'RecordingRegistry','RecordingWindowMetrics');
+D=load(R.report.StatsOutput,'RecordingRegistry','RecordingWindowMetrics','EventMeasurementQC','EventBaselineStatusCounts');
 assert(height(D.RecordingRegistry)==1 && D.RecordingRegistry.NFrames==600);
 assert(D.RecordingRegistry.RecordingDuration_sec==600);
 assert(isfinite(D.RecordingRegistry.RecordingArea_um2) && D.RecordingRegistry.RecordingArea_um2>0);
@@ -15,11 +15,16 @@ for kind=["Sink","Surge"]
     E=load(fullfile(folder,char(kind+"EventTable.mat")));
     sn=fieldnames(S);en=fieldnames(E);sites=S.(sn{1});events=E.(en{1});
     qc.(char(kind+"Sites"))=height(sites);qc.(char(kind+"Events"))=height(events);
+    row=D.EventMeasurementQC(D.EventMeasurementQC.EventType==lower(kind),:);
+    assert(height(row)==1 && row.DetectedEvents==height(events));
+    qc.(char(kind+"FiniteAmplitudes"))=row.FiniteAmplitudeEvents;
+    qc.(char(kind+"WrongDirectionAmplitudes"))=row.WrongDirectionAmplitudeEvents;
     if ~isempty(events)
         assert(all(events.StartFrame>=1 & events.EndFrame<=600 & events.EndFrame>=events.StartFrame));
         assert(all(abs(events.DurationSec-(events.EndFrame-events.StartFrame+1))<1e-10));
         assert(ismember('BaselineStatus',events.Properties.VariableNames));
         qc.(char(kind+"ValidBaselines"))=sum(string(events.BaselineStatus)=="valid");
+        assert(row.ValidBaselineEvents==qc.(char(kind+"ValidBaselines")));
         statuses=unique(string(events.BaselineStatus));
         counts=arrayfun(@(s)sum(string(events.BaselineStatus)==s),statuses);
         writetable(table(statuses,counts),fullfile(outputRoot,char(lower(kind)+"-baseline-status.csv")));

@@ -48,6 +48,13 @@ assert(max(abs(D.HypoxicBurden.EventTable.BurdenAmplitudePercent-[25;40]))<1e-10
 assert(all(D.RecordingRegistry.RecordingDuration_sec==50));
 assert(sum(D.HypoxicBurden.TimeSeriesTable.RecordingID=="R2")==100);
 assert(D.BaselineContrasts.RelativeChangePercent(1)==-100);
+Q=D.EventMeasurementQC;
+q=Q.EventType=="sink";
+assert(isequal(Q.DetectedEvents(q),[2;0]));
+assert(isequal(Q.FiniteAmplitudeEvents(q),[2;0]));
+assert(Q.FiniteAmplitudeFraction(find(q,1))==1);
+assert(ismember('EventMeasurementQC',sheetnames(result.OutputXlsx)));
+assert(ismember('SurgeSiteEventRate_per_min',sheetnames(result.OutputXlsx)));
 assert(isfile(result.OutputXlsx));
 fprintf('Known-event and zero-event integration passed: %s\n',root);
 end

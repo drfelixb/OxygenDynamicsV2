@@ -1,0 +1,31 @@
+{
+  "Dandiset": "000891",
+  "Version": "0.240215.0831",
+  "AssetID": "8ba82dc1-aaba-411d-a196-ff8ef0b61fc3",
+  "ArchivePath": "sub-ID400/sub-ID400_ses-M400-01-baseline-awake_image.nwb",
+  "NwbSHA256": "dbdb847b52a501eaf826b191f0affb2bcfc7078c95cddf035aa785e1aac3b23f",
+  "Series": "/acquisition/1hz_mcor.tif",
+  "MatlabInputAxes": "time,spatial1,spatial2",
+  "TiffSHA256": "695f8390be5fe18d06685d718b7e99c73d08715f51ef11ec14c694b32b599a05",
+  "Frames": 600,
+  "SampleHz": 1,
+  "PixelSizeUm": 4.75,
+  "IntensityRange": [
+    0,
+    255
+  ],
+  "PixelRoundtripVerified": true,
+  "PipelineContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-sd-1",
+    "Measurement": "event-footprint-1",
+    "Statistics": "mouse-strict-2",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  },
+  "MatlabVersion": "25.1.0.2943329 (R2025a)",
+  "LabelsAvailable": false,
+  "Status": "master_and_stats_completed",
+  "Limitations": "Motion-corrected archive; camera intensity provenance uncertain; one animal, no reviewed labels.",
+  "StatsOutput": "/private/tmp/oxygen-dandi-reference-stats2/stats/Stats_Output_20260909T092008/DataOutput.mat",
+  "ElapsedSeconds": 128.71336779166666
+}
