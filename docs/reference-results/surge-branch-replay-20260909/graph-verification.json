@@ -1,0 +1,11 @@
+{
+  "PolicyComparisons": 24,
+  "CandidateRunRows": 44193,
+  "OverlapEdgeRows": 69508,
+  "LinkRulesVerified": true,
+  "DurationAndQualificationVerified": true,
+  "AllContactFlagsVerified": true,
+  "EndpointPixelAccountingVerified": true,
+  "VerifierSHA256": "941accbebe08c6040efd36d14870b25af0bae3d008cf3b67b2048e6e5554ff55",
+  "Scope": "CSV graph arithmetic. Candidate reconstruction and pixel conservation are checked by MATLAB; physiological identity and support-score accuracy are not established here."
+}

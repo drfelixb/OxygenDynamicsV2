@@ -17,12 +17,19 @@ large-footprint dilution and undetected rising tails in nominally valid
 baselines. The three BOI sources and separate fluorescence control are the same
 recordings as before, not an independent held-out cohort.
 
-Next evaluate candidate separation and a clearly specified split/merge policy
-against independent neighboring signals and true branching/crossing scenarios.
-Preserve siblings and ambiguity rather than silently absorbing them. Then settle
-the spatial amplitude endpoint and validate event-local onset/baseline together.
-Production settings remain unchanged during this investigation. Statistical
-surge parity and final cohort reanalysis follow those definitions.
+The [split/merge comparison](SURGE_BRANCH_POLICY.md) now tests four linking
+policies with controlled contact/identity scenarios and six complete movie
+replays. Majority linking recovers the selected missed pulse, but can mix source
+identity through contact; the current primary rule can also do this. Stopping
+all contacts reduces retained support. None of these diagnostic policy changes
+has been promoted to production.
+
+Next export explicit contact connections and frame annotations in production,
+including rejected siblings, then test local candidate separation against
+independent neighboring injected signals. Preserve unresolved contact status
+when identity cannot be established. Then settle the spatial amplitude endpoint
+and validate event-local onset/baseline together. Statistical surge parity and
+final cohort reanalysis follow those definitions.
 
 The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
 with disjoint searches, a provisional 20-second bound and unresolved-boundary

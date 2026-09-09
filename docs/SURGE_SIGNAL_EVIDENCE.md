@@ -5,6 +5,12 @@ production detector, measurements and statistics remain at commit `03bdce8`'s
 contract; no thresholds were changed to improve challenge counts. The alternative
 detector is separate. See the [complete experiment and results](reference-results/surge-shape-evidence-20260909/README.md).
 
+Follow-up: the [split/merge policy comparison](SURGE_BRANCH_POLICY.md) recovers
+the selected missed pulse but demonstrates identity mixing through contacts,
+including under the current primary rule. Its six complete replays support
+explicit contact provenance and further separation tests before changing the
+production linking rule.
+
 ## What the new tools establish
 
 `auditSurgeCandidateEvidence` follows a fixed union of each imposed signal's

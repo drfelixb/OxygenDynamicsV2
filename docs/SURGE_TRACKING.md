@@ -4,6 +4,11 @@ This change replaces the BOI surge tracker's fixed initial seed and absolute
 390-pixel overlap rule. It remains the existing normalized-image detector;
 the separately developed alternative detector is not incorporated here.
 
+The later [split/merge policy comparison](SURGE_BRANCH_POLICY.md) is test-only.
+It demonstrates that even primary overlap links can mix source identities at
+contacts. The production rules below remain active; detailed contact-edge export
+is proposed as the next correction.
+
 ## Rules and their order
 
 1. **Candidate formation:** retain the existing spatial-then-temporal SD

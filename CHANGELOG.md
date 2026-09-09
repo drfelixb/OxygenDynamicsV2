@@ -6,6 +6,26 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Explicit surge branch-policy evidence
+
+- Compare the existing tracker with a strict-majority shape extension, a
+  split-only extension and stopping at every contact. Keep all sibling
+  candidates and export every nonzero overlap edge with recording/policy-local
+  run IDs, contact geometry and chosen-link status in test-only output.
+- Replay six complete frozen challenge movies from four reference recordings;
+  reproduce saved production masks and candidate/gap ledgers exactly. Production
+  detection, measurements and statistics contracts remain unchanged.
+- Recover the selected ID401 pulse as a 14-frame run under both extensions.
+  The broader majority extension improves three of eleven imposed support
+  windows but adds 276 contact links. Controlled tests demonstrate potential
+  identity changes through contact under both the extension and the current
+  primary rule; neither relaxation nor stopping all contacts is adopted.
+- Pass 94 focused tests and repository checks. Independently verify 44,193 run
+  rows and 69,508 edge rows across 24 movie/policy comparisons. These are
+  diagnostic replays, not new amplitude audits or biological accuracy estimates.
+- Update the [branch-policy decision and dependency plan](docs/SURGE_BRANCH_POLICY.md)
+  and retain [compact reproducible evidence](docs/reference-results/surge-branch-replay-20260909/README.md).
+
 ### Full-movie shape and signal-attribution audit
 
 - Add fixed-support traces through detrending, both SD normalization steps and

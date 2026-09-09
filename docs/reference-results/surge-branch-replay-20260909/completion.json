@@ -1,0 +1,12 @@
+{
+  "CompleteMovieReplays": 6,
+  "SourceRecordings": 4,
+  "Policies": 4,
+  "SupportScoreRows": 44,
+  "ProductionSourceUnchanged": true,
+  "CodeFreezeVerified": true,
+  "ProductionMasksAndCandidateLedgersReproduced": true,
+  "AllCandidatePixelsConserved": true,
+  "NoGapFilling": true,
+  "Interpretation": "Link-policy comparison on reused development recordings. No new master/statistics runs, amplitude recalculation, or biological accuracy estimate."
+}

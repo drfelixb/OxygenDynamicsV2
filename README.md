@@ -48,8 +48,8 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **85 focused tests**, smoke checks and synthetic
-master-to-statistics integration passed in MATLAB R2025a. The
+Current development validation: **94 focused tests** passed in MATLAB R2025a;
+prior smoke checks and synthetic master-to-statistics integration also passed. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
 adds 117 prescribed size-change/gap scenarios and repeats twenty full-movie cases
 on four source recordings: ID400, ID401, FB2312 and the separate FB2411
@@ -66,6 +66,14 @@ measurements match independent arithmetic. Detailed reconstruction identifies
 candidate split/merge identity, spatial averaging and undetected rising tails
 inside nominally valid baselines as separate limitations. Production rules remain
 unchanged during this experiment; see its [results](docs/reference-results/surge-shape-evidence-20260909/README.md).
+
+The [split/merge policy comparison](docs/SURGE_BRANCH_POLICY.md) replays six
+complete challenge movies from the same four sources under four linking rules.
+A majority extension recovers the selected 14-second missed pulse, but controlled
+contacts can mix signal identities under both that extension and the current
+primary rule. All candidate branches, including rejected siblings, are exported
+in the comparison evidence. Production linking remains unchanged; explicit
+contact provenance and candidate separation are the next development steps.
 
 **Surge detection remains provisional.** Geometry tests support the tracking
 correction, but full-movie results are mixed. Stage reconstruction identifies
