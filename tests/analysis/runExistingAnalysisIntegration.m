@@ -60,7 +60,7 @@ assert(Q.FiniteAmplitudeFraction(find(q,1))==1);
 assert(ismember('EventMeasurementQC',sheetnames(result.OutputXlsx)));
 definitions=readtable(result.OutputXlsx,'Sheet','MetricDefinitions','TextType','string');
 assert(all(ismember(["CloseNativeRun" "RecurrenceStatus" "CloseNativeRunEvents" ...
-    "NormOxySurgeAmp" "NormOxySurgeAmpPercent" "TimingMethod"],definitions.MetricName)));
+    "NormOxySurgeAmp" "NormOxySurgeAmpPercent" "TimingMethod" "AmbiguousTracking" "SiteAssignmentAmbiguous"],definitions.MetricName)));
 assert(contains(definitions.OutputLocation(definitions.MetricName=="CloseNativeRun"),"OxySurgeEvents"));
 assert(ismember('SurgeSiteEventRate_per_min',sheetnames(result.OutputXlsx)));
 assert(isfile(result.OutputXlsx));

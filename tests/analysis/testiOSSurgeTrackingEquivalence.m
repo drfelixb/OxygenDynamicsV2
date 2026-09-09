@@ -1,4 +1,4 @@
-function tests=testSurgeTrackingEquivalence
+function tests=testiOSSurgeTrackingEquivalence
 tests=functiontests(localfunctions);
 end
 function setupOnce(~)
@@ -17,7 +17,7 @@ for trial=1:40
         end
     end
     duration=randi([1 5]);overlap=randi([0 12]);
-    verifyEqual(t,trackSurgeCandidates(F,duration,overlap),originalTracker(F,duration,overlap));
+    verifyEqual(t,trackiOSSurgeCandidates(F,duration,overlap),originalTracker(F,duration,overlap));
 end
 end
 function testStrictOverlapAndFirstMatch(t)
@@ -25,8 +25,8 @@ F={struct('PixelIdxList',{[1;2;3]}); ...
    struct('PixelIdxList',{[1;2;4],[1;2;3;5]}); ...
    struct('PixelIdxList',{[1;2;3],[4;5;6]}); ...
    struct('PixelIdxList',{[2;3;4]})};
-verifyEqual(t,trackSurgeCandidates(F,1,2),originalTracker(F,1,2));
-verifyEqual(t,trackSurgeCandidates(cell(4,1),1,2),originalTracker(cell(4,1),1,2));
+verifyEqual(t,trackiOSSurgeCandidates(F,1,2),originalTracker(F,1,2));
+verifyEqual(t,trackiOSSurgeCandidates(cell(4,1),1,2),originalTracker(cell(4,1),1,2));
 end
 function O=originalTracker(F,minDuration,minOverlap)
 % Pre-optimization matching oracle with the corrected terminal seed bound.

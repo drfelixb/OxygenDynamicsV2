@@ -8,7 +8,8 @@ for shift=[0 1]
   mask=false(20,40);left=1+(t-1)*shift;mask(:,left:left+19)=true;
   F{t}=struct('PixelIdxList',find(mask));
  end
- surge=trackSurgeCandidates(F,P.ThresholMinddur_Surges,P.ThresholdMinsize_Surges-P.surgeOverlapSizeMarginPixels);
+ % Historical fixed-seed diagnostic, not the current BOI detector.
+ surge=trackiOSSurgeCandidates(F,P.ThresholMinddur_Surges,390);
  [~,surgeMask]=refineTrackedSurgeCandidates(surge,P.ThresholMinddur_Surges);
  sink=trackSinkCandidates(F,P.ThresholMinddur,.6);[~,sinkMask]=filterSinkRunsByDuration(sink,P.ThresholMinddur,P.ThresholMaxddur);
  surgeEvents=0;sinkEvents=0;

@@ -6,6 +6,31 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Physical surge tracking and explicit recurring sites
+
+- Replace the BOI fixed-seed, 390-pixel surge tracker with adjacent-frame mutual
+  coverage (default 0.6), one-to-one candidate ownership and no gap filling.
+- Express minimum surge area as 9,025 µm² (the previous 400-pixel cutoff at
+  4.75 µm/pixel); derive integer pixel cutoffs from each recording's calibration.
+- Filter contiguous runs by the ten-second minimum before grouping recurring
+  sites using fixed first-event footprints. Site grouping preserves event counts.
+- Export tracking/site methods, thresholds, possible split/merge and ambiguous
+  site-assignment flags. Add assessed/unassessed recording QC counts and workbook
+  definitions. Primary amplitude arithmetic is unchanged; changed surge masks
+  can affect both-sign baseline exclusion.
+- Isolate the previous fixed-seed tracker for the separate iOS path. Advance
+  detection/measurement/statistics contracts and require reanalysis.
+- Add ownership, motion, frame-rate, recurrence and metadata tests; a physical
+  candidate sweep; and full-background static/noisy/moving signal comparisons.
+  Complete 720 candidate cases and twenty full-movie runs on four source
+  recordings. All 3,773 baseline/amplitude records match independent arithmetic;
+  all thirteen identical-input comparisons preserve sink masks/timing/identities.
+- Pass 67 focused tests, smoke and statistics integration. Independently verify
+  constructed pixels, overlap scores, physical area, adjacent coverage, site
+  anchors and unique pixel ownership. Reconstruct three cases to localize
+  remaining failures to candidate continuity/geometry and duration qualification.
+  Full-movie results remain mixed; see [tracking rules and limitations](docs/SURGE_TRACKING.md).
+
 ### Surge-path audit and smooth-signal validation
 
 - Remove the obsolete z-score site-ratio computation from BOI surge construction

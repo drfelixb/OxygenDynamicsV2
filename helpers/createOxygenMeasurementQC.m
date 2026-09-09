@@ -3,11 +3,11 @@ function [Summary,Statuses]=createOxygenMeasurementQC(Registry,Sinks,Surges)
 assert(ismember('RecordingID',Registry.Properties.VariableNames));
 ids=string(Registry.RecordingID);
 assert(numel(unique(ids))==numel(ids),'Duplicate registry RecordingID.');
-Summary=table('Size',[0 14],'VariableTypes', ...
-    {'string','string','double','double','double','double','double','double','double','double','double','double','double','double'}, ...
+Summary=table('Size',[0 18],'VariableTypes', ...
+    [{'string','string'} repmat({'double'},1,16)], ...
     'VariableNames',{'RecordingID','EventType','DetectedEvents','ValidBaselineEvents', ...
     'FiniteAmplitudeEvents','UnavailableAmplitudeEvents','WrongDirectionAmplitudeEvents', ...
-    'ValidBaselineFraction','FiniteAmplitudeFraction','TimingResolvedEvents','TimingUnresolvedEvents','TimingNotAssessedEvents','CloseNativeRunEvents','RecurrenceNotAssessedEvents'});
+    'ValidBaselineFraction','FiniteAmplitudeFraction','TimingResolvedEvents','TimingUnresolvedEvents','TimingNotAssessedEvents','CloseNativeRunEvents','RecurrenceNotAssessedEvents','AmbiguousTrackingEvents','TrackingNotAssessedEvents','AmbiguousSiteAssignmentEvents','SiteAssignmentNotAssessedEvents'});
 Statuses=table('Size',[0 4],'VariableTypes',{'string','string','string','double'}, ...
     'VariableNames',{'RecordingID','EventType','BaselineStatus','EventCount'});
 inputs={Sinks,Surges};kinds=["sink","surge"];
@@ -23,7 +23,7 @@ for k=1:2
     for r=1:numel(ids)
         rows=false(height(E),1);
         if ~isempty(E),rows=string(E.RecordingID)==ids(r);end
-        T=E(rows,:);n=height(T);valid=0;finite=0;wrong=0;resolved=0;unresolved=0;notAssessed=n;closeRuns=0;recurrenceNotAssessed=n;
+        T=E(rows,:);n=height(T);valid=0;finite=0;wrong=0;resolved=0;unresolved=0;notAssessed=n;closeRuns=0;recurrenceNotAssessed=n;ambiguousTracking=0;trackingNotAssessed=n;ambiguousSite=0;siteNotAssessed=n;
         if n>0
             if ismember('TimingResolved',T.Properties.VariableNames)
                 assert(all(ismember(T.TimingResolved,[0 1])),'OxygenDynamics:InvalidTimingQC','TimingResolved must be Boolean.');
@@ -32,6 +32,14 @@ for k=1:2
             if ismember('CloseNativeRun',T.Properties.VariableNames)
                 assert(all(ismember(T.CloseNativeRun,[0 1])),'OxygenDynamics:InvalidRecurrenceQC','CloseNativeRun must be Boolean.');
                 closeRuns=sum(T.CloseNativeRun);recurrenceNotAssessed=0;
+            end
+            if ismember('AmbiguousTracking',T.Properties.VariableNames)
+                assert(all(ismember(T.AmbiguousTracking,[0 1])),'Tracking QC must be Boolean.');
+                ambiguousTracking=sum(T.AmbiguousTracking);trackingNotAssessed=0;
+            end
+            if ismember('SiteAssignmentAmbiguous',T.Properties.VariableNames)
+                assert(all(ismember(T.SiteAssignmentAmbiguous,[0 1])),'Site assignment QC must be Boolean.');
+                ambiguousSite=sum(T.SiteAssignmentAmbiguous);siteNotAssessed=0;
             end
             status=string(T.BaselineStatus);
             assert(all(~ismissing(status) & strlength(status)>0),'Missing event baseline status.');
@@ -45,7 +53,7 @@ for k=1:2
         end
         denom=n;if n==0,denom=NaN;end
         Summary(end+1,:)={ids(r),kinds(k),n,valid,finite,n-finite,wrong, ...
-            valid/denom,finite/denom,resolved,unresolved,notAssessed,closeRuns,recurrenceNotAssessed}; %#ok<AGROW>
+            valid/denom,finite/denom,resolved,unresolved,notAssessed,closeRuns,recurrenceNotAssessed,ambiguousTracking,trackingNotAssessed,ambiguousSite,siteNotAssessed}; %#ok<AGROW>
     end
 end
 end

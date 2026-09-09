@@ -1,5 +1,10 @@
 # Surge detection and analysis audit
 
+Historical snapshot at commit `a7c9e61`. The subsequent [physical surge tracking
+update](SURGE_TRACKING.md) replaces the fixed-pixel area and fixed-seed tracking
+rules described below. The timing, baseline and group-statistics limitations
+still apply. Validation counts below belong to this earlier contract.
+
 This audit distinguishes the final preserved-input measurements from intermediate
 V2 calculations and from scientific validation of the detector. The priorities
 below reflect consequences for interpretation; dependencies are explicit.
@@ -157,7 +162,7 @@ explicit surge recording/window contrasts and equal-mouse summaries with these
 measurement limitations carried into QC. No inferred oxygen concentration or
 confirmed biological event count should be substituted for optical measurements.
 
-The detector contract is now `existing-v2-retain-close-terminal-3`, measurement
+The detector contract for this audit was `existing-v2-retain-close-terminal-3`, measurement
 `event-footprint-sign-qc-4`, statistics `mouse-strict-sign-qc-5`. Earlier saved
 masters must be reanalyzed before pooling. Historical reports retain their
 original contract identities and are not current reruns.

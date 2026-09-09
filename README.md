@@ -28,6 +28,9 @@ maintained separately.
 - Amplitudes use each event's fixed footprint in the preserved input movie and
   a complete pre-event baseline excluding overlapping detected events. Missing baselines produce
   unavailable amplitudes while retaining detections.
+- [Surge tracking follows motion and groups recurring sites explicitly](docs/SURGE_TRACKING.md).
+  The minimum surge area is in µm²; adjacent-frame matching uses fractional
+  coverage. Outputs flag possible split/merge contacts and ambiguous site assignment.
 - [Surge amplitude and detection audit](docs/SURGE_ANALYSIS_AUDIT.md): remove the
   obsolete normalized-trace ratio export, correct terminal-event seeding for
   both trackers, and expose surge native timing/boundary and recurrence status.
@@ -42,17 +45,22 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: 57 focused tests plus smoke and synthetic
-master-to-statistics integration checks passed in MATLAB R2025a. The
-[current surge audit](docs/reference-results/smooth-surge-audit-20260909/README.md)
-ran twelve full-movie challenges on three sources and an unchanged FB2312
-recording: four distinct sources, including a fluorescence control. All 1,973
-baseline/amplitude records matched independent recalculation, including explicit
-unavailability. Smooth-surge detection remains inconsistent across backgrounds.
-Earlier eight-recording reference results used earlier pipeline contracts;
-they are historical evidence, not eight current-contract reruns. DANDI outputs
-are unlabelled reference results, not ground-truth accuracy. Default detection
-thresholds remain provisional after the SD correction.
+Current development validation: **67 focused tests**, smoke checks and synthetic
+master-to-statistics integration passed in MATLAB R2025a. The [physical surge
+tracking validation](docs/reference-results/surge-physical-adjacent-20260909/README.md)
+includes 720 prescribed candidate-mask cases and twenty full-movie runs on four
+source recordings: ID400, ID401, FB2312 and the separate FB2411 fluorescence
+control. All 3,773 baseline/amplitude records match independent recalculation,
+including unavailable measurements. Thirteen identical-input comparisons preserve
+sink native masks, timing and identities; sink amplitude availability can change
+through both-sign baseline exclusion.
+
+**Surge detection remains provisional.** Geometry tests support the tracking
+correction, but full-movie results are mixed. Stage reconstruction identifies
+candidate geometry/dropouts and the ten-second minimum as causes of missed
+smooth signals. These unlabelled reference results do not establish biological
+accuracy. Earlier reference reports retain their original contracts and are not
+current reruns or additional independent biological samples.
 See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
 [validation evidence](docs/EXISTING_ANALYSIS_VALIDATION.md),
 [remaining work](docs/PUBLICATION_READINESS.md),

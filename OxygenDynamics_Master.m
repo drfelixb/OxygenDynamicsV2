@@ -63,7 +63,6 @@ SinkTraceCorrelationThreshold = ParamVars.SinkTraceCorrelationThreshold;
 SinkNoiseCorrelationPercentile = ParamVars.SinkNoiseCorrelationPercentile;
 EventBaselineReturnTolerance = ParamVars.EventBaselineReturnTolerance;
 SinkDetectionNoiseAmpThreshold = ParamVars.SinkDetectionNoiseAmpThreshold;
-SurgeOverlapSizeMarginPixels = ParamVars.SurgeOverlapSizeMarginPixels;
 PercentileSurgeDetectionThres = ParamVars.PercentileSurgeDetectionThres;
 SurgeCircularityThreshold = ParamVars.SurgeCircularityThreshold;
 MaxOutsideRecordingAreaFraction = ParamVars.MaxOutsideRecordingAreaFraction;
@@ -308,10 +307,7 @@ toc;
 %% STEP 12 Detecting Oxygen surges
 fprintf('Identifying oxygen surges now... \n');
 
-%for the oxygen surges I need to follow a different approach. 
-% the spatial distribution is less importnant 
-% there is no maximum size
-% the percentile threshold will be different. I might need to check the original script from Ryszard
+% Surge candidate thresholds are distinct from sink thresholds and remain provisional.
 tic;
 %The putative oxygen surges are identified based on singal intensity.
 
@@ -331,20 +327,14 @@ toc;
 fprintf('Tracking putative oxygen surges across the imaging session... \n'); 
 tic;
 %this will contain putative oxygen surges(rows) and the pixels belonging to events for every frame of the recording.
-Overall_OxygenSurges_Pxllist = trackSurgeCandidates(OxygenSurgesInfo_all, ...
-    ThresholMinddur_Surges,ThresholdMinsize_Surges-SurgeOverlapSizeMarginPixels);
+[Overall_OxygenSurges_Pxllist,Overall_OxySurges_logical,SurgeRunMap] = ...
+    buildTrackedOxygenSurgeSites(OxygenSurgesInfo_all,AnalysisParams);
 
 clear OxygenSurgesInfo_all
 toc;
 
-%% STEP 14 Refining the identified oxygen surges based on event duration thresholds
-fprintf('Refining putative oxygen surges based on event duration threshold... \n'); 
-tic;
-[Overall_OxygenSurges_Pxllist,Overall_OxySurges_logical] = refineTrackedSurgeCandidates( ...
-    Overall_OxygenSurges_Pxllist,ThresholMinddur_Surges);
-fprintf([num2str(size(Overall_OxygenSurges_Pxllist,1)),' putative oxygen surge loci identified! \n'])
-
-toc;
+% Native runs have already passed duration filtering before recurring-site grouping.
+fprintf('%d retained oxygen surge runs across %d sites.\n',height(SurgeRunMap),size(Overall_OxygenSurges_Pxllist,1));
 
 %% Gathering oxygen surge loci parameters
 
@@ -395,6 +385,7 @@ SurgeEventMorphology = struct('MeanArea_um',MeanOxySurgeArea_um,'MeanFilledArea_
 [NumOxySurgeEvents,Start_Surge,Duration_Surge,NormOxySurgeAmp,Size_Surge_modulation,Table_OxygenSurgeEvents_Out] = ...
     collateOxygenSurgeEvents(Overall_OxygenSurges_Pxllist,Overall_OxySurges_logical, ...
     SurgeEventMetadata,SurgeEventMorphology,fs,AnalysisParams);
+Table_OxygenSurgeEvents_Out=attachSurgeTrackingMetadata(Table_OxygenSurgeEvents_Out,SurgeRunMap,AnalysisParams);
 
 clear SurgeEventMetadata SurgeEventMorphology
 

@@ -1,0 +1,11 @@
+{
+  "RowsIndependentlyVerified": 136,
+  "AllOverlapScoresMatch": true,
+  "NativeGapsAndFlagsMatchMasks": true,
+  "SurgeNativeTimingMetadataMatches": true,
+  "NoObsoleteSiteAmplitudeExport": true,
+  "SurgeAdjacentCoverageAndPhysicalAreaVerified": true,
+  "FixedSiteAnchorCoverageVerified": true,
+  "NoDuplicateSurgePixelOwnership": true,
+  "RejectedCandidateAmbiguityReconstructed": false
+}

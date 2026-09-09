@@ -76,9 +76,9 @@ recordings. Increasing event count is not the validation objective.
 
 Reanalysis is required. Current contract:
 
-- Detector: `existing-v2-retain-close-terminal-3`
-- Measurement: `event-footprint-sign-qc-4`
-- Statistics: `mouse-strict-sign-qc-5`
+- Detector: `existing-v2-surge-physical-adjacent-4`
+- Measurement: `event-footprint-surge-tracking-qc-5`
+- Statistics: `mouse-strict-tracking-qc-6`
 - Schema: `3.0-dev`; normalization unchanged.
 
 The existing contract/settings validator rejects earlier saved masters before
