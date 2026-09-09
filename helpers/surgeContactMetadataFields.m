@@ -1,0 +1,6 @@
+function fields=surgeContactMetadataFields()
+% Fields propagated from all-candidate QC to retained native events.
+fields={'ContactFrameCount','ContactFrames','ContactDurationSec','ContactFrameFraction', ...
+ 'ContactFrameFootprintFraction','ContactEdgeCount','LinkedContactEdgeCount', ...
+ 'ContactNeighborCandidateRunIDs','ContactWithRejectedCandidate'};
+end

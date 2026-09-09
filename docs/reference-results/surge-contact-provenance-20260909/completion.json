@@ -1,0 +1,301 @@
+{
+  "CachedCandidateReplays": 6,
+  "SourceRecordings": 4,
+  "NewReferenceMasterRuns": 1,
+  "PipelineContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-surge-shape-continuity-5",
+    "Measurement": "event-footprint-contact-ledger-7",
+    "Statistics": "mouse-strict-contact-qc-8",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  },
+  "FullMasterContactGraph": {
+    "CandidateRuns": 2887,
+    "RetainedEvents": 18,
+    "RetainedContactEvents": 6,
+    "AllOverlapEdges": 3058,
+    "ContactEdges": 548,
+    "AllCandidateContactFrames": 725,
+    "RetainedContactEventFrames": 10,
+    "RetainedEventsTouchingRejectedCandidates": 6,
+    "AllContactGeometryAndExposureVerified": true
+  },
+  "ReferenceStatisticsExportVerified": true,
+  "ExistingBothSignMasksTimingAndMeasurementsUnchanged": true,
+  "IndependentEventMeasurements": 141,
+  "FocusedTests": 102,
+  "AllFocusedTestsPassed": true,
+  "Smoke": {
+    "Root": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307",
+    "RecordingFolder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+    "RawPath": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/Smoke_original.tif",
+    "DenoisedPath": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/Smoke_denoised.tif",
+    "TiffStatus": {
+      "AllFiles": [
+        {
+          "name": "Smoke_denoised.tif",
+          "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+          "date": "09-Sep-2026 18:30:45",
+          "bytes": 6488,
+          "isdir": false,
+          "datenum": 740234.77135416667
+        },
+        {
+          "name": "Smoke_original.tif",
+          "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+          "date": "09-Sep-2026 18:30:45",
+          "bytes": 3800,
+          "isdir": false,
+          "datenum": 740234.77135416667
+        }
+      ],
+      "RawFiles": {
+        "name": "Smoke_original.tif",
+        "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+        "date": "09-Sep-2026 18:30:45",
+        "bytes": 3800,
+        "isdir": false,
+        "datenum": 740234.77135416667
+      },
+      "DenoisedFiles": {
+        "name": "Smoke_denoised.tif",
+        "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+        "date": "09-Sep-2026 18:30:45",
+        "bytes": 6488,
+        "isdir": false,
+        "datenum": 740234.77135416667
+      }
+    },
+    "Validation": {
+      "IsValid": true,
+      "Errors": [],
+      "Warnings": [],
+      "RecordingFolder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+      "TiffStatus": {
+        "AllFiles": [
+          {
+            "name": "Smoke_denoised.tif",
+            "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+            "date": "09-Sep-2026 18:30:45",
+            "bytes": 6488,
+            "isdir": false,
+            "datenum": 740234.77135416667
+          },
+          {
+            "name": "Smoke_original.tif",
+            "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+            "date": "09-Sep-2026 18:30:45",
+            "bytes": 3800,
+            "isdir": false,
+            "datenum": 740234.77135416667
+          }
+        ],
+        "RawFiles": {
+          "name": "Smoke_original.tif",
+          "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+          "date": "09-Sep-2026 18:30:45",
+          "bytes": 3800,
+          "isdir": false,
+          "datenum": 740234.77135416667
+        },
+        "DenoisedFiles": {
+          "name": "Smoke_denoised.tif",
+          "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+          "date": "09-Sep-2026 18:30:45",
+          "bytes": 6488,
+          "isdir": false,
+          "datenum": 740234.77135416667
+        }
+      },
+      "RawFile": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/Smoke_original.tif",
+      "DenoisedFile": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/Smoke_denoised.tif",
+      "RawTiffInfo": {
+        "Width": 14,
+        "Height": 12,
+        "Frames": 8,
+        "BitDepth": 16,
+        "Format": "tif"
+      },
+      "DenoisedTiffInfo": {
+        "Width": 14,
+        "Height": 12,
+        "Frames": 8,
+        "BitDepth": 32,
+        "Format": "tif"
+      },
+      "OverwriteOutputs": false
+    },
+    "MismatchValidation": {
+      "IsValid": false,
+      "Errors": [
+        "The original and denoised tif stacks do not have matching width, height, and frame count."
+      ],
+      "Warnings": [],
+      "RecordingFolder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMismatch",
+      "TiffStatus": {
+        "AllFiles": [
+          {
+            "name": "Mismatch_denoised.tif",
+            "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMismatch",
+            "date": "09-Sep-2026 18:31:45",
+            "bytes": 5678,
+            "isdir": false,
+            "datenum": 740234.77204861108
+          },
+          {
+            "name": "Mismatch_original.tif",
+            "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMismatch",
+            "date": "09-Sep-2026 18:31:45",
+            "bytes": 3800,
+            "isdir": false,
+            "datenum": 740234.77204861108
+          }
+        ],
+        "RawFiles": {
+          "name": "Mismatch_original.tif",
+          "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMismatch",
+          "date": "09-Sep-2026 18:31:45",
+          "bytes": 3800,
+          "isdir": false,
+          "datenum": 740234.77204861108
+        },
+        "DenoisedFiles": {
+          "name": "Mismatch_denoised.tif",
+          "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMismatch",
+          "date": "09-Sep-2026 18:31:45",
+          "bytes": 5678,
+          "isdir": false,
+          "datenum": 740234.77204861108
+        }
+      },
+      "RawFile": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMismatch/Mismatch_original.tif",
+      "DenoisedFile": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMismatch/Mismatch_denoised.tif",
+      "RawTiffInfo": {
+        "Width": 14,
+        "Height": 12,
+        "Frames": 8,
+        "BitDepth": 16,
+        "Format": "tif"
+      },
+      "DenoisedTiffInfo": {
+        "Width": 14,
+        "Height": 12,
+        "Frames": 7,
+        "BitDepth": 32,
+        "Format": "tif"
+      },
+      "OverwriteOutputs": false
+    },
+    "MultipleRawValidation": {
+      "IsValid": false,
+      "Errors": [
+        "More than one original/raw tif was found. Keep exactly one non-denoised tif in the recording folder."
+      ],
+      "Warnings": [],
+      "RecordingFolder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMultipleRaw",
+      "TiffStatus": {
+        "AllFiles": [
+          {
+            "name": "MultipleRaw_A.tif",
+            "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMultipleRaw",
+            "date": "09-Sep-2026 18:31:45",
+            "bytes": 3800,
+            "isdir": false,
+            "datenum": 740234.77204861108
+          },
+          {
+            "name": "MultipleRaw_B.tif",
+            "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMultipleRaw",
+            "date": "09-Sep-2026 18:31:45",
+            "bytes": 3800,
+            "isdir": false,
+            "datenum": 740234.77204861108
+          }
+        ],
+        "RawFiles": [
+          {
+            "name": "MultipleRaw_A.tif",
+            "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMultipleRaw",
+            "date": "09-Sep-2026 18:31:45",
+            "bytes": 3800,
+            "isdir": false,
+            "datenum": 740234.77204861108
+          },
+          {
+            "name": "MultipleRaw_B.tif",
+            "folder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingMultipleRaw",
+            "date": "09-Sep-2026 18:31:45",
+            "bytes": 3800,
+            "isdir": false,
+            "datenum": 740234.77204861108
+          }
+        ],
+        "DenoisedFiles": []
+      },
+      "RawFile": "",
+      "DenoisedFile": "",
+      "RawTiffInfo": {},
+      "DenoisedTiffInfo": {},
+      "OverwriteOutputs": false
+    },
+    "QCSummary": {
+      "Created": "2026-09-09 18:31:46",
+      "Source": "cell array input",
+      "Config": {
+        "folderSelection": "Recent",
+        "outputFolder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/Smoke_QC_Output",
+        "baseFolder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307",
+        "extremeNormAmpThreshold": 1
+      },
+      "Table": [
+        {
+          "Status": "OK",
+          "RecordingPath": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+          "DatafileID": "RecordingSmoke",
+          "SinkOutputFolder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/OxygenSinks_Output",
+          "SinkMatFile": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/OxygenSinks_Output/OxygenSinks_UrefinedRecordingSmoke.mat",
+          "RawFile": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/Smoke_original.tif",
+          "DenoisedFile": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/Smoke_denoised.tif",
+          "RawBitDepth": 16,
+          "DenoisedBitDepth": 32,
+          "DetectionSource": "Denoised TIFF if present; otherwise original/raw TIFF",
+          "QuantificationSource": "Original/raw TIFF",
+          "NumSinkLoci": 1,
+          "NumSinkEvents": 2,
+          "MeanNormOxySinkAmp": 0.30000000000000004,
+          "MedianNormOxySinkAmp": 0.30000000000000004,
+          "MaxNormOxySinkAmp": 0.4,
+          "MeanNormOxySinkAmpPercent": 30,
+          "MeanDetectionOxySinkAmp": 1.4,
+          "MedianDetectionOxySinkAmp": 1.4,
+          "MaxDetectionOxySinkAmp": 1.6,
+          "ExtremeNormAmpEventCount": 0
+        }
+      ]
+    },
+    "OutputFolders": {
+      "Timestamp": "",
+      "OverwriteOutputs": false,
+      "BaseFolder": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke",
+      "OxySinks": "OxygenSinks_Output",
+      "ManualCurOxySinks": "ManualCurOxySinksData",
+      "OxySurges": "OxygenSurges_Output",
+      "ImagesProcessed": "Images_Processed",
+      "OxySinksPath": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/OxygenSinks_Output",
+      "ManualCurOxySinksPath": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/ManualCurOxySinksData",
+      "OxySurgesPath": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/OxygenSurges_Output",
+      "ImagesProcessedPath": "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260909183045307/MouseSmoke/RecordingSmoke/Images_Processed"
+    },
+    "Passed": true
+  },
+  "Repository": {
+    "Passed": true,
+    "SourceFilesInspected": 381,
+    "CodeAnalyzerMessages": 73,
+    "FocusedTestsRun": true,
+    "Timestamp": "2026-09-09 18:32:06"
+  },
+  "SyntheticMasterAndStatisticsIntegrationPassed": true,
+  "CodeFreezeVerified": true,
+  "Interpretation": "Metadata/QC extension. Six candidate replays are not six master reruns; only ID401 smooth-pairs was fully rerun here. No biological accuracy estimate."
+}

@@ -327,7 +327,7 @@ toc;
 fprintf('Tracking putative oxygen surges across the imaging session... \n'); 
 tic;
 %this will contain putative oxygen surges(rows) and the pixels belonging to events for every frame of the recording.
-[Overall_OxygenSurges_Pxllist,Overall_OxySurges_logical,SurgeRunMap,SurgeCandidateRunQC,SurgeGapReview] = ...
+[Overall_OxygenSurges_Pxllist,Overall_OxySurges_logical,SurgeRunMap,SurgeCandidateRunQC,SurgeGapReview,SurgeTrackingEdges,SurgeContactFrames] = ...
     buildTrackedOxygenSurgeSites(OxygenSurgesInfo_all,AnalysisParams);
 
 clear OxygenSurgesInfo_all
@@ -437,8 +437,11 @@ SurgeCandidateRunQC.RecordingID=repmat(string(AnalysisInfo.RecordingID),height(S
 SurgeGapReview.RecordingID=repmat(string(AnalysisInfo.RecordingID),height(SurgeGapReview),1);
 OutputData.SurgeCandidateRunQC=SurgeCandidateRunQC;
 OutputData.SurgeGapReview=SurgeGapReview;
+SurgeTrackingEdges.RecordingID=repmat(string(AnalysisInfo.RecordingID),height(SurgeTrackingEdges),1);
+SurgeContactFrames.RecordingID=repmat(string(AnalysisInfo.RecordingID),height(SurgeContactFrames),1);
+OutputData.SurgeTrackingEdges=SurgeTrackingEdges;
+OutputData.SurgeContactFrames=SurgeContactFrames;
 SaveResult = saveOxygenMasterOutputs(OutputData);
 OutputFolders = SaveResult.OutputFolders;
 AnalysisInfo = SaveResult.AnalysisInfo;
 clear OutputData SaveResult
-

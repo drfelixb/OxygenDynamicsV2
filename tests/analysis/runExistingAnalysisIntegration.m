@@ -16,6 +16,10 @@ U=load(fullfile(u.folder,u.name));
 assert(isfield(U,'SurgeCandidateRunQC')&&isfield(U,'SurgeGapReview'));
 assert(isfile(fullfile(rec,'OxygenSurges_Output','SurgeCandidateRunQC.csv')));
 assert(isfile(fullfile(rec,'OxygenSurges_Output','SurgeGapReview.csv')));
+assert(isfield(U,'SurgeTrackingEdges')&&isfield(U,'SurgeContactFrames'));
+assert(isfile(fullfile(rec,'OxygenSurges_Output','SurgeTrackingEdges.csv')));
+assert(isfile(fullfile(rec,'OxygenSurges_Output','SurgeContactFrames.csv')));
+assert(all(ismember(surgeContactMetadataFields(),U.Table_OxygenSurgeEvents_Out.Properties.VariableNames)));
 assert(all(U.SurgeCandidateRunQC.KeptAsEvent==(U.SurgeCandidateRunQC.DurationFrames>=U.SurgeCandidateRunQC.MinimumDurationFrames)));
 assert(sum(U.SurgeCandidateRunQC.KeptAsEvent)==height(U.Table_OxygenSurgeEvents_Out));
 rec2=fullfile(root,'Recording2');copyfile(rec,rec2);
@@ -62,6 +66,8 @@ q=Q.EventType=="sink";
 assert(isequal(Q.DetectedEvents(q),[2;0]));
 assert(isequal(Q.ShapeChangeTrackingNotAssessedEvents(q),[2;0]));
 assert(isequal(Q.GapReviewNotAssessedEvents(q),[2;0]));
+assert(isequal(Q.ContactTrackingNotAssessedEvents(q),[2;0]));
+assert(all(Q.ContactTrackingNotAssessedEvents(~q)==0));
 assert(isequal(Q.CloseNativeRunEvents(q),[2;0]));
 assert(all(D.Table_OxygenSinkEvents_OutCombo.CloseNativeRun));
 assert(isequal(Q.FiniteAmplitudeEvents(q),[2;0]));
@@ -72,6 +78,7 @@ assert(all(ismember(["CloseNativeRun" "RecurrenceStatus" "CloseNativeRunEvents" 
     "NormOxySurgeAmp" "NormOxySurgeAmpPercent" "TimingMethod" "AmbiguousTracking" "SiteAssignmentAmbiguous" "PotentialGapContinuation"],definitions.MetricName)));
 assert(contains(definitions.OutputLocation(definitions.MetricName=="CloseNativeRun"),"OxySurgeEvents"));
 assert(ismember('SurgeSiteEventRate_per_min',sheetnames(result.OutputXlsx)));
+assert(all(ismember(["ContactFrameCount" "ContactFrameFootprintFraction" "ContactEventFrames"],definitions.MetricName)));
 assert(isfile(result.OutputXlsx));
 fprintf('Known-event and zero-event integration passed: %s\n',root);
 end

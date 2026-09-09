@@ -3,11 +3,12 @@ function [Summary,Statuses]=createOxygenMeasurementQC(Registry,Sinks,Surges)
 assert(ismember('RecordingID',Registry.Properties.VariableNames));
 ids=string(Registry.RecordingID);
 assert(numel(unique(ids))==numel(ids),'Duplicate registry RecordingID.');
-Summary=table('Size',[0 22],'VariableTypes', ...
-    [{'string','string'} repmat({'double'},1,20)], ...
+Summary=table('Size',[0 27],'VariableTypes', ...
+    [{'string','string'} repmat({'double'},1,25)], ...
     'VariableNames',{'RecordingID','EventType','DetectedEvents','ValidBaselineEvents', ...
     'FiniteAmplitudeEvents','UnavailableAmplitudeEvents','WrongDirectionAmplitudeEvents', ...
-    'ValidBaselineFraction','FiniteAmplitudeFraction','TimingResolvedEvents','TimingUnresolvedEvents','TimingNotAssessedEvents','CloseNativeRunEvents','RecurrenceNotAssessedEvents','AmbiguousTrackingEvents','TrackingNotAssessedEvents','AmbiguousSiteAssignmentEvents','SiteAssignmentNotAssessedEvents','ShapeChangeLinkedEvents','ShapeChangeTrackingNotAssessedEvents','PotentialGapContinuationEvents','GapReviewNotAssessedEvents'});
+    'ValidBaselineFraction','FiniteAmplitudeFraction','TimingResolvedEvents','TimingUnresolvedEvents','TimingNotAssessedEvents','CloseNativeRunEvents','RecurrenceNotAssessedEvents','AmbiguousTrackingEvents','TrackingNotAssessedEvents','AmbiguousSiteAssignmentEvents','SiteAssignmentNotAssessedEvents','ShapeChangeLinkedEvents','ShapeChangeTrackingNotAssessedEvents','PotentialGapContinuationEvents','GapReviewNotAssessedEvents', ...
+    'ContactTrackingEvents','ContactTrackingNotAssessedEvents','ContactWithRejectedCandidateEvents','ContactEventFrames','ContactEventDurationSec'});
 Statuses=table('Size',[0 4],'VariableTypes',{'string','string','string','double'}, ...
     'VariableNames',{'RecordingID','EventType','BaselineStatus','EventCount'});
 inputs={Sinks,Surges};kinds=["sink","surge"];
@@ -24,7 +25,27 @@ for k=1:2
         rows=false(height(E),1);
         if ~isempty(E),rows=string(E.RecordingID)==ids(r);end
         T=E(rows,:);n=height(T);valid=0;finite=0;wrong=0;resolved=0;unresolved=0;notAssessed=n;closeRuns=0;recurrenceNotAssessed=n;ambiguousTracking=0;trackingNotAssessed=n;ambiguousSite=0;siteNotAssessed=n;shapeEvents=0;shapeNotAssessed=n;gapEvents=0;gapNotAssessed=n;
+        contactEvents=0;contactNotAssessed=n;rejectedContactEvents=0;contactFrames=0;contactDuration=0;
         if n>0
+            present=ismember(surgeContactMetadataFields(),T.Properties.VariableNames);
+            assert(~any(present)||all(present),'OxygenDynamics:InvalidContactQC','Contact metadata must be complete.');
+            if all(present)
+                count=T.ContactFrameCount;
+                assert(all(isfinite(count)&count>=0&count==fix(count)) && ...
+                    all(isfinite(T.ContactDurationSec)&T.ContactDurationSec>=0) && ...
+                    all((count==0)==(T.ContactDurationSec==0)) && ...
+                    all(ismember(T.ContactWithRejectedCandidate,[0 1])), ...
+                    'OxygenDynamics:InvalidContactQC','Invalid contact count, duration or flag.');
+                if ismember('AmbiguousTracking',T.Properties.VariableNames)
+                    assert(isequal(logical(T.AmbiguousTracking),count>0), ...
+                        'OxygenDynamics:InvalidContactQC','Contact exposure disagrees with tracking ambiguity.');
+                end
+                assert(all(~T.ContactWithRejectedCandidate|count>0), ...
+                    'OxygenDynamics:InvalidContactQC','Rejected-neighbor contact requires a contact frame.');
+                contactEvents=sum(count>0);contactNotAssessed=0;
+                rejectedContactEvents=sum(T.ContactWithRejectedCandidate);
+                contactFrames=sum(count);contactDuration=sum(T.ContactDurationSec);
+            end
             if ismember('TimingResolved',T.Properties.VariableNames)
                 assert(all(ismember(T.TimingResolved,[0 1])),'OxygenDynamics:InvalidTimingQC','TimingResolved must be Boolean.');
                 resolved=sum(T.TimingResolved);unresolved=n-resolved;notAssessed=0;
@@ -61,7 +82,8 @@ for k=1:2
         end
         denom=n;if n==0,denom=NaN;end
         Summary(end+1,:)={ids(r),kinds(k),n,valid,finite,n-finite,wrong, ...
-            valid/denom,finite/denom,resolved,unresolved,notAssessed,closeRuns,recurrenceNotAssessed,ambiguousTracking,trackingNotAssessed,ambiguousSite,siteNotAssessed,shapeEvents,shapeNotAssessed,gapEvents,gapNotAssessed}; %#ok<AGROW>
+            valid/denom,finite/denom,resolved,unresolved,notAssessed,closeRuns,recurrenceNotAssessed,ambiguousTracking,trackingNotAssessed,ambiguousSite,siteNotAssessed,shapeEvents,shapeNotAssessed,gapEvents,gapNotAssessed, ...
+            contactEvents,contactNotAssessed,rejectedContactEvents,contactFrames,contactDuration}; %#ok<AGROW>
     end
 end
 end

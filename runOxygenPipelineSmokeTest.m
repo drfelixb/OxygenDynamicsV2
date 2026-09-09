@@ -2190,7 +2190,7 @@ if includeEventTables
     OutputData.Mean_ROI_TraceZ = single([1 2 3]);
     OutputData.Mean_OxySink_Trace_Raw = single([1 2 3]);
     OutputData.Table_OxygenSurgeEvents_Out = table({'Smoke'},'VariableNames',{'Experiment_Surge'});
-    [~,~,~,OutputData.SurgeCandidateRunQC,OutputData.SurgeGapReview]=buildTrackedOxygenSurgeSites(cell(0,1),createOxygenMasterParams(4.75,1));
+    [~,~,~,OutputData.SurgeCandidateRunQC,OutputData.SurgeGapReview,OutputData.SurgeTrackingEdges,OutputData.SurgeContactFrames]=buildTrackedOxygenSurgeSites(cell(0,1),createOxygenMasterParams(4.75,1));
 end
 
 end

@@ -5,6 +5,10 @@ outsourced alternative detector. Production calculations and contracts remain
 unchanged. See the [replay evidence](reference-results/surge-branch-replay-20260909/README.md)
 for recording identities, results and reproduction commands.
 
+Subsequent integration: [contact edges, frames and native-event exposure](SURGE_CONTACT_PROVENANCE.md)
+are now exported by the production pipeline. The policy variants in this report
+remain experimental; the existing linking rule is unchanged.
+
 ## Question and fixed policies
 
 Can a surge continue through a candidate split without losing its neighboring
@@ -75,7 +79,8 @@ and policy; do not join IDs across policies.
 This makes a short sibling and its relationship inspectable even when it never
 becomes a counted event. Births/deaths without overlap have no edge; their runs
 remain in the run table. These are observation relationships, not asserted
-biological ancestry. They currently exist only in the comparison output.
+biological ancestry. This experiment introduced the tables in comparison output;
+the subsequent production integration is documented above.
 
 The baseline replay must exactly reproduce saved production site masks and
 candidate/gap ledgers. All policies check per-frame pixel conservation, unique
@@ -99,10 +104,10 @@ and duration become difficult to interpret when a run incorporates another
 component. The current ambiguity flag is valuable but does not describe which
 frames and sibling components caused that uncertainty.
 
-1. Bring explicit contact-edge provenance and contact-frame annotations into
-   production, preserving all siblings and rejected fragments. Expose how much
-   of each retained event's duration and footprint involves contact; distinguish
-   that evidence from the count of independent biological events.
+1. Implemented subsequently: explicit contact-edge provenance and contact-frame
+   annotations in production, preserving all siblings and rejected fragments.
+   Native-event exposure remains distinct from counts of independent biological
+   events; see the contact-output definitions linked above.
 2. Use that evidence to test local separation within the existing detector's
    connected components. Prespecify when separation has enough evidence and
    when a contact must remain unresolved. Test independent neighboring injected

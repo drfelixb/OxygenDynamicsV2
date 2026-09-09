@@ -24,12 +24,17 @@ identity through contact; the current primary rule can also do this. Stopping
 all contacts reduces retained support. None of these diagnostic policy changes
 has been promoted to production.
 
-Next export explicit contact connections and frame annotations in production,
-including rejected siblings, then test local candidate separation against
-independent neighboring injected signals. Preserve unresolved contact status
-when identity cannot be established. Then settle the spatial amplitude endpoint
-and validate event-local onset/baseline together. Statistical surge parity and
-final cohort reanalysis follow those definitions.
+The [contact records](SURGE_CONTACT_PROVENANCE.md) are now integrated into normal
+master and statistics outputs, including rejected siblings, unique contact
+frames, native-event exposure and explicit assessment coverage. Tracking,
+amplitude and baseline rules remain unchanged; output contracts advance so old
+analyses cannot be silently treated as contact-free.
+
+Next test local candidate separation against independent neighboring injected
+signals. Preserve unresolved contact status when identity cannot be established.
+Then settle the spatial amplitude endpoint and validate event-local
+onset/baseline together. Statistical surge parity and final cohort reanalysis
+follow those definitions.
 
 The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
 with disjoint searches, a provisional 20-second bound and unresolved-boundary

@@ -1,0 +1,7 @@
+{
+  "PythonVerifierTests": 10,
+  "AllPythonVerifierTestsPassed": true,
+  "TestSourceSHA256": "57f6ec70f9e7ac01d885ae372e3ec9fe4fc6fdc2828242d716b6deb792ec03eb",
+  "VerifierSourceSHA256": "48cbfaa16714e34e965fbd0877d0888bb6a6960b98ec91b571710f4b2f4e30f6",
+  "Scope": "Regression tests for the separate frozen branch-policy verifier; production contact geometry is audited in MATLAB."
+}

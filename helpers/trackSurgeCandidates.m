@@ -1,14 +1,16 @@
-function [Runs,Info] = trackSurgeCandidates(Frames,minDurationFrames,minOverlapFraction,minContainmentFraction,maxAreaRatio)
+function [Runs,Info,Edges] = trackSurgeCandidates(Frames,minDurationFrames,minOverlapFraction,minContainmentFraction,maxAreaRatio)
 % Adjacent-frame, one-to-one native runs. No missing frames are bridged.
 % Primary link: mutual coverage. Isolated shape-change fallback: containment
 % of the smaller region plus bounded area ratio, with exactly one overlapping
-% partner at both endpoints. No lineage or missing-frame inference is made.
+% partner at both endpoints. Edges describe every nonzero adjacent overlap;
+% these are observed candidate relationships, not biological lineage.
 assert(isscalar(minDurationFrames)&&isfinite(minDurationFrames)&&minDurationFrames>0);
 assert(isscalar(minOverlapFraction)&&isfinite(minOverlapFraction)&&minOverlapFraction>=0&&minOverlapFraction<=1);
 assert(isscalar(minContainmentFraction)&&isfinite(minContainmentFraction)&&minContainmentFraction>0&&minContainmentFraction<=1);
 assert(isscalar(maxAreaRatio)&&isfinite(maxAreaRatio)&&maxAreaRatio>=1);
 N=numel(Frames);Runs=cell(0,N);ambiguous=false(0,1);lastPixels={};lastIDs=[];
 shapeFrames=cell(0,1);minimumCoverage=zeros(0,1);maximumRatio=zeros(0,1);
+edgeRows=zeros(0,16);
 for f=1:N
     current={};
     for r=1:numel(Frames{f})
@@ -24,7 +26,7 @@ for f=1:N
         assert(numel(unique(allPixels))==numel(allPixels),'Candidates within a frame must be disjoint.');
         [~,order]=sort(cellfun(@(p)p(1),current));current=current(order);
     end
-    score=zeros(numel(lastPixels),numel(current));containment=score;ratios=score;
+    score=zeros(numel(lastPixels),numel(current));containment=score;ratios=score;shared=score;
     if ~isempty(current)&&~isempty(lastPixels)
         maxPixel=max([cellfun(@max,current) cellfun(@max,lastPixels)]);
         membership=false(maxPixel,1);
@@ -33,6 +35,7 @@ for f=1:N
             for b=1:numel(current)
                 overlap=nnz(membership(current{b}));
                 if overlap>0
+                    shared(a,b)=overlap;
                     largest=max(numel(lastPixels{a}),numel(current{b}));smallest=min(numel(lastPixels{a}),numel(current{b}));
                     score(a,b)=overlap/largest;containment(a,b)=overlap/smallest;ratios(a,b)=largest/smallest;
                 end
@@ -66,6 +69,14 @@ for f=1:N
         end
         Runs{ids(b),f}=current{b};ambiguous(ids(b))=ambiguous(ids(b))||newAmbiguous(b);
     end
+    [aa,bb]=find(overlaps);rows=zeros(numel(aa),16);
+    for j=1:numel(aa)
+        a=aa(j);b=bb(j);previousPartners=nnz(overlaps(a,:));nextPartners=nnz(overlaps(:,b));
+        rows(j,:)=[f-1 f lastIDs(a) ids(b) shared(a,b) numel(lastPixels{a}) numel(current{b}) ...
+            score(a,b) containment(a,b) ratios(a,b) previousPartners nextPartners primary(a,b) shape(a,b) ...
+            (lastIDs(a)==ids(b)) (previousPartners>1||nextPartners>1)];
+    end
+    edgeRows=[edgeRows;rows]; %#ok<AGROW>
     lastPixels=current(ids>0);lastIDs=ids(ids>0);
 end
 first=zeros(size(Runs,1),1);last=first;
@@ -79,4 +90,8 @@ Info.MinimumMatchedMutualCoverage=minimumCoverage;Info.MaximumMatchedAreaRatio=m
 % All runs, including too-short terminal candidates, remain available for QC.
 Info.DurationFrames=last-first+1;
 Info.KeptAsEvent=Info.DurationFrames>=ceil(minDurationFrames);
+Edges=array2table(edgeRows,'VariableNames',{'FromFrame','ToFrame','PreviousCandidateRunID','NextCandidateRunID', ...
+    'SharedPixels','PreviousPixels','NextPixels','MutualCoverage','SmallerRegionCoverage','AreaRatio', ...
+    'PreviousPartnerCount','NextPartnerCount','PrimaryEligible','ShapeFallbackEligible','Linked','Contact'});
+for name=["PrimaryEligible","ShapeFallbackEligible","Linked","Contact"],Edges.(name)=logical(Edges.(name));end
 end

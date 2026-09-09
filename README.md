@@ -48,8 +48,8 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **94 focused tests** passed in MATLAB R2025a;
-prior smoke checks and synthetic master-to-statistics integration also passed. The
+Current development validation: **102 focused tests**, smoke checks and synthetic
+master-to-statistics integration passed in MATLAB R2025a. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
 adds 117 prescribed size-change/gap scenarios and repeats twenty full-movie cases
 on four source recordings: ID400, ID401, FB2312 and the separate FB2411
@@ -72,8 +72,16 @@ complete challenge movies from the same four sources under four linking rules.
 A majority extension recovers the selected 14-second missed pulse, but controlled
 contacts can mix signal identities under both that extension and the current
 primary rule. All candidate branches, including rejected siblings, are exported
-in the comparison evidence. Production linking remains unchanged; explicit
-contact provenance and candidate separation are the next development steps.
+in the comparison evidence. Production linking remains unchanged.
+
+[Contact records](docs/SURGE_CONTACT_PROVENANCE.md) are now integrated into normal
+master and statistics outputs: every candidate connection, contact endpoint
+frames, native-event exposure and contacts to rejected fragments. Six cached
+case replays preserve previous masks and identities; one full ID401 challenge
+rerun preserves both-sign measurements, with 141 event records independently
+checked. See the [integration evidence](docs/reference-results/surge-contact-provenance-20260909/README.md).
+Measurement/statistics contracts advance, so reanalysis is required before
+pooling. Local candidate separation is the next development step.
 
 The branch verifier also passes **10 Python regression tests**, including
 deliberately corrupted exports under normal and optimized Python. It requires

@@ -6,6 +6,28 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Production surge contact provenance
+
+- Export `SurgeTrackingEdges` and `SurgeContactFrames` in normal per-recording
+  CSV/MAT outputs. Preserve all nonzero candidate overlaps, actual link choices,
+  rejected siblings and recording-local candidate/event/site joins.
+- Add unique contact frames, duration and footprint exposure, incident-edge
+  counts and rejected-neighbor flags to candidate QC and retained surge events.
+  Preserve linking, duration qualification, site grouping and amplitude rules.
+- Add explicit contact assessment and retained-event exposure totals to
+  `EventMeasurementQC`; distinguish event-frames/event-seconds from recording
+  time and keep rejected candidates outside event totals. Update workbook
+  definitions and [contact-output documentation](docs/SURGE_CONTACT_PROVENANCE.md).
+- Advance measurement/statistics contracts to require complete reanalysis before
+  pooling. The detector and normalization identities are unchanged.
+- Pass 102 MATLAB tests, smoke and synthetic master/statistics integration, and
+  ten Python verifier tests. Independently audit six cached candidate replays
+  with unchanged masks and identities. Complete one ID401 challenge master and
+  statistics rerun: 123 sink events and 18 surge events across 11 surge sites;
+  all existing masks/timing/measurements match, and 141 event measurements pass
+  independent checks. These scopes are distinguished in the
+  [integration report](docs/reference-results/surge-contact-provenance-20260909/README.md).
+
 ### Branch verifier review corrections
 
 - Replace optimization-sensitive Python assertions with explicit validation

@@ -30,6 +30,8 @@ old=I;old.AnalysisSchemaVersion='2.1';
 verifyError(t,@()validateOxygenPipelineContract(old,M),'OxygenDynamics:ReanalysisRequired');
 old=I;old.PipelineContract.Detector='previous';
 verifyError(t,@()validateOxygenPipelineContract(old,M),'OxygenDynamics:ReanalysisRequired');
+old=I;old.PipelineContract.Measurement='event-footprint-candidate-ledger-6';
+verifyError(t,@()validateOxygenPipelineContract(old,M),'OxygenDynamics:ReanalysisRequired');
 old=I;old.AnalysisParams.PercentileDetectionThres=98;
 verifyError(t,@()validateOxygenPipelineContract(old,M),'OxygenDynamics:AnalysisSettingsMismatch');
 old=I;old.AnalysisParams.PixelSize=5;

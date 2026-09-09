@@ -79,6 +79,10 @@ M=table([2;1],[1;1],[21;1],[30;10],[false;true],[true;false], ...
  'VariableNames',{'SurgeID','EventID','NativeStartFrame','NativeEndFrame','SiteAssignmentAmbiguous','AmbiguousTracking'});
 M.CandidateRunID=[1;2];M.ShapeChangeLinkCount=[0;1];M.ShapeChangeLinkFrames=["";"2"];
 M.MinimumMatchedMutualCoverage=[.7;.5];M.MaximumMatchedAreaRatio=[1;2];M.PotentialGapContinuation=[false;false];
+for name=surgeContactMetadataFields(),M.(name{1})=zeros(2,1);end
+M.ContactFrameCount=[1;0];M.ContactDurationSec=[1;0];M.ContactFrameFraction=[.1;0];
+M.ContactFrameFootprintFraction=[1;0];M.ContactEdgeCount=[1;0];
+M.ContactFrames=["21";""];M.ContactNeighborCandidateRunIDs=["3";""];M.ContactWithRejectedCandidate=[true;false];
 E=M([2 1],1:4);E=attachSurgeTrackingMetadata(E,M,P);
 verifyEqual(t,E.AmbiguousTracking,[false;true]);verifyEqual(t,E.SiteAssignmentAmbiguous,[true;false]);
 E.RecordingID=["R";"R"];E.BaselineStatus=["valid";"valid"];E.NormOxySurgeAmp=[.2;.1];

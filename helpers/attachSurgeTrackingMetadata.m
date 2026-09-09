@@ -6,6 +6,7 @@ assert(all(found)&&numel(unique(row))==height(E),'Surge run identities must be u
 assert(isequal(E.NativeStartFrame,Map.NativeStartFrame(row))&&isequal(E.NativeEndFrame,Map.NativeEndFrame(row)));
 fields={'CandidateRunID','AmbiguousTracking','ShapeChangeLinkCount','ShapeChangeLinkFrames', ...
  'MinimumMatchedMutualCoverage','MaximumMatchedAreaRatio','PotentialGapContinuation'};
+fields=[fields surgeContactMetadataFields()];
 for k=1:numel(fields),E.(fields{k})=Map.(fields{k})(row,:);end
 E.SiteAssignmentAmbiguous=Map.SiteAssignmentAmbiguous(row);
 E.TrackingMethod=repmat("adjacent_mutual_or_isolated_containment",height(E),1);
