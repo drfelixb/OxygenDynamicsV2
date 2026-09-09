@@ -6,6 +6,21 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Paired known-signal validation pilot
+
+- Add seven paired-input full-master runs with repeated local sinks/surges,
+  uniform dimming and a less-dimmed patch on a global decrease, using a
+  checksum-verified ID400 awake crop. Production settings are unchanged.
+- Report native space-time overlap for both signs, retained event identities,
+  timing errors and amplitude availability. Independently verify constructed
+  pixels and overlap calculations; document the limits of cropped, unlabelled
+  background experiments.
+- Record evidence of relative-contrast surges during local input decreases,
+  non-monotonic retention of stronger sink injections, and the candidate-area
+  constraint imposed by the sink percentile rule. These are diagnostic findings,
+  not validated detector-accuracy estimates.
+- Correct stale measurement/statistics identities in the migration notes.
+
 ### Event-local sink timing
 
 - Replace the unbounded whole-record search with connected, sign-aware edge
