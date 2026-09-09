@@ -1,0 +1,9 @@
+Session,Case,RetainedSurgeEvents,SupportRowsIncludingOracle,PreselectedEventRow,StoredValidAmplitudes,EmptySupports
+M400-01-baseline-awake,growing_clean,51,154,14,26,0
+M400-01-baseline-awake,shrinking_clean,51,154,14,28,0
+M401-01-baseline-awake,growing_clean,12,37,6,8,0
+M401-01-baseline-awake,shrinking_clean,12,37,5,8,0
+FB2312-baseline-awake,growing_clean,40,121,20,27,0
+FB2312-baseline-awake,shrinking_clean,39,118,0,25,0
+FB2411,growing_clean,12,37,0,5,0
+FB2411,shrinking_clean,11,34,0,3,0

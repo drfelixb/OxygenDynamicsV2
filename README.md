@@ -48,7 +48,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **114 focused tests**, smoke checks and synthetic
+Current development validation: **123 focused tests**, smoke checks and synthetic
 master-to-statistics integration passed in MATLAB R2025a. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
 adds 117 prescribed size-change/gap scenarios and repeats twenty full-movie cases
@@ -94,7 +94,16 @@ The [completed comparison](docs/reference-results/surge-separation-20260909/READ
 covers twenty full movies on four sources. Stationary-pair gains in ID400/ID401
 do not generalize across the tested geometries/acquisitions. Independent Python
 checks verify 2.62 billion constructed pixels and all 112 coverage records;
-nineteen Python tests pass. The prototype remains experimental.
+its nineteen Python checks passed. The prototype remains experimental.
+
+The [amplitude/baseline audit](docs/SURGE_AMPLITUDE_SUPPORT.md) compares each
+surge's full footprint with fixed persistent cores using paired source movies.
+It reproduces all 228 stored amplitudes/statuses from eight frozen challenges
+and independently verifies 692 support/oracle rows. Tighter cores capture more
+imposed signal but can increase rising-phase contamination of the baseline;
+the normal amplitude definition remains unchanged. Current Python checks total
+26 tests. [Results and next onset/baseline work](docs/reference-results/surge-amplitude-support-20260909/README.md)
+distinguish spatial capture, background contribution and baseline bias.
 
 The branch verifier also passes **10 Python regression tests**, including
 deliberately corrupted exports under normal and optimized Python. It requires

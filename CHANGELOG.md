@@ -6,6 +6,27 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Surge amplitude support and baseline decomposition
+
+- Add a validation-only comparison of full-event footprints and fixed 50%/75%
+  occupancy cores. Preserve the full-footprint clean-baseline frame list across
+  supports and retain unavailable measurements. Recipe common cores are marked
+  as oracles rather than deployable estimators.
+- Decompose paired constructed/source traces into background, imposed signal
+  and baseline effects at the same observed peak. Account for the changed
+  denominator and preserve positive/negative imposed contributions separately.
+  Clearly distinguish unscreened diagnostics from reportable amplitudes.
+- Audit all 228 retained surges from eight frozen growing/shrinking movies on
+  four sources; reproduce 130 available and 98 unavailable full-event amplitudes.
+  Independently reconstruct 537,371 support-frame samples and verify 692 support
+  rows. No new detection/master/statistics runs or production formula changes.
+- Pass 123 MATLAB and 26 Python tests, including nine new MATLAB and seven new
+  Python checks. Results show that tighter support can worsen rising-phase
+  baseline contamination. Prioritize event-local onset/reference validation
+  before adopting a core amplitude. See the
+  [protocol](docs/SURGE_AMPLITUDE_SUPPORT.md) and
+  [complete evidence](docs/reference-results/surge-amplitude-support-20260909/README.md).
+
 ### Experimental local surge separation
 
 - Add a validation-only candidate partition requiring two persistent predecessors,

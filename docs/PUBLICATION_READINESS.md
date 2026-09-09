@@ -38,13 +38,23 @@ geometries or the finer-resolution source. The prototype remains validation-only
 contact provenance remains necessary. See the
 [full comparison](reference-results/surge-separation-20260909/README.md).
 
-Next settle the spatial amplitude endpoint and validate event-local onset/baseline
-together. Use the known imposed optical changes to compare full-event footprint
-averaging with a prespecified central-support measurement, and quantify how
-undetected rising tails affect the pre-event reference. Preserve the full
-footprint measurement while evaluating any proposed additional endpoint; do not
-silently change the meaning of amplitude. Statistical surge parity and final
-cohort reanalysis follow those definitions.
+The [paired-source amplitude audit](SURGE_AMPLITUDE_SUPPORT.md) now compares full
+footprints with fixed 50%/75% occupancy cores, using identical baseline exclusions.
+All 228 stored amplitudes/statuses reproduce exactly. Smaller supports improve
+imposed-signal capture but can also increase baseline contamination: in one
+FB2312 matched core, the known rising phase raises the prebaseline by 12.43% and
+reduces the baseline-referenced peak by 14.29 percentage points relative to its
+paired-source diagnostic. Source fluctuations remain a separate contribution.
+These diagnostics do not provide a correction for spontaneous events.
+
+Next develop and test a bounded event-local onset/reference procedure, beginning
+with the current full-event spatial support. Screen positive-recovery locations
+for tissue eligibility before signal construction; keep admission-failure tests
+separate. Compare estimated onset and baseline bias against known imposed starts,
+and monitor unjustified early shifts on unchanged controls. Preserve uncertain
+onset and unavailable-baseline states. Then repeat with candidate cores before
+choosing a new endpoint. Statistical surge parity and final cohort reanalysis
+follow those definitions.
 
 The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
 with disjoint searches, a provisional 20-second bound and unresolved-boundary
