@@ -6,6 +6,20 @@ reconstructed into releases.
 
 ## Unreleased
 
+### DANDI metadata reconciliation (2026-09-09)
+
+- Inspect acquisition/subject headers for all 87 assets in the pinned release.
+  Match all 83 annotated-workbook records; numerical calibration and grouping
+  metadata agree for those matched records.
+- Explicitly select the uniquely named BLI series in six multiseries files.
+  Preserve fluorescence-control identity; do not pool it as a BOI experiment.
+- Keep four asset/session mappings unresolved: F120, F134, F136 and M189.
+  Their NWB calibration is 1.54 µm/pixel versus 1.55 in candidate CSV rows.
+  No baseline/stimulation segment boundaries are inferred.
+- Correct the ID400 reference harness genotype from unspecified to WT and
+  include subject/group labels in future reference reports. Previously saved
+  reports remain historical records; no numerical detection rule changed.
+
 ### Breaking analysis changes — existing V3 development (2026-09-09)
 
 - Require reanalysis under schema `3.0-dev`; reject older output contracts,

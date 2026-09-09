@@ -39,7 +39,8 @@ DANDI outputs are unlabelled reference results, not ground-truth accuracy.
 Default detection thresholds remain provisional after the SD correction.
 See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
 [validation evidence](docs/EXISTING_ANALYSIS_VALIDATION.md),
-[remaining work](docs/PUBLICATION_READINESS.md) and [changelog](CHANGELOG.md).
+[remaining work](docs/PUBLICATION_READINESS.md),
+[DANDI metadata audit](docs/DANDI_METADATA_RECONCILIATION.md) and [changelog](CHANGELOG.md).
 
 ## Overview
 
