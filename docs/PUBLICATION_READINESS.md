@@ -47,14 +47,25 @@ reduces the baseline-referenced peak by 14.29 percentage points relative to its
 paired-source diagnostic. Source fluctuations remain a separate contribution.
 These diagnostics do not provide a correction for spontaneous events.
 
-Next develop and test a bounded event-local onset/reference procedure, beginning
-with the current full-event spatial support. Screen positive-recovery locations
-for tissue eligibility before signal construction; keep admission-failure tests
-separate. Compare estimated onset and baseline bias against known imposed starts,
-and monitor unjustified early shifts on unchanged controls. Preserve uncertain
-onset and unavailable-baseline states. Then repeat with candidate cores before
-choosing a new endpoint. Statistical surge parity and final cohort reanalysis
-follow those definitions.
+The first [bounded raw-trace onset experiment](SURGE_LOCAL_ONSET.md) is complete:
+456 constructed/source evaluations on 228 fixed supports resolve none of the
+five preselected imposed surges. Three lack an uncontaminated fitting context;
+two lack evidence for the prescribed change in slope. Eight other movie/event
+rows resolve identically on unchanged source signals. A forced onset correction
+is therefore unsupported; the prototype stays outside production. See the
+[full result](reference-results/surge-local-onset-20260909/README.md).
+
+Next establish the onset information available in the raw traces: use a
+prespecified trace-level panel varying imposed rise time and amplitude on the
+existing backgrounds, with known starts and paired unchanged controls. Compare
+the fixed-context rule with a fit constrained to the contiguous available clean
+context, and quantify timing error, baseline contamination and non-resolution.
+This isolates timing from detection/support failures before another full-movie
+run. Do not tune merely to resolve the five selected examples. Screen new
+positive movie locations for tissue eligibility before construction; retain
+admission-failure tests separately. Compare candidate spatial cores only after
+the timing/reference rule is supported. Surge statistical parity and the final
+cohort reanalysis follow those definitions.
 
 The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
 with disjoint searches, a provisional 20-second bound and unresolved-boundary

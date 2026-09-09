@@ -48,8 +48,9 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **123 focused tests**, smoke checks and synthetic
-master-to-statistics integration passed in MATLAB R2025a. The
+Current development validation: **135 focused tests** pass in MATLAB R2025a.
+Smoke checks and synthetic master-to-statistics integration passed for the
+unchanged production implementation. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
 adds 117 prescribed size-change/gap scenarios and repeats twenty full-movie cases
 on four source recordings: ID400, ID401, FB2312 and the separate FB2411
@@ -59,6 +60,13 @@ recalculation; all twenty same-input comparisons preserve sink masks/timing.
 These are four source recordings, not twenty independent samples.
 The preceding [physical tracking sweep](docs/reference-results/surge-physical-adjacent-20260909/README.md)
 remains a historical-contract result.
+
+The [experimental raw-trace onset rule](docs/SURGE_LOCAL_ONSET.md) evaluates all
+228 frozen surge supports on constructed and paired source traces (456 fits).
+It resolves none of the five preselected imposed surges. Only eight event rows
+resolve, identically on untouched source signals. The rule remains experimental;
+production amplitudes and baselines are unchanged. See the
+[results and next step](docs/reference-results/surge-local-onset-20260909/README.md).
 
 The [expanding/contracting signal audit](docs/SURGE_SIGNAL_EVIDENCE.md) adds eight
 full-movie challenges on those same four sources. All 1,508 additional event

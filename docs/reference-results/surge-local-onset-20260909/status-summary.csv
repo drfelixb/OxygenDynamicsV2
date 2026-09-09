@@ -1,0 +1,11 @@
+TraceKind,Status,Events
+constructed,insufficient_improvement,45
+constructed,not_a_rising_change,11
+constructed,overlapping_detection_in_fit,136
+constructed,recording_boundary_unresolved,28
+constructed,resolved,8
+source,insufficient_improvement,45
+source,not_a_rising_change,11
+source,overlapping_detection_in_fit,136
+source,recording_boundary_unresolved,28
+source,resolved,8

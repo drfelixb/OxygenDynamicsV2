@@ -6,6 +6,23 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Experimental bounded surge onset
+
+- Specify and implement a validation-only raw-trace broken-line onset estimate
+  with fixed full-event support, bounded timing, neighboring-event exclusions,
+  score/profile diagnostics and explicit unresolved states. Proposed baselines
+  precede the estimate; native peak windows remain fixed. Missing native signal
+  or a nonpositive reference prevents a provisional amplitude.
+- Evaluate 228 frozen events on constructed and paired source traces (456 fits)
+  across eight movies from four sources. Independently reconstruct exclusions,
+  fits, baseline arithmetic, paired-source effects and case/match coverage.
+- Resolve none of the five preselected imposed surges. Eight other event rows
+  resolve on identical source signals; this does not validate physiological
+  onset. Do not promote the rule or change production calculations.
+- Pass 135 MATLAB focused tests and 34 Python tests, including optimized Python
+  execution. See the [protocol](docs/SURGE_LOCAL_ONSET.md) and
+  [results](docs/reference-results/surge-local-onset-20260909/README.md).
+
 ### Surge amplitude support and baseline decomposition
 
 - Add a validation-only comparison of full-event footprints and fixed 50%/75%
