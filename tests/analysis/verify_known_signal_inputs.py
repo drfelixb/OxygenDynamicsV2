@@ -13,17 +13,21 @@ def verify(root):
     manifest = json.loads((root / "manifest.json").read_text())
     source = Path(manifest["SourceTiff"])
     assert hashlib.sha256(source.read_bytes()).hexdigest() == manifest["SourceSHA256"]
-    yy, xx = np.mgrid[1:257, 1:257]
-    mask = (xx - 128)**2 + (yy - 128)**2 <= 18**2
+    rows, cols = manifest["SourceRows"], manifest["SourceColumns"]
+    first, last = manifest["SourceFrames"]
+    height, width = rows[1] - rows[0] + 1, cols[1] - cols[0] + 1
+    cx, cy = manifest["CircleCenterXY"]
+    yy, xx = np.mgrid[1:height+1, 1:width+1]
+    mask = (xx - cx)**2 + (yy - cy)**2 <= manifest["CircleRadiusPixels"]**2
     checked = 0
     with Image.open(source) as original:
         for case in manifest["Cases"]:
             with Image.open(root / case["Case"] / "pilot_original.tif") as injected:
-                assert injected.n_frames == 180
-                for frame in range(180):
-                    original.seek(frame)
-                    base = np.asarray(original)[128:384, 128:384].astype(float)
-                    if 60 <= frame < 80 or 95 <= frame < 115:
+                assert injected.n_frames == last - first + 1
+                for frame in range(injected.n_frames):
+                    original.seek(first - 1 + frame)
+                    base = np.asarray(original)[rows[0]-1:rows[1], cols[0]-1:cols[1]].astype(float)
+                    if any(a <= frame + 1 <= b for a, b in manifest["WindowsInclusive"]):
                         factor = 1 + case["GlobalFraction"] + case["LocalAdditiveFraction"] * mask
                         base *= factor
                     # MATLAB rounds positive half-integers away from zero.

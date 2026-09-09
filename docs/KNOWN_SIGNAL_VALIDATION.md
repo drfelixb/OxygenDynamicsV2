@@ -77,3 +77,33 @@ and rectangular pulses do not represent the full range of biological waveforms.
    conditions. A high number of resolved events is not an optimization target.
 
 Completed first-pilot findings and manifests are in [the evidence folder](reference-results/known-signal-pilot-20260909/README.md).
+
+## Full-recording comparison and stage tracing
+
+The runner now accepts a third argument, `"crop"` (default) or `"full"`.
+Full mode uses every pixel and all 600 frames of the same verified source.
+The injected disk stays at the same source coordinates: (256,256), radius 18
+pixels, frames 61–80 and 96–115. All seven cases and detector settings are
+unchanged. The full-field sink candidate budget is approximately 2,228 pixels
+per frame after the 20-pixel border, compared with 467 in the crop.
+
+`traceKnownSignalSinks` reconstructs percentile candidates, geometry/tissue
+filtering, tracking, duration/spacing rejection and the three correlation passes.
+A diagnostic duration-only call disables the spacing criterion without changing
+production outputs; it distinguishes duration rejection from spacing rejection.
+Every final reconstructed pixel cell must exactly match the saved production
+site/frame masks before a trace report is accepted. Intermediate row numbers
+are stage-local; they are not persistent event identifiers.
+
+The trace records the fraction of the injected space-time volume intersected by
+all surviving masks, frames intersected, and bounds of intersecting runs. This
+coverage differs from the best-event IoU in the paired comparison table.
+Threshold-only and candidate-mask summaries describe pixel support, not final
+event identities. The independent overlap audit uses sparse logical volumes
+for the full recording to keep memory requirements manageable.
+
+Restoring field size and duration together tests whether findings persist on
+the original recording. It does not independently estimate the contribution
+of field size versus temporal context. No natural-event accuracy is inferred.
+
+Completed full-recording results and the exact-mask stage traces are in [the follow-up evidence folder](reference-results/known-signal-full-20260909/README.md).

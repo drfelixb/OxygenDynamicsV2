@@ -10,7 +10,7 @@ bioluminescence oxygen imaging.
 > outputs require scientific review and should not be treated as clinical or
 > diagnostic results.
 
-Known-signal stress testing is described in [the validation protocol](docs/KNOWN_SIGNAL_VALIDATION.md).
+Known-signal stress testing is described in [the validation protocol](docs/KNOWN_SIGNAL_VALIDATION.md), with [stage tracing and full-recording comparisons](docs/reference-results/known-signal-full-20260909/README.md).
 
 ## Development version: existing analysis V3
 

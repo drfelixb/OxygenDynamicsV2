@@ -6,6 +6,25 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Full-recording known-signal comparison and sink-stage tracing
+
+- Extend the fixed paired-input runner to all source pixels/frames while keeping
+  injection source coordinates, windows and settings unchanged. Generalize the
+  independent pixel/overlap audits to the recorded manifest geometry.
+- Trace sink candidates, tracking, duration/spacing filtering and correlation
+  passes, accepting the reconstruction only when final saved masks match exactly.
+- Identify the crop's missing first −20% sink at the existing minimum-spacing
+  rule: both native runs are 20 frames, but the 15-frame empty gap causes deletion
+  of the earlier run. A duration-only diagnostic preserves both.
+- Complete seven full-recording cases and confirm the same spacing deletion by
+  exact-mask stage reconstruction. Qualify the earlier crop finding: the
+  less-dimmed patches do not overlap retained surges at full extent.
+- Independently verify all 1,101,004,800 constructed full-input pixels and all
+  28 overlap rows; check that crop/full comparisons use identical source-space
+  injections and settings.
+- Keep this recurrence exclusion distinct from measurement-baseline availability;
+  no production detector parameters or event rules change in this update.
+
 ### Paired known-signal validation pilot
 
 - Add seven paired-input full-master runs with repeated local sinks/surges,

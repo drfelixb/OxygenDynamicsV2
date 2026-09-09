@@ -1,7 +1,9 @@
 function auditKnownSignalPilot(root)
 % Independently recompute all reported overlaps using full logical volumes.
 D=load(fullfile(root,'pilot-results.mat'));R=D.Results;M=D.M;
-[y,x]=ndgrid(1:256,1:256);mask=(x-128).^2+(y-128).^2<=18^2;
+heightPx=diff(M.SourceRows)+1;widthPx=diff(M.SourceColumns)+1;N=diff(M.SourceFrames)+1;
+[y,x]=ndgrid(1:heightPx,1:widthPx);
+mask=(x-M.CircleCenterXY(1)).^2+(y-M.CircleCenterXY(2)).^2<=M.CircleRadiusPixels^2;
 for c=reshape(unique(R.Case,'stable'),1,[])
  for kind=["sink" "surge"]
   if kind=="sink"
@@ -12,13 +14,13 @@ for c=reshape(unique(R.Case,'stable'),1,[])
    sites=S.Table_OxygenSurges_Out;events=S.Table_OxygenSurgeEvents_Out;id='SurgeID';
   end
   for w=1:2
-   truth=false(256*256,180);truth(:,M.WindowsInclusive(w,1):M.WindowsInclusive(w,2))=repmat(mask(:),1,20);
+   truth=logical(sparse(heightPx*widthPx,N));truth(:,M.WindowsInclusive(w,1):M.WindowsInclusive(w,2))=repmat(mask(:),1,20);
    scores=zeros(height(events),1);hits=0;
    for e=1:height(events)
     pixels=sites.FramePixels{events.(id)(e)};
     active=find(~cellfun(@isempty,pixels));
     starts=active([true diff(active)>1]);ends=active([diff(active)>1 true]);
-    k=events.EventID(e);volume=false(size(truth));
+    k=events.EventID(e);volume=logical(sparse(size(truth,1),size(truth,2)));
     for t=starts(k):ends(k),volume(pixels{t},t)=true;end
     intersection=nnz(volume&truth);hits=hits+(intersection>0);
     scores(e)=intersection/nnz(volume|truth);

@@ -1,24 +1,29 @@
-function Results=runKnownSignalPilot(sourceTiff,outputRoot)
+function Results=runKnownSignalPilot(sourceTiff,outputRoot,scope)
 % Paired-background stress test of the unchanged existing detector.
 % This fixed pilot is ID400 awake only, NOT a labelled accuracy benchmark.
+if nargin<3,scope="crop";end
+assert(any(string(scope)==["crop" "full"]),'Scope must be crop or full.');
+if string(scope)=="full",rows=1:512;columns=rows;frames=1:600;center=[256 256];
+else,rows=129:384;columns=rows;frames=1:180;center=[128 128];end
+N=numel(frames);side=numel(rows);
 setupOxygenDynamicsPath;
 assert(~isfolder(outputRoot),'Use a new output root.');
 sourceHash=oxygenFileSHA256(sourceTiff);
 assert(strcmp(sourceHash,'695f8390be5fe18d06685d718b7e99c73d08715f51ef11ec14c694b32b599a05'),'Wrong reference TIFF.');
 info=imfinfo(sourceTiff);assert(numel(info)==600&&info(1).Width==512&&info(1).Height==512);
 mkdir(outputRoot);
-X=zeros(256,256,180,'uint16');
-for t=1:180
- p=imread(sourceTiff,t);X(:,:,t)=p(129:384,129:384);
+X=zeros(side,side,N,'uint16');
+for t=1:N
+ p=imread(sourceTiff,frames(t));X(:,:,t)=p(rows,columns);
 end
-[y,x]=ndgrid(1:256,1:256);mask=(x-128).^2+(y-128).^2<=18^2;
+[y,x]=ndgrid(1:side,1:side);mask=(x-center(1)).^2+(y-center(2)).^2<=18^2;
 windows=[61 80;96 115];
 Cases=table(["control";"sink05";"sink20";"surge05";"surge20";"global_drop20";"global20_local05"], ...
  [0;-.05;-.2;.05;.2;0;.15],[0;0;0;0;0;-.2;-.2], ...
  'VariableNames',{'Case','LocalAdditiveFraction','GlobalFraction'});
 M=struct('SourceTiff',sourceTiff,'SourceSHA256',sourceHash, ...
- 'SourceSession','M400-01-baseline-awake','SourceFrames',[1 180],'SourceRows',[129 384], ...
- 'SourceColumns',[129 384],'SampleHz',1,'PixelSizeUm',4.75,'CircleCenterXY',[128 128], ...
+ 'SourceSession','M400-01-baseline-awake','Scope',char(scope),'SourceFrames',frames([1 end]),'SourceRows',rows([1 end]), ...
+ 'SourceColumns',columns([1 end]),'SampleHz',1,'PixelSizeUm',4.75,'CircleCenterXY',center, ...
  'CircleRadiusPixels',18,'WindowsInclusive',windows,'Cases',table2struct(Cases), ...
  'PipelineContract',oxygenPipelineContract(),'MatlabVersion',version, ...
  'Interpretation','Counterfactual injections on an unlabelled recorded background. Cropping and shortening change normalization and trend fitting; not full-recording accuracy. Fractions multiply each original pixel; uint16 rounding is measured. Global20_local05 means -20% outside, -5% inside.');
@@ -27,7 +32,7 @@ code=createOxygenRegressionCodeManifest(fileparts(fileparts(fileparts(mfilename(
 writetable(code,fullfile(outputRoot,'code-manifest.csv'));
 Results=table();
 for c=1:height(Cases)
- Y=double(X);active=false(1,180);
+ Y=double(X);active=false(1,N);
  for w=1:size(windows,1),active(windows(w,1):windows(w,2))=true;end
  factor=1+Cases.GlobalFraction(c)+Cases.LocalAdditiveFraction(c)*mask;
  Y(:,:,active)=Y(:,:,active).*factor;
