@@ -45,7 +45,8 @@ See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
 [multi-recording reference protocol](docs/REFERENCE_SET_PHASE1.md),
 [per-recording results and limitations](docs/reference-results/phase1-20260909/README.md),
 [signal-audit findings](docs/reference-results/signal-audit-20260909/README.md),
-[event-local timing rules and limitations](docs/LOCAL_SINK_TIMING.md)
+[event-local timing rules](docs/LOCAL_SINK_TIMING.md),
+[completed timing rerun and remaining limitations](docs/reference-results/local-timing-20260909/README.md)
 and [changelog](CHANGELOG.md).
 
 ## Overview

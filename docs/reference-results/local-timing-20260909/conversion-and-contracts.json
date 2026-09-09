@@ -1,0 +1,226 @@
+[
+  {
+    "Session": "M400-01-baseline-awake",
+    "AssetID": "8ba82dc1-aaba-411d-a196-ff8ef0b61fc3",
+    "PipelineContract": {
+      "Schema": "3.0-dev",
+      "Detector": "existing-v2-sd-1",
+      "Measurement": "event-footprint-local-timing-2",
+      "Statistics": "mouse-strict-3",
+      "Normalization": "spatial-sd_then_temporal-sd"
+    },
+    "Conversion": {
+      "NwbSHA256": "dbdb847b52a501eaf826b191f0affb2bcfc7078c95cddf035aa785e1aac3b23f",
+      "TiffSHA256": "695f8390be5fe18d06685d718b7e99c73d08715f51ef11ec14c694b32b599a05",
+      "IntensityRange": [
+        0,
+        255
+      ],
+      "PixelClass": "uint16",
+      "MatlabInputShape": [
+        600,
+        512,
+        512
+      ],
+      "PixelRoundtripVerified": true,
+      "AddedDenoising": false
+    },
+    "MatlabVersion": "25.1.0.2943329 (R2025a)"
+  },
+  {
+    "Session": "M400-03-baseline-iso",
+    "AssetID": "2357d2bf-f8d5-4937-a5cf-1010e5db1491",
+    "PipelineContract": {
+      "Schema": "3.0-dev",
+      "Detector": "existing-v2-sd-1",
+      "Measurement": "event-footprint-local-timing-2",
+      "Statistics": "mouse-strict-3",
+      "Normalization": "spatial-sd_then_temporal-sd"
+    },
+    "Conversion": {
+      "NwbSHA256": "396844121e41f441e0de15b7843e0bdab0d05e90c44777b0e820bd69bf92a997",
+      "TiffSHA256": "20e08bad8c1971f84b8e7080ff8b1ef87819df8a754f39e6d941d3c0d12832fa",
+      "IntensityRange": [
+        0,
+        255
+      ],
+      "PixelClass": "uint16",
+      "MatlabInputShape": [
+        600,
+        512,
+        512
+      ],
+      "PixelRoundtripVerified": true,
+      "AddedDenoising": false
+    },
+    "MatlabVersion": "25.1.0.2943329 (R2025a)"
+  },
+  {
+    "Session": "M401-01-baseline-awake",
+    "AssetID": "8f7d2943-1519-4bfd-b631-516985f6b572",
+    "PipelineContract": {
+      "Schema": "3.0-dev",
+      "Detector": "existing-v2-sd-1",
+      "Measurement": "event-footprint-local-timing-2",
+      "Statistics": "mouse-strict-3",
+      "Normalization": "spatial-sd_then_temporal-sd"
+    },
+    "Conversion": {
+      "NwbSHA256": "c645b6bc6411ebbc5f97d52e1aad3d99218f4ed6de7d7d1cd3f30caf476ab281",
+      "TiffSHA256": "22912f81ab9c01a96ddb7d403cb1b0204eadac78797e11f39e25cd71d88e078d",
+      "IntensityRange": [
+        0,
+        255
+      ],
+      "PixelClass": "uint16",
+      "MatlabInputShape": [
+        600,
+        512,
+        512
+      ],
+      "PixelRoundtripVerified": true,
+      "AddedDenoising": false
+    },
+    "MatlabVersion": "25.1.0.2943329 (R2025a)"
+  },
+  {
+    "Session": "M401-03-baseline-iso",
+    "AssetID": "c593b79f-d207-44b8-946c-7462a0af0272",
+    "PipelineContract": {
+      "Schema": "3.0-dev",
+      "Detector": "existing-v2-sd-1",
+      "Measurement": "event-footprint-local-timing-2",
+      "Statistics": "mouse-strict-3",
+      "Normalization": "spatial-sd_then_temporal-sd"
+    },
+    "Conversion": {
+      "NwbSHA256": "879c75267657452bb5e0a8d339d0ab1ac8356b3d6c4e229193864cb43f7c00b0",
+      "TiffSHA256": "85abeb1dc0eb650e184826035bf25a7892868b63f3cd98c8732709830d95aa25",
+      "IntensityRange": [
+        0,
+        255
+      ],
+      "PixelClass": "uint16",
+      "MatlabInputShape": [
+        600,
+        512,
+        512
+      ],
+      "PixelRoundtripVerified": true,
+      "AddedDenoising": false
+    },
+    "MatlabVersion": "25.1.0.2943329 (R2025a)"
+  },
+  {
+    "Session": "FB2312-baseline-awake",
+    "AssetID": "1dff98d5-540a-4ff5-a9d1-a610c0de0e1d",
+    "PipelineContract": {
+      "Schema": "3.0-dev",
+      "Detector": "existing-v2-sd-1",
+      "Measurement": "event-footprint-local-timing-2",
+      "Statistics": "mouse-strict-3",
+      "Normalization": "spatial-sd_then_temporal-sd"
+    },
+    "Conversion": {
+      "NwbSHA256": "6fbcc9a586cf59dd274ce1191b8e1148ef1a69412affaf138c453805889e21b5",
+      "TiffSHA256": "d2e65164f5640b4b97649714fbbd3e5ab5bc26c3243e44683d98e840ef89b657",
+      "IntensityRange": [
+        125,
+        61192
+      ],
+      "PixelClass": "uint16",
+      "MatlabInputShape": [
+        1200,
+        512,
+        512
+      ],
+      "PixelRoundtripVerified": true,
+      "AddedDenoising": false
+    },
+    "MatlabVersion": "25.1.0.2943329 (R2025a)"
+  },
+  {
+    "Session": "FB2316-baseline",
+    "AssetID": "8426348c-f940-4214-8e13-90d086301091",
+    "PipelineContract": {
+      "Schema": "3.0-dev",
+      "Detector": "existing-v2-sd-1",
+      "Measurement": "event-footprint-local-timing-2",
+      "Statistics": "mouse-strict-3",
+      "Normalization": "spatial-sd_then_temporal-sd"
+    },
+    "Conversion": {
+      "NwbSHA256": "fc690f0fa1a7d02a0a466d8d93bbed16297ffa5edecea9f1f3840a1bb8cea01c",
+      "TiffSHA256": "23385c57fd4c0fbd8eb031c2058b48166e42a5df01cf8b1fb486cfa6360a2065",
+      "IntensityRange": [
+        169,
+        62483
+      ],
+      "PixelClass": "uint16",
+      "MatlabInputShape": [
+        1200,
+        512,
+        512
+      ],
+      "PixelRoundtripVerified": true,
+      "AddedDenoising": false
+    },
+    "MatlabVersion": "25.1.0.2943329 (R2025a)"
+  },
+  {
+    "Session": "ID13-20200917",
+    "AssetID": "eccd66bb-845e-4564-9983-3b167eaf9e15",
+    "PipelineContract": {
+      "Schema": "3.0-dev",
+      "Detector": "existing-v2-sd-1",
+      "Measurement": "event-footprint-local-timing-2",
+      "Statistics": "mouse-strict-3",
+      "Normalization": "spatial-sd_then_temporal-sd"
+    },
+    "Conversion": {
+      "NwbSHA256": "4cb420277916d6f609e8305aa27bca758487eb166a4160ad56a043f86c86caef",
+      "TiffSHA256": "19211dc232042f969c35fc18d135b54793a9c162e883e4107ae4a411cd9be63b",
+      "IntensityRange": [
+        0,
+        255
+      ],
+      "PixelClass": "uint16",
+      "MatlabInputShape": [
+        1200,
+        512,
+        512
+      ],
+      "PixelRoundtripVerified": true,
+      "AddedDenoising": false
+    },
+    "MatlabVersion": "25.1.0.2943329 (R2025a)"
+  },
+  {
+    "Session": "FB2411",
+    "AssetID": "8129a280-f117-4d54-b509-8a3ea7ad7647",
+    "PipelineContract": {
+      "Schema": "3.0-dev",
+      "Detector": "existing-v2-sd-1",
+      "Measurement": "event-footprint-local-timing-2",
+      "Statistics": "mouse-strict-3",
+      "Normalization": "spatial-sd_then_temporal-sd"
+    },
+    "Conversion": {
+      "NwbSHA256": "9176d54535b44e9f6c23eddcd400b4bdfcdfb6f1bf01421406ac069f40ba0d79",
+      "TiffSHA256": "15edc9f8854a50d1fc478841d8cefd717043cb4ebbf5471a58f017870915a5db",
+      "IntensityRange": [
+        9450,
+        31414
+      ],
+      "PixelClass": "uint16",
+      "MatlabInputShape": [
+        301,
+        394,
+        221
+      ],
+      "PixelRoundtripVerified": true,
+      "AddedDenoising": false
+    },
+    "MatlabVersion": "25.1.0.2943329 (R2025a)"
+  }
+]

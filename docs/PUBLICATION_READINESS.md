@@ -4,23 +4,25 @@ The target is a single reanalyzed cohort using a frozen, reliable pipeline. Back
 
 ## Immediate next investigation
 
-The [completed signal audit](reference-results/signal-audit-20260909/README.md)
-reproduced all 1,300 reference-event measurements, but exposed a priority timing
-problem: repeated native sink events can receive identical, nonlocal measurement
-windows. Replace the unbounded sink timing search with a locally constrained,
-sign-aware rule, retaining native identity and explicit unresolved-boundary QC.
-Test recurring events and trend crossings before rerunning the reference set.
+The unbounded sink timing search has been replaced by an
+[event-local rule](LOCAL_SINK_TIMING.md), with native identity, disjoint searches
+between neighboring events, a provisional 20-second limit and explicit unresolved
+boundary flags. Old timing outputs are rejected by the new measurement/statistics
+contract. The frozen-trace 5/10/20/40-second sweep demonstrates substantial
+parameter sensitivity; resolution counts are not accuracy labels.
 
-The six flagged FB2312 surges also change sign between the detrended input and
-frame-wise spatial normalization. Define normalized spatial contrast separately
-from preserved-input baseline change before deciding acceptance rules and
-publication endpoints. Neither arithmetic consistency nor agreement between
-two signal representations establishes biological accuracy.
+Next validate onset/recovery with known injected signal shapes, recurrences,
+slow trends and mixed-sign changes. Include whole-site versus event-footprint
+trace support and test the return level/search limit without tuning to reference
+event counts. Native fallback windows remain in descriptive summaries; specify
+how unresolved timing enters publication endpoints before inferential analysis.
 
-After timing and signal definitions are explicit, perform controlled global/local
-signal perturbations, injection/recovery and physical-scale resampling. Keep the
-current reference frozen and resolve archived intensity preparation before
-cross-acquisition amplitude interpretation.
+The six flagged FB2312 surges in the earlier signal audit changed sign between
+detrended input and frame-wise spatial normalization. Define normalized spatial
+contrast separately from preserved-input baseline change. Neither arithmetic
+consistency nor sign agreement establishes biological accuracy. Physical-scale
+resampling follows these timing/signal-definition tests; archived intensity
+preparation still needs resolution before cross-acquisition amplitude comparisons.
 
 ## Work in dependency order
 

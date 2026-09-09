@@ -17,7 +17,7 @@ for i=1:numel(P.Records)
     if k<numel(runs),hi=floor((native(end)+runs(k+1).PixelIdxList(1))/2);end
     T=resolveSinkEventTiming(native,x,trend,S.AnalysisInfo.AnalysisParams.eventBaselineReturnTolerance,floor(seconds*fs),lo,hi);
     T.SiteID=s;T.EventID=k;idx=idx+1;
-    if idx==1,rows=T;else,rows(idx,1)=T;end %#ok<AGROW>
+    if idx==1,rows=T;else,rows(idx,1)=T;end
    end
   end
   A=struct2table(rows);assert(height(A)==height(E));

@@ -4,9 +4,9 @@ Runtime: MATLAB R2025a on macOS. Base: upstream main `8cf3f036b41e16b2c472bcee7e
 
 | Check | Latest completed result |
 |---|---|
-| Focused calculation/regression tests | 37 passed |
-| Full `runOxygenPipelineSmokeTest` | Passed with schema 3.0-dev and statistics identity mouse-strict-2 |
-| `runRepositoryChecks` | Passed: 335 MATLAB files; 51 Code Analyzer messages remain |
+| Focused calculation/regression tests | 46 passed |
+| Full `runOxygenPipelineSmokeTest` | Passed with schema 3.0-dev and statistics identity mouse-strict-3 |
+| `runRepositoryChecks` | Passed: 339 MATLAB files; 51 Code Analyzer messages remain |
 | Master → statistics synthetic integration | Passed at 2 Hz; includes known measurements and a zero-event recording |
 
 Smoke-suite printed FAIL rows are deliberate negative regression fixtures; the suite itself passed. The DANDI results below distinguish the first reference run from subsequent validation.
@@ -71,3 +71,18 @@ identified substantial nonlocal sink timing and direction disagreements between
 preserved-input change and normalized spatial contrast. Numerical agreement
 must not be interpreted as validation of these event definitions. Address
 bounded event-local timing before publication comparisons of durations/amplitudes.
+
+## Event-local timing rerun
+
+The complete eight-recording rerun passed under measurement identity
+`event-footprint-local-timing-2` and statistics identity `mouse-strict-3`.
+Native containment, 20-second extension limits and same-site nonoverlap passed
+for every sink event. Native masks and event identities match the frozen
+reference exactly, and all surge measurements are unchanged. All 1,300 event
+measurements passed independent amplitude/baseline checks.
+
+[Per-recording timing results, sensitivity and before/after figure](reference-results/local-timing-20260909/README.md)
+show 621/976 BOI sink timings resolved and 355 unresolved. BOI sink finite
+amplitudes changed from 723 to 758 and wrong-direction amplitudes from seven to
+eight. These are consequences of defined window changes, not accuracy estimates.
+The 5/10/20/40-second sweep confirms meaningful parameter sensitivity.

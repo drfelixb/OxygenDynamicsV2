@@ -18,8 +18,16 @@ reconstructed into releases.
 - Advance measurement identity to `event-footprint-local-timing-2` and statistics
   identity to `mouse-strict-3`; require reanalysis and reject mixed old outputs.
 - Add nine timing/QC tests and reference-run invariants for containment,
-  extension limits and nonoverlap. Document that retained unresolved windows
-  must not be interpreted as complete physiological event durations.
+  extension limits and nonoverlap. All 46 focused tests and the full smoke suite
+  passed. All eight recordings passed the complete rerun with exact native masks,
+  event identities and surge measurements preserved; 1,300 amplitudes/baselines
+  matched independent recomputation.
+- Eliminate same-site measurement-window overlaps in the reference set. Report
+  621/976 BOI sink timings resolved and 355 unresolved at the provisional 20-second
+  limit, plus a prespecified 5/10/20/40-second sensitivity sweep. Retained unresolved
+  windows must not be interpreted as complete physiological event durations.
+- Fix relative-path handling in the reference runner by canonicalizing its roots.
+  Preserve the superseded failed-path attempt separately from the successful rerun.
 
 ### Independent event signal audit and timing findings
 

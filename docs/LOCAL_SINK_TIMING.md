@@ -82,3 +82,24 @@ injection/recovery against controlled trends and recurring events, and the
 whole-site versus event-footprint timing trace. A bounded rule does not prove
 biological onset/recovery accuracy or solve the normalized-contrast/raw-signal
 direction disagreement identified in the signal audit.
+
+## Search-limit sensitivity on frozen traces
+
+The prespecified 5/10/20/40-second sweep of the original seven BOI recordings
+(976 native sink events) resolved 298/469/621/730 event timings, respectively.
+All settings preserved native containment and nonoverlapping same-site windows.
+This is a conditional diagnostic on fixed detections and timing traces, not a
+sensitivity/specificity or onset-accuracy estimate. Increasing the limit admits
+more distant crossings and changes the reported measurement, so resolution count
+alone cannot select the scientifically appropriate parameter.
+
+At 20 seconds, start statuses were 763 return crossings, 120 unresolved search
+limits, 89 native edges not below the return level, and 4 unresolved recording
+boundaries. End statuses were 764/106/91/15 respectively. These are edge counts;
+full-event resolution also requires a below-level native trace throughout.
+The fluorescence control is separate (24 of 26 sink timings resolved at 20 s).
+
+The [completed eight-recording rerun](reference-results/local-timing-20260909/README.md)
+verified exact native mask/event preservation, unchanged surge measurements and
+independent measurement agreement. It includes per-recording resolution and
+amplitude-availability counts and a recurring-event timing example.
