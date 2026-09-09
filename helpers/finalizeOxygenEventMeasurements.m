@@ -55,7 +55,7 @@ else
     siteCol='SurgeID'; ampCol='NormOxySurgeAmp'; areaCol='RecAreaSize_Surge';
     Events.AmplitudeSignConvention(:)="positive_increase_percent";
 end
-Events.SiteTraceAmplitude = Events.(ampCol);
+% No preliminary site-trace amplitude is exported; event raw pixels are authoritative.
 for e=1:height(Events)
     s=Events.(siteCol)(e); k=Events.EventID(e);
     first=Events.StartFrame(e); last=Events.EndFrame(e);

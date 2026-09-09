@@ -4,7 +4,7 @@ function OverallPixelList = trackSinkCandidates(SinkInfoAll,minDurationFrames,ov
 OverallPixelList = cell(1,length(SinkInfoAll));
 Counter = 1;
 
-for FrameIdx = 1:length(SinkInfoAll) - minDurationFrames
+for FrameIdx = 1:(length(SinkInfoAll) - ceil(minDurationFrames) + 1)
     for RegionIdx = 1:length(SinkInfoAll{FrameIdx,1})
         if isRemovedRegion(SinkInfoAll{FrameIdx,1}(RegionIdx).PixelIdxList)
             continue

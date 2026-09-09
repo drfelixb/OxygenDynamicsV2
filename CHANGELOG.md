@@ -6,6 +6,29 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Surge-path audit and smooth-signal validation
+
+- Remove the obsolete z-score site-ratio computation from BOI surge construction
+  and remove `SiteTraceAmplitude` from both BOI event exports. Final preserved-input
+  event-footprint amplitudes already used the correct signed fractional-change
+  formula; that primary formula is unchanged. Isolate the legacy iOS ratio helper.
+- Include the last valid start frame in both candidate trackers, using the ceiling
+  of fractional-duration thresholds. Preserve the existing overlap/matching rules.
+- Add surge native bounds, unrefined timing method and recording-edge contact
+  flags. Apply native-gap review flags to both signs and document their units.
+- Advance detection/measurement/statistics contracts; require reanalysis. Audit
+  the remaining fixed-overlap, timing and sink-only statistical-summary gaps.
+- Extend validation to smooth pairs, single pulses and controlled intensity noise
+  on two complete BOI movies plus a separate fluorescence control; independently
+  recalculate every resulting event's baseline and amplitude. Complete 12 runs
+  plus an unchanged FB2312 recheck: 1,973 event/status records agree numerically,
+  including unavailable values. Preserve two negative raw surge amplitudes in
+  FB2312 and document inconsistent smooth-surge detection across backgrounds.
+- Pass 57 focused tests, smoke and master-to-statistics integration checks.
+  Save source hashes, exact injected fractions, QC and independent pixel/overlap
+  verification; keep earlier-contract reference results labelled historical.
+
+
 ### Retain close native BOI sink runs
 
 - Remove spacing-based deletion from the BOI master. Preserve native runs that

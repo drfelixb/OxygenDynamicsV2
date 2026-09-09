@@ -38,7 +38,7 @@ remain included in descriptive event totals and in amplitude summaries when
 those amplitudes are otherwise valid. Do not interpret that as confirmation of
 independent biological episodes. `EventMeasurementQC` adds `CloseNativeRunEvents`
 and `RecurrenceNotAssessedEvents` alongside amplitude and timing counts. The
-latter distinguishes absent recurrence assessment (including surges) from zero
+latter distinguishes absent recurrence assessment from zero
 flagged events. Zero-event recordings have zero such event counts.
 
 Timing refinement still partitions gaps between same-site native events, so
@@ -76,9 +76,9 @@ recordings. Increasing event count is not the validation objective.
 
 Reanalysis is required. Current contract:
 
-- Detector: `existing-v2-sd-retain-close-2`
-- Measurement: `event-footprint-local-timing-recurrence-3`
-- Statistics: `mouse-strict-recurrence-4`
+- Detector: `existing-v2-retain-close-terminal-3`
+- Measurement: `event-footprint-sign-qc-4`
+- Statistics: `mouse-strict-sign-qc-5`
 - Schema: `3.0-dev`; normalization unchanged.
 
 The existing contract/settings validator rejects earlier saved masters before
@@ -87,3 +87,5 @@ outputs. Do not infer that the earlier eight-recording reference set has already
 been rerun with this correction.
 
 Completed full-recording results, native-mask checks and QC counts are in [the validation evidence](reference-results/retain-close-20260909/README.md). The exported workbook also defines the recurrence fields in `MetricDefinitions`.
+
+The [surge audit](SURGE_ANALYSIS_AUDIT.md) extends the same native-gap status to surges, using `surgeCloseNativeGapSec`; surge timing remains native and unrefined. The recurrence evidence linked above predates that audit contract.

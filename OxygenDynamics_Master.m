@@ -63,7 +63,6 @@ SinkTraceCorrelationThreshold = ParamVars.SinkTraceCorrelationThreshold;
 SinkNoiseCorrelationPercentile = ParamVars.SinkNoiseCorrelationPercentile;
 EventBaselineReturnTolerance = ParamVars.EventBaselineReturnTolerance;
 SinkDetectionNoiseAmpThreshold = ParamVars.SinkDetectionNoiseAmpThreshold;
-SurgeBaselineWindowFrames = ParamVars.SurgeBaselineWindowFrames;
 SurgeOverlapSizeMarginPixels = ParamVars.SurgeOverlapSizeMarginPixels;
 PercentileSurgeDetectionThres = ParamVars.PercentileSurgeDetectionThres;
 SurgeCircularityThreshold = ParamVars.SurgeCircularityThreshold;
@@ -395,7 +394,7 @@ SurgeEventMorphology = struct('MeanArea_um',MeanOxySurgeArea_um,'MeanFilledArea_
     'MeanCentroid_y',MeanCentroid_Surge_y);
 [NumOxySurgeEvents,Start_Surge,Duration_Surge,NormOxySurgeAmp,Size_Surge_modulation,Table_OxygenSurgeEvents_Out] = ...
     collateOxygenSurgeEvents(Overall_OxygenSurges_Pxllist,Overall_OxySurges_logical, ...
-    Mean_OxySurge_TraceZ,SurgeEventMetadata,SurgeEventMorphology,fs,SurgeBaselineWindowFrames,true);
+    SurgeEventMetadata,SurgeEventMorphology,fs,AnalysisParams);
 
 clear SurgeEventMetadata SurgeEventMorphology
 

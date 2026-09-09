@@ -11,7 +11,7 @@ for fs=[1 1.01 2]
   P=cell(1,d+30);P(a:b)={1};P(c:d)={1};
   [Q,L]=filterSinkRunsByDuration(P,3*fs,150*fs);
   verifyEqual(t,Q,P);verifyEqual(t,nnz(L),2*duration);
-  E=fixture([a;c],[b;d],[1;1]);E=annotateOxygenSinkRecurrence(E,fs,20);
+  E=fixture([a;c],[b;d],[1;1]);E=annotateOxygenEventRecurrence(E,fs,20);
   verifyEqual(t,E.CloseNativeRun,repmat(gapFrames/fs<20,2,1));
   verifyEqual(t,E.PreviousNativeGapSec(2),gapFrames/fs,'AbsTol',1e-12);
   verifyTrue(t,isnan(E.PreviousNativeGapSec(1))&&isnan(E.NextNativeGapSec(2)));
@@ -25,14 +25,14 @@ verifySize(t,Q,[1 170]);verifyEqual(t,find(L),10:12);
 [Q,L]=filterSinkRunsByDuration(cell(0,20),3,150);verifySize(t,Q,[0 20]);verifyEmpty(t,L);
 end
 function testUnsortedRowsAndDifferentSites(t)
-E=fixture([40;10;20],[45;15;25],[1;1;2]);E=annotateOxygenSinkRecurrence(E,1,30);
+E=fixture([40;10;20],[45;15;25],[1;1;2]);E=annotateOxygenEventRecurrence(E,1,30);
 verifyEqual(t,E.CloseNativeRun,[true;true;false]);verifyEqual(t,E.PreviousNativeGapSec(1),24);
 verifyTrue(t,isnan(E.PreviousNativeGapSec(3))&&isnan(E.NextNativeGapSec(3)));
 end
 function testSingleFragmentedExcursionIsFlaggedAndTimingUnresolved(t)
 % Prescribed candidate dropout: a stage-level challenge, not detector accuracy.
 x=zeros(1,110);x(20:80)=-.5*sin(pi*(0:60)/60).^2;
-E=fixture([25;53],[47;75],[1;1]);E=annotateOxygenSinkRecurrence(E,1,20);
+E=fixture([25;53],[47;75],[1;1]);E=annotateOxygenEventRecurrence(E,1,20);
 verifyTrue(t,all(E.CloseNativeRun));
 A=resolveSinkEventTiming(25:47,x,zeros(size(x)),.015,20,1,50);
 B=resolveSinkEventTiming(53:75,x,zeros(size(x)),.015,20,51,110);
@@ -41,13 +41,13 @@ verifyLessThan(t,A.EndFrame,B.StartFrame);
 end
 function testTrueSeparateExcursionsMayHaveResolvedTimingButStayFlagged(t)
 x=zeros(1,110);x(25:47)=-.5;x(53:75)=-.5;
-E=annotateOxygenSinkRecurrence(fixture([25;53],[47;75],[1;1]),1,20);
+E=annotateOxygenEventRecurrence(fixture([25;53],[47;75],[1;1]),1,20);
 A=resolveSinkEventTiming(25:47,x,zeros(size(x)),.015,20,1,50);
 B=resolveSinkEventTiming(53:75,x,zeros(size(x)),.015,20,51,110);
 verifyTrue(t,all(E.CloseNativeRun));verifyTrue(t,A.TimingResolved&&B.TimingResolved);
 end
 function testQCSeparatesRecurrenceFromAmplitudeAndTiming(t)
-E=annotateOxygenSinkRecurrence(fixture([61;96],[80;115],[1;1]),1,20);
+E=annotateOxygenEventRecurrence(fixture([61;96],[80;115],[1;1]),1,20);
 E.RecordingID=["R";"R"];E.BaselineStatus=["valid";"insufficient_clean_prebaseline"];
 E.NormOxySinkAmp=[.2;NaN];E.TimingResolved=[true;false];
 [Q,~]=createOxygenMeasurementQC(table(["R";"zero"],'VariableNames',{'RecordingID'}),E,table());

@@ -29,9 +29,9 @@ verifyEqual(t,trackSurgeCandidates(F,1,2),originalTracker(F,1,2));
 verifyEqual(t,trackSurgeCandidates(cell(4,1),1,2),originalTracker(cell(4,1),1,2));
 end
 function O=originalTracker(F,minDuration,minOverlap)
-% Frozen pre-optimization algorithm: serves as behavioral regression oracle.
+% Pre-optimization matching oracle with the corrected terminal seed bound.
 O=cell(1,length(F));counter=1;
-for frame=1:length(F)-minDuration
+for frame=1:(length(F)-ceil(minDuration)+1)
     for region=1:length(F{frame,1})
         start=F{frame,1}(region).PixelIdxList;
         if isRemovedRegion(start),continue;end

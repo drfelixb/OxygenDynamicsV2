@@ -1,5 +1,5 @@
-function EventMetrics = quantifyOxygenSurgeEvent(eventPixelIdx,surgeTrace,baselineWindowFrames,useAbsoluteRatio)
-%QUANTIFYOXYGENSURGEEVENT Calculate timing and baseline-normalized amplitude for one surge.
+function EventMetrics = quantifyiOSSurgeEvent(eventPixelIdx,surgeTrace,baselineWindowFrames,useAbsoluteRatio)
+%QUANTIFYIOSSURGEEVENT Legacy iOS ratio calculation; never used for BOI amplitudes.
 
 if nargin < 4
     useAbsoluteRatio = false;

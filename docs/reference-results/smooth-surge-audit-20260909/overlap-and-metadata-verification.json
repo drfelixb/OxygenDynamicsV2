@@ -1,0 +1,7 @@
+{
+  "RowsIndependentlyVerified": 90,
+  "AllOverlapScoresMatch": true,
+  "NativeGapsAndFlagsMatchMasks": true,
+  "SurgeNativeTimingMetadataMatches": true,
+  "NoObsoleteSiteAmplitudeExport": true
+}

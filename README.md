@@ -26,11 +26,15 @@ maintained separately.
 - Individual events, recurring spatial sites, recordings and animals have
   distinct identities and aggregation rules, including zero-event recordings.
 - Amplitudes use each event's fixed footprint in the preserved input movie and
-  a complete, uncontaminated pre-event baseline. Missing baselines produce
+  a complete pre-event baseline excluding overlapping detected events. Missing baselines produce
   unavailable amplitudes while retaining detections.
+- [Surge amplitude and detection audit](docs/SURGE_ANALYSIS_AUDIT.md): remove the
+  obsolete normalized-trace ratio export, correct terminal-event seeding for
+  both trackers, and expose surge native timing/boundary and recurrence status.
+  Surge experimental-baseline and mouse-summary analysis still needs parity.
 - Native masks determine event morphology and occupied eligible tissue.
   Inclusive frame timing uses N/fs recording exposure.
-- Recording/window baseline comparisons are explicit; animal summaries give
+- Sink recording/window baseline comparisons are explicit; animal summaries give
   equal weight to mice and expose missing measurements.
 - Sink and surge site recurrence both use explicit events/minute columns.
   `EventMeasurementQC` and `EventBaselineStatusCounts` expose amplitude
@@ -38,11 +42,17 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Development validation: 46 focused tests, synthetic master-to-statistics
-integration and eight complete DANDI recordings from six animals passed in
-MATLAB R2025a (seven BOI recordings and a separate fluorescence control).
-DANDI outputs are unlabelled reference results, not ground-truth accuracy.
-Default detection thresholds remain provisional after the SD correction.
+Current development validation: 57 focused tests plus smoke and synthetic
+master-to-statistics integration checks passed in MATLAB R2025a. The
+[current surge audit](docs/reference-results/smooth-surge-audit-20260909/README.md)
+ran twelve full-movie challenges on three sources and an unchanged FB2312
+recording: four distinct sources, including a fluorescence control. All 1,973
+baseline/amplitude records matched independent recalculation, including explicit
+unavailability. Smooth-surge detection remains inconsistent across backgrounds.
+Earlier eight-recording reference results used earlier pipeline contracts;
+they are historical evidence, not eight current-contract reruns. DANDI outputs
+are unlabelled reference results, not ground-truth accuracy. Default detection
+thresholds remain provisional after the SD correction.
 See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
 [validation evidence](docs/EXISTING_ANALYSIS_VALIDATION.md),
 [remaining work](docs/PUBLICATION_READINESS.md),

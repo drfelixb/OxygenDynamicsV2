@@ -21,7 +21,7 @@ for f=1:length(SurgeInfoAll)
 end
 StartMask=false(maxPixel,1);
 
-for FrameIdx = 1:length(SurgeInfoAll) - minDurationFrames
+for FrameIdx = 1:(length(SurgeInfoAll) - ceil(minDurationFrames) + 1)
     for RegionIdx = 1:length(SurgeInfoAll{FrameIdx,1})
         StartPixels = SurgeInfoAll{FrameIdx,1}(RegionIdx).PixelIdxList;
         if ~Active{FrameIdx}(RegionIdx)

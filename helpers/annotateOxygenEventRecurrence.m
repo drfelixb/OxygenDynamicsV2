@@ -1,5 +1,6 @@
-function E=annotateOxygenSinkRecurrence(E,fs,closeGapSec)
+function E=annotateOxygenEventRecurrence(E,fs,closeGapSec,siteColumn)
 % Per-recording native-run proximity; never a physiological event classifier.
+if nargin<4,siteColumn='SinkID';end
 assert(isscalar(fs)&&isfinite(fs)&&fs>0&&isscalar(closeGapSec)&&isfinite(closeGapSec)&&closeGapSec>=0);
 if ismember('RecordingID',E.Properties.VariableNames)
  assert(numel(unique(E.RecordingID))<=1,'Annotate one recording at a time.');
@@ -9,8 +10,8 @@ E.CloseNativeRun=false(n,1);E.CloseNativeGapThresholdSec=repmat(closeGapSec,n,1)
 E.RecurrenceStatus=repmat("no_close_native_neighbor",n,1);
 assert(all(isfinite(E.NativeStartFrame)&isfinite(E.NativeEndFrame)&E.NativeStartFrame>=1& ...
  E.NativeEndFrame>=E.NativeStartFrame&E.NativeStartFrame==fix(E.NativeStartFrame)&E.NativeEndFrame==fix(E.NativeEndFrame)));
-for s=reshape(unique(E.SinkID),1,[])
- rows=find(E.SinkID==s);[~,order]=sort(E.NativeStartFrame(rows));rows=rows(order);
+for s=reshape(unique(E.(siteColumn)),1,[])
+ rows=find(E.(siteColumn)==s);[~,order]=sort(E.NativeStartFrame(rows));rows=rows(order);
  if numel(rows)<2,continue;end
  gap=(E.NativeStartFrame(rows(2:end))-E.NativeEndFrame(rows(1:end-1))-1)/fs;
  assert(all(gap>0),'Native runs at one site must have at least one empty frame.');

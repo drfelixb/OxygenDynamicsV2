@@ -69,6 +69,6 @@ Table_OxygenSinkEvents_Out = createOxygenSinkEventTable(SinkEventVectors.EventEx
     SinkEventVectors.EventMeanCentroid_x,SinkEventVectors.EventMeanCentroid_y);
 
 Table_OxygenSinkEvents_Out=[Table_OxygenSinkEvents_Out TimingSummary];
-Table_OxygenSinkEvents_Out=annotateOxygenSinkRecurrence(Table_OxygenSinkEvents_Out,fs,analysisParams.sinkCloseNativeGapSec);
+Table_OxygenSinkEvents_Out=annotateOxygenEventRecurrence(Table_OxygenSinkEvents_Out,fs,analysisParams.sinkCloseNativeGapSec);
 
 end

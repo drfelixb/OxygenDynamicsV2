@@ -1,0 +1,3 @@
+RecordingID,EventType,DetectedEvents,ValidBaselineEvents,FiniteAmplitudeEvents,UnavailableAmplitudeEvents,WrongDirectionAmplitudeEvents,ValidBaselineFraction,FiniteAmplitudeFraction,TimingResolvedEvents,TimingUnresolvedEvents,TimingNotAssessedEvents,CloseNativeRunEvents,RecurrenceNotAssessedEvents
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-FB2312-recheck-20260909/Recording,sink,366,169,169,197,2,0.461748633879781,0.461748633879781,170,196,0,241,0
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-FB2312-recheck-20260909/Recording,surge,58,28,28,30,2,0.482758620689655,0.482758620689655,0,0,58,10,0

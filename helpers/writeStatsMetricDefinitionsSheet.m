@@ -149,13 +149,20 @@ Notes = { ...
 Definitions = table(MetricName,OutputLocation,MetricBasis,Formula,Units,Notes);
 RecurrenceDefinitions = {
     'DetectedEvents','EventMeasurementQC','Native detection runs','Number of retained runs','runs','Includes flagged close runs; not a count of confirmed independent physiological episodes.';
-    'CloseNativeRun','OxySinkEvents','Native run proximity','Either neighboring empty-frame gap < CloseNativeGapThresholdSec','Boolean','Both neighbors are flagged; no automatic deletion, merging or amplitude exclusion.';
-    'PreviousNativeGapSec / NextNativeGapSec','OxySinkEvents','Same final site within recording','(Next native start - preceding native end - 1) / SampleF','seconds','Uses native masks, not refined timing. No neighbor is NaN; other sites do not trigger the flag.';
-    'CloseNativeGapThresholdSec','OxySinkEvents','Development review threshold','sinkCloseNativeGapSec (default 20)','seconds','Strictly shorter gaps are flagged. This is not a validated biological separation threshold.';
-    'RecurrenceStatus','OxySinkEvents','Review status','close_native_runs_review or no_close_native_neighbor','text','Neither status confirms separate physiological events; candidate fragmentation remains possible.';
-    'CloseNativeRunEvents','EventMeasurementQC','Recording sink-run count','sum(CloseNativeRun)','runs','Counts both members of a close pair. These runs remain in descriptive event totals.';
-    'RecurrenceNotAssessedEvents','EventMeasurementQC','Assessment coverage','Number of runs lacking recurrence assessment','runs','Surges are not assessed by this sink proximity rule. Zero-event recordings have zero unassessed events.';
+    'CloseNativeRun','OxySinkEvents / OxySurgeEvents','Native run proximity','Either neighboring empty-frame gap < CloseNativeGapThresholdSec','Boolean','Both neighbors are flagged; no automatic deletion, merging or amplitude exclusion.';
+    'PreviousNativeGapSec / NextNativeGapSec','OxySinkEvents / OxySurgeEvents','Same final site and event sign within recording','(Next native start - preceding native end - 1) / SampleF','seconds','Uses native masks, not refined timing. No neighbor is NaN; other sites do not trigger the flag.';
+    'CloseNativeGapThresholdSec','OxySinkEvents / OxySurgeEvents','Development review threshold','sinkCloseNativeGapSec / surgeCloseNativeGapSec (both default 20)','seconds','Strictly shorter gaps are flagged. This is not a validated biological separation threshold.';
+    'RecurrenceStatus','OxySinkEvents / OxySurgeEvents','Review status','close_native_runs_review or no_close_native_neighbor','text','Neither status confirms separate physiological events; candidate fragmentation remains possible.';
+    'CloseNativeRunEvents','EventMeasurementQC','Recording run count by event sign','sum(CloseNativeRun)','runs','Counts both members of a close pair. These runs remain in descriptive event totals.';
+    'RecurrenceNotAssessedEvents','EventMeasurementQC','Assessment coverage','Number of runs lacking recurrence assessment','runs','Both event signs are assessed in current outputs. Missing assessment is distinct from no close neighbor; zero-event recordings have zero unassessed events.';
     'TimingResolved','OxySinkEvents','Algorithmic boundary resolution','Both return crossings found and native trace below return level','Boolean','Does not confirm physiological independence. Close runs can have resolved timing; amplitude baseline QC is separate.'};
+SurgeDefinitions = {
+    'NormOxySurgeAmp','OxySurgeEvents','Preserved-input event-footprint peak','max((signal - clean pre-event baseline) / baseline)','fraction','0.2 means a 20 percent optical increase. Negative values remain negative. Missing/contaminated baselines are unavailable; not calibrated oxygen concentration.';
+    'NormOxySurgeAmpPercent','OxySurgeEvents','Same event-footprint amplitude','100 * NormOxySurgeAmp','percent','No ratio of z-scores, absolute-value correction or post-event baseline is used.';
+    'MeanOxySurgeEvent_NormAmp','Surge site summary','Mean of available event amplitudes at one site','mean(finite NormOxySurgeAmp)','fraction','This is a site summary, not an individual event or a mouse-weighted group estimate.';
+    'TimingMethod','OxySurgeEvents','Native detection timing','native_mask_bounds_not_refined','text','Surge timing has not been refined to physiological onset/return. Native bounds can truncate smooth signals.';
+    'TouchesRecordingStart / TouchesRecordingEnd','OxySurgeEvents','Acquisition boundary contact','native start == 1 / native end == NFrames','Boolean','Flags possible truncation by the recording boundary; it does not establish true onset or return.'};
+Definitions=[Definitions;cell2table(SurgeDefinitions,'VariableNames',Definitions.Properties.VariableNames)];
 Definitions = [Definitions;cell2table(RecurrenceDefinitions,'VariableNames',Definitions.Properties.VariableNames)];
 writetable(Definitions,OutputXlsx,'Sheet','MetricDefinitions');
 
