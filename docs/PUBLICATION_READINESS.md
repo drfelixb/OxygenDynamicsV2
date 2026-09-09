@@ -55,17 +55,26 @@ rows resolve identically on unchanged source signals. A forced onset correction
 is therefore unsupported; the prototype stays outside production. See the
 [full result](reference-results/surge-local-onset-20260909/README.md).
 
-Next establish the onset information available in the raw traces: use a
-prespecified trace-level panel varying imposed rise time and amplitude on the
-existing backgrounds, with known starts and paired unchanged controls. Compare
-the fixed-context rule with a fit constrained to the contiguous available clean
-context, and quantify timing error, baseline contamination and non-resolution.
-This isolates timing from detection/support failures before another full-movie
-run. Do not tune merely to resolve the five selected examples. Screen new
-positive movie locations for tissue eligibility before construction; retain
-admission-failure tests separately. Compare candidate spatial cores only after
-the timing/reference rule is supported. Surge statistical parity and the final
-cohort reanalysis follow those definitions.
+The [prespecified trace panel](SURGE_ONSET_TRACE_PANEL.md) is now complete on
+115 fixed supports from the same four sources. Of 5,520 planned traces, 5,136
+have the required known pre-onset reference. Available contiguous context raises
+resolutions from 878 to 1,303 and estimates within five seconds of the imposed
+start from 564 to 856. It preserves every fixed-rule resolution. However, 2,208
+constructed cases still lack the required clean fitting context, and 447 of
+the available-context resolutions lie outside the five-second tolerance.
+See [stratified results](reference-results/surge-onset-trace-panel-20260909/README.md);
+the fluorescence background is a separate engineering-control stratum.
+
+A separate post-hoc noiseless calibration rejects all tested five-second rises
+when native onset is 25 seconds late. Next compare a model permitting a rise,
+plateau and recovery on this same frozen panel, retaining the contiguous clean
+context and missing-baseline requirements. Establish its noiseless behavior
+before interpreting gains on fluctuating backgrounds. Do not select a model
+merely for higher resolution counts: assess onset error, baseline contamination
+and paired source changes together, then seek additional held-out recordings.
+New positive movie locations must be screened for tissue eligibility before
+construction. Spatial-core comparisons, surge statistical parity and the final
+cohort reanalysis follow a supported timing/reference definition.
 
 The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
 with disjoint searches, a provisional 20-second bound and unresolved-boundary

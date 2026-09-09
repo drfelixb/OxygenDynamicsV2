@@ -1,0 +1,13 @@
+{
+  "SourceRecordings": 4,
+  "FixedSupports": 115,
+  "RecipesPerSupport": 48,
+  "PlannedConstructedTraces": 5520,
+  "ConstructibleTraces": 5136,
+  "PlannedConstructedEvaluations": 11040,
+  "ConstructedFitsRun": 10272,
+  "SourceFitsRun": 230,
+  "CodeAndInputFreezeVerified": true,
+  "ProductionChanged": false,
+  "NewDetectionOrMasterRuns": 0
+}

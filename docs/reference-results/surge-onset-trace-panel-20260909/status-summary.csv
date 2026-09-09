@@ -1,0 +1,16 @@
+Context,Status,Evaluations
+available,broad_profile_unresolved,38
+available,construction_unavailable,384
+available,insufficient_clean_context,2208
+available,insufficient_improvement,1101
+available,not_a_rising_change,400
+available,resolved,1303
+available,search_boundary_unresolved,86
+fixed,broad_profile_unresolved,32
+fixed,construction_unavailable,384
+fixed,insufficient_improvement,418
+fixed,not_a_rising_change,200
+fixed,overlapping_detection_in_fit,3312
+fixed,recording_boundary_unresolved,288
+fixed,resolved,878
+fixed,search_boundary_unresolved,8

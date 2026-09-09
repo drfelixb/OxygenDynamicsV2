@@ -1,5 +1,7 @@
-function R=estimateSurgeLocalOnset(trace,native,fs,blocked)
+function R=estimateSurgeLocalOnset(trace,native,fs,blocked,context)
 % Validation-only broken-line onset on fixed raw support. See protocol.
+if nargin<5,context="fixed";end
+context=string(context);assert(isscalar(context)&&ismember(context,["fixed","available"]));
 validateattributes(trace,{'numeric'},{'vector','real','nonempty'});
 validateattributes(fs,{'numeric'},{'scalar','real','finite','positive'});
 trace=double(trace(:)');blocked=logical(blocked(:)');
@@ -7,6 +9,11 @@ validateattributes(native,{'numeric'},{'vector','integer','positive'});
 assert(numel(blocked)==numel(trace)&&isequal(native(:)',native(1):native(end))&&native(end)<=numel(trace));
 b=max(1,round(20*fs));extension=max(1,floor(40*fs));look=floor(4*fs);
 s=native(1);lo=s-extension;first=lo-b;last=min(native(end),s+look);
+if context=="available"
+ first=max(1,first);neighbor=find(blocked(first:s-1),1,'last');
+ if ~isempty(neighbor),first=first+neighbor;end
+ lo=max(lo,first+b);
+end
 R=struct('Status',"unassessed",'OnsetFrame',NaN,'BestCandidateFrame',NaN, ...
  'FitStartFrame',first,'FitEndFrame',last,'ScoreImprovement',NaN, ...
  'ProfileStartFrame',NaN,'ProfileEndFrame',NaN,'ProfileSpanSec',NaN, ...
@@ -14,6 +21,7 @@ R=struct('Status',"unassessed",'OnsetFrame',NaN,'BestCandidateFrame',NaN, ...
  'BaselineStartFrame',NaN,'BaselineEndFrame',NaN,'BaselineMean',NaN, ...
  'ProvisionalAmplitude',NaN,'BaselineStatus',"onset_unresolved");
 if first<1,R.Status="recording_boundary_unresolved";return;end
+if context=="available"&&lo>=s-1,R.Status="insufficient_clean_context";return;end
 if any(~isfinite(trace(first:last))),R.Status="nonfinite_fit";return;end
 if any(blocked(first:s-1)),R.Status="overlapping_detection_in_fit";return;end
 scale=median(abs(trace(first:last)));if scale<=0,R.Status="nonpositive_scale";return;end

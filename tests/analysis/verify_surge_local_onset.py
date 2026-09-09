@@ -8,9 +8,14 @@ from verify_surge_separation import require, rows, sha, read_pixels, SESSIONS
 from verify_surge_amplitude_support import same
 
 
-def estimate(x, start, end, blocked):
+def estimate(x, start, end, blocked, context='fixed'):
     """Reference protocol for the audited 1 Hz movies. Frames returned 1-based."""
-    first, last = start-60, min(end, start+4)
+    require(context in ('fixed','available'),'Unknown context')
+    first, last = start-60, min(end, start+4);lo=start-40
+    if context=='available':
+        first=max(1,first);neighbors=np.flatnonzero(blocked[first-1:start-1])
+        if len(neighbors):first+=int(neighbors[-1])+1
+        lo=max(lo,first+20)
     names = ('OnsetFrame BestCandidateFrame ScoreImprovement ProfileStartFrame ProfileEndFrame '
              'ProfileSpanSec BaselineSlopePerSecOverFitMedian PostSlopePerSecOverFitMedian '
              'BaselineStartFrame BaselineEndFrame BaselineMean ProvisionalAmplitude').split()
@@ -18,6 +23,8 @@ def estimate(x, start, end, blocked):
     r.update(Status='unassessed', BaselineStatus='onset_unresolved', FitStartFrame=first, FitEndFrame=last)
     if first<1:
         r['Status']='recording_boundary_unresolved';return r
+    if context=='available' and lo>=start-1:
+        r['Status']='insufficient_clean_context';return r
     y=x[first-1:last]
     if not np.all(np.isfinite(y)):
         r['Status']='nonfinite_fit';return r
@@ -29,7 +36,7 @@ def estimate(x, start, end, blocked):
     y=y/scale;t=np.arange(first,last+1)-start;n=len(y)
     d=np.column_stack((np.ones(n),t));q=np.linalg.lstsq(d,y,rcond=None)[0]
     sse0=max(np.sum((y-d@q)**2),n*1e-20)
-    candidates=np.arange(start-40,start+1);scores=[];coeff=[]
+    candidates=np.arange(lo,start+1);scores=[];coeff=[]
     for k in candidates:
         h=np.column_stack((d,np.maximum(0,t-(k-1-start))))
         q=np.linalg.lstsq(h,y,rcond=None)[0];coeff.append(q)
@@ -41,7 +48,7 @@ def estimate(x, start, end, blocked):
              BaselineSlopePerSecOverFitMedian=q[1],PostSlopePerSecOverFitMedian=q[1]+q[2])
     if scores[j]<10:r['Status']='insufficient_improvement'
     elif q[2]<=0 or q[1]+q[2]<=0:r['Status']='not_a_rising_change'
-    elif k in (start-40,start):r['Status']='search_boundary_unresolved'
+    elif k in (lo,start):r['Status']='search_boundary_unresolved'
     elif profile[-1]-profile[0]>10:r['Status']='broad_profile_unresolved'
     else:
         b=np.mean(x[k-21:k-1]);r.update(Status='resolved',OnsetFrame=k,BaselineStartFrame=k-20,

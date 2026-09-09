@@ -48,7 +48,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **135 focused tests** pass in MATLAB R2025a.
+Current development validation: **145 focused tests** pass in MATLAB R2025a.
 Smoke checks and synthetic master-to-statistics integration passed for the
 unchanged production implementation. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
@@ -67,6 +67,15 @@ It resolves none of the five preselected imposed surges. Only eight event rows
 resolve, identically on untouched source signals. The rule remains experimental;
 production amplitudes and baselines are unchanged. See the
 [results and next step](docs/reference-results/surge-local-onset-20260909/README.md).
+
+The subsequent [onset trace panel](docs/SURGE_ONSET_TRACE_PANEL.md) varies rise
+size, duration, shape and timing on 115 fixed source supports. Limiting the fit
+to available contiguous clean context increases estimates within five seconds
+of the known start from 564 to 856 of 5,136 constructible traces. This aggregate
+includes a separate fluorescence background; it is a conditional engineering
+comparison, not biological detection accuracy. A separate noiseless calibration
+also identifies a limitation of the rising-line model. Both methods remain
+experimental; see the [full comparison](docs/reference-results/surge-onset-trace-panel-20260909/README.md).
 
 The [expanding/contracting signal audit](docs/SURGE_SIGNAL_EVIDENCE.md) adds eight
 full-movie challenges on those same four sources. All 1,508 additional event

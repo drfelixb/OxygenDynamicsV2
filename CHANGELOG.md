@@ -6,6 +6,29 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Surge onset information and available clean context
+
+- Add an experimental context option that begins after the latest preceding
+  overlapping detection, while preserving a contiguous 20-second reference,
+  bounded search, score/profile thresholds and explicit unresolved states.
+  The default fixed-context method and production pipeline are unchanged.
+- Specify a mean-trace panel on 115 source supports from three BOI recordings
+  and a separate fluorescence control: 48 recipes per support varying optical
+  increment, rise length/shape and delay. Retain all 5,520 planned cases, including
+  384 without enough known pre-onset reference; evaluate 5,136 constructed traces
+  under both methods plus 230 source controls.
+- Independently verify 10,272 constructed fits, 230 source fits and all 11,040
+  planned result rows. The available-context option preserves all 878 fixed-rule
+  resolutions and adds 425; estimates within five seconds increase 564 to 856.
+  Neither count establishes biological accuracy or supports production promotion.
+- Separately document 96 post-hoc noiseless fits: short rises followed by a late
+  native start expose the rising-line model's own limitation. Prioritize a model
+  allowing rise, plateau and recovery, with the same clean-context safeguard.
+- Pass 145 MATLAB focused tests and 42 Python tests (also under optimization);
+  keep README, provenance, result tables and a scientific overview plot current.
+  See the [protocol](docs/SURGE_ONSET_TRACE_PANEL.md) and
+  [results](docs/reference-results/surge-onset-trace-panel-20260909/README.md).
+
 ### Experimental bounded surge onset
 
 - Specify and implement a validation-only raw-trace broken-line onset estimate
