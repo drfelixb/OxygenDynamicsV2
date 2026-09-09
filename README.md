@@ -12,7 +12,7 @@ bioluminescence oxygen imaging.
 
 ## Development version: existing analysis V3
 
-Development branch: `development/existing-analysis-v3`. This is an unpublished,
+Development branch: `development-existing-analysis-v3`. This is an unpublished,
 breaking revision of the existing V2 detector and analysis. Reanalyze all input
 recordings; earlier saved analyses are rejected. The alternative detector is
 maintained separately.
