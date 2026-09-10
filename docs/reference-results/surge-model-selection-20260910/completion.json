@@ -1,0 +1,15 @@
+{
+  "SourceRecordings": 6,
+  "DevelopmentSupports": 115,
+  "AdditionalSupports": 193,
+  "NoiselessSupports": 1,
+  "RecipesPerSupport": 36,
+  "PlannedUnseenRows": 33372,
+  "ConstructibleCasesIncludingNoiseless": 10476,
+  "SourceControlRowsIncludingNoiseless": 927,
+  "CachedSelectorRows": 5520,
+  "CachedSelectorControls": 115,
+  "CodeAndInputFreezeVerified": true,
+  "ProductionChanged": false,
+  "NewDetectorOrMasterRuns": 0
+}

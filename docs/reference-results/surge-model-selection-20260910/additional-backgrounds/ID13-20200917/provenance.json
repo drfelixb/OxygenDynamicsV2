@@ -1,0 +1,48 @@
+{
+  "Session": "ID13-20200917",
+  "SourceTiff": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/local-timing-rerun-20260909/ID13-20200917/Recording/archive_original.tif",
+  "SourceSHA256": "19211dc232042f969c35fc18d135b54793a9c162e883e4107ae4a411cd9be63b",
+  "SurgeMat": "../reference-validation/local-timing-rerun-20260909/ID13-20200917/Recording/OxygenSurges_Output/OxygenSurgesRecording.mat",
+  "SurgeMatSHA256": "414b6ac466adcabeefce85bb2316fa316881516a173122e1c0d5282202614285",
+  "SinkMat": "../reference-validation/local-timing-rerun-20260909/ID13-20200917/Recording/OxygenSinks_Output/OxygenSinks_UrefinedRecording.mat",
+  "SinkMatSHA256": "723a79870fc2f4b2c3a86bd40814fafa8fffa48ed6fdaf3d19800246bdeb81bd",
+  "ReferenceReport": "../reference-validation/local-timing-rerun-20260909/ID13-20200917/reference-report.json",
+  "ReferenceReportSHA256": "f3fdc09463654ddf3d940865465325f71025a25a53f2fd855a992cbd4fa7cd45",
+  "HistoricalContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-sd-1",
+    "Measurement": "event-footprint-local-timing-2",
+    "Statistics": "mouse-strict-3",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  },
+  "ArchiveProfile": {
+    "Session": "ID13-20200917",
+    "AssetID": "eccd66bb-845e-4564-9983-3b167eaf9e15",
+    "ArchivePath": "sub-ID13/sub-ID13_ses-ID13-20200917_image.nwb",
+    "Mouse": "ID13",
+    "PixelSize": 2.38,
+    "SampleHz": 1,
+    "Condition": "Awake_mobile",
+    "DrugID": "awake",
+    "Promoter": "GFAP.PHP",
+    "Genotype": "WT",
+    "Series": "/acquisition/ID_13_1_mcor.tif",
+    "NwbShape": [
+      512,
+      512,
+      1200
+    ],
+    "TimeAxisHdf5": 3,
+    "Frames": 1200,
+    "ArchiveSHA256": "4cb420277916d6f609e8305aa27bca758487eb166a4160ad56a043f86c86caef",
+    "Bytes": 2.4039162E+8,
+    "Role": "BOI_reference",
+    "URL": "https://dandiarchive.s3.amazonaws.com/blobs/611/f96/611f964b-c417-4d16-9782-f40d3e278025"
+  },
+  "Height": 512,
+  "Width": 512,
+  "Frames": 1200,
+  "SampleHz": 1,
+  "EventSupports": 131,
+  "Scope": "Historical native supports on original raw source; no detector rerun or contract upgrade."
+}

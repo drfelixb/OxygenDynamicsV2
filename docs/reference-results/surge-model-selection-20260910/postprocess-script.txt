@@ -1,0 +1,59 @@
+"""Run with Python 3 and the result directory as the single argument."""
+import csv
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+def read(path):
+    with path.open(newline='') as f:
+        return list(csv.DictReader(f))
+def write(name, rows):
+    with (root / name).open('w', newline='') as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0]), lineterminator='\n')
+        w.writeheader()
+        w.writerows(rows)
+
+rows = read(root / 'unseen-results.csv')
+review = []
+for r in rows:
+    if r['Context'] != 'selection' or r['Cohort'] == 'noiseless' or r['Status'] != 'resolved':
+        continue
+    baseline = float(r['ProposedBaselineImposedFraction']) > .01
+    negative = float(r['ProvisionalAmplitude']) < 0
+    if baseline or negative:
+        review.append(dict(r, BaselineAboveOnePercent=int(baseline), NegativeRawAmplitude=int(negative)))
+if len(review) != 89 or sum(r['NegativeRawAmplitude'] for r in review) != 18:
+    raise ValueError('Unexpected review scope')
+write('resolved-measurement-review.csv', review)
+
+keys = ['Session', 'EventRow', 'AmplitudeFraction', 'RiseFrames', 'Shape', 'DelayFrames']
+def index(rows):
+    result = {tuple(r[k] for k in keys): r for r in rows}
+    if len(result) != len(rows):
+        raise ValueError('Duplicate recipe key')
+    return result
+comparisons = []
+def transitions(cohort, before, after):
+    a, b = index(before), index(after)
+    if a.keys() != b.keys():
+        raise ValueError('Mismatched recipe keys')
+    for criterion in ('Resolved', 'WithinFiveSec'):
+        counts = {(x,y): 0 for x in (False,True) for y in (False,True)}
+        for k, r in a.items():
+            s = b[k]
+            if r['Constructible'] != s['Constructible']:
+                raise ValueError('Construction mismatch')
+            if r['Constructible'] not in ('1','True','true'):
+                continue
+            good = lambda z: z['Status'] == 'resolved' if criterion == 'Resolved' else z['WithinFiveSec'] in ('1','True','true')
+            counts[good(r),good(s)] += 1
+        comparisons.append(dict(Cohort=cohort, Before='pulse', After='selection', Criterion=criterion,
+            Retained=counts[True,True], Gained=counts[False,True], Lost=counts[True,False], Neither=counts[False,False]))
+
+for cohort in ('development','additional','noiseless'):
+    transitions(cohort, [r for r in rows if r['Cohort']==cohort and r['Context']=='pulse'],
+        [r for r in rows if r['Cohort']==cohort and r['Context']=='selection'])
+transitions('cached_development', read(root.parent / 'surge-pulse-onset-20260910' / 'panel-results.csv'),
+    read(root / 'cached-selection-results.csv'))
+write('pulse-selection-transitions.csv', comparisons)
+print('Verified review filter: 89 rows; paired transition summaries written.')

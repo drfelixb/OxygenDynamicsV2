@@ -6,6 +6,26 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Experimental onset selection and new waveform/background evaluation
+
+- Add a prespecified comparison of rising-only and pulse fits with a two-family
+  score penalty, explicit disagreement/uncertainty states and unchanged signed
+  raw baseline/amplitude arithmetic. Keep all production rules unchanged.
+- Replay selection on the previous 5,520 planned recipes; evaluate 36 unseen
+  waveform recipes on 308 frozen event supports from six source recordings,
+  including 193 supports from ID13 awake/mobile and FB2316 under KX. Historical
+  supports remain historical; this is measurement validation, not a detector rerun.
+- Independently verify all 33,372 new result rows, 21,570 component fits including
+  controls, 231,600 additional raw support-frame means and 193 native mask unions.
+  Pass 167 MATLAB and 56 Python tests, including optimized Python execution.
+- On the additional backgrounds, estimates within five seconds increase 966 to
+  1,004 of 6,588 constructible cases, with 84 gains and 46 losses relative to pulse.
+  Source-control resolutions rise seven to thirteen. Retain three noiseless
+  timing failures, 71 baseline-contamination flags and 18 negative raw amplitudes.
+- Keep the selector experimental pending an explicit amplitude/reportability
+  definition. Update the README, roadmap and
+  [results and review list](docs/reference-results/surge-model-selection-20260910/README.md).
+
 ### Experimental rise, plateau and recovery fit
 
 - Add a batch pulse-template fit with independent rise/plateau/recovery lengths,

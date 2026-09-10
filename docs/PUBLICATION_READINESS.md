@@ -75,15 +75,25 @@ five seconds increase 856 to 1,056 and median resolved absolute error falls from
 The new model remains experimental; gains on generating families included in
 the template library do not establish generalization.
 
-Next specify how to choose between a rising-only and pulse-shaped model,
-including an unresolved state when plausible models disagree about onset.
-Use explicit model-complexity and uncertainty criteria, not an automatic union
-of successful outputs. Test on unseen asymmetric/exponential waveforms and
-additional held-out recordings before integration. Preserve missing-baseline
-states; 2,208 constructed cases still lack the required clean context under
-both models. New positive movie locations must be screened for tissue eligibility.
-Spatial-core comparisons, surge statistical parity and the final cohort
-reanalysis follow a supported timing/reference definition.
+The [prespecified model selector](SURGE_MODEL_SELECTION.md) and unseen-waveform
+evaluation are complete on 308 frozen supports from six recordings. Additional
+ID13 and FB2316 backgrounds contribute 6,588 constructible cases: selection
+increases estimates within five seconds from 966 to 1,004, with 84 gains and
+46 losses relative to pulse. Source-control resolutions increase seven to
+thirteen. Historical supports were reused; the current detector was not rerun.
+See [the complete report](reference-results/surge-model-selection-20260910/README.md).
+
+Next inspect the 89 flagged resolved measurements: 71 with more than one-percent
+imposed baseline contamination and 18 with negative raw amplitudes despite a
+positive fitted pulse. Define the intended amplitude quantity and reportability
+criteria before integration; preserve signed values and unavailable states.
+Test the definition across all recipes and source controls, then stress drift
+and acquisition noise. Do not reuse these now-inspected recordings as untouched
+evaluation data. Missing clean context remains unresolved (3,780 cases on the
+two additional sources); model selection does not manufacture a reference.
+Spatial-core comparisons, surge statistical parity and final cohort reanalysis
+follow a supported timing/reference definition. New positive movie locations
+must be screened for tissue eligibility.
 
 The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
 with disjoint searches, a provisional 20-second bound and unresolved-boundary

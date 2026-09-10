@@ -1,0 +1,10 @@
+{
+  "CachedSelectorRowsVerified": 5520,
+  "AdditionalRawSupportMeansVerified": 231600,
+  "AdditionalNativeUnionsVerified": 193,
+  "UnseenRowsVerified": 33372,
+  "ConstructibleCasesIncludingNoiseless": 10476,
+  "ComponentFitsIncludingControls": 21570,
+  "IndependentModelSelection": true,
+  "ProductionChanged": false
+}

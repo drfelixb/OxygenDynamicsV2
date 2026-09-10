@@ -1,0 +1,48 @@
+{
+  "Session": "FB2316-baseline",
+  "SourceTiff": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/local-timing-rerun-20260909/FB2316-baseline/Recording/archive_original.tif",
+  "SourceSHA256": "23385c57fd4c0fbd8eb031c2058b48166e42a5df01cf8b1fb486cfa6360a2065",
+  "SurgeMat": "../reference-validation/local-timing-rerun-20260909/FB2316-baseline/Recording/OxygenSurges_Output/OxygenSurgesRecording.mat",
+  "SurgeMatSHA256": "1068743c4b29dbbf33a682903cbcfa871e18864339e2faaa5d45ed46f9d5a599",
+  "SinkMat": "../reference-validation/local-timing-rerun-20260909/FB2316-baseline/Recording/OxygenSinks_Output/OxygenSinks_UrefinedRecording.mat",
+  "SinkMatSHA256": "34490310ba2969a82ebba78368bb34d50c30ca04b996ee8885b0e90562cdb258",
+  "ReferenceReport": "../reference-validation/local-timing-rerun-20260909/FB2316-baseline/reference-report.json",
+  "ReferenceReportSHA256": "f898ba404a5bdd1ef529e88c532addd39d48e9a4d8ecc3ce70362427b78a74a5",
+  "HistoricalContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-sd-1",
+    "Measurement": "event-footprint-local-timing-2",
+    "Statistics": "mouse-strict-3",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  },
+  "ArchiveProfile": {
+    "Session": "FB2316-baseline",
+    "AssetID": "8426348c-f940-4214-8e13-90d086301091",
+    "ArchivePath": "sub-FB2316/sub-FB2316_ses-FB2316-baseline_image.nwb",
+    "Mouse": "FB2316",
+    "PixelSize": 2.35,
+    "SampleHz": 1,
+    "Condition": "Anesthetized",
+    "DrugID": "KX",
+    "Promoter": "GFAP.PHP",
+    "Genotype": "WT",
+    "Series": "/acquisition/01_FB2316_bin2_950ms_2x_1Hz.tif",
+    "NwbShape": [
+      512,
+      512,
+      1200
+    ],
+    "TimeAxisHdf5": 3,
+    "Frames": 1200,
+    "ArchiveSHA256": "fc690f0fa1a7d02a0a466d8d93bbed16297ffa5edecea9f1f3840a1bb8cea01c",
+    "Bytes": 7.33949622E+8,
+    "Role": "BOI_reference",
+    "URL": "https://dandiarchive.s3.amazonaws.com/blobs/146/564/14656420-b459-440b-8546-88393df13d26"
+  },
+  "Height": 512,
+  "Width": 512,
+  "Frames": 1200,
+  "SampleHz": 1,
+  "EventSupports": 62,
+  "Scope": "Historical native supports on original raw source; no detector rerun or contract upgrade."
+}
