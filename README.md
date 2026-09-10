@@ -48,7 +48,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **167 focused tests** pass in MATLAB R2025a.
+Current development validation: **175 focused tests** pass in MATLAB R2025a.
 Smoke checks and synthetic master-to-statistics integration passed for the
 unchanged production implementation. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
@@ -95,6 +95,15 @@ resolutions increase. Baseline contamination and negative raw amplitudes remain;
 the [full report](docs/reference-results/surge-model-selection-20260910/README.md)
 lists 89 measurements requiring review before production integration. Historical
 supports are reused here; this is not a new current-detector validation.
+
+The subsequent [amplitude eligibility audit](docs/SURGE_AMPLITUDE_ELIGIBILITY.md)
+explains all 89 flagged cases and verifies 11,433 measurement/control rows.
+The experimental check preserves negative raw values as direction conflicts and
+leaves their positive-surge amplitude unavailable. All 18 negative recipes peak
+before the frozen native interval; reference-half agreement also fails to flag
+the 71 cases above the one-percent contamination screen. See
+[the mechanisms and next measurement-window test](docs/reference-results/surge-amplitude-eligibility-20260910/README.md).
+Positive eligibility remains provisional; production amplitudes are unchanged.
 
 The [expanding/contracting signal audit](docs/SURGE_SIGNAL_EVIDENCE.md) adds eight
 full-movie challenges on those same four sources. All 1,508 additional event

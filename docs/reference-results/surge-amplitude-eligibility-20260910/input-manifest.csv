@@ -1,0 +1,11 @@
+Path,SHA256
+../reference-validation/surge-model-selection-20260910/backgrounds.csv,d00c3756323bf0615131e48ad457f9d19d11301503d12d469a24e46598950a84
+../reference-validation/surge-model-selection-20260910/unseen-results.csv,9f49d40f6a23be2962ffefbad87f774c54366cd12d7f809b45d1dc85c43c4c08
+../reference-validation/surge-model-selection-20260910/unseen-controls.csv,f93ef4f8cc7f81f46d063d9ad230563420e468c75f58a03cd204e4a6c295f141
+../reference-validation/surge-model-selection-20260910/resolved-measurement-review.csv,74cc623b45b25032f2bb59e7529b3d74471d4769fe73d7daa18080945eb2f3fc
+../reference-validation/surge-amplitude-support-20260909/FB2312-baseline-awake/growing_clean/audit-inputs.mat,17fde840b06ee58cd7516d0faefee1f2bc54860bdfa665d9bd64944863de6051
+../reference-validation/surge-amplitude-support-20260909/FB2411/growing_clean/audit-inputs.mat,1b062be1e4c383127ee0d1fcc1987b1dea5a8961aed95a2697845c65cdd26a47
+../reference-validation/surge-amplitude-support-20260909/M400-01-baseline-awake/growing_clean/audit-inputs.mat,69708cfaf9befadec0fd362696ccaf38f360635564147b491d83c7c897a55665
+../reference-validation/surge-amplitude-support-20260909/M401-01-baseline-awake/growing_clean/audit-inputs.mat,1e09ef9f26e06e81872a7f311418bf7a613c1dffb35124938f34fb5bdae94179
+../reference-validation/surge-model-selection-20260910/additional-backgrounds/FB2316-baseline/background-inputs.mat,c909c2b74ee601f15043db288493cb25e158645caf85c3d99c38a3db39543a61
+../reference-validation/surge-model-selection-20260910/additional-backgrounds/ID13-20200917/background-inputs.mat,d938934adeec0c2fb42e0f70723b5eb78e740cf2775958bd00db8c1388358717

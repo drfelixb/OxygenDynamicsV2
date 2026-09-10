@@ -1,0 +1,15 @@
+Cohort,Kind,Status,Count
+additional,control,onset_unresolved,180
+additional,control,positive_raw_change_provisional,13
+additional,recipe,construction_unavailable,360
+additional,recipe,onset_unresolved,5321
+additional,recipe,positive_raw_change_provisional,1253
+additional,recipe,raw_direction_conflict,14
+development,control,onset_unresolved,108
+development,control,positive_raw_change_provisional,7
+development,recipe,construction_unavailable,288
+development,recipe,onset_unresolved,2621
+development,recipe,positive_raw_change_provisional,1227
+development,recipe,raw_direction_conflict,4
+noiseless,control,onset_unresolved,1
+noiseless,recipe,positive_raw_change_provisional,36

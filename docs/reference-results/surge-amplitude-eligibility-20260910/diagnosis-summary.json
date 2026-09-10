@@ -1,0 +1,26 @@
+{
+  "NegativeCases": 18,
+  "NegativeSourceSupports": 9,
+  "SourceFluctuationDominates": 15,
+  "ReferenceChangesSign": 3,
+  "NoImposedSignalAtObservedNativePeak": 3,
+  "AllNegativeCasesHaveRise7Delay25": true,
+  "PrescribedFirstPeakLeadFrames": [
+    19
+  ],
+  "NegativeAmplitudePercentRange": [
+    -1.7997458721128599,
+    -0.00510402932539789
+  ],
+  "BaselineAboveOnePercentCases": 71,
+  "AboveOnePercentStillPositiveAcrossHalves": 71,
+  "AboveOnePercentWithNonrisingHalfMeans": 26,
+  "AboveOnePercentOnsetErrorSecRange": [
+    3.0,
+    23.0
+  ],
+  "AboveOnePercentReferencePositiveFramesRange": [
+    3,
+    20
+  ]
+}

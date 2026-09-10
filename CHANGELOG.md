@@ -6,6 +6,25 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Experimental amplitude eligibility and failure decomposition
+
+- Add explicit arithmetic and raw-direction conditions for provisional surge
+  amplitudes, retaining signed diagnostics and missing/unresolved states. Export
+  reference-half sensitivity without introducing a new exclusion threshold.
+  Production detection, measurement, statistics and contracts remain unchanged.
+- Replay all 11,433 frozen selector recipe/control rows on six recordings plus
+  a separate noiseless support. Independently verify every row and 2,534 exact
+  paired-source decompositions; inspect all 89 previously flagged measurements.
+- Explain 18 negative cases on nine supports: source fluctuations outweigh the
+  imposed increment in 15, while reference contamination changes the sign in
+  three. All share a prescribed peak 19 seconds before the native interval.
+  Reference-half positivity fails to flag all 71 cases above the one-percent
+  contamination screen. Keep these checks diagnostic pending interval/reference
+  validation; do not force positive values or discard detected events.
+- Pass 175 MATLAB and 61 Python tests, including optimized Python execution.
+  Update the README, roadmap, [protocol](docs/SURGE_AMPLITUDE_ELIGIBILITY.md), and
+  [results with trace examples](docs/reference-results/surge-amplitude-eligibility-20260910/README.md).
+
 ### Experimental onset selection and new waveform/background evaluation
 
 - Add a prespecified comparison of rising-only and pulse fits with a two-family

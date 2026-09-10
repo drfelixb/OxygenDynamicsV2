@@ -83,14 +83,25 @@ increases estimates within five seconds from 966 to 1,004, with 84 gains and
 thirteen. Historical supports were reused; the current detector was not rerun.
 See [the complete report](reference-results/surge-model-selection-20260910/README.md).
 
-Next inspect the 89 flagged resolved measurements: 71 with more than one-percent
-imposed baseline contamination and 18 with negative raw amplitudes despite a
-positive fitted pulse. Define the intended amplitude quantity and reportability
-criteria before integration; preserve signed values and unavailable states.
-Test the definition across all recipes and source controls, then stress drift
-and acquisition noise. Do not reuse these now-inspected recordings as untouched
-evaluation data. Missing clean context remains unresolved (3,780 cases on the
-two additional sources); model selection does not manufacture a reference.
+The [amplitude eligibility audit](SURGE_AMPLITUDE_ELIGIBILITY.md) now explains all
+89 flags and verifies 11,433 recipe/control rows. Fifteen negative cases are
+dominated by source fluctuations at the observed native peak; reference
+contamination reverses the sign in three more. All eighteen prescribed peaks
+precede the frozen native interval by 19 seconds. Reference-half positivity
+also fails to flag all 71 cases above the one-percent contamination screen.
+The new experimental check preserves signed raw values and makes nonpositive
+positive-surge amplitudes unavailable; eligibility is not proof of reportability.
+See [the decompositions](reference-results/surge-amplitude-eligibility-20260910/README.md).
+
+Next prespecify a comparison of estimated-onset-to-native-end and native-only
+raw peak intervals, with both-sign neighboring-event exclusions. Test recovery
+of early imposed peaks against selection of unrelated source peaks, including
+unchanged controls and adjacent-event challenges. Evaluate reference contamination
+alongside peak recovery; do not move a reference to force a positive value.
+Keep production unchanged until the interval and pre-rise reference are justified
+together, then stress drift and acquisition noise. Do not reuse these inspected
+recordings as untouched evaluation data. Missing clean context remains unresolved
+(3,780 cases on the two additional sources); selection does not create a reference.
 Spatial-core comparisons, surge statistical parity and final cohort reanalysis
 follow a supported timing/reference definition. New positive movie locations
 must be screened for tissue eligibility.

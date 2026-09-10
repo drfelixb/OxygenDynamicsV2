@@ -1,0 +1,29 @@
+"""Summarize verified paired diagnostics; Python 3, result-directory argument."""
+import csv
+import json
+import sys
+from pathlib import Path
+
+root=Path(sys.argv[1])
+with (root/'flagged-case-decomposition.csv').open(newline='') as f:
+    rows=list(csv.DictReader(f))
+negative=[r for r in rows if r['AmplitudeStatus']=='raw_direction_conflict']
+contaminated=[r for r in rows if float(r['OracleBaselineImposedFraction'])>.01]
+if len(rows)!=89 or len(negative)!=18 or len(contaminated)!=71:
+    raise ValueError('Unexpected flagged scope')
+result=dict(
+    NegativeCases=len(negative),
+    NegativeSourceSupports=len({(r['Session'],r['EventRow']) for r in negative}),
+    SourceFluctuationDominates=sum(r['OracleFailureMechanism']=='source_fluctuation_dominates' for r in negative),
+    ReferenceChangesSign=sum(r['OracleFailureMechanism']=='reference_changes_sign' for r in negative),
+    NoImposedSignalAtObservedNativePeak=sum(float(r['OracleImposedAtObservedPeak'])==0 for r in negative),
+    AllNegativeCasesHaveRise7Delay25=all(int(r['RiseFrames'])==7 and int(r['DelayFrames'])==25 for r in negative),
+    PrescribedFirstPeakLeadFrames=sorted({int(r['NativeStartFrame'])-(int(r['TruthOnsetFrame'])+int(r['RiseFrames'])-1) for r in negative}),
+    NegativeAmplitudePercentRange=[min(float(r['SignedRawAmplitude'])*100 for r in negative),max(float(r['SignedRawAmplitude'])*100 for r in negative)],
+    BaselineAboveOnePercentCases=len(contaminated),
+    AboveOnePercentStillPositiveAcrossHalves=sum(r['PositiveAcrossReferenceHalves']=='1' for r in contaminated),
+    AboveOnePercentWithNonrisingHalfMeans=sum(float(r['ReferenceHalfChangeFraction'])<=0 for r in contaminated),
+    AboveOnePercentOnsetErrorSecRange=[min(float(r['OnsetErrorSec']) for r in contaminated),max(float(r['OnsetErrorSec']) for r in contaminated)],
+    AboveOnePercentReferencePositiveFramesRange=[min(int(r['OracleReferencePositiveFrames']) for r in contaminated),max(int(r['OracleReferencePositiveFrames']) for r in contaminated)])
+(root/'diagnosis-summary.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))
