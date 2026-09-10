@@ -1,0 +1,13 @@
+{
+  "File": "tests/analysis/auditSurgeFullMovieMeasurement.m",
+  "Messages": {
+    "id": "ALIGN",
+    "message": "This keyword might not be aligned with its matching END on line 101.",
+    "fix": 0,
+    "line": 93,
+    "column": [
+      3,
+      4
+    ]
+  }
+}

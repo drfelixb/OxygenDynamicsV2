@@ -1,0 +1,7 @@
+Component,Label,Imposed,TruthStartFrame,TruthEndFrame,EligibleFraction,IntersectingSameSignEvents,AssignedEventIndex,AssignedIoU,AssignedEventIntersectsComponents,OnsetStatus,ExpandedStatus,OnsetErrorSec,NativeEnvelopeFraction,ExpandedEnvelopeFraction,AssignedComponentStrongestAtPeak
+1,isolated_early,0,101,131,0.951437066402379,0,0,0,0,no_assigned_surge,no_assigned_surge,NaN,NaN,NaN,0
+2,isolated_slow,0,201,384,0.951437066402379,0,0,0,0,no_assigned_surge,no_assigned_surge,NaN,NaN,NaN,0
+3,target_positive_neighbor,0,401,431,0.951437066402379,1,44,0.108833046819699,2,no_model_evidence,onset_unresolved,NaN,NaN,NaN,0
+4,positive_neighbor,0,409,439,0.950445986124876,2,45,0.0209679947626117,1,insufficient_clean_context,onset_unresolved,NaN,NaN,NaN,0
+5,target_negative_neighbor,0,501,531,0.951437066402379,0,0,0,0,no_assigned_surge,no_assigned_surge,NaN,NaN,NaN,0
+6,negative_neighbor,0,509,539,0.950445986124876,0,0,0,0,no_assigned_surge,no_assigned_surge,NaN,NaN,NaN,0

@@ -1,0 +1,11 @@
+% Export the actual settings stored by each completed master run.
+root='../reference-validation/surge-full-movie-measurement-20260910';
+for session=["M400-01-baseline-awake","FB2316-baseline"]
+ for name=["control","challenge"]
+  rec=fullfile(root,session,name);files=dir(fullfile(rec,'OxygenSurges_Output','*.mat'));assert(isscalar(files));
+  D=load(fullfile(files.folder,files.name),'AnalysisInfo');
+  data=struct('AnalysisParams',D.AnalysisInfo.AnalysisParams,'PipelineContract',D.AnalysisInfo.PipelineContract);
+  f=fopen(fullfile(rec,'candidate-measurement','analysis-settings.json'),'w');assert(f>=0);
+  fprintf(f,'%s\n',jsonencode(data,'PrettyPrint',true));fclose(f);
+ end
+end

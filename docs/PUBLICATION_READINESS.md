@@ -102,13 +102,23 @@ block detected neighbors, but an undetected positive neighbor inflates the toy
 target amplitude from 20% to 65.38%. See the
 [full comparison](reference-results/surge-expanded-peak-20260910/README.md).
 
-Next prespecify full-movie validation using the existing detector and the actual
-newly detected event intervals, followed by candidate onset and expanded-peak
-measurement. Include isolated early/slow surges, nearby positive/negative events,
-overlap and unchanged sources. Score missed/merged events, onset availability,
-peak capture, wrong-event selection and reference contamination separately.
-Keep production unchanged until interval and pre-rise reference are justified
-together, then stress drift and acquisition noise. Do not reuse these inspected
+The [full-movie measurement test](SURGE_FULL_MOVIE_MEASUREMENT.md) is now complete
+on two control/challenge recording pairs (M400 awake and FB2316 KX). Ten positive
+components intersect retained surges; eight receive unique assignments and only
+two resolve. Six assigned cases lack clean context; the two resolutions select
+the same native/expanded peak. Both early cases gain sink exclusions before
+injection even though their raw pre-injection frames are unchanged. Tissue
+eligibility shifts as well. See the
+[complete report](reference-results/surge-full-movie-measurement-20260910/README.md).
+
+Next trace the six blocking cases through raw intensity, detrending, spatial and
+temporal normalization, candidate masks and event retention. Prioritize the two
+new frame-85 sink exclusions and the fragmented FB2316 slow surge. Establish
+whether blockers reflect source activity, imposed waveform/tail effects or
+processing changes before altering baseline exclusions or event grouping. Audit
+tissue-mask shifts before assuming stable spatial exposure. Keep production
+unchanged until interval and pre-rise reference are justified together, then
+stress drift and acquisition noise. Do not reuse these inspected
 recordings as untouched evaluation data. Missing clean context remains unresolved
 (3,780 cases on the two additional sources); selection does not create a reference.
 Spatial-core comparisons, surge statistical parity and final cohort reanalysis

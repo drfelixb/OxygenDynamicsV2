@@ -1,0 +1,68 @@
+"""Aggregate verified full-movie diagnostics; run from repo root with result path."""
+import csv,json,sys
+from pathlib import Path
+import numpy as np
+import h5py
+sys.path.insert(0,'tests/analysis')
+from verify_surge_separation import read_pixels
+
+root=Path(sys.argv[1])
+def read(p):
+    with p.open(newline='') as f:return list(csv.DictReader(f))
+def write(name,rows):
+    with (root/name).open('w',newline='') as f:
+        w=csv.DictWriter(f,fieldnames=list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
+components=[];measurements=[];blockers=[];traces=[]
+for session in ('M400-01-baseline-awake','FB2316-baseline'):
+    for case in ('control','challenge'):
+        out=root/session/case/'candidate-measurement'
+        events=read(out/'events.csv');mm=read(out/'measurements.csv');tt=read(out/'component-summary.csv')
+        components.extend(dict(Session=session,Case=case,**r) for r in tt)
+        measurements.extend(dict(Session=session,Case=case,**r) for r in mm)
+        if (out/'context-blockers.csv').exists():
+            blockers.extend(dict(Session=session,Case=case,**r) for r in read(out/'context-blockers.csv'))
+        if case!='challenge':continue
+        with h5py.File(out/'measurement-inputs.mat') as f:
+            x=f['XTrace'][()].T;y=f['YTrace'][()].T;prefs=f['Pixels'][()].ravel();allrefs=f['AllDetectedPixels'][()].ravel()
+            for t in tt:
+                e=int(t['AssignedEventIndex'])
+                if not e or events[e-1]['EventType']!='surge':continue
+                r=next(r for r in mm if int(r['EventIndex'])==e);px=read_pixels(f,f[prefs[e-1]])
+                start,end=int(events[e-1]['NativeStartFrame']),int(events[e-1]['NativeEndFrame']);truth=int(t['TruthStartFrame'])
+                for frame in range(max(1,min(truth-25,start-65)),min(x.shape[1],end+5)+1):
+                    blocked=frame<start and np.intersect1d(px,read_pixels(f,f[allrefs[frame-1]])).size>0
+                    traces.append(dict(Session=session,Component=int(t['Component']),EventIndex=e,Frame=frame,
+                        Source=x[e-1,frame-1],Observed=y[e-1,frame-1],PreNativeBlocked=int(blocked),
+                        NativeStart=start,NativeEnd=end,TruthStart=truth,Onset=r['OnsetFrame'],ReferenceMean=r['ReferenceMean']))
+write('component-summary.csv',components);write('all-candidate-measurements.csv',measurements)
+write('context-blockers.csv',blockers);write('assigned-trace-samples.csv',traces)
+comparisons=[]
+for session in ('M400-01-baseline-awake','FB2316-baseline'):
+    relevant=[r for r in blockers if r['Session']==session and r['Case']=='challenge' and r['OnsetStatus']=='insufficient_clean_context']
+    aroot=root/session/'challenge'/'candidate-measurement';croot=root/session/'control'/'candidate-measurement'
+    control_events=read(croot/'events.csv');pairs=read(aroot/'event-component-pairs.csv')
+    with h5py.File(aroot/'measurement-inputs.mat') as a,h5py.File(croot/'measurement-inputs.mat') as c:
+        ap=a['Pixels'][()].ravel();an=a['NativePixels'][()].T;cn=c['NativePixels'][()].T
+        for r in relevant:
+            event=int(r['AssignedEventIndex'])-1;other=int(r['BlockerEventIndex'])-1;frame=int(r['LatestBlockedFrame'])-1
+            shared=np.intersect1d(read_pixels(a,a[ap[event]]),read_pixels(a,a[an[other,frame]]))
+            cells=[read_pixels(c,c[cn[e,frame]]) for e,meta in enumerate(control_events) if meta['EventType']==r['BlockerEventType']]
+            union=np.unique(np.concatenate(cells)) if cells else np.array([],int)
+            overlap=np.intersect1d(shared,union).size
+            component_ids=';'.join(p['Component'] for p in pairs if int(p['EventIndex'])==other+1 and int(p['Intersection'])>0)
+            comparisons.append(dict(r,ControlSameSignOverlapPixels=overlap,ControlSameSignOverlapFraction=overlap/len(shared),
+                ImposedComponentsIntersectingBlocker=component_ids))
+write('context-blockers-control-comparison.csv',comparisons)
+positive=[r for r in components if r['Case']=='challenge' and int(r['Component'])!=6]
+assigned=[r for r in positive if int(r['AssignedEventIndex'])>0]
+resolved=[r for r in assigned if r['OnsetStatus']=='resolved']
+blocked=[r for r in blockers if r['Case']=='challenge' and r['OnsetStatus']=='insufficient_clean_context']
+summary=dict(ImposedPositiveComponents=len(positive),UniquelyAssignedPositiveComponents=len(assigned),
+    ComponentsWithSameSignIntersection=sum(int(r['IntersectingSameSignEvents'])>0 for r in positive),
+    AssignedResolved=len(resolved),AssignedInsufficientCleanContext=sum(r['OnsetStatus']=='insufficient_clean_context' for r in assigned),
+    ResolvedNativeAndExpandedNearPeak=sum(float(r['NativeEnvelopeFraction'])>=.9 and float(r['ExpandedEnvelopeFraction'])>=.9 for r in resolved),
+    LatestSinkBlockers=sum(r['BlockerEventType']=='sink' for r in blocked),
+    LatestSurgeBlockers=sum(r['BlockerEventType']=='surge' for r in blocked),
+    ContiguousPreNativeFrames=sorted(int(r['ContiguousPreNativeFrames']) for r in blocked),
+    BlockingRows=len(blocked),AssignedTraceSamples=len(traces))
+(root/'diagnosis-summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary,indent=2))

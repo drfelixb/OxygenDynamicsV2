@@ -48,7 +48,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **182 focused tests** pass in MATLAB R2025a.
+Current development validation: **185 focused tests** pass in MATLAB R2025a.
 Smoke checks and synthetic master-to-statistics integration passed for the
 unchanged production implementation. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
@@ -113,6 +113,16 @@ recorded-background cases, peaks meeting the 90% imposed-envelope screen increas
 become positive, while 71 contaminated references remain. An undetected positive
 neighbor inflates the toy challenge amplitude; the rule remains experimental.
 See [the results and proposed full-movie validation](docs/reference-results/surge-expanded-peak-20260910/README.md).
+
+The [full-movie candidate measurement test](docs/SURGE_FULL_MOVIE_MEASUREMENT.md)
+now runs the existing master pipeline on control/challenge pairs from M400 awake
+and FB2316 KX. Ten imposed positive components intersect retained events, eight
+receive unique assignments, and only two yield candidate measurements. Six
+assigned cases lack clean context; both positive pairs share retained events.
+New pre-onset sink exclusions appear in both recordings despite identical raw
+frames before injection. The [report](docs/reference-results/surge-full-movie-measurement-20260910/README.md)
+prioritizes tracing normalization, tissue eligibility and blocking masks before
+production integration. All 1,102 production amplitudes/statuses reproduce.
 
 The [expanding/contracting signal audit](docs/SURGE_SIGNAL_EVIDENCE.md) adds eight
 full-movie challenges on those same four sources. All 1,508 additional event

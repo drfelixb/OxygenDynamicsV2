@@ -6,6 +6,25 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Full-movie candidate surge measurement validation
+
+- Add control-only tissue-qualified placement and four complete master runs on
+  M400 awake and FB2316 KX. Each challenge contains isolated early/slow surges
+  and overlapping positive/negative neighbors; candidate measurements use newly
+  detected event footprints and no truth-based estimator inputs.
+- Export event/site counts, all event/component native intersections, deterministic
+  one-to-one geometric assignments and missing measurements. Ten positive
+  components intersect retained surges, eight are uniquely assigned, and only
+  two resolve. Both measurable cases select the same native/expanded peak.
+- Identify six assigned cases blocked by five sinks and one earlier surge fragment.
+  Both early cases acquire sink exclusions before injection despite unchanged
+  raw pre-injection frames. Retain tissue-mask shifts and compound-event ambiguity;
+  keep production rules unchanged pending a normalization/blocker audit.
+- Independently verify all movie pixels, 334 component fits, 167 candidate
+  measurements and 1,102 production amplitudes/statuses. Pass 185 MATLAB and
+  68 Python tests, including optimized Python execution. Update the README,
+  roadmap and [full report](docs/reference-results/surge-full-movie-measurement-20260910/README.md).
+
 ### Experimental peak interval from estimated onset
 
 - Add a candidate onset-to-native-end peak interval with an unchanged reference,

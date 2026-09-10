@@ -1,0 +1,5 @@
+Session,Case,MoviePixelsVerified,SupportFramePairsVerified,ComponentFitsVerified,CandidateMeasurementsVerified,DecompositionsVerified,EventComponentPairsVerified,ComponentSummariesVerified,ProductionAmplitudesVerified
+M400-01-baseline-awake,control,157286400,147600,100,50,0,1476,6,246
+M400-01-baseline-awake,challenge,157286400,144600,104,52,5,1446,6,241
+FB2316-baseline,control,314572800,410400,62,31,0,2052,6,342
+FB2316-baseline,challenge,314572800,327600,68,34,3,1638,6,273

@@ -1,0 +1,348 @@
+WARNING: package sun.awt.X11 not in java.desktop
+WARNING: package sun.awt.X11 not in java.desktop
+New file was loaded successfully. Elapsed time : 1.025 s.
+Loading data...
+New file was loaded successfully. Elapsed time : 0.547 s.
+Loaded original/raw TIFF: challenge_original.tif
+No denoised TIFF found. Detection will use the original/raw TIFF.
+Detrending... This might take some time!
+Cannot find denoised data... Analysis will continue with motion-corrected-only data!
+Elapsed time is 9.743181 seconds.
+Z-scoring data...
+Elapsed time is 1.123731 seconds.
+Convolving data...
+Elapsed time is 1.299639 seconds.
+Smoothing data...
+Detecting putative oxygen sinks in every frame...
+Elapsed time is 2.676107 seconds.
+Tracking putative oxygen sinks across imaging session...
+Elapsed time is 1.120756 seconds.
+Refining putative oxygen sinks based on event duration thresholds...
+Elapsed time is 0.088265 seconds.
+Extracting mean traces from Oxygen Sinks...
+Refining putative oxygen sinks based on the correlation of traces with other sinks...
+Elapsed time is 0.090322 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a second time...
+Elapsed time is 0.022492 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a third time...
+56 putative hypoxic pockets identified!
+Elapsed time is 0.020486 seconds.
+Collating properties of oxygen sinks and events...
+Elapsed time is 1.445628 seconds.
+Identifying oxygen surges now...
+Elapsed time is 6.948810 seconds.
+Tracking putative oxygen surges across the imaging session...
+Elapsed time is 2.413206 seconds.
+50 retained oxygen surge runs across 41 sites.
+Extracting mean traces from Oxygen Surges...
+Saving manipulated data matrices
+Output folders:
+  Oxygen sinks: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/M400-01-baseline-awake/control/OxygenSinks_Output
+  Manual curation: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/M400-01-baseline-awake/control/ManualCurOxySinksData
+  Oxygen surges: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/M400-01-baseline-awake/control/OxygenSurges_Output
+  Processed images: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/M400-01-baseline-awake/control/Images_Processed
+The file was saved successfully. Elapsed time : 0.324 s.
+The file was saved successfully. Elapsed time : 0.346 s.
+The file was saved successfully. Elapsed time : 0.392 s.
+The file was saved successfully. Elapsed time : 0.336 s.
+New file was loaded successfully. Elapsed time : 0.706 s.
+Audited 246 events; 0 measurement mismatches; 0 wrong-direction amplitudes.
+New file was loaded successfully. Elapsed time : 0.992 s.
+New file was loaded successfully. Elapsed time : 0.310 s.
+COMPLETED FULL MOVIE M400-01-baseline-awake control
+The file was saved successfully. Elapsed time : 0.359 s.
+Loading data...
+New file was loaded successfully. Elapsed time : 0.497 s.
+Loaded original/raw TIFF: challenge_original.tif
+No denoised TIFF found. Detection will use the original/raw TIFF.
+Detrending... This might take some time!
+Cannot find denoised data... Analysis will continue with motion-corrected-only data!
+Elapsed time is 15.145745 seconds.
+Z-scoring data...
+Elapsed time is 1.256590 seconds.
+Convolving data...
+Elapsed time is 1.316877 seconds.
+Smoothing data...
+Detecting putative oxygen sinks in every frame...
+Elapsed time is 2.451439 seconds.
+Tracking putative oxygen sinks across imaging session...
+Elapsed time is 3.811092 seconds.
+Refining putative oxygen sinks based on event duration thresholds...
+Elapsed time is 0.046580 seconds.
+Extracting mean traces from Oxygen Sinks...
+Refining putative oxygen sinks based on the correlation of traces with other sinks...
+Elapsed time is 0.117455 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a second time...
+Elapsed time is 0.016483 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a third time...
+50 putative hypoxic pockets identified!
+Elapsed time is 0.015638 seconds.
+Collating properties of oxygen sinks and events...
+Elapsed time is 0.757324 seconds.
+Identifying oxygen surges now...
+Elapsed time is 7.140513 seconds.
+Tracking putative oxygen surges across the imaging session...
+Elapsed time is 3.195383 seconds.
+52 retained oxygen surge runs across 43 sites.
+Extracting mean traces from Oxygen Surges...
+Saving manipulated data matrices
+Output folders:
+  Oxygen sinks: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/M400-01-baseline-awake/challenge/OxygenSinks_Output
+  Manual curation: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/M400-01-baseline-awake/challenge/ManualCurOxySinksData
+  Oxygen surges: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/M400-01-baseline-awake/challenge/OxygenSurges_Output
+  Processed images: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/M400-01-baseline-awake/challenge/Images_Processed
+The file was saved successfully. Elapsed time : 0.353 s.
+The file was saved successfully. Elapsed time : 0.355 s.
+The file was saved successfully. Elapsed time : 0.316 s.
+The file was saved successfully. Elapsed time : 0.372 s.
+New file was loaded successfully. Elapsed time : 0.578 s.
+Audited 241 events; 0 measurement mismatches; 0 wrong-direction amplitudes.
+New file was loaded successfully. Elapsed time : 0.741 s.
+New file was loaded successfully. Elapsed time : 0.506 s.
+COMPLETED FULL MOVIE M400-01-baseline-awake challenge
+New file was loaded successfully. Elapsed time : 2.540 s.
+Loading data...
+New file was loaded successfully. Elapsed time : 0.968 s.
+Loaded original/raw TIFF: challenge_original.tif
+No denoised TIFF found. Detection will use the original/raw TIFF.
+Detrending... This might take some time!
+Cannot find denoised data... Analysis will continue with motion-corrected-only data!
+Elapsed time is 21.255489 seconds.
+Z-scoring data...
+Elapsed time is 5.530806 seconds.
+Convolving data...
+Elapsed time is 3.482423 seconds.
+Smoothing data...
+Detecting putative oxygen sinks in every frame...
+Elapsed time is 4.720695 seconds.
+Tracking putative oxygen sinks across imaging session...
+Elapsed time is 5.501783 seconds.
+Refining putative oxygen sinks based on event duration thresholds...
+Elapsed time is 0.058562 seconds.
+Extracting mean traces from Oxygen Sinks...
+Refining putative oxygen sinks based on the correlation of traces with other sinks...
+Elapsed time is 0.532645 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a second time...
+Elapsed time is 0.041451 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a third time...
+79 putative hypoxic pockets identified!
+Elapsed time is 0.042457 seconds.
+Collating properties of oxygen sinks and events...
+Elapsed time is 1.328180 seconds.
+Identifying oxygen surges now...
+Elapsed time is 9.812139 seconds.
+Tracking putative oxygen surges across the imaging session...
+Elapsed time is 1.299353 seconds.
+31 retained oxygen surge runs across 27 sites.
+Extracting mean traces from Oxygen Surges...
+Saving manipulated data matrices
+Output folders:
+  Oxygen sinks: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/control/OxygenSinks_Output
+  Manual curation: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/control/ManualCurOxySinksData
+  Oxygen surges: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/control/OxygenSurges_Output
+  Processed images: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/control/Images_Processed
+The file was saved successfully. Elapsed time : 0.952 s.
+The file was saved successfully. Elapsed time : 0.776 s.
+The file was saved successfully. Elapsed time : 0.841 s.
+The file was saved successfully. Elapsed time : 0.768 s.
+New file was loaded successfully. Elapsed time : 1.046 s.
+Audited 342 events; 0 measurement mismatches; 2 wrong-direction amplitudes.
+New file was loaded successfully. Elapsed time : 1.623 s.
+New file was loaded successfully. Elapsed time : 0.711 s.
+COMPLETED FULL MOVIE FB2316-baseline control
+The file was saved successfully. Elapsed time : 0.754 s.
+Loading data...
+New file was loaded successfully. Elapsed time : 1.133 s.
+Loaded original/raw TIFF: challenge_original.tif
+No denoised TIFF found. Detection will use the original/raw TIFF.
+Detrending... This might take some time!
+Cannot find denoised data... Analysis will continue with motion-corrected-only data!
+Elapsed time is 20.416799 seconds.
+Z-scoring data...
+Elapsed time is 3.997510 seconds.
+Convolving data...
+Elapsed time is 2.852230 seconds.
+Smoothing data...
+Detecting putative oxygen sinks in every frame...
+Elapsed time is 4.158756 seconds.
+Tracking putative oxygen sinks across imaging session...
+Elapsed time is 3.969807 seconds.
+Refining putative oxygen sinks based on event duration thresholds...
+Elapsed time is 0.048735 seconds.
+Extracting mean traces from Oxygen Sinks...
+Refining putative oxygen sinks based on the correlation of traces with other sinks...
+Elapsed time is 0.316926 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a second time...
+Elapsed time is 0.039291 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a third time...
+63 putative hypoxic pockets identified!
+Elapsed time is 0.028740 seconds.
+Collating properties of oxygen sinks and events...
+Elapsed time is 0.884013 seconds.
+Identifying oxygen surges now...
+Elapsed time is 8.883566 seconds.
+Tracking putative oxygen surges across the imaging session...
+Elapsed time is 1.105732 seconds.
+34 retained oxygen surge runs across 25 sites.
+Extracting mean traces from Oxygen Surges...
+Saving manipulated data matrices
+Output folders:
+  Oxygen sinks: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/challenge/OxygenSinks_Output
+  Manual curation: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/challenge/ManualCurOxySinksData
+  Oxygen surges: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/challenge/OxygenSurges_Output
+  Processed images: /Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/challenge/Images_Processed
+The file was saved successfully. Elapsed time : 0.847 s.
+The file was saved successfully. Elapsed time : 0.685 s.
+The file was saved successfully. Elapsed time : 0.512 s.
+The file was saved successfully. Elapsed time : 0.579 s.
+New file was loaded successfully. Elapsed time : 1.928 s.
+Audited 273 events; 0 measurement mismatches; 3 wrong-direction amplitudes.
+New file was loaded successfully. Elapsed time : 1.532 s.
+New file was loaded successfully. Elapsed time : 1.151 s.
+COMPLETED FULL MOVIE FB2316-baseline challenge
+Running testAnalysisCorrections
+.......... ....
+Done testAnalysisCorrections
+__________
+
+Running testDandiConversion
+..
+Done testDandiConversion
+__________
+
+Running testEventAmplitudeAudit
+.....
+Done testEventAmplitudeAudit
+__________
+
+Running testLocalSinkTiming
+.........
+Done testLocalSinkTiming
+__________
+
+Running testMeasurementAvailability
+....
+Done testMeasurementAvailability
+__________
+
+Running testPipelineContract
+....
+Done testPipelineContract
+__________
+
+Running testReviewCorrections
+....Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp75aaf306_ad0b_4855_9840_6b9d02f777e9/tp1e103d6c_1527_4b44_9802_f64257aeab0e/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp75aaf306_ad0b_4855_9840_6b9d02f777e9/tp1e103d6c_1527_4b44_9802_f64257aeab0e/Summary_Figures
+.Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp75aaf306_ad0b_4855_9840_6b9d02f777e9/tp1c5c22da_5a3c_4d3f_98d0_477a2c4ca832/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp75aaf306_ad0b_4855_9840_6b9d02f777e9/tp1c5c22da_5a3c_4d3f_98d0_477a2c4ca832/Summary_Figures
+Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp75aaf306_ad0b_4855_9840_6b9d02f777e9/tp561bf031_38b6_4540_b6f8_dd2e8e3a8951/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp75aaf306_ad0b_4855_9840_6b9d02f777e9/tp561bf031_38b6_4540_b6f8_dd2e8e3a8951/Summary_Figures
+.
+Done testReviewCorrections
+__________
+
+Running testSinkRecurrence
+......
+Done testSinkRecurrence
+__________
+
+Running testSurgeAmplitudeCounterfactual
+.........
+Done testSurgeAmplitudeCounterfactual
+__________
+
+Running testSurgeAmplitudeEligibility
+........
+Done testSurgeAmplitudeEligibility
+__________
+
+Running testSurgeBranchPolicy
+.........
+Done testSurgeBranchPolicy
+__________
+
+Running testSurgeCandidateEvidence
+[Warning: Name is nonexistent or not a directory:
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/tests/analysis/tests/analysis]
+[> In path (line 109)
+In addpath (line 96)
+In testSurgeCandidateEvidence>setupOnce (line 5)]
+.......
+Done testSurgeCandidateEvidence
+__________
+
+Running testSurgeContactReview
+........
+Done testSurgeContactReview
+__________
+
+Running testSurgeContactSeparation
+.......... ..
+Done testSurgeContactSeparation
+__________
+
+Running testSurgeContinuity
+.......... .
+Done testSurgeContinuity
+__________
+
+Running testSurgeCorrections
+.....
+Done testSurgeCorrections
+__________
+
+Running testSurgeExpandedPeak
+.......
+Done testSurgeExpandedPeak
+__________
+
+Running testSurgeLocalOnset
+.......... ..
+Done testSurgeLocalOnset
+__________
+
+Running testSurgeMovieRecipe
+...
+Done testSurgeMovieRecipe
+__________
+
+Running testSurgeOnsetModelSelection
+.......... ..
+Done testSurgeOnsetModelSelection
+__________
+
+Running testSurgeOnsetTracePanel
+..........
+Done testSurgeOnsetTracePanel
+__________
+
+Running testSurgePulseOnset
+......
+Done testSurgePulseOnset
+__________
+
+Running testSurgeSpatialTracking
+..........
+Done testSurgeSpatialTracking
+__________
+
+Running testSurgeUnseenEnvelope
+....
+Done testSurgeUnseenEnvelope
+__________
+
+Running testiOSSurgeTrackingEquivalence
+..
+Done testiOSSurgeTrackingEquivalence
+__________
+
+The file was saved successfully. Elapsed time : 0.016 s.
+New file was loaded successfully. Elapsed time : 0.020 s.
+Hypoxia-amyloid synthetic tests passed.
+Repository checks passed: 414 MATLAB files inspected, 85 Code Analyzer messages, focused tests run: 1.
