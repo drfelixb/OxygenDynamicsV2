@@ -6,6 +6,25 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Experimental peak interval from estimated onset
+
+- Add a candidate onset-to-native-end peak interval with an unchanged reference,
+  explicit rejection of detected overlap/nonfinite added frames, and preserved
+  native and expanded signed measurements. Production rules remain unchanged.
+- Replay and independently verify all 11,433 prior recipe/control rows and 2,534
+  paired-source decompositions. Among 2,498 available recorded-background cases,
+  peaks meeting the prespecified 90% envelope screen increase 1,520 to 2,146:
+  660 gains and 34 losses. Every loss selects a larger background contribution
+  and a smaller imposed contribution. All 18 previously negative recipes become
+  positive, without resolving the 71 contaminated references.
+- Verify eight fixed-onset neighbor/missing-data challenges. Detected neighbors
+  block expansion; an undetected positive neighbor inflates the target's 20%
+  amplitude to 65.38%. Keep the rule experimental pending full-movie validation
+  of the existing detector, actual event intervals and candidate measurements.
+- Pass 182 MATLAB and 65 Python tests, including optimized Python execution.
+  Update documentation, provenance and the
+  [complete comparison](docs/reference-results/surge-expanded-peak-20260910/README.md).
+
 ### Experimental amplitude eligibility and failure decomposition
 
 - Add explicit arithmetic and raw-direction conditions for provisional surge

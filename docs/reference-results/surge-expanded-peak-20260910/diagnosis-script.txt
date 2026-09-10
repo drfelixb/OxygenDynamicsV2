@@ -1,0 +1,24 @@
+"""Summarize independently verified peak measurements; pass result directory."""
+import csv,json,sys
+from pathlib import Path
+root=Path(sys.argv[1])
+with (root/'expanded-peak-results.csv').open(newline='') as f:r=list(csv.DictReader(f))
+valid=[x for x in r if x['Constructible']=='1' and x['ExpandedArithmeticValid']=='1' and x['Cohort']!='noiseless']
+loss=[x for x in valid if float(x['NativeEnvelopeFraction'])>=.9 and float(x['ExpandedEnvelopeFraction'])<.9]
+negative=[x for x in valid if x['AmplitudeStatus']=='raw_direction_conflict']
+with (root/'near-peak-losses.csv').open('w',newline='') as f:
+    w=csv.DictWriter(f,fieldnames=list(r[0]),lineterminator='\n');w.writeheader();w.writerows(loss)
+result=dict(RecordedAvailable=len(valid),
+    NativeNearEnvelopeMaximum=sum(float(x['NativeEnvelopeFraction'])>=.9 for x in valid),
+    ExpandedNearEnvelopeMaximum=sum(float(x['ExpandedEnvelopeFraction'])>=.9 for x in valid),
+    NearPeakGains=sum(float(x['NativeEnvelopeFraction'])<.9 and float(x['ExpandedEnvelopeFraction'])>=.9 for x in valid),
+    NearPeakLosses=len(loss),
+    LossesWithHigherSourceAndLowerImposed=sum(float(x['ExpandedOracleSource'])>float(x['OracleSourceAtObservedPeak']) and float(x['ExpandedOracleImposed'])<float(x['OracleImposedAtObservedPeak']) for x in loss),
+    PreviousNegativeCases=len(negative),PreviouslyNegativeNowPositive=sum(x['ExpandedPositiveEligible']=='1' for x in negative),
+    PreviouslyNegativeNowNearEnvelopeMaximum=sum(float(x['ExpandedEnvelopeFraction'])>=.9 for x in negative),
+    PreviousNegativeExpandedPercentRange=[min(float(x['ExpandedSignedAmplitude'])*100 for x in negative),max(float(x['ExpandedSignedAmplitude'])*100 for x in negative)],
+    NativeOutsideImposedSupport=sum(float(x['NativeEnvelopeFraction'])==0 for x in valid),
+    ExpandedOutsideImposedSupport=sum(float(x['ExpandedEnvelopeFraction'])==0 for x in valid),
+    SourceOnlyWindowGainCases=sum(float(x['OracleSourceOnlyWindowGain'])>1e-12 for x in valid),
+    BaselineAboveOnePercent=sum(float(x['OracleBaselineImposedFraction'])>.01 for x in valid))
+(root/'diagnosis-summary.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))

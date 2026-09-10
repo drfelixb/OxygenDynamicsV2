@@ -93,12 +93,21 @@ The new experimental check preserves signed raw values and makes nonpositive
 positive-surge amplitudes unavailable; eligibility is not proof of reportability.
 See [the decompositions](reference-results/surge-amplitude-eligibility-20260910/README.md).
 
-Next prespecify a comparison of estimated-onset-to-native-end and native-only
-raw peak intervals, with both-sign neighboring-event exclusions. Test recovery
-of early imposed peaks against selection of unrelated source peaks, including
-unchanged controls and adjacent-event challenges. Evaluate reference contamination
-alongside peak recovery; do not move a reference to force a positive value.
-Keep production unchanged until the interval and pre-rise reference are justified
+The [expanded peak interval experiment](SURGE_EXPANDED_PEAK.md) is complete:
+among 2,498 available recorded-background cases, peaks meeting the 90% imposed
+envelope screen increase 1,520 to 2,146, with 660 gains and 34 losses. All previous
+18 negative recipes become positive, while all 71 contaminated references remain.
+Four available source controls acquire larger maxima. Supplied masks correctly
+block detected neighbors, but an undetected positive neighbor inflates the toy
+target amplitude from 20% to 65.38%. See the
+[full comparison](reference-results/surge-expanded-peak-20260910/README.md).
+
+Next prespecify full-movie validation using the existing detector and the actual
+newly detected event intervals, followed by candidate onset and expanded-peak
+measurement. Include isolated early/slow surges, nearby positive/negative events,
+overlap and unchanged sources. Score missed/merged events, onset availability,
+peak capture, wrong-event selection and reference contamination separately.
+Keep production unchanged until interval and pre-rise reference are justified
 together, then stress drift and acquisition noise. Do not reuse these inspected
 recordings as untouched evaluation data. Missing clean context remains unresolved
 (3,780 cases on the two additional sources); selection does not create a reference.

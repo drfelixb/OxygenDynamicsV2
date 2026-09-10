@@ -1,0 +1,16 @@
+VERIFIED EXPANDED PEAK M400-01-baseline-awake
+VERIFIED EXPANDED PEAK M401-01-baseline-awake
+VERIFIED EXPANDED PEAK FB2312-baseline-awake
+VERIFIED EXPANDED PEAK FB2411
+VERIFIED EXPANDED PEAK ID13-20200917
+VERIFIED EXPANDED PEAK FB2316-baseline
+VERIFIED EXPANDED PEAK flat
+{
+  "RowsVerified": 11433,
+  "ExpandedDecompositionsVerified": 2534,
+  "NeighborChallengesVerified": 8,
+  "PreviousNegativeCasesVerified": 18,
+  "InputHashesVerified": 8,
+  "ProductionChanged": false,
+  "OnsetRefits": 0
+}

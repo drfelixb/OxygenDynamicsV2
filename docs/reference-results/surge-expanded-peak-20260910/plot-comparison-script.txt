@@ -1,0 +1,41 @@
+% Execute from repository root after independent verification.
+root='../reference-validation/surge-expanded-peak-20260910';
+T=readtable(fullfile(root,'peak-summary.csv'),'Delimiter',',','TextType','string');
+C=readtable(fullfile(root,'neighbor-challenge-traces.csv'),'Delimiter',',','TextType','string');
+fig=figure('Visible','off','Color','white','Position',[100 100 1200 820]);
+tl=tiledlayout(fig,2,2,'TileSpacing','compact','Padding','compact');
+for j=1:2
+ cohorts=["development","additional"];r=T(T.Grouping=="Cohort"&T.Group==cohorts(j),:);
+ near=[r.NativeEnvelopeAtLeast90Percent;r.ExpandedEnvelopeAtLeast90Percent];
+ available=[r.NativeAvailable;r.ExpandedAvailable];
+ v=[near available-near r.Constructible-available]/r.Constructible*100;
+ ax=nexttile(tl,j);bb=bar(ax,v,'stacked');bb(1).FaceColor=[.16 .48 .66];bb(2).FaceColor=[.9 .55 .2];bb(3).FaceColor=[.85 .85 .85];
+ ax.XTick=1:2;ax.XTickLabel={'Native interval','From estimated onset'};
+ ax.Color='white';ax.XColor='black';ax.YColor='black';ylim(ax,[0 100]);
+ title(ax,sprintf('%s: %d constructed cases',cohorts(j),r.Constructible),'Color','black');
+ subtitle(ax,sprintf('%d gains; %d losses on the 90%% envelope screen',r.NearPeakGained,r.NearPeakLost),'Color','black');
+ ylabel(ax,'Percent of constructible cases','Color','black');
+end
+lg=legend(bb,{'At least 90% of envelope maximum','Other available peak','Unavailable'},'Orientation','horizontal');
+lg.Layout.Tile='north';lg.TextColor='black';lg.Color='white';lg.EdgeColor='white';
+for j=1:2
+ names=["detected_surge","undetected_surge"];s=C(C.Challenge==names(j),:);
+ ax=nexttile(tl,j+2);hold(ax,'on');
+ patch(ax,[0 24 24 0],[95 95 170 170],[.88 .93 1],'EdgeColor','none','HandleVisibility','off');
+ patch(ax,[25 45 45 25],[95 95 170 170],[.91 .95 .88],'EdgeColor','none','HandleVisibility','off');
+ plot(ax,s.Frame-75,100+20*s.TargetEnvelope,'Color',[.2 .2 .2],'LineWidth',1.5);
+ plot(ax,s.Frame-75,s.Observed,'Color',[.85 .36 .1],'LineWidth',1.7);
+ if j==1
+  plot(ax,[16 18],[166 166],'r','LineWidth',4);
+  title(ax,'Detected neighbor: expansion unavailable','Color','black');
+ else
+  plot(ax,16,100+50+20*(111-91)/26,'o','Color',[.55 .2 .6],'MarkerFaceColor',[.55 .2 .6]);
+  title(ax,'Undetected neighbor: inflated amplitude 65.38%','Color','black');
+ end
+ subtitle(ax,'Same target and observed trace; only the exclusion mask differs','Color','black');
+ ax.Color='white';ax.XColor='black';ax.YColor='black';xlim(ax,[-5 50]);ylim(ax,[95 170]);
+ xlabel(ax,'Seconds from fixed known onset','Color','black');ylabel(ax,'Synthetic intensity','Color','black');
+end
+title(tl,'Expanded peak interval: improved capture and remaining attribution failure','Color','black');
+subtitle(tl,'Bottom: black = target alone; orange = target + neighbor. Blue = added interval; green = native interval.','Color','black');
+exportgraphics(fig,fullfile(root,'comparison.png'),'Resolution',160,'BackgroundColor','white');close(fig);

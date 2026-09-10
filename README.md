@@ -48,7 +48,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **175 focused tests** pass in MATLAB R2025a.
+Current development validation: **182 focused tests** pass in MATLAB R2025a.
 Smoke checks and synthetic master-to-statistics integration passed for the
 unchanged production implementation. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
@@ -104,6 +104,15 @@ before the frozen native interval; reference-half agreement also fails to flag
 the 71 cases above the one-percent contamination screen. See
 [the mechanisms and next measurement-window test](docs/reference-results/surge-amplitude-eligibility-20260910/README.md).
 Positive eligibility remains provisional; production amplitudes are unchanged.
+
+The [expanded peak interval experiment](docs/SURGE_EXPANDED_PEAK.md) now measures
+from estimated onset through native end, retaining the same reference and rejecting
+detected overlap or missing samples in added frames. Among 2,498 available
+recorded-background cases, peaks meeting the 90% imposed-envelope screen increase
+1,520 to 2,146, with 660 gains and 34 losses. All 18 previously negative recipes
+become positive, while 71 contaminated references remain. An undetected positive
+neighbor inflates the toy challenge amplitude; the rule remains experimental.
+See [the results and proposed full-movie validation](docs/reference-results/surge-expanded-peak-20260910/README.md).
 
 The [expanding/contracting signal audit](docs/SURGE_SIGNAL_EVIDENCE.md) adds eight
 full-movie challenges on those same four sources. All 1,508 additional event
