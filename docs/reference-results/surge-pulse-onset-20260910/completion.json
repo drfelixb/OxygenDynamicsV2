@@ -1,0 +1,11 @@
+{
+  "SourceRecordings": 4,
+  "FixedSupports": 115,
+  "PlannedConstructedRows": 5520,
+  "ConstructedFits": 5136,
+  "SourceFits": 115,
+  "NoiselessFits": 48,
+  "CodeAndInputFreezeVerified": true,
+  "ProductionChanged": false,
+  "NewDetectionOrMasterRuns": 0
+}

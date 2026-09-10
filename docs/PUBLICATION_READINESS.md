@@ -65,16 +65,25 @@ the available-context resolutions lie outside the five-second tolerance.
 See [stratified results](reference-results/surge-onset-trace-panel-20260909/README.md);
 the fluorescence background is a separate engineering-control stratum.
 
-A separate post-hoc noiseless calibration rejects all tested five-second rises
-when native onset is 25 seconds late. Next compare a model permitting a rise,
-plateau and recovery on this same frozen panel, retaining the contiguous clean
-context and missing-baseline requirements. Establish its noiseless behavior
-before interpreting gains on fluctuating backgrounds. Do not select a model
-merely for higher resolution counts: assess onset error, baseline contamination
-and paired source changes together, then seek additional held-out recordings.
-New positive movie locations must be screened for tissue eligibility before
-construction. Spatial-core comparisons, surge statistical parity and the final
-cohort reanalysis follow a supported timing/reference definition.
+A separate post-hoc noiseless calibration rejected short rises with late native
+onset. The new [pulse-shaped fit](SURGE_PULSE_ONSET.md) addresses that failure:
+all 48 noiseless starts are exact. On the same background panel, estimates within
+five seconds increase 856 to 1,056 and median resolved absolute error falls from
+4 to 2 seconds. However, 190 previously within-tolerance cases lose that result;
+30-second-rise recovery falls 293 to 221. Source-control resolutions decrease
+7 to 4. See the [paired evidence](reference-results/surge-pulse-onset-20260910/README.md).
+The new model remains experimental; gains on generating families included in
+the template library do not establish generalization.
+
+Next specify how to choose between a rising-only and pulse-shaped model,
+including an unresolved state when plausible models disagree about onset.
+Use explicit model-complexity and uncertainty criteria, not an automatic union
+of successful outputs. Test on unseen asymmetric/exponential waveforms and
+additional held-out recordings before integration. Preserve missing-baseline
+states; 2,208 constructed cases still lack the required clean context under
+both models. New positive movie locations must be screened for tissue eligibility.
+Spatial-core comparisons, surge statistical parity and the final cohort
+reanalysis follow a supported timing/reference definition.
 
 The sink timing search already uses an [event-local rule](LOCAL_SINK_TIMING.md)
 with disjoint searches, a provisional 20-second bound and unresolved-boundary

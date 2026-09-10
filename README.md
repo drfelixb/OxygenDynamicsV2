@@ -48,7 +48,7 @@ maintained separately.
 - Source hashes, calibration, settings and pipeline identities are checked
   before statistics. Output schema is currently `3.0-dev`.
 
-Current development validation: **145 focused tests** pass in MATLAB R2025a.
+Current development validation: **151 focused tests** pass in MATLAB R2025a.
 Smoke checks and synthetic master-to-statistics integration passed for the
 unchanged production implementation. The
 [shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
@@ -76,6 +76,14 @@ includes a separate fluorescence background; it is a conditional engineering
 comparison, not biological detection accuracy. A separate noiseless calibration
 also identifies a limitation of the rising-line model. Both methods remain
 experimental; see the [full comparison](docs/reference-results/surge-onset-trace-panel-20260909/README.md).
+
+The [pulse-shaped onset fit](docs/SURGE_PULSE_ONSET.md) now allows a rise,
+plateau and recovery while retaining the same available clean context and raw
+amplitude rule. It recovers exact starts in all 48 noiseless calibration recipes.
+On the same recorded-background panel, estimates within five seconds increase
+from 856 to 1,056, but some slow-rise estimates are lost. It remains experimental;
+the [paired comparison](docs/reference-results/surge-pulse-onset-20260910/README.md)
+reports gains, losses, source controls and remaining baseline errors.
 
 The [expanding/contracting signal audit](docs/SURGE_SIGNAL_EVIDENCE.md) adds eight
 full-movie challenges on those same four sources. All 1,508 additional event

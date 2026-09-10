@@ -6,6 +6,26 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Experimental rise, plateau and recovery fit
+
+- Add a batch pulse-template fit with independent rise/plateau/recovery lengths,
+  two shape families, a nonnegative pulse component and linear background.
+  Preserve the available contiguous context, strict raw reference and native
+  peak interval. Template coefficients/durations remain diagnostics; production
+  measurement, detection, statistics and default experimental fit are unchanged.
+- Specify the grid and conservative complexity penalty before evaluation.
+  Recompute near-exact residuals directly to avoid cancellation. Test all 48
+  noiseless recipes, recovering each first positive sample exactly.
+- Verify all 5,520 planned rows, 5,136 constructed fits and 115 source controls
+  against independent NumPy profiles and selected-template residuals. Estimates
+  within five seconds increase 856 to 1,056; median resolved absolute error falls
+  4 to 2 seconds. Paired results also expose 190 previously within-tolerance cases
+  that no longer meet that criterion, with losses concentrated in slow rises.
+- Keep the pulse fit experimental pending model-selection and out-of-family
+  validation. Pass 151 MATLAB focused tests and 48 Python tests, including
+  optimized execution. Update the README, roadmap and
+  [complete comparison](docs/reference-results/surge-pulse-onset-20260910/README.md).
+
 ### Surge onset information and available clean context
 
 - Add an experimental context option that begins after the latest preceding

@@ -1,0 +1,9 @@
+{
+  "PlannedRowsVerified": 5520,
+  "ConstructedFitsVerified": 5136,
+  "SourceFitsVerified": 115,
+  "NoiselessFitsVerified": 48,
+  "IndependentPulseProfiles": true,
+  "SelectedTemplatesVerified": true,
+  "ProductionChanged": false
+}

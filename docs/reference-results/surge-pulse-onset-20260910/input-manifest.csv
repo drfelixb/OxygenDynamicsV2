@@ -1,0 +1,17 @@
+Path,SHA256
+../reference-validation/surge-amplitude-support-20260909/M400-01-baseline-awake/growing_clean/audit-inputs.mat,69708cfaf9befadec0fd362696ccaf38f360635564147b491d83c7c897a55665
+../reference-validation/surge-amplitude-support-20260909/M400-01-baseline-awake/growing_clean/support-results.csv,a5688da6f26ac4ae8894d885172b9e05d53a097324c2be8c9811aa355c57495f
+../reference-validation/surge-amplitude-support-20260909/M400-01-baseline-awake/growing_clean/provenance.json,2351dd0115b213b3c16e387da065851d2cce066ddeeea93f29fcd6f035c19f37
+../reference-validation/surge-amplitude-support-20260909/M401-01-baseline-awake/growing_clean/audit-inputs.mat,1e09ef9f26e06e81872a7f311418bf7a613c1dffb35124938f34fb5bdae94179
+../reference-validation/surge-amplitude-support-20260909/M401-01-baseline-awake/growing_clean/support-results.csv,eb7030b8c186c88eb6e309fafe2c870a7c27573c2b5f2438a5dac2488df6ab8e
+../reference-validation/surge-amplitude-support-20260909/M401-01-baseline-awake/growing_clean/provenance.json,21a48e644561eab7d60f487e4184eb908f72dae194fdb47fdb6ac457863eaf7c
+../reference-validation/surge-amplitude-support-20260909/FB2312-baseline-awake/growing_clean/audit-inputs.mat,17fde840b06ee58cd7516d0faefee1f2bc54860bdfa665d9bd64944863de6051
+../reference-validation/surge-amplitude-support-20260909/FB2312-baseline-awake/growing_clean/support-results.csv,e83052405a3e9c883d635f864c7c7961e0c272f3a12fc5bbb6d66e3ef3b59990
+../reference-validation/surge-amplitude-support-20260909/FB2312-baseline-awake/growing_clean/provenance.json,e4033e781129ab6158395aca641d3045788e550909615c911f9bd87c478fd4f5
+../reference-validation/surge-amplitude-support-20260909/FB2411/growing_clean/audit-inputs.mat,1b062be1e4c383127ee0d1fcc1987b1dea5a8961aed95a2697845c65cdd26a47
+../reference-validation/surge-amplitude-support-20260909/FB2411/growing_clean/support-results.csv,a1524d140c11f9a60f96987d5d704056fff4fc5bae7389a710b37a254cad427b
+../reference-validation/surge-amplitude-support-20260909/FB2411/growing_clean/provenance.json,753be397a8e7d967829b6f831ec41183f115f432cca6696c00a722d45eab9b73
+../reference-validation/surge-onset-trace-panel-20260909/panel-results.csv,000eec59c907590d9f87a47ab5c3b7fec6b7310f7318a3b1ec3530a4d42bdb7f
+../reference-validation/surge-onset-trace-panel-20260909/source-controls.csv,0f63424aaf0dedef7cdb9ab87978664d7a98de72f59bde70bfd9898e2ed05061
+../reference-validation/surge-onset-trace-panel-20260909/backgrounds.csv,c1c6ebaf71e8d206eeaf8c2dd02b4a6a13b7bbd84f84cf835e8a8259a44cbf6f
+../reference-validation/surge-onset-trace-panel-20260909/flat-calibration.csv,0360c1777d2f25c231a39516d2c62fdd7ea14d6f4349b219ee5988e6d79466dc
