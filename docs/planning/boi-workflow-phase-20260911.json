@@ -1,0 +1,45 @@
+{
+  "schema": "boi-evidence-decision-1",
+  "decision_id": "R5-CONNECT-012",
+  "date": "2026-09-11",
+  "status": "implementation_phase_complete_developer_verified",
+  "authorization": "User requested continuation until the phase is done.",
+  "implementation_phase_exit": [
+    "Connect saved windows to event trace/baseline/source/native-mask inspection with checked recording mapping and exported provenance.",
+    "Provide an explicit normal GUI action to create a missing preserved-source event audit, with runtime notice and immutable output.",
+    "Verify both signs, recurrence, missing evidence, source/result mutations and provenance mismatches; preserve existing numerical outputs.",
+    "Complete one connected HP developer walkthrough and a runnable independent researcher handoff with explicit pending gates."
+  ],
+  "bounded_work": {
+    "data": "Preserved HP ECS development recording and synthetic fixtures only.",
+    "new_audits": "One complete source-only audit on the preserved 1200-frame HP recording; no detection reconstruction, detector or statistics rerun.",
+    "comparison": "All saved baseline, amplitude, identity and timing fields must match the prior audit; review new and historical evidence without retroactive provenance claims.",
+    "resources": "Use the established full-recording audit path; report runtime and output size. No cohort batch or parameter search.",
+    "tolerance": "Existing exact saved-field comparisons and arithmetic replay tolerances only; no new scientific acceptance threshold."
+  },
+  "scientific_changes": [],
+  "formal_R5_release": "Still requires an independent researcher and second-person replay under the original contract. Developer checks cannot satisfy independence.",
+  "standing_requirements": [
+    "BOI only, both signs",
+    "biological variability",
+    "physiological relevance",
+    "feasibility",
+    "usability",
+    "traceability",
+    "preserve unresolved questions and existing changes"
+  ],
+  "implementation_phase_complete": true,
+  "formal_R5_release_complete": false,
+  "evidence": "docs/reference-results/boi-workflow-phase-20260911/README.md",
+  "handoff": "docs/BOI_RESEARCHER_WALKTHROUGH.md",
+  "verification": {
+    "targeted_tests_passed": 31,
+    "source_audits": 1,
+    "detector_runs": 0,
+    "statistics_runs": 0,
+    "audited_events": 249,
+    "measurement_mismatches": 0,
+    "prior_artifacts_preserved": 289
+  },
+  "next_required_work": "Independent researcher observation and second-person replay under the original contract; scientific eligibility remains open."
+}

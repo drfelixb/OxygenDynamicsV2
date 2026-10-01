@@ -1,0 +1,37 @@
+{
+  "decision_id": "R1-C02-OUTLINE-024",
+  "status": "completed_drafts_prepared_scientific_acceptance_unresolved",
+  "question": "Can the current automatic-mask concerns be turned into explicit outer-field drafts for substantive source-bound review?",
+  "scope": "Eight native outer-field geometry proposals, both BOI signs; no detector, adoption, source write, frame exclusion or window approval.",
+  "evidence": "Existing 021 five fixed-frame sheets and source native coordinates. Prior 023 automatic maps were seen; drafting is not blinded. No matched anatomical reference has been established by this task.",
+  "method": {
+    "draft": "One manually estimated polygon per recording. No holes, intensity segmentation, component removal or interpolation across excluded frames.",
+    "rasterization": "MATLAB inpolygon on native pixel centers (column,row) = 1..512; polygon boundary included. Acquisition boundaries at 0.5/512.5 retain edge pixels.",
+    "review": "Existing reviewBOITissueSupport produces ProposedMask.mat, Proposal.json and first/middle/last previews. Additional five-fixed-frame overlays mark uncertain segments orange; no adoption writer called.",
+    "comparison": "Source-bound draft versus preserved 023 automatic masks: retained/added/removed pixels, sink/surge areas and nominal area-time only. Do not infer changed event outcomes using old numerators.",
+    "timing": "External exact 1 Hz; full nominal source extent only. Established pre-recording state, interval unmeasured. No inferred induction or experimental baseline.",
+    "uncertainty": "Per-file boundary uncertainty and numbered uncertain segments are review annotations, not statistical confidence intervals. ID402 iso all segments are uncertain."
+  },
+  "budget": {
+    "drafts": 8,
+    "detector_runs": 0,
+    "maximum_source_preview_frames_per_case": 5,
+    "matlab_seconds": 180,
+    "threshold_sweeps": 0
+  },
+  "verification": "Independent native pixel-center polygon replay, connected/hole-free geometry, interior-retention points, default sink border, both sign areas, proposal/source hashes and prior artifact preservation.",
+  "stopping_rule": "One initial draft set. Revise only a documented coordinate/rendering error or explicit source-based boundary review; do not revise to achieve an area or expected state difference.",
+  "approved_masks": [],
+  "approved_windows": [],
+  "frame_exclusions": [],
+  "scientific_eligibility": "not_assessed",
+  "completion": {
+    "proposals": 8,
+    "verification": "passed",
+    "geometry_revisions": 0,
+    "mask_adoptions": 0,
+    "matlab_seconds": 50.168,
+    "layout_repair": "render-02; initial outputs preserved",
+    "report": "docs/reference-results/boi-c02-outline-proposals-20260912/README.md"
+  }
+}

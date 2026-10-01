@@ -1,0 +1,23 @@
+{
+  "schema": "boi-evidence-decision-1",
+  "decision_id": "R5-INSPECT-008",
+  "date": "2026-09-11",
+  "origin": "User-authorized continuation; developer implementation and verification",
+  "scope": "BOI, both signs; read-only saved event inspection and definitions; no detector/statistics rerun",
+  "status": "saved_event_inspection_connected_and_developer_verified",
+  "previous_behavior": "Dictionary and audit evidence available primarily through saved files and MATLAB helper calls.",
+  "decision": "Expose shared definitions and saved event evidence in MATLAB; retain availability, direction disagreements, exact source/identity and open scientific questions.",
+  "new_behavior": "BOI Measurements tab, selected saved/current definitions, read-only event viewer, checksum-gated source pixels and new-folder ingredient exports.",
+  "adopted_display_corrections": [
+    "readable trace/table contrast",
+    "selected row scrolling",
+    "full definition snapshot",
+    "clear stale image errors after reconnect"
+  ],
+  "scientific_changes": [],
+  "native_mask_limit": "Only fixed amplitude footprint present in saved audit; never presented as native frame or anatomical support.",
+  "timing": "Saved HP evidence confirms external 1 Hz; embedded timestamps remain unreliable provenance.",
+  "AQuA2_role": "Exploratory detection files; no substitution for anatomical evidence.",
+  "evidence": "docs/reference-results/boi-event-viewer-20260911/README.md",
+  "next_owned_work": "Extend traceable inspection to native frame masks and recording-summary denominator ingredients without changing measurement rules."
+}

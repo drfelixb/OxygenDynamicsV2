@@ -1,0 +1,68 @@
+{
+  "schema": "boi-publication-history-resolution-1",
+  "decision_id": "R3-PUBLICATION-HISTORY-018",
+  "recorded_utc": "2026-09-12T08:02:21.507453+00:00",
+  "status": "original_publication_membership_resolved",
+  "dandiset": "000891",
+  "version": "0.240215.0831",
+  "source_manifest_path": "docs/planning/boi-cohort-20260910.json",
+  "source_manifest_sha256": "e692d11a3cfc5eabc226efc9f3ccb91c45d80a3a08d27b305de6f5969d575809",
+  "user_statement": "Are those files included in the dandi archive? If so they are part of the science publication.",
+  "decision_origin": "User clarification plus exact asset membership in pinned archive ledger.",
+  "affected_assets": [
+    {
+      "mouse": "FB2314",
+      "session": "FB2314-baseline-awake",
+      "asset_id": "9ce94e52-e1d9-446d-a758-66db41a698e6",
+      "archive_path": "sub-FB2314/sub-FB2314_ses-FB2314-baseline-awake_image.nwb"
+    },
+    {
+      "mouse": "FB2314",
+      "session": "FB2314-baseline-iso",
+      "asset_id": "5ca61eac-9461-44e5-b222-1599aecc7ca8",
+      "archive_path": "sub-FB2314/sub-FB2314_ses-FB2314-baseline-iso_image.nwb"
+    },
+    {
+      "mouse": "FB2315",
+      "session": "FB2315-baseline-awake",
+      "asset_id": "237d26a9-8977-4a97-b46b-206aefeb4c3d",
+      "archive_path": "sub-FB2315/sub-FB2315_ses-FB2315-baseline-awake_image.nwb"
+    },
+    {
+      "mouse": "FB2315",
+      "session": "FB2315-baseline-iso",
+      "asset_id": "353b88f3-b509-4281-8c46-f338094b4907",
+      "archive_path": "sub-FB2315/sub-FB2315_ses-FB2315-baseline-iso_image.nwb"
+    },
+    {
+      "mouse": "ID402",
+      "session": "M402-01-baseline-awake",
+      "asset_id": "f6089c10-cb71-4f49-8185-ba07e4073fb1",
+      "archive_path": "sub-ID402/sub-ID402_ses-M402-01-baseline-awake_image.nwb"
+    },
+    {
+      "mouse": "ID402",
+      "session": "M402-03-baseline-iso",
+      "asset_id": "253f0176-34b4-4fae-9500-29bbde6803e2",
+      "archive_path": "sub-ID402/sub-ID402_ses-M402-03-baseline-iso_image.nwb"
+    },
+    {
+      "mouse": "ID403",
+      "session": "M403-01-baseline-awake",
+      "asset_id": "2d68bdb0-58b0-4d36-8227-4526b8905ebf",
+      "archive_path": "sub-ID403/sub-ID403_ses-M403-01-baseline-awake_image.nwb"
+    },
+    {
+      "mouse": "ID403",
+      "session": "M403-03-baseline-iso",
+      "asset_id": "693a568c-b90a-4e0c-b61d-ca77158c384a",
+      "archive_path": "sub-ID403/sub-ID403_ses-M403-03-baseline-iso_image.nwb"
+    }
+  ],
+  "original_publication_data": true,
+  "later_v2_aqua2_tuning_history": "not_established_by_this_statement",
+  "interpretation": "These are published-data reanalysis candidates. Prior publication is expected and is not automatic exclusion from reanalysis; it must not be confused with previously unseen biological data or proof of development use in the current method.",
+  "scientific_eligibility": "unchanged_not_assessed",
+  "evaluation_roles": "unchanged_not_frozen",
+  "scope": "Resolve original-publication history for the four questioned animals/eight archived sessions. Preserve original audit and freeze preparation as dated evidence; no new data analysis."
+}

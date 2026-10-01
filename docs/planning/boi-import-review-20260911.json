@@ -1,0 +1,32 @@
+{
+  "schema": "boi-evidence-decision-1",
+  "decision_id": "R1-IMPORT-007",
+  "date": "2026-09-11",
+  "origin": "User-authorized continuation; developer implementation and verification",
+  "scope": "BOI import review, both signs; no detector/statistics rerun or IOSI inclusion",
+  "status": "import_review_implemented_and_developer_verified",
+  "decision": "Expose shared acquisition/tissue preflight in MATLAB GUI and batch exports. Separate technical compatibility from scientific eligibility; preserve warnings and block unsupported inputs/import failures.",
+  "previous_behavior": "Acquisition/tissue review available through individual preflight; normal verification did not expose this shared review.",
+  "new_behavior": "BOI Input Review tab, selectable evidence/actions, full-review snapshot and MAT/XLSX/JSON review export.",
+  "user_evidence": {
+    "AQuA2": "the aqua files are likely not helpful. i have been playing around with the aqua2 detection.",
+    "role": "Exploratory detection work, not reviewed anatomical evidence.",
+    "timing": "Previously confirmed precise external 1 Hz remains authoritative; embedded recording clocks remain unreliable provenance."
+  },
+  "standing_requirements": [
+    "BOI only, both signs",
+    "preserve biological variability and unresolved animal identity",
+    "physiological claims remain restricted",
+    "reuse MATLAB verification with no detector rerun",
+    "readable evidence and actionable issues",
+    "source-bound declarations and durable exports"
+  ],
+  "unchanged": [
+    "prior sources and analysis artifacts",
+    "detection and measurement rules",
+    "prior scientific decisions and unresolved questions"
+  ],
+  "evidence": "docs/reference-results/boi-import-review-20260911/README.md",
+  "remaining_release_requirement": "Independent researcher workflow and numerical reproduction walkthrough",
+  "next_independent_owned_work": "Connect saved event inspection and calculation evidence to the MATLAB researcher workflow."
+}

@@ -1,0 +1,51 @@
+% G1 reuse the existing connected-review test fixture; no recording analysis.
+packet=fileparts(mfilename('fullpath'));workspace=fileparts(fileparts(packet));
+addpath(fullfile(workspace,'existing-analysis'));setupOxygenDynamicsPath;
+[~,~,tempRoot]=create_probe_fixture;cleanup=onCleanup(@()rmdir(tempRoot,'s'));
+a=createBOIEventAudit(tempRoot,fullfile(tempRoot,'created'));
+R=loadBOIEventReview(a);D=buildBOIEventReviewData(R,1);
+assert(strcmp(D.TimingReview.Corrected.Status,'not_saved'));
+assert(strcmp(D.TimingReview.Filtered.Status,'not_saved'));
+report=struct('Status','gap_reproduced','FixtureOrigin','tests/analysis/testBOIConnectedReview.m local fixture', ...
+ 'FixtureSourceSHA256',oxygenFileSHA256(fullfile(workspace,'existing-analysis','tests','analysis','testBOIConnectedReview.m')), ...
+ 'CorrectedStage',D.TimingReview.Corrected,'FilteredStage',D.TimingReview.Filtered, ...
+ 'NativeAuditMeasurementsMatch',all(R.Audit.MeasurementMatches),'Frames',R.AnalysisInfo.NFrames, ...
+ 'FrameSize',R.AnalysisInfo.FrameSize,'ScientificCodeChanged',false,'RecordedMovieRuns',0);
+f=fopen(fullfile(packet,'audit-creation-probe.json'),'w');assert(f>=0);fprintf(f,'%s\n',jsonencode(report,PrettyPrint=true));fclose(f);disp(report);
+
+function [statsPath,auditPath,root,masters]=create_probe_fixture
+root=tempname;mkdir(root);source=fullfile(root,'source.tif');raw=100*ones(4,5,80,'uint16');
+raw(1,1,27:28)=80;raw(3,1,27:28)=80;raw(2,1,55:56)=60;
+for f=1:80,if f==1,imwrite(raw(:,:,f),source);else,imwrite(raw(:,:,f),source,'WriteMode','append');end;end
+c=cell(1,80);c(27:28)={1};c{27}=[1;3];c(55:56)={2};
+Sites=table("source-R",1,{c},{[4 5]},80,1,{[27 55]},{[2 2]},{80},{(1:20)'}, ...
+ 'VariableNames',{'RecordingID','SiteID','FramePixels','FrameSize','NFrames','SampleF','Start','Duration','RecAreaSize','EligibleTissuePixels'});
+E=table(repmat("source-R",2,1),[1;1],[1;2],[27;55],[28;56],[100;100],["valid";"valid"],[20;20],[.2;.4],repmat("Unknown",2,1), ...
+ 'VariableNames',{'RecordingID','SinkID','EventID','StartFrame','EndFrame','BaselineValue','BaselineStatus','BaselineValidSamples','NormOxySinkAmp','Condition'});
+E.StartSec=E.StartFrame-1;E.EndSec=E.EndFrame;E.StatsRecordingIndex=ones(2,1);
+[A,T]=auditOxygenEventFootprints(Sites,E,Sites,raw,20,'sink');
+Table_OxygenSinks_Out=Sites;Table_OxygenSinkEvents_Out=E;
+G=renamevars(E,{'SinkID','NormOxySinkAmp'},{'SurgeID','NormOxySurgeAmp'});G.NormOxySurgeAmp=-G.NormOxySurgeAmp;
+GS=renamevars(Sites,{'Start','Duration','RecAreaSize'},{'Start_Surge','Duration_Surge','RecAreaSize_Surge'});
+[B,U]=auditOxygenEventFootprints(GS,G,Sites,raw,20,'surge');
+Table_OxygenSurges_Out=GS;Table_OxygenSurgeEvents_Out=G;Audit=[A;B];Traces=[T;U];
+contract=oxygenPipelineContract();
+AnalysisInfo=struct('RawFile',source,'RawSHA256',oxygenFileSHA256(source),'DenoisedFile','','DenoisedSHA256','', ...
+ 'NFrames',80,'FrameSize',[4 5],'AnalysisParams',createOxygenMasterParams(2,1),'RecordingID','source-R', ...
+ 'SinkEligibleTissuePixels',(1:20)','SurgeEligibleTissuePixels',(1:20)','RecordingAreaUm2',80,'SurgeRecordingAreaUm2',80, ...
+ 'PipelineContract',contract,'AnalysisSchemaVersion',contract.Schema);
+Audit.SourceRawSHA256=repmat(string(AnalysisInfo.RawSHA256),4,1);auditPath=fullfile(root,'event-amplitude-audit.mat');save(auditPath,'Audit','Traces','AnalysisInfo');
+mkdir(fullfile(root,'OxygenSinks_Output'));mkdir(fullfile(root,'OxygenSurges_Output'));
+masters={fullfile(root,'OxygenSinks_Output','OxygenSinks_UrefinedTest.mat'),fullfile(root,'OxygenSurges_Output','OxygenSurgesTest.mat')};
+save(masters{1},'AnalysisInfo','Table_OxygenSinks_Out','Table_OxygenSinkEvents_Out');save(masters{2},'AnalysisInfo','Table_OxygenSurges_Out','Table_OxygenSurgeEvents_Out');
+[C,RecordingInputQC,RecordingFrameExposure]=createBOIRecordingInputContract(AnalysisInfo,"portable-R",[4 5]);BOIInputContracts={C};
+RecordingRegistry=table("portable-R",{'M'},{'Unknown'},{'Unknown'},{'Unknown'},{'Unknown'},false,80,1,80,80,2,"loaded",string(AnalysisInfo.RawSHA256), ...
+ 'VariableNames',{'RecordingID','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim','NFrames','SampleF','RecordingDuration_sec','RecordingArea_um2','PixelSize','AnalysisStatus','RawSHA256'});
+Sites.RecordingID="portable-R";GS.RecordingID="portable-R";E.RecordingID(:)="portable-R";G.RecordingID(:)="portable-R";
+X=table(["portable-R";"portable-R"],["whole";"partial"],[0;26.5],[80;27.5],'VariableNames',{'RecordingID','WindowID','StartSec','EndSec'});
+[RecordingWindowMetrics,WindowFrameIngredients]=createOxygenAnalysisWindows(RecordingRegistry,Sites,E,X);
+[SurgeRecordingWindowMetrics,SurgeWindowFrameIngredients]=createBOISurgeAnalysisWindows(RecordingRegistry,BOIInputContracts,GS,G,X);
+Table_OxygenSinkEvents_OutCombo=E;Table_OxygenSurgeEvents_OutCombo=G;StatsInfo=struct('Recordings',struct('Folder','source-R'));
+statsPath=fullfile(root,'DataOutput.mat');save(statsPath,'RecordingRegistry','BOIInputContracts','RecordingInputQC','RecordingFrameExposure','RecordingWindowMetrics','WindowFrameIngredients', ...
+ 'SurgeRecordingWindowMetrics','SurgeWindowFrameIngredients','Table_OxygenSinkEvents_OutCombo','Table_OxygenSurgeEvents_OutCombo','StatsInfo');
+end

@@ -1,0 +1,48 @@
+function checkMatlabReadiness
+% Frozen source/header import check; no detector or image-pixel interpretation.
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(here,'matlab-01');assert(~isfolder(out));mkdir(out);
+S=jsondecode(fileread(fullfile(here,'source-readiness.json')));
+assert(strcmp(oxygenFileSHA256(fullfile(here,'prespecification.json')),S.SelectionSHA256));
+records=cell(numel(S.Records),1);
+for k=1:numel(S.Records)
+    s=S.Records(k);started=tic;
+    result=struct('MouseLabel',s.MouseLabel,'Status','not_run_source_hold','ScientificEligibility','not_established', ...
+        'DetectorRuns',0,'Error','','ElapsedSec',NaN);
+    if strcmp(s.Status,'ready_for_matlab_import')
+        try
+            assert(strcmp(oxygenFileSHA256(fullfile(s.StageFolder,'BOIInputMetadata.json')),s.MetadataSHA256));
+            Review=reviewBOIRecordingInput(s.StageFolder,1,2.35);
+            save(fullfile(out,[s.MouseLabel '-InputReview.mat']),'Review','s');
+            writetable(Review.QC,fullfile(out,[s.MouseLabel '-QC.csv']));
+            assert(Review.Files.IsValid&&Review.InputCompatible);
+            assert(strcmp(Review.RawSHA256,s.SHA256));
+            assert(strcmp(Review.Status,'descriptive_input_requires_scientific_review'));
+            assert(Review.Files.RawTiffInfo.Frames==s.Header.frames);
+            assert(Review.Files.RawTiffInfo.Width==512&&Review.Files.RawTiffInfo.Height==512);
+            assert(all(isnan(Review.Acquisition.DeclaredFrameValid)));
+            assert(strcmp(Review.ScientificStatus,'not_established'));
+            assert(any(Review.QC.IssueID=="SOURCE-CALIBRATION")&&any(Review.QC.IssueID=="SOURCE-HISTORY"));
+            if strcmp(s.MouseLabel,'FB2410')
+                assert(any(Review.QC.IssueID=="SOURCE-TRIGGER-CONFLICT"));
+                assert(~any(Review.QC.Disposition=="hold_recording"));
+            end
+            result.Status=Review.Status;result.SHA256=Review.RawSHA256;
+            result.Frames=Review.Files.RawTiffInfo.Frames;result.QC=table2struct(Review.QC);
+            result.Acquisition=Review.Acquisition;
+            result.MetadataSHA256=Review.MetadataSnapshot.SHA256;
+        catch err
+            result.Status='technical_hold';result.Error=[err.identifier ': ' err.message];
+        end
+    end
+    result.ElapsedSec=toc(started);records{k}=result;
+    fprintf('%s: %s (%.2f seconds)\n',s.MouseLabel,result.Status,result.ElapsedSec);
+end
+report=struct('DecisionID','R3-TRANSFER-READINESS-070','Records',{records}, ...
+    'MATLABVersion',version,'DetectorRuns',0,'ImagePixelInterpretation',false,'EvaluationFrozen',false);
+fid=fopen(fullfile(out,'readiness.json'),'w');assert(fid>=0);
+fprintf(fid,'%s\n',jsonencode(report,'PrettyPrint',true));fclose(fid);
+assert(all(cellfun(@(r)strcmp(r.Status,'descriptive_input_requires_scientific_review'),records)), ...
+    'One or more candidates held; retain report and do not substitute cases.');
+end

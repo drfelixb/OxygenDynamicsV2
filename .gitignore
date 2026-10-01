@@ -34,6 +34,14 @@ old Versions/
 *.mp4
 *.zip
 
+# Local validation payloads; keep narrative records and archived MATLAB recipes
+docs/reference-results/**/*
+!docs/reference-results/**/
+!docs/reference-results/**/*.md
+!docs/reference-results/**/*.m.txt
+*.bin
+*.npz
+
 # Credentials and local configuration
 .env
 .env.*

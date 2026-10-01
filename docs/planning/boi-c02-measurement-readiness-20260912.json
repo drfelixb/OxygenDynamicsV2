@@ -1,0 +1,30 @@
+{
+  "decision_id": "R1-C02-READINESS-027",
+  "status": "requirements_consolidated_next_descriptive_run_specified",
+  "scope": "Consolidate existing evidence for eight sources / four recent C02 mice against all 14 dictionary entries. BOI both signs only. The full C02 candidate comparison has seven mice; the other three do not inherit this scoped review.",
+  "method": "Join source-bound 023/024 records, 025/026 diagnostics and the unchanged dictionary. Inspect implementation for direct denominator dependencies. Separate arithmetic prerequisites, available evidence, uncomputed event results and scientific claim admission.",
+  "budget": {
+    "new_source_pixel_reads": 0,
+    "detector_runs": 0,
+    "registration_runs": 0,
+    "recording_rows": 8,
+    "measurement_rows": 14,
+    "recording_measurement_rows": 112
+  },
+  "success": "Complete unique 8x14 mapping, consistent source identities/calibration/nominal time, dictionary version preserved, numeric nominal support ingredients reproduce earlier audit, prior evidence and implementation unchanged.",
+  "stop": "Deliver a reviewable measurement-specific decision record and one concrete bounded descriptive workflow specification; no masks, exposure windows, censoring policy or scientific contrast adopted.",
+  "approved_masks": [],
+  "approved_windows": [],
+  "excluded_frames": [],
+  "scientific_eligibility": "not_assessed",
+  "completion": {
+    "recordings": 8,
+    "measurements": 14,
+    "recording_measurement_rows": 112,
+    "dictionary_version": "0.3.0-draft",
+    "declaration_parser_check": "passed",
+    "next_run_executed": false,
+    "report": "docs/reference-results/boi-c02-measurement-readiness-20260912/README.md",
+    "verification": "passed"
+  }
+}

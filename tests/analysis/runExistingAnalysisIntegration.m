@@ -80,5 +80,24 @@ assert(contains(definitions.OutputLocation(definitions.MetricName=="CloseNativeR
 assert(ismember('SurgeSiteEventRate_per_min',sheetnames(result.OutputXlsx)));
 assert(all(ismember(["ContactFrameCount" "ContactFrameFootprintFraction" "ContactEventFrames"],definitions.MetricName)));
 assert(isfile(result.OutputXlsx));
+% The normal statistics path must carry the shared BOI calculation contract.
+dictionary=readtable(result.OutputXlsx,'Sheet','BOIMeasurementDictionary','TextType','string');
+assert(isequal(dictionary,getBOIMeasurementDictionary()));
+assert(isfile(fullfile(fileparts(result.OutputXlsx),'BOIMeasurementGuide.md')));
+sidecar=jsondecode(fileread(fullfile(fileparts(result.OutputXlsx),'BOIMeasurementDictionary.json')));
+[~,expectedDictionary]=getBOIMeasurementDictionary();
+assert(isequaln(sidecar,expectedDictionary));
+assert(height(D.RecordingFrameExposure)==200);
+assert(all(isnan(D.RecordingFrameExposure.CameraExposureSec)));
+assert(all(isnan(D.RecordingFrameExposure.DeclaredFrameValid)));
+assert(all(D.RecordingFrameExposure.ModeledFrameIncluded));
+assert(all(D.RecordingRegistry.AcquisitionMetadataState=="not_supplied"));
+assert(any(D.RecordingInputQC.IssueID=="R1-EXPOSURE-UNKNOWN"));
+assert(isfile(fullfile(fileparts(result.OutputXlsx),'WindowFrameIngredients.csv')));
+assert(isfile(fullfile(fileparts(result.OutputXlsx),'RecordingInputReview.md')));
+assert(D.RecordingWindowMetrics.CoveredAreaTime_um2_sec(2)==0);
+assert(D.RecordingWindowMetrics.AnalyzedTissueTime_um2_sec(2)>0);
+acceptance=readtable(result.OutputXlsx,'Sheet','StatsAcceptance','TextType','string');
+assert(any(contains(acceptance.Item,"R1-EXPOSURE-UNKNOWN") & acceptance.Status=="REVIEW"));
 fprintf('Known-event and zero-event integration passed: %s\n',root);
 end

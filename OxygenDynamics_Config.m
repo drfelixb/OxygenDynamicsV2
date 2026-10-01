@@ -8,6 +8,7 @@ function Config = OxygenDynamics_Config()
 Config = struct();
 
 Config.OxygenWrapper = struct();
+Config.OxygenWrapper.BOISupportProfile = 'whole-image'; % Explicit legacy default; reviewed ROI is craniotomy-roi-1.
 Config.OxygenWrapper.inputCsv = 'GFAP_GeNL_Ctrl.csv';
 Config.OxygenWrapper.interactive = false;
 Config.OxygenWrapper.reanalyseExisting = true;

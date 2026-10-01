@@ -1,0 +1,27 @@
+{
+  "schema": "boi-evidence-decision-1",
+  "decision_id": "R5-NATIVE-009",
+  "date": "2026-09-11",
+  "origin": "User-authorized continuation; developer implementation and verification",
+  "scope": "BOI native event-mask inspection, both signs; no detector/statistics rerun",
+  "status": "native_inspection_implemented_and_developer_verified",
+  "previous_behavior": "Saved event viewer could show only the fixed amplitude footprint.",
+  "decision": "Add explicit master attachment with identity/metadata/timing/union checks; keep native masks separate from fixed quantification support and anatomical tissue.",
+  "historical_limit": "Original audit did not bind the master file checksum; the new attachment cannot prove historical per-frame identity from union/bounds agreement alone.",
+  "new_evidence": [
+    "Master SHA256 and attachment time",
+    "Selected-event native frame pixels",
+    "Per-frame support counts and explicit known-empty frames"
+  ],
+  "standing_requirements": [
+    "Preserve both signs and changing morphology",
+    "No physiological/anatomical acceptance from detected support",
+    "Selected master tables and one source frame at a time; no movie reanalysis",
+    "Clear display modes and actionable failures",
+    "Original audit and prior exports preserved"
+  ],
+  "timing": "User-confirmed external 1 Hz; embedded clocks remain unreliable provenance",
+  "scientific_changes": [],
+  "evidence": "docs/reference-results/boi-native-inspection-20260911/README.md",
+  "next_owned_work": "Connect saved recording-level denominator ingredients and measurement definitions in MATLAB."
+}

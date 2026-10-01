@@ -1,0 +1,172 @@
+{
+  "DecisionID": "R2-BASELINE-COMPARISON-037",
+  "Status": "controlled_comparison_complete_baseline_choice_open",
+  "InputCases": 208,
+  "ReferenceReadouts": 416,
+  "OriginalSavedInputs": 144,
+  "NewFluctuatingInputs": 64,
+  "ProductionChanged": false,
+  "DetectorRuns": 0,
+  "StatisticsRuns": 0,
+  "KineticsEstimated": false,
+  "Verification": {
+    "Status": "arithmetic_passed_with_near_zero_sign_flag_disagreements",
+    "NearZeroSignFlagDisagreements": [
+      {
+        "CaseID": "B005",
+        "Reference": "linear_20s",
+        "MATLABAmplitudeFraction": -1.13686837721616e-16,
+        "IndependentAmplitudeFraction": -0.0,
+        "MATLABNegativeFlag": 1.0,
+        "IndependentNegativeFlag": 0.0
+      },
+      {
+        "CaseID": "B017",
+        "Reference": "linear_20s",
+        "MATLABAmplitudeFraction": -1.13686837721616e-16,
+        "IndependentAmplitudeFraction": -0.0,
+        "MATLABNegativeFlag": 1.0,
+        "IndependentNegativeFlag": 0.0
+      },
+      {
+        "CaseID": "B029",
+        "Reference": "linear_20s",
+        "MATLABAmplitudeFraction": -1.13686837721616e-16,
+        "IndependentAmplitudeFraction": -0.0,
+        "MATLABNegativeFlag": 1.0,
+        "IndependentNegativeFlag": 0.0
+      }
+    ],
+    "InputCases": 208,
+    "Readouts": 416,
+    "IndependentMetricComparisons": 8320,
+    "MaxMetricAbsError": 1.1368683772161603e-11,
+    "ReferenceSampleRows": 9520,
+    "MaxReferenceSampleAbsError": 1.3642420526593924e-11,
+    "NewFluctuatingInputsExactSHA256Matches": 64,
+    "NewSourceTraceMaxAbsError": 5.002220859751105e-12,
+    "KnownNoEventSourceMaxAbsError": 5.6843418860808015e-12,
+    "Original144TraceMaxAbsError": 0.0,
+    "Original144ConstantResultsPreserved": true,
+    "MatlabImplementationFilesUnchanged": 467,
+    "Prior036SealedFilesPreserved": 68,
+    "UnavailableReadouts": 0,
+    "Limit": "Single shared noise realization; no biological inference, automatic winner or production-method adoption."
+  },
+  "Resources": {
+    "MainMatlabSeconds": 12.791233375,
+    "MainProcessSeconds": 22.54,
+    "MaximumResidentBytes": 1325662208,
+    "PeakMemoryFootprintBytes": 866077576,
+    "Workers": 0,
+    "BiologicalSourcesCopiedOrReprocessed": 0,
+    "TargetProcessSeconds": 120,
+    "TargetEvidenceBytes": 104857600
+  },
+  "Overview": [
+    {
+      "Arm": "smooth",
+      "NoiseFraction": 0,
+      "Reference": "constant_20s",
+      "Cases": 72,
+      "MedianAbsoluteAmplitudeError_pp": 0.6415345642656376,
+      "MaxAbsoluteAmplitudeError_pp": 7.71713548979821,
+      "MedianAbsoluteAUCError_sec": 0.09131882529334395,
+      "MaxAbsoluteAUCError_sec": 2.96923979045059,
+      "WrongInjectedDirectionCases": 0,
+      "NonzeroInjectionCases": 48
+    },
+    {
+      "Arm": "smooth",
+      "NoiseFraction": 0,
+      "Reference": "linear_20s",
+      "Cases": 72,
+      "MedianAbsoluteAmplitudeError_pp": 0.00127609181438161,
+      "MaxAbsoluteAmplitudeError_pp": 0.372853415049201,
+      "MedianAbsoluteAUCError_sec": 0.000373987812938459,
+      "MaxAbsoluteAUCError_sec": 0.0858349481734075,
+      "WrongInjectedDirectionCases": 0,
+      "NonzeroInjectionCases": 48
+    },
+    {
+      "Arm": "smooth",
+      "NoiseFraction": 0.005,
+      "Reference": "constant_20s",
+      "Cases": 72,
+      "MedianAbsoluteAmplitudeError_pp": 0.5470291810821499,
+      "MaxAbsoluteAmplitudeError_pp": 7.61483657671168,
+      "MedianAbsoluteAUCError_sec": 0.09784774987323691,
+      "MaxAbsoluteAUCError_sec": 2.98736512344994,
+      "WrongInjectedDirectionCases": 0,
+      "NonzeroInjectionCases": 48
+    },
+    {
+      "Arm": "smooth",
+      "NoiseFraction": 0.005,
+      "Reference": "linear_20s",
+      "Cases": 72,
+      "MedianAbsoluteAmplitudeError_pp": 0.26923272289760003,
+      "MaxAbsoluteAmplitudeError_pp": 0.7677557441111861,
+      "MedianAbsoluteAUCError_sec": 0.003547625142527045,
+      "MaxAbsoluteAUCError_sec": 0.119815222359255,
+      "WrongInjectedDirectionCases": 0,
+      "NonzeroInjectionCases": 48
+    },
+    {
+      "Arm": "fluctuating",
+      "NoiseFraction": 0,
+      "Reference": "constant_20s",
+      "Cases": 32,
+      "MedianAbsoluteAmplitudeError_pp": 3.086946654096845,
+      "MaxAbsoluteAmplitudeError_pp": 4.96655388314629,
+      "MedianAbsoluteAUCError_sec": 0.236183540397392,
+      "MaxAbsoluteAUCError_sec": 0.661453559715814,
+      "WrongInjectedDirectionCases": 0,
+      "NonzeroInjectionCases": 16
+    },
+    {
+      "Arm": "fluctuating",
+      "NoiseFraction": 0,
+      "Reference": "linear_20s",
+      "Cases": 32,
+      "MedianAbsoluteAmplitudeError_pp": 5.6747696330325095,
+      "MaxAbsoluteAmplitudeError_pp": 12.168556925575901,
+      "MedianAbsoluteAUCError_sec": 1.307556560391835,
+      "MaxAbsoluteAUCError_sec": 1.48147625269105,
+      "WrongInjectedDirectionCases": 4,
+      "NonzeroInjectionCases": 16
+    },
+    {
+      "Arm": "fluctuating",
+      "NoiseFraction": 0.005,
+      "Reference": "constant_20s",
+      "Cases": 32,
+      "MedianAbsoluteAmplitudeError_pp": 3.254954989769015,
+      "MaxAbsoluteAmplitudeError_pp": 5.21660594202379,
+      "MedianAbsoluteAUCError_sec": 0.239526970122839,
+      "MaxAbsoluteAUCError_sec": 0.672422416174357,
+      "WrongInjectedDirectionCases": 0,
+      "NonzeroInjectionCases": 16
+    },
+    {
+      "Arm": "fluctuating",
+      "NoiseFraction": 0.005,
+      "Reference": "linear_20s",
+      "Cases": 32,
+      "MedianAbsoluteAmplitudeError_pp": 5.8327480721930405,
+      "MaxAbsoluteAmplitudeError_pp": 12.332196499564601,
+      "MedianAbsoluteAUCError_sec": 1.30702673470818,
+      "MaxAbsoluteAUCError_sec": 1.47648754271341,
+      "WrongInjectedDirectionCases": 4,
+      "NonzeroInjectionCases": 16
+    }
+  ],
+  "Interpretation": "The pre-event line reduces error for smooth decay but can amplify a fluctuation and reverse an injected direction. Neither reference is accepted as a physiological correction by these fixtures.",
+  "ScientificLimits": [
+    "Known support and event timing, not detected biological events.",
+    "Shared sinusoid and decay rates are illustrative; one saved noise realization.",
+    "Reference positivity was satisfied in all cases; invalid-reference branches are not validated by this matrix.",
+    "Net local source change versus deviation from an expected/shared signal remains unresolved."
+  ],
+  "Next": "Integrate an explicitly diagnostic baseline-sensitivity view into existing MATLAB event review, preserving all original measurements and avoiding automatic corrections or exclusions."
+}

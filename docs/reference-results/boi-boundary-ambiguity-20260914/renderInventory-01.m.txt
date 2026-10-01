@@ -1,0 +1,60 @@
+function renderInventory
+root=fileparts(mfilename('fullpath'));timer=tic;
+S=jsondecode(fileread(fullfile(root,'inventory.json')));if iscell(S),S=vertcat(S{:});end
+out=fullfile(root,'review');assert(~isfolder(out));mkdir(out);
+for k=1:numel(S)
+ c=S(k);T=c.Trace;B=c.Branches;if iscell(B),B=vertcat(B{:});end
+ marks=[c.Marks.Onsets(:);c.Marks.Offsets(:);c.Marks.CoordinateSensitivity(:)];
+ lo=B(1).FrozenT2.SearchLower;hi=B(1).FrozenT2.SearchUpper;
+ lim=[max(1,min([lo-20;marks-5])),min(numel(T.Frame),max([hi+20;marks+5]))];
+ f=figure('Visible','off','Color','w','Position',[20 20 1600 1100]);clean=onCleanup(@()close(f));
+ tl=tiledlayout(f,3,2,'TileSpacing','compact','Padding','compact');
+ title(tl,sprintf('Example %d | %s | saved %s site %d / event %d',c.ReviewOrder,c.RecordingKey,c.EventType,c.SiteID,c.EventID),'Interpreter','none');
+ subtitle(tl,'Corrected intensity primary. Circles = eligible shoulders; red diamond = saved seed. Green lines = researcher marks, not accepted automatic bounds.','FontSize',10);
+ for j=1:2
+  b=B(j);d=b.FrozenT2;H=b.Shoulders;if iscell(H),H=vertcat(H{:});end
+  ax=nexttile(tl,j);hold(ax,'on');plot(ax,T.Frame,T.Corrected,'Color',[.1 .32 .6],'LineWidth',1,'DisplayName','Corrected intensity');
+  if ~isempty(H)
+   frames=[H.RepresentativeFrame];scatter(ax,frames,T.Corrected(frames),30,[.5 .2 .6],'o','DisplayName','All eligible shoulders');
+   for method={'T2','T3'}
+    dd=b.(['Frozen' method{1}]);fr=[dd.StartFrame dd.EndFrame];fr=fr(isfinite(fr));
+    if ~isempty(fr)
+     symbol='s';color=[0 .5 .7];if strcmp(method{1},'T3'),symbol='x';color=[.7 .25 0];end
+     plot(ax,fr,T.Corrected(fr),symbol,'LineStyle','none','Color',color,'MarkerSize',9,'LineWidth',1.5,'DisplayName',[method{1} ' saved choices']);
+    end
+   end
+  end
+  if isfinite(d.Seed),plot(ax,d.Seed,T.Corrected(d.Seed),'d','Color',[.7 .05 .1],'MarkerFaceColor',[.7 .05 .1],'DisplayName','Frozen seed');end
+  common(ax,c,d,lim);ylabel(ax,'Corrected intensity');
+  countLeft=0;countRight=0;if ~isempty(H),countLeft=nnz(strcmp({H.Side},'onset'));countRight=nnz(strcmp({H.Side},'recovery'));end
+  label='Declining branch';if b.Direction>0,label='Rising branch';end
+  title(ax,sprintf('%s | %d onset / %d recovery shoulders\n%s',label,countLeft,countRight,strrep(b.Status,'_',' ')),'FontSize',10);
+  legend(ax,'Location','southoutside','NumColumns',3,'FontSize',8);
+  ax=nexttile(tl,j+2);hold(ax,'on');plot(ax,T.Frame,T.Filtered,'Color',[.85 .4 0],'LineWidth',1,'DisplayName','Event-footprint filtered score');
+  plot(ax,T.Frame,T.Site,':','Color',[.35 .35 .35],'LineWidth',1,'DisplayName','Site trace (different support)');
+  if ~isempty(H),frames=[H.RepresentativeFrame];scatter(ax,frames,T.Filtered(frames),12,[.5 .2 .6],'o','HandleVisibility','off');end
+  common(ax,c,d,lim);ylabel(ax,'Saved detection scores');title(ax,'Supporting signals at the same eligible frames; no score ranking','FontSize',10);
+  legend(ax,'Location','southoutside','NumColumns',2,'FontSize',8);
+ end
+ ax=nexttile(tl,5,[1 2]);hold(ax,'on');plot(ax,T.Frame,T.Raw,'Color',[.2 .2 .2],'LineWidth',1);
+ common(ax,c,B(1).FrozenT2,lim);ylabel(ax,'Preserved raw mean');
+ title(ax,'Raw context only: no new correction, trend fit, amplitude reference or event acceptance','FontSize',10);
+ if isempty(c.Marks.Onsets)&&isempty(c.Marks.Offsets)
+  text(ax,.02,.92,'Researcher did not recognize this event; no human boundaries assigned.','Units','normalized','Color',[.55 .1 .1],'FontWeight','bold');
+ end
+ note=sprintf('Search %d–%d; native %d–%d. Left barriers: %s. Right barriers: %s.',lo,hi,c.NativeBounds(1),c.NativeBounds(2),strjoin(string(B(1).FrozenT2.LeftBarriers),', '),strjoin(string(B(1).FrozenT2.RightBarriers),', '));
+ xlabel(ax,{ 'One-based recording frame; modeled seconds = frame - 1 at external 1 Hz',note},'Interpreter','none','FontSize',9);
+ drawnow;exportgraphics(f,fullfile(out,sprintf('example-%02d.png',c.ReviewOrder)),'Resolution',110);clear clean;
+ assert(toc(timer)<600,'Rendering exceeded diagnostic runtime limit.');
+end
+report=struct('Status','passed','Figures',numel(S),'RuntimeSeconds',toc(timer));
+fid=fopen(fullfile(root,'render-verification.json'),'w');fprintf(fid,'%s\n',jsonencode(report,'PrettyPrint',true));fclose(fid);disp(report);
+end
+function common(ax,c,d,lim)
+xlim(ax,lim);grid(ax,'on');xlabel(ax,'Recording frame (one-based)');
+for frame=[d.SearchLower d.SearchUpper],xline(ax,frame,':','Color',[.35 .35 .35],'LineWidth',1.3,'HandleVisibility','off');end
+for frame=c.NativeBounds(:)',xline(ax,frame,'--','Color',[.6 .6 .65],'HandleVisibility','off');end
+for frame=c.Marks.Onsets(:)',xline(ax,frame,'-','Color',[0 .5 .25],'LineWidth',1.2,'HandleVisibility','off');end
+for frame=c.Marks.Offsets(:)',xline(ax,frame,'--','Color',[0 .5 .25],'LineWidth',1.2,'HandleVisibility','off');end
+for frame=c.Marks.CoordinateSensitivity(:)',xline(ax,frame,':','Color',[.6 .6 .25],'HandleVisibility','off');end
+end

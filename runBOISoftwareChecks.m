@@ -1,0 +1,16 @@
+function Results=runBOISoftwareChecks()
+%RUNBOISOFTWARECHECKS Bounded BOI regression gate; no external recording data.
+root=setupOxygenDynamicsPath;addpath(fullfile(root,'tests','analysis'));
+names={'testPipelineContract','testBOIRecordingInputContract','testBOITissueSupport', ...
+    'testBOIStrictROISupport','testBOIImportReview','testBOIEventReview', ...
+    'testBOIWindowReview','testBOIConnectedReview','testBOIReviewedOptical', ...
+    'testBOITemporalContext','testBOISavedMeasurementSupport','testBOISurgeWindows', ...
+    'testBOIRecordingWorkflow'};
+suites=cell(1,numel(names));
+for k=1:numel(names)
+    suites{k}=matlab.unittest.TestSuite.fromFile(fullfile(root,'tests','analysis',[names{k} '.m']));
+end
+Results=run([suites{:}]);
+assert(~isempty(Results)&&all([Results.Passed])&&~any([Results.Incomplete]), ...
+    'OxygenDynamics:BOIRegressionFailed','BOI regression gate failed or was incomplete. Inspect the MATLAB test report.');
+end

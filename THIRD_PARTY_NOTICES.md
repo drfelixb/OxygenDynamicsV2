@@ -21,6 +21,11 @@ starting revision and modification history of the TIFF helpers are also not
 recorded. These provenance details should be captured if older source archives
 become available.
 
+Local change, 10 September 2026: `abfload.m` uses the first backslash when
+extracting an ABF2 protocol path. Using all backslash positions as the start of
+a colon expression failed for ordinary nested Windows paths in original BOI
+acquisition files. Signal decoding and calibration formulas are unchanged.
+
 ## abfload
 
 Copyright (c) 2009, Forrest Collman

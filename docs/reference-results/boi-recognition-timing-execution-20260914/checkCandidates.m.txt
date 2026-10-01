@@ -1,0 +1,35 @@
+root=fileparts(mfilename('fullpath'));addpath(root);checks={};
+shapes={ [2 0 1 4 1 0 2],4,[2 6],[2 6]; [2 0 3 2 5 2 3 0 2],5,[4 6],[2 8]; [2 0 0 1 4 4 1 0 0 2],[5 6],[3 8],[3 8]; [2 0 4 1 4 0 2],[3 4 5],[2 4],[2 6]; [2 0 4 0 3 0 2],3,[2 4],[2 4]};
+for k=1:size(shapes,1)
+ for direction=[-1 1]
+  for scale=[1 3]
+   for shift=[0 17]
+    y=direction*(scale*shapes{k,1}+shift);native=shapes{k,2};B=bounds(native);
+    for method={'T2','T3'}
+     D=diagnoseCandidate(y,100+y,false(size(y)),native,1,numel(y),direction,method{1},'sink',B);expected=shapes{k,3+strcmp(method{1},'T3')};assert(strcmp(D.TimingStatus,'complete')&&isequal([D.StartFrame D.EndFrame],expected));
+     assert(D.CompetingSeed==(k==4));if k==3,assert(isequal(D.OnsetPlateau,[2 3])&&isequal(D.SeedPlateau,[5 6])&&isequal(D.RecoveryPlateau,[8 9]));end
+     checks{end+1}=struct('Family',k,'Direction',direction,'Scale',scale,'Shift',shift,'Candidate',method{1},'Passed',true);
+    end
+   end
+  end
+ end
+end
+for y={ones(1,9),1:9,[NaN NaN NaN]}
+ v=y{1};D=diagnoseCandidate(v,100+v,false(size(v)),ceil(numel(v)/2),1,numel(v),1,'T2','surge',bounds(ceil(numel(v)/2)));assert(~strcmp(D.TimingStatus,'complete'));checks{end+1}=struct('Family','flat_monotonic_missing','Passed',true);
+end
+v=[2 0 NaN 1 4 1 0 2];D=diagnoseCandidate(v,100+v,false(size(v)),5,1,8,1,'T2','surge',bounds(5));assert(strcmp(D.TimingStatus,'partial_shoulders')&&isnan(D.StartFrame)&&D.EndFrame==7&&ismember('nonfinite_sample',D.LeftBarriers));checks{end+1}=struct('Family','nonfinite_barrier','Passed',true);
+v=[2 0 1 4 1 0 2];B=bounds(4);B.PreviousNativeEnd=1;D=diagnoseCandidate(v,100+v,false(size(v)),4,3,7,1,'T2','surge',B);assert(strcmp(D.TimingStatus,'partial_shoulders')&&ismember('same_site_neighbor_partition',D.LeftBarriers));checks{end+1}=struct('Family','neighbor_partition','Passed',true);
+v=[4 1 0 2];D=diagnoseCandidate(v,100+v,false(size(v)),1,1,4,1,'T2','surge',bounds(1));assert(strcmp(D.TimingStatus,'seed_not_bracketed_peak')&&ismember('acquisition_boundary',D.LeftBarriers));checks{end+1}=struct('Family','acquisition_truncated_peak','Passed',true);
+for height=[0.5 5]
+ v=ones(1,60);v(25:31)=[2 0 height 0 2 1 1];overlap=false(size(v));D=diagnoseCandidate(v,100+v,overlap,27,1,60,1,'T2','surge',bounds(27));assert(strcmp(D.TimingStatus,'complete'));
+ assert(strcmp(D.Context{1}.ScreenStatus,ternary(height>1,'exceeds_both_context_ranges','does_not_exceed_both_context_ranges')));assert(strcmp(D.Amplitude.Status,'valid'));
+ overlap(6)=true;E=diagnoseCandidate(v,100+v,overlap,27,1,60,1,'T2','surge',bounds(27));assert(strcmp(E.Amplitude.Status,'insufficient_clean_prebaseline')&&strcmp(E.Context{1}.ScreenStatus,D.Context{1}.ScreenStatus));checks{end+1}=struct('Family','context_variability_and_overlap','Height',height,'Passed',true);
+end
+v=ones(1,60);v(25:31)=[1 0 5 0 1 1 1];D=diagnoseCandidate(v,100+v,false(size(v)),27,1,60,1,'T2','surge',bounds(27));assert(strcmp(D.Context{1}.Before.RatioStatus,'zero_context_range')&&isnan(D.Context{1}.Before.ProminenceRangeRatio));checks{end+1}=struct('Family','flat_context_ratio','Passed',true);
+f=fopen(fullfile(root,'known-shape-checks.json'),'w');fprintf(f,'%s\n',jsonencode(struct('Status','passed','AssertionsGroups',numel(checks),'Checks',{checks}),'PrettyPrint',true));fclose(f);fprintf('Known-shape groups passed: %d\n',numel(checks));
+function B=bounds(native)
+B=struct('NativeStart',min(native),'NativeEnd',max(native),'PreviousNativeEnd',NaN,'NextNativeStart',NaN);
+end
+function s=ternary(c,a,b)
+if c,s=a;else,s=b;end
+end

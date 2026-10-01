@@ -1,0 +1,10 @@
+function [Fig,UI]=openFB2420Revision04(queuePosition)
+% Open the frozen queue with explicit cumulative researcher revision 4.
+if nargin<1,queuePosition=5;end
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(fileparts(here)));
+addpath(fullfile(root,'reference-validation','boi-fb2420-first-roi-run-20260915'));
+[Fig,UI]=openFB2420Review(queuePosition);
+p=fullfile(here,'BOI-researcher-review-04.json');
+assert(strcmp(oxygenFileSHA256(p),'9650ede320ad2171eaa041843e8a64393b6bc369f49da1b02bc976dd5711ea1c'),'Researcher revision changed.');
+UI.LoadBoundaries(p);
+end

@@ -1,0 +1,86 @@
+root=fileparts(mfilename('fullpath'));ws=fileparts(fileparts(root));repo=fullfile(ws,'existing-analysis');cd(repo);setupOxygenDynamicsPath;
+out=fullfile(root,'run-01');assert(~isfolder(out));mkdir(out);copyfile(mfilename('fullpath')+".m",fullfile(out,'executed-runComparison.m'));timer=tic;
+R=struct('DecisionID','R2-BASELINE-COMPARISON-037','Status','started','MatlabVersion',version,'PrespecSHA256',oxygenFileSHA256(fullfile(root,'prespecification.json')),'GeneratorSHA256',oxygenFileSHA256(fullfile(out,'executed-runComparison.m')),'DetectorRuns',0,'StatisticsRuns',0,'ProductionChanged',false);
+try
+ spec=jsondecode(fileread(fullfile(root,'prespecification.json')));for i=1:numel(spec.Inputs),assert(strcmp(oxygenFileSHA256(spec.Inputs(i).path),spec.Inputs(i).sha256));end
+ code=createOxygenRegressionCodeManifest(repo);writetable(code,fullfile(out,'code-manifest-before.csv'));R.Contract=oxygenPipelineContract('craniotomy-roi-1');
+ prior=fullfile(ws,'reference-validation','boi-substrate-challenge-20260912','run-01');A=load(fullfile(prior,'baseline-fixtures.mat'));assert(isequal(size(A.BaselineTraces),[144,600]));bn=A.bn;mask=A.mask;px=find(mask);assert(isequal(size(bn),[8,8,600])&&numel(px)==16);
+ fid=fopen(fullfile(out,'saved-noise-float64-le.bin'),'w','ieee-le');assert(fid>0);fwrite(fid,bn,'double');fclose(fid);R.SavedNoiseSHA256=oxygenFileSHA256(fullfile(out,'saved-noise-float64-le.bin'));
+ Traces=zeros(208,600);NoEventSources=Traces;cases=cell(208,1);
+ for ci=1:144
+  a=A.Btable(ci,:);Traces(ci,:)=A.BaselineTraces(ci,:);NoEventSources(ci,:)=2000*exp(-log(2)*(0:599)/a.HalfLifeSec);
+  cases{ci}=struct('CaseID',string(a.CaseID),'Arm',"smooth",'Kind',string(a.Kind),'HalfLifeSec',a.HalfLifeSec,'DurationSec',a.DurationSec,'LocalFraction',a.LocalFraction,'NoiseFraction',a.NoiseFraction,'PhaseRadians',NaN,'SourceSHA256',string(a.SourceSHA256),'SourceTraceSHA256',string(hashArray(Traces(ci,:))),'PriorAmplitudeFraction',a.AmplitudeFraction,'PriorSignedAUC_sec',a.SignedAUC_sec);
+ end
+ wi=0;kinds=["sink","sink","surge","surge"];components=[-.02,0,0,.02];
+ for hl=[Inf,1200]
+  for phase=[0,pi/2,pi,3*pi/2]
+   bg=2000*exp(-log(2)*(0:599)/hl).*(1+.03*sin(2*pi*((1:600)-300)/30+phase));
+   for k=1:4
+    pulse=zeros(1,600);pulse(300:319)=components(k);
+    for ns=[0,.005]
+     wi=wi+1;ci=144+wi;Raw=single(reshape(bg.*(1+pulse),1,1,600)+2000*ns*bn);flat=reshape(Raw,64,600);Traces(ci,:)=mean(double(flat(px,:)),1);NoEventSources(ci,:)=bg;
+     cases{ci}=struct('CaseID',string(sprintf('W%03d',wi)),'Arm',"fluctuating",'Kind',kinds(k),'HalfLifeSec',hl,'DurationSec',20,'LocalFraction',components(k),'NoiseFraction',ns,'PhaseRadians',phase,'SourceSHA256',string(hashArray(Raw)),'SourceTraceSHA256',string(hashArray(Traces(ci,:))),'PriorAmplitudeFraction',NaN,'PriorSignedAUC_sec',NaN);
+    end
+   end
+  end
+ end
+ assert(wi==64);CaseTable=struct2table(vertcat(cases{:}));writetable(CaseTable,fullfile(out,'input-cases.csv'));
+ SourceTable=table(repelem(CaseTable.CaseID,600),repmat((1:600)',208,1),reshape(Traces',[],1),reshape(NoEventSources',[],1),'VariableNames',{'CaseID','Frame','SourceMean','NoiselessNoEventSource'});writetable(SourceTable,fullfile(out,'source-traces.csv'));clear SourceTable
+ rows=cell(416,1);samples=cell(208,1);b=280:299;replayErr=0;
+ for ci=1:208
+  c=cases{ci};raw=Traces(ci,:);bg=NoEventSources(ci,:);event=300:299+c.DurationSec;B=mean(raw(b));x=b-mean(b);fit=polyfit(x,raw(b),1);frames=[b,event];constant=B*ones(size(frames));linear=polyval(fit,frames-mean(b));oq=raw(event)./bg(event)-1;
+  oracleAmp=getAmp(oq,c.Kind);trueAmp=abs(c.LocalFraction);truthAUC=c.LocalFraction*c.DurationSec;
+  samples{ci}=table(repmat(c.CaseID,numel(frames),1),frames',ismember(frames,b)',ismember(frames,event)',raw(frames)',bg(frames)',constant',linear', ...
+   ((raw(frames)-constant)./constant)',((raw(frames)-linear)./linear)',(raw(frames)./bg(frames)-1)', ...
+   'VariableNames',{'CaseID','Frame','CleanBaseline','EventWindow','SourceMean','NoiselessNoEventSource','ConstantReference','LinearReference','ConstantChangeFraction','LinearChangeFraction','OracleChangeFraction'});
+  for ri=1:2
+   names=["constant_20s","linear_20s"];if ri==1,reference=constant(21:end);else,reference=linear(21:end);end
+   reason="valid";if numel(b)~=20||any(~isfinite(raw(b))),reason="incomplete_or_nonfinite_baseline";elseif ~isfinite(B)||B<=0,reason="nonpositive_baseline_mean";elseif any(~isfinite(raw(event)))||any(~isfinite(reference)),reason="nonfinite_event_source_or_reference";elseif any(reference<=0),reason="nonpositive_event_reference";end
+   amp=NaN;auc=NaN;avg=NaN;dirDisagree=NaN;oracleDisagree=NaN;
+   if reason=="valid"
+    q=(raw(event)-reference)./reference;amp=getAmp(q,c.Kind);auc=sum(q);avg=mean(q);
+    if c.LocalFraction~=0,dirDisagree=double(amp<0);end
+    if oracleAmp~=0,oracleDisagree=double(sign(amp)~=sign(oracleAmp));end
+   end
+   row=struct('CaseID',c.CaseID,'Arm',c.Arm,'Kind',c.Kind,'HalfLifeSec',c.HalfLifeSec,'DurationSec',c.DurationSec,'LocalFraction',c.LocalFraction,'NoiseFraction',c.NoiseFraction,'PhaseRadians',c.PhaseRadians,'Reference',names(ri),'Status',reason,'BaselineSamples',numel(b),'BaselineMean',B,'FitSlopeUnitsPerSec',fit(1),'FitSlopePercentPerSec',100*fit(1)/B,'DurationToBaselineRatio',c.DurationSec/20,'FirstEventReference',reference(1),'LastEventReference',reference(end),'MinimumEventReference',min(reference),'MaxReferenceRelativeErrorPercent',100*max(abs(reference./bg(event)-1)),'AmplitudeFraction',amp,'MeanSignedChangeFraction',avg,'SignedAUC_sec',auc,'InjectedAmplitudeFraction',trueAmp,'InjectedSignedAUC_sec',truthAUC,'OracleAmplitudeFraction',oracleAmp,'OracleSignedAUC_sec',sum(oq),'AmplitudeErrorVsInjectedFraction',amp-trueAmp,'AUCErrorVsInjected_sec',auc-truthAUC,'AmplitudeErrorVsOracleFraction',amp-oracleAmp,'AUCErrorVsOracle_sec',auc-sum(oq),'NegativeAmplitude',double(amp<0),'DirectionDisagreesWithInjected',dirDisagree,'SignDiffersFromOracle',oracleDisagree);
+   rows{2*ci-2+ri}=row;
+   if ci<=144 && ri==1,replayErr=max([replayErr,abs(amp-c.PriorAmplitudeFraction),abs(auc-c.PriorSignedAUC_sec)]);end
+  end
+ end
+ assert(replayErr<1e-12);Readouts=struct2table(vertcat(rows{:}));ReferenceSamples=vertcat(samples{:});writetable(Readouts,fullfile(out,'reference-readouts.csv'));writetable(ReferenceSamples,fullfile(out,'sample-references.csv'));
+ save(fullfile(out,'comparison-fixtures.mat'),'CaseTable','Traces','NoEventSources','Readouts','ReferenceSamples','mask','bn','-v7');
+ plotErrors(Readouts,fullfile(out,'amplitude-error-comparison.png'));plotPhases(CaseTable,Traces,NoEventSources,ReferenceSamples,fullfile(out,'fluctuation-phase-references.png'));
+ after=createOxygenRegressionCodeManifest(repo);writetable(after,fullfile(out,'code-manifest-after.csv'));assert(isequal(code,after));R.Status='completed';R.InputCases=height(CaseTable);R.ReferenceReadouts=height(Readouts);R.ReferenceSampleRows=height(ReferenceSamples);R.SavedConstantReplayMaxAbsError=replayErr;R.UnavailableReadouts=nnz(Readouts.Status~="valid");R.ImplementationFilesUnchanged=height(code);R.ElapsedSeconds=toc(timer);writeJSON(fullfile(out,'comparison-report.json'),R);fprintf('Completed %d inputs / %d readouts. Prior constant replay error %.3g.\n',R.InputCases,R.ReferenceReadouts,replayErr);
+catch err
+ R.Status='failed';R.ElapsedSeconds=toc(timer);R.Error=getReport(err,'extended','hyperlinks','off');writeJSON(fullfile(out,'comparison-report.json'),R);rethrow(err)
+end
+function a=getAmp(q,kind)
+ if kind=="sink",a=-min(q);else,a=max(q);end
+end
+function h=hashArray(A)
+ md=java.security.MessageDigest.getInstance('SHA-256');for f=1:size(A,3),v=A(:,:,f);md.update(typecast(v(:),'uint8'));end;h=lower(reshape(dec2hex(typecast(md.digest(),'uint8'),2)',1,[]));
+end
+function writeJSON(p,v)
+ fid=fopen(p,'w');assert(fid>0);clean=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(v,'PrettyPrint',true));
+end
+function plotErrors(T,p)
+ fig=figure('Visible','off','Position',[0,0,1280,980]);tiledlayout(2,2,'TileSpacing','compact');arms=["smooth","fluctuating"];colors=lines(4);
+ for ai=1:2
+  for ns=[0,.005]
+   nexttile;hold on;A=T(T.Arm==arms(ai)&T.NoiseFraction==ns&T.Reference=="constant_20s",:);B=T(T.Arm==arms(ai)&T.NoiseFraction==ns&T.Reference=="linear_20s",:);assert(isequal(A.CaseID,B.CaseID));
+   if ai==1,groups=[5,20,60];col='DurationSec';labels={'5-s event','20-s event','60-s event'};else,groups=[0,pi/2,pi,3*pi/2];col='PhaseRadians';labels={'Phase 0','Phase pi/2','Phase pi','Phase 3pi/2'};end
+   xa=100*abs(A.AmplitudeErrorVsInjectedFraction);yb=100*abs(B.AmplitudeErrorVsInjectedFraction);h=gobjects(numel(groups),1);
+   for j=1:numel(groups),sel=A.(col)==groups(j);h(j)=scatter(xa(sel),yb(sel),30,colors(j,:),'filled','MarkerFaceAlpha',.65);end
+   limit=max([xa;yb])*1.07;if limit==0,limit=1;end;plot([0,limit],[0,limit],'k:','HandleVisibility','off');xlim([0,limit]);ylim([0,limit]);axis square;grid on;legend(h,labels,'Location','best');xlabel('20-s mean: absolute amplitude error (pp)');ylabel('20-s line: absolute amplitude error (pp)');title(sprintf('%s background; noise SD %.1f%% of initial signal',arms(ai),100*ns));
+  end
+ end
+ sgtitle({'Error against the injected local component','Below diagonal: smaller error with line; synthetic sensitivity, no automatic method choice'});exportgraphics(fig,p,'Resolution',140);close(fig);
+end
+function plotPhases(C,Traces,BG,S,p)
+ fig=figure('Visible','off','Position',[0,0,1280,900]);tiledlayout(2,2,'TileSpacing','compact');phases=[0,pi/2,pi,3*pi/2];labels={'0','pi/2','pi','3pi/2'};
+ for j=1:4
+  ci=find(C.Arm=="fluctuating"&isinf(C.HalfLifeSec)&C.NoiseFraction==0&C.LocalFraction==0&C.Kind=="sink"&C.PhaseRadians==phases(j));assert(isscalar(ci));U=S(S.CaseID==C.CaseID(ci),:);B=mean(Traces(ci,280:299));t=U.Frame-300;nexttile;hold on;
+  h1=plot(t,100*(U.SourceMean/B-1),'k-','LineWidth',1.7);h2=plot(t,100*(U.ConstantReference/B-1),'-','Color',[0,.4,.8],'LineWidth',1.5);h3=plot(t,100*(U.LinearReference/B-1),'--','Color',[.85,.2,.05],'LineWidth',1.7);yl=ylim;patch([-20,0,0,-20],yl([1,1,2,2]),[.3,.7,.3],'FaceAlpha',.08,'EdgeColor','none');xline(0,':','HandleVisibility','off');grid on;xlim([-20,19]);xlabel('Seconds from supplied event start');ylabel('Change from own pre-event mean (%)');title(sprintf('Phase %s; no decay, no noise, no local injection',labels{j}));legend([h1,h2,h3],{'Source / known background','Constant reference','Pre-event line'},'Location','best');
+ end
+ sgtitle('Extrapolating a baseline fluctuation into a supplied 20-second window');exportgraphics(fig,p,'Resolution',140);close(fig);
+end

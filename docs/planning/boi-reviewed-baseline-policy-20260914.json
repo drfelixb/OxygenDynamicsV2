@@ -1,0 +1,941 @@
+{
+  "Schema": "boi-reviewed-baseline-policy-proposal-1",
+  "DecisionID": "R2-REVIEWED-BASELINE-POLICY-059",
+  "Date": "2026-09-14",
+  "Status": "proposed",
+  "AuthorRole": "assistant_policy_preparation",
+  "ScientificAdoption": {
+    "Reviewer": null,
+    "Decision": null,
+    "Date": null,
+    "Rationale": null,
+    "Scope": null
+  },
+  "RecommendedOption": "A_native_eligibility_with_reviewed_context_flags",
+  "Rules": [
+    {
+      "ID": "RB01",
+      "Status": "proposed",
+      "Text": "Retain preserved-input fixed native-union footprint and validated external clock; corrected trace remains primary for review.",
+      "Adoption": null
+    },
+    {
+      "ID": "RB02",
+      "Status": "proposed",
+      "Text": "Request round(20*fs) immediate pre-onset samples; require all to be observed, finite and free of either-sign native footprint overlap; no substitutions.",
+      "Adoption": null
+    },
+    {
+      "ID": "RB03",
+      "Status": "proposed",
+      "Text": "After adoption only, calculate each reviewed interval as a separate exploratory optical result; retain original automatic measurements and signed values.",
+      "Adoption": null
+    },
+    {
+      "ID": "RB04",
+      "Status": "proposed",
+      "Text": "Recommended option A retains native eligibility and flags shared reviewed interval/recovery contact. Alternative B adds an explicit inclusive-interval veto.",
+      "Adoption": null
+    },
+    {
+      "ID": "RB05",
+      "Status": "proposed",
+      "Text": "Keep recognition, numerical availability and claim-specific physiological assessment separate; do not demand a flat reference or force review of all events.",
+      "Adoption": null
+    }
+  ],
+  "Scope": {
+    "Modality": "BOI_only",
+    "DevelopmentRecording": "FB2314-awake",
+    "SampleHz": 1,
+    "FrameOrigin": 1,
+    "ModeledTimeFormula": "(Frame-1)/SampleHz",
+    "ExposureEqualsFrameInterval": false,
+    "GeneralizationEstablished": false,
+    "CurrentReviewEventCount": 4,
+    "DistinctReferenceWindows": 5,
+    "ReviewedIntervalCount": 7,
+    "ExistingMeasurementDictionaryVersionChanged": false
+  },
+  "ReviewSHA256": "16a99333cf9fed005fce1823fdea76161055776dde428e27c642afef0f1df26f",
+  "AuditSHA256": "c6ff9c10021068a659053da9be9e8a2092843c7caf19ad9ee8c14086df04776b",
+  "RawSourceSHA256": "08381f8ef4cb0da80a09645aeffc9416188cf7937eaf207c0536f1f997494cf8",
+  "MeasurementSource": "preserved_input_mean_on_original_event_fixed_native_union",
+  "FormulaSpecification": {
+    "Reference": "B=mean(r(C)) only when all required samples are eligible",
+    "SignedFraction": "d=(r(a:b)-B)/B",
+    "SinkDirectionalAmplitude": "-min(d)",
+    "SurgeDirectionalAmplitude": "max(d)",
+    "SignedTraceIntegralSec": "sum(d)/fs",
+    "NegativeValues": "preserve",
+    "BaselineGuard": "finite_and_positive",
+    "EventSignalGuard": "all_event_samples_finite",
+    "FormulaExecutionInThisPhase": false
+  },
+  "CandidateAssessmentStates": [
+    "not_assessed",
+    "unresolved",
+    "unsuitable_for_stated_claim",
+    "supported_for_stated_claim"
+  ],
+  "AssessmentStateRole": "proposed_separate_claim_specific_review_fields_not_new_actual_annotations",
+  "Cases": [
+    {
+      "AuditRow": 309,
+      "Event": {
+        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "EventType": "surge",
+        "SiteID": 1,
+        "EventID": 4,
+        "StartFrame": 540,
+        "EndFrame": 552,
+        "DetectedStartFrame": 540,
+        "DetectedEndFrame": 552
+      },
+      "OnsetFrame": 536,
+      "OnsetIsPreferred": true,
+      "RecoveryAlternativesFrames": [
+        556
+      ],
+      "CandidateFrames": [
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535
+      ],
+      "RequiredSamples": 20,
+      "NativeOverlapExcludedFrames": [],
+      "NativeContributors": [],
+      "NonfiniteFrames": [],
+      "RecommendedOptionA": {
+        "EligibleFrames": [
+          516,
+          517,
+          518,
+          519,
+          520,
+          521,
+          522,
+          523,
+          524,
+          525,
+          526,
+          527,
+          528,
+          529,
+          530,
+          531,
+          532,
+          533,
+          534,
+          535
+        ],
+        "EligibleCount": 20,
+        "SampleComplete": true,
+        "ProposedDisposition": "sample_complete_calculation_not_performed"
+      },
+      "AlternativeOptionB": {
+        "AdditionalExcludedFrames": [
+          516
+        ],
+        "EligibleFrames": [
+          517,
+          518,
+          519,
+          520,
+          521,
+          522,
+          523,
+          524,
+          525,
+          526,
+          527,
+          528,
+          529,
+          530,
+          531,
+          532,
+          533,
+          534,
+          535
+        ],
+        "EligibleCount": 19,
+        "SampleComplete": false,
+        "Role": "unadopted_set_count_counterfactual_only"
+      },
+      "ReviewedContactFlags": [
+        {
+          "OtherAuditRow": 308,
+          "OtherOnsetFrame": 496,
+          "OtherRecoveryFrame": 516,
+          "CandidateIntersectionFrames": [
+            516
+          ],
+          "EligibleIntersectionFrames": [
+            516
+          ],
+          "Policy": "Flag only; not applied as a new exclusion."
+        }
+      ],
+      "RecognitionStatus": "uncertain",
+      "PhysiologicalReferenceSuitability": "not_established_by_this_proposal",
+      "BaselineMeanAndAmplitudeCalculated": false,
+      "RemainingNumericalChecks": [
+        "finite_positive_reference_mean",
+        "finite_reviewed_event_samples"
+      ]
+    },
+    {
+      "AuditRow": 308,
+      "Event": {
+        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "EventType": "surge",
+        "SiteID": 1,
+        "EventID": 3,
+        "StartFrame": 503,
+        "EndFrame": 514,
+        "DetectedStartFrame": 503,
+        "DetectedEndFrame": 514
+      },
+      "OnsetFrame": 496,
+      "OnsetIsPreferred": true,
+      "RecoveryAlternativesFrames": [
+        516
+      ],
+      "CandidateFrames": [
+        476,
+        477,
+        478,
+        479,
+        480,
+        481,
+        482,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493,
+        494,
+        495
+      ],
+      "RequiredSamples": 20,
+      "NativeOverlapExcludedFrames": [],
+      "NativeContributors": [],
+      "NonfiniteFrames": [],
+      "RecommendedOptionA": {
+        "EligibleFrames": [
+          476,
+          477,
+          478,
+          479,
+          480,
+          481,
+          482,
+          483,
+          484,
+          485,
+          486,
+          487,
+          488,
+          489,
+          490,
+          491,
+          492,
+          493,
+          494,
+          495
+        ],
+        "EligibleCount": 20,
+        "SampleComplete": true,
+        "ProposedDisposition": "sample_complete_calculation_not_performed"
+      },
+      "AlternativeOptionB": {
+        "AdditionalExcludedFrames": [],
+        "EligibleFrames": [
+          476,
+          477,
+          478,
+          479,
+          480,
+          481,
+          482,
+          483,
+          484,
+          485,
+          486,
+          487,
+          488,
+          489,
+          490,
+          491,
+          492,
+          493,
+          494,
+          495
+        ],
+        "EligibleCount": 20,
+        "SampleComplete": true,
+        "Role": "unadopted_set_count_counterfactual_only"
+      },
+      "ReviewedContactFlags": [],
+      "RecognitionStatus": "uncertain",
+      "PhysiologicalReferenceSuitability": "not_established_by_this_proposal",
+      "BaselineMeanAndAmplitudeCalculated": false,
+      "RemainingNumericalChecks": [
+        "finite_positive_reference_mean",
+        "finite_reviewed_event_samples"
+      ]
+    },
+    {
+      "AuditRow": 321,
+      "Event": {
+        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "EventType": "surge",
+        "SiteID": 5,
+        "EventID": 1,
+        "StartFrame": 183,
+        "EndFrame": 193,
+        "DetectedStartFrame": 183,
+        "DetectedEndFrame": 193
+      },
+      "OnsetFrame": 177,
+      "OnsetIsPreferred": true,
+      "RecoveryAlternativesFrames": [
+        195
+      ],
+      "CandidateFrames": [
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176
+      ],
+      "RequiredSamples": 20,
+      "NativeOverlapExcludedFrames": [
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176
+      ],
+      "NativeContributors": [
+        {
+          "AuditRow": 315,
+          "EventType": "surge",
+          "SiteID": 2,
+          "EventID": 2,
+          "NativeStartFrame": 166,
+          "NativeEndFrame": 182,
+          "ExcludedCandidateFrames": [
+            166,
+            167,
+            168,
+            169,
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176
+          ],
+          "IntersectionPixelCounts": [
+            3007,
+            2817,
+            2792,
+            2858,
+            2993,
+            3046,
+            3157,
+            2796,
+            2383,
+            2246,
+            2215
+          ],
+          "MinimumIntersectionPixels": 2215,
+          "MaximumIntersectionPixels": 3157,
+          "TargetFootprintPixels": 5086
+        },
+        {
+          "AuditRow": 320,
+          "EventType": "surge",
+          "SiteID": 4,
+          "EventID": 1,
+          "NativeStartFrame": 154,
+          "NativeEndFrame": 165,
+          "ExcludedCandidateFrames": [
+            157,
+            158,
+            159,
+            160,
+            161,
+            162,
+            163,
+            164,
+            165
+          ],
+          "IntersectionPixelCounts": [
+            2254,
+            2298,
+            2338,
+            2410,
+            2467,
+            2505,
+            2607,
+            2708,
+            2681
+          ],
+          "MinimumIntersectionPixels": 2254,
+          "MaximumIntersectionPixels": 2708,
+          "TargetFootprintPixels": 5086
+        }
+      ],
+      "NonfiniteFrames": [],
+      "RecommendedOptionA": {
+        "EligibleFrames": [],
+        "EligibleCount": 0,
+        "SampleComplete": false,
+        "ProposedDisposition": "unavailable_insufficient_prebaseline"
+      },
+      "AlternativeOptionB": {
+        "AdditionalExcludedFrames": [],
+        "EligibleFrames": [],
+        "EligibleCount": 0,
+        "SampleComplete": false,
+        "Role": "unadopted_set_count_counterfactual_only"
+      },
+      "ReviewedContactFlags": [],
+      "RecognitionStatus": "uncertain",
+      "PhysiologicalReferenceSuitability": "not_established_by_this_proposal",
+      "BaselineMeanAndAmplitudeCalculated": false,
+      "RemainingNumericalChecks": [
+        "finite_positive_reference_mean",
+        "finite_reviewed_event_samples"
+      ]
+    },
+    {
+      "AuditRow": 186,
+      "Event": {
+        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "EventType": "sink",
+        "SiteID": 15,
+        "EventID": 36,
+        "StartFrame": 1156,
+        "EndFrame": 1165,
+        "DetectedStartFrame": 1157,
+        "DetectedEndFrame": 1164
+      },
+      "OnsetFrame": 1149,
+      "OnsetIsPreferred": false,
+      "RecoveryAlternativesFrames": [
+        1166,
+        1167
+      ],
+      "CandidateFrames": [
+        1129,
+        1130,
+        1131,
+        1132,
+        1133,
+        1134,
+        1135,
+        1136,
+        1137,
+        1138,
+        1139,
+        1140,
+        1141,
+        1142,
+        1143,
+        1144,
+        1145,
+        1146,
+        1147,
+        1148
+      ],
+      "RequiredSamples": 20,
+      "NativeOverlapExcludedFrames": [
+        1148
+      ],
+      "NativeContributors": [
+        {
+          "AuditRow": 312,
+          "EventType": "surge",
+          "SiteID": 1,
+          "EventID": 7,
+          "NativeStartFrame": 1148,
+          "NativeEndFrame": 1174,
+          "ExcludedCandidateFrames": 1148,
+          "IntersectionPixelCounts": 345,
+          "MinimumIntersectionPixels": 345,
+          "MaximumIntersectionPixels": 345,
+          "TargetFootprintPixels": 348
+        }
+      ],
+      "NonfiniteFrames": [],
+      "RecommendedOptionA": {
+        "EligibleFrames": [
+          1129,
+          1130,
+          1131,
+          1132,
+          1133,
+          1134,
+          1135,
+          1136,
+          1137,
+          1138,
+          1139,
+          1140,
+          1141,
+          1142,
+          1143,
+          1144,
+          1145,
+          1146,
+          1147
+        ],
+        "EligibleCount": 19,
+        "SampleComplete": false,
+        "ProposedDisposition": "unavailable_insufficient_prebaseline"
+      },
+      "AlternativeOptionB": {
+        "AdditionalExcludedFrames": [],
+        "EligibleFrames": [
+          1129,
+          1130,
+          1131,
+          1132,
+          1133,
+          1134,
+          1135,
+          1136,
+          1137,
+          1138,
+          1139,
+          1140,
+          1141,
+          1142,
+          1143,
+          1144,
+          1145,
+          1146,
+          1147
+        ],
+        "EligibleCount": 19,
+        "SampleComplete": false,
+        "Role": "unadopted_set_count_counterfactual_only"
+      },
+      "ReviewedContactFlags": [],
+      "RecognitionStatus": "uncertain",
+      "PhysiologicalReferenceSuitability": "not_established_by_this_proposal",
+      "BaselineMeanAndAmplitudeCalculated": false,
+      "RemainingNumericalChecks": [
+        "finite_positive_reference_mean",
+        "finite_reviewed_event_samples"
+      ]
+    },
+    {
+      "AuditRow": 186,
+      "Event": {
+        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "EventType": "sink",
+        "SiteID": 15,
+        "EventID": 36,
+        "StartFrame": 1156,
+        "EndFrame": 1165,
+        "DetectedStartFrame": 1157,
+        "DetectedEndFrame": 1164
+      },
+      "OnsetFrame": 1153,
+      "OnsetIsPreferred": true,
+      "RecoveryAlternativesFrames": [
+        1166,
+        1167
+      ],
+      "CandidateFrames": [
+        1133,
+        1134,
+        1135,
+        1136,
+        1137,
+        1138,
+        1139,
+        1140,
+        1141,
+        1142,
+        1143,
+        1144,
+        1145,
+        1146,
+        1147,
+        1148,
+        1149,
+        1150,
+        1151,
+        1152
+      ],
+      "RequiredSamples": 20,
+      "NativeOverlapExcludedFrames": [
+        1148,
+        1149,
+        1150,
+        1151,
+        1152
+      ],
+      "NativeContributors": [
+        {
+          "AuditRow": 312,
+          "EventType": "surge",
+          "SiteID": 1,
+          "EventID": 7,
+          "NativeStartFrame": 1148,
+          "NativeEndFrame": 1174,
+          "ExcludedCandidateFrames": [
+            1148,
+            1149,
+            1150,
+            1151,
+            1152
+          ],
+          "IntersectionPixelCounts": [
+            345,
+            277,
+            203,
+            120,
+            93
+          ],
+          "MinimumIntersectionPixels": 93,
+          "MaximumIntersectionPixels": 345,
+          "TargetFootprintPixels": 348
+        }
+      ],
+      "NonfiniteFrames": [],
+      "RecommendedOptionA": {
+        "EligibleFrames": [
+          1133,
+          1134,
+          1135,
+          1136,
+          1137,
+          1138,
+          1139,
+          1140,
+          1141,
+          1142,
+          1143,
+          1144,
+          1145,
+          1146,
+          1147
+        ],
+        "EligibleCount": 15,
+        "SampleComplete": false,
+        "ProposedDisposition": "unavailable_insufficient_prebaseline"
+      },
+      "AlternativeOptionB": {
+        "AdditionalExcludedFrames": [],
+        "EligibleFrames": [
+          1133,
+          1134,
+          1135,
+          1136,
+          1137,
+          1138,
+          1139,
+          1140,
+          1141,
+          1142,
+          1143,
+          1144,
+          1145,
+          1146,
+          1147
+        ],
+        "EligibleCount": 15,
+        "SampleComplete": false,
+        "Role": "unadopted_set_count_counterfactual_only"
+      },
+      "ReviewedContactFlags": [],
+      "RecognitionStatus": "uncertain",
+      "PhysiologicalReferenceSuitability": "not_established_by_this_proposal",
+      "BaselineMeanAndAmplitudeCalculated": false,
+      "RemainingNumericalChecks": [
+        "finite_positive_reference_mean",
+        "finite_reviewed_event_samples"
+      ]
+    }
+  ],
+  "CurrentAnnotations": [
+    {
+      "Revision": 1,
+      "PreviousEventRevision": 0,
+      "AuditRow": 309,
+      "Event": {
+        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "EventType": "surge",
+        "SiteID": 1,
+        "EventID": 4,
+        "StartFrame": 540,
+        "EndFrame": 552,
+        "DetectedStartFrame": 540,
+        "DetectedEndFrame": 552
+      },
+      "Annotation": {
+        "Status": "uncertain",
+        "OnsetFrames": 536,
+        "RecoveryFrames": 556,
+        "PreferredOnsetFrame": 536,
+        "PreferredRecoveryFrame": 556,
+        "Reviewer": "Felix",
+        "Reason": "New endpoints include the onset peak and offset peak."
+      },
+      "PreviousAnnotation": [],
+      "SaveImplementationSHA256": "e32f5bdccd3e993e5b90da49a5a09713f87e7ca7cf2b5e27f3bc14345e6c855f",
+      "ValidatorImplementationSHA256": "a79d2513f4cdf698d1a35fa23f0fd56bb23bdcb83d25b9a3718d01878f586bbc",
+      "CreatedUTC": "2026-09-14T10:41:32Z"
+    },
+    {
+      "Revision": 2,
+      "PreviousEventRevision": 0,
+      "AuditRow": 308,
+      "Event": {
+        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "EventType": "surge",
+        "SiteID": 1,
+        "EventID": 3,
+        "StartFrame": 503,
+        "EndFrame": 514,
+        "DetectedStartFrame": 503,
+        "DetectedEndFrame": 514
+      },
+      "Annotation": {
+        "Status": "uncertain",
+        "OnsetFrames": 496,
+        "RecoveryFrames": 516,
+        "PreferredOnsetFrame": 496,
+        "PreferredRecoveryFrame": 516,
+        "Reviewer": "Felix",
+        "Reason": "auto choose was too short. no the onset and offset are correctly placed and the duration is within the peaks."
+      },
+      "PreviousAnnotation": [],
+      "SaveImplementationSHA256": "e32f5bdccd3e993e5b90da49a5a09713f87e7ca7cf2b5e27f3bc14345e6c855f",
+      "ValidatorImplementationSHA256": "a79d2513f4cdf698d1a35fa23f0fd56bb23bdcb83d25b9a3718d01878f586bbc",
+      "CreatedUTC": "2026-09-14T10:52:13Z"
+    },
+    {
+      "Revision": 3,
+      "PreviousEventRevision": 0,
+      "AuditRow": 321,
+      "Event": {
+        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "EventType": "surge",
+        "SiteID": 5,
+        "EventID": 1,
+        "StartFrame": 183,
+        "EndFrame": 193,
+        "DetectedStartFrame": 183,
+        "DetectedEndFrame": 193
+      },
+      "Annotation": {
+        "Status": "uncertain",
+        "OnsetFrames": 177,
+        "RecoveryFrames": 195,
+        "PreferredOnsetFrame": 177,
+        "PreferredRecoveryFrame": 195,
+        "Reviewer": "Felix",
+        "Reason": "auto decision too short. onset at peak, offset at peak after sink."
+      },
+      "PreviousAnnotation": [],
+      "SaveImplementationSHA256": "e32f5bdccd3e993e5b90da49a5a09713f87e7ca7cf2b5e27f3bc14345e6c855f",
+      "ValidatorImplementationSHA256": "a79d2513f4cdf698d1a35fa23f0fd56bb23bdcb83d25b9a3718d01878f586bbc",
+      "CreatedUTC": "2026-09-14T10:57:23Z"
+    },
+    {
+      "Revision": 4,
+      "PreviousEventRevision": 0,
+      "AuditRow": 186,
+      "Event": {
+        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "EventType": "sink",
+        "SiteID": 15,
+        "EventID": 36,
+        "StartFrame": 1156,
+        "EndFrame": 1165,
+        "DetectedStartFrame": 1157,
+        "DetectedEndFrame": 1164
+      },
+      "Annotation": {
+        "Status": "uncertain",
+        "OnsetFrames": [
+          1149,
+          1153
+        ],
+        "RecoveryFrames": [
+          1166,
+          1167
+        ],
+        "PreferredOnsetFrame": 1153,
+        "PreferredRecoveryFrame": [],
+        "Reviewer": "Felix",
+        "Reason": "first peak at 1149 could be the onset, but its more clear at 1153. offset is around the peak afterwards."
+      },
+      "PreviousAnnotation": [],
+      "SaveImplementationSHA256": "e32f5bdccd3e993e5b90da49a5a09713f87e7ca7cf2b5e27f3bc14345e6c855f",
+      "ValidatorImplementationSHA256": "a79d2513f4cdf698d1a35fa23f0fd56bb23bdcb83d25b9a3718d01878f586bbc",
+      "CreatedUTC": "2026-09-14T11:13:10Z"
+    }
+  ],
+  "UnadoptedOptionBCounterfactual": {
+    "AdditionalExcludedTargetFrames": [
+      {
+        "AuditRow": 309,
+        "Frame": 516
+      }
+    ],
+    "CompleteWindowCountOptionA": 2,
+    "CompleteWindowCountOptionB": 1,
+    "Interpretation": "only the four currently annotated development events; no cohort missingness claim"
+  },
+  "ProhibitedImplicitChanges": [
+    "earlier_reference_search",
+    "partial_reference_mean",
+    "postevent_reference",
+    "new_substrate_model",
+    "mask_or_sign_override",
+    "prefer_onset_for_availability",
+    "absolute_value_amplitude",
+    "automatic_record_overwrite",
+    "cohort_or_composite_admission",
+    "new_anatomical_support"
+  ],
+  "OpenScientificQuestions": [
+    "physiological_reference_suitability",
+    "recognition_and_direction_interpretation",
+    "20_second_reference_scale",
+    "recovery_endpoint_acceptability",
+    "normalization_and_shared_signal",
+    "anatomical_support",
+    "cohort_eligibility_and_independent_evaluation"
+  ],
+  "FirstImplementationIncrement": "read_only_reference_preview_with_contributor_links_no_new_amplitude_or_policy_adoption",
+  "CalculationImplementationGate": "explicit_policy_selection_and_versioned_derived_measurement_definition",
+  "InputSources": {
+    "PriorManifest": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-baseline-exclusion-review-20260914/artifact-record.json",
+      "SHA256": "7b8eb290aa4cf3899c61554695b0262c5a5c4e3234eb2c66b7ae5eaee92e8613",
+      "Bytes": 14939,
+      "Snapshot": "inputs/PriorManifest.json"
+    },
+    "Contributors": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-baseline-exclusion-review-20260914/contributors.json",
+      "SHA256": "2debaf24ed61a1155f004bf9f6f3db4899f2679af4a8796a6245828be2e096ae",
+      "Bytes": 11870,
+      "Snapshot": "inputs/Contributors.json"
+    },
+    "PriorInspection": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-baseline-exclusion-review-20260914/README.md",
+      "SHA256": "bc0303e4f66a16b74dc298ea7937673b2123f4cc49937b063ff5aa9453a6161f",
+      "Bytes": 9800,
+      "Snapshot": "inputs/PriorInspection.md"
+    },
+    "PriorVerification": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-baseline-exclusion-review-20260914/verification.json",
+      "SHA256": "c021fde6e71620aba91b98cfe6ffa2093b2907667296e7aa9c184166e4298961",
+      "Bytes": 689,
+      "Snapshot": "inputs/PriorVerification.json"
+    },
+    "Availability": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-reviewed-prebaseline-availability-20260914/availability.json",
+      "SHA256": "382695f2145e1da8bc0add629230f4eee03ad3c97354db6f4a3c66b636273507",
+      "Bytes": 9906,
+      "Snapshot": "inputs/Availability.json"
+    },
+    "Review": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/audit-01/source-amplitude-audit/BOI-researcher-review-04.json",
+      "SHA256": "16a99333cf9fed005fce1823fdea76161055776dde428e27c642afef0f1df26f",
+      "Bytes": 5344,
+      "Snapshot": "inputs/Review.json"
+    },
+    "Dictionary": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/docs/planning/boi-measurement-dictionary.json",
+      "SHA256": "1eea8f70f37a0794800f764498f4fefc0e89bfc6b195ee1f3aa198ea810186a2",
+      "Bytes": 21094,
+      "Snapshot": "inputs/Dictionary.json"
+    },
+    "MeasurementImplementation": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/helpers/finalizeOxygenEventMeasurements.m",
+      "SHA256": "e274c48e8206de7533cc6fce59ff38236fb68f421cfcc25bc5767c6fa6d92634",
+      "Bytes": 6574,
+      "Snapshot": "inputs/MeasurementImplementation.m.txt"
+    },
+    "EarlierPolicy": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/docs/BOI_MEASUREMENT_POLICY_PROPOSAL.md",
+      "SHA256": "84905383ff81b6097f2f8fb6d8f86829767cf6135c58a99256478f9d7b20074e",
+      "Bytes": 11659,
+      "Snapshot": "inputs/EarlierPolicy.md"
+    },
+    "Durations": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-reviewed-duration-comparison-20260914/duration-comparison.json",
+      "SHA256": "545aa7fade5098de345da00609f4faf5802585a0238d3b450833936c15ca5766",
+      "Bytes": 15217,
+      "Snapshot": "inputs/Durations.json"
+    }
+  },
+  "DetectionReruns": 0,
+  "CorrectionFits": 0,
+  "NewBaselineOrAmplitudeCalculations": false,
+  "ActualRecognitionOrBoundaryChanges": false
+}

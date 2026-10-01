@@ -39,11 +39,39 @@ if isfield(CoreData,'RecordingRegistry')
     if ~isempty(BaselineContrasts), writetable(BaselineContrasts,OutputXlsx,'Sheet','PairedBaselineContrasts'); end
 end
 fprintf('[Stats %s] Writing acceptance and run summary sheets...\n',char(datetime('now','Format','HH:mm:ss')));
+if IsBLI && isfield(CoreData,'BOIInputContracts')
+    BOIInputContracts=CoreData.BOIInputContracts;
+    RecordingInputQC=CoreData.RecordingInputQC;
+    RecordingFrameExposure=CoreData.RecordingFrameExposure;
+    WindowFrameIngredients=CoreData.WindowFrameIngredients;
+    save(fullfile(StatsOutputFolderPath,'DataOutput.mat'),'BOIInputContracts','RecordingInputQC', ...
+        'RecordingFrameExposure','WindowFrameIngredients','-append');
+    writeBOIRecordingInputAudit(StatsOutputFolderPath,OutputXlsx,BOIInputContracts, ...
+        RecordingInputQC,RecordingFrameExposure,WindowFrameIngredients);
+    if isfield(CoreData,'SurgeRecordingWindowMetrics')
+        SurgeRecordingWindowMetrics=CoreData.SurgeRecordingWindowMetrics;
+        SurgeWindowFrameIngredients=CoreData.SurgeWindowFrameIngredients;
+        save(fullfile(StatsOutputFolderPath,'DataOutput.mat'),'SurgeRecordingWindowMetrics','SurgeWindowFrameIngredients','-append');
+        writetable(SurgeRecordingWindowMetrics,fullfile(StatsOutputFolderPath,'SurgeRecordingWindowMetrics.csv'));
+        writetable(SurgeWindowFrameIngredients,fullfile(StatsOutputFolderPath,'SurgeWindowFrameIngredients.csv'));
+        writetable(SurgeRecordingWindowMetrics,OutputXlsx,'Sheet','SurgeRecordingWindowMetrics');
+        if height(SurgeWindowFrameIngredients)<=1048575
+            writetable(SurgeWindowFrameIngredients,OutputXlsx,'Sheet','SurgeWindowFrameIngredients');
+        end
+        fid=fopen(fullfile(StatsOutputFolderPath,'RecordingInputReview.md'),'a');assert(fid>=0);
+        fprintf(fid,'\nSurgeRecordingWindowMetrics and SurgeWindowFrameIngredients add boi-surge-window-exposure-1 evidence. Use the saved surge support for their denominator; the RecordingRegistry area remains the sink area. The two signs are separate and do not cancel. Missing or negative surge amplitudes do not exclude detected events from count, time or coverage. No surge amplitude-area-time composite is defined (NaN). Original sink window tables and contrasts retain their existing semantics.\n');
+        fclose(fid);
+    end
+end
 writeStatsAcceptanceSheet(OutputXlsx,struct('StatsInfo',CoreData.StatsInfo, ...
     'DataOutputMat',fullfile(StatsOutputFolderPath,'DataOutput.mat')));
 writeStatsRunSummarySheets(OutputXlsx,CoreData.StatsInfo);
 writeStatsMetricBasisSheet(OutputXlsx);
 writeStatsMetricDefinitionsSheet(OutputXlsx);
+if IsBLI
+    % Same versioned BOI definitions for GUI and batch; no IOSI scope expansion.
+    writeBOIMeasurementDictionary(StatsOutputFolderPath,OutputXlsx);
+end
 writeStatsNormalizationGuideSheet(OutputXlsx);
 fprintf('[Stats %s] Writing event and hypoxic burden sheets...\n',char(datetime('now','Format','HH:mm:ss')));
 writeStatsEventTables(OutputXlsx,CoreData.TableOxygenSinkEvents,CoreData.TableOxygenSurgeEvents);

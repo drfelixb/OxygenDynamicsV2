@@ -1,0 +1,15 @@
+function [Fig,UI]=openResearcherReferenceExample
+% Open four saved local reference judgments without changing measurements.
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+s=jsondecode(fileread(fullfile(here,'inputs.json')));
+keys=fieldnames(s);
+for k=1:numel(keys)
+    v=s.(keys{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256), ...
+        'OxygenDynamics:ExampleSourceChanged','Example input changed; inspect the revision before opening.');
+end
+[Fig,UI]=openBOIEventReview(s.Audit.Path);
+UI.LoadBoundaries(s.Review.Path);UI.AttachReferenceSources(s.SinkMaster.Path,s.SurgeMaster.Path);
+UI.LoadReferenceJudgments({s.Judgment1.Path,s.Judgment2.Path,s.Judgment3.Path,s.Judgment4.Path});
+UI.Select(321);UI.Tabs.SelectedTab=UI.ReferenceTab;
+end

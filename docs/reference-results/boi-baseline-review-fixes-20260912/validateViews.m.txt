@@ -1,0 +1,47 @@
+root=fileparts(mfilename('fullpath'));ws=fileparts(fileparts(root));repo=fullfile(ws,'existing-analysis');cd(repo);setupOxygenDynamicsPath;
+out=fullfile(root,'validated-01');assert(~isfolder(out));mkdir(out);timer=tic;
+priorReview=fullfile(ws,'reference-validation','boi-baseline-code-review-20260912');
+cases={'synthetic-audit.mat','synthetic-mismatch-audit.mat'};
+for k=1:numel(cases)
+    path=fullfile(priorReview,cases{k});hash=oxygenFileSHA256(path);
+    [fig,UI]=openBOIEventReview(path);UI.Tabs.SelectedTab=UI.BaselineTab;drawnow;
+    R=UI.CurrentReview();D=buildBOIEventReviewData(R,1);
+    bounds=findall(UI.Baseline.ProjectionAxes,'Tag','BOIDiagnosticNativeBound');
+    assert(all([bounds.Value]>UI.Baseline.ProjectionAxes.XLim(1)&[bounds.Value]<UI.Baseline.ProjectionAxes.XLim(2)));
+    assert(abs(D.BaselineDiagnostic.DifferenceFromAuditedAmplitude_pp)<1e-12);
+    if k==2
+        assert(contains(UI.Baseline.Status.Text,'AUDIT DISAGREEMENT'));
+        assert(D.BaselineDiagnostic.DifferenceFromSavedAmplitude_pp==-20);
+        assert(findall(UI.Baseline.BaselineAxes,'Tag','BOIStoredMeanReference').Value==90);
+        assert(findall(UI.Baseline.BaselineAxes,'Tag','BOIAuditedMeanReference').Value==100);
+    end
+    exportapp(fig,fullfile(out,sprintf('fixed-case-%d.png',k)));
+    exportBOIEventReview(R,1,fullfile(out,sprintf('fixed-case-%d-export',k)));
+    assert(strcmp(hash,oxygenFileSHA256(path)));delete(fig);
+end
+% Same saved biological cases: verify exact old quantitative data and all old
+% diagnostic fields except the explicitly incremented schema.
+path=fullfile(ws,'reference-validation','boi-c02-strict-roi-20260912','audit-01','source-amplitude-audit','event-amplitude-audit.mat');
+before=oxygenFileSHA256(path);R=loadBOIEventReview(path);
+[fig,UI]=openBOIEventReview(path);UI.Tabs.SelectedTab=UI.BaselineTab;
+names={'sink-site10-event1','surge-site1-event3','surge-site1-event4','missing-baseline'};indices=[100,308,309,1];
+priorRoot=fullfile(ws,'reference-validation','boi-baseline-review-20260912','representative-02');
+rows=cell(4,1);
+for k=1:4
+    D=buildBOIEventReviewData(R,indices(k));old=load(fullfile(priorRoot,names{k},'SelectedEventReview.mat'),'Data');
+    assert(isequaln(D.Frames,old.Data.Frames)&&isequaln(D.Row,old.Data.Row)&&isequaln(D.Footprint,old.Data.Footprint));
+    fields=fieldnames(old.Data.BaselineDiagnostic);fields(strcmp(fields,'Schema'))=[];
+    for f=1:numel(fields),assert(isequaln(D.BaselineDiagnostic.(fields{f}),old.Data.BaselineDiagnostic.(fields{f})),fields{f});end
+    assert(isequaln(D.BaselineDiagnostic.DifferenceFromAuditedAmplitude_pp,D.BaselineDiagnostic.DifferenceFromSavedAmplitude_pp));
+    UI.Select(indices(k));drawnow;exportapp(fig,fullfile(out,[names{k} '.png']));
+    receipt=exportBOIEventReview(R,indices(k),fullfile(out,names{k}));
+    assert(strcmp(receipt.Schema,'boi-event-review-export-4'));
+    saved=load(fullfile(out,names{k},'SelectedEventReview.mat'));assert(isequaln(saved.Data,D));
+    rows{k}=struct('CaseID',names{k},'SavedAmplitude',D.Row.StoredAmplitude,'DiagnosticAmplitude',D.BaselineDiagnostic.AmplitudeFraction, ...
+        'ReferenceSensitivity_pp',D.BaselineDiagnostic.DifferenceFromAuditedAmplitude_pp,'OriginalDataUnchanged',true);
+end
+delete(fig);assert(strcmp(before,oxygenFileSHA256(path)));
+[fig,UI]=openBOIEventReview(path);UI.Select(309);assert(contains(UI.Baseline.Identity.Text,'event 4'));delete(fig);
+Result=struct('Status','checks_passed_pending_visual_review','SyntheticReviewCases',2,'RealCases',{vertcat(rows{:})}, ...
+    'OriginalAuditSHA256',before,'OriginalAuditUnchanged',true,'ElapsedSeconds',toc(timer),'MatlabVersion',version);
+fid=fopen(fullfile(out,'validation.json'),'w');fprintf(fid,'%s\n',jsonencode(Result,'PrettyPrint',true));fclose(fid);disp(Result);

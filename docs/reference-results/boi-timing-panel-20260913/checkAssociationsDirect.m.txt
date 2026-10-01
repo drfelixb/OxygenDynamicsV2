@@ -1,0 +1,22 @@
+root=fileparts(mfilename('fullpath'));ws=fileparts(fileparts(root));cd(fullfile(ws,'existing-analysis'));setupOxygenDynamicsPath;
+R=jsondecode(fileread(fullfile(root,'recordings.json')));sel=jsondecode(fileread(fullfile(root,'selection.json')));results=cell(numel(R),1);timer=tic;
+for k=1:numel(R)
+ r=R(k);V=load(r.AuditMat);I=V.AnalysisInfo;ids=find(strcmp({sel.UniqueEvents.RecordingKey},r.RecordingKey));cases=cell(numel(ids),1);
+ for sign={'sink','surge'}
+  if strcmp(sign{1},'sink'),p='Sink';master=r.SinkMaster;else,p='Surge';master=r.SurgeMaster;end
+  M=load(master,'AnalysisInfo',['Table_Oxygen' p 's_Out'],['Table_Oxygen' p 'Events_Out']);assert(isequaln(M.AnalysisInfo,I));S=M.(['Table_Oxygen' p 's_Out']);E=M.(['Table_Oxygen' p 'Events_Out']);
+  for q=1:numel(ids)
+   e=sel.UniqueEvents(ids(q));if ~strcmp(e.EventType,sign{1}),continue;end
+   a=V.Audit(e.AuditRow,:);t=V.Traces{e.AuditRow};s=find(S.SiteID==e.SiteID&string(S.RecordingID)==string(a.RecordingID));ee=find(E.([p 'ID'])==e.SiteID&E.EventID==e.EventID&string(E.RecordingID)==string(a.RecordingID));assert(isscalar(s)&&isscalar(ee));row=E(ee,:);
+   assert(isequaln([row.StartFrame,row.EndFrame],[a.StartFrame,a.EndFrame])&&isequaln(row.BaselineValue,a.StoredBaseline)&&string(row.BaselineStatus)==string(a.StoredStatus)&&isequaln(row.(['NormOxy' p 'Amp']),a.StoredAmplitude));
+   sz=S.FrameSize{s};assert(isequal(sz,[512 512])&&S.NFrames(s)==I.NFrames&&S.SampleF(s)==1);if isfield(I,'FrameSize'),assert(isequal(sz,I.FrameSize));end
+   pixels=S.FramePixels{s};assert(numel(pixels)==I.NFrames);active=~cellfun(@isempty,pixels(:));starts=find(diff([false;active])==1);ends=find(diff([active;false])==-1);ff=(starts(e.EventID):ends(e.EventID))';
+   assert(isequal(ff,t.DetectedFrames(:)));union=unique(vertcat(pixels{ff}));assert(isequal(double(union(:)),sort(double(t.Footprint(:))))&&all(union>=1&union<=prod(sz)));
+   cases{q}=struct('EventType',e.EventType,'SiteID',e.SiteID,'EventID',e.EventID,'AuditRow',e.AuditRow,'FrameSizeFromSavedSite',sz,'NativeFrames',numel(ff),'FootprintPixels',numel(union),'Association','Saved master AnalysisInfo exact equality; event identity, measurement, frame grid, native run and footprint match audit. Master hash captured in phase042 inputs; not attributed to original audit creation.');
+  end
+ end
+ profile='legacy_saved_whole_field';if isfield(I,'BOISupportProfile'),profile=I.BOISupportProfile;end
+ results{k}=struct('RecordingKey',r.RecordingKey,'Cases',{vertcat(cases{:})},'AuditHasFrameSize',isfield(I,'FrameSize'),'RawFile',I.RawFile,'RawSHA256',I.RawSHA256,'DenoisedFile',I.DenoisedFile,'DetectionSource',I.DetectionSource,'QuantificationSource',I.QuantificationSource,'SavedDetectionSupportProfile',profile,'SameSourceForRawAndCorrected',isempty(I.DenoisedFile));clear V M
+end
+out=struct('Status','passed','DecisionID','R2-TIMING-PANEL-042','Records',{vertcat(results{:})},'SelectedNativeAssociationsVerified',numel(sel.UniqueEvents),'ElapsedSeconds',toc(timer),'MovieReads',0,'NewTimingCalculations',0,'Compatibility','Historical ID400 and FB2316 audits omit AnalysisInfo.FrameSize, required by current reviewer. Direct read-only association uses saved site FrameSize and verifies 512x512 grid. No audit or production function rewritten.');
+fid=fopen(fullfile(root,'native-associations.json'),'w');fprintf(fid,'%s\n',jsonencode(out,'PrettyPrint',true));fclose(fid);disp(out.Status);

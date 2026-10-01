@@ -1,0 +1,13 @@
+{
+  "schema": "boi-development-review-1",
+  "decision_id": "R2-HP-REVIEW-003",
+  "recording_id": "HP_ECS_CSV2_identity_pending",
+  "role": "already inspected development recording; no independent evaluation",
+  "question": "Explain the flagged baseline-relative surge amplitude and characterize broader image-intensity changes without inferring a physiological mechanism or tuning the detector.",
+  "fixed_case": "Surge site 1 event 4, native and measurement frames 1048 through 1060, clean baseline 1028 through 1047. Whole-recording source and tissue summaries use all 1200 frames at the researcher-confirmed exact 1 Hz.",
+  "scope": "One reconstruction of saved detection preprocessing using the existing independent audit, with saved settings. One source-stack review: tissue/background mean, median, range, saturation, fixed-event images and five largest adjacent changes in tissue mean. Transition selection is diagnostic ranking, not an exclusion or acceptance threshold. Inspect source acquisition-setting changes where retained.",
+  "criteria": "Source and saved run hashes unchanged; reconstructed site traces and all-event measurements reproduce saved values. Determine whether the sign disagreement is an arithmetic/source error or a difference between detection and baseline-relative measurement definitions. Quantify broad changes; leave cause unresolved when evidence cannot distinguish it.",
+  "budget": "One reconstruction and one full source-stack scan; two MATLAB workers; no detector rerun, parameter search, altered timing, curation or source resampling. Stop on a technical inconsistency and preserve evidence.",
+  "standing_requirements": "BOI only, both signs retained separately, biological variability, physiological relevance, feasible review, readable plots and source/decision traceability.",
+  "outcome_options": ["retain measurement and flag interpretation", "correct demonstrated arithmetic/source bug with separate verification", "restrict unsupported claim", "defer scientific mechanism or exclusion decision"]
+}

@@ -15,6 +15,7 @@ RecDur = size(IM_Raw,3) / AnalysisParams.fs;
 
 AnalysisInfo = struct();
 AnalysisInfo.NFrames = size(IM_Raw,3);
+AnalysisInfo.FrameSize = [size(IM_Raw,1),size(IM_Raw,2)];
 AnalysisInfo.RecordingDurationSec = RecDur;
 AnalysisInfo.PipelineContract=oxygenPipelineContract();
 AnalysisInfo.AnalysisSchemaVersion = AnalysisInfo.PipelineContract.Schema;
@@ -31,6 +32,10 @@ if ~isempty(AnalysisInfo.DenoisedFile),AnalysisInfo.DenoisedSHA256=oxygenFileSHA
 AnalysisInfo.QuantificationSource = 'Original/raw TIFF';
 AnalysisInfo.DetectionSource = 'Denoised TIFF if present; otherwise original/raw TIFF';
 AnalysisInfo.AnalysisParams = AnalysisParams;
+AnalysisInfo.BOIAcquisitionMetadata = captureBOIAcquisitionMetadata( ...
+    recordingFolder,AnalysisInfo.NFrames,AnalysisParams.fs,AnalysisInfo.RawSHA256);
+AnalysisInfo.BOITissueSupport = captureBOITissueSupport( ...
+    recordingFolder,AnalysisInfo.FrameSize,AnalysisInfo.RawSHA256);
 
 InputData = struct();
 InputData.IM_Raw = IM_Raw;

@@ -1,0 +1,26 @@
+root=fileparts(mfilename('fullpath'));addpath(root);out=fullfile(root,'run-01');assert(~isfolder(out));mkdir(out);
+K=jsondecode(fileread(fullfile(root,'known-shape-checks.json')));assert(strcmp(K.Status,'passed'));assert(isfile(fullfile(root,'implementation-freeze.json')));
+R=jsondecode(fileread(fullfile(root,'recordings.json')));allRows={};summaries={};reports={};
+for k=1:numel(R)
+ timer=tic;r=R(k);V=load(r.ReplayMat,'Raw','Corrected','Footprints','NativeFrames','NativeUnionPixels');N=size(V.Raw,1);saved=readtable(r.SavedComparatorCSV,'TextType','string');
+ for j=1:numel(r.Events)
+  e=r.Events(j);if isempty(e.PreviousNativeEnd),e.PreviousNativeEnd=NaN;end;if isempty(e.NextNativeStart),e.NextNativeStart=NaN;end;col=e.TraceColumn;raw=V.Raw(:,col);y=V.Corrected(:,col);foot=V.Footprints{col};native=V.NativeFrames{col};mask=false(512*512,1);mask(foot)=true;overlap=false(N,1);
+  for f=1:N,overlap(f)=any(mask(V.NativeUnionPixels{f}));end
+  orig=saved(saved.Role=="saved"&saved.EventType==string(e.EventType)&saved.SiteID==e.SiteID&saved.EventID==e.EventID,:);assert(height(orig)==1);
+  for direction=[-1 1]
+   for method={'T2','T3'}
+    D=diagnoseCandidate(y,raw,overlap,native,e.SearchLower,e.SearchUpper,direction,method{1},e.EventType,e);
+    item=struct('RowID',numel(allRows)+1,'RecordingKey',r.RecordingKey,'EventType',e.EventType,'SiteID',e.SiteID,'EventID',e.EventID,'AuditRow',e.AuditRow,'TraceColumn',col,'NativeStart',e.NativeStart,'NativeEnd',e.NativeEnd,'SavedStart',orig.StartFrame,'SavedEnd',orig.EndFrame,'SavedBaseline',orig.BaselineMean,'SavedAmplitude',orig.Amplitude,'SavedAmplitudeStatus',char(orig.AmplitudeStatus),'ReplaySHA256',r.ReplaySHA256,'TraceSHA256',e.TraceSHA256,'FootprintSHA256',e.FootprintSHA256,'FootprintPixels',numel(foot),'Diagnostic',D);allRows{end+1}=item;
+    c10='timing_unresolved';c20=c10;if ~isempty(D.Context),c10=D.Context{1}.ScreenStatus;c20=D.Context{2}.ScreenStatus;end
+    summaries{end+1}=struct('RowID',item.RowID,'RecordingKey',string(r.RecordingKey),'EventType',string(e.EventType),'SiteID',e.SiteID,'EventID',e.EventID,'Candidate',string(method{1}),'Direction',direction,'Seed',D.Seed,'StartFrame',D.StartFrame,'EndFrame',D.EndFrame,'TimingStatus',string(D.TimingStatus),'CoversWholeNative',D.CoversWholeNative,'InternalPeakCount',D.InternalPeakCount,'Prominence',D.Prominence,'Context10',string(c10),'Context20',string(c20),'ContextScaleDisagreement',D.ContextScaleDisagreement,'CleanBaselineSamples',numel(D.Amplitude.CleanFrames),'AmplitudeStatus',string(D.Amplitude.Status),'AmplitudeFraction',D.Amplitude.Fraction,'SavedAmplitudeFraction',orig.Amplitude,'AmplitudeDifferencePP',100*(D.Amplitude.Fraction-orig.Amplitude));
+   end
+  end
+  assert(toc(timer)<600,'Candidate:Budget','Recording exceeds frozen ten-minute limit.');
+ end
+ reports{end+1}=struct('RecordingKey',r.RecordingKey,'Events',numel(r.Events),'NewTimingRows',4*numel(r.Events),'ElapsedSeconds',toc(timer));clear V;
+end
+assert(numel(allRows)==192);writeJson(fullfile(out,'diagnostics.json'),allRows);writetable(struct2table(vertcat(summaries{:})),fullfile(out,'timing-results.csv'));writeJson(fullfile(out,'run-report.json'),struct('Status','calculated_pending_independent_verification','Records',{reports},'MATLABVersion',version,'MovieReads',0,'DetectorRuns',0,'CorrectionRefits',0,'ProductionChanges',false));
+disp(groupsummary(struct2table(vertcat(summaries{:})),{'RecordingKey','Candidate','Direction','TimingStatus'}));
+function writeJson(p,x)
+f=fopen(p,'w');assert(f>0);c=onCleanup(@()fclose(f));fprintf(f,'%s\n',jsonencode(x,'PrettyPrint',true));
+end

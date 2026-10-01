@@ -1,0 +1,56 @@
+{
+  "DecisionID": "R2-SUBSTRATE-CHALLENGE-035",
+  "Status": "controlled_challenge_complete_scientific_acceptance_open",
+  "Scope": "BOI synthetic mechanism and original-source baseline arithmetic",
+  "OriginalStageInputs": 24,
+  "DecayStageExtensionInputs": 18,
+  "KnownSupportBaselineCases": 144,
+  "BaselineSeconds": 20,
+  "SamplingHz": 1,
+  "IllustrativeHalfLivesSeconds": [
+    600,
+    1200,
+    2400
+  ],
+  "DecayKineticsMeasured": false,
+  "ProductionMethodChanged": false,
+  "CohortExpanded": false,
+  "Verification": {
+    "Status": "passed",
+    "BaselineCases": 144,
+    "BaselineSourceFrames": 86400,
+    "BaselineArithmeticMaxAbsError": 4.092726157978177e-12,
+    "NoiselessBaselineSourceMaxAbsError": 5.002220859751105e-12,
+    "NoiselessAmplitudeVsAnalyticMaxAbsFraction": 4.110351381481081e-08,
+    "StageCases": 42,
+    "CandidateFrameRows": 25200,
+    "NoiselessStageSourceMeanMaxAbsError": 5.002220859751105e-12,
+    "NoiselessStageExactSHA256Matches": 21,
+    "NoiselessStageTotal": 21,
+    "SpatialDecompositionMaxAbsError": 9.459794059196724e-14,
+    "UndefinedFootprintDecompositionFrames": 4800,
+    "ProductionMatlabFilesUnchanged": 467,
+    "Prior034SealedFilesPreserved": 57,
+    "PriorClarificationPreservedAsSeparateAppend": true,
+    "MeasurementDictionarySHA256": "1eea8f70f37a0794800f764498f4fefc0e89bfc6b195ee1f3aa198ea810186a2"
+  },
+  "Resources": {
+    "MatlabChallengeSeconds": 248.81970579166668,
+    "ProcessSeconds": 257.37,
+    "MaxRSSBytes": 4803510272,
+    "PeakMemoryFootprintBytes": 4347696600,
+    "Threads": 2,
+    "SourceMoviesCopiedOrExported": 0,
+    "RenderProcessSeconds": 21.25,
+    "ProcessTargetSeconds": 600,
+    "EvidenceTargetBytes": 1073741824
+  },
+  "Limitations": [
+    "Decay rates/law and noise model are illustrative; biological variability and cross-mouse transfer remain unvalidated.",
+    "Frame candidates are not tracked accepted events; no biological false-positive rate is estimated.",
+    "Local test disk 613 pixels is below unchanged 1635-pixel surge minimum.",
+    "Entire decomposition traces are conservatively unavailable in four zero-SD cases, including individually valid frames; source and score readouts are retained.",
+    "The desired biological quantity and baseline approach remain unresolved."
+  ],
+  "Next": "Quantify pre-event local and ROI slopes for the same three source-audited FB2314 events without altering their original 20-second baselines or inferring substrate half-lives."
+}

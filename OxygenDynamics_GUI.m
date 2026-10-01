@@ -1,5 +1,6 @@
-function OxygenDynamics_GUI()
+function Fig=OxygenDynamics_GUI(InputCsv)
 %OXYGENDYNAMICS_GUI Stepwise launcher for the Oxygen Dynamics pipeline.
+% Optional InputCsv preselects a dataset without running any analysis.
 
 ProjectRoot = setupOxygenDynamicsPath();
 VersionInfo = getOxygenPipelineVersion();
@@ -35,14 +36,18 @@ Grid.ColumnWidth = {170,'1x',150,150,150};
 Grid.Padding = [12 12 12 12];
 Grid.RowSpacing = 8;
 Grid.ColumnSpacing = 8;
+BOIMenu=uimenu(Fig,'Text','BOI recording');
+uimenu(BOIMenu,'Text','New analysis / reopen saved run','MenuSelectedFcn',@(~,~)openBOIRecordingWorkflow());
+uimenu(BOIMenu,'Text','Open saved review evidence','MenuSelectedFcn',@(~,~)openBOIG4EvidenceBundle());
 
 Title = uilabel(Grid,'Text',sprintf('Oxygen Dynamics Pipeline v%s',PipelineVersion), ...
     'FontSize',20,'FontWeight','bold');
 Title.Layout.Row = 1;
 Title.Layout.Column = [1 2];
 
-VersionLabel = uilabel(Grid,'Text',sprintf('Build: %s',PipelineBuildTimestamp), ...
-    'HorizontalAlignment','right','FontColor',[0.35 0.35 0.35]);
+VersionLabel = uibutton(Grid,'Text','BOI recording workflow', ...
+    'Tooltip',sprintf('Build: %s | Single recording or reopen saved run',PipelineBuildTimestamp), ...
+    'ButtonPushedFcn',@(~,~)openBOIRecordingWorkflow());
 VersionLabel.Layout.Row = 1;
 VersionLabel.Layout.Column = 3;
 
@@ -84,7 +89,19 @@ VerificationGrid = uigridlayout(VerificationTab,[1 1]);
 VerificationGrid.Padding = [8 8 8 8];
 
 SummaryTable = uitable(VerificationGrid,'Data',cell(0,5), ...
-    'ColumnName',{'Mouse','Status','IssueSummary','RecommendedAction','RecordingFolder'});
+    'ColumnName',{'Mouse','Technical status','Issue summary','Recommended action','Recording folder'});
+
+BOIReviewTab=uitab(MainTabs,'Title','BOI Input Review');
+BOIReviewPanel=createBOIImportReviewPanel(BOIReviewTab);
+
+MeasurementTab=uitab(MainTabs,'Title','BOI Measurements');
+MeasurementGrid=uigridlayout(MeasurementTab,[2 1]);MeasurementGrid.RowHeight={32,'1x'};
+MeasurementActions=uigridlayout(MeasurementGrid,[1 3]);MeasurementActions.Padding=[0 0 0 0];
+uibutton(MeasurementActions,'Text','Create event source audit','ButtonPushedFcn',@createEventAudit);
+uibutton(MeasurementActions,'Text','Open saved event audit','ButtonPushedFcn',@openEventAudit);
+uibutton(MeasurementActions,'Text','Open recording/window evidence','ButtonPushedFcn',@openWindowReview);
+MeasurementBody=uipanel(MeasurementGrid,'BorderType','none');
+createBOIMeasurementPanel(MeasurementBody);
 
 ResultsTab = uitab(MainTabs,'Title','Results Preview');
 ResultsGrid = uigridlayout(ResultsTab,[1 2]);
@@ -308,6 +325,13 @@ ManualButton = uibutton(Grid,'Text','Manual','ButtonPushedFcn',@openManual);
 ManualButton.Layout.Row = 7;
 ManualButton.Layout.Column = 5;
 
+if nargin>0 && ~isempty(InputCsv)
+    InputCsv=char(java.io.File(char(InputCsv)).getCanonicalPath());
+    assert(isfile(InputCsv),'OxygenDynamics:MissingInputCsv','Input CSV does not exist.');
+    [FolderName,FileName,Extension]=fileparts(InputCsv);
+    selectCsv([FileName Extension],FolderName);
+end
+
     function chooseCsv(~,~)
         [FileName,FolderName] = uigetfile({'*.csv','CSV files (*.csv)'; '*.*','All files'}, ...
             'Choose input metadata CSV');
@@ -315,6 +339,30 @@ ManualButton.Layout.Column = 5;
             return
         end
 
+        selectCsv(FileName,FolderName);
+    end
+
+    function openEventAudit(~,~)
+        try,openBOIEventReview();catch err
+            uialert(Fig,err.message,'Cannot open saved event audit');
+        end
+    end
+    function openWindowReview(~,~)
+        try
+            if isstruct(State.LastStatsResult)&&isfield(State.LastStatsResult,'DataOutputMat')&&isfile(State.LastStatsResult.DataOutputMat)
+                openBOIWindowReview(State.LastStatsResult.DataOutputMat);
+            else,openBOIWindowReview();end
+        catch err
+            uialert(Fig,err.message,'Cannot open recording/window evidence');
+        end
+    end
+    function createEventAudit(~,~)
+        try
+            path=createBOIEventAudit();if ~isempty(path),openBOIEventReview(path);end
+        catch err,uialert(Fig,err.message,'Source audit failed');end
+    end
+
+    function selectCsv(FileName,FolderName)
         State.InputCsv = fullfile(FolderName,FileName);
         State.InputCsvName = FileName;
         State.MasterFolder = FolderName;
@@ -341,6 +389,7 @@ ManualButton.Layout.Column = 5;
         FiguresButton.Enable = 'off';
         OpenFolderButton.Enable = 'on';
         SummaryTable.Data = cell(0,5);
+        BOIReviewPanel.Update([]);
         clearStatsPreview();
         clearRegressionTab();
         refreshFigureList();
@@ -586,10 +635,15 @@ ManualButton.Layout.Column = 5;
     end
 
     function refreshVerificationReport()
+        State.VerificationReport=[];
+        SummaryTable.Data=cell(0,5);
+        BOIReviewPanel.Update([]);
         Report = runOxygenPipelineVerificationReport('inputCsv',State.InputCsv, ...
             'masterFolder',State.MasterFolder);
         State.VerificationReport = Report;
         updateSummaryTable(Report.SummaryTable);
+        BOIReviewPanel.Update(Report);
+        MainTabs.SelectedTab=BOIReviewTab;
 
         BlockedCount = sum(Report.SummaryTable.Status=="Blocked");
         PartialCount = sum(Report.SummaryTable.Status=="Partial");

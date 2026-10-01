@@ -1,0 +1,36 @@
+root=fileparts(mfilename('fullpath'));out=fullfile(root,'plots-02');assert(~isfolder(out));mkdir(out);
+R=jsondecode(fileread(fullfile(root,'run-01','report.json')));
+for k=1:numel(R.Cases)
+    C=R.Cases(k);T=readtable(fullfile(root,'run-01',C.CaseID,'trace-and-overlap.csv'));
+    f=figure('Visible','off','Color','w','Position',[20 20 1350 1030]);cleanup=onCleanup(@()delete(f));
+    layout=tiledlayout(f,3,1,'TileSpacing','compact','Padding','compact');
+    use=T.Frame>=C.SavedWindow(1)-30&T.Frame<=C.SavedWindow(2)+30;
+    titles={'Original source and existing full-recording cubic trend','Cubic-corrected local source: zero crossings are descriptive only','Detection scores: preserve their separate meaning'};
+    labels={'Input intensity (a.u.)','Corrected intensity (a.u.)','Detection score'};
+    for p=1:3
+        ax=nexttile(layout);set(ax,'Color','w','XColor',[.15 .15 .15],'YColor',[.15 .15 .15],'GridColor',[.6 .6 .6],'FontSize',11);hold(ax,'on');
+        if p==1
+            plot(ax,T.Frame(use),T.RawMean(use),'o-','Color',[0 .32 .65],'MarkerSize',3,'LineWidth',1.2);
+            plot(ax,T.Frame(use),T.CubicRemovedTrendMean(use),'Color',[.85 .35 0],'LineWidth',1.5);
+            lg=legend(ax,{'Fixed-footprint source','Existing cubic trend'},'Location','southoutside','NumColumns',2);
+        elseif p==2
+            plot(ax,T.Frame(use),T.CubicCorrectedMean(use),'o-','Color',[0 .32 .65],'MarkerSize',3,'LineWidth',1.2);
+            yline(ax,0,':','Color',[.4 .4 .4],'HandleVisibility','off');
+            lg=legend(ax,{'Fixed-footprint corrected source'},'Location','southoutside');
+        else
+            plot(ax,T.Frame(use),T.FixedFootprintTemporalScore(use),'Color',[0 .32 .65],'LineWidth',1.2);
+            plot(ax,T.Frame(use),T.FixedFootprintFilteredScore(use),'Color',[.85 .35 0],'LineWidth',1.5);
+            plot(ax,T.Frame(use),T.SavedWholeSiteTemporalScore(use),':','Color',[.4 .4 .4],'LineWidth',1.4);
+            lg=legend(ax,{'Fixed footprint: temporal','Fixed footprint: filtered','Saved whole-site temporal'},'Location','southoutside','NumColumns',3);
+        end
+        set(lg,'Color','w','TextColor',[.1 .1 .1],'EdgeColor',[.8 .8 .8]);
+        for v=C.SavedWindow(:)',xline(ax,v,'k--','LineWidth',1.4,'HandleVisibility','off');end
+        for v=[C.ResearcherOnsetRange(:);C.ResearcherRecoveryRange(:)]',xline(ax,v,':','Color',[.65 .15 .65],'LineWidth',1.3,'HandleVisibility','off');end
+        for v=[C.CubicZeroOnsetBracket(:);C.CubicZeroRecoveryBracket(:)]',xline(ax,v,'-.','Color',[0 .45 .25],'LineWidth',1.1,'HandleVisibility','off');end
+        xlim(ax,[min(T.Frame(use)),max(T.Frame(use))]);grid(ax,'on');
+        title(ax,titles{p},'Color',[.1 .1 .1]);ylabel(ax,labels{p},'Color',[.1 .1 .1]);
+    end
+    xlabel(ax,'Recording frame (external trigger: 1 Hz)','Color',[.1 .1 .1]);
+    title(layout,{sprintf('FB2314 awake | surge site 1, event %d | diagnostic comparison',k+2),sprintf('Black: saved %d-%d | Purple: annotation ranges | Green: zero brackets %d/%d and %d/%d',C.SavedWindow,C.CubicZeroOnsetBracket,C.CubicZeroRecoveryBracket)},'Color',[.1 .1 .1]);
+    exportgraphics(f,fullfile(out,[C.CaseID '.png']),'Resolution',135,'BackgroundColor','white');clear cleanup
+end

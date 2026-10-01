@@ -1,0 +1,11 @@
+function C=fixedHumanContacts(frames,foot,H)
+% Context association on fixed shared footprints, not native frame occupancy.
+C={};frames=frames(:);
+for k=1:numel(H)
+ h=H(k);shared=intersect(double(foot(:)),double(h.Footprint(:)));f=intersect(frames,(h.StartFrame:h.EndFrame)');
+ if isempty(shared)||isempty(f),continue;end
+ C{end+1}=struct('IntervalID',h.ID,'ParentObservation',h.ParentObservation,'Role',h.Role,'AuditRow',h.AuditRow, ...
+  'SourceBinding',h.SourceBinding,'BoundCertainty',h.BoundCertainty,'StartFrame',h.StartFrame,'EndFrame',h.EndFrame,'Frames',f', ...
+  'SharedFootprintPixels',numel(shared),'RecoveryEndpointOnly',isscalar(f)&&f==h.EndFrame,'Interpretation','shared fixed footprint and approximate temporal bounds; not native occupancy or proof of contamination'); %#ok<AGROW>
+end
+end

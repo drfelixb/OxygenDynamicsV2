@@ -1,0 +1,25 @@
+root=fileparts(mfilename('fullpath'));R=jsondecode(fileread(fullfile(root,'recordings.json')));selection=jsondecode(fileread(fullfile(root,'selection.json')));rows=cell(numel(R),1);timer=tic;
+for k=1:numel(R)
+    r=R(k);A=load(r.AuditMat);assert(strcmp(A.AnalysisInfo.RawSHA256,r.RawSHA256FromAudit));
+    assert(A.AnalysisInfo.NFrames==r.ExpectedFrames);assert(A.AnalysisInfo.AnalysisParams.fs==1);
+    ids=find(strcmp({selection.UniqueEvents.RecordingKey},r.RecordingKey));required={'Raw','Footprint','DetectedFrames','CleanBaselineFrames','DetectionDetrended','Normalized','Filtered'};
+    fields=cell(numel(ids),1);missing=strings(0,1);
+    for q=1:numel(ids)
+        e=selection.UniqueEvents(ids(q));j=e.AuditRow;t=A.Traces{j};a=A.Audit(j,:);
+        assert(strcmp(a.EventType,e.EventType)&&a.SiteID==e.SiteID&&a.EventID==e.EventID);
+        absent=setdiff(required,fieldnames(t));
+        for z=1:numel(absent),missing(end+1)=sprintf('%s:%d:%d:%s',e.EventType,e.SiteID,e.EventID,absent{z});end
+        lengths=struct;
+        for name={'Raw','DetectionDetrended','Normalized','Filtered'}
+            if isfield(t,name{1}),lengths.(name{1})=numel(t.(name{1}));assert(lengths.(name{1})==r.ExpectedFrames);end
+        end
+        assert(numel(t.Footprint)==a.FootprintPixels);
+        fields{q}=struct('EventType',e.EventType,'SiteID',e.SiteID,'EventID',e.EventID,'AuditRow',j,'Fields',{fieldnames(t)},'TraceLengths',lengths,'FootprintPixels',numel(t.Footprint));
+    end
+    sm=whos('-file',r.SinkMaster);gm=whos('-file',r.SurgeMaster);
+    S=load(r.SinkMaster,'AnalysisInfo');G=load(r.SurgeMaster,'AnalysisInfo');assert(strcmp(S.AnalysisInfo.RawSHA256,r.RawSHA256FromAudit)&&strcmp(G.AnalysisInfo.RawSHA256,r.RawSHA256FromAudit));
+    rows{k}=struct('RecordingKey',r.RecordingKey,'AuditRows',height(A.Audit),'SelectedEvents',numel(ids),'MissingRequiredTraceFields',missing,'TraceInventory',{vertcat(fields{:})},'SinkMasterVariables',{sm},'SurgeMasterVariables',{gm},'SourceHashesAgree',true,'Frames',A.AnalysisInfo.NFrames,'Hz',A.AnalysisInfo.AnalysisParams.fs,'AnalysisInfoFields',{fieldnames(A.AnalysisInfo)});
+    clear A S G
+end
+out=struct('Status','saved_audit_trace_and_master_header_inventory_complete','Records',{vertcat(rows{:})},'ElapsedSeconds',toc(timer),'MatlabVersion',version,'NewTimingCalculations',0,'MovieReads',0,'DetectorRuns',0,'StatisticsRuns',0);
+fid=fopen(fullfile(root,'preflight.json'),'w');fprintf(fid,'%s\n',jsonencode(out,'PrettyPrint',true));fclose(fid);disp(out.Status);

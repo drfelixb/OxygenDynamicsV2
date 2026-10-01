@@ -1,3 +1,48 @@
+> **Local integration candidate:** see [PACKAGE_CONTENTS.md](PACKAGE_CONTENTS.md) for the exact packaging scope, omitted repository documentation and remaining release gates.
+
+## Current BOI software workflow
+
+As of 1 October 2026, the bounded **CC-02 reviewed-pocket workflow** is
+implemented and accepted. It records an explicit pocket interpretation, exact
+episode/reference frames and suitability flags; displays the corrected signed
+trough with the raw signed trough alongside; and saves, reopens and exports the
+same values and provenance. The standalone viewer and native folder controls
+were accepted for the three saved examples at 1120 × 800 and 900 × 650.
+See the [numerical/integration delivery](docs/SOFTWARE_CC_02_COMPLETION_DELIVERY.md)
+and [usability delivery](docs/SOFTWARE_CC_02_USABILITY_COMPLETION_DELIVERY.md).
+
+These reviewed values are exploratory optical changes, expressed as percentages
+of the positive raw reference intensity. Conditional references, unresolved
+recovery and saved-footprint qualifications remain explicit. Automatic results
+and legacy reviewed measurements retain their own definitions.
+
+**Development and release are paused.** G5 and release remain incomplete;
+broader scientific validity, platform/CI evidence and real-acquisition resource
+and containment checks remain open. The
+[current development status](docs/planning/software-development-status.json)
+records the accepted scope and remaining limitations.
+
+Development evidence links may point to local workspace files. Software,
+tests, narrative records and archived MATLAB recipes are versioned here;
+acquisition data and new generated validation payloads are maintained locally.
+
+In MATLAB, run `Start_OxygenPipeline`, then select **BOI recording workflow**.
+Choose one recording folder and a new output location, enter the acquisition
+sampling rate and pixel calibration, and explicitly choose reviewed craniotomy
+support or the legacy whole-image profile. **Review settings** checks source-bound
+metadata/support before **Run recording** becomes available after confirmation.
+New runs preserve source inputs and use the existing analysis engine. **Inspect
+event traces** opens the primary corrected trace with score support;
+**Inspect recording results** connects the saved window and event views.
+**Reopen saved run** selects `BOIRun.mat` without rerunning analysis or selecting
+another CSV. Legacy CSV tools remain available as a separate route.
+
+Batch uses the same `prepareBOIRecordingRequest` → `runBOIRecordingWorkflow`
+services. See [the bounded G2 workflow and limitations](docs/SOFTWARE_G2_WORKFLOW.md).
+The saved review routes now include the separate, versioned CC-02 pocket
+evidence workflow. Broader workflow and release acceptance remain bounded by
+the current development plan.
+
 # OxygenDynamicsV2
 
 [![MATLAB CI](https://github.com/drfelixb/OxygenDynamicsV2/actions/workflows/matlab-ci.yml/badge.svg)](https://github.com/drfelixb/OxygenDynamicsV2/actions/workflows/matlab-ci.yml)
@@ -5,6 +50,47 @@
 OxygenDynamicsV2 is a MATLAB pipeline for detecting, curating, quantifying, and
 summarising spatiotemporal oxygen dynamics recorded in the murine cortex with
 bioluminescence oxygen imaging.
+
+**Current direction: develop the MATLAB analysis software.** The
+[software development plan](docs/SOFTWARE_DEVELOPMENT_PLAN.md) defines proposed
+goals, completion gates and approval boundaries. Cohort reanalysis, KX whisker
+and stimulation-window work are deferred. Recordings are software examples and
+regression fixtures within an approved task, not an automatic analysis campaign.
+The roadmap and G1 were approved on 23 September 2026. The
+[G1 engineering baseline](docs/SOFTWARE_G1_BASELINE.md) and
+[original backlog / G2 proposal](docs/SOFTWARE_BACKLOG.md) remain historical
+records. Subsequent bounded G3/G4 and CC-02 acceptances, G5 limits and the
+development pause are recorded in the current plan and status.
+
+The [earlier reanalysis plan](docs/REANALYSIS_UPDATE_PLAN.md) remains historical
+context; its cohort next steps are superseded by the software direction. Its
+applicable scientific boundaries remain in force. [Researcher usability and result traceability](docs/RESEARCHER_WORKFLOW_AND_TRACEABILITY.md)
+are release requirements, including understandable calculations and preserved
+decision history. See the [cohort issue-resolution record](docs/BOI_COHORT_RESOLUTION.md)
+for current metadata corrections, source evidence and remaining holds.
+The [measurement dictionary](docs/BOI_MEASUREMENT_DICTIONARY.md) and
+[representative MATLAB workflow](docs/BOI_REPRESENTATIVE_WORKFLOW.md) begin the
+R0/R5 work; [current status](docs/REANALYSIS_STATUS.md) separates completed
+technical evidence from open scientific and researcher-workflow gates.
+The [recording input/QC contract](docs/BOI_RECORDING_INPUT_CONTRACT.md) adds
+MATLAB preflight review and inspectable denominator exports.
+The [MATLAB import-review workflow](docs/BOI_IMPORT_REVIEW_WORKFLOW.md) displays
+source, timing and tissue evidence before analysis and retains it in verification
+exports, with input readiness separate from scientific eligibility.
+The [saved event-review workflow](docs/BOI_EVENT_REVIEW_WORKFLOW.md) connects
+measurement definitions, both-sign event traces and baseline/footprint evidence
+to MATLAB, with reproducible local exports and no automatic analysis rerun.
+The [recording/window evidence viewer](docs/BOI_WINDOW_REVIEW_WORKFLOW.md)
+connects saved summary values to frame exposure, tissue-time and event ingredients.
+The [reviewed tissue-support workflow](docs/BOI_REVIEWED_TISSUE_SUPPORT.md) adds
+source-bound static masks, preserves the automatic mask and review evidence,
+and applies support consistently in a fresh master and export.
+The [HP local input review](docs/BOI_HP_LOCAL_INPUT_REVIEW.md) records the
+additional compartment-labelled sources, identity conflicts and first local
+acquisition preflight; biological transfer eligibility remains unresolved.
+With researcher-confirmed exact 1 Hz external triggering, the
+[full HP development workflow](docs/reference-results/boi-hp-workflow-20260910/README.md)
+now demonstrates both-sign analysis, source-pixel audit and reproducible exports.
 
 > **Research software notice:** This software is intended for research use. Its
 > outputs require scientific review and should not be treated as clinical or
@@ -14,10 +100,12 @@ Known-signal stress testing is described in [the validation protocol](docs/KNOWN
 
 ## Development version: existing analysis V3
 
-Development branch: `development-existing-analysis-v3`. This is an unpublished,
-breaking revision of the existing V2 detector and analysis. Reanalyze all input
-recordings; earlier saved analyses are rejected. The alternative detector is
-maintained separately.
+Development branch: `development-existing-analysis-v3`. This development
+revision changes the existing V2 detector and analysis contracts and is not an
+accepted release. Incompatible earlier analyses are rejected; completed runs
+with supported schemas can be reopened through the saved-result workflow.
+Recording analysis requires its own approved scope. The alternative detector
+is maintained separately.
 
 - Temporal standardization now divides by SD, correcting the former sqrt(SD).
 - [Close sink runs are retained and flagged](docs/SINK_RECURRENCE.md); a short
@@ -838,3 +926,40 @@ For a plain-language summary of this change, see `Amplitude_Definition_Compariso
 - For batch runs, configure `RunConfig` in `OxygenDynamics_Wrapper.m` or `iOSDynamics_Wrapper.m`, and stats settings in `OxygenDynamics_Config.m`. Advanced batch code can also call `runOxygenDynamicsStats(configStruct)` directly.
 - For routine batch runs, prefer editing `OxygenDynamics_Config.m`; use `analysisMode = 'Preflight only'` to validate a dataset before a full run.
 - After code changes, run `runOxygenPipelineSmokeTest` in MATLAB to verify the shared TIFF handling, validation failure checks, and output-folder helpers still work.
+
+
+The [BOI window inspector](docs/BOI_WINDOW_REVIEW_WORKFLOW.md) supports separately
+saved sink and surge coverage, onset and concurrency measures. New statistics
+exports include surge frame/denominator ingredients; older exports retain
+explicit surge unavailability. [Development verification](docs/reference-results/boi-surge-windows-20260911/README.md)
+checks unchanged sink outputs and both-sign traceability without scientific
+acceptance or a detector rerun.
+
+
+The [connected BOI reviewer walkthrough](docs/BOI_RESEARCHER_WALKTHROUGH.md)
+now links saved window events to checked source/trace/native-mask evidence and
+its exported provenance. BOI Measurements also creates missing source audits
+explicitly in new folders. [Phase evidence](docs/reference-results/boi-workflow-phase-20260911/README.md)
+records developer completion and the independent-researcher/scientific release
+gates that remain open.
+
+The [saved measurement-support diagnostic](docs/reference-results/boi-measurement-support-20260912/README.md)
+quantifies amplitude availability versus native coverage and timing in the two
+preserved development examples. It changes no detections or measurement rules.
+The [scientific decision queue](docs/BOI_SCIENTIFIC_DECISIONS.md) separates the
+remaining evidence and researcher choices from completed technical checks.
+
+The fixed [baseline/timing challenge](docs/reference-results/boi-baseline-timing-20260912/README.md)
+documents 34 supplied-mask amplitude cases, 10 sink timing cases and 23 existing
+regression checks. Current measurements are retained; reference/support effects,
+unavailability and physiological interpretation remain separate. See the
+[scientific decision queue](docs/BOI_SCIENTIFIC_DECISIONS.md) for remaining gates.
+
+The [measurement-policy proposal](docs/BOI_MEASUREMENT_POLICY_PROPOSAL.md)
+provides five concrete review decisions and a C02 candidate-pair ledger. It
+preserves current formulas, unresolved scientific choices and unapproved
+evaluation/eligibility status.
+
+The [prior-use audit](docs/BOI_PRIOR_USE_AUDIT.md) links analytical development,
+source inspection and acquisition coverage to animal/asset identities. It
+includes earlier prototype use and preserves unresolved evaluation history.

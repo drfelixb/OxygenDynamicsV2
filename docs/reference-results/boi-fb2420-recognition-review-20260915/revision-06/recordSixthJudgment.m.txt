@@ -1,0 +1,36 @@
+function recordSixthJudgment
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(fileparts(here)));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+f=fullfile(here,'feedback.json');d=jsondecode(fileread(f));s=d.SourceBindings;names=fieldnames(s);
+for k=1:numel(names),v=s.(names{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+R=loadBOIEventReview(s.Audit.Path);Previous=loadBOIBoundaryReview(R,s.PreviousReview.Path);
+A=struct('Status','recognized','OnsetFrames',130,'RecoveryFrames',150, ...
+ 'PreferredOnsetFrame',[],'PreferredRecoveryFrame',[],'Reviewer','Researcher (user)', ...
+ 'Reason',['User: "yes, but more from 130 - 150". Recognized surge with approximate onset frame 130 and recovery frame 150; automatic interval 134-144 remains unchanged. No precision, preferred endpoint, reference or physiological ground truth inferred. Exact reply/context SHA256: ' oxygenFileSHA256(f)]);
+newpath=fullfile(here,'BOI-researcher-review-06.json');
+Store=saveBOIBoundaryReview(R,291,A,newpath,Previous);
+assert(numel(Store.Document.Revisions)==6);
+assert(isequaln(Store.Document.Revisions(1:5),Previous.Document.Revisions));
+R.BoundaryReview=Store;B=getBOIBoundaryReview(R,291);
+assert(strcmp(B.Status,'recognized')&&isequal(B.Annotation.OnsetFrames,130)&&isequal(B.Annotation.RecoveryFrames,150));
+assert(strcmp(getBOIBoundaryReview(R,34).Status,'not_recognized'));
+assert(strcmp(getBOIBoundaryReview(R,279).Status,'not_reviewed'));
+addpath(fullfile(root,'reference-validation','boi-fb2420-first-roi-run-20260915'));
+for pos=[6 7]
+ [Fig,UI]=openFB2420Review(pos);UI.LoadBoundaries(newpath);drawnow;
+ if pos==6
+  for ax=[UI.Timing.CorrectedAxes UI.Timing.ScoreAxes UI.Timing.RawAxes]
+   marks=findall(ax,'Tag','BOIResearcherBound');assert(isequal(sort([marks.Value]),[130 150]));
+   automatic=findall(ax,'Tag','BOITimingMeasurementBound');assert(isequal(sort([automatic.Value]),[134 144]));
+  end
+ end
+ exportapp(Fig,fullfile(here,sprintf('case-%02d-timing.png',pos)));close(Fig);
+end
+for k=1:numel(names),v=s.(names{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+v=struct('Status','saved_reloaded_and_rendered','CumulativeRevisionCount',6, ...
+ 'AnnotationAuditRow',291,'AnnotationStatus','recognized','HumanOnsetFrame',130,'HumanRecoveryFrame',150,'ApproximateTiming',true, ...
+ 'NoAdditionalContextInferred',true,'PreviousRevisionPreserved',true, ...
+ 'AutomaticSourcesUnchanged',true,'NextQueuePosition',7,'NextAuditRow',279, ...
+ 'NextStatus','not_reviewed','BoundaryArtifact',struct('Path',Store.Path,'SHA256',Store.SHA256));
+fid=fopen(fullfile(here,'verification.json'),'w');fprintf(fid,'%s\n',jsonencode(v,'PrettyPrint',true));fclose(fid);
+end

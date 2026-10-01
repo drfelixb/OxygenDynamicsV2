@@ -1,0 +1,49 @@
+function Review=attachBOIReferenceSources(Review,SinkPath,SurgePath)
+%ATTACHBOIREFERENCESOURCES Check complete both-sign native support for preview.
+id='OxygenDynamics:ReferenceSourceMismatch';A=Review.Audit;I=Review.AnalysisInfo;
+assert(strcmp(oxygenFileSHA256(Review.AuditPath),Review.AuditSHA256),id,'Audit changed; reopen before attaching reference sources.');
+paths={SinkPath,SurgePath};hashes=cell(1,2);pixels=cell(height(A),1);seen=false(height(A),1);
+for sign=1:2
+    prefix='Sink';kind="sink";if sign==2,prefix='Surge';kind="surge";end
+    paths{sign}=char(java.io.File(char(paths{sign})).getCanonicalPath());hashes{sign}=oxygenFileSHA256(paths{sign});
+    sn=['Table_Oxygen' prefix 's_Out'];en=['Table_Oxygen' prefix 'Events_Out'];
+    M=load(paths{sign},'AnalysisInfo',sn,en);
+    assert(all(isfield(M,{'AnalysisInfo',sn,en}))&&isequaln(M.AnalysisInfo,I),id,'Both masters must match the audit analysis metadata.');
+    S=M.(sn);E=M.(en);siteCol=[prefix 'ID'];ampCol=['NormOxy' prefix 'Amp'];
+    assert(istable(S)&&istable(E)&&all(ismember({'RecordingID','SiteID','FramePixels','FrameSize','NFrames','SampleF'},S.Properties.VariableNames))&& ...
+        all(ismember({'RecordingID',siteCol,'EventID','StartFrame','EndFrame','BaselineValue','BaselineStatus',ampCol},E.Properties.VariableNames)),id,'Master lacks native identity or measurement fields.');
+    matched=false(height(E),1);
+    for s=1:height(S)
+        assert(isequal(S.FrameSize{s},I.FrameSize)&&S.NFrames(s)==I.NFrames&&S.SampleF(s)==I.AnalysisParams.fs,id,'Native source grid differs from audit.');
+        c=S.FramePixels{s};assert(iscell(c)&&numel(c)==I.NFrames,id,'Incomplete per-frame native support.');c=c(:);
+        for f=1:numel(c)
+            p=c{f};assert(isnumeric(p)&&isreal(p)&&all(isfinite(p(:))&p(:)>=1&p(:)<=prod(I.FrameSize)&p(:)==fix(p(:)))&&numel(unique(p))==numel(p),id,'Invalid native pixels.');
+            c{f}=double(p(:));
+        end
+        active=~cellfun(@isempty,c);starts=find(diff([false;active])==1);ends=find(diff([active;false])==-1);
+        for k=1:numel(starts)
+            row=find(string(A.RecordingID)==string(S.RecordingID(s))&string(A.EventType)==kind&A.SiteID==S.SiteID(s)&A.EventID==k);
+            e=find(string(E.RecordingID)==string(S.RecordingID(s))&E.(siteCol)==S.SiteID(s)&E.EventID==k);
+            assert(isscalar(row)&&isscalar(e)&&~seen(row)&&~matched(e),id,'Each native run must have one unique matching audit and master event.');
+            frames=(starts(k):ends(k))';t=Review.Traces{row};
+            assert(isequal(frames,double(t.DetectedFrames(:)))&&isequal(unique(vertcat(c{frames})),sort(double(t.Footprint(:))))&& ...
+                isequaln([E.StartFrame(e),E.EndFrame(e)],[A.StartFrame(row),A.EndFrame(row)])&& ...
+                isequaln(E.BaselineValue(e),A.StoredBaseline(row))&&string(E.BaselineStatus(e))==string(A.StoredStatus(row))&& ...
+                isequaln(E.(ampCol)(e),A.StoredAmplitude(row)),id,'Native run, footprint or saved measurement differs from audit.');
+            pixels{row}=c(frames);seen(row)=true;matched(e)=true;
+        end
+    end
+    assert(all(matched),id,'A master event has no matching native run.');
+    assert(strcmp(hashes{sign},oxygenFileSHA256(paths{sign})),id,'Master changed during attachment.');
+end
+assert(all(seen),id,'Both masters must cover every audit event; partial support is unavailable, not clean.');
+association='All event identities, metadata, measurements, native runs and footprints matched. Original audit did not capture master checksums.';
+if isfield(Review,'AuditCreationReceipt')
+    assert(isequal(string(hashes(:)),string(Review.AuditCreationReceipt.MasterSHA256(:))),id,'Master checksum differs from audit creation receipt.');
+    association='All event identities/support and master checksums match the audit creation receipt.';
+end
+assert(strcmp(oxygenFileSHA256(Review.AuditPath),Review.AuditSHA256),id,'Audit changed during attachment.');
+Review.ReferenceSources=struct('Schema','boi-reference-sources-1','AuditSHA256',Review.AuditSHA256, ...
+    'MasterPaths',{paths},'MasterSHA256',{hashes},'EventFramePixels',{pixels},'EventCount',height(A), ...
+    'Association',association,'AttachedUTC',char(datetime('now','TimeZone','UTC','Format','yyyy-MM-dd''T''HH:mm:ssXXX')));
+end

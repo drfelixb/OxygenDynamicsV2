@@ -4,10 +4,13 @@ function RecordingArea = computeRecordingArea(IM_Notrend,PixelSize,backgroundPer
 % Optional name-value inputs:
 %   recAreaBinHalfSizeUm      Half-size in um for square spatial bins.
 %   recAreaMinCoverageFraction Minimum mask coverage required for a bin.
+%   eligibleMask             Optional logical native static support. The
+%                            automatic estimate is retained for comparison.
 
 Parser = inputParser();
 Parser.addParameter('recAreaBinHalfSizeUm',[],@(x) isempty(x) || isnumeric(x));
 Parser.addParameter('recAreaMinCoverageFraction',0.9,@isnumeric);
+Parser.addParameter('eligibleMask',[],@(x) isempty(x) || islogical(x));
 Parser.parse(varargin{:});
 Options = Parser.Results;
 
@@ -21,6 +24,12 @@ CollapsedArea = squeeze(mean(single(AboveMean),3));
 Aboveback = CollapsedArea > prctile(CollapsedArea(:),backgroundPercentile);
 
 RecordingArea = struct();
+RecordingArea.AutomaticMask = Aboveback;
+if ~isempty(Options.eligibleMask)
+    assert(isequal(size(Options.eligibleMask),size(Aboveback))&&any(Options.eligibleMask(:)), ...
+        'OxygenDynamics:InvalidTissueSupport','Explicit support must be nonempty and match native image dimensions.');
+    Aboveback=Options.eligibleMask;
+end
 RecordingArea.Mask = Aboveback;
 RecordingArea.Filter = Aboveback;
 RecordingArea.AreaUm2 = sum(Aboveback(:)) * PixelSize^2;

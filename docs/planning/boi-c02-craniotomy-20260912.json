@@ -1,0 +1,90 @@
+{
+  "decision_id": "R1-C02-CRANIOTOMY-030",
+  "recorded_utc": "2026-09-12T12:47:54.148677+00:00",
+  "status": "spatial_check_complete_craniotomy_requirement_recorded_exact_roi_not_adopted",
+  "user_quote": "the true Signal is often or in particular the cases I saw not in the corners/sides. It\u2019s limited to a craniotomy which sometimes is smaller than the fov",
+  "origin": "User clarification in current task",
+  "requirement": "Recording-specific craniotomy defines intended anatomical BOI field; preserve dark interior tissue and native source geometry.",
+  "exact_boundary_status": "Prior 024 outer-field approximation reused unchanged, not confirmed surgical-edge annotation.",
+  "report": "docs/reference-results/boi-c02-craniotomy-20260912/README.md",
+  "results": {
+    "DecisionID": "R1-C02-CRANIOTOMY-030",
+    "SourceSHA256": "08381f8ef4cb0da80a09645aeffc9416188cf7937eaf207c0536f1f997494cf8",
+    "MaskSHA256": "0912f3568a0d368dca1b0a891c34d874803452bcbcf5ee84f2184fe4b6f4f78d",
+    "ProposedPixels": 131135,
+    "FieldPixels": 262144,
+    "ProposedFieldFraction": 0.5002403259277344,
+    "Signs": [
+      {
+        "Sign": "sink",
+        "Events": 219,
+        "WhollyInside": 114,
+        "WhollyOutside": 42,
+        "Crossing": 63,
+        "AutomaticSupportPixels": 162030,
+        "AutomaticSupportOutsideDraftPixels": 49800,
+        "ExistingCoveredPixelSeconds": 1115328.0,
+        "ExistingCoveredOutsideDraftPixelSeconds": 766247,
+        "ExistingCoveredOutsideDraftFraction": 0.6870149408963103
+      },
+      {
+        "Sign": "surge",
+        "Events": 49,
+        "WhollyInside": 6,
+        "WhollyOutside": 2,
+        "Crossing": 41,
+        "AutomaticSupportPixels": 181456,
+        "AutomaticSupportOutsideDraftPixels": 67832,
+        "ExistingCoveredPixelSeconds": 6591970.0,
+        "ExistingCoveredOutsideDraftPixelSeconds": 4543352.0,
+        "ExistingCoveredOutsideDraftFraction": 0.6892252240225608
+      }
+    ],
+    "SelectedAuditRows": [
+      1,
+      2,
+      17,
+      220,
+      225,
+      246,
+      252
+    ],
+    "NativeFramesRendered": 21,
+    "ElapsedSeconds": 20.174110916666667,
+    "MaskAdopted": false,
+    "RevisedOutcomesCalculated": false
+  },
+  "verification": {
+    "decision_id": "R1-C02-CRANIOTOMY-030",
+    "status": "passed",
+    "polygon_native_positions_replayed": 262144,
+    "event_geometry_rows_replayed": 268,
+    "selection_replayed": [
+      1,
+      2,
+      17,
+      220,
+      225,
+      246,
+      252
+    ],
+    "selected_native_frame_source_means_checked": 21,
+    "unchanged_prior_mask": true,
+    "initial_corrected_geometry_identical": true,
+    "implementation_files_unchanged": 461,
+    "source_sha256": "08381f8ef4cb0da80a09645aeffc9416188cf7937eaf207c0536f1f997494cf8",
+    "seconds": 1.7923032499384135,
+    "limit": "Spatial agreement with a prior draft is not independent certification of the surgical edge, biological event identity or a rerun with restricted support."
+  },
+  "implementation_limits": [
+    "Accepted footprints remain unclipped under the current support override.",
+    "Candidate outside-support filtering is unchanged.",
+    "Normalization still uses the full image."
+  ],
+  "next_work": "Finalize source-supported craniotomy ROIs and explicit boundary-crossing/normalization support rules before a fresh craniotomy-restricted workflow.",
+  "mask_adoptions": 0,
+  "baseline_changes": 0,
+  "event_exclusions": 0,
+  "frame_exclusions": 0,
+  "scientific_outcome_changes": 0
+}

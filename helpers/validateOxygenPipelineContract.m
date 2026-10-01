@@ -1,8 +1,12 @@
 function validateOxygenPipelineContract(Info,M)
-C=oxygenPipelineContract();
+profile=getBOISupportProfile(Info);
+C=oxygenPipelineContract(profile);
 if ~isfield(Info,'PipelineContract') || ~isequaln(Info.PipelineContract,C) || ...
         ~isfield(Info,'AnalysisSchemaVersion') || ~strcmp(Info.AnalysisSchemaVersion,C.Schema)
     error('OxygenDynamics:ReanalysisRequired','Outputs do not match the current detection/measurement/statistics version. Rerun the master.');
+end
+if strcmp(profile,'craniotomy-roi-1')
+    validateBOISavedDetectionSupport(Info);
 end
 validateOxygenAnalysisCalibration(Info,M);
 expected=createOxygenMasterParams(M.PixelSize,M.SampleF);

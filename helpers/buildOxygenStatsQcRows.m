@@ -20,6 +20,13 @@ end
     Check,Status,Message,WhereToLook,RecommendedAction,StatsResult);
 
 QcRows = table(Check,Status,Message,WhereToLook,RecommendedAction);
+if isfield(Data,'RecordingInputQC') && ~isempty(Data.RecordingInputQC)
+    q=Data.RecordingInputQC;
+    additions=table(q.RecordingID + " / " + q.IssueID,repmat("REVIEW",height(q),1), ...
+        q.Message,repmat("RecordingInputQC and RecordingInputReview.md",height(q),1),q.Action, ...
+        'VariableNames',QcRows.Properties.VariableNames);
+    QcRows=[QcRows;additions];
+end
 
 end
 

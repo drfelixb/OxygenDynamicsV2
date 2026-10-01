@@ -1,0 +1,54 @@
+% G1: bounded existing BOI tests only; no full recorded-movie detector run.
+packet=fileparts(mfilename('fullpath'));
+root=fileparts(fileparts(packet));repo=fullfile(root,'existing-analysis');
+addpath(repo);setupOxygenDynamicsPath;addpath(fullfile(repo,'tests','analysis'));
+started=tic;
+names={'testPipelineContract','testBOIRecordingInputContract','testBOITissueSupport', ...
+    'testBOIStrictROISupport','testBOIImportReview','testBOIEventReview', ...
+    'testBOIWindowReview','testBOIConnectedReview','testBOIReviewedOptical', ...
+    'testBOITemporalContext','testBOISavedMeasurementSupport','testBOISurgeWindows'};
+env=struct('Version',version,'Computer',computer,'Toolboxes',{ver}, ...
+    'Repository',repo,'Scope','existing bounded BOI tests; no cohort or full movie runs');
+writeJSON(fullfile(packet,'matlab-environment.json'),env);
+rows=struct('Suite',{},'Name',{},'Passed',{},'Failed',{},'Incomplete',{},'Duration',{});
+suites=struct('Name',{},'Status',{},'Tests',{},'Error',{});
+for k=1:numel(names)
+    if toc(started)>900
+        suites(end+1)=struct('Name',names{k},'Status','skipped_budget','Tests',0,'Error','900-second soft budget reached');
+        continue
+    end
+    fprintf('\nG1 SUITE %s\n',names{k});
+    try
+        suite=matlab.unittest.TestSuite.fromFile(fullfile(repo,'tests','analysis',[names{k} '.m']));
+        results=run(suite);
+        for j=1:numel(results)
+            r=results(j);
+            rows(end+1)=struct('Suite',names{k},'Name',r.Name,'Passed',r.Passed, ...
+                'Failed',r.Failed,'Incomplete',r.Incomplete,'Duration',r.Duration);
+            if r.Failed||r.Incomplete,disp(r.Details);end
+        end
+        suites(end+1)=struct('Name',names{k},'Status','executed','Tests',numel(results),'Error','');
+    catch err
+        suites(end+1)=struct('Name',names{k},'Status','runner_error','Tests',0,'Error',getReport(err,'extended','hyperlinks','off'));
+        disp(getReport(err,'extended','hyperlinks','off'));
+    end
+    writeJSON(fullfile(packet,'test-results.json'),struct('Suites',suites,'Tests',rows,'ElapsedSeconds',toc(started)));
+end
+targets={'Start_OxygenPipeline.m','OxygenDynamics_GUI.m','OxygenDynamics_Wrapper.m', ...
+    'OxygenDynamics_Master.m','runOxygenDynamicsStats.m','openBOIEventReview.m', ...
+    'openBOIWindowReview.m','createBOIEventAudit.m'};
+analyzer=struct('Path',{},'Messages',{});
+for k=1:numel(targets)
+    analyzer(end+1)=struct('Path',targets{k},'Messages',checkcode(fullfile(repo,targets{k}),'-id'));
+end
+writeJSON(fullfile(packet,'code-analyzer.json'),analyzer);
+summary=struct('SuitesRequested',numel(names),'SuitesExecuted',sum(strcmp({suites.Status},'executed')), ...
+    'Tests',numel(rows),'Passed',sum([rows.Passed]),'Failed',sum([rows.Failed]), ...
+    'Incomplete',sum([rows.Incomplete]),'RunnerErrors',sum(strcmp({suites.Status},'runner_error')), ...
+    'SuitesSkipped',sum(strcmp({suites.Status},'skipped_budget')),'ElapsedSeconds',toc(started), ...
+    'FullRecordedMovieRuns',0,'IndependentHumanReview',false);
+writeJSON(fullfile(packet,'test-summary.json'),summary);disp(summary);
+function writeJSON(path,value)
+f=fopen(path,'w');assert(f>=0);clean=onCleanup(@()fclose(f));
+fprintf(f,'%s\n',jsonencode(value,PrettyPrint=true));
+end

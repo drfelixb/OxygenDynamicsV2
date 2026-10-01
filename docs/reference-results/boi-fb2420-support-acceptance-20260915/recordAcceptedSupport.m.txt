@@ -1,0 +1,38 @@
+function recordAcceptedSupport
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+S=jsondecode(fileread(fullfile(here,'inputs.json')));
+for k=1:numel(S),assert(strcmp(oxygenFileSHA256(S(k).Path),S(k).SHA256));end
+M=jsondecode(fileread(fullfile(here,'stage-manifest.json')));
+D=jsondecode(fileread(fullfile(here,'writer-decision.json')));
+assert(strcmp(oxygenFileSHA256(fullfile(here,'writer-decision.json')),M.WriterDecisionSHA256));
+assert(strcmp(oxygenFileSHA256(fullfile(here,'researcher-acceptance.json')),M.ResearcherAcceptanceSHA256));
+assert(~isfile(fullfile(M.PreviousStage,'BOITissueSupport.json')));
+Snapshot=writeBOITissueSupport(M.StageFolder,M.ProposalFolder,D);
+Review=reviewBOIRecordingInput(M.StageFolder,1,2.35);
+assert(Review.Files.IsValid&&Review.InputCompatible);
+assert(strcmp(Review.Status,'descriptive_input_requires_scientific_review'));
+assert(strcmp(Review.TissueSnapshot.State,'captured'));
+assert(strcmp(Review.TissueSnapshot.SHA256,Snapshot.SHA256));
+assert(strcmp(Review.TissueDeclaration.DecisionID,D.DecisionID));
+X=load(fullfile(M.ProposalFolder,'ProposedMask.mat'),'Mask');
+assert(isequal(Review.TissueDeclaration.MaskPixels(:),find(X.Mask)));
+assert(numel(Review.TissueDeclaration.MaskPixels)==161039&&X.Mask(350,150)&&X.Mask(330,432));
+assert(any(Review.QC.IssueID=="R1-REVIEWED-TISSUE"));
+assert(~any(Review.QC.IssueID=="R1-STATIC-TISSUE"));
+assert(all(isnan(Review.Acquisition.DeclaredFrameValid)));
+assert(strcmp(Review.MetadataSnapshot.SHA256,M.AcquisitionMetadataSHA256));
+assert(strcmp(Review.ScientificStatus,'not_established'));
+assert(~isfolder(fullfile(M.StageFolder,'OxygenSinks_Output'))&&~isfolder(fullfile(M.StageFolder,'OxygenSurges_Output')));
+assert(~isfile(fullfile(M.PreviousStage,'BOITissueSupport.json')));
+save(fullfile(here,'accepted-input-review.mat'),'Review','Snapshot','D','M');
+writetable(Review.QC,fullfile(here,'accepted-input-qc.csv'));
+result=struct('DecisionID',D.DecisionID,'Status','accepted_working_support_recorded_and_import_verified', ...
+    'MaskPixels',numel(Review.TissueDeclaration.MaskPixels),'MaskExactlyMatchesAcceptedProposal',true, ...
+    'TissueDeclarationSHA256',Snapshot.SHA256,'InputReviewStatus',Review.Status, ...
+    'TissueStatus',Review.TissueStatus,'SourceSHA256',Review.RawSHA256, ...
+    'OriginalAcquisitionMetadataUnchanged',true,'PriorStageUnchanged',true, ...
+    'FrameValidity','unknown','ScientificEligibility','not_established','DetectorRuns',0);
+for k=1:numel(S),assert(strcmp(oxygenFileSHA256(S(k).Path),S(k).SHA256));end
+fid=fopen(fullfile(here,'verification-matlab.json'),'w');fprintf(fid,'%s\n',jsonencode(result,'PrettyPrint',true));fclose(fid);disp(result);
+end

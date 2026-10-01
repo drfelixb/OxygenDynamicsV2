@@ -1,0 +1,96 @@
+function Panel=createBOITimingPanel(Parent,ReturnToEvent,SelectFrame)
+%CREATEBOITIMINGPANEL Corrected-primary review with saved score and raw context.
+Grid=uigridlayout(Parent,[2 1]);Grid.RowHeight={170,'1x'};
+Controls=uigridlayout(Grid,[3 1]);Controls.Padding=[0 0 0 0];Controls.RowHeight={32,88,30};Controls.Layout.Row=1;
+Header=uigridlayout(Controls,[1 2]);Header.Padding=[0 0 0 0];Header.ColumnWidth={'1x',170};
+Header.Layout.Row=1;
+Identity=uilabel(Header,'Text','Select a saved event.','Interpreter','none','WordWrap','on');
+Back=uibutton(Header,'Text','View amplitude evidence','ButtonPushedFcn',@(~,~)ReturnToEvent());
+Status=uilabel(Controls,'Text','Corrected intensity is primary; detection scores support interpretation.','WordWrap','on','Interpreter','none');
+Status.Layout.Row=2;
+Control=uigridlayout(Controls,[1 3]);Control.Padding=[0 0 0 0];Control.ColumnWidth={260,110,'1x'};
+Control.Layout.Row=3;
+RawToggle=uicheckbox(Control,'Text','Show raw / correction quality check','Value',false,'ValueChangedFcn',@toggleRaw);
+Frame=uispinner(Control,'Limits',[1 2],'Step',1,'Enable','off','ValueChangedFcn',@frameChanged);
+FrameLabel=uilabel(Control,'Text','Recording frame; modeled elapsed time shown here.','Interpreter','none');
+Plots=uigridlayout(Grid,[3 1]);Plots.Layout.Row=2;Plots.Padding=[0 0 0 0];Plots.RowHeight={'2x','1x',0};
+CorrectedHost=uigridlayout(Plots,[1 1]);CorrectedHost.Layout.Row=1;CorrectedHost.Padding=[0 0 0 0];
+ScoreHost=uigridlayout(Plots,[1 1]);ScoreHost.Layout.Row=2;ScoreHost.Padding=[0 0 0 0];
+CorrectedAxes=uiaxes(CorrectedHost);ScoreAxes=uiaxes(ScoreHost);
+RawHost=uigridlayout(Plots,[1 1]);RawHost.Padding=[0 0 0 0];RawAxes=uiaxes(RawHost);RawHost.Visible='off';
+RawHost.Layout.Row=3;
+Current=[];
+Panel=struct('Update',@update,'SetFrame',@setFrame,'Identity',Identity,'Status',Status,'Back',Back, ...
+    'CorrectedAxes',CorrectedAxes,'ScoreAxes',ScoreAxes,'RawAxes',RawAxes, ...
+    'RawToggle',RawToggle,'Frame',Frame,'FrameLabel',FrameLabel,'Grid',Grid);
+    function update(Data)
+        Current=Data;D=Data.TimingReview;F=Data.Frames;row=Data.Row;
+        Identity.Text=sprintf('%s | saved %s site %d / event %d | %d footprint pixels',row.RecordingID,row.EventType,row.SiteID,row.EventID,D.FootprintPixels);
+        Status.Text=sprintf('Primary: %s  Support: %s  Site: %s\nRed dashed = saved measurement; blue dotted = native sample bounds. Scores do not set boundaries.',D.Corrected.Message,D.Filtered.Message,D.Site.Message);
+        Frame.Limits=[1 max(2,height(F))];Frame.Enable='on';
+        B=Data.ResearcherBoundaryReview;manual=[];preferred=[];
+        if ~isempty(B.Annotation)
+            manual=unique([B.Annotation.OnsetFrames B.Annotation.RecoveryFrames]);
+            preferred=[B.Annotation.PreferredOnsetFrame B.Annotation.PreferredRecoveryFrame];
+        end
+        Status.Text=sprintf('%s\nResearcher: %s. Purple dotted = saved alternatives; thick purple = preferred. Edit in Researcher boundaries; drafts are not plotted.',Status.Text,B.Status);
+        bounds=[row.StartFrame,row.EndFrame,row.DetectedStartFrame,row.DetectedEndFrame,manual];
+        lim=[max(1,min(bounds)-40*D.SampleHz),min(height(F),max(bounds)+40*D.SampleHz)];
+        use=F.Frame>=lim(1)&F.Frame<=lim(2);
+        for ax=[CorrectedAxes ScoreAxes RawAxes]
+            % Keep the axes containers and reset only the selected-event data.
+            delete(findall(ax,'Tag','BOITimingMeasurementBound'));
+            delete(findall(ax,'Tag','BOITimingNativeBound'));
+            delete(findall(ax,'Tag','BOIResearcherBound'));
+            cla(ax);legend(ax,'off');ax.YLimMode='auto';hold(ax,'on');grid(ax,'on');xlim(ax,lim+[-.5 .5]);
+            xlabel(ax,'Recording frame (one-based)');
+        end
+        drawStage(CorrectedAxes,F.CorrectedIntensity,D.Corrected,'Corrected intensity',[.1 .35 .65],'BOICorrectedTrace','-');
+        ylabel(CorrectedAxes,'Corrected intensity');title(CorrectedAxes,'Primary: event shape and onset / recovery');
+        drawStage(ScoreAxes,F.FilteredDetectionScore,D.Filtered,'Event-footprint filtered score',[.85 .4 0],'BOIFilteredScore','-');
+        drawStage(ScoreAxes,F.SavedSiteTimingTrace,D.Site,'Saved site trace (different support)',[.4 .4 .4],'BOISiteScore',':');
+        if ~D.Filtered.FiniteSamples&&~D.Site.FiniteSamples
+            text(ScoreAxes,.02,.5,'Detection scores unavailable in this audit.','Units','normalized','Interpreter','none');
+        end
+        ylabel(ScoreAxes,'Detection score');title(ScoreAxes,'Support: orange = event-footprint filtered score; dotted gray = saved site trace');
+        plot(RawAxes,F.Frame(use),F.PreservedInputMean(use),'Color',[.1 .35 .65],'DisplayName','Preserved source','Tag','BOITimingRawTrace');
+        if any(isfinite(F.ExistingRemovedTrend(use)))
+            plot(RawAxes,F.Frame(use),F.ExistingRemovedTrend(use),'Color',[.85 .4 0],'DisplayName','Already removed trend (no new fit)','Tag','BOIRemovedTrend');
+        end
+        ylabel(RawAxes,'Input intensity');title(RawAxes,{'Correction quality check',D.RemovedTrend.Message},'Interpreter','none','FontSize',10);
+        for ax=[CorrectedAxes ScoreAxes RawAxes]
+            for v=[row.StartFrame row.EndFrame],xline(ax,v,'r--','HandleVisibility','off','Tag','BOITimingMeasurementBound');end
+            for v=[row.DetectedStartFrame row.DetectedEndFrame],xline(ax,v,'b:','HandleVisibility','off','Tag','BOITimingNativeBound');end
+            for v=manual
+                style=':';width=1.2;if ismember(v,preferred),style='-';width=2.2;end
+                xline(ax,v,style,'Color',[.55 .1 .65],'LineWidth',width,'HandleVisibility','off','Tag','BOIResearcherBound');
+            end
+            if ~isempty(findall(ax,'Type','line')),legend(ax,'show','Location','northeast','Interpreter','none');end
+            hold(ax,'off');
+        end
+        linkaxes([CorrectedAxes ScoreAxes RawAxes],'x');setFrame(row.DetectedStartFrame);toggleRaw();
+        function drawStage(ax,y,M,label,color,tag,style)
+            if M.ShapeValid&&any(isfinite(y(use)))
+                plot(ax,F.Frame(use),y(use),'LineStyle',style,'Color',color,'LineWidth',1.2,'DisplayName',label,'Tag',tag);
+            elseif ax==CorrectedAxes
+                text(ax,.02,.5,M.Message,'Units','normalized','Interpreter','none','Tag','BOITimingUnavailable');
+            end
+        end
+    end
+    function toggleRaw(~,~)
+        if RawToggle.Value,RawHost.Visible='on';Plots.RowHeight={'2x','1x','1x'};
+        else,RawHost.Visible='off';Plots.RowHeight={'2x','1x',0};end
+    end
+    function setFrame(value)
+        if isempty(Current),return;end
+        value=min(height(Current.Frames),max(1,round(value)));Frame.Value=value;
+        FrameLabel.Text=sprintf('Frame %d = %.6g s modeled elapsed time | %.6g Hz; not exposure duration',value,Current.Frames.ModeledTimeSec(value),Current.TimingReview.SampleHz);
+        for ax=[CorrectedAxes ScoreAxes RawAxes]
+            delete(findall(ax,'Tag','BOITimingSelectedFrame'));
+            xline(ax,value,'-.','Color',[.5 .5 .5],'HandleVisibility','off','Tag','BOITimingSelectedFrame');
+        end
+    end
+    function frameChanged(~,~)
+        setFrame(Frame.Value);SelectFrame(Frame.Value);
+    end
+end

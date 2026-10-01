@@ -1,0 +1,25 @@
+root=fileparts(mfilename('fullpath')); out=fullfile(root,'run-01');assert(~isfolder(out));mkdir(out);timer=tic;
+C=jsondecode(fileread(fullfile(root,'candidates.json')));rows=cell(numel(C),1);lastPath="";
+for k=1:numel(C)
+ c=C(k);
+ if string(c.ReplayMat)~=lastPath,V=load(c.ReplayMat,'Raw','Footprints','NativeUnionPixels');lastPath=string(c.ReplayMat);end
+ raw=double(V.Raw(:,c.TraceColumn));N=numel(raw);px=V.Footprints{c.TraceColumn};mask=false(512*512,1);mask(px)=true;overlap=false(N,1);
+ for f=1:N,overlap(f)=any(mask(V.NativeUnionPixels{f}));end
+ a=c.StartFrame;b=c.EndFrame;assert(a>=21&&a<=b&&b<=N);pre=(a-20:a-1)';clean=pre(~overlap(pre)&isfinite(raw(pre)));excluded=pre(overlap(pre));missing=pre(~isfinite(raw(pre)));B=NaN;amp=NaN;status="insufficient_clean_prebaseline";
+ if numel(clean)==20
+  B=mean(raw(clean));status="nonpositive_baseline_or_missing_event_signal";
+  if isfinite(B)&&B>0&&all(isfinite(raw(a:b)))
+   d=(raw(a:b)-B)/B;if strcmp(c.EventType,'sink'),amp=-min(d);else,amp=max(d);end;status="valid";
+  end
+ end
+ [low,ilow]=min(raw(a:b));[high,ihigh]=max(raw(a:b));
+ rows{k}=struct('RowID',c.RowID,'ReviewOrder',c.ReviewOrder,'RecordingKey',string(c.RecordingKey),'EventType',string(c.EventType),'SiteID',c.SiteID,'EventID',c.EventID,'Role',string(c.Role),'StartFrame',a,'EndFrame',b,'EndpointSeparationSec',b-a,'IncludedSamples',b-a+1,'NativeStart',c.NativeStart,'NativeEnd',c.NativeEnd,'CoversWholeNative',a<=c.NativeStart&&b>=c.NativeEnd,'FootprintPixels',numel(px),'BaselineStart',a-20,'BaselineEnd',a-1,'CleanSamples',numel(clean),'OverlapExcludedSamples',numel(excluded),'NonfiniteBaselineSamples',numel(missing),'CleanFrames',join(string(clean'),';'),'OverlapFrames',join(string(excluded'),';'),'NonfiniteFrames',join(string(missing'),';'),'BaselineMean',B,'AmplitudeFraction',amp,'AmplitudeStatus',status,'RawMinimum',low,'RawMinimumFrame',a+ilow-1,'RawMaximum',high,'RawMaximumFrame',a+ihigh-1,'SavedBaseline',NaN,'SavedAmplitudeFraction',NaN,'AmplitudeDifferencePP',NaN,'BaselineDifference',NaN);
+ assert(toc(timer)<600);
+end
+T=struct2table(vertcat(rows{:}));
+for k=1:height(T)
+ s=find(T.ReviewOrder==T.ReviewOrder(k)&T.Role=="saved");assert(isscalar(s));T.SavedBaseline(k)=T.BaselineMean(s);T.SavedAmplitudeFraction(k)=T.AmplitudeFraction(s);T.AmplitudeDifferencePP(k)=100*(T.AmplitudeFraction(k)-T.AmplitudeFraction(s));T.BaselineDifference(k)=T.BaselineMean(k)-T.BaselineMean(s);
+end
+writetable(T,fullfile(out,'interval-results.csv'));
+report=struct('DecisionID','R2-MARKED-INTERVAL-IMPACT-045','Status','calculated_pending_independent_verification','Rows',height(T),'ElapsedSeconds',toc(timer),'MATLABVersion',version,'MovieReads',0,'DetectorRuns',0,'CorrectionRefits',0,'StatisticsRuns',0,'ProductionChanges',false);
+f=fopen(fullfile(out,'run-report.json'),'w');fprintf(f,'%s\n',jsonencode(report,'PrettyPrint',true));fclose(f);disp(T(:,{'ReviewOrder','Role','StartFrame','EndFrame','CleanSamples','AmplitudeFraction','AmplitudeDifferencePP'}));

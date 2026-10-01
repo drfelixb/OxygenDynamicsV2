@@ -1,0 +1,63 @@
+function verifyResearcherBoundaries
+workspace='/Users/zcm361/Documents/Github/OxygenDynamicsV2';repo=fullfile(workspace,'existing-analysis');cd(repo);setupOxygenDynamicsPath;
+evidence=fullfile(workspace,'reference-validation/boi-researcher-boundaries-20260914');out=fullfile(evidence,'run-02');assert(~isfolder(out));mkdir(out);started=tic;
+audit=fullfile(workspace,'reference-validation/boi-c02-strict-roi-20260912/audit-01/source-amplitude-audit/event-amplitude-audit.mat');
+R=loadBOIEventReview(audit);auditHash=oxygenFileSHA256(audit);
+old=fileread(fullfile(evidence,'before/helpers/buildBOIEventReviewData.m'));
+old=strrep(old,'function Data=buildBOIEventReviewData(','function Data=priorBuildBOIEventReviewData(');
+scratch=tempname;mkdir(scratch);cleanup=onCleanup(@()cleanScratch(scratch));writeText(fullfile(scratch,'priorBuildBOIEventReviewData.m'),old);addpath(scratch);
+[fig,UI]=openBOIEventReview(audit);closeFig=onCleanup(@()delete(fig));UI.Select(186);
+a=struct('Status','uncertain','OnsetFrames',[1149 1154],'RecoveryFrames',[1166 1167], ...
+    'PreferredOnsetFrame',1154,'PreferredRecoveryFrame',[],'Reviewer','Codex developer QA fixture', ...
+    'Reason','DEVELOPER QA ONLY. Coordinates exercise the saved recording display; this is not a new researcher judgment or an import of prior feedback.');
+UI.Boundaries.SetDraft(a);UI.SaveBoundaries(fullfile(out,'developer-fixture-revision-01.json'));
+a.Reason=[a.Reason ' This second revision checks retention of the previous reason with unchanged endpoints.'];
+UI.Boundaries.SetDraft(a);UI.SaveBoundaries(fullfile(out,'developer-fixture-revision-02.json'));
+UI.Tabs.SelectedTab=UI.BoundaryTab;drawnow;pause(.5);drawnow;exportapp(fig,fullfile(out,'researcher-editor-row-186.png'));
+UI.Tabs.SelectedTab=UI.TimingTab;drawnow;pause(.5);drawnow;exportapp(fig,fullfile(out,'timing-manual-alternatives-row-186.png'));
+UI.Select(309);a.OnsetFrames=536;a.RecoveryFrames=556;a.PreferredOnsetFrame=[];a.Reason='DEVELOPER QA ONLY. Second event exercises event isolation; not new researcher evidence.';
+UI.Boundaries.SetDraft(a);UI.SaveBoundaries(fullfile(out,'developer-fixture-revision-03.json'));
+UI.Tabs.SelectedTab=UI.TimingTab;drawnow;pause(.5);drawnow;exportapp(fig,fullfile(out,'timing-manual-row-309.png'));
+R=UI.CurrentReview();
+for k=1:height(R.Audit)
+    D=buildBOIEventReviewData(R,k);B=priorBuildBOIEventReviewData(R,k);
+    assert(isequaln(rmfield(D,'ResearcherBoundaryReview'),B),'Original saved review fields changed at row %d',k);
+end
+csvMaxError=0;
+for row=[186 309]
+    D=buildBOIEventReviewData(R,row);folder=fullfile(out,sprintf('event-row-%d',row));receipt=exportBOIEventReview(R,row,folder);
+    F=readtable(fullfile(folder,'SelectedEventTrace.csv'));
+    assert(isequal(isnan(F.SignedFraction),isnan(D.Frames.SignedFraction)));
+    delta=max(abs(F.SignedFraction-D.Frames.SignedFraction),[],'omitnan');assert(isempty(delta)||isnan(delta)||delta<1e-12);csvMaxError=max(csvMaxError,delta);
+    B=priorBuildBOIEventReviewData(R,row);priorCSV=fullfile(out,sprintf('prior-trace-row-%d.csv',row));writetable(B.Frames,priorCSV);
+    assert(strcmp(oxygenFileSHA256(priorCSV),oxygenFileSHA256(fullfile(folder,'SelectedEventTrace.csv'))));
+    assert(isequaln(F.ModeledTimeSec,D.Frames.ModeledTimeSec));assert(strcmp(receipt.Schema,'boi-event-review-export-6'));
+    history=loadBOIBoundaryReview(R,fullfile(folder,'ResearcherBoundaryHistory.json'));assert(isequaln(history.Document,R.BoundaryReview.Document));
+    checks=jsondecode(fileread(fullfile(folder,'ArtifactChecksums.json')));
+    for k=1:numel(checks),assert(strcmp(checks(k).SHA256,oxygenFileSHA256(fullfile(folder,checks(k).Name))));end
+end
+UI.Select(186);UI.LoadBoundaries(fullfile(out,'event-row-186/ResearcherBoundaryHistory.json'));
+assert(numel(getBOIBoundaryReview(UI.CurrentReview(),186).History)==2);
+assert(isequal(UI.Boundaries.ReadDraft().OnsetFrames,[1149 1154]));
+delete(fig);clear closeFig;
+historic=fullfile(workspace,'reference-validation/boi-hp-workflow-20260910/event-audit/event-amplitude-audit.mat');
+H=loadBOIEventReview(historic);historicHash=oxygenFileSHA256(historic);D=buildBOIEventReviewData(H,1);
+assert(strcmp(D.TimingReview.Corrected.Status,'not_saved')&&all(isnan(D.Frames.CorrectedIntensity))&&D.ReplayMatches);
+[fig,UI]=openBOIEventReview(historic);closeFig=onCleanup(@()delete(fig));UI.Tabs.SelectedTab=UI.BoundaryTab;
+assert(isempty(UI.Boundaries.Onset.Value)&&~UI.Boundaries.HasDrafts());
+drawnow;pause(.5);drawnow;exportapp(fig,fullfile(out,'historical-unreviewed-editor.png'));
+assert(strcmp(auditHash,oxygenFileSHA256(audit))&&strcmp(historicHash,oxygenFileSHA256(historic)));
+report=struct('Status','passed','Role','developer numerical and UI verification; not independent physiological validation', ...
+    'MeasurementRowsCompared',height(R.Audit),'AllPriorReviewFieldsUnchanged',true, ...
+    'SavedStageSamplesPreserved',height(R.Audit)*R.AnalysisInfo.NFrames*3,'AuditSHA256',auditHash,'HistoricalAuditSHA256',historicHash, ...
+    'CSVSerializationMaxAbsoluteError',csvMaxError,'PriorTraceCSVBytesIdentical',true, ...
+    'DeveloperFixtureRevisions',3,'RealResearcherFeedbackImported',false,'ExportsReopened',2, ...
+    'HistoricalMissingStagesPreserved',true,'DetectorReruns',0,'StatisticsReruns',0,'NewBaselineFits',0,'RuntimeSeconds',toc(started));
+writeText(fullfile(out,'verification.json'),jsonencode(report,'PrettyPrint',true));disp(report);
+end
+function cleanScratch(path)
+rmpath(path);rmdir(path,'s');
+end
+function writeText(path,value)
+fid=fopen(path,'w');assert(fid>=0);c=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',value);
+end

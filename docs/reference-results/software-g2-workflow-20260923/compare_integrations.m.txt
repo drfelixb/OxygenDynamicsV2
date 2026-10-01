@@ -1,0 +1,87 @@
+packet=fileparts(mfilename('fullpath'));workspace=fileparts(fileparts(packet));repo=fullfile(workspace,'existing-analysis');
+addpath(repo);setupOxygenDynamicsPath;
+G=loadBOIRecordingRun(fullfile(packet,'gui-run'));B=loadBOIRecordingRun(fullfile(packet,'batch-run'));
+baseline=fullfile(workspace,'reference-validation','boi-id400-awake-run-20260921','run-01');
+baseRec=fullfile(baseline,'Recording');
+basePaths={fullfile(baseRec,'OxygenSinks_Output','OxygenSinks_UrefinedRecording.mat'), ...
+    fullfile(baseRec,'OxygenSurges_Output','OxygenSurgesRecording.mat')};
+rows=struct('Comparison',{},'Object',{},'ExactEqual',{});differences={};
+roots={fullfile(G.Directory,'Recording'),fullfile(B.Directory,'Recording'),baseRec};
+for k=1:2
+    role='SinkMaster';if k==2,role='SurgeMaster';end
+    g=load(G.Paths.(role));b=load(B.Paths.(role));old=load(basePaths{k});
+    names=fieldnames(g);assert(isequal(sort(names),sort(fieldnames(b)))&&isequal(sort(names),sort(fieldnames(old))));
+    for n=names'
+        name=n{1};if strcmp(name,'AnalysisInfo'),continue;end
+        gv=normalize(g.(name),roots);bv=normalize(b.(name),roots);ov=normalize(old.(name),roots);
+        rows(end+1)=struct('Comparison','GUI_vs_batch','Object',[role '.' name],'ExactEqual',isequaln(gv,bv)); %#ok<AGROW>
+        rows(end+1)=struct('Comparison','GUI_vs_G1_baseline','Object',[role '.' name],'ExactEqual',isequaln(gv,ov)); %#ok<AGROW>
+    end
+    fields={'AnalysisParams','PipelineContract','AnalysisSchemaVersion','NFrames','FrameSize', ...
+        'RawSHA256','DenoisedSHA256','BOISupportProfile','BOIAcquisitionMetadata','BOITissueSupport', ...
+        'RecordingDurationSec','RecordingAreaUm2','SurgeRecordingAreaUm2','SinkEligibleTissuePixels','SurgeEligibleTissuePixels'};
+    for name=fields
+        if ~isfield(g.AnalysisInfo,name{1}),continue;end
+        v=normalize(g.AnalysisInfo.(name{1}),roots);
+        rows(end+1)=struct('Comparison','GUI_vs_batch','Object',[role '.AnalysisInfo.' name{1}], ...
+            'ExactEqual',isequaln(v,normalize(b.AnalysisInfo.(name{1}),roots))); %#ok<AGROW>
+        rows(end+1)=struct('Comparison','GUI_vs_G1_baseline','Object',[role '.AnalysisInfo.' name{1}], ...
+            'ExactEqual',isequaln(v,normalize(old.AnalysisInfo.(name{1}),roots))); %#ok<AGROW>
+    end
+end
+g=load(G.Paths.DataOutput);b=load(B.Paths.DataOutput);
+oldFiles=dir(fullfile(baseline,'statistics','Stats_Output*','DataOutput.mat'));assert(isscalar(oldFiles));
+old=load(fullfile(oldFiles.folder,oldFiles.name));
+for name=fieldnames(g)'
+    n=name{1};if ~istable(g.(n)),continue;end
+    rows(end+1)=struct('Comparison','GUI_vs_batch','Object',['statistics.' n], ...
+        'ExactEqual',isequaln(normalize(g.(n),roots),normalize(b.(n),roots))); %#ok<AGROW>
+    if isfield(old,n)
+        rows(end+1)=struct('Comparison','GUI_vs_G1_baseline','Object',['statistics.' n], ...
+            'ExactEqual',isequaln(normalize(g.(n),roots),normalize(old.(n),roots))); %#ok<AGROW>
+    end
+end
+% Trace capture is additive: compare existing scientific audit ingredients/stages.
+oldAudit=fullfile(workspace,'reference-validation','boi-id400-awake-run-20260921','audit-01','source-amplitude-audit','event-amplitude-audit.mat');
+a=load(G.Paths.EventAudit);b=load(B.Paths.EventAudit);old=load(oldAudit);
+rows(end+1)=struct('Comparison','GUI_vs_batch','Object','audit','ExactEqual',isequaln(normalize(a.Audit,roots),normalize(b.Audit,roots)));
+columns=a.Audit.Properties.VariableNames;
+rows(end+1)=struct('Comparison','GUI_vs_G1_baseline','Object','audit_existing_columns','ExactEqual',isequaln(normalize(a.Audit,roots),normalize(old.Audit(:,columns),roots)));
+stages={'Raw','Footprint','CleanBaselineFrames','DetectedFrames','DetectionDetrended','Filtered','SiteNormalized','TimingTrace'};
+for name=stages
+    eq=true;oldEq=true;
+    for k=1:numel(a.Traces)
+        eq=eq&&isequaln(a.Traces{k}.(name{1}),b.Traces{k}.(name{1}));
+        oldEq=oldEq&&isequaln(a.Traces{k}.(name{1}),old.Traces{k}.(name{1}));
+    end
+    rows(end+1)=struct('Comparison','GUI_vs_batch','Object',['traces.' name{1}],'ExactEqual',eq); %#ok<AGROW>
+    rows(end+1)=struct('Comparison','GUI_vs_G1_baseline','Object',['traces.' name{1}],'ExactEqual',oldEq); %#ok<AGROW>
+end
+T=struct2table(rows);writetable(T,fullfile(packet,'numerical-comparison.csv'));
+writeBOIRunJSON(fullfile(packet,'numerical-comparison.json'),rows);
+disp(T(~T.ExactEqual,:));
+summary=struct('Checks',height(T),'Passed',sum(T.ExactEqual),'Failed',sum(~T.ExactEqual), ...
+    'Normalization','Only recording directory identities and the historical ID400 registry alias are normalized; numeric data are exact, with NaN equivalence.', ...
+    'Tolerance','exact isequaln; no permissive numeric tolerance','IndependentHumanReview',false);
+writeBOIRunJSON(fullfile(packet,'comparison-summary.json'),summary);disp(summary);
+assert(all(T.ExactEqual),'Scientific comparison differences need review; do not adopt or tune them away.');
+% Reopen in a fresh workflow instance; no input CSV and no analysis execution.
+[fig,ui]=openBOIRecordingWorkflow();cleanup=onCleanup(@()delete(fig));ui.OpenRun(G.ManifestPath);
+s=ui.State();assert(strcmp(s.Status,'complete')&&s.SelectedRun.EventCount==G.EventCount);
+exportapp(fig,fullfile(packet,'gui-reopened.png'));
+[ef,eu]=ui.OpenEvents();closeEvent=onCleanup(@()delete(ef));
+assert(eu.Tabs.SelectedTab==eu.TimingTab);reopenedData=buildBOIEventReviewData(eu.CurrentReview(),1);
+assert(strcmp(reopenedData.TimingReview.Corrected.Status,'available'));
+writeBOIRunJSON(fullfile(packet,'reopen-check.json'),struct('Passed',true,'CSVSelected',false,'DetectorExecutions',0,'StatsExecutions',0));
+function v=normalize(v,roots)
+if istable(v)
+    for name=v.Properties.VariableNames,v.(name{1})=normalize(v.(name{1}),roots);end
+elseif isstruct(v)
+    for k=1:numel(v),for name=fieldnames(v)',v(k).(name{1})=normalize(v(k).(name{1}),roots);end,end
+elseif iscell(v)
+    for k=1:numel(v),v{k}=normalize(v{k},roots);end
+elseif ischar(v)||isstring(v)
+    for k=1:numel(roots),v=strrep(v,roots{k},'<recording>');end
+    v=strrep(v,'dandi000891_ID400_awake_strict_112','<recording>');
+end
+end

@@ -1,0 +1,20 @@
+function C=fixedNativeContacts(frames,foot,N)
+% N contains native frame pixels, not measurement intervals or human judgments.
+frames=frames(:);foot=double(foot(:));C=cell(numel(frames),1);
+for j=1:numel(frames)
+ f=frames(j);u={[],[]};contributors={};independent=false(max(foot),2);
+ for r=1:numel(N)
+  ix=find(N(r).Frames==f);if isempty(ix),continue;end;assert(isscalar(ix));pixels=double(N(r).FramePixels{ix}(:));
+  shared=intersect(foot,pixels);g=1;if strcmp(N(r).Sign,'surge'),g=2;end
+  % Different membership/count route checks union and per-event arithmetic.
+  alternative=pixels(ismember(pixels,foot));assert(numel(shared)==numel(unique(alternative)));
+  independent(alternative,g)=true;
+  if isempty(shared),continue;end
+  u{g}=union(u{g},shared);
+  contributors{end+1}=struct('AuditRow',N(r).AuditRow,'Sign',N(r).Sign,'SiteID',N(r).SiteID,'EventID',N(r).EventID,'OverlapPixels',numel(shared)); %#ok<AGROW>
+ end
+ assert(nnz(independent(:,1))==numel(u{1})&&nnz(independent(:,2))==numel(u{2})&&nnz(any(independent,2))==numel(union(u{1},u{2})));
+ C{j}=struct('Frame',f,'FootprintPixels',numel(foot),'SinkPixels',numel(u{1}),'SurgePixels',numel(u{2}), ...
+  'AnyPixels',numel(union(u{1},u{2})),'Contributors',{contributors});
+end
+end

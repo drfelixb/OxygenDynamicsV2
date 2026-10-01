@@ -1,0 +1,60 @@
+% G1 read-only existing-result probe; exports are confined to this new packet.
+packet=fileparts(mfilename('fullpath'));root=fileparts(fileparts(packet));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+timer=tic;
+runRoot=fullfile(root,'reference-validation','boi-id400-awake-run-20260921');
+report=jsondecode(fileread(fullfile(runRoot,'run-01','workflow-report.json')));
+auditPath=fullfile(runRoot,'audit-01','source-amplitude-audit','event-amplitude-audit.mat');
+beforeAudit=oxygenFileSHA256(auditPath);beforeStats=oxygenFileSHA256(report.DataOutputMat);
+R=loadBOIEventReview(auditPath);W=loadBOIWindowReview(report.DataOutputMat);
+checks=struct('Sign',{},'Metrics',{},'Checks',{},'EventReplay',{},'Timing',{});
+for kind={'sink','surge'}
+    name=kind{1};D=buildBOIWindowReviewData(W,1,name);
+    assert(all(D.Metrics.ArithmeticStatus=="match")&&all(D.Checks.Status=="match"));
+    index=find(string(R.Audit.EventType)==string(name)&isfinite(R.Audit.StoredAmplitude),1);
+    E=buildBOIEventReviewData(R,index);assert(E.ReplayMatches);
+    checks(end+1)=struct('Sign',name,'Metrics',table2struct(D.Metrics), ...
+        'Checks',table2struct(D.Checks),'EventReplay',E.ReplayMatches,'Timing',E.TimingReview);
+end
+% Exercise the connected GUI on one saved event, without reading/reconstructing a movie.
+[wf,wu]=openBOIWindowReview(report.DataOutputMat);cleanupW=onCleanup(@()deleteIfValid(wf));
+wu.SelectSign('sink');wu.Select(1);wu.SelectEvent(1);wu.ConnectAudit(auditPath);
+[ef,eu]=wu.OpenEvent();cleanupE=onCleanup(@()deleteIfValid(ef));
+selected=eu.List.Selection;loaded=eu.CurrentReview();
+assert(contains(eu.Detail.Value{1},'CONNECTED WINDOW'));
+Receipt=exportBOIEventReview(loaded,selected,fullfile(packet,'cached-event-export'));
+eu.ReturnToWindow.ButtonPushedFcn([],[]);assert(strcmp(wu.Sign.Value,'sink'));
+% Export is an evidence bundle; check whether the normal event-review loader can reopen it.
+reopen=struct('Status','not_tested','Identifier','','Message','');
+try
+    loadBOIEventReview(fullfile(packet,'cached-event-export','SelectedEventReview.mat'));
+    reopen.Status='loaded_as_event_audit';
+catch err
+    reopen.Status='not_reopenable_as_event_audit';reopen.Identifier=err.identifier;reopen.Message=err.message;
+end
+% Normal wrapper context versus the explicit accepted-profile context; no master execution.
+C=createLegacyRecordingContext(1,'example','example',4.75,'unknown','unknown','unknown',NaN,NaN,NaN,'N');
+wrapperProfile=getBOISupportProfile(C);C.BOISupportProfile='craniotomy-roi-1';explicitProfile=getBOISupportProfile(C);
+assert(strcmp(wrapperProfile,'whole-image')&&strcmp(explicitProfile,'craniotomy-roi-1'));
+f=OxygenDynamics_GUI();cleanupF=onCleanup(@()deleteIfValid(f));
+buttons=findall(f,'Type','uibutton');labels=string({buttons.Text});
+launcher=struct('Status','opened','Buttons',labels,'AnalysisModes',{{}});
+dd=findall(f,'Type','uidropdown');
+for k=1:numel(dd)
+    if any(strcmp(dd(k).Items,'All analysis')),launcher.AnalysisModes=dd(k).Items;end
+end
+assert(strcmp(oxygenFileSHA256(auditPath),beforeAudit)&&strcmp(oxygenFileSHA256(report.DataOutputMat),beforeStats));
+out=struct('Status','completed_observations_recorded','RecordingID',report.RecordingID, ...
+    'InputAudit',auditPath,'InputAuditSHA256',beforeAudit,'InputStats',report.DataOutputMat, ...
+    'InputStatsSHA256',beforeStats,'Checks',checks,'ConnectedWindowEventUI','passed', ...
+    'ExportReceipt',Receipt,'EvidenceBundleReopen',reopen,'Launcher',launcher, ...
+    'WrapperContextDefaultProfile',wrapperProfile,'ExplicitAcceptedProfile',explicitProfile, ...
+    'SourcePixelAccessAttempted',false,'DetectorRuns',0,'StatsRuns',0, ...
+    'OriginalArtifactsUnchanged',true,'ElapsedSeconds',toc(timer));
+fid=fopen(fullfile(packet,'saved-workflow-probe.json'),'w');assert(fid>=0);
+fprintf(fid,'%s\n',jsonencode(out,PrettyPrint=true));fclose(fid);
+disp(struct('Status',out.Status,'ConnectedReview',out.ConnectedWindowEventUI, ...
+    'ExportReopen',reopen.Status,'DefaultProfile',wrapperProfile,'ElapsedSeconds',out.ElapsedSeconds));
+function deleteIfValid(f)
+if isgraphics(f),delete(f);end
+end

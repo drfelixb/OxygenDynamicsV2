@@ -1,0 +1,61 @@
+function runTemporalComparison
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;timer=tic;
+s=jsondecode(fileread(fullfile(here,'source-bindings.json')));keys=fieldnames(s);checkSources(s,keys);
+freeze=jsondecode(fileread(fullfile(here,'implementation-freeze.json')));for k=1:numel(freeze.Files),f=freeze.Files(k);assert(strcmp(oxygenFileSHA256(fullfile(here,f.Path)),f.SHA256));end
+T=jsondecode(fileread(fullfile(here,'known-shape-tests.json')));assert(strcmp(T.Status,'passed'));V=jsondecode(fileread(fullfile(here,'independent-known-shape-tests.json')));assert(strcmp(V.Status,'passed'));
+P=jsondecode(fileread(fullfile(here,'comparison-spec.json')));assert(strcmp(oxygenFileSHA256(fullfile(here,'comparison-spec.json')),s.FrozenSpec.SHA256));assert(numel(P.Intervals)==14&&isequal(P.ContextSamplesPerSide(:)',[10 20]));
+out=fullfile(here,'run-01');assert(~isfolder(out));mkdir(out);
+R=loadBOIEventReview(s.Audit.Path);R.BoundaryReview=loadBOIBoundaryReview(R,s.Review.Path);R=attachBOIReferenceSources(R,s.SinkMaster.Path,s.SurgeMaster.Path);
+A=R.Audit;assert(height(A)==330&&R.AnalysisInfo.NFrames==1200&&R.AnalysisInfo.AnalysisParams.fs==1);
+Q=readtable(s.Queue.Path);prior=jsondecode(fileread(s.PriorContextIntervals.Path));
+N=repmat(struct('AuditRow',0,'Sign','','SiteID',0,'EventID',0,'Frames',[],'FramePixels',{{}}),height(A),1);
+for r=1:height(A)
+ N(r)=struct('AuditRow',r,'Sign',char(A.EventType(r)),'SiteID',A.SiteID(r),'EventID',A.EventID(r),'Frames',R.Traces{r}.DetectedFrames(:)', 'FramePixels',{R.ReferenceSources.EventFramePixels{r}});
+ assert(isequal(unique(double(vertcat(N(r).FramePixels{:}))),double(R.Traces{r}.Footprint(:))));
+end
+H=P.Intervals(~strcmp({P.Intervals.Role},'saved_automatic_interval'));
+for i=1:numel(H)
+ H(i).Footprint=double(R.Traces{H(i).AuditRow}.Footprint(:)');H(i).SourceBinding='PriorContextIntervals';if strcmp(H(i).Role,'reviewed_interval'),H(i).SourceBinding='Review';end
+end
+writeJSON(fullfile(out,'human-interval-sources.json'),H);
+cache=cell(height(A),1);original=cell(height(Q),1);
+for k=1:height(Q)
+ r=Q.AuditRow(k);z=R.Traces{r};foot=double(z.Footprint(:));y=double(z.DetectionDetrended(:));
+ assert(numel(y)==1200&&all(isfinite(y)));Frame=(1:1200)';Corrected=y;writetable(table(Frame,Corrected),fullfile(out,sprintf('case-%02d-corrected.csv',k)));
+ writeJSON(fullfile(out,sprintf('case-%02d-footprint.json',k)),struct('AuditRow',r,'PixelIndexBase',1,'PixelIndexOrder','MATLAB column-major 512 by 512 original coordinates','Pixels',foot','AuditSHA256',s.Audit.SHA256));
+ frames=[];selected=P.Intervals([P.Intervals.AuditRow]==r);
+ for j=1:numel(selected),c=selected(j);frames=union(frames,max(1,c.StartFrame-20):min(1200,c.EndFrame+20));end
+ C=fixedNativeContacts(frames,foot,N);writeJSON(fullfile(out,sprintf('case-%02d-native-contacts.json',k)),C);cache{r}=C;
+ B=getBOIBoundaryReview(R,r);original{k}=struct('QueuePosition',k,'AuditRow',r,'ResearcherReview',B);
+end
+writeJSON(fullfile(out,'original-researcher-reviews.json'),original);writetable(A(Q.AuditRow,:),fullfile(out,'original-automatic-rows.csv'));
+rows=cell(28,1);n=0;
+for i=1:numel(P.Intervals)
+ c=P.Intervals(i);a=c.StartFrame;b=c.EndFrame;r=c.AuditRow;z=R.Traces{r};foot=double(z.Footprint(:));assert(strcmp(c.SavedSign,A.EventType(r))&&Q.AuditRow(c.QueuePosition)==r);
+ if strcmp(c.Role,'saved_automatic_interval'),assert(isequal([a b],[A.StartFrame(r) A.EndFrame(r)]));
+ elseif strcmp(c.Role,'reviewed_interval'),B=getBOIBoundaryReview(R,r);assert(strcmp(B.Status,'recognized')&&ismember(a,B.Annotation.OnsetFrames)&&ismember(b,B.Annotation.RecoveryFrames));
+ else,assert(nnz(arrayfun(@(v)v.AuditRow==r&&v.Start==a&&v.End==b,prior.ContextIntervals))==1);end
+ for W=P.ContextSamplesPerSide(:)'
+  d=fixedIntervalDiagnostic(z.DetectionDetrended,a,b,W);row=struct('Interval',c,'ContextSamples',W,'Descriptor',d,'FootprintFile',sprintf('case-%02d-footprint.json',c.QueuePosition), ...
+   'TraceFile',sprintf('case-%02d-corrected.csv',c.QueuePosition),'NativeContactFile',sprintf('case-%02d-native-contacts.json',c.QueuePosition),'AuditSHA256',s.Audit.SHA256);
+  parts={'Before','Interval','After'};C=cache{r};cf=cellfun(@(v)v.Frame,C);
+  for j=1:numel(parts)
+   name=parts{j};f=d.(name).Frames;row.([name 'Native'])=C(ismember(cf,f));row.([name 'Human'])=fixedHumanContacts(f,foot,H);
+  end
+  n=n+1;rows{n}=row;
+ end
+end
+assert(n==28);writeJSON(fullfile(out,'comparison.json'),rows);
+plotTemporalComparison(rows,R,out);
+checkSources(s,keys);files=dir(fullfile(out,'**','*'));bytes=sum([files(~[files.isdir]).bytes]);assert(bytes<50*1024^2&&toc(timer)<300);
+v=struct('DecisionID','R3-FB2420-TEMPORAL-COMPARISON-085','Status','execution_passed_independent_result_verification_pending','Rows',28,'Intervals',14,'ContextScales',[10 20], ...
+ 'NativeEventsAssociated',330,'NativeUnionArithmeticDoubleChecked',true,'MatlabSeconds',toc(timer),'OutputBytesBeforeVerification',bytes, ...
+ 'SourceExecutionPasses',1,'FullLengthSourceStacksRead',0,'DetectorRuns',0,'CorrectionFits',0,'NewBaselines',0,'OriginalSourcesUnchanged',true,'ScientificRuleAdopted',false);
+writeJSON(fullfile(out,'execution.json'),v);disp(v);
+end
+function checkSources(s,keys)
+for k=1:numel(keys),x=s.(keys{k});assert(strcmp(oxygenFileSHA256(x.Path),x.SHA256),keys{k});end
+end
+function writeJSON(p,x)
+f=fopen(p,'w');assert(f>=0);fprintf(f,'%s\n',jsonencode(x,'PrettyPrint',true));fclose(f);
+end

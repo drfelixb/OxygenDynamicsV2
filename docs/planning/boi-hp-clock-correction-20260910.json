@@ -1,0 +1,24 @@
+{
+  "schema": "boi-source-decision-1",
+  "decision_id": "R1-HP-CLOCK-002",
+  "date": "2026-09-10",
+  "authoritative_evidence": "User: timestamps from within the recording files are not correct. the recordings are precisely at 1 Hz controlled by an external trigger",
+  "scope": "The supplied HP recordings. Preserve contrary embedded metadata, including the internal-trigger tag in FB2410, as source values superseded by this user confirmation for analysis timing.",
+  "adopted": "Exactly 1 Hz uniform sampling controlled by external trigger. Retain model interval [frame-1,frame) seconds; do not fabricate measured absolute timestamps or exposure-start alignment.",
+  "supersedes": "The interpretation of embedded ElapsedTime-ms as the analysis frame clock in R1-HP-INPUT-001. Preserve that preflight and its technical result as history.",
+  "metadata_treatment": "Copy original timestamp values unchanged into provenance-only SourceClockTimesSec, SourceClockStatus known_unreliable. Set UniformSamplingConfirmed true with the user confirmation in SamplingRateEvidence. Do not populate FrameTimesSec with a fabricated measured clock.",
+  "source_pairing_followup": "FB2416 and FB2417 earlier TIFFs and their denoised TIFFs are respectively byte-identical. FB2316 and FB2318 denoised TIFFs have different full hashes; correct pairing remains unverified.",
+  "next_development_run": {
+    "recording_id": "HP_ECS_CSV2_identity_pending",
+    "source_case": "GFAP-ECS-GeNL/FB2412, same case selected before outcomes in R1-HP-INPUT-001",
+    "role": "development workflow transfer, never independent biological evaluation",
+    "identity_handling": "Use a recording-specific provisional identity, not an asserted mouse ID, for descriptive exports. Preserve CSV/folder and embedded identities in source review. No cross-recording comparison or animal-level inference.",
+    "calibration": "2.35 um/pixel as supplied and used by the historical wrapper/master. Physical calibration remains unverified; all physical-scale measurements and detector defaults conditional on it.",
+    "budget": "One full 1200-frame raw-source master with existing defaults, both signs, two MATLAB workers; one whole-recording statistics export and one diagnostic [30,1200) export; existing independent amplitude audit and exported denominator replay. No parameter search. 900-second soft gate after master and before extra stages; 5 GiB output review target. Stop on technical failure and preserve it.",
+    "example_selection": "First finite sink amplitude in saved order, or report unavailable if none. No replacement case or detector tuning to obtain an example.",
+    "technical_criteria": "Confirmed 1 Hz clock used; unreliable source times preserved separately; source issues visible; source and original preflight unchanged; same event tables in both statistics runs; exported occupancy and amplitude ingredients reproduce saved values at 1e-10 relative and 1e-12 absolute numerical tolerance.",
+    "biological_criteria": "Not established. No claim of biological detection accuracy, correct tissue eligibility, physiological mechanism, cross-expression comparability or accepted onset/recovery definitions."
+  },
+  "approved_experimental_windows": [],
+  "unchanged_holds": ["Animal identity and source pairing", "Genotype/drug/promoter label semantics", "Physical calibration validity", "Intensity and motion preparation", "Substrate and time since application", "Tissue/frame validity and measurement-specific scientific eligibility"]
+}

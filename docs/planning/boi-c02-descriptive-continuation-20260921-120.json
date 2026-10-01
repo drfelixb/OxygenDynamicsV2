@@ -1,0 +1,24 @@
+{
+  "Schema": "boi-c02-descriptive-continuation-1",
+  "DecisionID": "R4-C02-DESCRIPTIVE-120",
+  "ResearcherInstruction": "go on",
+  "InstructionContext": "after the phase-119 descriptive package proposal",
+  "Interpretation": "proceed with working descriptive package and paired figure",
+  "Scope": [
+    "full stored intervals",
+    "existing candidate sink outcomes",
+    "equal mouse descriptive contrasts",
+    "separate surge and companion results",
+    "methods and limitations"
+  ],
+  "FinalConfirmatoryPlanApproved": false,
+  "InferentialAnalysisPerformed": false,
+  "Remaining": [
+    "confirmatory outcome status",
+    "uncertainty and multiplicity",
+    "broader cohort decisions",
+    "independent researcher walkthrough and replay",
+    "final release freeze"
+  ],
+  "PreviousProposalSHA256": "8c30c43a5ef97a16c493c9f35fbf405d5fc0e52807709ebfc146ddcae1bc05e1"
+}

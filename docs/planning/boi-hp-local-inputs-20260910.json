@@ -1,0 +1,1001 @@
+{
+  "schema": "boi-hp-local-input-overlay-1",
+  "recorded_utc": "2026-09-10T11:53:59.040502+00:00",
+  "source_root_label": "HP_indepth/Data (user-supplied external volume; local mapping retained outside repo)",
+  "source_csv": "HP_Compartments.csv",
+  "source_csv_sha256": "08c3d27d7d59aa334ebd4abc828fd21860cd71a50618cea56d52aadb6c1eab77",
+  "prior_cohort_ledger_sha256": "e692d11a3cfc5eabc226efc9f3ccb91c45d80a3a08d27b305de6f5969d575809",
+  "full_local_inventory_sha256": "aef02fac2f126df03da807199b763251080d47309b5d7f6c23faa0ccd21e0f28",
+  "selected_frame_metadata_sha256": "31f20e69e7edac31ce5255262942111ecdc4420cf48b8fae0b488e0cf8c68f71",
+  "scope": "Additional source/header inventory, not a cohort freeze. Separate from the 20 older U12 local sessions. No image pixels or prior outcomes interpreted.",
+  "counts": {
+    "csv_rows": 20,
+    "folders_found": 20,
+    "mouse_ids_also_in_archive": 6,
+    "source_candidates": 20
+  },
+  "records": [
+    {
+      "csv_line": 2,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-ECS-GeNL\\FB2412",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2412",
+        "Genotype": "GFAP-ECS",
+        "Condition": "baseline",
+        "DrugID": "GFAP-ECS",
+        "Promoter": "GFAP-ECS",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-ECS-GeNL/FB2412/New folder/01_FB2412_GFAP_ECS_GeNL_2x_bin2_1Hz_KX_2_MMStack_Default.ome.tif",
+      "source_bytes": 635262002,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2411_GFAP_ECS_GeNL_2x_bin2_1Hz_KX_2",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3780.0,
+        "ReceivedTime": "2024-04-22 13:04:42.441 +0200",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": "3d903105aa450da0348d6aa4ddb4b23145099534d5817a826461bb5ff2132e73",
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [
+        "embedded_prefix_mouse_disagrees_with_csv"
+      ],
+      "role": "R1-HP-INPUT-001_development_input_transfer_check",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 3,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-ECS-GeNL\\FB2413",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2413",
+        "Genotype": "GFAP-ECS",
+        "Condition": "baseline",
+        "DrugID": "GFAP-ECS",
+        "Promoter": "GFAP-ECS",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-ECS-GeNL/FB2413/New folder/01_FB2413 _GFAP_ECS_GeNL_2x_bin2_1Hz_KX_2_MMStack_Default.ome.tif",
+      "source_bytes": 623620008,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1178
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2412 _GFAP_ECS_GeNL_2x_bin2_1Hz_KX_2",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 2760.0,
+        "ReceivedTime": "2024-04-23 11:19:41.862 +0200",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [
+        "embedded_prefix_mouse_disagrees_with_csv"
+      ],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 4,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-ECS-GeNL\\FB2416",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2416",
+        "Genotype": "GFAP-ECS",
+        "Condition": "baseline",
+        "DrugID": "GFAP-ECS",
+        "Promoter": "GFAP-ECS",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-ECS-GeNL/FB2416/New folder/02_FB2415_BLI_GFAP_ECS_GeNL_bin2_2x_KX_1_MMStack_Default.ome.tif",
+      "source_bytes": 635259581,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "02_FB2415_BLI_GFAP_ECS_GeNL_bin2_2x_KX_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3350.0,
+        "ReceivedTime": "2024-05-02 11:55:59.222 +0200",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": "f58072c1c936b876c10d182bc52ef4c42d0aa220d3b38e4d6efc6bc9f286586d",
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [
+        "embedded_prefix_mouse_disagrees_with_csv",
+        "source_filename_mouse_disagrees_with_csv",
+        "denoised_filename_mouse_disagrees_with_csv",
+        "source_candidate_byte_identical_to_other_csv_mouse"
+      ],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 5,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-ECS-GeNL\\FB2417",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2417",
+        "Genotype": "GFAP-ECS",
+        "Condition": "baseline",
+        "DrugID": "GFAP-ECS",
+        "Promoter": "GFAP-ECS",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-ECS-GeNL/FB2417/New folder/02_FB2417_BLI_GFAP_ECS_GeNL_bin2_2x_KX_1_MMStack_Default.ome.tif",
+      "source_bytes": 635259581,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "02_FB2415_BLI_GFAP_ECS_GeNL_bin2_2x_KX_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3350.0,
+        "ReceivedTime": "2024-05-02 11:55:59.222 +0200",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": "f58072c1c936b876c10d182bc52ef4c42d0aa220d3b38e4d6efc6bc9f286586d",
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [
+        "embedded_prefix_mouse_disagrees_with_csv",
+        "source_candidate_byte_identical_to_other_csv_mouse"
+      ],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 6,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-ECS-GeNL\\FB2419",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2419",
+        "Genotype": "GFAP-ECS",
+        "Condition": "baseline",
+        "DrugID": "GFAP-ECS",
+        "Promoter": "GFAP-ECS",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-ECS-GeNL/FB2419/New folder/01_FB2419_GFAP_ECS_GeNL_bin2_2x_KX_1Hz_1_MMStack_Default.ome.tif",
+      "source_bytes": 635262182,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2417_GFAP_ECS_GeNL_bin2_2x_KX_1Hz_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3160.0,
+        "ReceivedTime": "2024-05-07 11:39:54.108 +0200",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [
+        "embedded_prefix_mouse_disagrees_with_csv"
+      ],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 7,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-ECS-GeNL\\FB2420",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2420",
+        "Genotype": "GFAP-ECS",
+        "Condition": "baseline",
+        "DrugID": "GFAP-ECS",
+        "Promoter": "GFAP-ECS",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-ECS-GeNL/FB2420/New folder/01_FB2420_GFAP_ECS_GeNL_bin2_2x_KX_1Hz_1_MMStack_Default.ome.tif",
+      "source_bytes": 635261950,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2420_GFAP_ECS_GeNL_bin2_2x_KX_1Hz_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 2642.0,
+        "ReceivedTime": "2024-05-08 11:56:30.522 +0200",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 8,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-GeNL_KX\\FB2311",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2311",
+        "Genotype": "GFAP-GeNL",
+        "Condition": "baseline",
+        "DrugID": "GFAP-GeNL",
+        "Promoter": "GFAP-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-GeNL_KX/FB2311/New folder/01_FB2311_bin2_950ms_2x_1Hz_1_MMStack_Default.ome_mcor.tif",
+      "source_bytes": 630196816,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": null,
+      "first_page_acquisition_fields": {},
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [
+        {
+          "asset_id": "06dec506-92c2-40e0-b4a7-9a023a2e1da3",
+          "session": "FB2311-baseline",
+          "selected_image_series": "01_FB2311_bin2_950ms_2x_1Hz_1_MMStack_Default.ome_mcor.tif"
+        },
+        {
+          "asset_id": "c901c310-ff4a-4ec4-b6ca-d7d1709283a8",
+          "session": "FB2311-whisker",
+          "selected_image_series": "02_FB2311_bin2_950ms_2x_1Hz_whisker_1_MMStack_Default.ome_mcor.tif"
+        }
+      ],
+      "exact_archive_series_name_matches": [
+        "06dec506-92c2-40e0-b4a7-9a023a2e1da3"
+      ],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 9,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-GeNL_KX\\FB2316",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2316",
+        "Genotype": "GFAP-GeNL",
+        "Condition": "baseline",
+        "DrugID": "GFAP-GeNL",
+        "Promoter": "GFAP-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-GeNL_KX/FB2316/New folder/01_FB2316_bin2_950ms_2x_1Hz.tif",
+      "source_bytes": 630196816,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": null,
+      "first_page_acquisition_fields": {},
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [
+        {
+          "asset_id": "8426348c-f940-4214-8e13-90d086301091",
+          "session": "FB2316-baseline",
+          "selected_image_series": "01_FB2316_bin2_950ms_2x_1Hz.tif"
+        },
+        {
+          "asset_id": "e9969756-66fc-4dcf-8fed-9f9dcebc6ff0",
+          "session": "FB2316-whisker",
+          "selected_image_series": "02_FB2316_bin2_950ms_2x_1Hz_whisker.tif"
+        }
+      ],
+      "exact_archive_series_name_matches": [
+        "8426348c-f940-4214-8e13-90d086301091"
+      ],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 10,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-GeNL_KX\\FB2317",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2317",
+        "Genotype": "GFAP-GeNL",
+        "Condition": "baseline",
+        "DrugID": "GFAP-GeNL",
+        "Promoter": "GFAP-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-GeNL_KX/FB2317/New folder/01_FB2317_bin2_950ms_2x_1Hz.tif",
+      "source_bytes": 630196816,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": null,
+      "first_page_acquisition_fields": {},
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [
+        {
+          "asset_id": "3ff31516-8926-4451-bf21-862aa32625ae",
+          "session": "FB2317-baseline",
+          "selected_image_series": "01_FB2317_bin2_950ms_2x_1Hz.tif"
+        },
+        {
+          "asset_id": "f69851f0-5914-4551-842b-0e8aab191e65",
+          "session": "FB2317-whisker",
+          "selected_image_series": "02_FB2317_bin2_950ms_2x_1Hz_whisker.tif"
+        }
+      ],
+      "exact_archive_series_name_matches": [
+        "3ff31516-8926-4451-bf21-862aa32625ae"
+      ],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 11,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-GeNL_KX\\FB2318",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2318",
+        "Genotype": "GFAP-GeNL",
+        "Condition": "baseline",
+        "DrugID": "GFAP-GeNL",
+        "Promoter": "GFAP-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-GeNL_KX/FB2318/New folder/0_FB2318_bin2_950ms_2x_1Hz_1.tif",
+      "source_bytes": 630196816,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": null,
+      "first_page_acquisition_fields": {},
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [
+        {
+          "asset_id": "fd2b202e-a792-4d31-95b4-dadcd0f18ff5",
+          "session": "FB2318-baseline",
+          "selected_image_series": "0_FB2318_bin2_950ms_2x_1Hz_1.tif"
+        },
+        {
+          "asset_id": "df090c13-1fb3-4103-95a4-e5f680aaf48a",
+          "session": "FB2318-whisker",
+          "selected_image_series": "02_FB2318_bin2_950ms_2x_1Hz_whisker.tif"
+        }
+      ],
+      "exact_archive_series_name_matches": [
+        "fd2b202e-a792-4d31-95b4-dadcd0f18ff5"
+      ],
+      "identity_issues": [
+        "denoised_filename_mouse_disagrees_with_csv"
+      ],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 12,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-GeNL_KX\\FB2319",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2319",
+        "Genotype": "GFAP-GeNL",
+        "Condition": "baseline",
+        "DrugID": "GFAP-GeNL",
+        "Promoter": "GFAP-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-GeNL_KX/FB2319/New folder/01_FB2319_bin2_950ms_2x_1Hz.tif",
+      "source_bytes": 630196816,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": null,
+      "first_page_acquisition_fields": {},
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [
+        {
+          "asset_id": "1a75db8e-93a8-4418-9588-b69f7c9681c8",
+          "session": "FB2319-baseline",
+          "selected_image_series": "01_FB2319_bin2_950ms_2x_1Hz.tif"
+        },
+        {
+          "asset_id": "ec181372-d7c2-45f9-99ff-319971af4032",
+          "session": "FB2319-whisker",
+          "selected_image_series": "04_FB2319_bin2_950ms_2x_1Hz_whisker.tif"
+        }
+      ],
+      "exact_archive_series_name_matches": [
+        "1a75db8e-93a8-4418-9588-b69f7c9681c8"
+      ],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 13,
+      "original_csv_row": {
+        "Paths": "Data\\GFAP-GeNL_KX\\FB2320",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2320",
+        "Genotype": "GFAP-GeNL",
+        "Condition": "baseline",
+        "DrugID": "GFAP-GeNL",
+        "Promoter": "GFAP-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "GFAP-GeNL_KX/FB2320/New folder/01_FB2320_bin2_950ms_2x_1Hz.tif",
+      "source_bytes": 630196816,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": null,
+      "first_page_acquisition_fields": {},
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [
+        {
+          "asset_id": "6610e840-4186-46cc-9b3d-08aba67be646",
+          "session": "FB2320-baseline",
+          "selected_image_series": "01_FB2320_bin2_950ms_2x_1Hz.tif"
+        },
+        {
+          "asset_id": "25f45d28-a409-4d8b-8bb4-d9dc9082a05a",
+          "session": "FB2320-whisker",
+          "selected_image_series": "02_FB2320_bin2_950ms_2x_1Hz_whisker.tif"
+        }
+      ],
+      "exact_archive_series_name_matches": [
+        "6610e840-4186-46cc-9b3d-08aba67be646"
+      ],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 14,
+      "original_csv_row": {
+        "Paths": "Data\\hSyn-GeNL_KX\\FB2402",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2402",
+        "Genotype": "hSyn-GeNL",
+        "Condition": "baseline",
+        "DrugID": "hSyn-GeNL",
+        "Promoter": "hSyn-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "hSyn-GeNL_KX/FB2402/New folder/01_FB2402_hSyn-GeNL_2x_Bin2_1Hz_KX.tif",
+      "source_bytes": 635252069,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2402_hSyn-GeNL_2x_Bin2_1Hz_KX_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3764.0,
+        "ReceivedTime": "2024-03-18 11:07:36.545 +0100",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 15,
+      "original_csv_row": {
+        "Paths": "Data\\hSyn-GeNL_KX\\FB2403",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2403",
+        "Genotype": "hSyn-GeNL",
+        "Condition": "baseline",
+        "DrugID": "hSyn-GeNL",
+        "Promoter": "hSyn-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "hSyn-GeNL_KX/FB2403/New folder/01_FB2403_hSyn-GeNL_2x_Bin2_1Hz_KX_1.tif",
+      "source_bytes": 635245879,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2403_hSyn-GeNL_2x_Bin2_1Hz_KX_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3346.0,
+        "ReceivedTime": "2024-03-19 09:51:33.697 +0100",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 16,
+      "original_csv_row": {
+        "Paths": "Data\\hSyn-GeNL_KX\\FB2404",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2404",
+        "Genotype": "hSyn-GeNL",
+        "Condition": "baseline",
+        "DrugID": "hSyn-GeNL",
+        "Promoter": "hSyn-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "hSyn-GeNL_KX/FB2404/New folder/01_FB2404_hSyn-GeNL_2x_Bin2_1Hz_KX.tif",
+      "source_bytes": 635248671,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2404_hSyn-GeNL_2x_Bin2_1Hz_KX_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3391.0,
+        "ReceivedTime": "2024-03-19 11:04:30.576 +0100",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 17,
+      "original_csv_row": {
+        "Paths": "Data\\hSyn-GeNL_KX\\FB2405",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2405",
+        "Genotype": "hSyn-GeNL",
+        "Condition": "baseline",
+        "DrugID": "hSyn-GeNL",
+        "Promoter": "hSyn-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "hSyn-GeNL_KX/FB2405/New folder/01_FB2405_hSyn-GeNL_2x_Bin2_1Hz_KX.tif",
+      "source_bytes": 635251518,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2405_hSyn-GeNL_2x_Bin2_1Hz_KX_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3980.0,
+        "ReceivedTime": "2024-03-20 09:49:28.517 +0100",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 18,
+      "original_csv_row": {
+        "Paths": "Data\\hSyn-GeNL_KX\\FB2406",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2406",
+        "Genotype": "hSyn-GeNL",
+        "Condition": "baseline",
+        "DrugID": "hSyn-GeNL",
+        "Promoter": "hSyn-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "hSyn-GeNL_KX/FB2406/New folder/01_FB2406_hSyn-GeNL_2x_Bin2_1Hz_KX.tif",
+      "source_bytes": 635250697,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2405_hSyn-GeNL_2x_Bin2_1Hz_KX_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3795.0,
+        "ReceivedTime": "2024-03-20 11:03:44.061 +0100",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [
+        "embedded_prefix_mouse_disagrees_with_csv"
+      ],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 19,
+      "original_csv_row": {
+        "Paths": "Data\\hSyn-GeNL_KX\\FB2407",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2407",
+        "Genotype": "hSyn-GeNL",
+        "Condition": "baseline",
+        "DrugID": "hSyn-GeNL",
+        "Promoter": "hSyn-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "hSyn-GeNL_KX/FB2407/New folder/01_FB2407_hSyn-GeNL_2x_Bin2_1Hz_KX.tif",
+      "source_bytes": 635252441,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2407_hSyn-GeNL_2x_Bin2_1Hz_KX_3",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3560.0,
+        "ReceivedTime": "2024-03-21 10:05:32.959 +0100",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 20,
+      "original_csv_row": {
+        "Paths": "Data\\hSyn-GeNL_KX\\FB2408",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2408",
+        "Genotype": "hSyn-GeNL",
+        "Condition": "baseline",
+        "DrugID": "hSyn-GeNL",
+        "Promoter": "hSyn-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "hSyn-GeNL_KX/FB2408/New folder/01_FB2408_hSyn-GeNL_2x_Bin2_1Hz_KX_baseline_1_MMStack_Default.ome.tif",
+      "source_bytes": 635273931,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2408_hSyn-GeNL_2x_Bin2_1Hz_KX_baseline_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 3757.0,
+        "ReceivedTime": "2024-03-21 11:33:38.256 +0100",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "External",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "993.31 (minimum)"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    },
+    {
+      "csv_line": 21,
+      "original_csv_row": {
+        "Paths": "Data\\hSyn-GeNL_KX\\FB2410",
+        "PostureFile": "",
+        "PupilFile": "",
+        "PuffsFile": "",
+        "Mouse": "FB2410",
+        "Genotype": "hSyn-GeNL",
+        "Condition": "baseline",
+        "DrugID": "hSyn-GeNL",
+        "Promoter": "hSyn-GeNL",
+        "SampleF": "1",
+        "Pixelsize": "2.35",
+        "Puff_2use": "2 3 5 6",
+        "WhiskingFile": ""
+      },
+      "source_candidate_path_relative_to_data": "hSyn-GeNL_KX/FB2410/New folder/01_FB2410_hSyn-GeNL_2x_Bin2_1Hz_KX_1.tif",
+      "source_bytes": 635240825,
+      "shape_row_column_frame": [
+        512,
+        512,
+        1200
+      ],
+      "stored_mode": "I;16",
+      "embedded_prefix_as_recorded": "01_FB2410_hSyn-GeNL_2x_Bin2_1Hz_KX_1",
+      "first_page_acquisition_fields": {
+        "Frame": 0,
+        "FrameIndex": 0,
+        "Exposure-ms": 960.0,
+        "ElapsedTime-ms": 2432.0,
+        "ReceivedTime": "2024-03-26 12:06:01.869 +0100",
+        "PixelSizeUm": 0.0,
+        "Binning": 2,
+        "Camera": "Andor",
+        "Andor-Trigger": "Internal",
+        "Andor-Exposure": "960.00",
+        "Andor-ActualInterval-ms": "996.97"
+      },
+      "source_tiff_sha256": null,
+      "archive_mouse_links": [],
+      "exact_archive_series_name_matches": [],
+      "identity_issues": [],
+      "role": "unassigned_not_eligible_not_untouched_evaluation",
+      "final_inclusion": "not_assessed",
+      "archive_whole_movie_equivalence": "not_established"
+    }
+  ],
+  "selected_timing": {
+    "frames": 1200,
+    "first_elapsed_sec": 3.78,
+    "last_elapsed_sec": 1202.94113,
+    "min_adjacent_interval_sec": 0.9900599999998576,
+    "max_adjacent_interval_sec": 1.0208599999998569,
+    "max_abs_deviation_from_1Hz_sec": 0.16112999999995736,
+    "interpretation": "Per-page Micro-Manager elapsed clock; exposure-start semantics and trigger alignment unverified. Not approved experimental windows."
+  },
+  "selected_decision": "boi-hp-transfer-decision-20260910.json",
+  "approved_analysis_windows": [],
+  "known_limitations": [
+    "No complete archive payload comparison.",
+    "CSV repeated Genotype/DrugID/Promoter labels remain original, not canonical biological values.",
+    "The two byte-identical source candidates do not establish whether the corresponding denoised movies or all session materials are duplicates.",
+    "Filename/header review does not establish historical development/evaluation independence.",
+    "No biological event detection, quantitative cohort inclusion or physiological validation."
+  ]
+}

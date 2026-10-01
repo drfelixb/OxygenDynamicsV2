@@ -1,0 +1,97 @@
+function auditContributors
+% Bounded diagnostic: unchanged native masks, no detection/correction fitting.
+root='/Users/zcm361/Documents/Github/OxygenDynamicsV2';
+cd(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(root,'reference-validation/boi-baseline-exclusion-review-20260914');
+I=jsondecode(fileread(fullfile(out,'inputs.json')));names=fieldnames(I.Sources);
+for k=1:numel(names),s=I.Sources.(names{k});assert(strcmp(oxygenFileSHA256(s.Path),s.SHA256));end
+R=loadBOIEventReview(I.Sources.Audit.Path);A=R.Audit;
+review=loadBOIBoundaryReview(R,I.Sources.Review.Path);
+C=jsondecode(fileread(I.Sources.Availability.Path));
+assert(strcmp(C.AuditSHA256,R.AuditSHA256)&&strcmp(C.ReviewSHA256,review.SHA256));
+assert(R.AnalysisInfo.AnalysisParams.fs==1&&isempty(R.AnalysisInfo.DenoisedFile));
+sink=load(I.Sources.SinkMaster.Path,'AnalysisInfo','Table_OxygenSinks_Out');
+surge=load(I.Sources.SurgeMaster.Path,'AnalysisInfo','Table_OxygenSurges_Out');
+assert(isequaln(sink.AnalysisInfo,R.AnalysisInfo)&&isequaln(surge.AnalysisInfo,R.AnalysisInfo));
+sites={sink.Table_OxygenSinks_Out,surge.Table_OxygenSurges_Out};signs=["sink","surge"];
+V=load(I.Sources.Replay.Path,'NativeUnionPixels');
+N=R.AnalysisInfo.NFrames;sz=R.AnalysisInfo.FrameSize;
+members=struct('WindowIndex',{},'TargetAuditRow',{},'OnsetFrame',{},'Frame',{},'ContributorAuditRow',{},'OverlapPixels',{});
+counts=[];windows=cell(numel(C.Windows),1);pixelEvidence=cell(numel(C.Windows),1);
+for w=1:numel(C.Windows)
+    W=C.Windows(w);target=double(R.Traces{W.AuditRow}.Footprint(:));
+    evidence=cell(20,1);summary=struct('WindowIndex',w,'TargetAuditRow',W.AuditRow,'OnsetFrame',W.OnsetFrame,'Contributors',[]);
+    for j=1:20
+        f=W.CandidateFrames(j);unionAll=[];contrib=[];parts={};
+        for sign=1:2
+            S=sites{sign};
+            for s=1:height(S)
+                c=S.FramePixels{s};px=double(c{f}(:));unionAll=union(unionAll,px);
+                hit=intersect(target,px);if isempty(hit),continue;end
+                ar=find(string(A.RecordingID)==string(S.RecordingID(s))&string(A.EventType)==signs(sign)& ...
+                    A.SiteID==S.SiteID(s)&A.DetectedStartFrame<=f&A.DetectedEndFrame>=f);
+                assert(isscalar(ar),'Every overlapping native site/frame needs exactly one audit event.');
+                members(end+1)=struct('WindowIndex',w,'TargetAuditRow',W.AuditRow,'OnsetFrame',W.OnsetFrame, ...
+                    'Frame',f,'ContributorAuditRow',ar,'OverlapPixels',numel(hit)); %#ok<AGROW>
+                contrib(end+1)=ar;parts{end+1}=hit; %#ok<AGROW>
+            end
+        end
+        assert(isequal(unionAll,double(V.NativeUnionPixels{f}(:))),'Full native union differs from the frozen cache.');
+        hit=intersect(target,unionAll);excluded=ismember(f,W.NativeOverlapExcludedFrames);
+        assert(excluded==~isempty(hit));
+        counts(end+1,:)=[w W.AuditRow W.OnsetFrame f numel(hit) numel(target) numel(contrib) excluded]; %#ok<AGROW>
+        evidence{j}=struct('Frame',f,'ContributorAuditRows',contrib,'IntersectionPixels',{parts},'UnionOverlapPixels',hit);
+    end
+    selected=members([members.WindowIndex]==w);rows=unique([selected.ContributorAuditRow]);cs=cell(numel(rows),1);
+    for j=1:numel(rows)
+        ar=rows(j);m=selected([selected.ContributorAuditRow]==ar);
+        cs{j}=struct('AuditRow',ar,'EventType',char(A.EventType(ar)),'SiteID',A.SiteID(ar),'EventID',A.EventID(ar), ...
+            'NativeStartFrame',A.DetectedStartFrame(ar),'NativeEndFrame',A.DetectedEndFrame(ar), ...
+            'ExcludedCandidateFrames',[m.Frame],'IntersectionPixelCounts',[m.OverlapPixels], ...
+            'MinimumIntersectionPixels',min([m.OverlapPixels]),'MaximumIntersectionPixels',max([m.OverlapPixels]), ...
+            'TargetFootprintPixels',numel(target));
+    end
+    summary.Contributors=cs;windows{w}=summary;pixelEvidence{w}=evidence;
+end
+F=array2table(counts,'VariableNames',{'WindowIndex','TargetAuditRow','OnsetFrame','Frame','UnionOverlapPixels','TargetFootprintPixels','ContributorCount','Excluded'});
+writetable(F,fullfile(out,'frame-overlap.csv'));writetable(struct2table(members),fullfile(out,'event-contributions.csv'));
+rows=unique([[C.Windows.AuditRow] [members.ContributorAuditRow]]);association=cell(numel(rows),1);traceEvidence=cell(numel(rows),1);
+for k=1:numel(rows)
+    ar=rows(k);master=I.Sources.SinkMaster.Path;if A.EventType(ar)=="surge",master=I.Sources.SurgeMaster.Path;end
+    R=attachBOINativeMasks(R,ar,master);att=R.NativeMasks{ar};
+    association{k}=rmfield(att,'FramePixels');
+    % Match each attributed contributor's saved event-specific masks exactly.
+    for w=1:numel(pixelEvidence)
+        target=double(R.Traces{C.Windows(w).AuditRow}.Footprint(:));
+        for j=1:20
+            e=pixelEvidence{w}{j};ix=find(e.ContributorAuditRows==ar);
+            if ~isempty(ix),assert(isscalar(ix)&&isequal(intersect(target,double(att.FramePixels{e.Frame}(:))),e.IntersectionPixels{ix}));end
+        end
+    end
+    t=R.Traces{ar};f=(1:N)';
+    T=table(f,f-1,double(t.Raw(:)),double(t.DetectionDetrended(:)),double(t.Filtered(:)),double(t.TimingTrace(:)), ...
+        'VariableNames',{'Frame','ModeledTimeSec','PreservedInputMean','CorrectedIntensity','FilteredDetectionScore','SavedSiteTimingTrace'});
+    T.ExistingRemovedTrend=T.PreservedInputMean-T.CorrectedIntensity;
+    writetable(T,fullfile(out,sprintf('trace-row-%d.csv',ar)));
+    traceEvidence{k}=struct('AuditRow',ar,'Identity',table2struct(A(ar,:)),'Trace',T,'FixedFootprint',t.Footprint, ...
+        'NativeFrames',t.DetectedFrames,'NativeFramePixels',{att.FramePixels});
+end
+shared=intersect(R.Traces{309}.Footprint,R.Traces{308}.Footprint);
+endpoint=struct('Frame',516,'TargetAuditRow',309,'PreviousReviewedAuditRow',308, ...
+    'PreviousReviewedRecoveryFrame',516,'PreviousNativeEndFrame',A.DetectedEndFrame(308), ...
+    'SharedFixedFootprintPixels',numel(shared),'TargetFootprintPixels',numel(R.Traces{309}.Footprint), ...
+    'PreviousFootprintPixels',numel(R.Traces{308}.Footprint),'NativeOverlapPixels',F.UnionOverlapPixels(F.WindowIndex==1&F.Frame==516), ...
+    'Status','Eligible under unchanged native rule; shared manual recovery endpoint remains a physiological question');
+assert(endpoint.SharedFixedFootprintPixels==9614&&endpoint.NativeOverlapPixels==0);
+P=struct('Schema','boi-baseline-exclusion-contributors-1','DecisionID',I.DecisionID,'Status','passed', ...
+    'RecordingKey','FB2314-awake','Animal','FB2314','SampleHz',1,'FrameOrigin',1, ...
+    'AuditSHA256',R.AuditSHA256,'ReviewSHA256',review.SHA256,'RawSourceSHA256',R.AnalysisInfo.RawSHA256, ...
+    'Windows',{windows},'Endpoint516',endpoint,'ContributorAuditRows',unique([members.ContributorAuditRow]), ...
+    'VerifiedEventRows',rows,'CandidateMembershipsChecked',height(F),'ContributorMembershipsChecked',numel(members), ...
+    'MasterAssociations',{association},'DetectionReruns',0,'CorrectionFits',0,'NewBaselineOrAmplitudeCalculations',false, ...
+    'RecognitionDecisionsChanged',false,'ScientificAcceptance','not_established');
+for k=1:numel(names),s=I.Sources.(names{k});assert(strcmp(oxygenFileSHA256(s.Path),s.SHA256));end
+save(fullfile(out,'inspection-evidence.mat'),'pixelEvidence','traceEvidence','shared','-v7.3');
+fid=fopen(fullfile(out,'contributors.json'),'w');cleanup=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(P,'PrettyPrint',true));
+disp(struct('Status',P.Status,'ContributorAuditRows',P.ContributorAuditRows,'VerifiedEventRows',rows,'Windows',{windows}));
+end

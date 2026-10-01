@@ -1,0 +1,10 @@
+packet=fileparts(mfilename('fullpath'));repo=fullfile(fileparts(fileparts(packet)),'existing-analysis');
+addpath(repo);setupOxygenDynamicsPath;
+[fig,ui]=openBOIRecordingWorkflow();cleanup=onCleanup(@()delete(fig));
+ui.OpenRun(fullfile(packet,'gui-run','BOIRun.mat'));state=ui.State();r=state.SelectedRun.Request.InputReview;
+expected=resolveBOITissueSupport(r.TissueSnapshot,[r.Files.RawTiffInfo.Height r.Files.RawTiffInfo.Width],r.RawSHA256);
+images=findall(fig,'Type','image');assert(numel(images)==1&&isequal(logical(images.CData),expected));
+exportapp(fig,fullfile(packet,'gui-reopened-final.png'));
+checks=checkcode(fullfile(repo,'openBOIRecordingWorkflow.m'),'-id');assert(isempty(checks));
+writeBOIRunJSON(fullfile(packet,'saved-support-display-check.json'),struct('Passed',true, ...
+    'RenderedMaskExactlyMatchesSavedDeclaration',true,'DetectorExecutions',0,'StatisticsExecutions',0));

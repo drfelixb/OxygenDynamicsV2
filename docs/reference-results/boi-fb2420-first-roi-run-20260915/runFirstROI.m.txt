@@ -1,0 +1,69 @@
+function runFirstROI
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));repo=fullfile(root,'existing-analysis');
+addpath(repo);setupOxygenDynamicsPath;
+P=jsondecode(fileread(fullfile(here,'prespecification.json')));S=jsondecode(fileread(fullfile(here,'inputs.json')));
+for k=1:numel(S),assert(strcmp(oxygenFileSHA256(S(k).Path),S(k).SHA256));end
+out=fullfile(here,'run-01');assert(~isfolder(out));mkdir(out);rec=fullfile(out,'Recording');mkdir(rec);
+clockStart=tic;R=struct('DecisionID',P.DecisionID,'Status','started','RecordingID',P.RecordingID, ...
+    'Role',P.Role,'SourceSHA256',P.SourceSHA256,'ScientificEligibility','not_established', ...
+    'PrespecificationSHA256',oxygenFileSHA256(fullfile(here,'prespecification.json')),'MatlabVersion',version);
+writeJSON(fullfile(out,'workflow-report.json'),R);
+code=createOxygenRegressionCodeManifest(repo);writetable(code,fullfile(out,'code-manifest-before.csv'));
+try
+    assert(strcmp(oxygenFileSHA256(P.SourcePath),P.SourceSHA256));
+    % Local copy keeps a complete run independent of a later drive disconnect.
+    copyfile(P.SourcePath,fullfile(rec,'preserved_original.tif'));
+    copyfile(fullfile(here,'BOIInputMetadata.json'),fullfile(rec,'BOIInputMetadata.json'));
+    copyfile(fullfile(here,'BOITissueSupport.json'),fullfile(rec,'BOITissueSupport.json'));
+    assert(strcmp(oxygenFileSHA256(fullfile(rec,'preserved_original.tif')),P.SourceSHA256));
+    assert(strcmp(oxygenFileSHA256(fullfile(rec,'BOITissueSupport.json')),P.SupportSHA256));
+    Review=reviewBOIRecordingInput(rec,1,2.35);save(fullfile(out,'InputReview.mat'),'Review');writetable(Review.QC,fullfile(out,'InputQC.csv'));
+    assert(Review.Files.IsValid&&Review.InputCompatible&&Review.Files.RawTiffInfo.Frames==1200);
+    assert(all(isnan(Review.Acquisition.DeclaredFrameValid))&&all(Review.Acquisition.CameraExposureSec==0.96));
+    assert(any(Review.QC.IssueID=="SOURCE-LOCAL-TRANSIENT"));
+    pool=parpool('Threads',2);poolCleanup=onCleanup(@()delete(pool)); %#ok<NASGU>
+    C=P.Context;C.Puff=NaN;t=tic;master=runOxygenDynamicsMaster(rec,C);R.MasterSeconds=toc(t);
+    save(fullfile(out,'MasterReturn.mat'),'master');I=master.AnalysisInfo;
+    assert(I.NFrames==1200&&I.RecordingDurationSec==1200);
+    assert(isequaln(createOxygenMasterParams(2.35,1),I.AnalysisParams));
+    writeJSON(fullfile(out,'effective-master-settings.json'),I.AnalysisParams);
+    D=jsondecode(fileread(fullfile(rec,'BOITissueSupport.json')));Mask=false(512);Mask(D.MaskPixels)=true;
+    assert(isequal(find(Mask),I.SurgeEligibleTissuePixels));
+    sink=Mask;sink(1:20,:)=false;sink(end-19:end,:)=false;sink(:,1:20)=false;sink(:,end-19:end)=false;
+    assert(isequal(find(sink),I.SinkEligibleTissuePixels));
+    assert(strcmp(I.TissueSupportAudit.NormalizationSupport,'craniotomy-roi-1'));
+    validateOxygenPipelineContract(I,struct('SampleF',1,'PixelSize',2.35));
+    R.Status='master_complete';R.ElapsedSeconds=toc(clockStart);writeJSON(fullfile(out,'workflow-report.json'),R);
+    assert(toc(clockStart)<P.Budget.SoftStopAfterMasterMinutes*60,'Soft stage budget reached after master.');
+    Paths={rec};PostureFile=NaN;PupilFile=NaN;PuffsFile=NaN;WhiskingFile=NaN;
+    Mouse={C.Mous};Genotype={C.Gen};Condition={C.Cond};DrugID={C.Drug};Promoter={C.Promo};
+    SampleF=1;Pixelsize=2.35;Puff_2use=NaN;RecordingID=string(P.RecordingID);
+    T=table(Paths,PostureFile,PupilFile,PuffsFile,WhiskingFile,Mouse,Genotype,Condition,DrugID,Promoter,SampleF,Pixelsize,Puff_2use,RecordingID);
+    inputCsv=fullfile(out,'input.csv');writetable(T,inputCsv);
+    config=struct('inputCsv',inputCsv,'masterFolder',out,'outputRoot',fullfile(out,'statistics'),'interactive',false, ...
+        'imagingMode','BLI','useCuratedSinks',false,'chooseSpecificFolders',false,'sinkFolderSelection','Recent', ...
+        'surgeFolderSelection','Recent','behaviourFolderSelection','Recent','analysisWindowsCsv','','baselinePairsCsv','','windowPairsCsv','');
+    writeJSON(fullfile(out,'stats-request.json'),config);t=tic;stats=runOxygenDynamicsStats(config);R.StatsSeconds=toc(t);
+    save(fullfile(out,'StatsReturn.mat'),'stats');R.DataOutputMat=stats.DataOutputMat;R.DataOutputSHA256=oxygenFileSHA256(stats.DataOutputMat);
+    data=load(stats.DataOutputMat);F=data.RecordingFrameExposure;
+    assert(height(F)==1200&&isequal(F.ModeledStartSec,(0:1199)')&&all(F.FrameIntervalSec==1));
+    assert(all(isnan(F.DeclaredFrameValid))&&all(F.ModeledFrameIncluded)&&all(F.CameraExposureSec==0.96));
+    assert(height(data.RecordingRegistry)==1&&data.RecordingRegistry.RecordingID==RecordingID);
+    R.Status='master_statistics_complete_audit_pending';writeJSON(fullfile(out,'workflow-report.json'),R);
+    t=tic;[Audit,Traces]=auditOxygenEventAmplitudeSource(rec,'reconstructDetection',true,'outputFolder',fullfile(out,'source-amplitude-audit')); %#ok<ASGLU>
+    assert(all(Audit.MeasurementMatches));R.AuditSeconds=toc(t);R.EventsAudited=height(Audit);R.MeasurementMismatches=sum(~Audit.MeasurementMatches);
+    after=createOxygenRegressionCodeManifest(repo);assert(isequal(code(:,{'RelativePath','SHA256'}),after(:,{'RelativePath','SHA256'})));
+    for k=1:numel(S),assert(strcmp(oxygenFileSHA256(S(k).Path),S(k).SHA256));end
+    assert(strcmp(oxygenFileSHA256(P.SourcePath),P.SourceSHA256));
+    files=dir(fullfile(out,'**','*'));R.OutputBytes=sum([files(~[files.isdir]).bytes]);
+    R.OutputWithinBudget=R.OutputBytes<=P.Budget.NewOutputGiB*1024^3;R.ElapsedSeconds=toc(clockStart);
+    assert(R.OutputWithinBudget&&R.ElapsedSeconds<P.Budget.MaximumMinutes*60,'Execution resource budget exceeded.');
+    R.Status='execution_and_source_replay_passed_review_queue_pending';writeJSON(fullfile(out,'workflow-report.json'),R);disp(R);
+catch err
+    R.Status='failed_or_stopped_preserve_outputs';R.ErrorID=err.identifier;R.ErrorMessage=err.message;
+    R.ElapsedSeconds=toc(clockStart);writeJSON(fullfile(out,'workflow-report.json'),R);rethrow(err);
+end
+end
+function writeJSON(path,data)
+fid=fopen(path,'w');assert(fid>=0);fprintf(fid,'%s\n',jsonencode(data,'PrettyPrint',true));fclose(fid);
+end

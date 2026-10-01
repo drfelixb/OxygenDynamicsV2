@@ -244,6 +244,13 @@ StatsInfo.LoadSummary = warnStatsLoadedDataIssues(StatsInfo,StatsRecordingCells,
 StatsLoadedData=createStatsLoadedRecordingData(StatsRecordingCells);
 RecordingRegistry=vertcatCellTables(StatsRecordingCells.RecordingRegistry);
 assert(numel(unique(RecordingRegistry.RecordingID))==height(RecordingRegistry),'Duplicate recording IDs in input.');
+if IsBLI
+    [RecordingRegistry,BOIInputContracts,RecordingInputQC,RecordingFrameExposure] = ...
+        buildBOIRecordingInputContracts(RecordingRegistry,StatsInfo.Recordings);
+    if ~isempty(BOIInputContracts),StatsInfo.PipelineContract=BOIInputContracts{1}.PipelineContract;end
+    StatsInfo.BOIInputContractVersion = 'boi-recording-input-1';
+    StatsInfo.BOIWindowAuditVersion = 'boi-window-exposure-1';
+end
 Table_OxygenSinks_OutCombo=StatsLoadedData.TableOxygenSinks;
 Table_OxygenSinkEvents_OutCombo=StatsLoadedData.TableOxygenSinkEvents;
 HypoxicEventSpecificMetrics=StatsLoadedData.HypoxicEventSpecificMetrics;
@@ -506,7 +513,16 @@ end
 if isfield(StatsConfig,'windowPairsCsv') && strlength(string(StatsConfig.windowPairsCsv))>0
     WindowPairs=readtable(StatsConfig.windowPairsCsv,'TextType','string');
 end
-StatsCoreData.RecordingWindowMetrics=createOxygenAnalysisWindows(RecordingRegistry,Table_OxygenSinks_OutCombo,Table_OxygenSinkEvents_OutCombo,Windows);
+[StatsCoreData.RecordingWindowMetrics,WindowFrameIngredients]=createOxygenAnalysisWindows(RecordingRegistry,Table_OxygenSinks_OutCombo,Table_OxygenSinkEvents_OutCombo,Windows);
+if IsBLI
+    StatsCoreData.BOIInputContracts=BOIInputContracts;
+    StatsCoreData.RecordingInputQC=RecordingInputQC;
+    StatsCoreData.RecordingFrameExposure=RecordingFrameExposure;
+    StatsCoreData.WindowFrameIngredients=WindowFrameIngredients;
+    [StatsCoreData.SurgeRecordingWindowMetrics,StatsCoreData.SurgeWindowFrameIngredients]= ...
+        createBOISurgeAnalysisWindows(RecordingRegistry,BOIInputContracts, ...
+        Table_OxygenSurges_OutCombo,Table_OxygenSurgeEvents_OutCombo,Windows);
+end
 StatsCoreData.WindowBaselineContrasts=createOxygenWindowContrasts(StatsCoreData.RecordingWindowMetrics,WindowPairs);
 StatsCoreData.RecordingRegistry = RecordingRegistry;
 Pairs=table();
@@ -527,6 +543,7 @@ StatsResult = struct();
 StatsResult.StatsInfo = StatsInfo;
 StatsResult.OutputFolders = StatsInfo.OutputFolders;
 StatsResult.OutputXlsx = StatsExportInfo.OutputXlsx;
+StatsResult.AnalysisManifest = StatsExportInfo.AnalysisManifest;
 StatsResult.DataOutputMat = StatsExportInfo.DataOutputMat;
 StatsResult.EventSpecificOutputXlsx = StatsExportInfo.EventSpecificOutputXlsx;
 StatsResult.EventSpecificDataMat = StatsExportInfo.EventSpecificDataMat;

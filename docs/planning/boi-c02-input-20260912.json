@@ -1,0 +1,82 @@
+{
+  "decision_id": "R1-C02-INPUT-019",
+  "status": "completed_technical_audit_scientific_eligibility_unresolved",
+  "scope": "Eight published C02 awake/isoflurane recordings, local read-only input suitability checks.",
+  "cases": [
+    {
+      "session": "FB2314-baseline-awake",
+      "mouse": "FB2314",
+      "asset_id": "9ce94e52-e1d9-446d-a758-66db41a698e6"
+    },
+    {
+      "session": "FB2314-baseline-iso",
+      "mouse": "FB2314",
+      "asset_id": "5ca61eac-9461-44e5-b222-1599aecc7ca8"
+    },
+    {
+      "session": "FB2315-baseline-awake",
+      "mouse": "FB2315",
+      "asset_id": "237d26a9-8977-4a97-b46b-206aefeb4c3d"
+    },
+    {
+      "session": "FB2315-baseline-iso",
+      "mouse": "FB2315",
+      "asset_id": "353b88f3-b509-4281-8c46-f338094b4907"
+    },
+    {
+      "session": "M402-01-baseline-awake",
+      "mouse": "ID402",
+      "asset_id": "f6089c10-cb71-4f49-8185-ba07e4073fb1"
+    },
+    {
+      "session": "M402-03-baseline-iso",
+      "mouse": "ID402",
+      "asset_id": "253f0176-34b4-4fae-9500-29bbde6803e2"
+    },
+    {
+      "session": "M403-01-baseline-awake",
+      "mouse": "ID403",
+      "asset_id": "2d68bdb0-58b0-4d36-8227-4526b8905ebf"
+    },
+    {
+      "session": "M403-03-baseline-iso",
+      "mouse": "ID403",
+      "asset_id": "693a568c-b90a-4e0c-b61d-ca77158c384a"
+    }
+  ],
+  "question": "Are the mapped local inputs technically readable with the existing MATLAB BOI preflight, and what source/calibration/timing/tissue or legacy-provenance issues remain?",
+  "method": "Existing validateOxygenRecording plus createBOIImportReview with canonical metadata; whole-file source fingerprints, TIFF metadata, legacy MAT file inventory/variable headers only. Do not load event/site tables or pixel time series.",
+  "budget": "One preflight pass for eight inputs and independent header/hash replay; no detector/statistics or scientific contrast. Preserve failed attempts and every source/output file.",
+  "interpretation": "Local readability and publication membership do not establish archive pixel equivalence, intensity preparation, tissue validity, approved windows or scientific eligibility. Legacy output presence is prior-processing evidence, not a dated current-method tuning attribution.",
+  "clock": "Use supplied/published 1 Hz for the preflight; embedded TIFF timestamps do not override external timing. Do not manufacture an exposure or wash-in interval.",
+  "success_checks": [
+    "all eight asset/session identities conserved",
+    "selected TIFF name agrees with pinned series name",
+    "source/output inventory unchanged across read-only checks",
+    "review failures/missingness remain explicit",
+    "no scientific role or window approval"
+  ],
+  "completion": {
+    "recorded_utc": "2026-09-12T08:24:17.667491+00:00",
+    "disposition": "Retain current rules; restrict this result to technical input compatibility and provenance inventory.",
+    "successful_run": "run-02",
+    "preserved_failed_run": "run-01",
+    "reporting_correction": "Rename reserved VariableNames report field to MATVariableList; supply the already-known canonical Mouse field to validation. No production/source change.",
+    "recordings": 8,
+    "animals": 4,
+    "compatible_inputs": 8,
+    "legacy_mat_files": 24,
+    "tiff_frame_headers_verified": 7200,
+    "source_and_legacy_hashes_verified": 32,
+    "implementation_files_unchanged": 460,
+    "report": "docs/reference-results/boi-c02-input-20260912/README.md",
+    "timing_interpretation": "docs/reference-results/boi-c02-input-20260912/qc-interpretation.json",
+    "original_prespecification_sha256": "89e97dde1501d38afa99b318473d9aa32c8cd2a5536065f6e49754b76e54c07f",
+    "archive_pixel_equivalence": "not_tested",
+    "scientific_eligibility": "not_assessed",
+    "approved_windows": [],
+    "evaluation_roles_assigned": [],
+    "new_detector_runs": 0,
+    "new_statistics_runs": 0
+  }
+}

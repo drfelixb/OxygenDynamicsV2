@@ -1,0 +1,58 @@
+{
+  "Schema": "boi-c02-eligibility-update-1",
+  "DecisionIDs": [
+    "R1-ID402-AWAKE-RUN-099",
+    "R1-ID402-ISO-RUN-100",
+    "R4-ID402-DESCRIPTIVE-101"
+  ],
+  "PreviousUpdate": "boi-c02-eligibility-update-20260921-096.json",
+  "PreviousUpdateSHA256": "64e8871cca621eb16697c274d1b69066829e6caf20ca57334969ad842ef565d4",
+  "Changes": [
+    {
+      "Session": "M402-01-baseline-awake",
+      "AssetID": "f6089c10-cb71-4f49-8185-ba07e4073fb1",
+      "SourceSHA256": "f35194a9b8d21722a6701e8f2344c40b1eecf97117ccec4fa4aa46e95f854555",
+      "WorkingROI": "accepted_source_specific_working_support",
+      "RunStatus": "restricted_profile_run_verified",
+      "MethodProfile": "craniotomy-roi-1",
+      "NativeFrameCount": 600,
+      "SampleHz": 1,
+      "PixelSizeUm": 4.75,
+      "ModelExtentSec": [
+        0,
+        600
+      ],
+      "FinalComparisonWindows": [],
+      "Evidence": "reference-results/boi-id402-paired-summary-20260921/awake/verification.json"
+    },
+    {
+      "Session": "M402-03-baseline-iso",
+      "AssetID": "253f0176-34b4-4fae-9500-29bbde6803e2",
+      "SourceSHA256": "b57cb3119000931bf3e2749ff0a0b926ea51697ced259ac3d5e1a41525cb0b96",
+      "WorkingROI": "accepted_source_specific_working_support",
+      "RunStatus": "restricted_profile_run_verified",
+      "MethodProfile": "craniotomy-roi-1",
+      "NativeFrameCount": 600,
+      "SampleHz": 1,
+      "PixelSizeUm": 4.75,
+      "ModelExtentSec": [
+        0,
+        600
+      ],
+      "FinalComparisonWindows": [],
+      "Evidence": "reference-results/boi-id402-paired-summary-20260921/iso/verification.json"
+    }
+  ],
+  "CurrentCounts": {
+    "CandidateMice": 7,
+    "CandidateRecordings": 14,
+    "RecordingsWithRunEvidence": 11,
+    "NoEquivalentRunInBaseInventory": 3,
+    "AcceptedWorkingROIs": 6,
+    "ExistingUnacceptedDrafts": 2,
+    "NoReviewedROIInBaseInventory": 6,
+    "PairsWithBothRestrictedProfileRuns": 3,
+    "CompletedCurrentPairedDescriptiveSummaries": 3
+  },
+  "NewScientificExclusions": 0
+}

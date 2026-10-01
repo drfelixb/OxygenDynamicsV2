@@ -1,0 +1,31 @@
+function D=fixedIntervalDiagnostic(y,a,b,W)
+% Separate phase085 descriptive arithmetic; no screening, correction or search.
+y=double(y(:));N=numel(y);assert(all(isfinite([a b W]))&&all([a b W]==fix([a b W]))&&a>=1&&b>=a&&b<=N&&W>0);
+D=struct('StartFrame',a,'EndFrame',b,'ContextSamples',W);
+D.Before=side(y,(a-W:a-1)',W);D.After=side(y,(b+1:b+W)',W);
+f=(a:b)';v=y(f);good=all(isfinite(v));
+I=struct('Status','available','Frames',f','Values',v','NonfiniteFrames',f(~isfinite(v))','Minimum',NaN,'MinimumFrames',[], ...
+ 'Maximum',NaN,'MaximumFrames',[],'Onset',NaN,'Recovery',NaN,'EndpointDifference',NaN);
+if good
+ I.Minimum=min(v);I.Maximum=max(v);I.MinimumFrames=f(v==I.Minimum)';I.MaximumFrames=f(v==I.Maximum)';I.Onset=v(1);I.Recovery=v(end);I.EndpointDifference=v(end)-v(1);
+else,I.Status='nonfinite_samples';end
+D.Interval=I;D.BeforeContrasts=contrast(I,D.Before);D.AfterContrasts=contrast(I,D.After);
+D.OnsetVsBefore=scalarDifference(I.Onset,D.Before.Median,{I.Status,D.Before.Status});
+D.RecoveryVsAfter=scalarDifference(I.Recovery,D.After.Median,{I.Status,D.After.Status});
+D.ContextLevelDifference=scalarDifference(D.After.Median,D.Before.Median,{D.Before.Status,D.After.Status});
+end
+function S=side(y,requested,W)
+f=requested(requested>=1&requested<=numel(y));v=y(f);missing=requested(requested<1|requested>numel(y));bad=f(~isfinite(v));status='available';
+if ~isempty(missing)&&~isempty(bad),status='incomplete_acquisition_and_nonfinite_samples';elseif ~isempty(missing),status='incomplete_acquisition';elseif ~isempty(bad),status='nonfinite_samples';end
+S=struct('Status',status,'RequestedFrames',requested','Frames',f','Values',v','MissingAcquisitionFrames',missing','MissingAcquisitionCount',numel(missing), ...
+ 'NonfiniteFrames',bad','ObservedCount',numel(f),'RequiredCount',W,'Median',NaN,'Minimum',NaN,'Maximum',NaN,'Range',NaN,'MAD',NaN);
+if strcmp(status,'available'),S.Median=median(v);S.Minimum=min(v);S.Maximum=max(v);S.Range=S.Maximum-S.Minimum;S.MAD=median(abs(v-S.Median));end
+end
+function C=contrast(I,S)
+C=struct('Status','unavailable_dependency','Dependencies',{{I.Status,S.Status}},'Rise',NaN,'Decline',NaN);
+if strcmp(I.Status,'available')&&strcmp(S.Status,'available'),C.Status='available';C.Rise=I.Maximum-S.Median;C.Decline=S.Median-I.Minimum;end
+end
+function Q=scalarDifference(x,y,status)
+Q=struct('Status','unavailable_dependency','Dependencies',{status},'Value',NaN);
+if all(strcmp(status,'available')),Q.Status='available';Q.Value=x-y;end
+end

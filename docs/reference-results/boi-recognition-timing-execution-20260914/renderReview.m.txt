@@ -1,0 +1,47 @@
+root=fileparts(mfilename('fullpath'));addpath(root);out=fullfile(root,'review');assert(~isfolder(out));mkdir(out);
+X=jsondecode(fileread(fullfile(root,'run-01/diagnostics.json')));if iscell(X),X=vertcat(X{:});end
+R=jsondecode(fileread(fullfile(root,'recordings.json')));Q=jsondecode(fileread(fullfile(root,'researcher-reference.json')));Q=Q.Cases;if isstruct(Q),Q=num2cell(Q);end
+for k=1:numel(Q)
+ q=Q{k};rec=R(strcmp({R.RecordingKey},q.RecordingKey));e=rec.Events(strcmp({rec.Events.EventType},q.SavedEventType)&[rec.Events.SiteID]==q.SiteID&[rec.Events.EventID]==q.EventID);V=load(rec.ReplayMat,'Raw','Corrected');y=V.Corrected(:,e.TraceColumn);raw=V.Raw(:,e.TraceColumn);N=numel(y);frame=(1:N)';rr=X(strcmp({X.RecordingKey},q.RecordingKey)&strcmp({X.EventType},q.SavedEventType)&[X.SiteID]==q.SiteID&[X.EventID]==q.EventID);
+ f=figure('Visible','off','Color','w','Position',[30 30 1500 1250]);tl=tiledlayout(f,3,2,'TileSpacing','compact','Padding','compact');
+ title(tl,sprintf('Example %d | %s | saved %s site %d / event %d',k,q.RecordingKey,q.SavedEventType,q.SiteID,q.EventID),'Interpreter','none');
+ lim=[max(1,e.SearchLower-20) min(N,e.SearchUpper+20)];
+ for direction=[-1 1]
+  for method={'T2','T3'}
+   d=rr(arrayfun(@(a)a.Diagnostic.Direction==direction&&strcmp(a.Diagnostic.Candidate,method{1}),rr)).Diagnostic;
+   pos=1+2*(direction==1)+strcmp(method{1},'T3');ax=nexttile(tl,pos);hold(ax,'on');plot(ax,frame,y,'Color',[.17 .2 .23],'LineWidth',1);xlim(ax,lim);grid(ax,'on');ylabel(ax,'Existing corrected signal');xlabel(ax,'One-based frame (1 Hz)');
+   xline(ax,e.SearchLower,':','search L','Color',[.4 .4 .4]);xline(ax,e.SearchUpper,':','search R','Color',[.4 .4 .4]);xline(ax,e.NativeStart,'--','native','Color',[.5 .5 .65]);xline(ax,e.NativeEnd,'--','Color',[.5 .5 .65]);
+   if isfinite(d.Seed),plot(ax,d.Seed,y(d.Seed),'o','Color',[.7 .2 .1],'MarkerFaceColor',[.7 .2 .1]);end
+   if isfinite(d.StartFrame),xline(ax,d.StartFrame,'-','onset','Color',[0 .4 .6],'LineWidth',1.5);plot(ax,d.OnsetPlateau,y(d.OnsetPlateau),'o-','Color',[0 .4 .6]);end
+   if isfinite(d.EndFrame),xline(ax,d.EndFrame,'-','recovery','Color',[.6 .2 .6],'LineWidth',1.5);plot(ax,d.RecoveryPlateau,y(d.RecoveryPlateau),'o-','Color',[.6 .2 .6]);end
+   textStatus=strrep(d.TimingStatus,'_',' ');
+   if strcmp(d.TimingStatus,'complete')
+    for side={'Before','After'}
+     cc=d.Context;if iscell(cc),cc=vertcat(cc{:});end;c20=cc(2).(side{1});c10=cc(1).(side{1});p20=c20.AvailableFrames;p10=c10.AvailableFrames;
+     plot(ax,p20,y(p20),'Color',[.75 .7 .4],'LineWidth',2);plot(ax,p10,y(p10),'Color',[.05 .5 .3],'LineWidth',2);
+    end
+    textStatus=sprintf('%d–%d | peaks %d | screen 10/20: %s / %s',d.StartFrame,d.EndFrame,d.InternalPeakCount,shortStatus(cc(1).ScreenStatus),shortStatus(cc(2).ScreenStatus));
+   end
+   title(ax,sprintf('%s %s\n%s',method{1},directionName(direction),textStatus),'Interpreter','none','FontSize',10);
+   text(ax,.01,.02,sprintf('Finite search segment %s; barriers retained in JSON',mat2str(d.FiniteSegment)),'Units','normalized','FontSize',8,'Interpreter','none');
+  end
+  ax=nexttile(tl,5+(direction==1));hold(ax,'on');plot(ax,frame,raw,'Color',[.2 .2 .2]);xlim(ax,lim);grid(ax,'on');xlabel(ax,'One-based frame (1 Hz)');ylabel(ax,'Original raw mean');labels={};
+  for method={'T2','T3'}
+   d=rr(arrayfun(@(a)a.Diagnostic.Direction==direction&&strcmp(a.Diagnostic.Candidate,method{1}),rr)).Diagnostic;col=[0 .4 .6];if strcmp(method{1},'T3'),col=[.65 .25 .1];end
+   if isfinite(d.StartFrame),xline(ax,d.StartFrame,'--',method{1},'Color',col);end
+   if isfinite(d.EndFrame),xline(ax,d.EndFrame,'--','Color',col);end
+   a=d.Amplitude;ids=a.AvailableFrames;if ~isempty(ids),plot(ax,ids,raw(ids),'.','Color',col,'MarkerSize',9);end
+   if strcmp(a.Status,'valid'),plot(ax,[min(a.CleanFrames) max(a.CleanFrames)],[a.BaselineMean a.BaselineMean],'-','Color',col,'LineWidth',2);end
+   labels{end+1}=sprintf('%s: %s (%d/20 clean)',method{1},strrep(a.Status,'_',' '),numel(a.CleanFrames));
+  end
+  title(ax,sprintf('Raw amplitude reference: %s branch\n%s\n%s',directionName(direction),labels{1},labels{2}),'FontSize',9,'Interpreter','none');
+ end
+ subtitle(tl,'T2 nearest turns; T3 strongest shoulders. Context: green 10 samples, ochre extension to 20. Screens are diagnostic, not event admission.','FontSize',10);
+ exportgraphics(f,fullfile(out,sprintf('example-%02d.png',k)),'Resolution',110);close(f);
+end
+function s=shortStatus(x)
+if strcmp(x,'exceeds_both_context_ranges'),s='exceeds';elseif strcmp(x,'does_not_exceed_both_context_ranges'),s='does not';else,s='unresolved';end
+end
+function s=directionName(d)
+if d<0,s='decline';else,s='rise';end
+end

@@ -6,6 +6,14 @@ if strcmp(kind,'sink'), traceName='Mean_OxySink_Trace_Convo'; rec='RecDuration';
 else, traceName='Mean_ROI_TraceZ';rec='RecDuration_Surge';dur='Duration_Surge';amp='NormOxySurgeAmp';end
 if strcmp(kind,'sink'), support='SinkEligibleTissuePixels';else,support='SurgeEligibleTissuePixels';end
 if isfield(Info,support),S.EligibleTissuePixels=repmat({Info.(support)},height(S),1);end
+if strcmp(getBOISupportProfile(Info),'craniotomy-roi-1')
+    validateBOINativeSupport(S,Info.(support),Info.FrameSize);
+    for T={S,E}
+        assert(istable(T{1})&&ismember('AnalysisSchemaVersion',T{1}.Properties.VariableNames)&& ...
+            all(string(T{1}.AnalysisSchemaVersion)==string(Info.AnalysisSchemaVersion)), ...
+            'OxygenDynamics:ReanalysisRequired','Restricted event/site table schema differs from master provenance.');
+    end
+end
 if ~ismember('SiteID',S.Properties.VariableNames), S.SiteID=(1:height(S))'; end
 trace=loadOptionalMatVar(MatFile,traceName,[]); N=size(trace,2);
 if isfield(Info,'NFrames'), N=Info.NFrames; end

@@ -1,0 +1,36 @@
+{
+  "decision": "CC-01",
+  "status": "scientific_target_and_rule_choice_proposal_only",
+  "planning_read_hashes": {
+    "docs/EVENT_SIGNAL_AUDIT.md": "c3bd76cd771fb25cbe34cd6fa3443f43660a6cdbf93ab77442a3e486b08e12fd",
+    "docs/reference-results/signal-audit-20260909/README.md": "85075ffbced3ae776be9937d417b9ad1f4be7b4c8214c0db0e3c0abf47d70c30",
+    "docs/reference-results/boi-baseline-timing-20260912/README.md": "74077e02f70a4902ecc0656313645f6f2aa0e5045872a5cc58194fbce4926649",
+    "docs/reference-results/boi-baseline-timing-20260912/verification-report.json": "b6985405fc560ba79afabb67afc1819eb080aadbbe6bf0562f44aba900cdef9b",
+    "docs/BOI_WORKING_ANALYSIS_SPECIFICATION.md": "80206d2b0debd18a7f0f5e3d8b569aa22be189bcb9b765a8aa34253ee3f74a05",
+    "docs/BOI_REVIEWED_AUTOMATIC_COMPARISON.md": "9d2d61ae76ade56d379f70eb79a1f9f0a5628567144b7502c86bc9fbcf07d11f",
+    "docs/SOFTWARE_G4_REPLAY_TARGETS.md": "e33bef3da67424dbf0035df586abd625525e6e0cacbc9941d0fb98cdf5c75efd",
+    "docs/reference-results/boi-reviewed-automatic-comparison-20260915/run-01/comparison.json": "909760f9530a8f82c4c6954313cc1d9cf5f1529a807a8724071d7b7151893091",
+    "docs/reference-results/boi-reviewed-automatic-comparison-20260915/inputs.json": "823fb3bf65e3c1aec514f1dfe2eb84c4f2150a14e34783da87f26aa3b6e6b4e6",
+    "helpers/normalizeToZStat.m": "c1aff46c9d8019ceb62c8f025512ac9cc895604c98f11de552f2dd77fa733888",
+    "helpers/preprocessDetectionStack.m": "93ee66a659167b055477c2a9962ef7ced263a2e0f0554bea47cc1c72961d301b",
+    "helpers/finalizeOxygenEventMeasurements.m": "e274c48e8206de7533cc6fce59ff38236fb68f421cfcc25bc5767c6fa6d92634",
+    "OxygenDynamics_Master.m": "3dfc06fbdcf606e198ba1f0aaca53c2fccb22fdacbf28ddf5ffb1bf2096dbc21"
+  },
+  "future_saved_inputs": {
+    "A": "reference-validation/signal-audit-full-20260909/M400-01-baseline-awake/event-amplitude-audit.mat",
+    "B": "reference-validation/signal-audit-full-20260909/normalization-detail-FB2312/event-amplitude-audit.mat",
+    "C": "reference-validation/software-g4-evidence-20260927/saved-bundle-final/Evidence.json",
+    "D_E_F_G": "existing-analysis/docs/reference-results/boi-reviewed-automatic-comparison-20260915/run-01/comparison.json",
+    "D_E_F_G_associations": "existing-analysis/docs/reference-results/boi-reviewed-automatic-comparison-20260915/inputs.json",
+    "H": "existing-analysis/docs/reference-results/boi-baseline-timing-20260912/verification-report.json",
+    "H_definition_and_expected_value": "existing-analysis/docs/reference-results/boi-baseline-timing-20260912/README.md"
+  },
+  "note": "Future input availability/provenance/full precision must pass approved preflight; planning reads are not an integrity validation. Original historical artifacts remain unchanged.",
+  "revision": 2,
+  "superseded_reporting_proposal": "docs/CC_01_REPORTING_PROPOSAL_SUPERSEDED.md",
+  "superseded_reporting_proposal_sha256": "b4103628984a6cf049d3e72fc51566dbe2895f6b6a1ca51db21dea614da41453",
+  "current_decision_sha256": "31779c16c1bddcdbae64592567ee4a63b2ab4902412afedf1ad5bb86251dd76d",
+  "prior_future_saved_inputs_note": "These locations were named in revision 1; they are retained as discovery anchors only, not proof that complete source-matched corrected traces exist for revision 2. The revision-1 eight-case reporting budget is superseded.",
+  "revision_2_candidate": "L3 local corrected direction; R2 exact reviewed references; A2 corrected residual relative to corrected reference scaled by positive preserved-input reference mean; not adopted",
+  "revision_2_execution_authorized": false
+}

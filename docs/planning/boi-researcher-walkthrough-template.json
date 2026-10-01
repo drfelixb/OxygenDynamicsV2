@@ -1,0 +1,31 @@
+{
+  "schema": "boi-researcher-walkthrough-1",
+  "status": "not_started_template",
+  "recorded_utc": null,
+  "researcher": null,
+  "researcher_independent_of_implementation": null,
+  "second_person_replaying_exports": null,
+  "recording_id": null,
+  "source_sha256": null,
+  "scientific_eligibility_decision_id": null,
+  "role": "must_identify_training_or_formal_release",
+  "code_manifest": null,
+  "matlab_version": null,
+  "run_ids_and_output_hashes": [],
+  "tasks": [
+    {"task": "Import and explain one actionable QC issue", "status": "not_observed", "evidence": null},
+    {"task": "Review configuration and run master/statistics", "status": "not_observed", "evidence": null},
+    {"task": "Explain a window quantity and sign-specific denominator", "status": "not_observed", "evidence": null},
+    {"task": "Connect window event to audit, trace and native source frame", "status": "not_observed", "evidence": null},
+    {"task": "Explain missingness or direction disagreement without excluding it", "status": "not_observed", "evidence": null},
+    {"task": "Export and independently reproduce window/event values", "status": "not_observed", "evidence": null},
+    {"task": "Explain a declared setting/decision change while preserving the prior run", "status": "not_observed", "evidence": null}
+  ],
+  "assistance_and_confusion": [],
+  "failures_and_corrections": [],
+  "elapsed_minutes": null,
+  "memory_and_storage_observations": null,
+  "arithmetic_tolerance_and_results": null,
+  "remaining_scientific_questions": [],
+  "formal_R5_release_decision": "pending_independent_observation_and_scientific_eligibility"
+}

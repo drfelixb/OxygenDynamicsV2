@@ -1,0 +1,31 @@
+function plotPanelTemporalComparison(rows,out)
+ids={'latest-321-177-195','history-10'};names={'fb2314-reviewed-pocket-context.png','id400-reviewed-surge-context.png'};
+for k=1:2
+ fig=figure('Visible','off','Color','w','Position',[50 50 1400 880]);layout=tiledlayout(fig,2,1,'TileSpacing','compact','Padding','compact');
+ for j=1:2
+  W=10*j;ix=find(cellfun(@(q)strcmp(q.Interval.ID,ids{k})&&q.ContextSamples==W,rows));assert(isscalar(ix));q=rows{ix};c=q.Interval;d=q.Descriptor;T=readtable(fullfile(out,q.TraceFile));
+  ax=nexttile(layout);hold(ax,'on');a=c.StartFrame;b=c.EndFrame;lim=[max(1,a-30),min(height(T),b+30)];ff=lim(1):lim(2);
+  for z=1:2
+   parts={'Before','After'};colors={[.15 .55 .85],[.15 .65 .4]};S=d.(parts{z});col=colors{z};if ~strcmp(S.Status,'available'),continue;end
+   xx=[S.Frames(1)-.45 S.Frames(end)+.45];patch(ax,xx([1 2 2 1]),[S.Minimum S.Minimum S.Maximum S.Maximum],col,'EdgeColor','none','FaceAlpha',.12);
+   patch(ax,xx([1 2 2 1]),S.Median+S.MAD*[-1 -1 1 1],col,'EdgeColor','none','FaceAlpha',.22);plot(ax,xx,[S.Median S.Median],'Color',col,'LineWidth',2);
+  end
+  plot(ax,T.Frame(ff),T.Corrected(ff),'Color',[.12 .22 .32],'LineWidth',1.4);xlim(ax,lim);yl=ylim(ax);span=diff(yl);ylim(ax,[yl(1)-.18*span yl(2)]);
+  auto=find(cellfun(@(z)strcmp(z.Interval.RecordingKey,c.RecordingKey)&&z.Interval.AuditRow==c.AuditRow&&strcmp(z.Interval.Role,'saved_automatic_interval')&&z.ContextSamples==10,rows));assert(isscalar(auto));ac=rows{auto}.Interval;
+  for e=[ac.StartFrame ac.EndFrame],xline(ax,e,'--','Color',[.8 .15 .15],'LineWidth',1.3);end
+  for e=[a b],xline(ax,e,':','Color',[.55 .1 .65],'LineWidth',1.7);end
+  for part={'Before','After'}
+   nc=q.([part{1} 'Native']);nf=cellfun(@(v)v.Frame,nc(cellfun(@(v)v.AnyPixels>0,nc)));plot(ax,nf,repmat(yl(1)-.04*span,size(nf)),'k|','MarkerSize',7);
+   hc=q.([part{1} 'Human']);hf=[];for z=1:numel(hc),hf=union(hf,hc{z}.Frames);end;plot(ax,hf,repmat(yl(1)-.09*span,size(hf)),'|','Color',[.55 .1 .65]);
+  end
+  if k==1,plot(ax,165:176,repmat(yl(1)-.14*span,1,12),'|','Color',[.85 .4 0]);end
+  title(ax,sprintf('%s | %d-%d | %d samples/side | before MAD %.2f, after MAD %.2f',c.RecordingKey,a,b,W,d.Before.MAD,d.After.MAD),'Interpreter','none');
+  xlabel(ax,'One-based recording frame; external 1 Hz');ylabel(ax,'Corrected input-intensity units');grid(ax,'on');
+ end
+ heading='Researcher-marked surge 529-546; approximate timing';if k==1,heading='Researcher-marked pocket 177-195; saved detector label remains surge';end
+ title(layout,heading,'FontWeight','bold');subtitle(layout,{'Unchanged fixed-footprint corrected trace. Blue/green: before/after range (pale), median +/- unscaled MAD (dark), median line.', ...
+ 'Red dashed: original automatic bounds. Purple dotted: supplied interval. Bottom ticks: native (black), human context (purple).', ...
+ 'Orange ticks, where present: previously accepted 165-176 reference, preserved separately from diagnostic contexts. No new baseline.'});
+ exportgraphics(fig,fullfile(out,names{k}),'Resolution',115);close(fig);
+end
+end

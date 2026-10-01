@@ -1,0 +1,38 @@
+function plotTemporalComparison(rows,R,out)
+% Illustration choices pinned in execution-plan.json before source execution.
+groups={{'auto-06','human-surge-06'},{'context-02-B84','context-02-B85'}};
+names={'recognized-surge-context.png','tentative-pocket-recovery-context.png'};
+headings={'Recognized surge: original 134-144 and researcher approximate 130-150','Tentative pocket: same observation, recovery alternatives 84 and 85'};
+for g=1:2
+ fig=figure('Visible','off','Position',[50 50 1500 960],'Color','w');t=tiledlayout(fig,2,2,'TileSpacing','compact','Padding','compact');
+ title(t,headings{g},'FontWeight','bold');subtitle(t,{'Corrected intensity on the unchanged fixed event footprint; context is not an accepted baseline.', ...
+ 'Red dashed: original bounds. Purple dotted: researcher/context bounds. Shaded: side range and median +/- unscaled MAD.', ...
+ 'Bottom ticks: native mask contact (black), human/context association (purple); flags only. External 1 Hz; frame 1 = 0 s.'});
+ for i=1:2
+  for w=1:2
+   W=[10 20];W=W(w);ix=find(cellfun(@(q)strcmp(q.Interval.ID,groups{g}{i})&&q.ContextSamples==W,rows));assert(isscalar(ix));q=rows{ix};d=q.Descriptor;
+   ax=nexttile(t);y=double(R.Traces{q.Interval.AuditRow}.DetectionDetrended(:));a=d.StartFrame;b=d.EndFrame;lim=[max(1,a-25) min(numel(y),b+25)];f=lim(1):lim(2);
+   hold(ax,'on');parts={'Before','After'};colors={[.15 .55 .85],[.15 .65 .40]};
+   for j=1:2
+    s=d.(parts{j});col=colors{j};if ~strcmp(s.Status,'available'),continue;end
+    x=[s.Frames(1)-.45 s.Frames(end)+.45];patch(ax,x([1 2 2 1]),[s.Minimum s.Minimum s.Maximum s.Maximum],col,'FaceAlpha',.12,'EdgeColor','none','HandleVisibility','off');
+    patch(ax,x([1 2 2 1]),s.Median+s.MAD*[-1 -1 1 1],col,'FaceAlpha',.22,'EdgeColor','none','HandleVisibility','off');
+    plot(ax,x,[s.Median s.Median],'-','Color',col,'LineWidth',2,'HandleVisibility','off');
+   end
+   plot(ax,f,y(f),'Color',[.12 .22 .32],'LineWidth',1.4);xlim(ax,lim);yl=ylim(ax);span=diff(yl);ylim(ax,[yl(1)-.15*span yl(2)]);
+   r=q.Interval.AuditRow;for e=[R.Audit.StartFrame(r) R.Audit.EndFrame(r)],xline(ax,e,'--','Color',[.8 .15 .15],'LineWidth',1.2);end
+   same=rows(cellfun(@(z)z.ContextSamples==10&&z.Interval.AuditRow==r&&~strcmp(z.Interval.Role,'saved_automatic_interval'),rows));
+   edges=[];for j=1:numel(same),edges=union(edges,[same{j}.Interval.StartFrame same{j}.Interval.EndFrame]);end
+   for e=reshape(edges,1,[]),if e>=lim(1)&&e<=lim(2),xline(ax,e,':','Color',[.55 .1 .65],'LineWidth',1.7);end;end
+   for name={'Before','After'}
+    nc=q.([name{1} 'Native']);hit=cellfun(@(v)v.AnyPixels>0,nc);nf=cellfun(@(v)v.Frame,nc(hit));plot(ax,nf,repmat(yl(1)-.045*span,size(nf)),'k|','MarkerSize',7);
+    hc=q.([name{1} 'Human']);hf=[];for j=1:numel(hc),hf=union(hf,hc{j}.Frames);end
+    plot(ax,hf,repmat(yl(1)-.105*span,size(hf)),'|','Color',[.55 .1 .65],'MarkerSize',7);
+   end
+   title(ax,sprintf('%s | selected %d-%d | %d samples/side',q.Interval.ID,a,b,W),'Interpreter','none');
+   xlabel(ax,sprintf('One-based frame | before MAD %.2f, after MAD %.2f',d.Before.MAD,d.After.MAD));ylabel(ax,'Corrected input-intensity units');grid(ax,'on');
+  end
+ end
+ exportgraphics(fig,fullfile(out,names{g}),'Resolution',120);close(fig);
+end
+end

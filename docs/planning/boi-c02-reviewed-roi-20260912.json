@@ -1,0 +1,58 @@
+{
+  "decision_id": "R1-C02-ROI-RUN-031",
+  "recorded_utc": "2026-09-12T13:23:24.892465+00:00",
+  "status": "single_reviewed_working_roi_run_complete",
+  "authorization": "User reviewed the craniotomy comparison and replied: Looks good. Go on.",
+  "scope": "One fresh FB2314 awake master/statistics pair with the reviewed working 024 ROI, compared with preserved automatic-support 028. Both BOI signs; no second recording.",
+  "report": "docs/reference-results/boi-c02-reviewed-roi-20260912/README.md",
+  "recording_id": "dandi000891_FB2314_awake_roi_031",
+  "source_sha256": "08381f8ef4cb0da80a09645aeffc9416188cf7937eaf207c0536f1f997494cf8",
+  "working_roi": {
+    "Schema": "boi-static-tissue-support-1",
+    "Modality": "BOI",
+    "RawSHA256": "08381f8ef4cb0da80a09645aeffc9416188cf7937eaf207c0536f1f997494cf8",
+    "FrameSize": [
+      512,
+      512
+    ],
+    "IndexConvention": "MATLAB_one_based_column_major_row_column",
+    "ReviewStatus": "reviewed_for_static_support",
+    "DecisionID": "R1-C02-ROI-RUN-031",
+    "Actor": "User visual review accepted in current task; Codex records working ROI for bounded development",
+    "Reason": "Craniotomy may be smaller than FOV. Use the displayed 024 outline as the working static ROI for FB2314 awake only; uncertain boundary segments remain.",
+    "Evidence": "R1-C02-CRANIOTOMY-030 overview and geometry review; user response Looks good. Go on.; R1-C02-OUTLINE-024 native proposal.",
+    "AlignmentEvidence": "Unchanged 024 native 512-by-512 mask; source SHA256 matches. No resizing or cross-recording transfer.",
+    "RecordedUTC": "2026-09-12T13:10:58Z",
+    "MaskPixelCount": 131135,
+    "DeclarationSHA256": "a5756ef6ed67362120a872e73405fa2f0d8cda7d7136b56b23d33367e2b6ca06"
+  },
+  "only_analysis_change": "Existing reviewed-static-support application; all implementation files/parameters and dictionary unchanged.",
+  "counts": {
+    "sink": {
+      "events": 175,
+      "finite": 100,
+      "negative": 0,
+      "outside_roi_native_fraction": 0.051320924413336806
+    },
+    "surge": {
+      "events": 21,
+      "finite": 11,
+      "negative": 0,
+      "outside_roi_native_fraction": 0.07850553686984914
+    }
+  },
+  "source_audit_events": 196,
+  "detector_runs": 1,
+  "statistics_runs": 1,
+  "working_roi_applied": 1,
+  "biological_contrasts": 0,
+  "scientific_eligibility": "not_assessed",
+  "next_specification": "docs/reference-results/boi-c02-reviewed-roi-20260912/strict-roi-specification.md",
+  "next_method_status": "specified_not_implemented_or_executed",
+  "remaining": [
+    "Uncertain exact surgical edge and other recordings masks.",
+    "Whole-image normalization and percentile selection.",
+    "Full accepted crossing footprints.",
+    "Physiological timing/reference, animal roles/contrast and independent researcher usability."
+  ]
+}

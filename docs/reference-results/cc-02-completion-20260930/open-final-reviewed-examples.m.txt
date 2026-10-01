@@ -1,0 +1,23 @@
+% Open the three FINAL saved reviewed examples in the existing event reviewer.
+% Displays stored pocket evidence; does not replay pocket arithmetic or run analysis.
+% Copy into MATLAB's Command Window. Keep this documentation file as .m.txt.
+cc02Root = '/Users/zcm361/Documents/Github/OxygenDynamicsV2';
+cd(fullfile(cc02Root,'existing-analysis'));
+setupOxygenDynamicsPath;
+cc02Packet = fullfile(cc02Root,'reference-validation','cc-02-completion-extension-20260930');
+cc02Examples = jsondecode(fileread(fullfile(cc02Packet,'cases.json')));
+cc02Names = {'ID400','FB2312','C02'};
+cc02Figures = cell(1,3);
+cc02Reviewers = cell(1,3);
+for cc02Index = 1:3
+    cc02Example = cc02Examples(cc02Index);
+    [cc02Figures{cc02Index},cc02Reviewers{cc02Index}] = openBOIEventReview( ...
+        cc02Example.Audit,[],true,cc02Example.Metadata);
+    cc02Reviewers{cc02Index}.Select(cc02Example.Row);
+    cc02Reviewers{cc02Index}.LoadPocket(fullfile(cc02Packet, ...
+        sprintf('batch-02-T%02d-saved',cc02Index)));
+    cc02Figures{cc02Index}.Name = [cc02Names{cc02Index} ' — final saved reviewed pocket'];
+end
+% For a single example, replace the loop with cc02Index = 1, 2 or 3 and its body.
+% New edits require Preview draft -> Save NEW revision to a NEW destination.
+% Export SAVED revision excludes unsaved edits and leaves original outputs alone.

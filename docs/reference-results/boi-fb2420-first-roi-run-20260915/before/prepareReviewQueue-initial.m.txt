@@ -1,0 +1,110 @@
+function prepareReviewQueue
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));repo=fullfile(root,'existing-analysis');
+addpath(repo);setupOxygenDynamicsPath;addpath(fullfile(repo,'tests','analysis'));
+P=jsondecode(fileread(fullfile(here,'prespecification.json')));run=fullfile(here,'run-01');
+R=jsondecode(fileread(fullfile(run,'workflow-report.json')));assert(strcmp(R.Status,'execution_and_source_replay_passed_review_queue_pending'));
+out=fullfile(here,'review-01');assert(~isfolder(out));mkdir(out);
+rec=fullfile(run,'Recording');paths=cell(2,1);masters=cell(2,1);
+patterns={{'OxygenSinks_Output*','OxygenSinks_Urefined*.mat'},{'OxygenSurges_Output*','OxygenSurges*.mat'}};
+for k=1:2,p=patterns{k};f=dir(fullfile(rec,p{1},p{2}));assert(isscalar(f));paths{k}=fullfile(f.folder,f.name);masters{k}=load(paths{k});end
+I=masters{1}.AnalysisInfo;assert(isequaln(I,masters{2}.AnalysisInfo));
+auditPath=fullfile(run,'source-amplitude-audit','event-amplitude-audit.mat');AR=loadBOIEventReview(auditPath);A=AR.Audit;Z=AR.Traces;
+assert(strcmp(oxygenFileSHA256(R.DataOutputMat),R.DataOutputSHA256));D=load(R.DataOutputMat);
+sourceBindings=struct('Audit',binding(auditPath),'SinkMaster',binding(paths{1}),'SurgeMaster',binding(paths{2}), ...
+    'DataOutput',binding(R.DataOutputMat),'Prespecification',binding(fullfile(here,'prespecification.json')));
+writeJSON(fullfile(out,'source-bindings.json'),sourceBindings);
+center=sub2ind([512 512],330,432);[yy,xx]=ndgrid(325:335,427:437);patch=sub2ind([512 512],yy(:),xx(:));
+L=table((1:height(A))',A.EventType,A.SiteID,A.EventID,A.DetectedStartFrame,A.DetectedEndFrame, ...
+    A.DetectedEndFrame-A.DetectedStartFrame+1,A.StartFrame,A.EndFrame,A.StoredStatus,A.StoredAmplitude, ...
+    'VariableNames',{'AuditRow','SavedSign','SiteID','EventID','NativeStart','NativeEnd','NativeDuration','MeasuredStart','MeasuredEnd','AutomaticStatus','AutomaticAmplitude'});
+fields={'FixedPatchPixels','FixedCenter','NativePatchPixelsFrame17','NativeCenterFrame17','MeasuredContains17','CleanBaselineContains17','MeasuredPatchContact','BaselinePatchContact','SignedIntegralReplay','MeanSignedReplay','PriorSameSiteGap'};
+for f=fields,L.(f{1})=nan(height(L),1);end
+allReports=cell(2,1);replay=0;
+for g=1:2
+    if g==1,kind="sink";prefix='Sink';ST=masters{g}.Table_OxygenSinks_Out;E=masters{g}.Table_OxygenSinkEvents_Out;W=D.RecordingWindowMetrics;
+    else,kind="surge";prefix='Surge';ST=masters{g}.Table_OxygenSurges_Out;E=masters{g}.Table_OxygenSurgeEvents_Out;W=D.SurgeRecordingWindowMetrics;end
+    [summary,EA,FA]=auditBOISavedMeasurementSupport(ST,E,I,kind,string(P.RecordingID));
+    closeEnough(summary.AllOccupiedFraction,W.MeanOccupiedTissueFraction);
+    writetable(EA,fullfile(out,[char(kind) '-event-support.csv']));writetable(FA,fullfile(out,[char(kind) '-frame-support.csv']));
+    allReports{g}=summary;
+    rows=find(A.EventType==kind);
+    for j=rows'
+        z=Z{j};idx=find(E.([prefix 'ID'])==A.SiteID(j)&E.EventID==A.EventID(j));assert(isscalar(idx));
+        site=find(ST.SiteID==A.SiteID(j));assert(isscalar(site));c=ST.FramePixels{site};
+        native=unique(vertcat(c{z.DetectedFrames}));assert(isequal(native(:),z.Footprint(:)));
+        assert(all(ismember(native,I.([prefix 'EligibleTissuePixels']))));
+        L.FixedPatchPixels(j)=numel(intersect(native,patch));L.FixedCenter(j)=ismember(center,native);
+        f17=[];if ismember(17,z.DetectedFrames),f17=c{17};end
+        L.NativePatchPixelsFrame17(j)=numel(intersect(f17,patch));L.NativeCenterFrame17(j)=ismember(center,f17);
+        L.MeasuredContains17(j)=A.StartFrame(j)<=17&&A.EndFrame(j)>=17;
+        L.CleanBaselineContains17(j)=ismember(17,z.CleanBaselineFrames);
+        L.MeasuredPatchContact(j)=L.MeasuredContains17(j)&&L.FixedPatchPixels(j)>0;
+        L.BaselinePatchContact(j)=L.CleanBaselineContains17(j)&&L.FixedPatchPixels(j)>0;
+        integral=NaN;mu=NaN;
+        if strcmp(A.StoredStatus(j),'valid')
+            q=(z.Raw(A.StartFrame(j):A.EndFrame(j))-A.StoredBaseline(j))/A.StoredBaseline(j);
+            integral=sum(q)/I.AnalysisParams.fs;mu=mean(q);
+        end
+        closeEnough(integral,E.SignedTraceAUC_sec(idx));closeEnough(mu,E.MeanSignedChangeFraction(idx));
+        L.SignedIntegralReplay(j)=integral;L.MeanSignedReplay(j)=mu;replay=replay+1;
+        previous=rows(A.SiteID(rows)==A.SiteID(j)&A.DetectedEndFrame(rows)<A.DetectedStartFrame(j));
+        if ~isempty(previous),L.PriorSameSiteGap(j)=A.DetectedStartFrame(j)-max(A.DetectedEndFrame(previous))-1;end
+    end
+end
+slots=struct('Sign',{},'Slot',{},'AuditRow',{},'Status',{});selected=[];reasons={};
+names={'first_valid','first_unavailable','shortest_native','longest_native','closest_recurrence','native_patch_at_17','retained_baseline_patch_at_17'};
+for kind=["sink","surge"]
+    B=sortrows(L(L.SavedSign==kind,:),{'NativeStart','SiteID','EventID','AuditRow'});
+    for s=1:7
+        if isempty(B)
+            C=B;
+        else
+        switch s
+            case 1,C=B(isfinite(B.AutomaticAmplitude),:);
+            case 2,C=B(~isfinite(B.AutomaticAmplitude),:);
+            case 3,C=B(B.NativeDuration==min(B.NativeDuration),:);
+            case 4,C=B(B.NativeDuration==max(B.NativeDuration),:);
+            case 5,C=B(isfinite(B.PriorSameSiteGap)&B.PriorSameSiteGap>=0,:);if ~isempty(C),C=C(C.PriorSameSiteGap==min(C.PriorSameSiteGap),:);end
+            case 6,C=B(B.NativePatchPixelsFrame17>0,:);
+            case 7,C=B(B.BaselinePatchContact>0,:);
+        end
+        end
+        row=NaN;status='absent_no_replacement';
+        if ~isempty(C)
+            row=C.AuditRow(1);status='selected';pos=find(selected==row);
+            if isempty(pos),selected(end+1)=row;reasons{end+1}={names{s}};else,reasons{pos}{end+1}=names{s};end %#ok<AGROW>
+        end
+        slots(end+1)=struct('Sign',char(kind),'Slot',names{s},'AuditRow',row,'Status',status); %#ok<AGROW>
+    end
+end
+Q=L(selected,:);Q.QueuePosition=(1:height(Q))';Q.SelectionReasons=string(cellfun(@(r)strjoin(r,'; '),reasons,'UniformOutput',false))';
+assert(height(Q)<=14&&numel(unique(Q.AuditRow))==height(Q));
+writetable(L,fullfile(out,'all-event-transient-context.csv'));writetable(Q,fullfile(out,'review-queue.csv'));
+writeJSON(fullfile(out,'selection.json'),struct('DecisionID',P.DecisionID,'Slots',slots,'Queue',table2struct(Q),'NoSubstitution',true,'HumanAnnotationsCreated',false));
+for row=selected
+    z=Z{row};Frame=(1:1200)';Raw=z.Raw(:);Corrected=z.DetectionDetrended(:);Filtered=z.Filtered(:);
+    Native=ismember(Frame,z.DetectedFrames);RetainedBaseline=ismember(Frame,z.CleanBaselineFrames);
+    writetable(table(Frame,Raw,Corrected,Filtered,Native,RetainedBaseline),fullfile(out,sprintf('row-%d-traces.csv',row)));
+end
+writeJSON(fullfile(out,'support-summary.json'),struct('Signs',{allReports}));
+result=struct('DecisionID',P.DecisionID,'Status','review_queue_and_support_replay_passed', ...
+    'Events',height(A),'SignedIntegralMeanReplays',replay,'SourceAmplitudeMismatches',sum(~A.MeasurementMatches), ...
+    'SelectedUniqueEvents',height(Q),'FilledSlots',sum(strcmp({slots.Status},'selected')),'AbsentSlots',sum(strcmp({slots.Status},'absent_no_replacement')), ...
+    'NativePatchContactsAt17',sum(L.NativePatchPixelsFrame17>0),'MeasuredPatchContactsAt17',sum(L.MeasuredPatchContact>0), ...
+    'RetainedBaselinePatchContactsAt17',sum(L.BaselinePatchContact>0),'NoCausalAttribution',true,'ScientificEligibility','not_established');
+writeJSON(fullfile(out,'verification.json'),result);
+sourceBindings.Selection=binding(fullfile(out,'selection.json'));
+sourceBindings.Queue=binding(fullfile(out,'review-queue.csv'));
+writeJSON(fullfile(out,'source-bindings.json'),sourceBindings);
+keys=fieldnames(sourceBindings);for k=1:numel(keys),v=sourceBindings.(keys{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+disp(result);disp(Q(:,{'QueuePosition','AuditRow','SavedSign','SiteID','EventID','NativeStart','NativeEnd','AutomaticStatus','SelectionReasons'}));
+end
+function v=binding(path)
+v=struct('Path',path,'SHA256',oxygenFileSHA256(path));
+end
+function writeJSON(path,value)
+fid=fopen(path,'w');assert(fid>=0);fprintf(fid,'%s\n',jsonencode(value,'PrettyPrint',true));fclose(fid);
+end
+function closeEnough(a,b)
+assert(isscalar(a)&&isscalar(b)&&((isnan(a)&&isnan(b))||(isfinite(a)&&isfinite(b)&&abs(a-b)<=1e-10*max(1,abs(b)))),'Saved numerical quantity mismatch.');
+end

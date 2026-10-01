@@ -1,0 +1,45 @@
+{
+  "schema": "boi-evidence-decision-1",
+  "decision_id": "R2-SUPPORT-013",
+  "date": "2026-09-12",
+  "status": "completed_retain_current_calculations_restrict_subset_interpretation",
+  "question": "How do amplitude availability, acquisition-boundary contact and native versus measurement timing affect the interpretation of descriptive coverage and event summaries?",
+  "frozen_cases": [
+    "dandi000891_ID400_awake, saved full 600-frame development run",
+    "HP_ECS_CSV2_identity_pending, saved full 1200-frame development run"
+  ],
+  "role": "Both previously inspected development cases; no independent evaluation or cohort estimate.",
+  "scope": "Both signs separately. Read saved event/site masks, source metadata and whole-recording statistics only. No source-stack scan, detector, statistics rerun, tuning, event exclusion or biological pooling.",
+  "diagnostics": [
+    "event amplitude availability and baseline reason counts",
+    "native area-time partition: finite-amplitude only, unavailable-amplitude only, overlap of the two",
+    "measurement versus native support duration",
+    "acquisition-start/end contact and recurrence flags"
+  ],
+  "invariants": [
+    "native partitions are disjoint and sum to complete union coverage",
+    "finite plus unavailable event counts equal all detections",
+    "native runs resolve to saved site/event identities",
+    "full coverage agrees with the existing union helper and saved window metric where present",
+    "input files and original outputs remain unchanged"
+  ],
+  "budget": "One saved-data pass per case/sign, plus small synthetic invariant checks. No threshold search. Stop on an identity/support inconsistency and preserve the attempt.",
+  "consequence": "Retain current measurements, report missingness/support limitations and identify needed scientific admission decisions. Do not adopt a censoring, complete-case, recovery or physiological interpretation policy from this diagnostic.",
+  "scientific_acceptance_threshold": "None adopted. Existing numerical arithmetic tolerances only.",
+  "comparison_priority": "User preference requested separately; this descriptive diagnostic does not depend on that choice.",
+  "evidence": "docs/reference-results/boi-measurement-support-20260912/README.md",
+  "outcome": "Retain every detection and current measurement rule. Report amplitude availability and native/measurement support separately. Defer scientific baseline, censoring, recovery and outcome admission policies.",
+  "verification": {
+    "tests_passed": 4,
+    "event_rows": 495,
+    "frame_rows": 3600,
+    "csv_replay_passed": true,
+    "original_output_hashes_unchanged": true,
+    "prior_artifacts_verified": 353
+  },
+  "corrections_preserved": [
+    "Older ID400 master lacks FrameSize; dimensions are taken explicitly from agreeing saved site rows. Original metadata unchanged.",
+    "Reporting harness required an explicitly fielded empty Inputs structure; calculation logic unchanged."
+  ],
+  "next_owned_work": "Frame a bounded baseline/timing validation, preserving uncertainty and development roles; comparison priority awaits researcher preference."
+}

@@ -1,0 +1,18 @@
+# Next controlled baseline comparison
+
+R2-C02-BASELINE-DRIFT-036 handoff. **Specified, not executed.** No baseline approach is adopted by this specification. It is a development challenge, not an independent physiological validation.
+
+## Fixed comparison
+
+1. Reuse all 144 saved original-source known-support fixtures from phase 035, with their existing per-pixel construction, 1 Hz cadence, 20 baseline frames (280–299), event start 300, durations 5/20/60, signs/components, decay rates and noise draws. Read the saved fixtures; do not regenerate an alternative realization.
+2. Reference A is the existing constant mean of those 20 samples. Reference B is a line fitted to **only those same samples**, evaluated at each supplied event frame. Do not use event or post-event samples to estimate B. Compute each candidate's signed fractional change `(source - reference)/reference` and the same sign-specific extremum, signed mean and sample-sum integral. Keep all negative values. If any required reference is nonfinite or nonpositive, mark the corresponding whole-event amplitude/integral unavailable; no clipping, denominator floor or fallback search.
+3. Add exactly 64 fluctuating-background fixtures: same 8×8×600 geometry and 16-pixel footprint as phase 035, start 300 and duration 20; half-life Inf or 1200 s; a shared multiplicative sinusoid of amplitude 3%, period 30 s and phase 0, pi/2, pi or 3*pi/2 at event start; local step −2% (sink), zero (sink), zero (surge) or +2% (surge); zero noise or the same phase-035 8×8×600 seed-3501 draw scaled to SD 10 initial-intensity units. Construct the no-event source as `2000*exp(-log(2)*(frame-1)/halfLife)*(1+0.03*sin(2*pi*(frame-300)/30+phase))`. Multiply by `(1+localStep)` during frames 300–319 only, then add noise and cast once to single. No spatial detector is run. These waveform choices are illustrative sensitivity conditions, not estimates of empirical oscillation period or substrate kinetics.
+4. This makes 208 fixed inputs and 416 candidate/reference readouts. Save every input identity, sample reference, output and reason for unavailability. Preserve the original 035 outputs and the current production quantifier. Keep experimental/condition baselines separate from these event-local references.
+
+## Readouts and scientific limits
+
+Compare each candidate with the known noiseless contemporaneous no-event source and declared injected local step. Report signed amplitude error, signed integral error, direction disagreements, reference positivity, and instability by duration, decay, noise and sinusoid phase. These constructed components are diagnostic oracles; the shared sinusoid must not be labeled a biological artifact merely because it was placed in the synthetic background. Preserve full raw traces so net source change and deviation from the constructed background remain distinguishable.
+
+Record how the line extrapolates a 20-s fit across 5, 20 and 60 s event windows. Do not change baseline length, fit order, phase, thresholds or scoring after seeing outcomes. No target error threshold or automatic winner is declared. Results must inform the unresolved choice between net local source change and deviation from an expected/shared background, with physiological relevance and biological variability considered before changing the measurement dictionary or production method.
+
+Use MATLAB for the candidate calculations, an independent arithmetic replay, two minutes and 100 MiB as feasibility targets. Freeze a machine-readable run specification before execution, preserve failed attempts and all existing work. No cohort expansion, real-event reclassification or automated substrate correction is part of this comparison.

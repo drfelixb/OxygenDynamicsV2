@@ -1,0 +1,99 @@
+function P=buildBOIReviewedReferencePreview(Review,Index)
+%BUILDBOIREVIEWEDREFERENCEPREVIEW Read-only frame eligibility, never a new mean.
+id='OxygenDynamics:ReferencePreviewChanged';
+assert(strcmp(oxygenFileSHA256(Review.AuditPath),Review.AuditSHA256),id,'Audit changed; reopen the event review.');
+if isfield(Review,'BoundaryReview')&&~isempty(Review.BoundaryReview)
+    S=loadBOIBoundaryReview(Review,Review.BoundaryReview.Path);
+    assert(strcmp(S.SHA256,Review.BoundaryReview.SHA256),id,'Saved boundaries changed; reload them before previewing.');
+    Review.BoundaryReview=S;
+end
+judgments=[];
+if isfield(Review,'ReferenceJudgments')&&~isempty(Review.ReferenceJudgments)
+    old=Review.ReferenceJudgments;checked=loadBOIReferenceJudgments(Review,{old.Path});
+    assert(isequal({old.SHA256},{checked.ReferenceJudgments.SHA256}), 'OxygenDynamics:ReferenceJudgmentChanged','Judgment file changed; reload judgments before preview or export.');
+    judgments=checked.ReferenceJudgments;judgments=judgments([judgments.AuditRow]==Index);
+end
+B=getBOIBoundaryReview(Review,Index);I=Review.AnalysisInfo;fs=I.AnalysisParams.fs;n=round(20*fs);N=I.NFrames;
+P=struct('Schema','boi-reviewed-reference-preview-2','Status','no_saved_onset','Message','Load or save onset frames in Researcher boundaries.', ...
+    'Policy','R2-REVIEWED-BASELINE-POLICY-059: proposed options A/B; neither adopted', ...
+    'Role','read_only_sample_eligibility_not_physiological_acceptance','NewBaselineOrAmplitudeCalculations',false, ...
+    'AuditSHA256',Review.AuditSHA256,'RawSourceSHA256',I.RawSHA256,'BoundaryReview',B,'SampleHz',fs, ...
+    'FrameOrigin',1,'FrameTimeFormula','(Frame-1)/SampleHz; frame interval is not exposure', ...
+    'ResearcherJudgments',judgments,'RequiredSamples',n,'SourceEvidence',[],'Windows',[],'Frames',table(),'Contributors',table(),'Contacts',[]);
+if isempty(B.Annotation)||isempty(B.Annotation.OnsetFrames),return;end
+available=isfield(Review,'ReferenceSources')&&~isempty(Review.ReferenceSources);
+if available
+    S=Review.ReferenceSources;assert(strcmp(S.AuditSHA256,Review.AuditSHA256),id,'Reference sources belong to another audit.');
+    for k=1:2,assert(strcmp(oxygenFileSHA256(S.MasterPaths{k}),S.MasterSHA256{k}),id,'Reference master changed or is unavailable; reattach both sources.');end
+    P.SourceEvidence=rmfield(S,'EventFramePixels');
+end
+P.Status='native_sources_required';P.Message='Attach both matching native masters to determine exclusions. Missing support is unknown, not zero.';
+if available,P.Status='available';P.Message='Read-only preview: sample eligibility does not establish a physiological baseline. No reviewed amplitude calculated.';end
+t=Review.Traces{Index};foot=double(t.Footprint(:));raw=double(t.Raw(:));
+[~,stages]=buildBOITimingReviewData(t,I,Review);a=B.Annotation;windows=cell(numel(a.OnsetFrames),1);frames=[];contrib={};contacts={};
+for w=1:numel(a.OnsetFrames)
+    onset=a.OnsetFrames(w);candidate=(max(1,onset-n):onset-1)';missing=n-numel(candidate);
+    overlap=nan(numel(candidate),1);eligible=nan(numel(candidate),1);veto=false(numel(candidate),1);
+    if available
+        overlap(:)=0;
+        for j=1:numel(candidate)
+            f=candidate(j);unionPixels=[];
+            for row=1:height(Review.Audit)
+                native=Review.Traces{row}.DetectedFrames(:);ix=find(native==f);if isempty(ix),continue;end
+                hit=intersect(foot,S.EventFramePixels{row}{ix});if isempty(hit),continue;end
+                unionPixels=union(unionPixels,hit);r=Review.Audit(row,:);
+                contrib(end+1,:)={onset,f,row,char(r.EventType),r.SiteID,r.EventID,numel(hit)}; %#ok<AGROW>
+            end
+            overlap(j)=numel(unionPixels);
+        end
+        eligible=double(overlap==0&isfinite(raw(candidate)));
+    end
+    % Contacts use current saved judgments only; alternatives remain discrete.
+    for row=1:height(Review.Audit)
+        if row==Index,continue;end
+        other=getBOIBoundaryReview(Review,row);if isempty(other.Annotation),continue;end
+        shared=numel(intersect(foot,double(Review.Traces{row}.Footprint(:))));if shared==0,continue;end
+        oa=other.Annotation;
+        for start=oa.OnsetFrames(:)'
+            for finish=oa.RecoveryFrames(:)'
+                hit=intersect(candidate,(start:finish)');if isempty(hit),continue;end
+                veto=veto|ismember(candidate,hit);
+                contacts{end+1}=struct('OnsetFrame',onset,'OtherAuditRow',row,'OtherEvent',other.Event, ...
+                    'OtherRevision',other.History(end).Revision,'OtherOnsetFrame',start,'OtherRecoveryFrame',finish, ...
+                    'Frames',hit,'SharedFootprintPixels',shared,'RecoveryEndpointOnly',all(hit==finish)); %#ok<AGROW>
+            end
+        end
+    end
+    countA=NaN;countB=NaN;completeA=false;completeB=false;
+    if available,countA=sum(eligible==1);countB=sum(eligible==1&~veto);completeA=countA==n;completeB=countB==n;end
+    selected=nan(numel(candidate),1);judgment=[];
+    if ~isempty(judgments)
+        judgment=judgments([judgments.OnsetFrame]==onset);
+        if ~isempty(judgment),selected=double(ismember(candidate,judgment.Frames));end
+    end
+    humanCount=NaN;humanFrames=[];humanNativeCount=NaN;humanMeetsCount=NaN;
+    if ~isempty(judgment)
+        humanFrames=judgment.Frames;humanCount=numel(humanFrames);humanMeetsCount=humanCount==n;
+        if available,humanNativeCount=sum(selected==1&eligible==1);end
+    end
+    windows{w}=struct('ResearcherReferenceFrames',humanFrames,'ResearcherSampleCount',humanCount, ...
+        'ResearcherNativeEligibleCount',humanNativeCount,'ResearcherMeetsOriginalSampleCount',humanMeetsCount, ...
+        'OnsetFrame',onset,'PreferredOnset',ismember(onset,a.PreferredOnsetFrame), ...
+        'RecoveryFrames',a.RecoveryFrames,'PreferredRecoveryFrame',a.PreferredRecoveryFrame,'CandidateFrames',candidate, ...
+        'MissingBeforeRecording',missing,'RequiredSamples',n,'NativeSourcesAvailable',available,'OptionAEligibleCount',countA, ...
+        'OptionBEligibleCount',countB,'OptionASampleComplete',completeA,'OptionBSampleComplete',completeB, ...
+        'NativeExcludedFrames',candidate(overlap>0),'NonfiniteFrames',candidate(~isfinite(raw(candidate))), ...
+        'ReviewedContactFrames',candidate(veto),'OptionBAdditionalExcludedFrames',candidate(veto&eligible==1));
+    frames=[frames;[repmat(onset,numel(candidate),1),candidate,(candidate-1)/fs,double(isfinite(raw(candidate))),overlap,eligible, ...
+        double(veto),eligible.*double(~veto),raw(candidate),stages.CorrectedIntensity(candidate),stages.FilteredDetectionScore(candidate),selected]]; %#ok<AGROW>
+end
+P.Windows=vertcat(windows{:});P.Contacts=contacts;
+P.Frames=array2table(frames,'VariableNames',{'OnsetFrame','Frame','ModeledTimeSec','FiniteInput','NativeOverlapPixels', ...
+    'OptionAEligible','ReviewedContact','OptionBEligible','PreservedInputMean','CorrectedIntensity','FilteredDetectionScore','ResearcherSelectedReference'});
+names={'OnsetFrame','Frame','AuditRow','EventType','SiteID','EventID','OverlapPixels'};
+if isempty(contrib)
+    P.Contributors=table(zeros(0,1),zeros(0,1),zeros(0,1),strings(0,1),zeros(0,1),zeros(0,1),zeros(0,1),'VariableNames',names);
+else
+    P.Contributors=cell2table(contrib,'VariableNames',names);
+end
+end

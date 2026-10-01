@@ -1,0 +1,14 @@
+function [Fig,UI]=openReviewedReferenceExample
+% Open the saved FB2314 development review; no detection or measurement update.
+root=fileparts(fileparts(fileparts(mfilename('fullpath'))));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+sources=jsondecode(fileread(fullfile(root,'reference-validation/boi-baseline-exclusion-review-20260914/inputs.json')));
+s=sources.Sources;
+for key={'Audit','Review','SinkMaster','SurgeMaster'}
+    source=s.(key{1});assert(strcmp(oxygenFileSHA256(source.Path),source.SHA256), ...
+        'OxygenDynamics:ExampleSourceChanged','Saved example input changed; inspect the new revision before opening this example.');
+end
+[Fig,UI]=openBOIEventReview(s.Audit.Path);
+UI.LoadBoundaries(s.Review.Path);UI.AttachReferenceSources(s.SinkMaster.Path,s.SurgeMaster.Path);
+UI.Select(186);UI.Tabs.SelectedTab=UI.ReferenceTab;
+end

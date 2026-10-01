@@ -20,4 +20,23 @@ for prefix={'Raw','Denoised'}
     assert(strcmp(oxygenFileSHA256(path),Info.(fingerprint)), ...
         'OxygenDynamics:SourceChanged','Input contents changed since analysis. Rerun the master: %s',path);
 end
+if isfield(Info,'BOIAcquisitionMetadata')
+    snapshot=Info.BOIAcquisitionMetadata;
+    metadataFile=fullfile(RecordingFolder,'BOIInputMetadata.json');
+    if strcmp(snapshot.State,'captured')
+        assert(isfile(metadataFile)&&strcmp(oxygenFileSHA256(metadataFile),snapshot.SHA256), ...
+            'OxygenDynamics:InputMetadataChanged','Acquisition declarations changed or disappeared since the master. Preserve the prior run and rerun with the intended metadata.');
+    else
+        assert(~isfile(metadataFile),'OxygenDynamics:InputMetadataChanged', ...
+            'Acquisition metadata was added after the master. Rerun to capture it; statistics cannot apply it retrospectively.');
+    end
+end
+tissueFile=fullfile(RecordingFolder,'BOITissueSupport.json');
+if isfield(Info,'BOITissueSupport') && strcmp(Info.BOITissueSupport.State,'captured')
+    assert(isfile(tissueFile)&&strcmp(oxygenFileSHA256(tissueFile),Info.BOITissueSupport.SHA256), ...
+        'OxygenDynamics:TissueSupportChanged','Reviewed tissue declaration changed or disappeared. Preserve the prior run and rerun the master with the intended support.');
+else
+    assert(~isfile(tissueFile),'OxygenDynamics:TissueSupportChanged', ...
+        'Tissue support was added after the master. Statistics cannot apply it retrospectively; use a fresh master run.');
+end
 end

@@ -1,0 +1,786 @@
+{
+  "schema": "boi-measurement-policy-proposal-1",
+  "decision_id": "R0-R2-R4-POLICY-015",
+  "date": "2026-09-12",
+  "status": "proposal_ready_for_scientific_review",
+  "execution_enabled": false,
+  "scientific_adoption": false,
+  "scope": "BOI only; metadata/evidence preparation, no new recording outcomes or analysis run.",
+  "comparison_priority": {
+    "working_example": "C02",
+    "basis": "Existing plan proposes C02 then C01; user instructed continuation of plan. This preparation does not record final comparison acceptance.",
+    "researcher_choice": null
+  },
+  "dictionary_version": "0.3.0-draft",
+  "production_rule_changes": [],
+  "standing_requirements": [
+    "biological variability and animal-level replication",
+    "physiological relevance with explicit claim limits",
+    "bounded computation and review effort",
+    "MATLAB researcher usability",
+    "source/configuration/result/decision traceability",
+    "preserve unresolved science and existing evidence",
+    "HP externally triggered 1 Hz is authoritative; embedded clocks and camera exposure stay separate",
+    "AQuA2 exploratory outputs are not anatomical ground truth"
+  ],
+  "policies": [
+    {
+      "policy_id": "P01",
+      "title": "Reference and amplitude interpretation",
+      "measurement_ids": [
+        "BOI-M06",
+        "BOI-M07"
+      ],
+      "proposed_position": "Retain the existing 20-second immediately preceding clean baseline for descriptive event-relative optical amplitude and signed integral. Keep fixed native-union footprint, full sample requirement and saved event bounds.",
+      "permitted_interpretation_if_admitted": "A local optical change relative to that preceding baseline; known precursor, drift and support effects remain visible. Numerical valid status is not physiological acceptance.",
+      "unresolved_or_prohibited_substitution": "A replacement baseline is not proposed for adoption. Any alternate reference must first name its estimand, required support and known-signal/development comparison.",
+      "evidence": [
+        "helpers/finalizeOxygenEventMeasurements.m",
+        "docs/reference-results/boi-baseline-timing-20260912/README.md"
+      ],
+      "status": "proposed",
+      "review": {
+        "decision": null,
+        "reviewer": null,
+        "recorded_at": null,
+        "rationale": null,
+        "scope": null
+      }
+    },
+    {
+      "policy_id": "P02",
+      "title": "Missingness and observation support",
+      "measurement_ids": [
+        "BOI-M01",
+        "BOI-M02",
+        "BOI-M03",
+        "BOI-M06",
+        "BOI-M07",
+        "BOI-M12"
+      ],
+      "proposed_position": "Keep all detections in descriptive count/coverage/concurrency calculations independently of amplitude availability. Keep unavailable amplitude/integral values unavailable and negative finite amplitudes signed. Report both event counts and covered-support availability.",
+      "permitted_interpretation_if_admitted": "Finite-amplitude summaries describe only their explicitly identified subset. Missing amplitude alone does not invalidate native coverage or justify deleting initial recording exposure.",
+      "unresolved_or_prohibited_substitution": "No zero imputation, post-event fallback, silent complete-case substitution, or numerical availability threshold is proposed. For paired amplitude claims, expose both-state per-animal availability; a missing state leaves that metric contrast unavailable.",
+      "evidence": [
+        "docs/reference-results/boi-measurement-support-20260912/README.md",
+        "helpers/createOxygenAnalysisWindows.m"
+      ],
+      "status": "proposed",
+      "review": {
+        "decision": null,
+        "reviewer": null,
+        "recorded_at": null,
+        "rationale": null,
+        "scope": null
+      }
+    },
+    {
+      "policy_id": "P03",
+      "title": "Onset, duration and recovery",
+      "measurement_ids": [
+        "BOI-M02",
+        "BOI-M03",
+        "BOI-M04",
+        "BOI-M08",
+        "BOI-M09"
+      ],
+      "proposed_position": "Retain current saved-boundary descriptive onset/concurrency and native-versus-measurement timing diagnostics. Keep acquisition-start contact, ongoing-at-window-start, unresolved edges and recurrence separate.",
+      "permitted_interpretation_if_admitted": "Current sink onsets use saved, potentially refined StartSec; native-mask occupancy uses native support. Neither is a validated physiological onset or recovery measure.",
+      "unresolved_or_prohibited_substitution": "A frame-1-excluded onset diagnostic is a possible future sensitivity comparison, not an approved new primary rule. Physiological recovery needs a return reference, persistence, minimum observation and censoring policy before confirmatory release.",
+      "evidence": [
+        "helpers/createOxygenAnalysisWindows.m",
+        "helpers/resolveSinkEventTiming.m",
+        "docs/reference-results/boi-baseline-timing-20260912/README.md"
+      ],
+      "status": "proposed",
+      "review": {
+        "decision": null,
+        "reviewer": null,
+        "recorded_at": null,
+        "rationale": null,
+        "scope": null
+      }
+    },
+    {
+      "policy_id": "P04",
+      "title": "Outcome hierarchy and admission",
+      "measurement_ids": [
+        "BOI-M01",
+        "BOI-M02",
+        "BOI-M03",
+        "BOI-M10",
+        "BOI-M11",
+        "BOI-M12"
+      ],
+      "proposed_position": "Carry forward candidate primary sink occupancy and onset rate, required concurrency/availability, explanatory both-sign amplitude/integral/area/duration, and secondary sink composite. Keep response/calibration questions separate.",
+      "permitted_interpretation_if_admitted": "The original hierarchy remains proposed. Onset identity and eligible tissue-time remain essential admission conditions for their respective candidate primary outcomes.",
+      "unresolved_or_prohibited_substitution": "No primary outcome is demoted to pass a gate. Retain current sink composite unavailability for missing/wrong-direction contributions; surge composite remains undefined. Failure of onset validity requires an explicit hierarchy decision before final evaluation.",
+      "evidence": [
+        "docs/REANALYSIS_UPDATE_PLAN.md",
+        "docs/planning/boi-measurement-dictionary.json"
+      ],
+      "status": "proposed",
+      "review": {
+        "decision": null,
+        "reviewer": null,
+        "recorded_at": null,
+        "rationale": null,
+        "scope": null
+      }
+    },
+    {
+      "policy_id": "P05",
+      "title": "C02 comparison and biological replication",
+      "measurement_ids": [
+        "BOI-M01",
+        "BOI-M02",
+        "BOI-M03",
+        "BOI-M06",
+        "BOI-M12",
+        "BOI-M13"
+      ],
+      "proposed_position": "Use C02 as the worked planning example following the existing proposed order. For each admitted metric, propose one within-mouse isoflurane-minus-awake difference, followed by an equal-mouse mean of available paired differences.",
+      "permitted_interpretation_if_admitted": "A within-mouse state-associated contrast in this acquisition sequence. Pairing does not isolate anesthesia from order, wash-in, preparation or intensity-history effects.",
+      "unresolved_or_prohibited_substitution": "Priority, metric-specific eligibility, interval selection, repeated-session handling, inference, multiplicity and missing-pair sensitivity remain unapproved. Do not pool event rows, weight animals by event count, or substitute unpaired observations into the paired contrast.",
+      "evidence": [
+        "docs/BOI_COHORT_COMPARISONS.md",
+        "docs/BOI_COHORT_RESOLUTION.md",
+        "docs/REFERENCE_SET_PHASE1.md"
+      ],
+      "status": "proposed",
+      "review": {
+        "decision": null,
+        "reviewer": null,
+        "recorded_at": null,
+        "rationale": null,
+        "scope": null
+      }
+    }
+  ],
+  "admission_layers": [
+    {
+      "layer": "calculation_availability",
+      "meaning": "Current numerical status, support and counts; may be established by arithmetic replay."
+    },
+    {
+      "layer": "recording_metric_eligibility",
+      "meaning": "Source, exposure, tissue, calibration and preparation evidence for this recording and metric; successful analysis alone is insufficient."
+    },
+    {
+      "layer": "scientific_claim_admission",
+      "meaning": "Approved estimand and interpretation with relevant validation and comparison design; not implied by the other layers."
+    }
+  ],
+  "paired_estimand_proposal": {
+    "contrast_direction": "isoflurane_minus_awake",
+    "eligible_pair_difference": "d_i = Y_i,isoflurane - Y_i,awake, only when both states have admitted measurements for that metric",
+    "across_mouse_summary": "mean(d_i) across available eligible paired mice; equal mouse weight",
+    "recording_rate_aggregation": "If multiple valid intervals are approved within a state, combine nonoverlapping numerator/exposure ingredients before calculating rates; do not average rates with unequal exposure by accident. Repeat recordings/FOVs need a separate declared within-state rule.",
+    "amplitude_summary": "Propose per-state mean over explicitly reported finite event-relative amplitudes, conditional on observed events; also retain full event distribution, finite/total counts and missing-support coverage. No-event state has undefined event-amplitude mean, even when coverage is a valid zero.",
+    "pair_missingness": "Show all seven candidate mice with reason per missing metric/state; report N_pair per metric. Conditional paired estimate does not identify the full candidate-population effect without a justified missingness analysis.",
+    "uncertainty_method": null,
+    "multiplicity_policy": null,
+    "repeated_session_policy": null,
+    "approved_windows": [],
+    "scientific_acceptance_thresholds": null,
+    "status": "proposed_not_implemented"
+  },
+  "candidate_pairs": [
+    {
+      "pair_id": "C02-FB2312",
+      "mouse": "FB2312",
+      "comparison_id": "C02",
+      "members": [
+        {
+          "asset_id": "1dff98d5-540a-4ff5-a9d1-a610c0de0e1d",
+          "session": "FB2312-baseline-awake",
+          "condition_role": "awake",
+          "archive_path": "sub-FB2312/sub-FB2312_ses-FB2312-baseline-awake_image.nwb",
+          "selected_image_series": "01_FB2312_bin2_950ms_2x_1Hz_awake_baseline_1_MMStack_Default.ome_mcor.tif",
+          "metadata_pixel_size_um": 2.35,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "known reference recording",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        },
+        {
+          "asset_id": "799b4406-f755-4d01-ad7f-354d6d700e36",
+          "session": "FB2312-baseline-iso",
+          "condition_role": "isoflurane",
+          "archive_path": "sub-FB2312/sub-FB2312_ses-FB2312-baseline-iso_image.nwb",
+          "selected_image_series": "03_FB2312_bin2_950ms_2x_1Hz_iso_baseline_1_MMStack_Default.ome_mcor.tif",
+          "metadata_pixel_size_um": 2.35,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "same animal as known reference recording",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        }
+      ],
+      "pairing_evidence": {
+        "basis": "same canonical mouse; complementary group labels",
+        "same_source_date": true,
+        "same_pixel_size": true
+      },
+      "current_issue_overlay": [
+        {
+          "issue_id": "G1",
+          "status": "open",
+          "decision": "Complete source and signal QC by measurement."
+        },
+        {
+          "issue_id": "G2",
+          "status": "open",
+          "decision": "Freeze development/evaluation roles; preserve this source-inspection history."
+        },
+        {
+          "issue_id": "U7",
+          "status": "resolved_by_claim_restriction",
+          "decision": "State association only; report preparation/acquisition confounds."
+        },
+        {
+          "issue_id": "U8",
+          "status": "partially_resolved",
+          "decision": "Local ABF headers verify awake-before-iso for FB2312/14/15; remaining pair timing and wash-in unverified."
+        }
+      ],
+      "prior_use_status": "known_development_animal",
+      "role_basis": "Existing cohort ledger and phase-1 reference record only; metadata/source inspection also exists for FB2314/FB2315. No exhaustive prior-use audit or untouched designation.",
+      "evaluation_role": "not_frozen",
+      "pair_eligibility": "not_assessed",
+      "final_inclusion": "not_assessed",
+      "amplitude_comparability": "unresolved_intensity_preparation_and_measurement_support",
+      "required_evidence": [
+        "source identity and archived/local quantitative intensity history",
+        "within-pair timing, wash-in and valid observation windows",
+        "eligible tissue/exposure and motion history for both states",
+        "animal-level prior-use audit and evaluation assignment",
+        "per-metric paired availability and scientific admission"
+      ]
+    },
+    {
+      "pair_id": "C02-FB2314",
+      "mouse": "FB2314",
+      "comparison_id": "C02",
+      "members": [
+        {
+          "asset_id": "9ce94e52-e1d9-446d-a758-66db41a698e6",
+          "session": "FB2314-baseline-awake",
+          "condition_role": "awake",
+          "archive_path": "sub-FB2314/sub-FB2314_ses-FB2314-baseline-awake_image.nwb",
+          "selected_image_series": "01_FB2314_bin2_950ms_2x_1Hz_awake_baseline_1_MMStack_Default.ome_mcor.tif",
+          "metadata_pixel_size_um": 2.35,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "not audited; independence unestablished",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        },
+        {
+          "asset_id": "5ca61eac-9461-44e5-b222-1599aecc7ca8",
+          "session": "FB2314-baseline-iso",
+          "condition_role": "isoflurane",
+          "archive_path": "sub-FB2314/sub-FB2314_ses-FB2314-baseline-iso_image.nwb",
+          "selected_image_series": "03_FB2314_bin2_950ms_2x_1Hz_iso_baseline_1_MMStack_Default.ome_mcor.tif",
+          "metadata_pixel_size_um": 2.35,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "not audited; independence unestablished",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        }
+      ],
+      "pairing_evidence": {
+        "basis": "same canonical mouse; complementary group labels",
+        "same_source_date": true,
+        "same_pixel_size": true
+      },
+      "current_issue_overlay": [
+        {
+          "issue_id": "G1",
+          "status": "open",
+          "decision": "Complete source and signal QC by measurement."
+        },
+        {
+          "issue_id": "G2",
+          "status": "open",
+          "decision": "Freeze development/evaluation roles; preserve this source-inspection history."
+        },
+        {
+          "issue_id": "U7",
+          "status": "resolved_by_claim_restriction",
+          "decision": "State association only; report preparation/acquisition confounds."
+        },
+        {
+          "issue_id": "U8",
+          "status": "partially_resolved",
+          "decision": "Local ABF headers verify awake-before-iso for FB2312/14/15; remaining pair timing and wash-in unverified."
+        }
+      ],
+      "prior_use_status": "prior_use_not_fully_audited",
+      "role_basis": "Existing cohort ledger and phase-1 reference record only; metadata/source inspection also exists for FB2314/FB2315. No exhaustive prior-use audit or untouched designation.",
+      "evaluation_role": "not_frozen",
+      "pair_eligibility": "not_assessed",
+      "final_inclusion": "not_assessed",
+      "amplitude_comparability": "unresolved_intensity_preparation_and_measurement_support",
+      "required_evidence": [
+        "source identity and archived/local quantitative intensity history",
+        "within-pair timing, wash-in and valid observation windows",
+        "eligible tissue/exposure and motion history for both states",
+        "animal-level prior-use audit and evaluation assignment",
+        "per-metric paired availability and scientific admission"
+      ]
+    },
+    {
+      "pair_id": "C02-FB2315",
+      "mouse": "FB2315",
+      "comparison_id": "C02",
+      "members": [
+        {
+          "asset_id": "237d26a9-8977-4a97-b46b-206aefeb4c3d",
+          "session": "FB2315-baseline-awake",
+          "condition_role": "awake",
+          "archive_path": "sub-FB2315/sub-FB2315_ses-FB2315-baseline-awake_image.nwb",
+          "selected_image_series": "01_FB2314_bin2_950ms_2x_1Hz_awake_baseline_2_MMStack_Default.ome_mcor.tif",
+          "metadata_pixel_size_um": 2.35,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "not audited; independence unestablished",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        },
+        {
+          "asset_id": "353b88f3-b509-4281-8c46-f338094b4907",
+          "session": "FB2315-baseline-iso",
+          "condition_role": "isoflurane",
+          "archive_path": "sub-FB2315/sub-FB2315_ses-FB2315-baseline-iso_image.nwb",
+          "selected_image_series": "03_FB2314_bin2_950ms_2x_1Hz_iso_baseline_1_MMStack_Default.ome_mcor.tif",
+          "metadata_pixel_size_um": 2.35,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "not audited; independence unestablished",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        }
+      ],
+      "pairing_evidence": {
+        "basis": "same canonical mouse; complementary group labels",
+        "same_source_date": true,
+        "same_pixel_size": true
+      },
+      "current_issue_overlay": [
+        {
+          "issue_id": "G1",
+          "status": "open",
+          "decision": "Complete source and signal QC by measurement."
+        },
+        {
+          "issue_id": "G2",
+          "status": "open",
+          "decision": "Freeze development/evaluation roles; preserve this source-inspection history."
+        },
+        {
+          "issue_id": "U2",
+          "status": "local_identity_resolved_archive_payload_unverified",
+          "decision": "FB2315 local images and ABFs differ from FB2314; folder/table identity retained; archive payload equivalence still needs G1."
+        },
+        {
+          "issue_id": "U7",
+          "status": "resolved_by_claim_restriction",
+          "decision": "State association only; report preparation/acquisition confounds."
+        },
+        {
+          "issue_id": "U8",
+          "status": "partially_resolved",
+          "decision": "Local ABF headers verify awake-before-iso for FB2312/14/15; remaining pair timing and wash-in unverified."
+        }
+      ],
+      "prior_use_status": "prior_use_not_fully_audited",
+      "role_basis": "Existing cohort ledger and phase-1 reference record only; metadata/source inspection also exists for FB2314/FB2315. No exhaustive prior-use audit or untouched designation.",
+      "evaluation_role": "not_frozen",
+      "pair_eligibility": "not_assessed",
+      "final_inclusion": "not_assessed",
+      "amplitude_comparability": "unresolved_intensity_preparation_and_measurement_support",
+      "required_evidence": [
+        "source identity and archived/local quantitative intensity history",
+        "within-pair timing, wash-in and valid observation windows",
+        "eligible tissue/exposure and motion history for both states",
+        "animal-level prior-use audit and evaluation assignment",
+        "per-metric paired availability and scientific admission"
+      ]
+    },
+    {
+      "pair_id": "C02-ID400",
+      "mouse": "ID400",
+      "comparison_id": "C02",
+      "members": [
+        {
+          "asset_id": "8ba82dc1-aaba-411d-a196-ff8ef0b61fc3",
+          "session": "M400-01-baseline-awake",
+          "condition_role": "awake",
+          "archive_path": "sub-ID400/sub-ID400_ses-M400-01-baseline-awake_image.nwb",
+          "selected_image_series": "1hz_mcor.tif",
+          "metadata_pixel_size_um": 4.75,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "known reference recording",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        },
+        {
+          "asset_id": "2357d2bf-f8d5-4937-a5cf-1010e5db1491",
+          "session": "M400-03-baseline-iso",
+          "condition_role": "isoflurane",
+          "archive_path": "sub-ID400/sub-ID400_ses-M400-03-baseline-iso_image.nwb",
+          "selected_image_series": "1hz_mcor.tif",
+          "metadata_pixel_size_um": 4.75,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "known reference recording",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        }
+      ],
+      "pairing_evidence": {
+        "basis": "same canonical mouse; complementary group labels",
+        "same_source_date": true,
+        "same_pixel_size": true
+      },
+      "current_issue_overlay": [
+        {
+          "issue_id": "G1",
+          "status": "open",
+          "decision": "Complete source and signal QC by measurement."
+        },
+        {
+          "issue_id": "G2",
+          "status": "open",
+          "decision": "Freeze development/evaluation roles; preserve this source-inspection history."
+        },
+        {
+          "issue_id": "U7",
+          "status": "resolved_by_claim_restriction",
+          "decision": "State association only; report preparation/acquisition confounds."
+        },
+        {
+          "issue_id": "U8",
+          "status": "partially_resolved",
+          "decision": "Local ABF headers verify awake-before-iso for FB2312/14/15; remaining pair timing and wash-in unverified."
+        }
+      ],
+      "prior_use_status": "known_development_animal",
+      "role_basis": "Existing cohort ledger and phase-1 reference record only; metadata/source inspection also exists for FB2314/FB2315. No exhaustive prior-use audit or untouched designation.",
+      "evaluation_role": "not_frozen",
+      "pair_eligibility": "not_assessed",
+      "final_inclusion": "not_assessed",
+      "amplitude_comparability": "unresolved_intensity_preparation_and_measurement_support",
+      "required_evidence": [
+        "source identity and archived/local quantitative intensity history",
+        "within-pair timing, wash-in and valid observation windows",
+        "eligible tissue/exposure and motion history for both states",
+        "animal-level prior-use audit and evaluation assignment",
+        "per-metric paired availability and scientific admission"
+      ]
+    },
+    {
+      "pair_id": "C02-ID401",
+      "mouse": "ID401",
+      "comparison_id": "C02",
+      "members": [
+        {
+          "asset_id": "8f7d2943-1519-4bfd-b631-516985f6b572",
+          "session": "M401-01-baseline-awake",
+          "condition_role": "awake",
+          "archive_path": "sub-ID401/sub-ID401_ses-M401-01-baseline-awake_image.nwb",
+          "selected_image_series": "1hz_mcor.tif",
+          "metadata_pixel_size_um": 4.75,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "known reference recording",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        },
+        {
+          "asset_id": "c593b79f-d207-44b8-946c-7462a0af0272",
+          "session": "M401-03-baseline-iso",
+          "condition_role": "isoflurane",
+          "archive_path": "sub-ID401/sub-ID401_ses-M401-03-baseline-iso_image.nwb",
+          "selected_image_series": "1hz_mcor.tif",
+          "metadata_pixel_size_um": 4.75,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "known reference recording",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        }
+      ],
+      "pairing_evidence": {
+        "basis": "same canonical mouse; complementary group labels",
+        "same_source_date": true,
+        "same_pixel_size": true
+      },
+      "current_issue_overlay": [
+        {
+          "issue_id": "G1",
+          "status": "open",
+          "decision": "Complete source and signal QC by measurement."
+        },
+        {
+          "issue_id": "G2",
+          "status": "open",
+          "decision": "Freeze development/evaluation roles; preserve this source-inspection history."
+        },
+        {
+          "issue_id": "U7",
+          "status": "resolved_by_claim_restriction",
+          "decision": "State association only; report preparation/acquisition confounds."
+        },
+        {
+          "issue_id": "U8",
+          "status": "partially_resolved",
+          "decision": "Local ABF headers verify awake-before-iso for FB2312/14/15; remaining pair timing and wash-in unverified."
+        }
+      ],
+      "prior_use_status": "known_development_animal",
+      "role_basis": "Existing cohort ledger and phase-1 reference record only; metadata/source inspection also exists for FB2314/FB2315. No exhaustive prior-use audit or untouched designation.",
+      "evaluation_role": "not_frozen",
+      "pair_eligibility": "not_assessed",
+      "final_inclusion": "not_assessed",
+      "amplitude_comparability": "unresolved_intensity_preparation_and_measurement_support",
+      "required_evidence": [
+        "source identity and archived/local quantitative intensity history",
+        "within-pair timing, wash-in and valid observation windows",
+        "eligible tissue/exposure and motion history for both states",
+        "animal-level prior-use audit and evaluation assignment",
+        "per-metric paired availability and scientific admission"
+      ]
+    },
+    {
+      "pair_id": "C02-ID402",
+      "mouse": "ID402",
+      "comparison_id": "C02",
+      "members": [
+        {
+          "asset_id": "f6089c10-cb71-4f49-8185-ba07e4073fb1",
+          "session": "M402-01-baseline-awake",
+          "condition_role": "awake",
+          "archive_path": "sub-ID402/sub-ID402_ses-M402-01-baseline-awake_image.nwb",
+          "selected_image_series": "1hz_mcor.tif",
+          "metadata_pixel_size_um": 4.75,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "not audited; independence unestablished",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        },
+        {
+          "asset_id": "253f0176-34b4-4fae-9500-29bbde6803e2",
+          "session": "M402-03-baseline-iso",
+          "condition_role": "isoflurane",
+          "archive_path": "sub-ID402/sub-ID402_ses-M402-03-baseline-iso_image.nwb",
+          "selected_image_series": "1hz_mcor.tif",
+          "metadata_pixel_size_um": 4.75,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "not audited; independence unestablished",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        }
+      ],
+      "pairing_evidence": {
+        "basis": "same canonical mouse; complementary group labels",
+        "same_source_date": true,
+        "same_pixel_size": true
+      },
+      "current_issue_overlay": [
+        {
+          "issue_id": "G1",
+          "status": "open",
+          "decision": "Complete source and signal QC by measurement."
+        },
+        {
+          "issue_id": "G2",
+          "status": "open",
+          "decision": "Freeze development/evaluation roles; preserve this source-inspection history."
+        },
+        {
+          "issue_id": "U7",
+          "status": "resolved_by_claim_restriction",
+          "decision": "State association only; report preparation/acquisition confounds."
+        },
+        {
+          "issue_id": "U8",
+          "status": "partially_resolved",
+          "decision": "Local ABF headers verify awake-before-iso for FB2312/14/15; remaining pair timing and wash-in unverified."
+        }
+      ],
+      "prior_use_status": "prior_use_not_fully_audited",
+      "role_basis": "Existing cohort ledger and phase-1 reference record only; metadata/source inspection also exists for FB2314/FB2315. No exhaustive prior-use audit or untouched designation.",
+      "evaluation_role": "not_frozen",
+      "pair_eligibility": "not_assessed",
+      "final_inclusion": "not_assessed",
+      "amplitude_comparability": "unresolved_intensity_preparation_and_measurement_support",
+      "required_evidence": [
+        "source identity and archived/local quantitative intensity history",
+        "within-pair timing, wash-in and valid observation windows",
+        "eligible tissue/exposure and motion history for both states",
+        "animal-level prior-use audit and evaluation assignment",
+        "per-metric paired availability and scientific admission"
+      ]
+    },
+    {
+      "pair_id": "C02-ID403",
+      "mouse": "ID403",
+      "comparison_id": "C02",
+      "members": [
+        {
+          "asset_id": "2d68bdb0-58b0-4d36-8227-4526b8905ebf",
+          "session": "M403-01-baseline-awake",
+          "condition_role": "awake",
+          "archive_path": "sub-ID403/sub-ID403_ses-M403-01-baseline-awake_image.nwb",
+          "selected_image_series": "1hz_mcor.tif",
+          "metadata_pixel_size_um": 4.75,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "not audited; independence unestablished",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        },
+        {
+          "asset_id": "693a568c-b90a-4e0c-b61d-ca77158c384a",
+          "session": "M403-03-baseline-iso",
+          "condition_role": "isoflurane",
+          "archive_path": "sub-ID403/sub-ID403_ses-M403-03-baseline-iso_image.nwb",
+          "selected_image_series": "1hz_mcor.tif",
+          "metadata_pixel_size_um": 4.75,
+          "metadata_sample_hz": 1,
+          "original_development_evidence": "not audited; independence unestablished",
+          "approved_analysis_windows": [],
+          "metric_eligibility": "not_assessed"
+        }
+      ],
+      "pairing_evidence": {
+        "basis": "same canonical mouse; complementary group labels",
+        "same_source_date": true,
+        "same_pixel_size": true
+      },
+      "current_issue_overlay": [
+        {
+          "issue_id": "G1",
+          "status": "open",
+          "decision": "Complete source and signal QC by measurement."
+        },
+        {
+          "issue_id": "G2",
+          "status": "open",
+          "decision": "Freeze development/evaluation roles; preserve this source-inspection history."
+        },
+        {
+          "issue_id": "U7",
+          "status": "resolved_by_claim_restriction",
+          "decision": "State association only; report preparation/acquisition confounds."
+        },
+        {
+          "issue_id": "U8",
+          "status": "partially_resolved",
+          "decision": "Local ABF headers verify awake-before-iso for FB2312/14/15; remaining pair timing and wash-in unverified."
+        }
+      ],
+      "prior_use_status": "prior_use_not_fully_audited",
+      "role_basis": "Existing cohort ledger and phase-1 reference record only; metadata/source inspection also exists for FB2314/FB2315. No exhaustive prior-use audit or untouched designation.",
+      "evaluation_role": "not_frozen",
+      "pair_eligibility": "not_assessed",
+      "final_inclusion": "not_assessed",
+      "amplitude_comparability": "unresolved_intensity_preparation_and_measurement_support",
+      "required_evidence": [
+        "source identity and archived/local quantitative intensity history",
+        "within-pair timing, wash-in and valid observation windows",
+        "eligible tissue/exposure and motion history for both states",
+        "animal-level prior-use audit and evaluation assignment",
+        "per-metric paired availability and scientific admission"
+      ]
+    }
+  ],
+  "remaining_validation": [
+    {
+      "id": "V01",
+      "requirement": "Known-support amplitude and timing arithmetic",
+      "current_evidence": "R2-BASELINE-TIMING-014: 34 amplitude and 10 timing cases; fixed current rules.",
+      "remaining_gap": "Physiological reference/onset/recovery still unresolved."
+    },
+    {
+      "id": "V02",
+      "requirement": "End-to-end detector/identity performance",
+      "current_evidence": "Earlier reference and injection work exists; no new detector run in this proposal.",
+      "remaining_gap": "Synthesize existing evidence against the chosen primary outcomes before adding cases; held-out performance not established."
+    },
+    {
+      "id": "V03",
+      "requirement": "Biological/acquisition variability",
+      "current_evidence": "Two latest development examples and earlier reference set; C02 spans metadata scales 2.35 and 4.75 um/pixel.",
+      "remaining_gap": "Freeze animal roles and strata; characterize preparation/intensity/motion differences and realistic weak/sustained/contact/shape/noise/global-response cases."
+    },
+    {
+      "id": "V04",
+      "requirement": "Measurement-specific eligibility",
+      "current_evidence": "Cohort-resolution overlay and source-bound input/tissue workflow.",
+      "remaining_gap": "Actual valid tissue-time, quantitative intensity history and pair windows need evidence. HP identity/calibration/support remains unresolved."
+    },
+    {
+      "id": "V05",
+      "requirement": "Feasibility and usability",
+      "current_evidence": "Existing representative full MATLAB workflows and developer connected walkthrough.",
+      "remaining_gap": "Agree compute/review budget; observe independent researcher and second-person replay on eligible input."
+    }
+  ],
+  "next_work": {
+    "independent_of_scientific_signoff": "Audit existing prior-use/validation records by animal and acquisition stratum without opening new outcomes; identify gaps and prevent accidental evaluation reuse.",
+    "requires_scientific_decision": "Adopt/revise P01-P05; choose comparison priority; freeze estimands, eligible windows, scientific acceptance criteria and animal roles before candidate-rule or final evaluation runs."
+  },
+  "preparation_budget": "One metadata/evidence pass and consistency check. No experiments or expensive cohort execution. Proposal ends with explicit unresolved review fields.",
+  "approved_analysis_windows": [],
+  "approved_evaluation_animals": [],
+  "reviewer_acceptances": [],
+  "evidence_inputs": [
+    {
+      "path": "docs/REANALYSIS_UPDATE_PLAN.md",
+      "sha256": "6e8c26125bd8563a309608bb4ce968fc5e33d73f25a9f93f54d142363e6ca880"
+    },
+    {
+      "path": "docs/BOI_COHORT_COMPARISONS.md",
+      "sha256": "0939634d8c5f19fce345bb6e863230cdad20abec87842f7055fda8972acd8ef8"
+    },
+    {
+      "path": "docs/BOI_COHORT_RESOLUTION.md",
+      "sha256": "518a609080982c87d8a60ac2f188f6b2259dc2084d5f222ea6a6834a541802bf"
+    },
+    {
+      "path": "docs/RESEARCHER_WORKFLOW_AND_TRACEABILITY.md",
+      "sha256": "c687b10c4eb4a14022103cfebfc90d0d3e7f2632674428c91eac8964a9a66540"
+    },
+    {
+      "path": "docs/REFERENCE_SET_PHASE1.md",
+      "sha256": "ed5078e93c7f046746d8a387efa92e602b1ff013e8830e180815184e07ece811"
+    },
+    {
+      "path": "docs/planning/boi-cohort-20260910.json",
+      "sha256": "e692d11a3cfc5eabc226efc9f3ccb91c45d80a3a08d27b305de6f5969d575809"
+    },
+    {
+      "path": "docs/planning/boi-cohort-resolution-20260910.json",
+      "sha256": "9f0f5f249f8d98c5cfe1685e60ff0597c16e70f0e1083640f26219e30ff2eacd"
+    },
+    {
+      "path": "docs/planning/boi-measurement-dictionary.json",
+      "sha256": "1eea8f70f37a0794800f764498f4fefc0e89bfc6b195ee1f3aa198ea810186a2"
+    },
+    {
+      "path": "docs/reference-results/boi-baseline-timing-20260912/verification-report.json",
+      "sha256": "b6985405fc560ba79afabb67afc1819eb080aadbbe6bf0562f44aba900cdef9b"
+    },
+    {
+      "path": "docs/reference-results/boi-measurement-support-20260912/verification-report.json",
+      "sha256": "313fe7cc4756bd83e414ef3997296977279d36a778e2487092faa46ad9cfc850"
+    },
+    {
+      "path": "helpers/createOxygenAnalysisWindows.m",
+      "sha256": "f13a08d072bb8ced8be24a600cb170954fa54b5a2b7224b64651c7d6a074329e"
+    },
+    {
+      "path": "helpers/finalizeOxygenEventMeasurements.m",
+      "sha256": "fcfc63350cf0a2297703450095937758c0dd9171d06cc9fbeb419ff72007676d"
+    },
+    {
+      "path": "helpers/resolveSinkEventTiming.m",
+      "sha256": "692c82f1a9a347f8e6790cdcd71aad770561743f3f6c243ba6b62ca9b2c32bcf"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+function recordNinthJudgment
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(fileparts(here)));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+f=fullfile(here,'feedback.json');d=jsondecode(fileread(f));s=d.SourceBindings;names=fieldnames(s);
+for k=1:numel(names),v=s.(names{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+R=loadBOIEventReview(s.Audit.Path);Previous=loadBOIBoundaryReview(R,s.PreviousReview.Path);
+A=struct('Status','not_recognized','OnsetFrames',[],'RecoveryFrames',[], ...
+ 'PreferredOnsetFrame',[],'PreferredRecoveryFrame',[],'Reviewer','Researcher (user)', ...
+ 'Reason',['User: "no surge" for case 9, surge site 2/event 4, automatic native/measured frames 105-126. No additional rationale, boundaries, reference or physiological truth inferred. Exact reply/context SHA256: ' oxygenFileSHA256(f)]);
+newpath=fullfile(here,'BOI-researcher-review-09.json');
+Store=saveBOIBoundaryReview(R,283,A,newpath,Previous);
+assert(numel(Store.Document.Revisions)==9);
+assert(isequaln(Store.Document.Revisions(1:8),Previous.Document.Revisions));
+R.BoundaryReview=Store;B=getBOIBoundaryReview(R,283);
+assert(strcmp(B.Status,'not_recognized')&&isempty(B.Annotation.OnsetFrames)&&isempty(B.Annotation.RecoveryFrames));
+assert(strcmp(getBOIBoundaryReview(R,34).Status,'not_recognized'));
+Q=readtable(s.Queue.Path);assert(height(Q)==9);
+for k=1:height(Q)
+ b=getBOIBoundaryReview(R,Q.AuditRow(k));
+ if Q.AuditRow(k)==291,assert(strcmp(b.Status,'recognized'));else,assert(strcmp(b.Status,'not_recognized')&&isempty(b.Annotation.OnsetFrames)&&isempty(b.Annotation.RecoveryFrames));end
+end
+assert(strcmp(getBOIBoundaryReview(R,291).Status,'recognized'));
+priorSurge=getBOIBoundaryReview(R,291);assert(isequal(priorSurge.Annotation.OnsetFrames,130)&&isequal(priorSurge.Annotation.RecoveryFrames,150));
+addpath(fullfile(root,'reference-validation','boi-fb2420-first-roi-run-20260915'));
+for pos=9
+ [Fig,UI]=openFB2420Review(pos);UI.LoadBoundaries(newpath);drawnow;
+ exportapp(Fig,fullfile(here,sprintf('case-%02d-timing.png',pos)));close(Fig);
+end
+for k=1:numel(names),v=s.(names{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+v=struct('Status','saved_reloaded_and_rendered','CumulativeRevisionCount',9, ...
+ 'AnnotationAuditRow',283,'AnnotationStatus','not_recognized','NoBoundaryFrames',true, ...
+ 'NoAdditionalContextInferred',true,'PreviousRevisionPreserved',true, ...
+ 'AutomaticSourcesUnchanged',true,'QueueComplete',true,'RecognizedCases',1,'NotRecognizedCases',8,'BoundaryArtifact',struct('Path',Store.Path,'SHA256',Store.SHA256));
+fid=fopen(fullfile(here,'verification.json'),'w');fprintf(fid,'%s\n',jsonencode(v,'PrettyPrint',true));fclose(fid);
+end

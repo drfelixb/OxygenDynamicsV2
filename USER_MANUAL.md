@@ -1,3 +1,5 @@
+> **Local integration candidate:** see [PACKAGE_CONTENTS.md](PACKAGE_CONTENTS.md) for the exact packaging scope, omitted repository documentation and remaining release gates.
+
 # Oxygen Dynamics Pipeline User Manual
 
 This manual describes how to run the oxygen dynamics pipeline from a fresh MATLAB session, how to prepare input data, what outputs to expect, and how to diagnose common problems.

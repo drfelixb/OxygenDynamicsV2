@@ -50,5 +50,11 @@ save(fullfile(OutputFolders.ManualCurOxySinksPath,['ManualCuration',OutputData.D
 SaveResult = struct();
 SaveResult.OutputFolders = OutputFolders;
 SaveResult.AnalysisInfo = AnalysisInfo;
+SaveResult.ReviewAuditPath='';
+if isfield(OutputData,'ReviewRaw')
+    MasterPaths={fullfile(OutputFolders.OxySinksPath,['OxygenSinks_Urefined',OutputData.DatafileID,'.mat']), ...
+        fullfile(OutputFolders.OxySurgesPath,['OxygenSurges',OutputData.DatafileID,'.mat'])};
+    SaveResult.ReviewAuditPath=captureBOIRunReview(OutputData,AnalysisInfo,MasterPaths);
+end
 
 end

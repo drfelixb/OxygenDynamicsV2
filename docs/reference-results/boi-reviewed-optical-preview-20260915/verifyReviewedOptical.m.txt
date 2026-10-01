@@ -1,0 +1,46 @@
+function verifyReviewedOptical(runName)
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(here,runName);assert(~isfolder(out));mkdir(out);s=jsondecode(fileread(fullfile(here,'inputs.json')));keys=fieldnames(s);
+for k=1:numel(keys),v=s.(keys{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+R=loadBOIEventReview(s.Audit.Path);R.BoundaryReview=loadBOIBoundaryReview(R,s.Review.Path);R=attachBOIReferenceSources(R,s.SinkMaster.Path,s.SurgeMaster.Path);
+R=loadBOIReferenceJudgments(R,{s.Judgment1.Path,s.Judgment2.Path,s.Judgment3.Path,s.Judgment4.Path});rows=[186 309 308 321];previews=cell(4,1);summary=table();files=0;
+for k=1:4
+    row=rows(k);O=buildBOIReviewedOpticalPreview(R,row);assert(strcmp(O.Status,'available'));
+    prior=load(fullfile(root,'reference-validation/boi-researcher-reference-display-20260915/final',sprintf('export-row-%d',row),'SelectedEventReview.mat'),'Data');
+    assert(isequaln(buildBOIEventReviewData(R,row),prior.Data));
+    for j=1:numel(O.Intervals)
+        m=O.Intervals(j);raw=double(R.Traces{row}.Raw(:));
+        if m.OnsetFrame==1149
+            assert(strcmp(m.Status,'unavailable_no_accepted_reference')&&isnan(m.ReferenceMean)&&all(isnan(m.SignedFraction)));
+        else
+            assert(strcmp(m.Status,'computed_exploratory'));C=m.ReferenceFrames;E=m.EventFrames;B=sum(raw(C))/numel(C);q=(raw(E)-B)/B;
+            assert(abs(B-m.ReferenceMean)<1e-10&&max(abs(q-m.SignedFraction))<1e-12);
+            assert(isequal(m.MinimumFrames,E(q==min(q)))&&isequal(m.MaximumFrames,E(q==max(q))));
+            assert(abs(sum(q)-m.SignedTraceIntegralSec)<1e-12&&abs(min(q)-m.MinimumSignedChangeFraction)<1e-12&&abs(max(q)-m.MaximumSignedChangeFraction)<1e-12);
+        end
+        summary=[summary;table(row,string(m.SavedSign),m.OnsetFrame,m.RecoveryFrame,m.ReferenceSampleCount,m.NativeEligibleWithinSelectedReference,m.ReferenceMean, ...
+            100*m.MinimumSignedChangeFraction,100*m.MaximumSignedChangeFraction,100*m.SavedSignDirectionalAmplitudeFraction,m.SignedTraceIntegralSec,string(m.Status), ...
+            'VariableNames',{'AuditRow','SavedSign','Onset','Recovery','ReferenceSamples','NativeEligibleWithinSelection','ReferenceMean','MinPercent','MaxPercent','SavedSignPercent','IntegralSec','Status'})]; %#ok<AGROW>
+    end
+    folder=fullfile(out,sprintf('export-row-%d',row));receipt=exportBOIEventReview(R,row,folder);assert(strcmp(receipt.Schema,'boi-event-review-export-9'));
+    X=load(fullfile(folder,'SelectedEventReview.mat'));assert(isequaln(X.Data,prior.Data)&&isequaln(X.ReviewedOpticalPreview,O));
+    checks=jsondecode(fileread(fullfile(folder,'ArtifactChecksums.json')));for f=1:numel(checks),assert(strcmp(oxygenFileSHA256(fullfile(folder,checks(f).Name)),checks(f).SHA256));end
+    files=files+numel(checks);previews{k}=O;
+end
+assert(height(summary)==7&&sum(summary.Status=="computed_exploratory")==5&&sum(summary.Status=="unavailable_no_accepted_reference")==2);
+assert(summary.ReferenceSamples(summary.AuditRow==321)==12&&summary.NativeEligibleWithinSelection(summary.AuditRow==321)==0);
+[fig,UI]=openReviewedOpticalExample;cleanup=onCleanup(@()delete(fig));fig.Position=[40 40 1440 1050];
+for row=rows
+    UI.Select(row);assert(~isempty(UI.Optical.Data()));assert(~isempty(UI.Optical.Results.Data));drawnow;exportapp(fig,fullfile(out,sprintf('optical-row-%d.png',row)));
+end
+UI.Select(186);assert(UI.Optical.Data().Intervals(UI.Optical.Choice.Value).OnsetFrame==1154);
+UI.Optical.Choice.Value=1;UI.Optical.Choice.ValueChangedFcn([],[]);assert(contains(UI.Optical.Summary.Text,'No accepted reference'));
+assert(isempty(findall(UI.Optical.RawAxes,'Tag','BOIReviewedReferenceMean')));drawnow;exportapp(fig,fullfile(out,'optical-row-186-unjudged.png'));
+UI.Optical.Choice.Value=4;UI.Optical.Choice.ValueChangedFcn([],[]);assert(UI.Optical.Data().Intervals(4).RecoveryFrame==1167);
+for k=1:numel(keys),v=s.(keys{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+writetable(summary,fullfile(out,'reviewed-summary.csv'));
+result=struct('Status','passed','ReviewedEvents',4,'BoundaryCombinations',7,'ComputedExploratory',5,'UnavailableNoAcceptedReference',2, ...
+    'OriginalAutomaticDataMatchesPriorExports',true,'AllNativeEventsAssociated',R.ReferenceSources.EventCount,'FinalExportArtifactsVerified',files, ...
+    'ShortReferenceUsesExactly12Samples',true,'UnjudgedAlternativeAndGuiResetVerified',true,'NewOpticalQuantitiesAreSeparate',true,'GlobalScientificAdoption',false);
+save(fullfile(out,'verification.mat'),'previews','summary','result');fid=fopen(fullfile(out,'verification.json'),'w');c=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(result,'PrettyPrint',true));disp(summary);disp(result);
+end

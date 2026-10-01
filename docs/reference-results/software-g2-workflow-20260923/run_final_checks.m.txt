@@ -1,0 +1,20 @@
+packet=fileparts(mfilename('fullpath'));workspace=fileparts(fileparts(packet));repo=fullfile(workspace,'existing-analysis');
+addpath(repo);setupOxygenDynamicsPath;addpath(fullfile(repo,'tests','analysis'));
+results=run(matlab.unittest.TestSuite.fromFile(fullfile(repo,'tests','analysis','testBOIRecordingWorkflow.m')));
+save(fullfile(packet,'final-focused-results.mat'),'results');
+writeBOIRunJSON(fullfile(packet,'final-focused-results.json'),table2struct(table(results)));
+assert(all([results.Passed])&&~any([results.Incomplete]));
+R=loadBOIRecordingRun(fullfile(packet,'gui-run'));B=loadBOIRecordingRun(fullfile(packet,'batch-run'));
+[fig,ui]=openBOIRecordingWorkflow();cleanup=onCleanup(@()delete(fig));ui.OpenRun(R.ManifestPath);
+assert(strcmp(ui.Source.Value,R.Request.Options.RecordingFolder)&&strcmp(ui.SampleHz.Value,'1'));
+exportapp(fig,fullfile(packet,'gui-reopened-final.png'));
+launcher=OxygenDynamics_GUI();closeLauncher=onCleanup(@()delete(launcher));
+buttons=findall(launcher,'Type','uibutton');names=string({buttons.Text});assert(any(names=="BOI recording workflow"));
+exportapp(launcher,fullfile(packet,'launcher-final.png'));
+checks=struct('Path',{},'Messages',{});targets={'openBOIRecordingWorkflow.m','runBOIRecordingWorkflow.m','loadBOIRecordingRun.m','tests/analysis/testBOIRecordingWorkflow.m'};
+for k=1:numel(targets),checks(k)=struct('Path',targets{k},'Messages',checkcode(fullfile(repo,targets{k}),'-id'));end
+writeBOIRunJSON(fullfile(packet,'final-code-analyzer.json'),checks);
+% Prior tests already verified the numerical pipeline. No third detector run.
+writeBOIRunJSON(fullfile(packet,'final-focused-summary.json'),struct('Tests',numel(results), ...
+    'Passed',sum([results.Passed]),'Failed',sum([results.Failed]),'Incomplete',sum([results.Incomplete]), ...
+    'GUIReopenDisplaysSavedSettings',true,'LauncherEntryPresent',true,'DetectorExecutions',0));

@@ -1,0 +1,53 @@
+{
+  "schema": "boi-evidence-decision-1",
+  "decision_id": "R5-SURGE-WINDOW-011",
+  "date": "2026-09-11",
+  "status": "both_sign_windows_implemented_and_developer_verified",
+  "scope": "BOI both-sign descriptive windows; one preserved HP development recording; no detector rerun, tuning, animal pooling or scientific admission",
+  "decision": "Add separate surge window metrics and frame ingredients with contract-bound surge tissue support; expose them in saved-window inspection.",
+  "bounded_verification": {
+    "case": "HP_ECS_CSV2_identity_pending, unchanged preserved master and source",
+    "runs": "one whole-recording statistics-only run after targeted tests; retain failures if correction requires retry",
+    "settings": "existing run-A input, defaults, full [0,1200) seconds, confirmed external 1 Hz; 0.96 s camera exposure separate",
+    "acceptance": "Original sink windows, frame ingredients and both event tables must be exactly unchanged with isequaln. Independently replay all three surge measures from exported CSV. Verify source/master/prior artifacts unchanged.",
+    "scientific_tolerance": "none adopted; numerical replay tolerance only"
+  },
+  "scientific_changes": [],
+  "unresolved": [
+    "source identity and biological metadata",
+    "pixel calibration",
+    "anatomical and dynamic tissue validity",
+    "acquisition-boundary onset policy",
+    "negative surge direction and broad source changes",
+    "outcome hierarchy and animal-level inference",
+    "independent researcher release walkthrough"
+  ],
+  "next_owned_work": "Connect a selected recording/window to its event and source inspection path for a continuous MATLAB review workflow.",
+  "evidence": "docs/reference-results/boi-surge-windows-20260911/README.md",
+  "verification": {
+    "initial_tests": 33,
+    "final_affected_tests": 14,
+    "statistics_runs": 1,
+    "detector_runs": 0,
+    "original_fields_exactly_unchanged": [
+      "RecordingWindowMetrics",
+      "WindowFrameIngredients",
+      "Table_OxygenSinkEvents_OutCombo",
+      "Table_OxygenSurgeEvents_OutCombo",
+      "Table_OxygenSinks_OutCombo",
+      "Table_OxygenSurges_OutCombo",
+      "WindowBaselineContrasts",
+      "HypoxicBurden",
+      "RecordingRegistry",
+      "RecordingInputQC",
+      "RecordingFrameExposure"
+    ],
+    "existing_contract_fields_exactly_unchanged": true,
+    "prior_empty_contract_extension_fields": [
+      "TissueDecision",
+      "TissueSnapshot",
+      "TissueSupportExtension"
+    ],
+    "native_union_frames": 1200
+  }
+}
