@@ -1,4 +1,10 @@
-> **Local integration candidate:** see [PACKAGE_CONTENTS.md](PACKAGE_CONTENTS.md) for the exact packaging scope, omitted repository documentation and remaining release gates.
+> **Start here for reviewed pocket measurements:** the [short guide](README.md)
+> explains the current workflow; [Understanding a reviewed pocket measurement](docs/POCKET_MEASUREMENTS.md)
+> explains the calculation, reference choice, units and exported results.
+> This full manual also covers older and optional tools. The saved reviewed
+> calculation uses matching corrected data with a raw reference denominator;
+> original automatic amplitudes retain their separate raw-signal definition.
+> For the scope of the earlier local package, see [package contents](PACKAGE_CONTENTS.md).
 
 # Oxygen Dynamics Pipeline User Manual
 
@@ -14,13 +20,21 @@ Main analyses:
 
 - Detect oxygen sinks and oxygen surges in TIFF recordings.
 - Use a denoised TIFF for event detection when available.
-- Always quantify signal amplitudes from the original/raw TIFF.
+- Quantify automatic event amplitudes from the original/raw TIFF.
+- Review a pocket using exact reference and episode frames, with its corrected
+  decrease and raw decrease shown separately.
 - Export recording-level, ROI-level, and event-level tables.
 - Optionally analyse behaviour traces.
 - Optionally compare raw and denoised outputs for QC.
 - Optionally compute vascular-distance metrics from artery/vein annotation masks.
 
-The denoised/raw split is important. Denoised recordings can improve event detection, but denoising or scaling can distort signal amplitudes. Therefore detection may use `denoised.tif`, while `NormOxySinkAmp`, raw sink traces, and related amplitude outputs are calculated from the original recording.
+The denoised/raw split is important. Denoised recordings can improve event
+detection, but denoising or scaling can distort signal amplitudes. Therefore
+detection may use `denoised.tif`, while automatic `NormOxySinkAmp`, raw sink
+traces and related automatic amplitude outputs use the original recording.
+The separate reviewed-pocket measurement compares the saved corrected trace
+with its corrected reference and divides by the raw reference intensity.
+Its raw companion and original automatic result remain separately identified.
 
 ## 2. Project Layout
 

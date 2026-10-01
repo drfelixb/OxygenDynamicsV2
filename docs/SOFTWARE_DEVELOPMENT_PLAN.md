@@ -526,3 +526,14 @@ On 30 September 2026 the researcher approved **CC-02-01 through CC-02-05 as one 
 
 
 **Development and release pause confirmed (1 October 2026).** CC-02 is closed within its accepted scope. The researcher will provide the next requirement after using the workflow. Development and release work remain paused; no subsequent validation phase is to be prepared automatically. No further planning, implementation, checks or launches are active or authorized. All scientific qualifications, documented limitations, historical evidence and G5/release non-acceptance remain unchanged.
+
+**Researcher priority and communication clarified (1 October 2026).** The
+immediate goal is correct analysis calculations and understandable scientific
+outputs. Detection refinement is a separate future priority. Scientist-facing
+documentation and progress reports should explain the working feature,
+calculation, reference, units and uncertainty in plain language. Internal work
+codes remain in development records. README and the short measurement guide
+are revised for this purpose; the previous README is preserved in
+`DEVELOPMENT_NOTES.md`. This is a documentation-only clarification and GitHub
+update. Existing calculation rules, saved outputs and acceptance limits remain
+unchanged; no new validation campaign or recording execution is authorized.

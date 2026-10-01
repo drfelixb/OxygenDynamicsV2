@@ -54,6 +54,25 @@ boundaries still apply. Preserve older records; do not execute their stale
 
 ## Working discipline
 
+### Researcher priorities and communication
+
+The researcher's 1 October 2026 priority is correct analysis calculations and
+clear, scientifically understandable outputs. Detection refinement is a
+separate future priority. Documentation changes do not authorize calculation
+changes or a new test/recording campaign.
+
+Use plain feature names and explain what the scientist can do, what each
+measurement means, its reference, units and remaining uncertainty. Keep internal
+milestone codes in development records; do not require the researcher to decode
+codes such as CC-02 or G5 to understand a progress report or approval request.
+Describe proposed work by its practical outcome. State precisely which
+calculations were checked and distinguish that from suitability of a reference,
+background correction or biological interpretation. Keep ordinary implementation
+repairs inside an already approved complete workflow rather than requesting
+permission for each error.
+
+### Implementation records
+
 Every implementation item needs an ID, user benefit, bounded scope, owner,
 acceptance checks and stopping condition. Use one active delivery milestone;
 parallel tasks must be independent and explicitly assigned if delegation is
