@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - development
+      - development-existing-analysis-v3
       - "migration/**"
   pull_request:
   workflow_dispatch:
@@ -18,7 +19,7 @@ concurrency:
 
 jobs:
   repository-checks:
-    name: Repository checks
+    name: Portable BOI checks (Linux R2025b)
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -34,7 +35,19 @@ jobs:
             Image_Processing_Toolbox
             Statistics_and_Machine_Learning_Toolbox
 
-      - name: Run repository checks
+      - name: Record tested commit
+        run: git rev-parse HEAD
+
+      - name: Run portable BOI checks
         uses: matlab-actions/run-command@v3
         with:
-          command: runRepositoryChecks; runBOISoftwareChecks
+          command: runBOISoftwareChecks('portable','ci-results')
+
+      - name: Upload BOI test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boi-linux-r2025b-${{ github.sha }}
+          path: ci-results/
+          if-no-files-found: warn
+          retention-days: 14

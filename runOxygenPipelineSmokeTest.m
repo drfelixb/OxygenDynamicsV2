@@ -7,7 +7,7 @@ function SmokeResult = runOxygenPipelineSmokeTest()
 
 setupOxygenDynamicsPath();
 VersionInfo = getOxygenPipelineVersion();
-assert(strcmp(VersionInfo.Version,'3.1.0-dev.1') && ~isempty(VersionInfo.BuildTimestamp), ...
+assert(strcmp(VersionInfo.Version,'3.1.0-dev.2') && ~isempty(VersionInfo.BuildTimestamp), ...
     'Pipeline version metadata is missing or unexpected.');
 
 MasterFolder = fileparts(mfilename('fullpath'));

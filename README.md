@@ -1,4 +1,4 @@
-> Development snapshot: **3.1.0-dev.1**, build `2026-10-04 20:36:05 +02:00`.
+> Development snapshot: **3.1.0-dev.2**, build `2026-10-04 21:37:28 +02:00`.
 > This is not a release; prior saved-run metadata remains unchanged.
 
 # OxygenDynamicsV2
@@ -141,9 +141,9 @@ also use Statistics and Machine Learning Toolbox. See the manual for details.
 
 - [Pocket measurements: a short guide](docs/POCKET_MEASUREMENTS.md)
 - [Full user manual, including older and optional tools](USER_MANUAL.md)
-- [Detailed development history](DEVELOPMENT_NOTES.md)
-- [Calculation and workflow verification records](docs/SOFTWARE_CC_02_COMPLETION_DELIVERY.md)
-- [Viewer and folder-selection verification records](docs/SOFTWARE_CC_02_USABILITY_COMPLETION_DELIVERY.md)
+- Detailed development history (repository record: `DEVELOPMENT_NOTES.md`)
+- Calculation and workflow verification records (repository record: `docs/SOFTWARE_CC_02_COMPLETION_DELIVERY.md`)
+- Viewer and folder-selection verification records (repository record: `docs/SOFTWARE_CC_02_USABILITY_COMPLETION_DELIVERY.md`)
 - [Citation information](CITATION.cff)
 - [Third-party notices](THIRD_PARTY_NOTICES.md)
 

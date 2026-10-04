@@ -175,6 +175,7 @@ elseif ~StatsConfig.interactive
 end
 
 StatsInfo = struct();
+StatsInfo.CalculationSoftware = getOxygenPipelineVersion(); % identity at statistics calculation time
 StatsInfo.PipelineContract=oxygenPipelineContract();
 StatsInfo.AnalysisDate = char(datetime('now','Format','yyyy-MM-dd HH:mm:ss'));
 StatsInfo.Masterfolder = Masterfolder;

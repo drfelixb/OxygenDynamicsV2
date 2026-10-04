@@ -6,6 +6,27 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Development snapshot — 3.1.0-dev.2 (4 October 2026)
+
+- Add self-contained portable BOI arithmetic/export/provenance and reviewed-pocket
+  compatibility checks. Separate programmatic desktop checks and enable the
+  development-existing-analysis-v3 Linux R2025b CI trigger with result artifacts.
+
+
+- Installation candidate: exact policy includes reviewed-pocket/automatic exports,
+  definitions, guides and provenance. Manifest records modified source hashes
+  and ancestry-only base commit; named extracted saved-data routes pass.
+
+
+- Separate saved calculation identity from the current reader/exporter in
+  analysis manifests and event/window review receipts. Missing original software
+  identity is explicitly unknown; saved calculation schemas remain separate.
+  Future statistics runs record their calculation software at generation time.
+- Check signed optical integrals, sink composites, normalizations and summaries
+  in a bounded saved-data/fixture task. No numerical definition change is
+  included in the provenance repair; original results and scientific limits remain.
+
+
 ### Accepted development snapshot — 3.1.0-dev.1 (4 October 2026)
 
 - Save accepted reviewed-pocket measurements, immutable save/reopen/export and

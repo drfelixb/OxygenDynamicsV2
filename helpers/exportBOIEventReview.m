@@ -48,6 +48,7 @@ Receipt=struct('Schema','boi-event-review-export-9','CreatedUTC',char(datetime('
     'DictionaryVersion',dictionary.Version,'DictionarySHA256',dictionaryHash,'DictionaryRole',role, ...
     'NativeFrameMasks','not_present_in_saved_audit','SourceImageIncluded',false, ...
     'DetectorReruns',0,'StatisticsReruns',0,'BaselineDiagnostic',Data.BaselineDiagnostic,'TimingReview',Data.TimingReview);
+Receipt.ExportProvenance=createOxygenExportProvenance(Review,{'getOxygenPipelineVersion','createOxygenExportProvenance','loadBOIEventReview','buildBOIEventReviewData','exportBOIEventReview'});
 Receipt.ReviewedReferencePreview=rmfield(ReviewedReferencePreview,{'Frames','Contributors'});
 writeText(fullfile(OutputFolder,'ReviewedReferencePreview.json'),jsonencode(Receipt.ReviewedReferencePreview,'PrettyPrint',true));
 if ~isempty(ReviewedReferencePreview.Windows)

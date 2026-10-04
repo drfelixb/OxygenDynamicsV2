@@ -88,8 +88,8 @@ To build a clean release copy without raw data or generated outputs, run:
 createOxygenReleasePackage
 ```
 
-The current development snapshot is `v3.1.0-dev.1`, build
-`2026-10-04 20:36:05 +02:00`. Version metadata is maintained in
+The current development snapshot is `v3.1.0-dev.2`, build
+`2026-10-04 21:37:28 +02:00`. Version metadata is maintained in
 `getOxygenPipelineVersion.m`.
 
 This creates `Release_Packages/OxygenDynamics_Release_<timestamp>/`, a matching ZIP file, and `RELEASE_MANIFEST.txt`. The release contains the user-facing scripts, `helpers/`, `external/`, documentation, flow maps, and smoke test, but excludes `Data/`, stats outputs, QC outputs, run logs, verification reports, regression baselines, legacy archives, and previous release packages.

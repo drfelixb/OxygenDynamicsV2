@@ -3,16 +3,15 @@
 ## Current priorities
 
 4 October 2026. The [working plan](SOFTWARE_NEXT_STEPS.md) and current status
-control the next-work proposals. Step 1 is delivered; later steps require separate approval. Development and
-release are paused after the bounded delivery. The older dated backlog below is retained as history.
+control the next-work proposals. Steps 1–4 are accepted within scope; Step 5 approved and active; later steps require separate approval. Release remains paused during Step 5. The older dated backlog below is retained as history.
 
 | Order | Remaining task | Current status |
 |---|---|---|
 | 1 | Save accepted software to GitHub and reconcile its development version | Delivered as 3.1.0-dev.1; source commit recorded in step-1 delivery |
-| 2 | Check duration, native event area, tissue occupancy and event-rate calculations | Proposed arithmetic/export verification; no defect presumed |
-| 3 | Check signed integrals, composite normalization and recording/mouse/group summaries | Proposed; accepted amplitude clarification stays complete |
-| 4 | Update and verify the installable candidate with current functions/contracts/guides | Known source-policy omission; older candidate preserved |
-| 5 | Demonstrate named MATLAB/OS support, current tests and hosted CI | Hosted execution evidence open; current branch missing from push triggers |
+| 2 | Check duration, native event area, tissue occupancy and event-rate calculations | Delivered: final 9/9 named cases pass; definitions preserved |
+| 3 | Check signed integrals, composite normalization and recording/mouse/group summaries | Delivered: final 8/8; formulas preserved; export identity repaired in local 3.1.0-dev.2 |
+| 4 | Update and verify the installable candidate with current functions/contracts/guides | Delivered: one dev.2 candidate; matching hashes and 6/6 extracted saved-data routes; older candidate preserved |
+| 5 | Demonstrate named MATLAB/OS support, current tests and hosted CI | Step 5 active: portable fixtures/runner and branch trigger; named local/hosted execution pending |
 | 6 | Demonstrate fresh-recording integration and resources with justified cleanup | Deferred blockers remain; separate assessment and launch decisions required |
 | 7 | Complete independent use/replay, licensing and versioned release preparation | Not approved; publication remains a later decision |
 

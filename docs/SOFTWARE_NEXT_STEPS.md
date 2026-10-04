@@ -7,9 +7,9 @@ plan first preserves the accepted software, then checks the remaining main
 measurements, repairs demonstrated defects, and prepares a usable distribution.
 Detector refinement stays a later priority.
 
-**Status: step 1 delivered on 4 October 2026; steps 2–7 require separate approval.** Preparing this plan does not start implementation,
-tests, MATLAB, packaging, GitHub publication or a recording run. Step 1 is the only authorized delivery; development and release stop after its
-normal push and remote verification. Its completion is recorded in [step-1 delivery](SOFTWARE_NEXT_01_DELIVERY.md). The active
+**Status: steps 1–4 accepted within their documented scopes; Step 5 approved and active. Steps 6–7 require separate approval.** Preparing this plan does not start implementation,
+tests, MATLAB, packaging, GitHub publication or a recording run. Step 1 was saved on GitHub; the separately approved Steps 2–4 are now delivered. Steps 2–4 were accepted within their demonstrated scopes; [Step 5 task](SOFTWARE_NEXT_05_TASK.md) now governs active work.
+Step 5 development is active and release remains paused. Its completion is recorded in [step-1 delivery](SOFTWARE_NEXT_01_DELIVERY.md). The active
 [development plan](SOFTWARE_DEVELOPMENT_PLAN.md) and [workspace instructions](../AGENTS.md)
 remain the authority. Earlier accepted work and failures remain recorded.
 
@@ -115,6 +115,12 @@ scientific calculation files/contracts are preserved.
 **Handoff:** [ready-to-copy first task](SOFTWARE_FIRST_TASK_HANDOFF.md).
 
 ## Step 2 Check duration area occupancy and event rates
+
+**Delivered within the named scope on 4 October 2026:** final 9/9 cases pass;
+original calculations/results preserved, no scientific-output change. See the
+[delivery](SOFTWARE_NEXT_02_DELIVERY.md) and
+[calculation guide](BOI_DURATION_AREA_AND_EVENT_RATES.md). The budget below
+records the original proposal; actual consumption is in the delivery.
 
 **User benefit:** a researcher can trust the time and spatial denominators behind
 the main descriptive outputs.
@@ -388,6 +394,5 @@ saved values or make them appear to have been produced by current code.
    messages in plain language; internal IDs remain in records.
 
 **Internal work IDs:** NEXT-01 through NEXT-07 correspond to steps 1 through 7.
-NEXT-01 approval is consumed by its delivery; NEXT-02 through NEXT-07 remain
-proposed. The owner is the implementation assistant; no reviewer or additional
+NEXT-01 through NEXT-04 approvals are consumed by their deliveries; NEXT-05 is approved and active; NEXT-06 and NEXT-07 remain proposed. The owner is the implementation assistant; no reviewer or additional
 agent has been engaged.

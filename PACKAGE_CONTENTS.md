@@ -1,22 +1,15 @@
-# Local package integration candidate
+# Development candidate contents
 
-This folder is a local F07-03I integration candidate, not an approved release.
-`OxygenReleaseSourcePolicy.json` defines the exact included source files;
-`RELEASE_MANIFEST.txt` records this build. No recording or saved result is bundled.
+The explicit OxygenReleaseSourcePolicy.json includes current GUI/batch runtime
+sources, reviewed-pocket preview/save/reopen/portable export, automatic amplitude
+companions, provenance, required JSON definitions and three reader guides.
+No folder is recursively copied. Recorded per-file hashes define this snapshot.
 
-From this folder, `setupOxygenDynamicsPath` adds this copy and its helpers and
-external folders. The integration check resolves the named BOI entry points
-without invoking analysis, statistics, or a GUI. It does not establish runtime
-closure for every optional or legacy workflow.
+Excluded: recordings, generated results, source maps, tests/development evidence,
+historical development notes and changelog. Repository-only historical references
+in reader documents are plain paths, not installation links. Saved examples must
+be supplied separately. [Installation instructions](INSTALLATION.md).
 
-README and USER_MANUAL retain repository context. Their `docs/` links point to
-repository-only material that is deliberately not bundled; use the repository
-for that context. Tests, development evidence, CHANGELOG, the two development
-comparison PDFs, and the legacy OxygenDynamics_Sinks_Curation.mlapp are omitted.
-The legacy curation app is outside the named BOI resolution scope. The manual's
-broader legacy features have not been tested from this candidate.
-
-Licensing and hosted CI remain open. Successful acquisition-worker acknowledgement,
-verified containment, and real-acquisition resource measurements remain deferred
-release blockers. Version/manual reconciliation and broader dependency/runtime
-checks remain separate work. This packaging check closes none of those gates.
+The previous candidate is preserved. This candidate remains not release ready:
+licensing, hosted CI, broader runtime/platform support and live integration are
+unresolved. This task demonstrates named saved-data routes on macOS/R2025a.

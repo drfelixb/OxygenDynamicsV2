@@ -11,6 +11,8 @@ Config = struct();
 Config.outputRoot = fullfile(ProjectRoot,'Release_Packages');
 Config.releaseName = ['OxygenDynamics_Release_',char(datetime('now','Format','yyyyMMdd''T''HHmmss'))];
 Config.includeSmokeTest = true;
+Config.baseCommit = 'unknown';
+Config.sourceState = 'unverified_source_snapshot';
 Config = parseReleaseOptions(Config,varargin{:});
 
 % Fail on missing/excluded sources before creating any output directory.
@@ -25,6 +27,10 @@ mkdirIfMissing(ReleaseFolder);
 
 ReleaseInfo = struct();
 ReleaseInfo.PipelineVersion = VersionInfo;
+ReleaseInfo.BaseCommit = char(Config.baseCommit);
+ReleaseInfo.SourceState = char(Config.sourceState);
+ReleaseInfo.SourceRelativePaths = SourcePlan.RelativePaths;
+ReleaseInfo.SourceSHA256 = SourcePlan.SHA256;
 ReleaseInfo.ProjectRoot = ProjectRoot;
 ReleaseInfo.ReleaseFolder = ReleaseFolder;
 ReleaseInfo.Created = char(datetime('now','Format','yyyy-MM-dd HH:mm:ss'));
@@ -76,12 +82,19 @@ fprintf(FileId,'Oxygen Dynamics Pipeline Release\n');
 fprintf(FileId,'Version: %s\n',ReleaseInfo.PipelineVersion.Version);
 fprintf(FileId,'Build: %s\n',ReleaseInfo.PipelineVersion.BuildTimestamp);
 fprintf(FileId,'Created: %s\n',ReleaseInfo.Created);
+fprintf(FileId,'Base commit (ancestry only): %s\n',ReleaseInfo.BaseCommit);
+fprintf(FileId,'Source state: %s\n',ReleaseInfo.SourceState);
+fprintf(FileId,'Per-file hashes below identify this snapshot; base commit does not identify modified bytes.\n');
 fprintf(FileId,'Paths are relative to the repository root.\n\n');
 fprintf(FileId,'Exact source policy SHA256: %s\n',ReleaseInfo.SourcePolicySHA256);
 fprintf(FileId,'NOT RELEASE READY: broader runtime, licensing, hosted CI and live validation gates remain open.\n');
 fprintf(FileId,'Sources use an exact file list; no folder is copied recursively.\n');
 fprintf(FileId,'Excluded generated folders include Data, Stats_Runs, QC_Output, Run_Logs, Verification_Reports, Regression_Baselines, Legacy_Archive, and Release_Packages.\n\n');
-fprintf(FileId,'Included file manifest:\n');
+fprintf(FileId,'Exact source SHA256 manifest:\n');
+for SourceIdx = 1:numel(ReleaseInfo.SourceRelativePaths)
+    fprintf(FileId,'sha256\t%s\t%s\n',ReleaseInfo.SourceRelativePaths{SourceIdx},ReleaseInfo.SourceSHA256{SourceIdx});
+end
+fprintf(FileId,'\nIncluded file manifest:\n');
 for RowIdx = 1:numel(ManifestRows)
     fprintf(FileId,'%s\n',ManifestRows(RowIdx));
 end

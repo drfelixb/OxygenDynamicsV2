@@ -23,6 +23,59 @@ commit/push to `development-existing-analysis-v3`. Only NEXT-01 is active;
 statements describe earlier gates. No calculation work, MATLAB, tests, package,
 recording, release or step-2 work is authorized.
 
+**Current delivery (4 October 2026): Step 2 approved and delivered.** The
+researcher authorized the complete bounded duration/native-area/union-occupancy/
+onset-rate/concurrent-density task, with routine repairs and old/new review
+before scientific-output adoption. [Task](SOFTWARE_NEXT_02_TASK.md),
+[delivery](SOFTWARE_NEXT_02_DELIVERY.md) and
+[scientist guide](BOI_DURATION_AREA_AND_EVENT_RATES.md) record final 9/9 named
+passes, two batches/18 evaluations, two charged MATLAB attempts (one successful
+saved-data-only session), approximately 42.16 MiB and zero production changes.
+Correctly implemented definitions and original results are preserved. No
+numerical adoption decision remains within the named scope. Earlier pause/gate
+statements describe their historical dates; current development is stopped
+after Step 2. Step 3 requires separate approval and release stays paused.
+
+**Current delivery (4 October 2026): Step 3 delivered; development stopped.**
+The researcher accepted Step 2 within its demonstrated arithmetic/export scope,
+retaining failures and scientific limits, then approved Step 3. Its
+[delivery](SOFTWARE_NEXT_03_DELIVERY.md) and
+[guide](BOI_INTEGRALS_COMPOSITES_AND_SUMMARIES.md) record 8/8 final cases,
+three batches/24 evaluations and two saved-data-only sessions. Numerical
+formulas/results remain unchanged. Original/current export identity is repaired
+in local 3.1.0-dev.2; both saved statistics creator versions remain unknown.
+Step 2 uncommitted work is preserved. No commit/push or Step 4 starts;
+release and development remain paused pending separate approval.
+
+**Current authorization (4 October 2026): Step 3 accepted; Step 4 active.**
+The researcher accepted Step 3 within its demonstrated calculation/provenance
+scope, retaining limitations, and approved the complete installation-package
+task with routine repairs/rechecks. [Step 4 task](SOFTWARE_NEXT_04_TASK.md)
+sets four active hours, three builds, six focused batches, two MATLAB sessions
+and 150 MiB. Preserve previous candidate and uncommitted Steps 2–3; no
+recordings, calculation changes, containment, commit/push/publication or Step 5.
+Earlier dated active/pause statements are historical, superseded for this scope.
+
+**Current delivery (4 October 2026): Step 4 complete; development stopped.**
+[Installation candidate delivery](SOFTWARE_NEXT_04_DELIVERY.md): one fresh
+3.1.0-dev.2 modified-working-tree build; exact source/folder/ZIP/extraction
+hashes match; six final saved-data routes pass without checkout fallback.
+Five focused batches and one MATLAB session, under four hours/150 MiB; retained
+harness failures and extra window recheck. Step 3 accepted within its limits;
+previous candidate and Steps 2–3 preserved. No commit/push/publication.
+Current active execution is none. Step 4 acceptance and separate Step 5 approval
+remain; release and containment work stay paused.
+
+**Current authorization (4 October 2026): Step 4 accepted; Step 5 active.**
+The researcher accepted the installation candidate within its saved-data limits
+and approved portable calculation/export/compatibility checks plus named
+macOS/R2025a and hosted Linux/R2025b evidence. [Task](SOFTWARE_NEXT_05_TASK.md):
+four active hours, one selected local BOI gate with targeted repairs, at most
+two hosted executions including push triggers, each capped at 30 minutes.
+Commit/push accepted Steps 2–4 and portable tests; preserve candidate/results.
+No recording, calculation change, containment, release or Step 6. Earlier
+active/pause statements apply to their historical dates only.
+
 ## 1. Product goal
 
 Deliver a maintainable MATLAB application in which a researcher can load a BOI

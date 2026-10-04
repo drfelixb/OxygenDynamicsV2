@@ -413,7 +413,7 @@ pull request. Security-sensitive reports should follow
 
 ## Current Version Highlights
 
-Current pipeline version: `3.1.0-dev.1`, build timestamp `2026-10-04 20:36:05 +02:00`.
+Current pipeline version: `3.1.0-dev.2`, build timestamp `2026-10-04 21:37:28 +02:00`.
 
 Release metadata is centralized in `getOxygenPipelineVersion.m`; the GUI,
 wrapper provenance, health report, release manifest, and analysis manifest use

@@ -58,3 +58,6 @@ __pycache__/
 *.py[cod]
 .idea/
 .vscode/
+
+# Portable automated check reports
+ci-results/

@@ -10,8 +10,8 @@ manual now agree; older outputs keep their original identity.
 This is a development snapshot, not a published release. No existing tag was
 moved and no new tag was created. Stable `3.1.0` / `v3.1.0` require separate
 release acceptance; calculation contracts are unchanged. See
-[step-1 record](docs/SOFTWARE_NEXT_01_DELIVERY.md) and
-[version policy](docs/SOFTWARE_NEXT_STEPS.md#software-and-calculation-versioning).
+step-1 record (repository record: `docs/SOFTWARE_NEXT_01_DELIVERY.md`) and
+version policy (repository record: `docs/SOFTWARE_NEXT_STEPS.md#software-and-calculation-versioning`).
 The process below is future release guidance, not current authorization.
 
 ## Release Preconditions

@@ -8,8 +8,8 @@
   "communication_preference": "Use plain feature names, calculation meanings, references, units and uncertainty. Keep internal milestone codes in development records.",
   "scope_direction": "researcher_confirmed_software_focus",
   "roadmap_status": "approved",
-  "active_implementation_milestone": null,
-  "proposed_next_milestone": "NEXT-02_requires_separate_approval",
+  "active_implementation_milestone": "NEXT-05",
+  "proposed_next_milestone": "NEXT-06_requires_separate_approval",
   "approved_implementation_items": [
     "SW-G3-01_saved_run_entry",
     "SW-G3-02_neutral_event_selection",
@@ -47,7 +47,11 @@
     "CC-02-01_through_CC-02-05_bounded_integration_4_batches_20_evaluations_2_starts",
     "CC-02_completion_extension_28_additional_evaluations_two_saved_data_starts_no_batch_ceiling",
     "AMP-EXPORT-01_automatic_amplitude_summary_export_clarification",
-    "NEXT-01_save_accepted_work_and_version_baseline"
+    "NEXT-01_save_accepted_work_and_version_baseline",
+    "NEXT-02_bounded_duration_area_occupancy_event_rates",
+    "NEXT-03_bounded_integrals_composites_summaries_provenance",
+    "NEXT-04_bounded_installation_package",
+    "NEXT-05_portable_automated_checks_named_environments"
   ],
   "completed_work": [
     "planning inspection",
@@ -66,12 +70,12 @@
     "SW-G3-01 through SW-G3-03 saved-result usability slice delivered for researcher acceptance",
     "131/131 bounded MATLAB BOI regression tests passed; saved G2 both-sign event/window export walkthrough passed",
     "SW-G3-02 usability feedback: event-row click remains on Saved event evidence and updates its trace",
-    "Researcher confirmed saved event row-click usability: “good. works.”",
+    "Researcher confirmed saved event row-click usability: \u201cgood. works.\u201d",
     "SW-G3-04 through SW-G3-06 bounded pre-run/progress/synthetic journey slice delivered for researcher usability acceptance",
     "one 96x96x100 synthetic GUI end-to-end execution; staging, analysis, statistics and complete visually captured",
     "synthetic event inspection/export and exact saved-run reopen verified; saved failed-status fixture excluded",
     "133/133 bounded MATLAB BOI regression tests passed after G3 pre-run/progress changes",
-    "Researcher accepted the demonstrated SW-G3-04 through SW-G3-06 partial workflow: “its ok”",
+    "Researcher accepted the demonstrated SW-G3-04 through SW-G3-06 partial workflow: \u201cits ok\u201d",
     "Researcher used native folder chooser to reopen the completed G2 gui-run and launched its indexed workbook in MATLAB; no analysis rerun",
     "SW-G3-07 one disposable synthetic staging failure: GUI and RunStatus showed stage/error/incomplete folder; completed-run list/reopen rejected it; zero detector and statistics executions",
     "SW-G3-07 presentation revision: source-unavailable recovery wording and exact error/folder preserved; saved failure fixture shows disabled Run, 14/14 focused GUI tests passed; no new execution",
@@ -151,10 +155,13 @@
     "30 September 2026: researcher accepted CC-02 bounded numerical/integration delivery and demonstrated main-window workflow only. C02 remains conditional, FB2312 recovery unresolved, and all saved-footprint qualifications retained. Native chooser interaction and standalone viewer layout remain open; overall usability, G5 and release remain unaccepted. Acceptance recorded in documentation only; no further checks or launches started. Historical execution packets, containment_failure and consumed approvals unchanged.",
     "30 September 2026: CC-02U bounded usability-completion proposal prepared only: standalone 1120x800/900x650 layout, researcher native save/reopen/export and cancellation, three existing saved fixtures, six focused checks/twelve evaluations, two active hours/one saved-data session/100 MiB. Routine UI repairs included if approved; exact scientific payload preservation and final hashes required. No implementation, checks or MATLAB launch started; overall usability/G5/release unaccepted.",
     "1 October 2026: CC-02U bounded delivery: six focused checks passed in twelve recorded evaluations/five phase groups, one existing MATLAB session with zero starts, one unchanged ID400 preview. Native save/reopen/export/cancel researcher-performed; exact payloads, 71 protected inputs and 528 final code pins preserved. Retained failed/superseded layout iterations, wrong-window guard rejection and deleted-window restoration. Standalone C02 shown at supported smaller size; researcher usability acceptance pending, no further execution; overall usability/G5/release unaccepted.",
-    "1 October 2026: researcher accepted CC-02U bounded usability workflow at 1120 × 800 and 900 × 650, including demonstrated native selections and cancellations. Both CC-02 usability items closed within that scope. C02 conditional reference, FB2312 unresolved recovery, all footprint qualifications and documented limitations retained. Documentation only; no checks, launches or implementation. Broader usability/G5/release unaccepted; release paused and historical containment/consumed approvals unchanged.",
+    "1 October 2026: researcher accepted CC-02U bounded usability workflow at 1120 \u00d7 800 and 900 \u00d7 650, including demonstrated native selections and cancellations. Both CC-02 usability items closed within that scope. C02 conditional reference, FB2312 unresolved recovery, all footprint qualifications and documented limitations retained. Documentation only; no checks, launches or implementation. Broader usability/G5/release unaccepted; release paused and historical containment/consumed approvals unchanged.",
     "1 October 2026: researcher confirms CC-02 closed within its accepted scope and keeps development and release paused. No automatic next validation phase, planning, checks or launches; researcher will supply the next requirement after using the workflow. Scientific qualifications, documented limits and G5/release non-acceptance retained.",
     "AMP-EXPORT-01: automatic amplitude meanings and site/recording/mouse/group average counts exported additively; final six synthetic and three saved cases passed, existing numerical tables/calculation files/saved inputs preserved. Four batches/36 evaluations, two working MATLAB starts plus one unsuccessful invocation. Storage ceiling exceeded before lossless earlier-evidence compression; disclosed exception. No detector/statistics-pipeline/recorded runs, correction refits or release work.",
-    "NEXT-01: accepted exports and planning saved; development identity 3.1.0-dev.1 reconciled using static checks only"
+    "NEXT-01: accepted exports and planning saved; development identity 3.1.0-dev.1 reconciled using static checks only",
+    "NEXT-02: duration, native event area, union occupancy, onset rate and concurrent density checked for both signs; final 9/9 named cases passed; no scientific-output change",
+    "NEXT-03: 8/8 final signed-integral/composite/summary/provenance cases; three batches/24 evaluations, two saved-data sessions; formulas preserved; local 3.1.0-dev.2 export identity repair; no commit/push",
+    "NEXT-04: one fresh modified dev.2 installation build; source/folder/ZIP/extraction hashes match; 6/6 extracted saved-data routes; five batches/one MATLAB session; previous candidate and uncommitted Steps 2\u20133 preserved; no commit/push/publication"
   ],
   "standing_boundaries": [
     "BOI only",
@@ -226,7 +233,7 @@
     {
       "date": "2026-09-27",
       "origin": "researcher decision",
-      "verbatim": "I accept G3’s demonstrated daily-use workflow.",
+      "verbatim": "I accept G3\u2019s demonstrated daily-use workflow.",
       "approved_scope": "G3 usability acceptance only. No validation of a fresh real-acquisition run or every failure path; no more G3 tests and no release approval. Analysis/statistics failures, incomplete-run recovery and relevant real-acquisition checks move to bounded G5 release work. G4 proposal requested, not implementation approval."
     },
     {
@@ -346,7 +353,7 @@
     {
       "date": "2026-09-28",
       "origin": "researcher instruction",
-      "verbatim": "I approve SW-G5-06R-07 implementation, up to eight named offline schema evaluations, and—only if the static and offline gates pass—one startup-only MATLAB launch under the card’s 100-second total limit and resource and containment stops. No retry.",
+      "verbatim": "I approve SW-G5-06R-07 implementation, up to eight named offline schema evaluations, and\u2014only if the static and offline gates pass\u2014one startup-only MATLAB launch under the card\u2019s 100-second total limit and resource and containment stops. No retry.",
       "approved_scope": "New no-Run startup worker/caller, eight one-use saved-data cases and one conditional 100-second MATLAB startup only after static and offline final-code gates. No Run, master, detector, statistics, attempt marker, recorded movie, SW-G5-07, G5 acceptance or release."
     },
     {
@@ -358,13 +365,13 @@
     {
       "date": "2026-09-28",
       "origin": "researcher instruction",
-      "verbatim": "Please hold the unspent SW-G5-06R-07 MATLAB launch. The final process snapshot is captured before the caller’s final preflight and the controller’s second `preflight_ok()` call. Revise the boundary so a new process snapshot is obtained after all potentially slow preflight work and assessed immediately before token publication. Propose a bounded offline test with a delayed preflight that proves a stale snapshot cannot publish a token, plus the final-code hash gate required after the change. Do not launch MATLAB under this request.",
+      "verbatim": "Please hold the unspent SW-G5-06R-07 MATLAB launch. The final process snapshot is captured before the caller\u2019s final preflight and the controller\u2019s second `preflight_ok()` call. Revise the boundary so a new process snapshot is obtained after all potentially slow preflight work and assessed immediately before token publication. Propose a bounded offline test with a delayed preflight that proves a stale snapshot cannot publish a token, plus the final-code hash gate required after the change. Do not launch MATLAB under this request.",
       "approved_scope": "Revise the final-snapshot/preflight boundary and prepare a finite offline test/hash-gate proposal; hold all MATLAB and recorded-movie launches. No new offline evaluations approved by this instruction."
     },
     {
       "date": "2026-09-28",
       "origin": "researcher instruction",
-      "verbatim": "I approve SW-G5-06R-07B’s 13 named, one-use offline evaluations under the decision card’s no-launch limits. Pin the final executable and harness hashes before testing, stop at the first failed case without retry, and report the ordered traces, claim/token counts, and post-test hash gate. Keep the MATLAB startup on hold; this approval does not authorize a live worker token or recording run.",
+      "verbatim": "I approve SW-G5-06R-07B\u2019s 13 named, one-use offline evaluations under the decision card\u2019s no-launch limits. Pin the final executable and harness hashes before testing, stop at the first failed case without retry, and report the ordered traces, claim/token counts, and post-test hash gate. Keep the MATLAB startup on hold; this approval does not authorize a live worker token or recording run.",
       "approved_scope": "Thirteen named saved-data evaluations once each, with exact pre/post executable/harness hashes and stop on first failure. Zero child process/MATLAB launch, live worker token or recorded movie; startup remains held pending separate decision."
     },
     {
@@ -418,7 +425,7 @@
     {
       "date": "2026-09-29",
       "origin": "researcher instruction",
-      "verbatim": "approve SW-G5-07’s one local inventory and six named static assessments under the decision card. Produce only the audit document, manifests, and factual plan/status updates. Record missing evidence as untested and contradictory claims as failures. Do not run tests or MATLAB, access the network or excluded recordings, repair code, package, publish, or treat this audit as G5 or release acceptance. Present the findings and bounded follow-up choices when complete.",
+      "verbatim": "approve SW-G5-07\u2019s one local inventory and six named static assessments under the decision card. Produce only the audit document, manifests, and factual plan/status updates. Record missing evidence as untested and contradictory claims as failures. Do not run tests or MATLAB, access the network or excluded recordings, repair code, package, publish, or treat this audit as G5 or release acceptance. Present the findings and bounded follow-up choices when complete.",
       "approved_scope": "One local inventory and six static assessments, documentation/manifests/plan/status only; no execution, network, excluded data, repairs, packaging or release acceptance."
     },
     {
@@ -430,7 +437,7 @@
     {
       "date": "2026-09-29",
       "origin": "researcher instruction",
-      "verbatim": "I approve F07-03’s bounded source-list repair and at most ten one-use offline manifest evaluations under the decision card. Pin final code and fixture hashes before testing; stop at the first failure without retry. Verify that the harness checks the same policy the packager uses and that required-file validation precedes directory creation. Do not run MATLAB, build a folder or ZIP, include excluded data, or mark the package release-ready. Report the patch, case results, hashes, and remaining integration gaps.",
+      "verbatim": "I approve F07-03\u2019s bounded source-list repair and at most ten one-use offline manifest evaluations under the decision card. Pin final code and fixture hashes before testing; stop at the first failure without retry. Verify that the harness checks the same policy the packager uses and that required-file validation precedes directory creation. Do not run MATLAB, build a folder or ZIP, include excluded data, or mark the package release-ready. Report the patch, case results, hashes, and remaining integration gaps.",
       "approved_scope": "Source-list-only patch and at most ten one-use offline manifest evaluations; pin final code/fixtures, stop first failure with no retry; no MATLAB or package folder/ZIP."
     },
     {
@@ -889,7 +896,7 @@
     {
       "date": "2026-09-27",
       "item": "G3 demonstrated daily-use workflow",
-      "verbatim": "I accept G3’s demonstrated daily-use workflow.",
+      "verbatim": "I accept G3\u2019s demonstrated daily-use workflow.",
       "acceptance": "researcher usability acceptance only; fresh real-acquisition and non-staging failure paths untested; no release approval"
     },
     {
@@ -1116,7 +1123,7 @@
     }
   },
   "cc_02_proposal": {
-    "status": "approved_implementation_active",
+    "status": "historical_approved_scope_completed_accepted_with_limits",
     "case_limit": 14,
     "case_evaluation_limit": 20,
     "validation_batch_limit": 4,
@@ -1207,7 +1214,7 @@
       "UsabilityResolution": {
         "Date": "2026-10-01",
         "WorkItem": "CC-02U",
-        "Scope": "CC-02U bounded standalone workflow at 1120 × 800 and 900 × 650, including demonstrated native save/reopen/export selections and cancellations",
+        "Scope": "CC-02U bounded standalone workflow at 1120 \u00d7 800 and 900 \u00d7 650, including demonstrated native save/reopen/export selections and cancellations",
         "AcceptanceRecord": "cc02_usability_completion_proposal.Acceptance",
         "FurtherChecksOrLaunchesAuthorized": false
       }
@@ -1259,7 +1266,7 @@
     "Acceptance": {
       "Date": "2026-10-01",
       "Authority": "researcher",
-      "Scope": "CC-02U bounded standalone workflow at 1120 × 800 and 900 × 650, including demonstrated native save/reopen/export selections and cancellations",
+      "Scope": "CC-02U bounded standalone workflow at 1120 \u00d7 800 and 900 \u00d7 650, including demonstrated native save/reopen/export selections and cancellations",
       "ClosedUsabilityItems": [
         "Standalone viewer layout at the two named sizes",
         "Native chooser interaction for the demonstrated save, reopen and export paths, including cancellation"
@@ -1285,8 +1292,8 @@
       "ExecutionEvidence": "Historical packets, failures, hashes, counts and consumed approvals remain unchanged; this is a documentation-only acceptance"
     }
   },
-  "development_work_status": "paused_after_step_1_delivery",
-  "next_requirement": "Step 1 source and identity saved; stop after normal branch push and remote verification. Step 2 requires separate researcher approval. Release remains paused.",
+  "development_work_status": "NEXT-05_approved_active",
+  "next_requirement": "Step 5 portable calculation/export/compatibility checks and named macOS R2025a/Linux R2025b evidence; commit/push approved scope, retain candidate; stop before Step 6.",
   "cc02_scope_closure": {
     "Date": "2026-10-01",
     "Status": "closed_within_accepted_scope",
@@ -1363,13 +1370,13 @@
     }
   },
   "working_plan_20261004": {
-    "Status": "step_1_delivered_later_steps_require_approval",
+    "Status": "steps_1_through_4_delivered_later_steps_require_approval",
     "ResearcherRequest": "Make a priority list and working plan, include software versioning and handoffs/guidelines, and supply a concrete first-task handoff",
     "Record": "docs/SOFTWARE_NEXT_STEPS.md",
     "FirstTaskHandoff": "docs/SOFTWARE_FIRST_TASK_HANDOFF.md",
     "ProposedDevelopmentVersion": "3.1.0-dev.1",
     "VersionStatus": "adopted_after_local_and_remote_tag_confirmation",
-    "CurrentReportedSoftwareVersion": "3.1.0-dev.1",
+    "CurrentReportedSoftwareVersion": "3.1.0-dev.2",
     "CurrentLocalTag": "v3.0",
     "Steps": [
       {
@@ -1379,19 +1386,23 @@
       },
       {
         "Item": "NEXT-02",
-        "Outcome": "Check and repair duration, area, occupancy and event-rate calculations within approved scope"
+        "Outcome": "Check and repair duration, area, occupancy and event-rate calculations within approved scope",
+        "Status": "accepted_within_demonstrated_arithmetic_export_scope"
       },
       {
         "Item": "NEXT-03",
-        "Outcome": "Check and repair integral, composite and recording/mouse/group summaries within approved scope"
+        "Outcome": "Check and repair integral, composite and recording/mouse/group summaries within approved scope",
+        "Status": "accepted_within_demonstrated_calculation_provenance_scope"
       },
       {
         "Item": "NEXT-04",
-        "Outcome": "Update and verify current installation candidate"
+        "Outcome": "Update and verify current installation candidate",
+        "Status": "accepted_within_demonstrated_saved_data_scope"
       },
       {
         "Item": "NEXT-05",
-        "Outcome": "Demonstrate named support and hosted automated checks"
+        "Outcome": "Demonstrate named support and hosted automated checks",
+        "Status": "approved_active"
       },
       {
         "Item": "NEXT-06",
@@ -1406,7 +1417,7 @@
     "PlanningOnly": false,
     "ImplementationStarted": true,
     "VersionMetadataChanged": true,
-    "NewTestsOrMATLABStarted": false,
+    "NewTestsOrMATLABStarted": true,
     "CommitOrPushPerformed": true,
     "HistoricalEvidenceAndReleaseBlockersRetained": true
   },
@@ -1440,5 +1451,126 @@
     "SuccessfulPushLimit": 1,
     "RemainingLocalChanges": "None at source commit; final clean-worktree check required",
     "StaticChecks": "Six calculation, eight accepted code/check and seven saved input/evidence hashes match; all 2224 other initial tracked files unchanged; metadata agreement, JSON parse and Git whitespace pass"
+  },
+  "next_02": {
+    "Status": "delivered_within_named_scope",
+    "Record": "docs/SOFTWARE_NEXT_02_TASK.md",
+    "StartingCommit": "b0f6d20be415f9dc64f99c05585147e21633d8db",
+    "SoftwareVersion": "3.1.0-dev.1",
+    "Owner": "implementation_assistant",
+    "Step3Authorized": false,
+    "Delivery": "docs/SOFTWARE_NEXT_02_DELIVERY.md",
+    "Guide": "docs/BOI_DURATION_AREA_AND_EVENT_RATES.md",
+    "Evidence": "reference-validation/software-next02-calculations-20261004/",
+    "FinalCases": "9/9 pass on unchanged final harness",
+    "ValidationBatches": 2,
+    "CaseEvaluations": 18,
+    "MATLABInvocations": 2,
+    "SuccessfulSavedDataSessions": 1,
+    "SessionExitCode": 0,
+    "EvidenceBytes": 44206708,
+    "ConservativeActiveSecondsUpperBound": 2572.518864,
+    "CalculationChanges": 0,
+    "ScientificOutputChanges": 0,
+    "OriginalSavedFilesUnchanged": 18,
+    "CodeManifestSHA256": "0a3fba90be05c694941509c273ae353325b16b4be0e979468d022cb4ea426250",
+    "CommitOrPushPerformed": false,
+    "IndependentHumanReview": false,
+    "UnresolvedNumericalDecision": null,
+    "ReleaseAuthorized": false,
+    "FinalStoppedUTC": "2026-10-04T19:17:50.290207+00:00",
+    "Acceptance": {
+      "Authority": "researcher",
+      "Date": "2026-10-04",
+      "Scope": "demonstrated arithmetic/export scope",
+      "FailuresAndScientificLimitationsRetained": true
+    }
+  },
+  "next_03": {
+    "Status": "accepted_within_demonstrated_calculation_provenance_scope",
+    "Record": "docs/SOFTWARE_NEXT_03_TASK.md",
+    "StartingCommit": "b0f6d20be415f9dc64f99c05585147e21633d8db",
+    "StartingSoftwareVersion": "3.1.0-dev.1",
+    "Owner": "implementation_assistant",
+    "Step4Authorized": false,
+    "CommitPushAuthorized": false,
+    "Delivery": "docs/SOFTWARE_NEXT_03_DELIVERY.md",
+    "Guide": "docs/BOI_INTEGRALS_COMPOSITES_AND_SUMMARIES.md",
+    "SoftwareVersion": "3.1.0-dev.2",
+    "BuildTimestamp": "2026-10-04 21:37:28 +02:00",
+    "FinalCases": "8/8 pass on unchanged final pins",
+    "ValidationBatches": 3,
+    "CaseEvaluations": 24,
+    "MATLABInvocations": 2,
+    "SuccessfulSavedDataSessions": 2,
+    "SessionExitCodes": [
+      0,
+      0
+    ],
+    "CalculationChanges": 0,
+    "ScientificOutputChanges": 0,
+    "OriginalSavedFilesUnchanged": 38,
+    "OriginalCalculationSoftware": {
+      "G2_ID400": "unknown",
+      "C02": "unknown"
+    },
+    "CommitOrPushPerformed": false,
+    "UnresolvedNumericalDecision": null,
+    "IndependentHumanReview": false,
+    "ReleaseAuthorized": false,
+    "EvidenceBytes": 69975253,
+    "TotalNewBytesConservative": 70037232,
+    "ConservativeActiveSecondsUpperBound": 2868.9194580000003,
+    "FinalStoppedUTC": "2026-10-04T19:53:46.694797+00:00",
+    "CodeManifestSHA256": "b748dd3336a733380efbadc92f11768eb2c422e15cc9d2a81e3da128bca161a6",
+    "Acceptance": {
+      "Date": "2026-10-04",
+      "Authority": "researcher",
+      "Scope": "demonstrated calculation and provenance scope",
+      "DocumentedLimitationsRetained": true
+    }
+  },
+  "development_status": "NEXT-05_approved_active",
+  "next_04": {
+    "Status": "accepted_within_demonstrated_saved_data_scope",
+    "Record": "docs/SOFTWARE_NEXT_04_TASK.md",
+    "StartingCommit": "b0f6d20be415f9dc64f99c05585147e21633d8db",
+    "SourceState": "modified_uncommitted_3.1.0-dev.2_not_identical_to_base_commit",
+    "Step5Authorized": false,
+    "CommitPushPublicationAuthorized": false,
+    "Delivery": "docs/SOFTWARE_NEXT_04_DELIVERY.md",
+    "Version": "3.1.0-dev.2",
+    "BuildTimestamp": "2026-10-04 21:37:28 +02:00",
+    "CandidateZIP": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/software-next04-package-20261004/OxygenDynamics_3.1.0-dev.2_NEXT04_candidate01.zip",
+    "ZIP_SHA256": "246274ea9bad0ee7d1ac54d61216b77ecf39a32fe5edd8167ea7d05e3851765b",
+    "SourcePolicySHA256": "2170b2ab0d10b3ba6d7f71b35fca4a30d9a4945610ff8bc627fcee57b44e24fc",
+    "PackagedSourceFiles": 443,
+    "TotalCandidateFiles": 444,
+    "Builds": 1,
+    "ValidationBatches": 5,
+    "RouteEvaluations": 12,
+    "FinalRoutes": "6/6 pass",
+    "MATLABSessions": 1,
+    "SessionExitCode": 0,
+    "OriginalInputsUnchanged": 42,
+    "PreviousCandidateFilesUnchanged": 1682,
+    "CalculationChanges": 0,
+    "IndependentHumanReview": false,
+    "CommitPushPublicationPerformed": false,
+    "FinalStoppedUTC": "2026-10-04T20:16:15.123068+00:00",
+    "ArtifactBytes": 117128115,
+    "ConservativeTotalNewBytes": 117449726,
+    "ConservativeActiveSecondsUpperBound": 2401.385253,
+    "Acceptance": {
+      "Date": "2026-10-04",
+      "Authority": "researcher",
+      "DocumentedLimitationsRetained": true
+    }
+  },
+  "next_05": {
+    "Status": "approved_implementation_active",
+    "Record": "docs/SOFTWARE_NEXT_05_TASK.md",
+    "Step6Authorized": false,
+    "ReleaseAuthorized": false
   }
 }
