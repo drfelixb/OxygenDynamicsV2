@@ -64,7 +64,7 @@ function testHistoricalSavedDimensionsRequireMatchedMetadata(t)
 [R,f]=fixture('sink');cleanup=onCleanup(@()rmdir(f,'s'));S=load(R.AuditPath);S.AnalysisInfo=rmfield(S.AnalysisInfo,'FrameSize');save(R.AuditPath,'-struct','S');
 verifyError(t,@()loadBOIEventReview(R.AuditPath),'OxygenDynamics:HistoricalDimensionsRequired');
 p=fullfile(f,'dimensions.json');write(p,struct('Conversion',struct('TiffSHA256',S.AnalysisInfo.RawSHA256,'MatlabInputShape',[8 2 2])));
-oldHash=oxygenFileSHA256(R.AuditPath);historical=loadBOIEventReview(R.AuditPath,p);verifyEqual(t,historical.AnalysisInfo.FrameSize,[2;2]);verifyEqual(t,oxygenFileSHA256(R.AuditPath),oldHash);
+oldHash=oxygenFileSHA256(R.AuditPath);historical=loadBOIEventReview(R.AuditPath,p);verifyEqual(t,historical.AnalysisInfo.FrameSize,[2 2]);verifyEqual(t,oxygenFileSHA256(R.AuditPath),oldHash);
 write(p,struct('Conversion',struct('TiffSHA256','different-source','MatlabInputShape',[8 2 2])));
 verifyError(t,@()loadBOIEventReview(R.AuditPath,p),'OxygenDynamics:HistoricalMetadataMismatch');
 end

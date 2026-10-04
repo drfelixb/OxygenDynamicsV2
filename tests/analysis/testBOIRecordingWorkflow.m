@@ -121,6 +121,14 @@ verifyEqual(t,r.Paths.EventAudit,fullfile(root,'BOIReview','event-amplitude-audi
 writeBOIRunJSON(fullfile(root,'RunStatus.json'),struct('Status','failed'));
 verifyError(t,@()loadBOIRecordingRun(path),'OxygenDynamics:IncompleteRun');
 writeBOIRunJSON(fullfile(root,'RunStatus.json'),struct('Status','complete'));
+S=load(path,'Run');Run=S.Run;Run.Schema='future-unsupported';save(path,'Run');
+verifyError(t,@()loadBOIRecordingRun(path),'OxygenDynamics:InvalidRun');Run=S.Run;save(path,'Run');
+Q=load(r.Paths.Request,'Request');Request=Q.Request;Request.Schema='future-unsupported';save(r.Paths.Request,'Request');
+% Re-hash the deliberately incompatible request so schema rejection is reached.
+Run=S.Run;k=find(strcmp({Run.Artifacts.Role},'Request'));Run.Artifacts(k).SHA256=oxygenFileSHA256(r.Paths.Request);save(path,'Run');
+verifyError(t,@()loadBOIRecordingRun(path),'OxygenDynamics:InvalidRun');
+Request=Q.Request;save(r.Paths.Request,'Request');Run=S.Run;Run.Artifacts(k).SHA256=oxygenFileSHA256(r.Paths.Request);save(path,'Run');
+
 writeBOIRunJSON(r.Paths.Workbook,struct('Changed',true));
 verifyError(t,@()loadBOIRecordingRun(path),'OxygenDynamics:RunArtifactChanged');
 end
