@@ -8,7 +8,7 @@
   "communication_preference": "Use plain feature names, calculation meanings, references, units and uncertainty. Keep internal milestone codes in development records.",
   "scope_direction": "researcher_confirmed_software_focus",
   "roadmap_status": "approved",
-  "active_implementation_milestone": "NEXT-01",
+  "active_implementation_milestone": null,
   "proposed_next_milestone": "NEXT-02_requires_separate_approval",
   "approved_implementation_items": [
     "SW-G3-01_saved_run_entry",
@@ -153,7 +153,8 @@
     "1 October 2026: CC-02U bounded delivery: six focused checks passed in twelve recorded evaluations/five phase groups, one existing MATLAB session with zero starts, one unchanged ID400 preview. Native save/reopen/export/cancel researcher-performed; exact payloads, 71 protected inputs and 528 final code pins preserved. Retained failed/superseded layout iterations, wrong-window guard rejection and deleted-window restoration. Standalone C02 shown at supported smaller size; researcher usability acceptance pending, no further execution; overall usability/G5/release unaccepted.",
     "1 October 2026: researcher accepted CC-02U bounded usability workflow at 1120 × 800 and 900 × 650, including demonstrated native selections and cancellations. Both CC-02 usability items closed within that scope. C02 conditional reference, FB2312 unresolved recovery, all footprint qualifications and documented limitations retained. Documentation only; no checks, launches or implementation. Broader usability/G5/release unaccepted; release paused and historical containment/consumed approvals unchanged.",
     "1 October 2026: researcher confirms CC-02 closed within its accepted scope and keeps development and release paused. No automatic next validation phase, planning, checks or launches; researcher will supply the next requirement after using the workflow. Scientific qualifications, documented limits and G5/release non-acceptance retained.",
-    "AMP-EXPORT-01: automatic amplitude meanings and site/recording/mouse/group average counts exported additively; final six synthetic and three saved cases passed, existing numerical tables/calculation files/saved inputs preserved. Four batches/36 evaluations, two working MATLAB starts plus one unsuccessful invocation. Storage ceiling exceeded before lossless earlier-evidence compression; disclosed exception. No detector/statistics-pipeline/recorded runs, correction refits or release work."
+    "AMP-EXPORT-01: automatic amplitude meanings and site/recording/mouse/group average counts exported additively; final six synthetic and three saved cases passed, existing numerical tables/calculation files/saved inputs preserved. Four batches/36 evaluations, two working MATLAB starts plus one unsuccessful invocation. Storage ceiling exceeded before lossless earlier-evidence compression; disclosed exception. No detector/statistics-pipeline/recorded runs, correction refits or release work.",
+    "NEXT-01: accepted exports and planning saved; development identity 3.1.0-dev.1 reconciled using static checks only"
   ],
   "standing_boundaries": [
     "BOI only",
@@ -1284,8 +1285,8 @@
       "ExecutionEvidence": "Historical packets, failures, hashes, counts and consumed approvals remain unchanged; this is a documentation-only acceptance"
     }
   },
-  "development_work_status": "NEXT-01_approved_active",
-  "next_requirement": "Complete step 1 only; stop after saving accepted software and development identity. Step 2 requires separate researcher approval.",
+  "development_work_status": "paused_after_step_1_delivery",
+  "next_requirement": "Step 1 source and identity saved; stop after normal branch push and remote verification. Step 2 requires separate researcher approval. Release remains paused.",
   "cc02_scope_closure": {
     "Date": "2026-10-01",
     "Status": "closed_within_accepted_scope",
@@ -1362,7 +1363,7 @@
     }
   },
   "working_plan_20261004": {
-    "Status": "step_1_approved_later_steps_proposed",
+    "Status": "step_1_delivered_later_steps_require_approval",
     "ResearcherRequest": "Make a priority list and working plan, include software versioning and handoffs/guidelines, and supply a concrete first-task handoff",
     "Record": "docs/SOFTWARE_NEXT_STEPS.md",
     "FirstTaskHandoff": "docs/SOFTWARE_FIRST_TASK_HANDOFF.md",
@@ -1373,7 +1374,8 @@
     "Steps": [
       {
         "Item": "NEXT-01",
-        "Outcome": "Save accepted software and establish development version"
+        "Outcome": "Save accepted software and establish development version",
+        "Status": "delivered"
       },
       {
         "Item": "NEXT-02",
@@ -1405,11 +1407,11 @@
     "ImplementationStarted": true,
     "VersionMetadataChanged": true,
     "NewTestsOrMATLABStarted": false,
-    "CommitOrPushPerformed": false,
+    "CommitOrPushPerformed": true,
     "HistoricalEvidenceAndReleaseBlockersRetained": true
   },
   "next_01": {
-    "Status": "approved_active",
+    "Status": "source_saved_delivery_complete",
     "Owner": "implementation_assistant",
     "Record": "docs/SOFTWARE_NEXT_01_DELIVERY.md",
     "Version": "3.1.0-dev.1",
@@ -1427,6 +1429,16 @@
     "RecordingRuns": 0,
     "CalculationChanges": 0,
     "ReleaseAuthorized": false,
-    "Step2Authorized": false
+    "Step2Authorized": false,
+    "SourceCommit": "2f002ab507613b6c5322a43f72f95d7b09a54c70",
+    "Branch": "development-existing-analysis-v3",
+    "Remote": "https://github.com/drfelixb/OxygenDynamicsV2.git",
+    "SourceCommitURL": "https://github.com/drfelixb/OxygenDynamicsV2/commit/2f002ab507613b6c5322a43f72f95d7b09a54c70",
+    "DeliveryCommit": "Commit containing this status; resolve from Git history",
+    "PushVerification": "One normal branch push and exact remote-tip comparison required after this delivery-record commit; outcome reported in final handoff",
+    "Commits": 2,
+    "SuccessfulPushLimit": 1,
+    "RemainingLocalChanges": "None at source commit; final clean-worktree check required",
+    "StaticChecks": "Six calculation, eight accepted code/check and seven saved input/evidence hashes match; all 2224 other initial tracked files unchanged; metadata agreement, JSON parse and Git whitespace pass"
   }
 }

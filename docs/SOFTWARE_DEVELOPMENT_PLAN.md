@@ -549,3 +549,12 @@ are revised for this purpose; the previous README is preserved in
 `DEVELOPMENT_NOTES.md`. This is a documentation-only clarification and GitHub
 update. Existing calculation rules, saved outputs and acceptance limits remain
 unchanged; no new validation campaign or recording execution is authorized.
+
+## Step-1 completion — 4 October 2026
+
+Accepted exports and planning are saved with development identity `3.1.0-dev.1`;
+see [source identity and static checks](SOFTWARE_NEXT_01_DELIVERY.md). The
+authorization above is consumed by this bounded delivery. The delivery-record
+commit is followed only by the approved normal branch push and remote-tip
+verification, whose outcome is reported in the final handoff. Development and
+release then stop. No step-2 work or additional checks are authorized.

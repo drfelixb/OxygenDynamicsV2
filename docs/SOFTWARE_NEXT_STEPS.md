@@ -7,9 +7,9 @@ plan first preserves the accepted software, then checks the remaining main
 measurements, repairs demonstrated defects, and prepares a usable distribution.
 Detector refinement stays a later priority.
 
-**Status: step 1 approved on 4 October 2026; steps 2–7 remain proposed.** Preparing this plan does not start implementation,
-tests, MATLAB, packaging, GitHub publication or a recording run. Only step 1 is authorized by the researcher’s current request; release remains
-paused. Its completion is recorded in [step-1 delivery](SOFTWARE_NEXT_01_DELIVERY.md). The active
+**Status: step 1 delivered on 4 October 2026; steps 2–7 require separate approval.** Preparing this plan does not start implementation,
+tests, MATLAB, packaging, GitHub publication or a recording run. Step 1 is the only authorized delivery; development and release stop after its
+normal push and remote verification. Its completion is recorded in [step-1 delivery](SOFTWARE_NEXT_01_DELIVERY.md). The active
 [development plan](SOFTWARE_DEVELOPMENT_PLAN.md) and [workspace instructions](../AGENTS.md)
 remain the authority. Earlier accepted work and failures remain recorded.
 
@@ -388,6 +388,6 @@ saved values or make them appear to have been produced by current code.
    messages in plain language; internal IDs remain in records.
 
 **Internal work IDs:** NEXT-01 through NEXT-07 correspond to steps 1 through 7.
-NEXT-01 alone is approved for implementation; NEXT-02 through NEXT-07 remain
+NEXT-01 approval is consumed by its delivery; NEXT-02 through NEXT-07 remain
 proposed. The owner is the implementation assistant; no reviewer or additional
 agent has been engaged.

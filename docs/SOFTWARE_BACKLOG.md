@@ -3,12 +3,12 @@
 ## Current priorities
 
 4 October 2026. The [working plan](SOFTWARE_NEXT_STEPS.md) and current status
-control the next-work proposals. Step 1 alone is approved; later steps remain proposed and release stays
-paused. The older dated backlog below is retained as history.
+control the next-work proposals. Step 1 is delivered; later steps require separate approval. Development and
+release are paused after the bounded delivery. The older dated backlog below is retained as history.
 
 | Order | Remaining task | Current status |
 |---|---|---|
-| 1 | Save accepted software to GitHub and reconcile its development version | Approved; static save/version task in progress |
+| 1 | Save accepted software to GitHub and reconcile its development version | Delivered as 3.1.0-dev.1; source commit recorded in step-1 delivery |
 | 2 | Check duration, native event area, tissue occupancy and event-rate calculations | Proposed arithmetic/export verification; no defect presumed |
 | 3 | Check signed integrals, composite normalization and recording/mouse/group summaries | Proposed; accepted amplitude clarification stays complete |
 | 4 | Update and verify the installable candidate with current functions/contracts/guides | Known source-policy omission; older candidate preserved |

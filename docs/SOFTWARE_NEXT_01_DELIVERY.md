@@ -45,3 +45,32 @@ Started UTC: 2026-10-04T18:36:05.317539+00:00
 - JSON parses and Git whitespace checks pass. No numerical tests were run.
   Staging is restricted to the explicit source, existing check and document list.
   Original research payloads and local source maps are excluded.
+
+## Source saved and completion handoff
+
+- Software source commit: [`2f002ab507613b6c5322a43f72f95d7b09a54c70`](https://github.com/drfelixb/OxygenDynamicsV2/commit/2f002ab507613b6c5322a43f72f95d7b09a54c70).
+- Development version: `3.1.0-dev.1`. Build: `2026-10-04 20:36:05 +02:00`.
+- This second commit records delivery only; software/calculation files are
+  unchanged from the source commit. Both commits are included in the single
+  approved normal push to `development-existing-analysis-v3`. The final commit
+  is the commit containing this record, identifiable from Git history.
+- At this pre-push record snapshot, the normal push and exact `git ls-remote`
+  comparison remain required before reporting success. Their actual result and
+  final GitHub commit are supplied in the final researcher handoff. No force
+  push or new tag is permitted; stop on remote divergence.
+- Changed files: six root user/version documents, central metadata and its
+  existing smoke assertion; accepted export helpers/integration/sheet wording;
+  two existing MATLAB check/session files; reader guide, acceptance/task records,
+  seven-step plan, first handoff, backlog, active plan and JSON status. The
+  source commit lists all 24 explicit paths. No research payload was staged.
+- Zero MATLAB starts, test-suite executions, package builds, recording runs,
+  calculation changes, main merges, release tags or publications. Two commits
+  maximum; one successful branch push maximum. Textual additions are below
+  0.2 MiB, well below 5 MiB. Work elapsed is below the 90-minute limit.
+- Calculation contracts, originals, earlier failures, consumed approvals and
+  storage-budget exception are retained. C02 reference is conditional, FB2312
+  recovery unresolved and all saved-footprint qualifications remain.
+- Next chat: step 2 is proposed only. Read the instructions, active plan, status
+  and working plan; obtain separate approval before any calculation checks.
+  Package omissions, hosted support, live containment, licensing, independent
+  use and scientific/release decisions remain open. Stop here.
