@@ -51,7 +51,7 @@ J=struct('Schema','boi-researcher-reference-acceptance-1','DecisionID','SYNTHETI
 jpath=fullfile(root,'reference.json');writeBoundaryTestJSON(jpath,J);
 end
 function testKnownShapeDefinitionsRemainUnchanged(t)
-here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(fileparts(here)));f=fullfile(root,'reference-validation','boi-fb2420-temporal-comparison-20260915','known-shape-tests.json');S=jsondecode(fileread(f));
+here=fileparts(mfilename('fullpath'));f=fullfile(fileparts(here),'fixtures','boi-temporal-shapes.json');S=jsondecode(fileread(f));
 for k=1:numel(S.Fixtures)
  q=S.Fixtures(k);D=computeBOITemporalContext(q.Input,q.StartFrame,q.EndFrame,q.ContextSamples);
  verifyEqual(t,jsondecode(jsonencode(D)),q.Result,'AbsTol',1e-12);
