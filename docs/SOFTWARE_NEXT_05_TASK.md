@@ -28,3 +28,10 @@ or publication. If numerical defect appears, document impact for separate review
 Stop with named environment/support table, actual local/hosted results and
 GitHub links, protected candidate/source relationship and remaining limits.
 Step 6 requires separate approval.
+
+## Completion
+
+Final hosted gate 133/133 passes on 5c23b02. One local full gate and three
+passing targeted checks; two hosted executions. Retain original failures and
+separate local/hosted identities. See [delivery](SOFTWARE_NEXT_05_DELIVERY.md).
+Approval consumed; Step 6 does not start.

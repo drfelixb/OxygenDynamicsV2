@@ -3,7 +3,7 @@
 ## Current priorities
 
 4 October 2026. The [working plan](SOFTWARE_NEXT_STEPS.md) and current status
-control the next-work proposals. Steps 1–4 are accepted within scope; Step 5 approved and active; later steps require separate approval. Release remains paused during Step 5. The older dated backlog below is retained as history.
+control the next-work proposals. Steps 1–4 are accepted within scope; Step 5 delivered; later steps require separate approval. Development and release are paused after Step 5. The older dated backlog below is retained as history.
 
 | Order | Remaining task | Current status |
 |---|---|---|
@@ -11,7 +11,7 @@ control the next-work proposals. Steps 1–4 are accepted within scope; Step 5 a
 | 2 | Check duration, native event area, tissue occupancy and event-rate calculations | Delivered: final 9/9 named cases pass; definitions preserved |
 | 3 | Check signed integrals, composite normalization and recording/mouse/group summaries | Delivered: final 8/8; formulas preserved; export identity repaired in local 3.1.0-dev.2 |
 | 4 | Update and verify the installable candidate with current functions/contracts/guides | Delivered: one dev.2 candidate; matching hashes and 6/6 extracted saved-data routes; older candidate preserved |
-| 5 | Demonstrate named MATLAB/OS support, current tests and hosted CI | Step 5 active: portable fixtures/runner and branch trigger; named local/hosted execution pending |
+| 5 | Demonstrate named MATLAB/OS support, current tests and hosted CI | Delivered: Linux R2025b 133/133; macOS R2025a selected gate/targeted repairs; desktop/native evidence separate |
 | 6 | Demonstrate fresh-recording integration and resources with justified cleanup | Deferred blockers remain; separate assessment and launch decisions required |
 | 7 | Complete independent use/replay, licensing and versioned release preparation | Not approved; publication remains a later decision |
 

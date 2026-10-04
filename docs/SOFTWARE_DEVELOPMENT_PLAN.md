@@ -76,6 +76,16 @@ Commit/push accepted Steps 2–4 and portable tests; preserve candidate/results.
 No recording, calculation change, containment, release or Step 6. Earlier
 active/pause statements apply to their historical dates only.
 
+**Current delivery (4 October 2026): Step 5 complete; development stopped.**
+[Portable check/environment delivery](SOFTWARE_NEXT_05_DELIVERY.md): 26 new
+portable cases connected to BOI runner; 29 desktop cases separate. Final hosted
+Linux/R2025b gate 133/133 passes on 5c23b02; macOS/R2025a one full gate had
+132 passes/one repaired fixture failure, then three targeted checks passed.
+Two hosted executions used, both below 30 minutes; earlier failures retained.
+Accepted Steps 2–4 and tests committed/pushed; preserved candidate's 443 source
+hashes match tested source. Documentation-only completion commit skips CI.
+No active implementation remains; Step 6 and release require separate approval.
+
 ## 1. Product goal
 
 Deliver a maintainable MATLAB application in which a researcher can load a BOI
