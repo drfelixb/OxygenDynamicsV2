@@ -1,5 +1,34 @@
 # OxygenDynamics software backlog
 
+## Current priorities
+
+4 October 2026. The [working plan](SOFTWARE_NEXT_STEPS.md) and current status
+control the next-work proposals. Step 1 alone is approved; later steps remain proposed and release stays
+paused. The older dated backlog below is retained as history.
+
+| Order | Remaining task | Current status |
+|---|---|---|
+| 1 | Save accepted software to GitHub and reconcile its development version | Approved; static save/version task in progress |
+| 2 | Check duration, native event area, tissue occupancy and event-rate calculations | Proposed arithmetic/export verification; no defect presumed |
+| 3 | Check signed integrals, composite normalization and recording/mouse/group summaries | Proposed; accepted amplitude clarification stays complete |
+| 4 | Update and verify the installable candidate with current functions/contracts/guides | Known source-policy omission; older candidate preserved |
+| 5 | Demonstrate named MATLAB/OS support, current tests and hosted CI | Hosted execution evidence open; current branch missing from push triggers |
+| 6 | Demonstrate fresh-recording integration and resources with justified cleanup | Deferred blockers remain; separate assessment and launch decisions required |
+| 7 | Complete independent use/replay, licensing and versioned release preparation | Not approved; publication remains a later decision |
+
+**Accepted within demonstrated scope:** selected-run/review workflows; saved
+reviewed-pocket calculations and immutable save/reopen/export; the tested viewer
+sizes and native controls; automatic amplitude descriptions and contributor counts.
+All scientific qualifications, storage-budget exceptions and earlier failures
+remain. Legacy paths and broad platform/recording validity are not implied.
+
+The [ready-to-copy first task](SOFTWARE_FIRST_TASK_HANDOFF.md) supplies its exact
+scope and budget. The working plan contains handoff instructions for every later
+step. Detector refinement, cohort reanalysis, protocol inference and additional
+physiological estimators remain outside these next tasks.
+
+## Historical backlog and proposals
+
 26 September 2026 · G1/G2 delivered · SW-G3-01 through SW-G3-03 approved as a partial saved-result slice
 
 Priorities describe product impact, not biological event quality. P1 means a

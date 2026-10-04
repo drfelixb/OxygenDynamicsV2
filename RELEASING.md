@@ -1,8 +1,18 @@
 # Release Process
 
-OxygenDynamicsV2 does not currently have a fully reconciled public release
-line. The repository tag `v3.0` and the internal version reported by
-`getOxygenPipelineVersion.m` must be reconciled before creating another tag.
+The historical version line is the unchanged local and GitHub tag `v3.0`
+at `329cdc2f1fd3afd04c54ce4518673165f999b1a0` (4 June 2026, “Final Version”).
+It is an ancestor of the accepted development baseline. On 4 October 2026,
+the researcher approved step 1 and the development label `3.1.0-dev.1`,
+replacing the stale internal `1.01` identity. Central metadata and current
+manual now agree; older outputs keep their original identity.
+
+This is a development snapshot, not a published release. No existing tag was
+moved and no new tag was created. Stable `3.1.0` / `v3.1.0` require separate
+release acceptance; calculation contracts are unchanged. See
+[step-1 record](docs/SOFTWARE_NEXT_01_DELIVERY.md) and
+[version policy](docs/SOFTWARE_NEXT_STEPS.md#software-and-calculation-versioning).
+The process below is future release guidance, not current authorization.
 
 ## Release Preconditions
 

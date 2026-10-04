@@ -98,6 +98,11 @@ ExportInfo.DataOutputMat = fullfile(StatsOutputFolderPath,'DataOutput.mat');
 ExportInfo.EventSpecificOutputXlsx = EventSpecificExportInfo.OutputXlsx;
 ExportInfo.EventSpecificDataMat = EventSpecificExportInfo.DataMat;
 ExportInfo.HypoxicBurden = HypoxicBurden;
+if IsBLI
+    AutomaticAmplitudeExport=createAutomaticAmplitudeExportData(CoreData,HypoxicBurden);
+    ExportInfo.AutomaticAmplitude=writeAutomaticAmplitudeExport(StatsOutputFolderPath,OutputXlsx,AutomaticAmplitudeExport);
+    save(ExportInfo.DataOutputMat,'AutomaticAmplitudeExport','-append');
+end
 ExportInfo.AnalysisManifest = writeOxygenAnalysisManifest(ExportInfo);
 
 end

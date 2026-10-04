@@ -6,6 +6,23 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Accepted development snapshot — 3.1.0-dev.1 (4 October 2026)
+
+- Save accepted reviewed-pocket measurements, immutable save/reopen/export and
+  demonstrated viewer/native controls. Corrected signed trough remains
+  exploratory with its raw companion; C02 reference remains conditional,
+  FB2312 recovery unresolved and saved-footprint qualifications retained.
+- Save accepted automatic optical-amplitude explanations and additive workbook,
+  CSV/MAT and readable companions, with contributor/total counts and availability
+  for site, recording, within-mouse and equal-mouse summaries. Preserve existing
+  values, column identifiers and scientific calculation contracts. The earlier
+  failures and disclosed storage-budget exception remain in the delivery record.
+- Establish development version `3.1.0-dev.1` and reconcile central/displayed
+  version and build documentation. Retain historical `v3.0` and old run metadata.
+  Save the current seven-step plan separately from the historical backlog.
+- Step 1 uses static inspection only: no new MATLAB, tests, packages or recordings.
+  Later calculation checks and release work require separate approval.
+
 ### Full-movie candidate surge measurement validation
 
 - Add control-only tissue-qualified placement and four complete master runs on

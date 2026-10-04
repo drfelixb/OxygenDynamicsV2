@@ -2,14 +2,14 @@
   "schema": "oxygen-software-development-status-1",
   "plan_id": "SW-PLAN-001",
   "plan_version": "0.2",
-  "date": "2026-10-01",
+  "date": "2026-10-04",
   "mission": "Make BOI analysis calculations correct and results understandable for scientists",
   "researcher_priority": "Correct analysis calculations and clear outputs; detection refinement is a separate future priority.",
   "communication_preference": "Use plain feature names, calculation meanings, references, units and uncertainty. Keep internal milestone codes in development records.",
   "scope_direction": "researcher_confirmed_software_focus",
   "roadmap_status": "approved",
-  "active_implementation_milestone": null,
-  "proposed_next_milestone": null,
+  "active_implementation_milestone": "NEXT-01",
+  "proposed_next_milestone": "NEXT-02_requires_separate_approval",
   "approved_implementation_items": [
     "SW-G3-01_saved_run_entry",
     "SW-G3-02_neutral_event_selection",
@@ -45,7 +45,9 @@
     "F07-03I_four_builds_twelve_batches_two_packaging_MATLAB_starts",
     "CC-01_revision_2_bounded_saved_evidence_comparison_delivered_no_adoption",
     "CC-02-01_through_CC-02-05_bounded_integration_4_batches_20_evaluations_2_starts",
-    "CC-02_completion_extension_28_additional_evaluations_two_saved_data_starts_no_batch_ceiling"
+    "CC-02_completion_extension_28_additional_evaluations_two_saved_data_starts_no_batch_ceiling",
+    "AMP-EXPORT-01_automatic_amplitude_summary_export_clarification",
+    "NEXT-01_save_accepted_work_and_version_baseline"
   ],
   "completed_work": [
     "planning inspection",
@@ -150,7 +152,8 @@
     "30 September 2026: CC-02U bounded usability-completion proposal prepared only: standalone 1120x800/900x650 layout, researcher native save/reopen/export and cancellation, three existing saved fixtures, six focused checks/twelve evaluations, two active hours/one saved-data session/100 MiB. Routine UI repairs included if approved; exact scientific payload preservation and final hashes required. No implementation, checks or MATLAB launch started; overall usability/G5/release unaccepted.",
     "1 October 2026: CC-02U bounded delivery: six focused checks passed in twelve recorded evaluations/five phase groups, one existing MATLAB session with zero starts, one unchanged ID400 preview. Native save/reopen/export/cancel researcher-performed; exact payloads, 71 protected inputs and 528 final code pins preserved. Retained failed/superseded layout iterations, wrong-window guard rejection and deleted-window restoration. Standalone C02 shown at supported smaller size; researcher usability acceptance pending, no further execution; overall usability/G5/release unaccepted.",
     "1 October 2026: researcher accepted CC-02U bounded usability workflow at 1120 × 800 and 900 × 650, including demonstrated native selections and cancellations. Both CC-02 usability items closed within that scope. C02 conditional reference, FB2312 unresolved recovery, all footprint qualifications and documented limitations retained. Documentation only; no checks, launches or implementation. Broader usability/G5/release unaccepted; release paused and historical containment/consumed approvals unchanged.",
-    "1 October 2026: researcher confirms CC-02 closed within its accepted scope and keeps development and release paused. No automatic next validation phase, planning, checks or launches; researcher will supply the next requirement after using the workflow. Scientific qualifications, documented limits and G5/release non-acceptance retained."
+    "1 October 2026: researcher confirms CC-02 closed within its accepted scope and keeps development and release paused. No automatic next validation phase, planning, checks or launches; researcher will supply the next requirement after using the workflow. Scientific qualifications, documented limits and G5/release non-acceptance retained.",
+    "AMP-EXPORT-01: automatic amplitude meanings and site/recording/mouse/group average counts exported additively; final six synthetic and three saved cases passed, existing numerical tables/calculation files/saved inputs preserved. Four batches/36 evaluations, two working MATLAB starts plus one unsuccessful invocation. Storage ceiling exceeded before lossless earlier-evidence compression; disclosed exception. No detector/statistics-pipeline/recorded runs, correction refits or release work."
   ],
   "standing_boundaries": [
     "BOI only",
@@ -1281,8 +1284,8 @@
       "ExecutionEvidence": "Historical packets, failures, hashes, counts and consumed approvals remain unchanged; this is a documentation-only acceptance"
     }
   },
-  "development_work_status": "paused_by_researcher",
-  "next_requirement": "Researcher will provide the next requirement after using the accepted workflow; no automatic validation planning or execution.",
+  "development_work_status": "NEXT-01_approved_active",
+  "next_requirement": "Complete step 1 only; stop after saving accepted software and development identity. Step 2 requires separate researcher approval.",
   "cc02_scope_closure": {
     "Date": "2026-10-01",
     "Status": "closed_within_accepted_scope",
@@ -1292,5 +1295,138 @@
     "FurtherChecksOrLaunchesAuthorized": false,
     "NextRequirementAuthority": "researcher",
     "ScientificQualificationsAndLimitations": "Retained unchanged"
+  },
+  "automatic_amplitude_export_task": {
+    "Status": "accepted_within_demonstrated_scope_development_and_release_paused",
+    "Record": "docs/SOFTWARE_AUTOMATIC_AMPLITUDE_EXPORT_TASK.md",
+    "Delivery": "docs/SOFTWARE_AUTOMATIC_AMPLITUDE_EXPORT_DELIVERY.md",
+    "FinalCases": "9/9 pass",
+    "Preservation": {
+      "calculation-preservation.json": {
+        "Files": 6,
+        "Unchanged": true
+      },
+      "saved-input-pins.json": {
+        "Files": 7,
+        "Unchanged": true
+      },
+      "batch-04-code-pins.json": {
+        "Files": 8,
+        "Unchanged": true
+      }
+    },
+    "Budget": {
+      "id": "AMP-EXPORT-01",
+      "started_utc": "2026-10-01T13:36:08.624277+00:00",
+      "maximum_active_seconds": 10800,
+      "maximum_matlab_starts": 2,
+      "maximum_batches": 4,
+      "maximum_case_evaluations": 36,
+      "maximum_evidence_bytes": 157286400,
+      "matlab_starts": 2,
+      "batches": 4,
+      "case_evaluations": 36,
+      "recording_runs": 0,
+      "correction_refits": 0,
+      "detector_changes": 0,
+      "release_work": false,
+      "routine_repairs_included": true,
+      "first_launch_status": "no_log_or_case_results_and_no_new_matlab_process_observed",
+      "matlab_invocations": 3,
+      "successful_saved_data_sessions": 2,
+      "launch_accounting": "Invocation 1 produced no log/results and no new MATLAB process; invocations 2 and 3 are the two successful MATLAB starts. First session closed normally; no new live containment work.",
+      "ended_utc": "2026-10-01T14:01:30.518890+00:00",
+      "status": "final_nine_cases_passed_storage_ceiling_exceeded",
+      "evidence_bytes_before_compression": 235753195,
+      "evidence_bytes_after_compression": 152494197,
+      "storage_budget_met": false,
+      "elapsed_seconds": 1521.896149
+    },
+    "ScientificOutputChanges": 0,
+    "FurtherTestsOrLaunchesPlanned": false,
+    "IndependentHumanReview": false,
+    "Acceptance": {
+      "Date": "2026-10-04",
+      "Authority": "researcher",
+      "Scope": "Automatic amplitude export clarification within its demonstrated scope",
+      "Verbatim": "I accept the automatic amplitude export clarification within its demonstrated scope. Retain the storage-budget exception, earlier failures and scientific limitations. Record acceptance and keep development and release paused. Do not start further verification or another analysis task automatically.",
+      "StorageBudgetExceptionRetained": true,
+      "EarlierFailuresRetained": true,
+      "ScientificLimitationsRetained": true,
+      "DevelopmentPaused": true,
+      "ReleasePaused": true,
+      "FurtherVerificationAuthorized": false,
+      "AutomaticNextAnalysisTaskAuthorized": false,
+      "ReleaseAccepted": false,
+      "ExecutionEvidence": "Historical budgets, failures, results and preservation records unchanged; documentation-only acceptance"
+    }
+  },
+  "working_plan_20261004": {
+    "Status": "step_1_approved_later_steps_proposed",
+    "ResearcherRequest": "Make a priority list and working plan, include software versioning and handoffs/guidelines, and supply a concrete first-task handoff",
+    "Record": "docs/SOFTWARE_NEXT_STEPS.md",
+    "FirstTaskHandoff": "docs/SOFTWARE_FIRST_TASK_HANDOFF.md",
+    "ProposedDevelopmentVersion": "3.1.0-dev.1",
+    "VersionStatus": "adopted_after_local_and_remote_tag_confirmation",
+    "CurrentReportedSoftwareVersion": "3.1.0-dev.1",
+    "CurrentLocalTag": "v3.0",
+    "Steps": [
+      {
+        "Item": "NEXT-01",
+        "Outcome": "Save accepted software and establish development version"
+      },
+      {
+        "Item": "NEXT-02",
+        "Outcome": "Check and repair duration, area, occupancy and event-rate calculations within approved scope"
+      },
+      {
+        "Item": "NEXT-03",
+        "Outcome": "Check and repair integral, composite and recording/mouse/group summaries within approved scope"
+      },
+      {
+        "Item": "NEXT-04",
+        "Outcome": "Update and verify current installation candidate"
+      },
+      {
+        "Item": "NEXT-05",
+        "Outcome": "Demonstrate named support and hosted automated checks"
+      },
+      {
+        "Item": "NEXT-06",
+        "Outcome": "Separate containment assessment decision and bounded fresh-recording integration"
+      },
+      {
+        "Item": "NEXT-07",
+        "Outcome": "Independent use/replay and versioned release preparation"
+      }
+    ],
+    "AllStepBudgets": "Proposed in linked plan; routine repairs and necessary rechecks included after scope approval",
+    "PlanningOnly": false,
+    "ImplementationStarted": true,
+    "VersionMetadataChanged": true,
+    "NewTestsOrMATLABStarted": false,
+    "CommitOrPushPerformed": false,
+    "HistoricalEvidenceAndReleaseBlockersRetained": true
+  },
+  "next_01": {
+    "Status": "approved_active",
+    "Owner": "implementation_assistant",
+    "Record": "docs/SOFTWARE_NEXT_01_DELIVERY.md",
+    "Version": "3.1.0-dev.1",
+    "BuildTimestamp": "2026-10-04 20:36:05 +02:00",
+    "HistoricalTagCommit": "329cdc2f1fd3afd04c54ce4518673165f999b1a0",
+    "Budget": {
+      "ActiveMinutesLimit": 90,
+      "CommitLimit": 2,
+      "SuccessfulPushLimit": 1,
+      "NewTextualEvidenceMiBLimit": 5
+    },
+    "MATLABStarts": 0,
+    "TestSuiteExecutions": 0,
+    "PackageBuilds": 0,
+    "RecordingRuns": 0,
+    "CalculationChanges": 0,
+    "ReleaseAuthorized": false,
+    "Step2Authorized": false
   }
 }

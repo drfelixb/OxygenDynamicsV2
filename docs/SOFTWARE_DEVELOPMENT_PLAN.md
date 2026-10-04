@@ -11,6 +11,18 @@ The researcher [accepted G3's demonstrated daily-use workflow for usability](SOF
 
 **Current gate (1 October 2026):** [CC-02U delivered](SOFTWARE_CC_02_USABILITY_COMPLETION_DELIVERY.md), with all six focused layout/native-chooser/preservation checks passing within twelve recorded evaluations. The researcher accepted the bounded workflow at 1120 × 800 and 900 × 650, including demonstrated native selections and cancellations. Both CC-02 usability items are closed within that scope; all documented limitations remain. No further checks, launches or implementation are authorized. Release remains paused; overall usability, G5 and release are unaccepted.
 
+**Current delivery (1 October 2026):** [Automatic amplitude and summary export clarification delivered](SOFTWARE_AUTOMATIC_AMPLITUDE_EXPORT_DELIVERY.md): final 9/9 saved/synthetic cases passed; formulas, existing values and column identifiers preserved. The [pre-execution budget](SOFTWARE_AUTOMATIC_AMPLITUDE_EXPORT_TASK.md) storage ceiling was exceeded and is disclosed; earlier duplicate artifacts were losslessly compressed. No further tests, launches or campaign are planned. The researcher accepted this clarification within its demonstrated scope on **4 October 2026**, retaining the storage-budget exception, earlier failures and scientific limitations. **Development and release are paused.** No further verification or analysis task is authorized automatically; await a new explicit researcher requirement. Live-run containment remains paused.
+
+**Next work proposal (4 October 2026):** the [software priorities and working plan](SOFTWARE_NEXT_STEPS.md) orders seven practical steps, starting with saving the accepted software and reconciling its development identity, then checking duration/area/occupancy and the remaining summaries. It includes a proposed version policy, bounded task budgets and handoffs. The [first-task handoff](SOFTWARE_FIRST_TASK_HANDOFF.md) is ready for a separate step-1 approval. Preparing these documents authorizes planning only; no implementation, tests, MATLAB, package build, commit/push or release action has started. Development and release remain paused.
+
+**Step-1 authorization (4 October 2026):** the researcher approved saving accepted
+software and establishing `3.1.0-dev.1`, including routine repairs and normal
+commit/push to `development-existing-analysis-v3`. Only NEXT-01 is active;
+[its record](SOFTWARE_NEXT_01_DELIVERY.md) defines the static-only checks and
+90-minute/two-commit/one-push/5-MiB limits. The preceding paused/proposal
+statements describe earlier gates. No calculation work, MATLAB, tests, package,
+recording, release or step-2 work is authorized.
+
 ## 1. Product goal
 
 Deliver a maintainable MATLAB application in which a researcher can load a BOI

@@ -1,3 +1,6 @@
+> Development snapshot: **3.1.0-dev.1**, build `2026-10-04 20:36:05 +02:00`.
+> This is not a release; prior saved-run metadata remains unchanged.
+
 # OxygenDynamicsV2
 
 MATLAB software for analysing bioluminescence oxygen-imaging recordings and
@@ -24,7 +27,7 @@ viewer. Original automatic results remain available separately.
 | Number | Meaning |
 |---|---|
 | Detection score | A normalized signal used to find candidates. It is not a percentage intensity change. |
-| Automatic amplitude | The original pipeline's measurement using its own event interval and reference rules. |
+| Automatic amplitude | Preserved-input intensity relative to its own pre-event reference: a positive drop for sinks or positive increase for surges. Stored fractions and explicitly named percentage columns are separate. |
 | Reviewed raw decrease | The lowest uncorrected intensity in your chosen interval, compared with your chosen reference mean. |
 | Reviewed corrected decrease | The lowest corrected intensity in your chosen interval, compared with the corrected reference mean and scaled by the uncorrected reference mean. |
 
@@ -45,6 +48,21 @@ produce an unavailable result, rather than a replacement reference or a zero.
 
 [Read the short measurement guide](docs/POCKET_MEASUREMENTS.md) for examples,
 reference selection, units and the meaning of uncertainty labels.
+
+## Understand automatic summary exports
+
+New BOI statistics exports include an `AutomaticAmplitudeGuide.md` report,
+companion definition/count/availability sheets in the workbook, and CSV/MAT
+copies. Existing columns and values retain their identifiers and definitions.
+Site means include negative finite amplitudes. Recording burden-amplitude means
+exclude negative drop-oriented amplitudes. Composite means additionally require
+available event area and duration. Mouse means require every recording value;
+group means weight contributing mice equally. Each affected average has its own
+contributing count, total count and observation unit.
+
+[Read the automatic amplitude guide](docs/AUTOMATIC_AMPLITUDE_EXPORTS.md) before
+comparing site, recording or mouse summaries. Existing saved outputs are not
+rewritten automatically.
 
 ## Start with a saved result
 
