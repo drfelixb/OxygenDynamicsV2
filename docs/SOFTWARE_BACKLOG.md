@@ -2,18 +2,20 @@
 
 ## Current priorities
 
-4 October 2026. The [working plan](SOFTWARE_NEXT_STEPS.md) and current status
-control the next-work proposals. Steps 1–4 are accepted within scope; Step 5 delivered; later steps require separate approval. Development and release are paused after Step 5. The older dated backlog below is retained as history.
+5 October 2026. Steps 1–5 are accepted within scope; the independent supervision
+assessment is complete. The researcher deferred VM isolation, watchdogs and
+custom launch qualification to a possible v4. These no longer block the current
+version's user-readiness work. The [revised working plan](SOFTWARE_NEXT_STEPS.md)
+and current status govern; older dated proposals below are historical.
 
-| Order | Remaining task | Current status |
+| Order | Task | Current status |
 |---|---|---|
-| 1 | Save accepted software to GitHub and reconcile its development version | Delivered as 3.1.0-dev.1; source commit recorded in step-1 delivery |
-| 2 | Check duration, native event area, tissue occupancy and event-rate calculations | Delivered: final 9/9 named cases pass; definitions preserved |
-| 3 | Check signed integrals, composite normalization and recording/mouse/group summaries | Delivered: final 8/8; formulas preserved; export identity repaired in local 3.1.0-dev.2 |
-| 4 | Update and verify the installable candidate with current functions/contracts/guides | Delivered: one dev.2 candidate; matching hashes and 6/6 extracted saved-data routes; older candidate preserved |
-| 5 | Demonstrate named MATLAB/OS support, current tests and hosted CI | Delivered: Linux R2025b 133/133; macOS R2025a selected gate/targeted repairs; desktop/native evidence separate |
-| 6 | Demonstrate fresh-recording integration and resources with justified cleanup | Deferred blockers remain; separate assessment and launch decisions required |
-| 7 | Complete independent use/replay, licensing and versioned release preparation | Not approved; publication remains a later decision |
+| 1–5 | Calculation explanations/checks, installation candidate and automated protection | Accepted within demonstrated scopes; complete Linux and partial final macOS evidence distinct |
+| Accepted within scope | Ordinary installation/saved-result walkthrough and one numerical replay | [Accepted](SOFTWARE_NEXT_07_DELIVERY.md): assistant checks remain distinct from independent researcher feedback |
+| Delivered | Portable guides, one updated development candidate and GitHub documentation/scope save | [Documentation/distribution delivery](SOFTWARE_NEXT_07_DISTRIBUTION.md); application calculations unchanged, no active execution |
+| Separate decision | Normal MATLAB fresh-recording workflow check and resource observations | Unverified; finite ordinary-workflow proposal permitted without VM/watchdog prerequisite; no run approved |
+| Before publication | Applicable licence, citation, dependency notices, support limits and release decision | Open; no public release approval |
+| Possible v4 | VM boundary, external watchdog, custom containment and recording-worker release qualification | Deferred out of the current plan; independent findings and failures retained |
 
 **Accepted within demonstrated scope:** selected-run/review workflows; saved
 reviewed-pocket calculations and immutable save/reopen/export; the tested viewer

@@ -1,6 +1,7 @@
 {
   "schema": "oxygen-release-source-policy-1",
   "required_sources": [
+    "DISTRIBUTION_STATUS.md",
     "INSTALLATION.md",
     "MakeRecording_3D.m",
     "OxygenDynamics_Behaviour.m",
@@ -34,6 +35,8 @@
     "docs/AUTOMATIC_AMPLITUDE_EXPORTS.md",
     "docs/BOI_DURATION_AREA_AND_EVENT_RATES.md",
     "docs/BOI_INTEGRALS_COMPOSITES_AND_SUMMARIES.md",
+    "docs/BOI_ORDINARY_MATLAB_WALKTHROUGH.md",
+    "docs/BOI_SAVED_CALCULATION_WORKED_EXAMPLES.md",
     "docs/POCKET_MEASUREMENTS.md",
     "docs/SOFTWARE_NEXT_02_DELIVERY.md",
     "docs/SOFTWARE_NEXT_02_TASK.md",

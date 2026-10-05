@@ -66,6 +66,13 @@ rewritten automatically.
 
 ## Start with a saved result
 
+Follow the [portable saved-result walkthrough](docs/BOI_ORDINARY_MATLAB_WALKTHROUGH.md)
+and [two worked calculations](docs/BOI_SAVED_CALCULATION_WORKED_EXAMPLES.md).
+The software candidate excludes recordings and example results; supply saved
+ingredients separately. [Distribution limits](DISTRIBUTION_STATUS.md) distinguish
+complete Linux calculation evidence, partial final macOS gate evidence and
+assistant-operated saved workflows from independent researcher feedback.
+
 Open MATLAB in the repository folder and run:
 
 ```matlab

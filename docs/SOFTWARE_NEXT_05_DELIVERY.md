@@ -103,3 +103,11 @@ corrected reviewed trough exploratory and automatic/reviewed outputs separate.
 No physiological validation, full detector/runtime or recording evidence,
 licensing clearance, containment or release publication is claimed. Step 5 is
 delivered for researcher acceptance; development stops before Step 6.
+
+## Researcher acceptance, 5 October 2026
+
+Accepted within the demonstrated portable-calculation and environment scope.
+The complete Linux 133/133 pass and partial final macOS evidence remain distinct;
+historical failures and limitations are retained. Only Step 6's initial
+independent Codex code review was separately approved, without implementation,
+tests, research-process/MATLAB launches or recording attempts.

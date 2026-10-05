@@ -8,6 +8,12 @@ reconstructed into releases.
 
 ### Development snapshot — 3.1.0-dev.2 (4 October 2026)
 
+- Package portable saved-result instructions and actual event/recording worked
+  calculations; accept the demonstrated assistant workflow separately from
+  independent researcher feedback. Preserve earlier candidate/results and
+  calculations. Clarify current support and deferred custom-supervision scope;
+  licence, fresh-recording claims and public release remain separate decisions.
+
 - Add self-contained portable BOI arithmetic/export/provenance and reviewed-pocket
   compatibility checks. Separate programmatic desktop checks and enable the
   development-existing-analysis-v3 Linux R2025b CI trigger with result artifacts.

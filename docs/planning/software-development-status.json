@@ -2,14 +2,14 @@
   "schema": "oxygen-software-development-status-1",
   "plan_id": "SW-PLAN-001",
   "plan_version": "0.2",
-  "date": "2026-10-04",
+  "date": "2026-10-05",
   "mission": "Make BOI analysis calculations correct and results understandable for scientists",
   "researcher_priority": "Correct analysis calculations and clear outputs; detection refinement is a separate future priority.",
   "communication_preference": "Use plain feature names, calculation meanings, references, units and uncertainty. Keep internal milestone codes in development records.",
-  "scope_direction": "researcher_confirmed_software_focus",
+  "scope_direction": "researcher_confirmed_calculations_and_ordinary_matlab_use_custom_supervision_deferred",
   "roadmap_status": "approved",
   "active_implementation_milestone": null,
-  "proposed_next_milestone": "NEXT-06_requires_separate_approval",
+  "proposed_next_milestone": "licensing_dependency_support_and_explicit_release_decisions_require_direction",
   "approved_implementation_items": [
     "SW-G3-01_saved_run_entry",
     "SW-G3-02_neutral_event_selection",
@@ -70,12 +70,12 @@
     "SW-G3-01 through SW-G3-03 saved-result usability slice delivered for researcher acceptance",
     "131/131 bounded MATLAB BOI regression tests passed; saved G2 both-sign event/window export walkthrough passed",
     "SW-G3-02 usability feedback: event-row click remains on Saved event evidence and updates its trace",
-    "Researcher confirmed saved event row-click usability: \u201cgood. works.\u201d",
+    "Researcher confirmed saved event row-click usability: “good. works.”",
     "SW-G3-04 through SW-G3-06 bounded pre-run/progress/synthetic journey slice delivered for researcher usability acceptance",
     "one 96x96x100 synthetic GUI end-to-end execution; staging, analysis, statistics and complete visually captured",
     "synthetic event inspection/export and exact saved-run reopen verified; saved failed-status fixture excluded",
     "133/133 bounded MATLAB BOI regression tests passed after G3 pre-run/progress changes",
-    "Researcher accepted the demonstrated SW-G3-04 through SW-G3-06 partial workflow: \u201cits ok\u201d",
+    "Researcher accepted the demonstrated SW-G3-04 through SW-G3-06 partial workflow: “its ok”",
     "Researcher used native folder chooser to reopen the completed G2 gui-run and launched its indexed workbook in MATLAB; no analysis rerun",
     "SW-G3-07 one disposable synthetic staging failure: GUI and RunStatus showed stage/error/incomplete folder; completed-run list/reopen rejected it; zero detector and statistics executions",
     "SW-G3-07 presentation revision: source-unavailable recovery wording and exact error/folder preserved; saved failure fixture shows disabled Run, 14/14 focused GUI tests passed; no new execution",
@@ -155,14 +155,16 @@
     "30 September 2026: researcher accepted CC-02 bounded numerical/integration delivery and demonstrated main-window workflow only. C02 remains conditional, FB2312 recovery unresolved, and all saved-footprint qualifications retained. Native chooser interaction and standalone viewer layout remain open; overall usability, G5 and release remain unaccepted. Acceptance recorded in documentation only; no further checks or launches started. Historical execution packets, containment_failure and consumed approvals unchanged.",
     "30 September 2026: CC-02U bounded usability-completion proposal prepared only: standalone 1120x800/900x650 layout, researcher native save/reopen/export and cancellation, three existing saved fixtures, six focused checks/twelve evaluations, two active hours/one saved-data session/100 MiB. Routine UI repairs included if approved; exact scientific payload preservation and final hashes required. No implementation, checks or MATLAB launch started; overall usability/G5/release unaccepted.",
     "1 October 2026: CC-02U bounded delivery: six focused checks passed in twelve recorded evaluations/five phase groups, one existing MATLAB session with zero starts, one unchanged ID400 preview. Native save/reopen/export/cancel researcher-performed; exact payloads, 71 protected inputs and 528 final code pins preserved. Retained failed/superseded layout iterations, wrong-window guard rejection and deleted-window restoration. Standalone C02 shown at supported smaller size; researcher usability acceptance pending, no further execution; overall usability/G5/release unaccepted.",
-    "1 October 2026: researcher accepted CC-02U bounded usability workflow at 1120 \u00d7 800 and 900 \u00d7 650, including demonstrated native selections and cancellations. Both CC-02 usability items closed within that scope. C02 conditional reference, FB2312 unresolved recovery, all footprint qualifications and documented limitations retained. Documentation only; no checks, launches or implementation. Broader usability/G5/release unaccepted; release paused and historical containment/consumed approvals unchanged.",
+    "1 October 2026: researcher accepted CC-02U bounded usability workflow at 1120 × 800 and 900 × 650, including demonstrated native selections and cancellations. Both CC-02 usability items closed within that scope. C02 conditional reference, FB2312 unresolved recovery, all footprint qualifications and documented limitations retained. Documentation only; no checks, launches or implementation. Broader usability/G5/release unaccepted; release paused and historical containment/consumed approvals unchanged.",
     "1 October 2026: researcher confirms CC-02 closed within its accepted scope and keeps development and release paused. No automatic next validation phase, planning, checks or launches; researcher will supply the next requirement after using the workflow. Scientific qualifications, documented limits and G5/release non-acceptance retained.",
     "AMP-EXPORT-01: automatic amplitude meanings and site/recording/mouse/group average counts exported additively; final six synthetic and three saved cases passed, existing numerical tables/calculation files/saved inputs preserved. Four batches/36 evaluations, two working MATLAB starts plus one unsuccessful invocation. Storage ceiling exceeded before lossless earlier-evidence compression; disclosed exception. No detector/statistics-pipeline/recorded runs, correction refits or release work.",
     "NEXT-01: accepted exports and planning saved; development identity 3.1.0-dev.1 reconciled using static checks only",
     "NEXT-02: duration, native event area, union occupancy, onset rate and concurrent density checked for both signs; final 9/9 named cases passed; no scientific-output change",
     "NEXT-03: 8/8 final signed-integral/composite/summary/provenance cases; three batches/24 evaluations, two saved-data sessions; formulas preserved; local 3.1.0-dev.2 export identity repair; no commit/push",
-    "NEXT-04: one fresh modified dev.2 installation build; source/folder/ZIP/extraction hashes match; 6/6 extracted saved-data routes; five batches/one MATLAB session; previous candidate and uncommitted Steps 2\u20133 preserved; no commit/push/publication",
-    "NEXT-05: 26 new portable cases; 133/133 final hosted Linux R2025b gate on 5c23b02; one macOS R2025a gate and three targeted repairs; 29 desktop cases separate; accepted source pushed; all 443 candidate source hashes and 1725 protected files unchanged"
+    "NEXT-04: one fresh modified dev.2 installation build; source/folder/ZIP/extraction hashes match; 6/6 extracted saved-data routes; five batches/one MATLAB session; previous candidate and uncommitted Steps 2–3 preserved; no commit/push/publication",
+    "NEXT-05: 26 new portable cases; 133/133 final hosted Linux R2025b gate on 5c23b02; one macOS R2025a gate and three targeted repairs; 29 desktop cases separate; accepted source pushed; all 443 candidate source hashes and 1725 protected files unchanged",
+    "NEXT-07: researcher accepted assistant saved-data readiness within scope; portable guides and one new development candidate delivered, application calculations unchanged; original candidate/results preserved; independent scientist walkthrough feedback remains absent.",
+    "NEXT-07-DIST: 446 source files plus manifest match folder/ZIP/extraction, 38 package links pass; one packaging-only invocation; accepted documentation and deferred custom-supervision scope saved to development branch with CI skipped."
   ],
   "standing_boundaries": [
     "BOI only",
@@ -180,7 +182,8 @@
     "protocol inference",
     "new scientific estimators",
     "replacement detector",
-    "platform rewrite"
+    "platform rewrite",
+    "VM isolation, external watchdogs, custom whole-launch containment and recording-worker release qualification (possible v4; outside current 3.1 plan)"
   ],
   "continuation_rule": "Continue only the currently approved software item or milestone; obtain scope-specific approval at a boundary",
   "approval_history": [
@@ -234,7 +237,7 @@
     {
       "date": "2026-09-27",
       "origin": "researcher decision",
-      "verbatim": "I accept G3\u2019s demonstrated daily-use workflow.",
+      "verbatim": "I accept G3’s demonstrated daily-use workflow.",
       "approved_scope": "G3 usability acceptance only. No validation of a fresh real-acquisition run or every failure path; no more G3 tests and no release approval. Analysis/statistics failures, incomplete-run recovery and relevant real-acquisition checks move to bounded G5 release work. G4 proposal requested, not implementation approval."
     },
     {
@@ -354,7 +357,7 @@
     {
       "date": "2026-09-28",
       "origin": "researcher instruction",
-      "verbatim": "I approve SW-G5-06R-07 implementation, up to eight named offline schema evaluations, and\u2014only if the static and offline gates pass\u2014one startup-only MATLAB launch under the card\u2019s 100-second total limit and resource and containment stops. No retry.",
+      "verbatim": "I approve SW-G5-06R-07 implementation, up to eight named offline schema evaluations, and—only if the static and offline gates pass—one startup-only MATLAB launch under the card’s 100-second total limit and resource and containment stops. No retry.",
       "approved_scope": "New no-Run startup worker/caller, eight one-use saved-data cases and one conditional 100-second MATLAB startup only after static and offline final-code gates. No Run, master, detector, statistics, attempt marker, recorded movie, SW-G5-07, G5 acceptance or release."
     },
     {
@@ -366,13 +369,13 @@
     {
       "date": "2026-09-28",
       "origin": "researcher instruction",
-      "verbatim": "Please hold the unspent SW-G5-06R-07 MATLAB launch. The final process snapshot is captured before the caller\u2019s final preflight and the controller\u2019s second `preflight_ok()` call. Revise the boundary so a new process snapshot is obtained after all potentially slow preflight work and assessed immediately before token publication. Propose a bounded offline test with a delayed preflight that proves a stale snapshot cannot publish a token, plus the final-code hash gate required after the change. Do not launch MATLAB under this request.",
+      "verbatim": "Please hold the unspent SW-G5-06R-07 MATLAB launch. The final process snapshot is captured before the caller’s final preflight and the controller’s second `preflight_ok()` call. Revise the boundary so a new process snapshot is obtained after all potentially slow preflight work and assessed immediately before token publication. Propose a bounded offline test with a delayed preflight that proves a stale snapshot cannot publish a token, plus the final-code hash gate required after the change. Do not launch MATLAB under this request.",
       "approved_scope": "Revise the final-snapshot/preflight boundary and prepare a finite offline test/hash-gate proposal; hold all MATLAB and recorded-movie launches. No new offline evaluations approved by this instruction."
     },
     {
       "date": "2026-09-28",
       "origin": "researcher instruction",
-      "verbatim": "I approve SW-G5-06R-07B\u2019s 13 named, one-use offline evaluations under the decision card\u2019s no-launch limits. Pin the final executable and harness hashes before testing, stop at the first failed case without retry, and report the ordered traces, claim/token counts, and post-test hash gate. Keep the MATLAB startup on hold; this approval does not authorize a live worker token or recording run.",
+      "verbatim": "I approve SW-G5-06R-07B’s 13 named, one-use offline evaluations under the decision card’s no-launch limits. Pin the final executable and harness hashes before testing, stop at the first failed case without retry, and report the ordered traces, claim/token counts, and post-test hash gate. Keep the MATLAB startup on hold; this approval does not authorize a live worker token or recording run.",
       "approved_scope": "Thirteen named saved-data evaluations once each, with exact pre/post executable/harness hashes and stop on first failure. Zero child process/MATLAB launch, live worker token or recorded movie; startup remains held pending separate decision."
     },
     {
@@ -426,7 +429,7 @@
     {
       "date": "2026-09-29",
       "origin": "researcher instruction",
-      "verbatim": "approve SW-G5-07\u2019s one local inventory and six named static assessments under the decision card. Produce only the audit document, manifests, and factual plan/status updates. Record missing evidence as untested and contradictory claims as failures. Do not run tests or MATLAB, access the network or excluded recordings, repair code, package, publish, or treat this audit as G5 or release acceptance. Present the findings and bounded follow-up choices when complete.",
+      "verbatim": "approve SW-G5-07’s one local inventory and six named static assessments under the decision card. Produce only the audit document, manifests, and factual plan/status updates. Record missing evidence as untested and contradictory claims as failures. Do not run tests or MATLAB, access the network or excluded recordings, repair code, package, publish, or treat this audit as G5 or release acceptance. Present the findings and bounded follow-up choices when complete.",
       "approved_scope": "One local inventory and six static assessments, documentation/manifests/plan/status only; no execution, network, excluded data, repairs, packaging or release acceptance."
     },
     {
@@ -438,7 +441,7 @@
     {
       "date": "2026-09-29",
       "origin": "researcher instruction",
-      "verbatim": "I approve F07-03\u2019s bounded source-list repair and at most ten one-use offline manifest evaluations under the decision card. Pin final code and fixture hashes before testing; stop at the first failure without retry. Verify that the harness checks the same policy the packager uses and that required-file validation precedes directory creation. Do not run MATLAB, build a folder or ZIP, include excluded data, or mark the package release-ready. Report the patch, case results, hashes, and remaining integration gaps.",
+      "verbatim": "I approve F07-03’s bounded source-list repair and at most ten one-use offline manifest evaluations under the decision card. Pin final code and fixture hashes before testing; stop at the first failure without retry. Verify that the harness checks the same policy the packager uses and that required-file validation precedes directory creation. Do not run MATLAB, build a folder or ZIP, include excluded data, or mark the package release-ready. Report the patch, case results, hashes, and remaining integration gaps.",
       "approved_scope": "Source-list-only patch and at most ten one-use offline manifest evaluations; pin final code/fixtures, stop first failure with no retry; no MATLAB or package folder/ZIP."
     },
     {
@@ -475,6 +478,26 @@
       "date": "2026-09-29",
       "origin": "researcher instruction",
       "decision": "Accept CC-01 as a bounded arithmetic/numerical comparison only; preserve outputs; prepare one concise saved-evidence scientific decision view for historical ID400, FB2312 and C02 row 321. No recording run or diagnostic campaign."
+    },
+    {
+      "date": "2026-10-05",
+      "origin": "researcher instruction",
+      "decision": "Accept Step 5 within demonstrated portable-calculation/environment scope, retaining complete Linux versus partial final macOS distinction. Approve only one Step 6 initial independent assessment, one separate Codex reviewer, three active hours, saved evidence/code review only. No implementation, tests, research-process/MATLAB launch, recording analysis, push or publication; stop after assessment."
+    },
+    {
+      "date": "2026-10-05",
+      "origin": "researcher instruction",
+      "decision": "Defer VM isolation, watchdogs, custom launch containment and recording-worker qualification to a possible later version such as v4; remove them from current development prerequisites and proceed with ordinary MATLAB user readiness. Preserve findings/failures and unverified fresh-recording evidence. Planning revision only; no new execution or release approval."
+    },
+    {
+      "date": "2026-10-05",
+      "origin": "researcher instruction",
+      "decision": "Approve complete ordinary MATLAB user-readiness task: four active hours, at most two saved-data MATLAB sessions and 100 MiB; routine repairs/focused checks, preserved values/results/qualifications. No recording, scientific-definition changes, VM/watchdog work, commit/push or publication. Stop after delivery."
+    },
+    {
+      "date": "2026-10-05",
+      "origin": "researcher instruction",
+      "decision": "Accept saved-data user-readiness within demonstrated scope, preserving assistant/researcher feedback distinction. Approve one portable-documentation/development-distribution task: 90 active minutes, one build, at most one packaging-only MATLAB session, 50 MiB, at most one automatic CI execution and no manual rerun; commit/push accepted docs and scope to development-existing-analysis-v3; no recordings, licence choice, containment, merge/tag/release."
     }
   ],
   "team_started": false,
@@ -897,7 +920,7 @@
     {
       "date": "2026-09-27",
       "item": "G3 demonstrated daily-use workflow",
-      "verbatim": "I accept G3\u2019s demonstrated daily-use workflow.",
+      "verbatim": "I accept G3’s demonstrated daily-use workflow.",
       "acceptance": "researcher usability acceptance only; fresh real-acquisition and non-staging failure paths untested; no release approval"
     },
     {
@@ -940,34 +963,17 @@
     }
   ],
   "proposed_next_items": [
-    "CC-02U-01_normal_standalone_layout",
-    "CC-02U-02_smaller_standalone_layout",
-    "CC-02U-03_native_save_and_cancel",
-    "CC-02U-04_native_reopen_and_cancel",
-    "CC-02U-05_native_export_and_cancel",
-    "CC-02U-06_final_value_qualification_and_input_preservation"
+    "project_licence_dependency_notices",
+    "declare_support_and_intended_release_claims",
+    "explicit_release_decision"
   ],
-  "proposed_next_evidence": "docs/SOFTWARE_CC_02_USABILITY_COMPLETION_PROPOSAL.md",
+  "proposed_next_evidence": "docs/SOFTWARE_NEXT_07_HANDOFF.md",
   "release_blockers": [
     {
-      "id": "G5_LIVE_ACKNOWLEDGEMENT",
-      "status": "open_work_deferred_by_researcher",
-      "reason": "Successful live startup acknowledgement has not been demonstrated.",
-      "evidence": "docs/SOFTWARE_G5_REAL_ACQUISITION_GATE_DECISION.md",
-      "waived": false
-    },
-    {
-      "id": "G5_VERIFIED_CONTAINMENT",
-      "status": "open_work_deferred_by_researcher",
-      "reason": "Verified live containment remains unestablished; historical containment_failure retained.",
-      "evidence": "docs/SOFTWARE_G5_REAL_ACQUISITION_GATE_DECISION.md",
-      "waived": false
-    },
-    {
       "id": "G5_REAL_ACQUISITION_RESOURCES",
-      "status": "open_work_deferred_by_researcher",
-      "reason": "Runtime and peak-memory measurements from the named real-acquisition execution remain unverified; integration also unverified.",
-      "evidence": "docs/SOFTWARE_G5_REAL_ACQUISITION_GATE_DECISION.md",
+      "status": "unverified_normal_matlab_workflow_check_may_be_proposed_separately",
+      "reason": "Fresh-recording integration and runtime/peak-memory evidence remain unverified. A finite ordinary MATLAB check can be proposed without the deferred VM/watchdog/custom release prerequisite; no new run is approved.",
+      "evidence": "docs/SOFTWARE_NEXT_STEPS.md",
       "waived": false
     },
     {
@@ -979,18 +985,18 @@
     },
     {
       "id": "G5_PACKAGE_DEPENDENCIES",
-      "status": "bounded_F07-03I_named_BOI_package_integration_demonstrated_broader_runtime_unverified",
-      "reason": "Actual local MATLAB packaging, exact folder/ZIP/extracted contents and 26 named BOI package-only resolutions demonstrated in F07-03I and accepted within delivery-report limits; broader runtime dependency closure remains unverified.",
+      "status": "demonstrated_and_accepted_within_next04_named_saved_data_scope",
+      "reason": "Step 4 candidate includes 443 pinned source/document files plus manifest; folder/ZIP/extraction agree, and six saved-data routes passed without development-checkout fallback.",
       "waived": false,
-      "evidence": "docs/SOFTWARE_F07_03_INTEGRATION_DELIVERY.md",
+      "evidence": "docs/SOFTWARE_NEXT_04_DELIVERY.md",
       "limitation": "Bounded local candidate accepted; full dynamic/optional/legacy runtime closure and release readiness remain unverified."
     },
     {
       "id": "G5_HOSTED_CI",
-      "status": "open_missing_execution_evidence",
-      "reason": "Configured Ubuntu/R2025b CI has no verified hosted execution evidence in the bounded local audit.",
+      "status": "demonstrated_and_accepted_within_named_portable_scope",
+      "reason": "Step 5 final Ubuntu/R2025b portable gate passed 133/133 on 5c23b02. Complete Linux and partial final macOS evidence remain distinct; broader platforms remain untested.",
       "waived": false,
-      "evidence": "docs/SOFTWARE_G5_07_AUDIT.md"
+      "evidence": "docs/SOFTWARE_NEXT_05_DELIVERY.md"
     }
   ],
   "release_work_status": "paused_by_researcher",
@@ -1215,7 +1221,7 @@
       "UsabilityResolution": {
         "Date": "2026-10-01",
         "WorkItem": "CC-02U",
-        "Scope": "CC-02U bounded standalone workflow at 1120 \u00d7 800 and 900 \u00d7 650, including demonstrated native save/reopen/export selections and cancellations",
+        "Scope": "CC-02U bounded standalone workflow at 1120 × 800 and 900 × 650, including demonstrated native save/reopen/export selections and cancellations",
         "AcceptanceRecord": "cc02_usability_completion_proposal.Acceptance",
         "FurtherChecksOrLaunchesAuthorized": false
       }
@@ -1267,7 +1273,7 @@
     "Acceptance": {
       "Date": "2026-10-01",
       "Authority": "researcher",
-      "Scope": "CC-02U bounded standalone workflow at 1120 \u00d7 800 and 900 \u00d7 650, including demonstrated native save/reopen/export selections and cancellations",
+      "Scope": "CC-02U bounded standalone workflow at 1120 × 800 and 900 × 650, including demonstrated native save/reopen/export selections and cancellations",
       "ClosedUsabilityItems": [
         "Standalone viewer layout at the two named sizes",
         "Native chooser interaction for the demonstrated save, reopen and export paths, including cancellation"
@@ -1293,8 +1299,8 @@
       "ExecutionEvidence": "Historical packets, failures, hashes, counts and consumed approvals remain unchanged; this is a documentation-only acceptance"
     }
   },
-  "development_work_status": "paused_after_step_5_delivery",
-  "next_requirement": "Step 5 delivered within named portable-check/environment scope; await researcher acceptance and separate Step 6 approval. No automatic further tests, hosted executions, recording, containment or release work.",
+  "development_work_status": "stopped_after_portable_documentation_and_development_distribution",
+  "next_requirement": "Portable guides and one verified development candidate delivered; accepted documentation/scope committed and normally pushed with CI skipped. Stop; licence/dependency notices, support and explicit publication decisions remain. Fresh recording integration/runtime/memory unverified; no automatic work.",
   "cc02_scope_closure": {
     "Date": "2026-10-01",
     "Status": "closed_within_accepted_scope",
@@ -1371,7 +1377,7 @@
     }
   },
   "working_plan_20261004": {
-    "Status": "steps_1_through_5_delivered_later_steps_require_approval",
+    "Status": "steps_1_through_5_accepted_custom_supervision_deferred_user_readiness_next",
     "ResearcherRequest": "Make a priority list and working plan, include software versioning and handoffs/guidelines, and supply a concrete first-task handoff",
     "Record": "docs/SOFTWARE_NEXT_STEPS.md",
     "FirstTaskHandoff": "docs/SOFTWARE_FIRST_TASK_HANDOFF.md",
@@ -1403,15 +1409,17 @@
       {
         "Item": "NEXT-05",
         "Outcome": "Demonstrate named support and hosted automated checks",
-        "Status": "delivered_named_portable_environment_scope"
+        "Status": "accepted_within_named_portable_environment_scope"
       },
       {
         "Item": "NEXT-06",
-        "Outcome": "Separate containment assessment decision and bounded fresh-recording integration"
+        "Outcome": "Independent assessment complete; custom VM/watchdog execution supervision deferred to a possible v4",
+        "Status": "assessment_delivered_custom_infrastructure_deferred_outside_current_scope"
       },
       {
         "Item": "NEXT-07",
-        "Outcome": "Independent use/replay and versioned release preparation"
+        "Outcome": "Final ordinary installation/saved-result walkthrough, numerical replay and scoped release preparation",
+        "Status": "accepted_within_demonstrated_saved_data_scope_portable_guides_distributed"
       }
     ],
     "AllStepBudgets": "Proposed in linked plan; routine repairs and necessary rechecks included after scope approval",
@@ -1531,7 +1539,7 @@
       "DocumentedLimitationsRetained": true
     }
   },
-  "development_status": "paused_after_step_5_delivery",
+  "development_status": "stopped_after_portable_documentation_and_development_distribution",
   "next_04": {
     "Status": "accepted_within_demonstrated_saved_data_scope",
     "Record": "docs/SOFTWARE_NEXT_04_TASK.md",
@@ -1569,7 +1577,7 @@
     }
   },
   "next_05": {
-    "Status": "delivered_acceptance_pending",
+    "Status": "accepted_with_demonstrated_scope_and_limitations",
     "Record": "docs/SOFTWARE_NEXT_05_TASK.md",
     "Step6Authorized": false,
     "ReleaseAuthorized": false,
@@ -1598,9 +1606,288 @@
     "CalculationChanges": 0,
     "ScientificOutputChanges": 0,
     "CommitPushPerformed": true,
-    "DeliveryCommit": "Documentation-only completion record, resolve from Git history; no new CI execution",
+    "DeliveryCommit": "1d4b6631935a2d95730f365fae70c900a8bff107",
     "UnresolvedScientificOutputDecision": null,
     "IndependentHumanReview": false,
-    "FinalStoppedUTC": "2026-10-04T20:46:45.166090+00:00"
+    "FinalStoppedUTC": "2026-10-04T20:46:45.166090+00:00",
+    "AcceptedDate": "2026-10-05",
+    "AcceptanceScope": "Portable-calculation/environment scope only; complete Linux pass and partial final macOS evidence remain distinct."
+  },
+  "active_assessment": null,
+  "next_06_assessment": {
+    "Status": "delivered_specific_blocker_recording_gate_remains_blocked",
+    "Record": "docs/SOFTWARE_NEXT_06_INDEPENDENT_ASSESSMENT.md",
+    "Scope": "Independent Codex code review, not a human systems audit",
+    "Reviewer": "separate Codex reviewer /root/independent_launch_review; no implementation-chat history supplied",
+    "BaseCommit": "1d4b6631935a2d95730f365fae70c900a8bff107",
+    "SoftwareVersion": "3.1.0-dev.2",
+    "MaximumActiveHours": 3,
+    "TestsAuthorized": 0,
+    "ResearchProcessLaunchesAuthorized": 0,
+    "MATLABLaunchesAuthorized": 0,
+    "ImplementationAuthorized": false,
+    "RecordingAttemptAuthorized": false,
+    "AutomaticRetriesAuthorized": false,
+    "CommitPushAuthorized": false,
+    "ReleaseAuthorized": false,
+    "HistoricalFailuresAndConsumedApprovalsPreserved": true,
+    "IndependentCodexReview": true,
+    "IndependentHumanSystemsAudit": false,
+    "ReviewedCodeFiles": 14,
+    "ReviewedSavedEvidenceAnchors": 5,
+    "HashManifest": "docs/planning/SOFTWARE_NEXT_06_REVIEWED_HASHES.json",
+    "CurrentApproachMeetsRecordingPrerequisite": false,
+    "Blocker": "Sampled PGID/ancestry can miss escaping/reparenting children before registration; no exclusively owned whole-launch boundary with independently enforced cleanup deadline is demonstrated.",
+    "Recommendation": "An exclusively owned disposable execution boundary, preferably an explicitly agreed VM, with external watchdog; one separately approved finite qualification packet before any recording proposal.",
+    "MinimumProspectiveEvidence": "Frozen one-use Run contract/hashes; eight named non-recording lifecycle cases once each; one startup-only MATLAB acknowledgement and normal-exit check. No automatic execution, repairs or retries; stop at first failure.",
+    "BoundaryAvailabilityAndEnvironmentDecisionResolved": false,
+    "TestsPerformed": 0,
+    "ResearchProcessLaunchesPerformed": 0,
+    "MATLABLaunchesPerformed": 0,
+    "RecordingAnalysesPerformed": 0,
+    "CodeRepairsPerformed": 0,
+    "CommitPushPerformed": false,
+    "PublicationPerformed": false,
+    "ProtectedFilesUnchanged": 140,
+    "Step4CandidateZIPUnchanged": true,
+    "ConservativeActiveTimeUpperBoundMinutes": 41,
+    "TimeUpperBoundMethod": "Elapsed since initial preservation receipt plus 30-minute allowance for preceding instruction reads/delegation; within three active hours.",
+    "StoppedUTC": "2026-10-05T06:45:31.717523+00:00",
+    "Disposition": "Review findings retained; proposed execution boundary/watchdog/worker qualification deferred to a possible v4 by the researcher on 2026-10-05. Not a prerequisite for current user-readiness work."
+  },
+  "future_version_requirements": [
+    {
+      "id": "G5_LIVE_ACKNOWLEDGEMENT",
+      "status": "deferred_outside_current_version_scope",
+      "possible_target_version": "v4_or_later_to_be_decided",
+      "required_for_current_version": false,
+      "passed": false,
+      "historical_release_blocker": {
+        "id": "G5_LIVE_ACKNOWLEDGEMENT",
+        "status": "open_work_deferred_by_researcher",
+        "reason": "Successful live startup acknowledgement has not been demonstrated.",
+        "evidence": "docs/SOFTWARE_G5_REAL_ACQUISITION_GATE_DECISION.md",
+        "waived": false
+      }
+    },
+    {
+      "id": "G5_VERIFIED_CONTAINMENT",
+      "status": "deferred_outside_current_version_scope",
+      "possible_target_version": "v4_or_later_to_be_decided",
+      "required_for_current_version": false,
+      "passed": false,
+      "historical_release_blocker": {
+        "id": "G5_VERIFIED_CONTAINMENT",
+        "status": "open_work_deferred_by_researcher",
+        "reason": "Verified live containment remains unestablished; historical containment_failure retained.",
+        "evidence": "docs/SOFTWARE_G5_REAL_ACQUISITION_GATE_DECISION.md",
+        "waived": false
+      }
+    }
+  ],
+  "scope_revision_20261005": {
+    "ResearcherInstruction": "i do not want to go into that direction. keep that at something which can be done for a very later version (e.g. v4 or so) but not for the current development plan. I need to proceed.",
+    "Decision": "Defer custom isolation/watchdog/whole-launch containment and recording-worker qualification; proceed with ordinary MATLAB user readiness.",
+    "CurrentVersion": "3.1.0-dev.2",
+    "CustomSupervisionRequiredForCurrentVersion": false,
+    "HistoricalReviewFailuresAndConsumedApprovalsPreserved": true,
+    "FreshRecordingIntegrationAndResources": "unverified; ordinary MATLAB proposal permitted separately, no execution authorized",
+    "NextHandoff": "docs/SOFTWARE_NEXT_07_HANDOFF.md",
+    "ScientificOrSoftwareChanges": false,
+    "MATLABTestsRecordingsCommitPushPublicationAuthorized": false,
+    "ReleaseApproval": false
+  },
+  "next_07": {
+    "ID": "NEXT-07",
+    "Status": "accepted_within_demonstrated_saved_data_scope",
+    "Record": "docs/SOFTWARE_NEXT_07_HANDOFF.md",
+    "UserBenefit": "Make accepted software easy to install/use and explain one event measure and one recording summary from saved exported ingredients",
+    "Owner": "implementation assistant; researcher provides walkthrough feedback and acceptance",
+    "ScopeRevisionAuthorized": true,
+    "ImplementationAuthorized": false,
+    "PreparationAuthorizesLaunchOrRecording": false,
+    "ReuseAcceptedStep4Candidate": true,
+    "PreserveOriginalCandidateZIP": true,
+    "PreserveUncommittedAssessmentAndScopeDocuments": true,
+    "Budget": {
+      "MaximumActiveHours": 4,
+      "OrdinaryInstallationWorkflowDemonstrations": 1,
+      "EventPlusRecordingReplays": 1,
+      "MaximumSavedDataMATLABSessions": 2,
+      "MaximumNewArtifactBytes": 104857600,
+      "RoutineRepairsAndFocusedRechecksIncluded": true,
+      "CheckSpaceBeforeExports": true,
+      "FullCalculationMatricesAutomaticallyRepeated": false,
+      "HostedCIAutomaticallyRepeated": false
+    },
+    "Acceptance": "Readable installation/workflow instructions with expected visible outcomes; one event and one recording calculation with actual inputs/formula/units/reference/denominator/contributors; assistant-operated evidence distinguished from received researcher feedback; final source identity and concrete release decisions",
+    "ScientificQualifications": [
+      "C02 conditional reference",
+      "FB2312 unresolved recovery",
+      "fixed saved footprints",
+      "unknown historical calculator versions",
+      "automatic/reviewed separation",
+      "optical measurement distinct from physiological interpretation"
+    ],
+    "NumericalChangeRequiresSeparateAdoptionDecision": true,
+    "ChangedImplementationMustBeIdentifiedSeparatelyFromPriorCandidate": true,
+    "NewPackageOrBroaderVerificationNeedsConcreteApprovedBudget": true,
+    "FreshRecordingIntegrationAndRuntimeMemory": "unverified; separate ordinary MATLAB proposal permitted when needed for release claims; no execution here",
+    "DeferredToPossibleV4": [
+      "VM isolation",
+      "external watchdogs",
+      "custom process-tree containment",
+      "recording-worker release qualification"
+    ],
+    "RemainingPublicationDecisions": [
+      "project licence and dependency notices",
+      "declared support and unverified limits",
+      "explicit release approval"
+    ],
+    "RecordingRunsAuthorized": 0,
+    "CorrectionRefitsAuthorized": 0,
+    "DetectorChangesAuthorized": false,
+    "CommitPushAuthorized": false,
+    "MergeTagPublicationAuthorized": false,
+    "StoppingCondition": "Bring the complete bounded result for researcher review and stop; do not start new recording, packaging, broader verification or publication automatically",
+    "ApprovedDate": "2026-10-05",
+    "EvidencePacket": "reference-validation/software-next07-user-readiness-20261005",
+    "StartedUTC": "2026-10-05T07:49:06.982749+00:00",
+    "ExecutionRecord": "docs/SOFTWARE_NEXT_07_TASK.md",
+    "Delivery": "docs/SOFTWARE_NEXT_07_DELIVERY.md",
+    "Instructions": "docs/BOI_ORDINARY_MATLAB_WALKTHROUGH.md",
+    "WorkedCalculations": "docs/BOI_SAVED_CALCULATION_WORKED_EXAMPLES.md",
+    "ExecutionApprovalConsumed": true,
+    "SoftwareVersion": "3.1.0-dev.2",
+    "BuildTimestamp": "2026-10-04 21:37:28 +02:00",
+    "SourceCommit": "1d4b6631935a2d95730f365fae70c900a8bff107",
+    "PackagedSourceMatchesHostedTestedCommit": "5c23b0259806b74364183726e6a886d4ecf4488b",
+    "ApplicationImplementationChanges": 0,
+    "ScientificDefinitionChanges": 0,
+    "ScientificOutputChanges": 0,
+    "CandidateZIPUnchanged": true,
+    "CandidateRebuilt": false,
+    "MATLABSessionsCharged": 2,
+    "ConfirmedSavedDataSessions": 1,
+    "PossibleNativeStartupCharge": 1,
+    "MATLABSessionExitCode": 0,
+    "MATLABRelease": "R2025a",
+    "Computer": "MACA64",
+    "WorkflowDemonstrationsCompleted": 1,
+    "EventReplay": "corrected -5.05234056884336%; raw -4.32865625454589%; nine reference/17 observation samples, 1100 fixed pixels, min frame 88; CSV rounding only",
+    "RecordingReplay": "8.90797287875453%, 94 contributors/192 events, 98 unavailable",
+    "IndependentArithmeticEvaluator": "Python CSV replay by assistant; not an independent person",
+    "AssistantProgrammaticControlsAndCaptures": true,
+    "NewNativeChooserEvidence": false,
+    "IndependentScientistWalkthrough": false,
+    "ResearcherFeedbackReceived": false,
+    "CompletedWorkflowAndSelectedExportChecks": "pass",
+    "RetainedHarnessFailures": 3,
+    "FullNumericalMatricesRepeated": 0,
+    "HostedExecutions": 0,
+    "RecordingRunsPerformed": 0,
+    "RefitsPerformed": 0,
+    "CommitPushPerformed": false,
+    "PublicationPerformed": false,
+    "ProtectedPinsUnchanged": 1461,
+    "StoppedUTC": "2026-10-05T08:20:39.848668+00:00",
+    "BudgetActuals": {
+      "ID": "NEXT-07",
+      "StartedUTC": "2026-10-05T07:49:06.982749+00:00",
+      "MaximumActiveSeconds": 14400,
+      "PreRecordAllowanceSeconds": 1800,
+      "MATLABSessionLimit": 2,
+      "ArtifactByteLimit": 104857600,
+      "MATLABSessionsCharged": 2,
+      "NativeDesktopInspection": "CUA getApp timeout after 214.719 seconds; conservatively charged one possible startup/session",
+      "RecordingRuns": 0,
+      "HostedExecutions": 0,
+      "FullNumericalMatrices": 0,
+      "PackageBuilds": 0,
+      "Status": "complete_stopped_for_researcher_review",
+      "FreeBytesBeforeExtraction": 119603200000,
+      "InstalledBytes": 1830658,
+      "NativeInspectionFailureRetained": true,
+      "OrdinarySavedDataSessionsStarted": 1,
+      "EndedUTC": "2026-10-05T08:20:39.848668+00:00",
+      "ConservativeActiveSecondsUpperBound": 3692.865919,
+      "SessionExitCode": 0,
+      "SessionCommands": 6,
+      "RetainedHarnessFailures": 3,
+      "CompletedWorkflowDemonstrations": 1,
+      "IndependentEventAndRecordingReplay": "pass",
+      "SelectedExportRoundtrip": "pass",
+      "ConfirmedSavedDataMATLABSessions": 1,
+      "PossibleNativeStartupConservativelyCharged": 1,
+      "ArtifactBytes": 31380449,
+      "NoFurtherMATLABStarts": true,
+      "ResearcherFeedbackReceived": false,
+      "ConservativeUncommittedDocumentationBytes": 283300,
+      "ConservativeTotalNewBytes": 31667845,
+      "AccountingMethod": "Packet file bytes plus all uncommitted documentation file sizes (including preserved earlier docs) plus 4 KiB receipt reserve; conservative upper bound."
+    },
+    "ResearcherAcceptance": {
+      "Date": "2026-10-05",
+      "Scope": "saved-data user-readiness delivery within demonstrated scope",
+      "IndependentScientistWalkthrough": false,
+      "AssistantChecksRemainDistinctFromResearcherFeedback": true
+    }
+  },
+  "next_07_distribution": {
+    "ID": "NEXT-07-DIST",
+    "Status": "complete_stop_after_commit_push_verification",
+    "Owner": "implementation assistant",
+    "Record": "docs/SOFTWARE_NEXT_07_DISTRIBUTION.md",
+    "UserBenefit": "Portable installation and calculation guides included in a recoverable development candidate",
+    "Budget": {
+      "ActiveSeconds": 5400,
+      "Builds": 1,
+      "PackagingOnlyMATLABSessions": 1,
+      "NewArtifactBytes": 52428800,
+      "AutomaticallyTriggeredCIExecutions": 1,
+      "ManualCIReruns": 0
+    },
+    "ApprovedDate": "2026-10-05",
+    "PreviousCandidatePreserved": true,
+    "ScientificOrCalculationChangesAuthorized": false,
+    "RecordingRunsAuthorized": 0,
+    "LicenceChoiceAuthorized": false,
+    "CommitPushAuthorized": true,
+    "PublicationAuthorized": false,
+    "CIPlan": "skip CI on documentation/distribution commit; preserve prior test evidence",
+    "ImplementationAuthorized": false,
+    "ExecutionApprovalConsumed": true,
+    "Version": "3.1.0-dev.2",
+    "BuildTimestamp": "2026-10-04 21:37:28 +02:00",
+    "AncestryOnlyBaseCommit": "1d4b6631935a2d95730f365fae70c900a8bff107",
+    "CandidateZIP": "reference-validation/software-next07-distribution-20261005/OxygenDynamics_3.1.0-dev.2_portable-guides_candidate02.zip",
+    "CandidateZIP_SHA256": "dd321e9b1b08773141959e4538707f5b39564068deeb9acd6b9c9d67389205ef",
+    "ManifestSHA256": "7729d445b4325598c2d739843786982d772529cd1b576ef1473a7fb86b4c32e4",
+    "SourcePolicySHA256": "b9feafce840b3c6870bb441a8054ae09cba56e968a0d8b869f81ab1e4aed55ed",
+    "SourceFiles": 446,
+    "TotalFiles": 447,
+    "PackageBuilds": 1,
+    "PackagingOnlyMATLABInvocations": 1,
+    "PackageFolderZIPExtractionHashesMatch": true,
+    "PackageLocalLinksChecked": 38,
+    "ProtectedFilesUnchanged": 1999,
+    "UnchangedMATLABFiles": 541,
+    "MATLABImplementationChanges": [
+      "createOxygenReleasePackage.m: manifest limitation wording only"
+    ],
+    "CalculationChanges": 0,
+    "NumericalMatricesRepeated": 0,
+    "RecordingRunsPerformed": 0,
+    "NewResearcherWalkthroughFeedbackReceived": false,
+    "CIExecutionsPlanned": 0,
+    "CICommitMarker": "[skip ci]",
+    "CommitPushPerformed": "required final normal push and remote equality check; exact commit supplied by final handoff",
+    "DeliveryCommit": "commit containing this record; resolve from Git history",
+    "RemainingDecisions": [
+      "project licence and dependency notices/provenance",
+      "declared support and release claims",
+      "explicit release decision/publication approval"
+    ],
+    "FreshRecordingIntegrationRuntimeMemory": "unverified"
   }
 }

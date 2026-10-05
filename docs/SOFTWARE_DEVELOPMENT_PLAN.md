@@ -86,6 +86,102 @@ Accepted Steps 2–4 and tests committed/pushed; preserved candidate's 443 sourc
 hashes match tested source. Documentation-only completion commit skips CI.
 No active implementation remains; Step 6 and release require separate approval.
 
+**Current authorization (5 October 2026): Step 5 accepted; Step 6 initial
+assessment only.** The researcher accepted the portable-calculation/environment
+scope, preserving the complete Linux pass versus partial final macOS evidence,
+and authorized one separate Codex reviewer for an independent code review of
+the launch supervisor, worker and saved startup/cleanup evidence. This is not a
+human systems audit. [Assessment](SOFTWARE_NEXT_06_INDEPENDENT_ASSESSMENT.md):
+three active hours maximum; no implementation, tests, research-process/MATLAB
+launches, recording analysis, push or publication. Historical failures and
+consumed approvals remain. Stop after assessment; any implementation or recording
+requires a separate concrete proposal and approval. No retries or diagnostic
+campaign are authorized. No active implementation milestone exists.
+
+**Current delivery (5 October 2026): Step 6 initial assessment complete; stopped.**
+The separately authorized [independent code review](SOFTWARE_NEXT_06_INDEPENDENT_ASSESSMENT.md)
+finds that sampled ancestry cannot establish whole-launch ownership/cleanup.
+It recommends an exclusively owned disposable execution boundary with an
+external watchdog and one finite, separately authorized qualification packet.
+No such boundary or recording-ready release contract is demonstrated. Fourteen
+code hashes and five saved-evidence anchors identify the review; 140 protected
+files/candidate pins match. No repairs, tests, research-process/MATLAB launches,
+recording analysis, commit/push or publication. Historical failures and consumed
+approvals remain. Any implementation/recording needs a separate concrete proposal
+and approval; no qualification campaign, retries or Step 7 starts automatically.
+
+## Current scope decision on 5 October 2026
+
+The researcher deferred VM isolation, external watchdogs, custom process-tree
+containment, one-use recording-worker release contracts and their qualification
+campaign to a possible later major version, such as v4. These are outside the
+current 3.1 development plan and are not prerequisites for its remaining user
+workflow or release preparation. The independent assessment remains valid for
+the reviewed supervision approach; its findings and historical failures are
+preserved, not marked passed.
+
+Proceed with ordinary MATLAB use, clear analysis outputs and the final
+installation/calculation walkthrough in [the revised working plan](SOFTWARE_NEXT_STEPS.md).
+The [next-chat handoff](SOFTWARE_NEXT_07_HANDOFF.md) describes one complete user
+readiness task. Preparing that handoff is authorized planning; its implementation
+and any MATLAB session still need the bounded task approval.
+
+A normal MATLAB fresh-recording check can be proposed separately without a VM,
+external watchdog or custom launch-control qualification. Such a proposal must
+name the recording, settings, new output, feasible effort/output budget and
+ordinary stop procedure. No new recording execution is authorized by this scope
+decision. Fresh-recording integration and runtime/memory evidence remain
+unverified; claims must retain that limitation. Project licensing, applicable
+support limits and final release publication remain separate decisions.
+
+This current scope supersedes earlier containment-related release prerequisites.
+Older dated gates, the assessment, consumed approvals and original results stay
+as historical evidence. Software version remains 3.1.0-dev.2; this revision
+changes planning records only.
+
+**Current delivery (5 October 2026): ordinary MATLAB user readiness complete.**
+The researcher approved the complete four-hour/two-session/100-MiB task.
+[Delivery](SOFTWARE_NEXT_07_DELIVERY.md),
+[walkthrough](BOI_ORDINARY_MATLAB_WALKTHROUGH.md) and
+[worked calculations](BOI_SAVED_CALCULATION_WORKED_EXAMPLES.md) demonstrate
+fresh candidate installation, completed-run inspection, accepted ID400 reviewed
+choices/new save/reopen/export, and G2 ID400 automatic recording mean from CSV
+ingredients (94/192 events). Assistant controls/captures and independent Python
+arithmetic are distinguished from scientist feedback, which has not been received.
+No application code, scientific definition or accepted result changed. Original
+candidate/results and earlier uncommitted assessment/scope work are preserved.
+One confirmed MATLAB R2025a session exited 0; timed-out native desktop access is
+conservatively charged as a second possible session. Three evidence-harness
+failures and focused repairs are retained. No full matrices, hosted CI, recordings,
+refits, custom supervision, commit/push or publication. Task complete for review;
+no active execution remains. Licensing, declared support and explicit release
+decisions remain; fresh integration/runtime/memory are unverified. No automatic
+next task, recording proposal execution or publication.
+
+**Current authorization (5 October 2026): saved-data user readiness accepted;
+documentation/distribution only.** The researcher accepted the demonstrated
+scope while preserving assistant checks versus researcher feedback. One bounded
+[task](SOFTWARE_NEXT_07_DISTRIBUTION.md) makes the new guides portable, includes
+them in one new development candidate, and saves accepted documentation/scope
+records to GitHub on development-existing-analysis-v3. Ninety active minutes,
+one build, at most one packaging-only MATLAB session, 50 MiB, at most one
+automatic CI execution and no manual rerun. The push skips CI; historical
+numerical evidence is retained. Preserve previous ZIP/results. No recording,
+calculation/scientific-definition change, licence choice, custom supervision,
+merge/tag or publication. Stop after delivery; no further task is authorized.
+
+**Current delivery (5 October 2026): portable documentation and development
+candidate complete.** [Delivery](SOFTWARE_NEXT_07_DISTRIBUTION.md) records one
+packaging-only build, 446 exact source/document files plus manifest, matching
+folder/ZIP/extraction hashes and 38 package links. Previous ZIP/results and
+accepted scientific values/qualifications are preserved. New guides are portable;
+only packaging-manifest wording changed in MATLAB, no calculation/GUI/test repair.
+Accepted documentation/scope records are saved on the development branch with CI
+skipped. Task stopped after normal push/source verification; no active execution.
+Researcher acceptance does not imply an independent scientist walkthrough.
+Licence/dependency notices, support/claims and explicit release approval remain.
+Fresh-recording integration/runtime/memory remain unverified; no automatic next task.
+
 ## 1. Product goal
 
 Deliver a maintainable MATLAB application in which a researcher can load a BOI

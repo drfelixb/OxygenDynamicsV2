@@ -1,6 +1,9 @@
 # Install this development candidate
 
-Requires MATLAB; this candidate is checked on macOS with MATLAB R2025a.
+Requires MATLAB. The named saved-data routes were checked on macOS/R2025a;
+the portable calculation gate passed on Linux/R2025b. Required toolboxes vary
+by route: Image Processing Toolbox and, for some analyses, Statistics and
+Machine Learning Toolbox. See [support and distribution limits](DISTRIBUTION_STATUS.md).
 Extract the ZIP into a new folder. Keep previous installations and result folders.
 In MATLAB, change Current Folder to the extracted folder and run:
 
@@ -17,16 +20,20 @@ saved events/windows; this package contains no recordings or saved results.
 For reviewed pockets: select saved event, enter explicit frames/reference and
 suitability/recovery judgment, Preview draft, Save NEW revision, then Export
 SAVED revision. Reopen portable exports with `openBOIReviewedPocketEvidence`.
-See the [reviewed-pocket guide](docs/POCKET_MEASUREMENTS.md),
+Follow the [short saved-result walkthrough](docs/BOI_ORDINARY_MATLAB_WALKTHROUGH.md)
+and [two worked calculations](docs/BOI_SAVED_CALCULATION_WORKED_EXAMPLES.md).
+See also the [reviewed-pocket guide](docs/POCKET_MEASUREMENTS.md),
 [duration/area/rate guide](docs/BOI_DURATION_AREA_AND_EVENT_RATES.md) and
 [integral/composite/summary guide](docs/BOI_INTEGRALS_COMPOSITES_AND_SUMMARIES.md).
 
-This is 3.1.0-dev.2, a modified uncommitted snapshot based on b0f6d20; it is
-not identical to that commit. RELEASE_MANIFEST.txt records the base commit,
+This candidate retains software version 3.1.0-dev.2 and its original software
+build timestamp; the package creation time is recorded separately.
+RELEASE_MANIFEST.txt records the ancestry-only base commit,
 source state, policy hash and per-file SHA256. It is a development candidate,
 not a published release or verification of fresh recording execution.
-Required toolboxes vary by route; full detector/runtime/platform compatibility,
-third-party licensing and hosted CI remain separate gates. C02 references remain
+The per-file hashes identify the actual packaged bytes; a base commit alone
+does not identify a modified snapshot. Fresh recording/runtime/platform evidence,
+licence/dependency decisions and release approval remain incomplete. C02 references remain
 conditional, FB2312 recovery unresolved, reviewed corrected troughs exploratory.
 Automatic and reviewed results remain separate; unknown original calculator
 identity stays unknown. Use a new output folder for each saved revision/export.

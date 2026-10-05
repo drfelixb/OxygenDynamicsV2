@@ -7,11 +7,32 @@ plan first preserves the accepted software, then checks the remaining main
 measurements, repairs demonstrated defects, and prepares a usable distribution.
 Detector refinement stays a later priority.
 
-**Status: steps 1–4 accepted within their documented scopes; Step 5 delivered. Steps 6–7 require separate approval.** Preparing this plan does not start implementation,
-tests, MATLAB, packaging, GitHub publication or a recording run. Step 1 was saved on GitHub; the separately approved Steps 2–4 are now delivered. Steps 2–4 were accepted within their demonstrated scopes; [Step 5 delivery](SOFTWARE_NEXT_05_DELIVERY.md) records final automated/platform evidence.
-Development is stopped after Step 5 and release remains paused. Its completion is recorded in [step-1 delivery](SOFTWARE_NEXT_01_DELIVERY.md). The active
-[development plan](SOFTWARE_DEVELOPMENT_PLAN.md) and [workspace instructions](../AGENTS.md)
-remain the authority. Earlier accepted work and failures remain recorded.
+**Current scope, 5 October 2026:** steps 1–5 are accepted within their documented
+scopes. The independent launch/cleanup assessment is complete. The researcher
+has deferred VM isolation, watchdogs, custom containment and worker-release
+qualification to a possible v4. This infrastructure no longer blocks the
+remaining work for the current version. Review findings and historical failures
+remain unchanged; nothing has been retroactively passed.
+
+The ordinary MATLAB installation, saved-result workflow and numerical replay
+are [accepted within demonstrated scope](SOFTWARE_NEXT_07_DELIVERY.md).
+Assistant checks remain distinct from independently received researcher feedback;
+no independent scientist walkthrough is claimed.
+
+**Current delivery, 5 October 2026:** the complete
+[documentation/distribution task](SOFTWARE_NEXT_07_DISTRIBUTION.md) adds portable
+guides to one new development candidate. Exact source/folder/ZIP/extraction hashes
+and 38 package links pass; previous ZIP/results are preserved. Accepted docs and
+scope records are saved to the development branch with CI skipped. No calculation
+or workflow rerun. Task complete; no active implementation or further execution.
+The remaining decisions are licence/dependency notices, declared support/claims
+and explicit release approval. Earlier proposals/approvals below are historical.
+
+A normal fresh-recording check may be proposed separately with no VM/custom
+supervision prerequisite. Fresh integration/runtime/memory remain unverified;
+licence/dependency notices, declared support and explicit publication approval
+remain open. The [development plan](SOFTWARE_DEVELOPMENT_PLAN.md) and
+[workspace instructions](../AGENTS.md) remain the authority.
 
 ## What a calculation check means
 
@@ -34,6 +55,18 @@ scientific outputs. Do not replace the target quantity simply because another
 definition gives a more expected biological answer.
 
 ## Current starting point
+
+Version 3.1.0-dev.2 is committed on development-existing-analysis-v3. The hosted
+portable gate passed 133/133 on 5c23b02; the documentation/status tip is 1d4b663.
+The Step 4 candidate has 443 source/document files plus its manifest and six
+passing saved-data installation routes. Its source hashes match the tested
+commit. Steps 2 and 3 checked the named calculation families; scientific
+qualifications and the partial final macOS evidence remain.
+
+The independent supervision review is retained as evidence for future work.
+Its recommended VM/watchdog qualification is outside the current scope.
+
+## Historical starting point on 4 October 2026
 
 - Repository: `/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis`.
 - Working branch: `development-existing-analysis-v3`.
@@ -65,8 +98,8 @@ definition gives a more expected biological answer.
 | 3 | Remaining summary, integral and composite calculations checked and explained | Step 2 definitions stable |
 | 4 | An installable candidate containing the current functions, contracts and guides | Steps 2 and 3 completed or explicitly limited |
 | 5 | Supported environments and automated checks demonstrated | Current code and candidate available |
-| 6 | A complete fresh-recording journey with measured resources and justified cleanup | Separate containment decision and exact run budget |
-| 7 | Independent use, reproducible output and an approved versioned release | Required scientific and release decisions resolved |
+| 6 | Custom execution isolation and supervision | Deferred to a possible v4; initial assessment preserved |
+| 7 | Final ordinary user workflow, numerical replay and release preparation | Current candidate and accepted calculation evidence; no VM prerequisite |
 
 The researcher owns scientific choices and acceptance. The implementation chat
 owns engineering, routine repairs and truthful evidence within each approved
@@ -269,38 +302,28 @@ CI logs identify the tested commit, and remaining platform limits are documented
 > within the budget and report actual run logs and code identity. Keep unknown
 > platforms labeled untested; do not expand the matrix or run recordings.
 
-## Step 6 Demonstrate a fresh recording safely
+## Step 6 Defer custom execution supervision
 
-**User benefit:** the complete new-analysis journey is demonstrated with measured
-runtime and memory rather than inferred from saved-result checks.
+The independent code assessment is complete and remains available in
+[its report](SOFTWARE_NEXT_06_INDEPENDENT_ASSESSMENT.md). Its sampled-process
+ownership, cleanup, memory and recording-token findings remain unresolved.
 
-The prior supervised attempts did not establish verified live containment.
-Keep their failures and consumed approvals unchanged. First obtain one
-independently written containment assessment of current code and saved evidence,
-with a three-hour assessment budget and zero launches. Selecting or messaging
-that reviewer needs explicit authorization. The assessment must identify a
-defensible approach and the minimum finite evidence required, or leave the gate
-blocked; it must not begin another sequence of speculative diagnostics.
+On 5 October the researcher removed the proposed VM boundary, external watchdog,
+custom process-tree containment, recording-worker release contract and associated
+lifecycle/startup qualification from the current development plan. Keep them in
+the backlog for a possible v4. Do not implement or launch them automatically;
+future work needs a new requirement and scope decision.
 
-Only after that decision prepare a single integration proposal naming source,
-hashes, settings, new output, supervision/cleanup, time, process-tree memory,
-disk limits and retained failure evidence. The exact numeric launch budget must
-be prepared from the chosen recording and approved separately. No recording is
-preauthorized here, and no historical attempt can be retried under old approval.
+Successful custom live acknowledgement and verified whole-launch containment
+are no longer current-version release prerequisites. This is a change of scope,
+not a passing result or evidence of complete cleanup. Historical packets and
+consumed approvals remain unchanged.
 
-**Done when:** one approved fresh journey imports, checks settings, runs, inspects,
-reopens and exports with measured resources and verified exit/cleanup; or the
-single attempt stops and reports a specific incomplete result. An incomplete
-attempt retains the blocker. No automatic retry or additional diagnostic phase.
-
-**Handoff for the assessment after approval:**
-
-> Complete one independent containment assessment for step 6 using current code
-> and saved evidence only. Explain unresolved ownership and cleanup risks and
-> the minimum evidence needed for a defensible fresh-recording proposal. Stop
-> with a written conclusion. Do not implement, launch MATLAB or propose a chain
-> of incremental diagnostic retries. A later recording launch requires its own
-> exact approval.
+A normal MATLAB fresh-recording check can be proposed independently, naming
+source/settings, a new output directory, a practical effort/output budget and
+ordinary stop procedure. No recording execution is authorized here. Fresh
+integration and runtime/memory evidence remain unverified and must stay visible
+in support/release claims; do not infer them from saved-data or portable tests.
 
 ## Step 7 Complete independent use and release preparation
 
@@ -311,18 +334,27 @@ Obtain the rights holder's licence decision and reconcile dependency notices,
 source attribution, citation and version metadata. Have a researcher unfamiliar
 with the development history follow the quick start from a fresh installation,
 then reproduce one event measure and one recording summary from exported
-ingredients. Reuse step 6's fresh-run evidence where applicable; do not require a
-second acquisition just to repeat it. Correct essential instructions or controls
+ingredients. Use the accepted saved examples and exported ingredients. A normal
+MATLAB fresh-recording check is a separate proposal; it does not require the
+deferred VM/watchdog qualification. Correct essential instructions or controls
 within the approved task. Distinguish arithmetic replay from biological validation.
 
 **Proposed budget:** one unfamiliar-user walkthrough, one independent numerical
 replay session and four active engineering hours for documentation/ordinary
 repairs; no extra recordings. Reviewer participation and its tools must be
 explicitly arranged. Licence decisions and publication remain researcher gates.
+The [concrete user-readiness handoff](SOFTWARE_NEXT_07_HANDOFF.md) proposes at
+most two saved-data MATLAB sessions and 100 MiB within those four engineering
+hours; the completed calculation matrices are not repeated automatically.
 
-Prepare a release candidate and release notes only when required blockers are
-closed or a changed release scope is explicitly approved. Release acceptance is
-a separate decision from approving a development branch or a candidate ZIP.
+Prepare release notes for the declared, demonstrated scope. Keep fresh-recording
+evidence unverified until a separately approved ordinary MATLAB check establishes
+it; do not claim complete new-analysis validation. VM/watchdog qualification is
+excluded from current release prerequisites. Prepare a release candidate only
+when the remaining applicable requirements and licence decisions are resolved
+or the researcher explicitly approves a narrower release scope. Release
+acceptance is a separate decision from approving a development branch or a
+candidate ZIP.
 
 **Done when:** final version, source commit, package, tested support, calculation
 guide and known limitations agree, required evidence is accepted and publication
@@ -394,5 +426,10 @@ saved values or make them appear to have been produced by current code.
    messages in plain language; internal IDs remain in records.
 
 **Internal work IDs:** NEXT-01 through NEXT-07 correspond to steps 1 through 7.
-NEXT-01 through NEXT-04 approvals are consumed by their deliveries; NEXT-05 approval is consumed by its delivery; NEXT-06 and NEXT-07 remain proposed. The owner is the implementation assistant; no reviewer or additional
-agent has been engaged.
+NEXT-01 through NEXT-05 approvals are consumed by their accepted deliveries.
+NEXT-06A's independent review is delivered and its approval consumed. Custom
+NEXT-06 implementation/qualification is deferred to a possible v4 by the
+5 October scope decision. NEXT-07's ordinary saved-data user-readiness task was
+separately approved and delivered; its task budget is consumed, with researcher
+review pending. Any ordinary MATLAB fresh-recording check and publication still
+require separate decisions. No active execution or reviewer work remains.
