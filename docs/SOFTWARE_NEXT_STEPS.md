@@ -25,12 +25,50 @@ guides to one new development candidate. Exact source/folder/ZIP/extraction hash
 and 38 package links pass; previous ZIP/results are preserved. Accepted docs and
 scope records are saved to the development branch with CI skipped. No calculation
 or workflow rerun. Task complete; no active implementation or further execution.
-The remaining decisions are licence/dependency notices, declared support/claims
-and explicit release approval. Earlier proposals/approvals below are historical.
+The researcher accepted the updated distribution within its demonstrated scope.
+The [release decision sheet](RELEASE_DECISION_SHEET.md) covers licence/dependency
+notices, declared support/claims and explicit release approval. Preparing it
+authorizes documentation only; testing, recording and publication remain separate
+decisions. Earlier proposals/approvals below are historical.
+
+**Current documentation correction, 5 October 2026:** the
+[licence/notice review](LICENCE_NOTICE_RECONCILIATION.md) retains the six reconciled
+dependency notices. The original Science_2024 archive was subsequently found to
+contain MIT. Its exact notice is restored; [licensing and contributor credits](../LICENSING.md)
+describe the existing grant and the separate unconfirmed coverage of new V2
+contributions. The earlier general “project licence unknown” statement is
+superseded for inherited code. MIT is recommended for new contributions once
+authorised. This local documentation remains outside the accepted ZIPs.
+Historical dependency origins, new-contribution licensing, support claims and
+explicit publication approval remain decisions or disclosed limits.
+
+**Documentation task finished, 5 October 2026:** the original licence correction
+is complete locally, with its recorded static checks. The
+[next implementation handoff](SOFTWARE_LICENSING_DISTRIBUTION_HANDOFF.md) proposes
+one complete update to GitHub and the development download so users receive the
+corrected documents. Its budget includes routine repairs and verification;
+execution approval remains pending. No new scientific calculation change is
+proposed by this handoff.
+
+**Approved distribution task stopped before build, 5 October 2026:** the
+researcher approved the complete handoff. Its preservation/privacy requirements
+conflict on a required hash-pinned contract containing twelve absolute local
+research-path strings. [The decision record](SOFTWARE_LICENSING_DISTRIBUTION_BLOCKER.md)
+provides a proposed twelve-string/one-digest repair and finite verification
+amendment. No code/contract change, MATLAB, build, commit or push occurred.
+Execution is stopped for that decision; the original task's remaining budget
+does not authorize the wider contract/loader change automatically.
+
+**Current distribution continuation approved, 5 October 2026:** the researcher
+approved twelve portable provenance labels and the matching loader checksum,
+with distinct labels and retained hashes for distinct judgments. All formulas,
+frames, values and qualifications remain intact. The one session includes the
+extracted definition-load check. Complete the verified licensing candidate and
+GitHub update within the original total budget, then stop; no automatic next task.
 
 A normal fresh-recording check may be proposed separately with no VM/custom
 supervision prerequisite. Fresh integration/runtime/memory remain unverified;
-licence/dependency notices, declared support and explicit publication approval
+new-contribution licensing, applicable notices, declared support and explicit publication approval
 remain open. The [development plan](SOFTWARE_DEVELOPMENT_PLAN.md) and
 [workspace instructions](../AGENTS.md) remain the authority.
 
@@ -56,12 +94,15 @@ definition gives a more expected biological answer.
 
 ## Current starting point
 
-Version 3.1.0-dev.2 is committed on development-existing-analysis-v3. The hosted
-portable gate passed 133/133 on 5c23b02; the documentation/status tip is 1d4b663.
-The Step 4 candidate has 443 source/document files plus its manifest and six
-passing saved-data installation routes. Its source hashes match the tested
-commit. Steps 2 and 3 checked the named calculation families; scientific
-qualifications and the partial final macOS evidence remain.
+Version 3.1.0-dev.2 is committed on development-existing-analysis-v3 at e119df6.
+The hosted portable gate passed 133/133 on 5c23b02; e119df6 is the newer
+documentation/distribution commit with unchanged application calculations.
+The accepted updated candidate has 446 source/document files plus its manifest;
+all 446 source hashes match e119df6. The earlier Step 4 ZIP and its six saved-data
+installation routes remain preserved. Steps 2 and 3 checked the named calculation
+families; scientific qualifications and the partial final macOS evidence remain.
+The release sheet and current notice reconciliation are uncommitted documentation
+after e119df6, outside the preserved candidate.
 
 The independent supervision review is retained as evidence for future work.
 Its recommended VM/watchdog qualification is outside the current scope.

@@ -1,5 +1,14 @@
 # OxygenDynamics: software development plan
 
+**Latest task status, 5 October 2026:** original MIT notice restoration and
+licensing documentation are complete locally. The researcher requested task
+closure and a [next implementation handoff](SOFTWARE_LICENSING_DISTRIBUTION_HANDOFF.md).
+That handoff proposes one bounded documentation/GitHub/development-download
+update; its execution approval is pending. No application calculation changes,
+MATLAB session, build, commit/push or publication occurred during this closure.
+New V2 contribution licensing and release decisions remain separate. Earlier
+dated approvals and deliveries below remain historical records.
+
 Version 0.2 · 23 September 2026 · SW-PLAN-001
 
 Approval recorded 23 September 2026: roadmap and G1 accepted (“i approve”). Later milestone gates remain in force.
@@ -181,6 +190,84 @@ skipped. Task stopped after normal push/source verification; no active execution
 Researcher acceptance does not imply an independent scientist walkthrough.
 Licence/dependency notices, support/claims and explicit release approval remain.
 Fresh-recording integration/runtime/memory remain unverified; no automatic next task.
+
+**Current decision record (5 October 2026): updated development distribution
+accepted within demonstrated scope.** The researcher requested one concise
+[release decision sheet](RELEASE_DECISION_SHEET.md) covering the project licence,
+dependency notices, supported environments/evidence gaps and accurate publication
+wording. Documentation preparation only; no active implementation, tests, MATLAB,
+recording, package build, commit/push or publication. Preserve prior candidates,
+results, scientific qualifications and assistant/researcher feedback distinction.
+Licence selection and any further execution/publication require separate approval.
+
+**Current documentation delivery (5 October 2026): dependency notices reconciled;
+project licence discussion deferred.** The researcher authorized one complete
+licence/notice documentation task, preserving code/results and returning the
+documents before publication. When exact project details were requested, the
+researcher deferred holder/year/licence selection to a separate background
+discussion. [Review](LICENCE_NOTICE_RECONCILIATION.md) and
+[notices](../THIRD_PARTY_NOTICES.md) identify official upstream terms for the six
+listed files, retain source/distribution attributions and preserve unknown
+historical origins. Five licence-byte hashes and full text reproductions are
+recorded; 542 MATLAB file hashes and both candidate ZIP hashes are unchanged.
+No project grant is adopted. Local documentation is outside the accepted ZIPs;
+no code change, MATLAB, tests, recording, build, commit/push or publication.
+No active milestone remains. Return for review and the separate licence discussion;
+historical failures, consumed approvals and scientific qualifications remain.
+
+**Current authorization (5 October 2026): original software licence correction.**
+The researcher said “Continue” after the original Science_2024 release was found
+to contain an MIT licence. One documentation slice, LICENCE-02, restores that
+notice verbatim, corrects current licensing claims, records contributor roles and
+source evidence, and checks links and preserved hashes. The implementation
+assistant owns the correction. Limit: 60 active minutes and 1 MiB of new documents;
+no MATLAB, scientific tests, recording, build, commit/push or publication.
+Licensing authority for new V2 contributions remains a separate decision; this
+approval does not adopt a blanket licence for them. Stop after the local delivery.
+Earlier “no licence found” records describe the inspection available at that time
+and are superseded for inherited code by the original release evidence.
+
+**Current documentation delivery (5 October 2026): original MIT notice restored.**
+[Licensing and contributor credits](../LICENSING.md), the
+[source record](planning/original-software-licence.json) and the corrected
+[notice review](LICENCE_NOTICE_RECONCILIATION.md) retain the original archive's MIT
+text and `Copyright (c) 2023 Antonis Asiminas`. Archive checksum and pinned GitHub
+text confirm the source; the saved Zenodo CC BY 4.0 label is recorded separately.
+The earlier BSD proposal is superseded. The researcher-described roles of
+Antonios Asiminas, Ryszard Gomolka, Felix Beinlich and Maiken Nedergaard are
+credited without assigning ownership or changing citation order. Current
+documents explain that the existing MIT grant permits reuse with its notice;
+new V2 contribution licensing remains unconfirmed. No new grant or rights holder
+is invented. The prospective package file list includes the notice, guide and
+source record; no rebuild is claimed. Delivery is local and uncommitted, version
+3.1.0-dev.2. Stop after static document/preservation checks. Publication, support
+decisions and fresh-recording evidence remain separate; no automatic next work.
+
+**Current approved task stopped before build (5 October 2026).** The researcher
+approved the complete [documentation/distribution handoff](SOFTWARE_LICENSING_DISTRIBUTION_HANDOFF.md)
+within two active hours, two builds, one packaging-only MATLAB session, three
+commits, one successful normal push and 50 MiB. Initial local/remote identity,
+space and preservation checks passed. The mandatory reviewed-optical contract
+contains twelve absolute research-path strings and is hash-pinned by its MATLAB
+loader. Unchanged contracts/code and no machine-specific paths cannot both be
+met. [The concrete decision](SOFTWARE_LICENSING_DISTRIBUTION_BLOCKER.md) proposes
+twelve provenance-label replacements, one loader digest change and a single
+non-numerical definition-load check in the packaging session, without changing
+scientific values/formulas. Proposal only; no code/contract change, MATLAB,
+build, commit or push occurred. Existing uncommitted documents/results and old
+ZIPs remain preserved. Stop for the bounded scope decision; no active execution.
+
+**Current continuation approved (5 October 2026).** The researcher approved the
+path amendment within the same DOCS-DIST-01 total budget: use unique labels for
+distinct historical judgments, retain their hashes, preserve every formula,
+frame, value and qualification, and update only the loader checksum. The same
+single MATLAB session may package and check the extracted definition loader.
+Twelve path strings have been replaced; four distinct judgments have four labels.
+The checksum-only loader change and all other field equality are checked
+statically. Portable reader documents retain the MIT/dependency terms and V2
+licensing limit; historical task/evidence records stay outside the package.
+Complete source commit, package/hash/link/notice verification and one normal
+push, then stop. No numerical matrices, recording, CI or publication are approved.
 
 ## 1. Product goal
 

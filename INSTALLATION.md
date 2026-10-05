@@ -28,12 +28,14 @@ See also the [reviewed-pocket guide](docs/POCKET_MEASUREMENTS.md),
 
 This candidate retains software version 3.1.0-dev.2 and its original software
 build timestamp; the package creation time is recorded separately.
-RELEASE_MANIFEST.txt records the ancestry-only base commit,
-source state, policy hash and per-file SHA256. It is a development candidate,
+RELEASE_MANIFEST.txt records the actual committed source through its source-state
+entry and per-file SHA256 values, alongside the ancestry/base field and policy hash. It is a development candidate,
 not a published release or verification of fresh recording execution.
 The per-file hashes identify the actual packaged bytes; a base commit alone
 does not identify a modified snapshot. Fresh recording/runtime/platform evidence,
-licence/dependency decisions and release approval remain incomplete. C02 references remain
+licensing of new V2 contributions, declared support and release approval remain
+incomplete. Retain the [original MIT notice](licenses/Science_2024-MIT.txt) and
+[dependency terms](THIRD_PARTY_NOTICES.md); see [licensing and credits](LICENSING.md). C02 references remain
 conditional, FB2312 recovery unresolved, reviewed corrected troughs exploratory.
 Automatic and reviewed results remain separate; unknown original calculator
 identity stays unknown. Use a new output folder for each saved revision/export.

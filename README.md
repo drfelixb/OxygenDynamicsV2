@@ -73,7 +73,7 @@ ingredients separately. [Distribution limits](DISTRIBUTION_STATUS.md) distinguis
 complete Linux calculation evidence, partial final macOS gate evidence and
 assistant-operated saved workflows from independent researcher feedback.
 
-Open MATLAB in the repository folder and run:
+Open MATLAB in the installation folder and run:
 
 ```matlab
 setupOxygenDynamicsPath
@@ -135,8 +135,8 @@ chosen reference or background correction is biologically appropriate.
 - Automatic measurements retain their existing definitions. Agreement with
   arithmetic alone does not settle their biological interpretation.
 
-Development and release work are currently paused. Broader testing of fresh
-recordings, resource use and platform compatibility remains incomplete. The
+Broader testing of fresh recordings, resource use and platform compatibility
+remains incomplete. The
 current repository is a development version, rather than a finished general
 release. Local recordings and generated research results are maintained
 separately from the source repository.
@@ -152,9 +152,16 @@ also use Statistics and Machine Learning Toolbox. See the manual for details.
 - Calculation and workflow verification records (repository record: `docs/SOFTWARE_CC_02_COMPLETION_DELIVERY.md`)
 - Viewer and folder-selection verification records (repository record: `docs/SOFTWARE_CC_02_USABILITY_COMPLETION_DELIVERY.md`)
 - [Citation information](CITATION.cff)
+- [Software licensing and contributor credits](LICENSING.md)
 - [Third-party notices](THIRD_PARTY_NOTICES.md)
 
-The project licence remains under review. The software builds on the analysis
+The original Science_2024 software was released under
+[MIT](licenses/Science_2024-MIT.txt); retain its copyright and permission notice
+when sharing inherited code. Licensing of new V2 contributions remains
+unconfirmed; [the licensing guide](LICENSING.md) explains that remaining decision
+and records contributor roles. [The dependency notice review](docs/LICENCE_NOTICE_RECONCILIATION.md)
+records the helpers' own terms and remaining provenance limits. This candidate
+includes those documents; earlier ZIPs are preserved. The software builds on the analysis
 associated with [the 2024 Science paper](https://doi.org/10.1126/science.adn1011).
 When comparing results with earlier software versions, check the calculation
 and units: some measurement definitions have changed.

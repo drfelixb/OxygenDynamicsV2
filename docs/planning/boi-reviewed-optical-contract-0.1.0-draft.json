@@ -78,7 +78,7 @@
     {
       "AuditRow": 186,
       "SavedEvent": {
-        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "RecordingID": "C02-saved-example",
         "EventType": "sink",
         "SiteID": 15,
         "EventID": 36,
@@ -107,7 +107,7 @@
     {
       "AuditRow": 186,
       "SavedEvent": {
-        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "RecordingID": "C02-saved-example",
         "EventType": "sink",
         "SiteID": 15,
         "EventID": 36,
@@ -136,7 +136,7 @@
     {
       "AuditRow": 186,
       "SavedEvent": {
-        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "RecordingID": "C02-saved-example",
         "EventType": "sink",
         "SiteID": 15,
         "EventID": 36,
@@ -178,7 +178,7 @@
       "ReviewedEventAllFinite": true,
       "OriginalImmediateNativeEligibleCount": 14,
       "NativeEligibleWithinSelectedReference": 14,
-      "JudgmentPath": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-researcher-baseline-acceptance-20260915/researcher-frame-judgment-02.json",
+      "JudgmentPath": "historical-judgment/C02-baseline/researcher-frame-judgment-02.json",
       "JudgmentSHA256": "4e2cb841012a8ea1e7495bbc96d8ab604b2ac0a280ac33a6bfeb2492932ec2c0",
       "PreflightStatus": "selection_and_event_samples_available_B_guard_not_evaluated",
       "NewReferenceMeanOrAmplitudeCalculated": false
@@ -186,7 +186,7 @@
     {
       "AuditRow": 186,
       "SavedEvent": {
-        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "RecordingID": "C02-saved-example",
         "EventType": "sink",
         "SiteID": 15,
         "EventID": 36,
@@ -228,7 +228,7 @@
       "ReviewedEventAllFinite": true,
       "OriginalImmediateNativeEligibleCount": 14,
       "NativeEligibleWithinSelectedReference": 14,
-      "JudgmentPath": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-researcher-baseline-acceptance-20260915/researcher-frame-judgment-02.json",
+      "JudgmentPath": "historical-judgment/C02-baseline/researcher-frame-judgment-02.json",
       "JudgmentSHA256": "4e2cb841012a8ea1e7495bbc96d8ab604b2ac0a280ac33a6bfeb2492932ec2c0",
       "PreflightStatus": "selection_and_event_samples_available_B_guard_not_evaluated",
       "NewReferenceMeanOrAmplitudeCalculated": false
@@ -236,7 +236,7 @@
     {
       "AuditRow": 309,
       "SavedEvent": {
-        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "RecordingID": "C02-saved-example",
         "EventType": "surge",
         "SiteID": 1,
         "EventID": 4,
@@ -278,7 +278,7 @@
       "ReviewedEventAllFinite": true,
       "OriginalImmediateNativeEligibleCount": 20,
       "NativeEligibleWithinSelectedReference": 20,
-      "JudgmentPath": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-researcher-event4-reference-20260915/researcher-reference-judgment.json",
+      "JudgmentPath": "historical-judgment/C02-event4-reference/researcher-reference-judgment.json",
       "JudgmentSHA256": "5d5a70af143c4a37230afe6664d9a9b668f92673dc439e1dbf5b17a6e5ee05bd",
       "PreflightStatus": "selection_and_event_samples_available_B_guard_not_evaluated",
       "NewReferenceMeanOrAmplitudeCalculated": false
@@ -286,7 +286,7 @@
     {
       "AuditRow": 308,
       "SavedEvent": {
-        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "RecordingID": "C02-saved-example",
         "EventType": "surge",
         "SiteID": 1,
         "EventID": 3,
@@ -328,7 +328,7 @@
       "ReviewedEventAllFinite": true,
       "OriginalImmediateNativeEligibleCount": 20,
       "NativeEligibleWithinSelectedReference": 20,
-      "JudgmentPath": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-researcher-event3-reference-20260915/researcher-reference-judgment.json",
+      "JudgmentPath": "historical-judgment/C02-event3-reference/researcher-reference-judgment.json",
       "JudgmentSHA256": "c7bb75e25d7a1ee57250b7a5a38b189a8063a53345b9f019bfa19527e76d45b3",
       "PreflightStatus": "selection_and_event_samples_available_B_guard_not_evaluated",
       "NewReferenceMeanOrAmplitudeCalculated": false
@@ -336,7 +336,7 @@
     {
       "AuditRow": 321,
       "SavedEvent": {
-        "RecordingID": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-c02-strict-roi-20260912/run-01/Recording",
+        "RecordingID": "C02-saved-example",
         "EventType": "surge",
         "SiteID": 5,
         "EventID": 1,
@@ -370,7 +370,7 @@
       "ReviewedEventAllFinite": true,
       "OriginalImmediateNativeEligibleCount": 0,
       "NativeEligibleWithinSelectedReference": 0,
-      "JudgmentPath": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-researcher-short-reference-20260915/researcher-reference-judgment.json",
+      "JudgmentPath": "historical-judgment/C02-short-reference/researcher-reference-judgment.json",
       "JudgmentSHA256": "347197bc52afea13ea06b10c94008efcf678aa758d447ac2aa14ef5efb51673a",
       "PreflightStatus": "selection_and_event_samples_available_B_guard_not_evaluated",
       "NewReferenceMeanOrAmplitudeCalculated": false

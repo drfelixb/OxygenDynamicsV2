@@ -90,5 +90,6 @@ These checks preserve automatic/reviewed separation, correction and footprint
 rules. Camera integration exposure remains unknown in this saved example; static
 tissue support does not establish dynamic physiological validity. C02's conditional
 reference, FB2312's unresolved recovery and saved-footprint qualifications remain.
-No inference about those other recordings was made here. See the
-[bounded check report](SOFTWARE_NEXT_02_DELIVERY.md) for exact evidence and limits.
+No inference about those other recordings was made here. See
+[distribution limits](../DISTRIBUTION_STATUS.md). The exact historical check record
+is repository documentation (`docs/SOFTWARE_NEXT_02_DELIVERY.md`).

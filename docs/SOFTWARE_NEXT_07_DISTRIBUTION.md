@@ -87,8 +87,11 @@ research data or GitHub release assets.
 
 ## Remaining decisions and stop
 
-The rights holder must select the project licence and resolve dependency notices/
-upstream provenance gaps. Declare support/claims within the complete Linux pass,
+The original Science_2024 MIT notice has since been restored in local documentation;
+see [licensing and contributor credits](../LICENSING.md). The existing ZIPs retain
+their earlier notices. Confirm licensing of new V2 contributions and retain
+applicable dependency notices, with historical origin gaps disclosed.
+Declare support/claims within the complete Linux pass,
 partial final macOS gate and named assistant saved-workflow evidence, then make
 an explicit release identity/publication decision. Fresh-recording integration,
 runtime and memory remain unverified; any needed ordinary MATLAB recording check
@@ -98,3 +101,14 @@ the assistant delivery remains separate. No new scientific adoption is required.
 
 This complete distribution task stops after the authorized commit/push and final
 remote/source/budget checks. No further implementation or release work is active.
+
+## Researcher acceptance and release decisions
+
+On 5 October 2026, the researcher accepted the updated development distribution
+within its demonstrated scope. Commit/push completed at
+`e119df6338faa0590f933f889a8dddf81256de30`; the remote tip matched, all 446
+packaged source hashes matched committed blobs, and no new CI run was observed.
+The worktree was clean at that delivery. Acceptance does not establish independent
+researcher walkthrough feedback. The separately requested
+[release decision sheet](RELEASE_DECISION_SHEET.md) is planning documentation
+outside this preserved ZIP. No further testing, recording or publication is approved.

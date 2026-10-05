@@ -75,4 +75,5 @@ Arithmetic agreement does not validate a reference or biological interpretation.
 C02's reference remains conditional, FB2312 recovery remains unresolved, and
 corrected reviewed troughs remain exploratory. Original footprints, correction,
 automatic/reviewed separation and all prior qualifications are preserved.
-See [delivery and limitations](SOFTWARE_NEXT_03_DELIVERY.md).
+See [distribution limits](../DISTRIBUTION_STATUS.md). The detailed historical
+check record is repository documentation (`docs/SOFTWARE_NEXT_03_DELIVERY.md`).

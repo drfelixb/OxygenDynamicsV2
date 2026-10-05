@@ -1,0 +1,58 @@
+{
+  "Schema": "oxygen-original-software-licence-1",
+  "Date": "2026-10-05",
+  "CurrentSoftwareVersion": "3.1.0-dev.2",
+  "Scope": "Existing published licence for original Science_2024 code; no new blanket grant for V2 contributions",
+  "OriginalLicence": "MIT",
+  "OriginalCopyrightLine": "Copyright (c) 2023 Antonis Asiminas",
+  "SourceRepository": "https://github.com/Temp2Spec/OxygenDynamics_Public",
+  "SourceTag": "Science_2024",
+  "SourceCommit": "a3f4bee5d08f5f6000448a9be7b0059b9a4a6866",
+  "PinnedLicenceURL": "https://github.com/Temp2Spec/OxygenDynamics_Public/blob/a3f4bee5d08f5f6000448a9be7b0059b9a4a6866/LICENSE",
+  "ZenodoDOI": "10.5281/zenodo.10629901",
+  "ZenodoURL": "https://doi.org/10.5281/zenodo.10629901",
+  "ZenodoMetadataLicence": "cc-by-4.0",
+  "ArchiveFile": "Temp2Spec/OxygenDynamics_Public-Science_2024.zip",
+  "ArchiveMD5": "078fd8e731a3d7449818e3dcf0d73dfb",
+  "ArchiveSHA256": "7b091482b5358a85be4f80c8a3aea9d32eb6645cc5362124bd4c8f48f8f7b27e",
+  "ArchiveLicencePath": "Temp2Spec-OxygenDynamics_Public-a3f4bee/LICENSE",
+  "RestoredLicencePath": "licenses/Science_2024-MIT.txt",
+  "LicenceBytes": 1073,
+  "LicenceSHA256": "d82e8bb7af3023a0f86f060203f117135b232c6c5c497621a5353462959e1dbd",
+  "RestoredBytesEqualArchive": true,
+  "GithubReturnedTextMatchesApartFromTrailingBlankLine": true,
+  "GithubReturnedTextSHA256": "d82e8bb7af3023a0f86f060203f117135b232c6c5c497621a5353462959e1dbd",
+  "MetadataScopeOrDualLicensingDetermined": false,
+  "MetadataDifference": "Zenodo saved record lists cc-by-4.0; archive LICENSE and pinned code release contain MIT. Both retained without changing published metadata or inferring depositor intent.",
+  "HistoricalOriginOfEveryCurrentLineEstablished": false,
+  "NewV2ContributionLicenceAdopted": false,
+  "NewV2ContributionCopyrightHolderConfirmed": false,
+  "RecommendedLicenceForNewContributions": "MIT, pending confirmation by the authorised rights holder",
+  "ResearcherDescribedCredits": [
+    {
+      "Name": "Antonios Asiminas",
+      "Role": "Main developer of original software",
+      "NoticeSpelling": "Antonis Asiminas"
+    },
+    {
+      "Name": "Ryszard Gomolka",
+      "Role": "Initial ideas and draft"
+    },
+    {
+      "Name": "Felix Beinlich",
+      "Role": "Recordings, scientific requirements, current software development and maintenance with AI assistance"
+    },
+    {
+      "Name": "Maiken Nedergaard",
+      "Role": "Research supervision"
+    }
+  ],
+  "CreditsSource": "Felix Beinlich supplied these roles in this chat on 5 October 2026; not an exhaustive contributor list or an ownership assignment",
+  "ResearcherReportedEmployment": "Original contributors employed by University of Copenhagen during development and remain employed there",
+  "ContributorCitationOrderChanged": false,
+  "ThirdPartyTermsRemainSeparate": true,
+  "ExistingCandidateZIPsRebuilt": false,
+  "PublicationApproved": false,
+  "LicenceRestorationBaseCommit": "e119df6338faa0590f933f889a8dddf81256de30",
+  "PackagedSourceIdentity": "RELEASE_MANIFEST.txt: exact committed source state and per-file hashes; the restoration base is historical ancestry"
+}

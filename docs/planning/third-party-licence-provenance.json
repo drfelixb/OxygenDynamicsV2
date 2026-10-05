@@ -1,0 +1,141 @@
+{
+  "Schema": "oxygen-third-party-licence-provenance-1",
+  "Date": "2026-10-05",
+  "SourceCommit": "e119df6338faa0590f933f889a8dddf81256de30",
+  "SoftwareVersion": "3.1.0-dev.2",
+  "Scope": "Six previously inventoried bundled files; upstream licence identification and attribution reconciliation only",
+  "ProjectLicenceSelected": false,
+  "ProjectCopyrightIdentity": null,
+  "ProjectDecision": "Researcher deferred exact holder/year/licence to a separate discussion on 5 October 2026",
+  "ExactHistoricalSourceRevisionsKnown": false,
+  "ExhaustiveRightsClearance": false,
+  "Components": [
+    {
+      "LocalPath": "external/abfload.m",
+      "LocalSHA256": "91e6bbf7888f5a83e9dfb544ea36a3ac3076ca2cd8b18571c8e4a086a1102ea3",
+      "RetainedLocalAttribution": "Harald Hentschke; Forrest Collman; Ulrich Egert (pvpmod.m attribution)",
+      "UpstreamLicenceCopyright": "2009 Forrest Collman; 2004 Harald Hentschke",
+      "Terms": "BSD-2-Clause",
+      "LicenceFileKey": "abfload-license.txt",
+      "EvidenceRevisionOrDistributionVersion": "021c9ffb661978cc4d8a875e64dc3d696ebf40bc",
+      "BundledHistoricalRevision": null,
+      "EvidenceLimitation": "Identifies consulted upstream licence; does not establish exact bundled source revision or complete modification history"
+    },
+    {
+      "LocalPath": "external/loadtiff.m",
+      "LocalSHA256": "c408d9e133a788b858424b781e66bb0d4d967d969b7e62544aeb1f8ebe38570e",
+      "RetainedLocalAttribution": "YoonOh Tak, local copyright 2012",
+      "UpstreamLicenceCopyright": "2019 YoonOh Tak",
+      "Terms": "BSD-3-Clause-style",
+      "LicenceFileKey": "tiff-license.txt",
+      "EvidenceRevisionOrDistributionVersion": "4.5.0",
+      "BundledHistoricalRevision": null,
+      "EvidenceLimitation": "Identifies consulted upstream licence; does not establish exact bundled source revision or complete modification history"
+    },
+    {
+      "LocalPath": "external/saveastiff.m",
+      "LocalSHA256": "8d120dd1b86a881c105f4a9843f850d6e86a1069c8026c84ae5541b67f33d880",
+      "RetainedLocalAttribution": "Adapted from Multipage TIFF stack by Yoon-Oh Tak",
+      "UpstreamLicenceCopyright": "2019 YoonOh Tak",
+      "Terms": "BSD-3-Clause-style",
+      "LicenceFileKey": "tiff-license.txt",
+      "EvidenceRevisionOrDistributionVersion": "4.5.0",
+      "BundledHistoricalRevision": null,
+      "EvidenceLimitation": "Identifies consulted upstream licence; does not establish exact bundled source revision or complete modification history"
+    },
+    {
+      "LocalPath": "helpers/peakfinder.m",
+      "LocalSHA256": "057926694660d24a9467ce96aa53e8d510f1de9fab4457db87077ad9e8c64f94",
+      "RetainedLocalAttribution": "Nathanael C. Yoder, local copyright 2015",
+      "UpstreamLicenceCopyright": "2016 Nathanael C. Yoder",
+      "Terms": "BSD-2-Clause",
+      "LicenceFileKey": "peakfinder-license.txt",
+      "EvidenceRevisionOrDistributionVersion": "2.0.2",
+      "BundledHistoricalRevision": null,
+      "EvidenceLimitation": "Identifies consulted upstream licence; does not establish exact bundled source revision or complete modification history"
+    },
+    {
+      "LocalPath": "helpers/plot_areaerrorbar.m",
+      "LocalSHA256": "a30ff1f359c26ddcd69713aeccdc633fc2fdcc39eede01e1c1c5b92862ff17fc",
+      "RetainedLocalAttribution": "Victor Martinez-Cagigal, local copyright 2018",
+      "UpstreamLicenceCopyright": "2018 Víctor Martínez",
+      "Terms": "BSD-3-Clause",
+      "LicenceFileKey": "plot-license.txt",
+      "EvidenceRevisionOrDistributionVersion": "1.3.1",
+      "BundledHistoricalRevision": null,
+      "EvidenceLimitation": "Identifies consulted upstream licence; does not establish exact bundled source revision or complete modification history"
+    },
+    {
+      "LocalPath": "helpers/hex2rgb.m",
+      "LocalSHA256": "94cd90396243d6d041c7726cd5edc0a9e22470845fcde0608c789f5633de3f44",
+      "RetainedLocalAttribution": "Chad Greene, local copyright 2014",
+      "UpstreamLicenceCopyright": "2014 Chad Greene",
+      "Terms": "BSD-3-Clause",
+      "LicenceFileKey": "hex-license.txt",
+      "EvidenceRevisionOrDistributionVersion": "1.1.1",
+      "BundledHistoricalRevision": null,
+      "EvidenceLimitation": "Identifies consulted upstream licence; does not establish exact bundled source revision or complete modification history"
+    }
+  ],
+  "LicenceFiles": [
+    {
+      "File": "abfload-license.txt",
+      "URL": "https://raw.githubusercontent.com/fcollman/abfload/021c9ffb661978cc4d8a875e64dc3d696ebf40bc/license.txt",
+      "Bytes": 1352,
+      "SHA256": "ed0137199d0ed9fb8a9d683ca20b0d6d92143c1ba88b5345ee15e028ff43db16",
+      "RetrievedUTC": "2026-10-05T10:46:02.485518+00:00",
+      "Text": "Copyright (c) 2009, Forrest Collman\nCopyright (c) 2004, Harald Hentschke\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are\nmet:\n\n    * Redistributions of source code must retain the above copyright\n      notice, this list of conditions and the following disclaimer.\n    * Redistributions in binary form must reproduce the above copyright\n      notice, this list of conditions and the following disclaimer in\n      the documentation and/or other materials provided with the distribution\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\nARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE\nLIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\nCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\nSUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\nINTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\nCONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\nARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\nPOSSIBILITY OF SUCH DAMAGE.\n"
+    },
+    {
+      "File": "tiff-license.txt",
+      "URL": "https://addons.mathworks.com/downloads/e5/e588e2c9-4a80-11e4-9553-005056977bd0/4.5.0/license.txt",
+      "Bytes": 1514,
+      "SHA256": "d05bd72c00dcb18c5da99a0ae54308653e6eb7e507f712be659ef44fd4cdad45",
+      "RetrievedUTC": "2026-10-05T10:46:02.660875+00:00",
+      "Text": "Copyright (c) 2019, YoonOh Tak\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are met:\n\n* Redistributions of source code must retain the above copyright notice, this\n  list of conditions and the following disclaimer.\n\n* Redistributions in binary form must reproduce the above copyright notice,\n  this list of conditions and the following disclaimer in the documentation\n  and/or other materials provided with the distribution\n* Neither the name of Gwangju Institute of Science and Technology (GIST) nor the names of its\n  contributors may be used to endorse or promote products derived from this\n  software without specific prior written permission.\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\nDISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE\nFOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL\nDAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR\nSERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\nCAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,\nOR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
+    },
+    {
+      "File": "peakfinder-license.txt",
+      "URL": "https://addons.mathworks.com/downloads/e5/e569680a-4a80-11e4-9553-005056977bd0/2.0.2/license.txt",
+      "Bytes": 1298,
+      "SHA256": "f063c7531393debc47dc600fe07589d680e621353bf319d50c449063590cca12",
+      "RetrievedUTC": "2026-10-05T10:46:02.627031+00:00",
+      "Text": "Copyright (c) 2016, Nathanael C. Yoder\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are met:\n\n* Redistributions of source code must retain the above copyright notice, this\n  list of conditions and the following disclaimer.\n\n* Redistributions in binary form must reproduce the above copyright notice,\n  this list of conditions and the following disclaimer in the documentation\n  and/or other materials provided with the distribution\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\nDISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE\nFOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL\nDAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR\nSERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\nCAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,\nOR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
+    },
+    {
+      "File": "plot-license.txt",
+      "URL": "https://addons.mathworks.com/downloads/bb/bb020821-973a-470c-840a-fb66370313e4/1.3.1/license.txt",
+      "Bytes": 1495,
+      "SHA256": "3682f3ef9ac456c1de2e3f5305141bedbf4c0b602240e0a91f03d40f8f9cbd05",
+      "RetrievedUTC": "2026-10-05T10:46:02.628798+00:00",
+      "Text": "Copyright (c) 2018, Víctor Martínez\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are met:\n\n* Redistributions of source code must retain the above copyright notice, this\n  list of conditions and the following disclaimer.\n\n* Redistributions in binary form must reproduce the above copyright notice,\n  this list of conditions and the following disclaimer in the documentation\n  and/or other materials provided with the distribution\n* Neither the name of University of Valladolid nor the names of its\n  contributors may be used to endorse or promote products derived from this\n  software without specific prior written permission.\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\nDISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE\nFOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL\nDAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR\nSERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\nCAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,\nOR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
+    },
+    {
+      "File": "hex-license.txt",
+      "URL": "https://addons.mathworks.com/downloads/e5/e5a9c7a3-4a80-11e4-9553-005056977bd0/1.1.1/license.txt",
+      "Bytes": 1498,
+      "SHA256": "c0d2c7c3eb62f46a4b1b56137d5ae980a15c9b5db59bb73b452833a3389bd4ab",
+      "RetrievedUTC": "2026-10-05T10:46:02.615320+00:00",
+      "Text": "Copyright (c) 2014, Chad Greene\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are met:\n\n* Redistributions of source code must retain the above copyright notice, this\n  list of conditions and the following disclaimer.\n\n* Redistributions in binary form must reproduce the above copyright notice,\n  this list of conditions and the following disclaimer in the documentation\n  and/or other materials provided with the distribution\n* Neither the name of The University of Texas at Austin nor the names of its\n  contributors may be used to endorse or promote products derived from this\n  software without specific prior written permission.\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\nDISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE\nFOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL\nDAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR\nSERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\nCAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,\nOR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
+    }
+  ],
+  "TIFFSourceHeaderNotice": {
+    "URLs": [
+      "https://viewer.mathworks.com/addons/35684/latest/files/loadtiff.m",
+      "https://viewer.mathworks.com/addons/35684/latest/files/saveastiff.m"
+    ],
+    "RetrievedDate": "2026-10-05",
+    "SourceView": "latest; exact historical revision not established",
+    "Format": "UI source-header transcription with comment markers removed; not byte-exact original source",
+    "Copyright": "2012 YoonOh Tak",
+    "TranscriptionSHA256": "027145ba30b7a639ad0ec1171619362537b1b79c2b1e8fbde5f32450ea1c6656",
+    "Text": "Copyright (c) 2012, YoonOh Tak\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are\nmet:\n\n* Redistributions of source code must retain the above copyright\nnotice, this list of conditions and the following disclaimer.\n* Redistributions in binary form must reproduce the above copyright\nnotice, this list of conditions and the following disclaimer in\nthe documentation and/or other materials provided with the distribution\n* Neither the name of the Gwangju Institute of Science and Technology (GIST), Republic of Korea nor the names\nof its contributors may be used to endorse or promote products derived\nfrom this software without specific prior written permission.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\nARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE\nLIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\nCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\nSUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\nINTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\nCONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\nARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\nPOSSIBILITY OF SUCH DAMAGE.\n"
+  },
+  "PeakfinderSourceHeaderAttribution": {
+    "URL": "https://viewer.mathworks.com/addons/25500/latest/files/peakfinder.m",
+    "RetrievedDate": "2026-10-05",
+    "SourceView": "latest; exact historical revision not established",
+    "ObservedText": "% Copyright Nathanael C. Yoder 2015 (nyoder@gmail.com)",
+    "EvidenceFormat": "Official source viewer DOM observation; not a byte-exact downloaded source file"
+  }
+}
