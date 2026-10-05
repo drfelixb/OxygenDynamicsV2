@@ -2,11 +2,13 @@
 
 5 October 2026 · For the researcher and project rights holder
 
-The updated **3.1.0-dev.2 development distribution** is accepted within its
-demonstrated scope. Recommend publication wording limited to saved results and
+The previous **3.1.0-dev.2 portable-guides distribution** is accepted within its
+demonstrated scope. The newer licensing candidate has separate package/loader
+verification in its delivery record; researcher acceptance is not presumed. Recommend publication wording limited to saved results and
 checked calculations. Project licence selection, further tests/recordings and
 publication remain separate decisions. The dependency reconciliation below was
-completed afterward as local documentation; it is outside the preserved ZIP.
+completed afterward and is included in the new licensing candidate; the earlier
+ZIPs keep their original contents.
 
 ## Licence and dependency decisions
 
@@ -64,16 +66,22 @@ qualifications, unknown historical calculator versions and automatic/reviewed
 separation. Optical percentages do not measure oxygen concentration/pressure;
 arithmetic agreement does not validate correction, reference suitability or physiology.
 
-The candidate's **446 packaged source/document hashes match commit
+The previous portable-guides candidate's **446 source/document hashes match commit
 [e119df6](https://github.com/drfelixb/OxygenDynamicsV2/commit/e119df6338faa0590f933f889a8dddf81256de30)**;
 all 447 files match folder/ZIP/extraction. It contains newer documentation than
 hosted-tested `5c23b02`, with unchanged application calculations; `e119df6` had
 no new CI execution. [Candidate identity and hashes](SOFTWARE_NEXT_07_DISTRIBUTION.md).
 
+The new licensing candidate has **447 sources at 44f3031** and 448 matching
+folder/ZIP/extraction files, with 65 local links and the same-session extracted
+definition load passing. The approved twelve-label/one-checksum repair preserves
+all formulas, frames, numerical values and qualifications. No numerical suite
+was repeated on this source. [New candidate identity](SOFTWARE_LICENSING_DISTRIBUTION_DELIVERY.md).
+
 Confirm licensing for new V2 contributions and applicable notices, support scope,
 exact release identity and destination before publication. Acceptance does not
 authorize stable `3.1.0`, a tag, release
-or DOI. This local sheet is outside the preserved candidates/results.
+or DOI. This sheet is a repository decision record, outside the candidate/result files.
 
 ## Recommended publication wording
 
@@ -84,7 +92,9 @@ Use the following only after the licence/notices and publication are approved:
 > and ingredients. Named saved-data workflows were demonstrated on macOS with
 > MATLAB R2025a. The portable calculation suite passed 133/133 on Linux with
 > MATLAB R2025b at commit 5c23b02; a final complete macOS suite was not repeated.
-> This distribution corresponds to packaged source at commit e119df6.
+> This distribution corresponds to packaged source at commit 44f3031.
+> It adds licensing documents and a portable provenance-label/checksum repair;
+> package and extracted-definition checks passed without repeating the numerical suite.
 > Fresh-recording integration, runtime and memory remain unverified. Measurements
 > retain their reference, footprint and recovery qualifications and do not
 > establish oxygen concentration or physiological validity.

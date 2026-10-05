@@ -8,8 +8,8 @@
   "communication_preference": "Use plain feature names, calculation meanings, references, units and uncertainty. Keep internal milestone codes in development records.",
   "scope_direction": "researcher_confirmed_calculations_and_ordinary_matlab_use_custom_supervision_deferred",
   "roadmap_status": "approved",
-  "active_implementation_milestone": "DOCS-DIST-01",
-  "proposed_next_milestone": "none_after_current_delivery",
+  "active_implementation_milestone": null,
+  "proposed_next_milestone": "researcher_release_scope_and_new_v2_licensing_decisions_no_execution",
   "approved_implementation_items": [
     "SW-G3-01_saved_run_entry",
     "SW-G3-02_neutral_event_selection",
@@ -168,7 +168,8 @@
     "RELEASE-DECISION-01: one concise release decision sheet prepared from existing notices, bundled headers, environment/candidate records and official proposed licence terms; no licence chosen, tests, MATLAB, recordings, build, commit/push or publication.",
     "Six inventoried bundled dependency notices reconciled against five official upstream licence files; original attributions and historical provenance gaps retained. Project holder/year/licence deferred by researcher; documentation returned for review, no code/build/publication.",
     "Original Science_2024 MIT notice restored byte-for-byte, current licensing claims corrected, contributor roles and Zenodo metadata distinction recorded; new V2 contribution grant remains unconfirmed. Documentation only, no numerical work or publication.",
-    "LICENCE-02 documentation scope complete and next DOCS-DIST-01 handoff prepared at researcher request; original MIT/source evidence/credits preserved. Next task execution approval pending; no new scientific work, build or push."
+    "LICENCE-02 documentation scope complete and next DOCS-DIST-01 handoff prepared at researcher request; original MIT/source evidence/credits preserved. Next task execution approval pending; no new scientific work, build or push.",
+    "Verified licensing candidate from 44f3031: 447 committed sources/448 folder-ZIP-extraction files, 65 links, exact MIT/five upstream texts, unique historical judgment labels with retained hashes and one checksum-only loader repair. One same-session extracted definition-load check; no numerical suites/recording/CI/release. Final transport identity reported separately."
   ],
   "standing_boundaries": [
     "BOI only",
@@ -1347,8 +1348,8 @@
       "ExecutionEvidence": "Historical packets, failures, hashes, counts and consumed approvals remain unchanged; this is a documentation-only acceptance"
     }
   },
-  "development_work_status": "finishing_portable_source_before_commit_and_package",
-  "next_requirement": "Complete the approved documentation/distribution task and path amendment, verify package and push once, then stop. No new scientific definition, numerical matrix, recording, CI or publication.",
+  "development_work_status": "stopped_after_verified_delivery_final_transport_reported_separately",
+  "next_requirement": "Review the verified licensing development candidate. New V2 contribution licensing, declared support/claims and explicit publication remain separate decisions. Final Git transport/source identities are reported in the handoff and local receipt. No further tests, recording, containment or release execution authorised.",
   "cc02_scope_closure": {
     "Date": "2026-10-01",
     "Status": "closed_within_accepted_scope",
@@ -1587,7 +1588,7 @@
       "DocumentedLimitationsRetained": true
     }
   },
-  "development_status": "approved_licensing_distribution_and_path_amendment_active",
+  "development_status": "verified_licensing_candidate_and_documentation_delivery_complete",
   "next_04": {
     "Status": "accepted_within_demonstrated_saved_data_scope",
     "Record": "docs/SOFTWARE_NEXT_04_TASK.md",
@@ -1947,12 +1948,12 @@
   },
   "release_decision_sheet": {
     "ID": "RELEASE-DECISION-01",
-    "Status": "corrected_for_original_MIT_release_documentation_only",
+    "Status": "updated_for_verified_licensing_candidate_release_decisions_open",
     "Owner": "implementation assistant; researcher/project rights holder decides",
     "Date": "2026-10-05",
     "UserBenefit": "Choose an accurate release scope and wording without overstating validation or licensing",
     "Record": "docs/RELEASE_DECISION_SHEET.md",
-    "SourceCommit": "e119df6338faa0590f933f889a8dddf81256de30",
+    "SourceCommit": "44f303161dc1ae52541e7e6d8715d0fcb0ce677f",
     "Scope": "One concise scientist-readable sheet for licence, dependency notices, environments, evidence gaps and proposed publication wording",
     "AcceptanceChecks": "Claims checked against notices/source headers, environment and candidate receipts; links/JSON/whitespace checked",
     "StoppingCondition": "Deliver decision sheet and stop; no implementation or execution",
@@ -1973,7 +1974,9 @@
     "OriginalPublishedLicence": "MIT",
     "OriginalLicenceRecord": "docs/planning/original-software-licence.json",
     "OriginalLicenceNoticeRestored": true,
-    "LicenceSelectionScope": "LicenceSelected=false refers to adoption for new V2 contributions, not the already published original MIT grant"
+    "LicenceSelectionScope": "LicenceSelected=false refers to adoption for new V2 contributions, not the already published original MIT grant",
+    "UpdatedDeliveryRecord": "docs/SOFTWARE_LICENSING_DISTRIBUTION_DELIVERY.md",
+    "LicenceSelectedForNewV2Contributions": false
   },
   "licence_documentation": {
     "ID": "LICENCE-01",
@@ -2008,7 +2011,7 @@
     "Verification": "Five downloaded licence SHA-256 hashes and exact full texts, retained attributions, relative links, JSON, Git whitespace, 542 unchanged MATLAB hashes and two unchanged candidate ZIP hashes",
     "ProtectedMATLABFiles": 542,
     "PreservedCandidateZIPs": 2,
-    "DocumentsUncommitted": true,
+    "DocumentsUncommitted": false,
     "CurrentDocumentsIncludedInPreservedZIP": false,
     "AcceptanceReceived": false,
     "PackageBuilds": 0,
@@ -2018,7 +2021,9 @@
     "ProspectiveDocumentationFileList": "Two new documentation records added to explicit source list; static membership/link checks pass, no build performed",
     "VerificationRecord": "reference-validation/software-licence-notices-20261005/documentation-verification.json (local workspace evidence)",
     "OriginalLicenceCorrection": "docs/planning/original-software-licence.json",
-    "EarlierGeneralNoLicenceFindingSupersededForInheritedCode": true
+    "EarlierGeneralNoLicenceFindingSupersededForInheritedCode": true,
+    "IncludedInLicensingCandidate": true,
+    "LicensingCandidateSourceCommit": "44f303161dc1ae52541e7e6d8715d0fcb0ce677f"
   },
   "licence_restoration": {
     "ID": "LICENCE-02",
@@ -2060,7 +2065,7 @@
     "CommitPushPerformed": false,
     "PublicationPerformed": false,
     "ContributorCitationOrderChanged": false,
-    "DocumentsUncommitted": true,
+    "DocumentsUncommitted": false,
     "ExistingZIPsContainUpdatedDocuments": false,
     "VerificationRecord": "reference-validation/software-original-mit-restoration-20261005/documentation-verification.json",
     "CompletionDate": "2026-10-05",
@@ -2068,11 +2073,13 @@
     "CompletionRecord": "docs/LICENCE_NOTICE_RECONCILIATION.md",
     "CompletionVerificationRecord": "reference-validation/software-original-mit-restoration-20261005/completion-handoff-verification.json",
     "NextHandoff": "docs/SOFTWARE_LICENSING_DISTRIBUTION_HANDOFF.md",
-    "CompletionScope": "Original MIT notice restoration, source evidence, contributor credits and corrected current documentation; no new V2 licence adoption or independent legal acceptance."
+    "CompletionScope": "Original MIT notice restoration, source evidence, contributor credits and corrected current documentation; no new V2 licence adoption or independent legal acceptance.",
+    "IncludedInLicensingCandidate": true,
+    "LicensingCandidateSourceCommit": "44f303161dc1ae52541e7e6d8715d0fcb0ce677f"
   },
   "next_documentation_distribution_handoff": {
     "ID": "DOCS-DIST-01",
-    "Status": "active_with_researcher_approved_path_amendment",
+    "Status": "verified_candidate_and_documentation_delivered_closed_by_final_normal_branch_push",
     "Date": "2026-10-05",
     "Owner": "implementation Codex chat",
     "UserBenefit": "Users receive the corrected original licence, contributor credits and dependency notices in GitHub and the development download",
@@ -2096,7 +2103,8 @@
       "ScientificTestSuites": 0,
       "HostedCIExecutions": 0,
       "RecordingRuns": 0,
-      "MaximumPackagingAndDefinitionLoadMATLABSessions": 1
+      "MaximumPackagingAndDefinitionLoadMATLABSessions": 1,
+      "FinalPlannedCommitCount": 2
     },
     "AcceptanceChecks": [
       "Exact original MIT and dependency licence text",
@@ -2109,9 +2117,9 @@
     "NewV2ContributionLicenceAdopted": false,
     "ExecutionApproved": true,
     "ImplementationStarted": true,
-    "MATLABSessions": 0,
-    "PackageBuilds": 0,
-    "CommitPushPerformed": false,
+    "MATLABSessions": 1,
+    "PackageBuilds": 1,
+    "CommitPushPerformed": "See final transport receipt; package source and later delivery-record commit distinguished",
     "PublicationAuthorized": false,
     "RemainingReleaseDecisions": [
       "Licensing coverage/authority of new V2 contributions",
@@ -2125,10 +2133,7 @@
     "BlockerRecord": "docs/SOFTWARE_LICENSING_DISTRIBUTION_BLOCKER.md",
     "Blocker": "12 absolute local research-path strings in a required scientific contract; integrity-pinned MATLAB loader prevents removal/sanitization under unchanged-contract/code budget",
     "RepairProposalApplied": true,
-    "Commits": 0,
-    "SuccessfulBranchPushes": 0,
-    "TaskComplete": false,
-    "PreservationCheck": "542 MATLAB files, all protected tracked bytes/scientific JSON, exact MIT and both old ZIPs match initial snapshot",
+    "PreservationCheck": "541 unchanged MATLAB files plus one digest literal; 12 path labels only; all scientific fields/judgment hashes, other tracked inputs/results, MIT/dependency texts and both old ZIPs preserved",
     "OutputPacket": "reference-validation/software-licensing-distribution-20261005",
     "ApprovalDoesNotAuthorizeContractOrLoaderChange": false,
     "PathAmendmentApproved": true,
@@ -2141,6 +2146,30 @@
     "PreservationAcceptance": "541/542 MATLAB files unchanged; one checksum-only loader repair; 12 provenance labels in one contract, all other scientific JSON fields unchanged; old results/ZIPs/legal texts preserved",
     "MATLABSessionScope": "Packaging and one extracted-copy definition-load/integrity check, same single session",
     "OriginalScopeStopRetained": true,
-    "CurrentBlocker": "none; original path conflict resolved within approved amendment"
+    "CurrentBlocker": "none",
+    "DeliveryRecord": "docs/SOFTWARE_LICENSING_DISTRIBUTION_DELIVERY.md",
+    "SourceCommit": "44f303161dc1ae52541e7e6d8715d0fcb0ce677f",
+    "PackageFile": "OxygenDynamics_3.1.0-dev.2_licensing_candidate03.zip",
+    "PackageSHA256": "f591233acba1fbf88c481d8f5a87c47ed96ec3d701922b96c3605f5d43d30a42",
+    "PackageBytes": 663910,
+    "PackageCreated": "2026-10-05 15:43:34",
+    "PackageCreationTimeZone": "Europe/Copenhagen",
+    "SourceFiles": 447,
+    "PackageFilesIncludingManifest": 448,
+    "LocalReaderLinksPassed": 65,
+    "MATLABNormalExitCode": 0,
+    "DefinitionLoadPassed": true,
+    "DefinitionFunctionsFromExtractedCopy": 5,
+    "NumericalEvaluations": 0,
+    "ScientificTestSuites": 0,
+    "RecordingRuns": 0,
+    "HostedCIExecutions": 0,
+    "LocalVerificationComplete": true,
+    "FinalTransportVerification": "Final normal branch push and exact remote tip checked after the delivery-record commit; final handoff/local push-and-remote-verification.json identify that commit and outcome",
+    "CompletionCondition": "Verified local delivery plus successful normal branch push and remote-tip agreement; reported in the final transport receipt",
+    "SourceCommitCI": "skip ci",
+    "DeliveryCommitCI": "skip ci",
+    "AcceptanceReceivedForNewCandidate": false,
+    "SourceCommitsCreatedBeforeClosingRecord": 1
   }
 }

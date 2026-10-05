@@ -146,3 +146,13 @@ one readable result and stop; no diagnostic or release campaign follows.
 > the unconfirmed licensing of new V2 contributions and current support limits;
 > no blanket new licence, recording run, CI campaign, stable tag or public release
 > is approved. Complete the whole task, bring me the result, and stop.
+
+## Approval and completion record
+
+The researcher approved this complete task and then the bounded provenance-label/
+loader-checksum amendment on 5 October 2026. The original total budget remains.
+[The delivery](SOFTWARE_LICENSING_DISTRIBUTION_DELIVERY.md) records one build,
+one same-session extracted definition-load check, exact package verification and
+preserved original results/ZIPs. Source and closing-record commits are separate.
+The final normal branch push/remote check is reported in the handoff receipt.
+This proposed-task text is historical; no further execution follows completion.

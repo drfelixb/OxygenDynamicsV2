@@ -78,3 +78,13 @@ Exactly twelve strings changed; all other contract fields remain equal.
 The loader changes only its contract checksum literal. This resolves the
 original package-path blocker. The earlier stopped/proposal text is historical;
 source/package verification and the approved same-session load check follow.
+
+## Verification and closure
+
+The first candidate build and extracted-copy definition load passed in the same
+single ordinary MATLAB session; all required function resolutions were inside
+the extraction. Static comparison confirms every field outside the twelve
+approved labels is equal and all judgment hashes remain. Source/package hashes
+and links passed. The blocker is resolved within the approved amendment; see
+[the delivery](SOFTWARE_LICENSING_DISTRIBUTION_DELIVERY.md). Earlier stopped and
+proposal records remain historical and do not authorise a retry or new task.

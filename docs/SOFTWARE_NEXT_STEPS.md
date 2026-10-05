@@ -66,6 +66,15 @@ frames, values and qualifications remain intact. The one session includes the
 extracted definition-load check. Complete the verified licensing candidate and
 GitHub update within the original total budget, then stop; no automatic next task.
 
+**Current verified licensing candidate, 5 October 2026:**
+[delivery](SOFTWARE_LICENSING_DISTRIBUTION_DELIVERY.md) records source 44f3031,
+447 committed sources/448 exact package files, 65 resolved local reader links,
+exact legal texts and preserved old ZIPs/results. One ordinary MATLAB session
+built once and passed the extracted definition load; no numerical matrix or
+workflow rerun. The approved label/checksum repair preserves all scientific
+fields and judgment hashes. Final branch transport is verified separately from
+package source identity. Development stops; no automatic next task or publication.
+
 A normal fresh-recording check may be proposed separately with no VM/custom
 supervision prerequisite. Fresh integration/runtime/memory remain unverified;
 new-contribution licensing, applicable notices, declared support and explicit publication approval
@@ -94,15 +103,15 @@ definition gives a more expected biological answer.
 
 ## Current starting point
 
-Version 3.1.0-dev.2 is committed on development-existing-analysis-v3 at e119df6.
-The hosted portable gate passed 133/133 on 5c23b02; e119df6 is the newer
-documentation/distribution commit with unchanged application calculations.
-The accepted updated candidate has 446 source/document files plus its manifest;
-all 446 source hashes match e119df6. The earlier Step 4 ZIP and its six saved-data
-installation routes remain preserved. Steps 2 and 3 checked the named calculation
-families; scientific qualifications and the partial final macOS evidence remain.
-The release sheet and current notice reconciliation are uncommitted documentation
-after e119df6, outside the preserved candidate.
+Version 3.1.0-dev.2 is packaged from source commit 44f3031 on
+development-existing-analysis-v3; closing delivery records are a later commit.
+The latest licensing candidate contains 447 pinned sources plus its manifest,
+with complete source/folder/ZIP/extraction agreement. The two earlier ZIPs stay
+preserved. The hosted portable gate remains 133/133 at 5c23b02 and the final
+macOS evidence remains partial. Numerical fields/formulas are unchanged; the
+new source adds documents and a checksum-only loader repair for twelve portable
+provenance labels. The extracted definition-load check is recorded separately.
+Scientific qualifications and previous assistant/researcher feedback limits remain.
 
 The independent supervision review is retained as evidence for future work.
 Its recommended VM/watchdog qualification is outside the current scope.

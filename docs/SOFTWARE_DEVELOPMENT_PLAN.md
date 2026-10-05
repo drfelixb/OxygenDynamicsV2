@@ -269,6 +269,20 @@ licensing limit; historical task/evidence records stay outside the package.
 Complete source commit, package/hash/link/notice verification and one normal
 push, then stop. No numerical matrices, recording, CI or publication are approved.
 
+**Current local delivery complete (5 October 2026).** The approved licensing
+[distribution delivery](SOFTWARE_LICENSING_DISTRIBUTION_DELIVERY.md) has 447
+committed sources at 44f3031 and 448 matching folder/ZIP/extracted files.
+All 65 reader links, exact MIT/five upstream licence texts, exclusions and
+preservation checks pass. The same single MATLAB session built once and passed
+the extracted definition load; normal exit 0, zero numerical evaluations or
+recording runs. Only twelve provenance strings and one loader checksum changed
+under the explicit amendment; formulas, frames, values, judgment hashes and all
+qualifications remain. Both old ZIPs/results are preserved. This closing record
+is outside the package; final normal push/remote verification is reported in the
+handoff/transport receipt. No active implementation or automatic next task remains.
+New V2 licensing, declared support/claims and publication remain decisions; no
+new CI, recording, custom supervision or release action is authorised.
+
 ## 1. Product goal
 
 Deliver a maintainable MATLAB application in which a researcher can load a BOI
