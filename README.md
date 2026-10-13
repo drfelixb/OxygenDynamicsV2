@@ -1,4 +1,4 @@
-> Development snapshot: **3.1.0-dev.2**, build `2026-10-04 21:37:28 +02:00`.
+> Development snapshot: **3.1.0-dev.3**, build `2026-10-13 20:02:39 +02:00`.
 > This is not a release; prior saved-run metadata remains unchanged.
 
 # OxygenDynamicsV2
@@ -13,10 +13,12 @@ make your own measurement choices before interpreting the results.
 ## What you can do now
 
 - Reopen an existing analysis and inspect its event traces and saved image regions.
+- Review one recording's explicit timing, calibration and detection-support choice before starting analysis yourself.
 - Mark an interval as a pocket and choose the exact frames before it to use as a reference.
 - Measure the deepest decrease in the corrected signal, with the uncorrected measurement alongside it.
 - Record an uncertain reference or an unresolved recovery explicitly.
 - Save your choices, reopen the same measurements and export the values and calculation inputs.
+- Find the last completed event/window export through its full selectable path, **Open folder** or **Copy path**.
 
 The recent work made this reviewed-measurement workflow usable from the MATLAB
 interface, including folder selection, cancellation and a readable saved-result
@@ -66,21 +68,34 @@ rewritten automatically.
 
 ## Start with a saved result
 
+Use the updated Git checkout on `development-existing-analysis-v3` for these
+interface fixes. The preserved ZIPs are **3.1.0-dev.2**; no replacement ZIP was
+built for 3.1.0-dev.3. Follow [checkout installation](INSTALLATION.md).
+
 Follow the [portable saved-result walkthrough](docs/BOI_ORDINARY_MATLAB_WALKTHROUGH.md)
 and [two worked calculations](docs/BOI_SAVED_CALCULATION_WORKED_EXAMPLES.md).
 The software candidate excludes recordings and example results; supply saved
 ingredients separately. [Distribution limits](DISTRIBUTION_STATUS.md) distinguish
 complete Linux calculation evidence, partial final macOS gate evidence and
-assistant-operated saved workflows from independent researcher feedback.
+assistant-operated saved workflows from Felix's later named manual test.
 
-Open MATLAB in the installation folder and run:
+In a fresh ordinary MATLAB session, make the updated `existing-analysis` checkout
+Current Folder and run:
 
 ```matlab
-setupOxygenDynamicsPath
-Start_OxygenPipeline
+addpath(pwd,'-begin');
+setupOxygenDynamicsPath;
+getOxygenPipelineVersion
+which openBOIRecordingWorkflow -all
+which createBOIExportFolderPanel -all
+openBOIRecordingWorkflow
 ```
 
-1. Open **BOI recording workflow**, then **Reopen saved run**.
+Expected: version 3.1.0-dev.3 and the build above, with functions resolving from
+this checkout, not an older extracted installation. Close older viewer windows
+before switching installations.
+
+1. Click **Open saved run → Choose BOIRun.mat** and select a completed run.
 2. Choose a completed analysis folder and open **Inspect event traces**.
 3. Select an event. In **Reviewed optical → Reviewed pocket**, enter your pocket
    interval, reference frames, reference suitability, recovery status, reviewer
@@ -98,6 +113,19 @@ recalculation is a separate, explicit action.
 A draft is excluded from export until saved. Earlier revisions and automatic
 results are preserved. The main window's **Export selected evidence** includes
 both the original event information and the saved reviewed measurement.
+
+Event **Export selected evidence** and recording **Export selected window
+evidence** now leave the full destination in **Last completed export folder**.
+Click **Open folder** to open that exact folder in the file manager, or **Copy
+path** to copy it. The path remains visible when the selected event/window changes.
+Cancellation or failure keeps the last completed destination; an incomplete
+export is not offered as a completed folder. Keep complete export folders together.
+
+For a new recording, **Detection support** requires an explicit choice:
+**Reviewed craniotomy ROI** needs a matching saved tissue boundary; **Legacy whole
+image** uses the existing whole-image method. A missing choice explains what to
+select and directs you back to **Review settings**. A changed choice clears
+confirmation; valid preflight and your confirmation are required before Run.
 
 ## What you receive
 
@@ -118,6 +146,16 @@ input requirements.
 
 ## What has been checked, and what remains uncertain
 
+On 13 October 2026, Felix completed and accepted one **FB2311** recording using
+3.1.0-dev.2: **328 automatic candidates** (240 sinks, 88 surges), **293.60 seconds**
+saved elapsed time. He inspected/exported a sink event and whole-recording sink
+summary, then confirmed matching values after reopening. One event amplitude and
+three sink-summary calculations were independently replayed from their ingredients;
+see [the manual-test result](docs/BOI_FB2311_MANUAL_TEST_RESULT.md).
+Peak memory was not measured. Surge inspection, native-mask attachment and this
+run's indexed-workbook launch were not demonstrated by Felix. His test is distinct
+from an unfamiliar scientist independently following the instructions.
+
 The reviewed calculation and save/reopen/export workflow were checked on three
 saved examples: ID400, FB2312 and C02. Their exact measurements and uncertainty
 labels were preserved. Folder selection and cancellation were exercised.
@@ -135,7 +173,7 @@ chosen reference or background correction is biologically appropriate.
 - Automatic measurements retain their existing definitions. Agreement with
   arithmetic alone does not settle their biological interpretation.
 
-Broader testing of fresh recordings, resource use and platform compatibility
+Broader testing of other recordings, resource use and platform compatibility
 remains incomplete. The
 current repository is a development version, rather than a finished general
 release. Local recordings and generated research results are maintained

@@ -17,7 +17,7 @@ tabs=uitabgroup(layout);
 main=uitab(tabs,'Title','Window calculation');frameTab=uitab(tabs,'Title','Frame ingredients');
 eventTab=uitab(tabs,'Title','Event timing');supportTab=uitab(tabs,'Title','Saved tissue support');
 definitionTab=uitab(tabs,'Title','Measurement definitions');definitions=createBOIMeasurementPanel(definitionTab);
-mainGrid=uigridlayout(main,[6 1]);mainGrid.RowHeight={90,35,110,32,'1x',170};
+mainGrid=uigridlayout(main,[7 1]);mainGrid.RowHeight={90,35,110,32,82,'1x',170};
 windows=uitable(mainGrid,'Data',W(:,{'RecordingID','WindowID','StartSec','EndSec','OccupancyStatus'}), ...
     'SelectionType','row','Multiselect','off','RowName',{},'CellSelectionCallback',@chooseRow);
 status=uilabel(mainGrid,'Text','Select a saved window.','WordWrap','on');
@@ -27,6 +27,7 @@ exportButton=uibutton(actions,'Text','Export selected window evidence','Enable',
 signItems={'sink'};if R.HasSurgeWindows,signItems={'sink','surge'};end
 signControl=uidropdown(actions,'Items',signItems,'Value','sink','ValueChangedFcn',@changeSign, ...
     'Tooltip','Each sign uses its own saved tissue support. Older exports have no surge window outcomes; unavailable is not zero.');
+exportFolder=createBOIExportFolderPanel(mainGrid);
 plots=uigridlayout(mainGrid,[1 2]);plots.Padding=[0 0 0 0];areaAxes=uiaxes(plots);timeAxes=uiaxes(plots);
 detail=uitextarea(mainGrid,'Editable','off','Value',{'No saved windows; no biological zero is inferred.'});
 frameGrid=uigridlayout(frameTab,[2 1]);frameGrid.RowHeight={140,'1x'};
@@ -46,7 +47,7 @@ for t=[windows metrics checks frames events]
 end
 UI=struct('Review',R,'Select',@selectWindow,'Windows',windows,'Metrics',metrics,'Checks',checks,'Frames',frames, ...
     'Sign',signControl,'SelectSign',@selectSign,'Events',events,'Detail',detail,'Status',status,'Definitions',definitions,'SupportNote',supportNote, ...
-    'SinkAxes',sinkAxes,'SurgeAxes',surgeAxes,'ExportButton',exportButton, ...
+    'SinkAxes',sinkAxes,'SurgeAxes',surgeAxes,'ExportButton',exportButton,'ExportFolder',exportFolder,'ExportSelected',@exportSelectedTo, ...
     'SelectEvent',@selectEvent,'ConnectAudit',@connectAudit,'OpenEvent',@openEvent, ...
     'EventStatus',eventStatus,'OpenEventButton',openEventButton);
 if height(W)>0,selectWindow(1);end
@@ -128,10 +129,14 @@ if height(W)>0,selectWindow(1);end
         try,openEvent();catch err,eventStatus.Text=['Event evidence unavailable: ' err.message];end
     end
     function exportSelected(~,~)
-        parent=uigetdir(fileparts(R.Path),'Choose parent folder for a NEW window review');if isequal(parent,0),return;end
-        [~,uniqueName]=fileparts(tempname(parent));folder=fullfile(parent,['BOIWindowReview_' uniqueName]);
         try
-            exportBOIWindowReview(R,Index,folder,definitions.SelectedPath(),kind);status.Text=['Exported: ' folder];
+            exportFolder.ChooseAndExport(@writeSelected,fileparts(R.Path),'BOIWindowReview_');
         catch err,uialert(Fig,err.message,'Window export failed');end
+    end
+    function receipt=exportSelectedTo(folder)
+        receipt=exportFolder.ExportTo(@writeSelected,folder);
+    end
+    function receipt=writeSelected(folder)
+        receipt=exportBOIWindowReview(R,Index,folder,definitions.SelectedPath(),kind);
     end
 end

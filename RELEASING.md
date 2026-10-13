@@ -1,10 +1,12 @@
 # Release decisions and future publication
 
-This is a **3.1.0-dev.2 development candidate**, with software build
-`2026-10-04 21:37:28 +02:00`. Stable 3.1.0, a tag, GitHub release or DOI need
+The current checkout is **3.1.0-dev.3**, software build
+`2026-10-13 20:02:39 +02:00`. Preserved candidate ZIPs remain 3.1.0-dev.2 and
+do not contain the later interface fixes; no replacement ZIP is built here.
+Stable 3.1.0, a tag, GitHub release or DOI need
 separate release approval. Existing tags and prior archives remain unchanged.
 The historical v3.0 tag and version decisions are repository records
-(`docs/SOFTWARE_NEXT_STEPS.md`); the package manifest identifies this candidate.
+(`docs/SOFTWARE_NEXT_STEPS.md`); each existing package manifest identifies its own candidate.
 
 ## Before proposing publication
 
@@ -17,7 +19,9 @@ The historical v3.0 tag and version decisions are repository records
   [distribution status](DISTRIBUTION_STATUS.md). The complete Linux portable pass,
   partial final macOS gate and named saved workflows are separate evidence.
 - Decide the exact release version, source commit, destination and archive hash.
-  Fresh-recording integration, runtime and peak memory remain unverified.
+  Felix's completed FB2311 case supplies integration and 293.60 s elapsed time;
+  peak memory and broader recording/runtime support remain unverified. His
+  demonstrated sink workflow is distinct from an unfamiliar scientist's walkthrough.
 - Review source/citation metadata, applicable notices and package exclusions.
   Keep original calculations, results and scientific qualifications traceable.
 
@@ -39,9 +43,9 @@ custom containment and worker qualification are deferred to a possible v4.
 4. Record the archive hash, limitations and any implementation changes. A base
    commit alone does not identify modified files. See [package contents](PACKAGE_CONTENTS.md).
 
-This documentation/distribution task uses static and package checks plus the
-approved definition-load check. It does not repeat the numerical suites or add
-fresh-recording evidence.
+The preserved licensing candidate received static/package and definition-load
+checks. The later interface task uses focused saved-FB2311 checks and no recording
+rerun or package build. Publication claims must identify those scopes separately.
 
 ## Publish only after a separate release decision
 

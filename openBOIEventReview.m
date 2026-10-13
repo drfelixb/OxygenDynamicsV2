@@ -39,7 +39,7 @@ OpticalPanel=createBOIReviewedOpticalPanel(LegacyOpticalTab,@()set(Tabs,'Selecte
 PocketPanel=createBOIReviewedPocketPanel(PocketTab,struct('Preview',@previewPocket,'Save',@choosePocketSave,'Load',@choosePocketLoad,'Export',@choosePocketExport));
 DefinitionTab=uitab(Tabs,'Title','Measurement definitions');
 Definitions=createBOIMeasurementPanel(DefinitionTab);
-Grid=uigridlayout(EventTab,[6 1]);Grid.RowHeight={36,105,32,32,'1x',175};
+Grid=uigridlayout(EventTab,[7 1]);Grid.RowHeight={36,105,32,32,82,'1x',175};
 heading=uigridlayout(Grid,[1 2]);heading.Padding=[0 0 0 0];heading.ColumnWidth={'1x',160};
 Header=uilabel(heading,'Text',['Saved audit: ' Review.AuditPath ' | No scientific acceptance implied.'], ...
     'Interpreter','none','WordWrap','on');
@@ -70,6 +70,7 @@ NativeActions=uigridlayout(Grid,[1 3]);NativeActions.Padding=[0 0 0 0];NativeAct
 NativeButton=uibutton(NativeActions,'Text','Attach native masks','ButtonPushedFcn',@chooseNativeMaster,'Enable','off');
 Overlay=uidropdown(NativeActions,'Items',{'Fixed amplitude footprint'},'ItemsData',{'fixed'},'ValueChangedFcn',@showFrame);
 NativeStatus=uilabel(NativeActions,'Text','Native masks unavailable until a matching master is attached.','WordWrap','on');
+ExportFolder=createBOIExportFolderPanel(Grid);
 Plots=uigridlayout(Grid,[1 2]);Plots.ColumnWidth={'1x','1x'};Plots.Padding=[0 0 0 0];
 ImageAxes=uiaxes(Plots);axis(ImageAxes,'off');
 TracePlots=uigridlayout(Plots,[2 1]);TracePlots.Padding=[0 0 0 0];
@@ -83,7 +84,7 @@ end
 Detail=uitextarea(Grid,'Editable','off','Value',initialDetail);
 UI=struct('Review',Review,'Select',@selectEvent,'List',List,'Frame',Frame,'ImageButton',ImageButton, ...
     'ImageAxes',ImageAxes,'RawAxes',RawAxes,'FractionAxes',FractionAxes,'Detail',Detail, ...
-    'ImageStatus',ImageStatus,'Definitions',Definitions,'ExportButton',ExportButton,'Header',Header, ...
+    'ImageStatus',ImageStatus,'Definitions',Definitions,'ExportButton',ExportButton,'ExportFolder',ExportFolder,'Header',Header, ...
     'AttachNative',@attachNative,'CurrentReview',@currentReview,'Overlay',Overlay,'NativeStatus',NativeStatus,'ReturnToWindow',back, ...
     'Context',ContextPanel,'ContextTab',ContextTab,'Baseline',BaselinePanel,'BaselineTab',BaselineTab,'Timing',TimingPanel,'TimingTab',TimingTab,'EventTab',EventTab,'Tabs',Tabs,'CurrentIndex',@currentIndex, ...
     'Boundaries',BoundaryPanel,'BoundaryTab',BoundaryTab,'SaveBoundaries',@saveBoundaries,'LoadBoundaries',@loadBoundaries, ...
@@ -282,15 +283,14 @@ if height(A)>0&&~StartOnEventList,selectEvent(initialIndex);end
         PocketPanel.State.Tooltip=target;PocketPanel.Details.Value=[{['Exported folder: ' target]};PocketPanel.Details.Value];
     end
     function receipt=exportSelectedTo(folder)
+        receipt=ExportFolder.ExportTo(@writeSelected,folder);
+    end
+    function receipt=writeSelected(folder)
         receipt=exportBOIEventReview(Review,Index,folder,Definitions.SelectedPath());
     end
     function exportSelected(~,~)
-        parent=uigetdir(fileparts(Review.AuditPath),'Choose parent folder for a NEW event review');
-        if isequal(parent,0),return;end
-        [~,uniqueName]=fileparts(tempname(parent));folder=fullfile(parent,['BOIEventReview_' uniqueName]);
         try
-            exportBOIEventReview(Review,Index,folder,Definitions.SelectedPath());
-            ImageStatus.Text=['Exported: ' folder];
+            ExportFolder.ChooseAndExport(@writeSelected,fileparts(Review.AuditPath),'BOIEventReview_');
         catch err,uialert(Fig,err.message,'Evidence export failed');end
     end
 end

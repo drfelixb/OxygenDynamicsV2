@@ -7,6 +7,44 @@ plan first preserves the accepted software, then checks the remaining main
 measurements, repairs demonstrated defects, and prepares a usable distribution.
 Detector refinement stays a later priority.
 
+## Current interface delivery — 13 October 2026
+
+The approved [interface task](BOI_USABILITY_GITHUB_HANDOFF.md) adds clear explicit
+support guidance and persistent event/window export folders with **Open folder**
+and **Copy path**, using saved FB2311 for focused verification. Current checkout
+is **3.1.0-dev.3**, build **2026-10-13 20:02:39 +02:00**. Thirteen unique focused
+checks pass after a retained getter repair; saved numerical fields/frames remain
+unchanged. See [delivery](BOI_USABILITY_GITHUB_DELIVERY.md) and
+[launch instructions](../INSTALLATION.md). The ordinary branch push is the final
+approved transport; no new package or recording run. Stop after verified delivery.
+No next implementation or test is authorised automatically.
+
+## Felix's recording-test agenda
+
+- [x] **Personally test one recording in ordinary MATLAB — accepted within the
+  demonstrated scope on 13 October 2026.** Felix ran FB2311, inspected and
+  exported a sink event and its recording summary, then confirmed matching
+  event count and values after reopening. The [test result](BOI_FB2311_MANUAL_TEST_RESULT.md)
+  records the independent arithmetic checks and remaining scientific limits.
+  Numeric resource limits were not agreed before Run; peak memory was not
+  measured. Surge inspection, native-mask attachment and workbook opening were
+  not demonstrated. No further checks are scheduled automatically.
+- [x] Prepare the [manual walkthrough and results form](BOI_FELIX_MANUAL_RECORDING_TEST.md)
+  under the [planning handoff](SOFTWARE_RESEARCHER_RECORDING_TEST_HANDOFF.md).
+  The 5 October preparation itself launched no MATLAB or recording. Felix's
+  subsequent 13 October manual run and feedback are recorded separately;
+  no candidate rebuild or Git update is included in this test.
+
+The licensing development download is accepted within its demonstrated scope:
+[delivery](SOFTWARE_LICENSING_DISTRIBUTION_DELIVERY.md), source 44f3031 and final
+branch commit 029c989. That preserved ZIP remains 3.1.0-dev.2; the current
+checkout advances to 3.1.0-dev.3 for the separately approved interface fixes.
+The FB2311 test supplies
+fresh-recording integration and elapsed time for one case. Peak memory, broader
+performance and scientific validation remain unverified.
+New-contribution licensing, support claims and publication are separate decisions.
+The dated entries below retain the history leading to this current agenda.
+
 **Current scope, 5 October 2026:** steps 1–5 are accepted within their documented
 scopes. The independent launch/cleanup assessment is complete. The researcher
 has deferred VM isolation, watchdogs, custom containment and worker-release
@@ -75,8 +113,9 @@ workflow rerun. The approved label/checksum repair preserves all scientific
 fields and judgment hashes. Final branch transport is verified separately from
 package source identity. Development stops; no automatic next task or publication.
 
-A normal fresh-recording check may be proposed separately with no VM/custom
-supervision prerequisite. Fresh integration/runtime/memory remain unverified;
+Felix’s completed FB2311 test supplies integration and elapsed time for one case.
+Peak memory and broader recording/platform evidence remain missing; any further
+ordinary MATLAB recording check requires separate direction and no VM prerequisite.
 new-contribution licensing, applicable notices, declared support and explicit publication approval
 remain open. The [development plan](SOFTWARE_DEVELOPMENT_PLAN.md) and
 [workspace instructions](../AGENTS.md) remain the authority.
@@ -103,15 +142,14 @@ definition gives a more expected biological answer.
 
 ## Current starting point
 
-Version 3.1.0-dev.2 is packaged from source commit 44f3031 on
-development-existing-analysis-v3; closing delivery records are a later commit.
-The latest licensing candidate contains 447 pinned sources plus its manifest,
-with complete source/folder/ZIP/extraction agreement. The two earlier ZIPs stay
-preserved. The hosted portable gate remains 133/133 at 5c23b02 and the final
-macOS evidence remains partial. Numerical fields/formulas are unchanged; the
-new source adds documents and a checksum-only loader repair for twelve portable
-provenance labels. The extracted definition-load check is recorded separately.
-Scientific qualifications and previous assistant/researcher feedback limits remain.
+The development checkout is 3.1.0-dev.3. The version changes presentation/reader
+identity, not scientific definitions or the original FB2311 creator metadata.
+Candidate03 remains 3.1.0-dev.2, source 44f3031, with 447 pinned sources plus
+manifest and verified folder/ZIP/extraction hashes. It does not contain the new
+support/export controls. All earlier ZIPs and results remain unchanged.
+Historical Linux 133/133 and partial final macOS evidence remain distinct; the
+single delivery push may trigger the existing portable CI, whose exact result
+is reported with the GitHub delivery. No full local gate is repeated.
 
 The independent supervision review is retained as evidence for future work.
 Its recommended VM/watchdog qualification is outside the current scope.
@@ -371,9 +409,10 @@ consumed approvals remain unchanged.
 
 A normal MATLAB fresh-recording check can be proposed independently, naming
 source/settings, a new output directory, a practical effort/output budget and
-ordinary stop procedure. No recording execution is authorized here. Fresh
-integration and runtime/memory evidence remain unverified and must stay visible
-in support/release claims; do not infer them from saved-data or portable tests.
+ordinary stop procedure. No recording execution is authorized here. Felix's
+completed FB2311 case supplies integration and elapsed time; peak memory and
+broader recording/runtime evidence remain missing. Keep those limits visible
+in support/release claims; do not extend them from saved-data or portable tests.
 
 ## Step 7 Complete independent use and release preparation
 
@@ -397,9 +436,11 @@ The [concrete user-readiness handoff](SOFTWARE_NEXT_07_HANDOFF.md) proposes at
 most two saved-data MATLAB sessions and 100 MiB within those four engineering
 hours; the completed calculation matrices are not repeated automatically.
 
-Prepare release notes for the declared, demonstrated scope. Keep fresh-recording
-evidence unverified until a separately approved ordinary MATLAB check establishes
-it; do not claim complete new-analysis validation. VM/watchdog qualification is
+Prepare release notes for the declared, demonstrated scope. Name the completed
+FB2311 integration/elapsed-time case and its unmeasured peak memory, rather than
+claiming all fresh-recording evidence is absent or complete new-analysis validity.
+Other recordings and broader performance still require separate evidence.
+VM/watchdog qualification is
 excluded from current release prerequisites. Prepare a release candidate only
 when the remaining applicable requirements and licence decisions are resolved
 or the researcher explicitly approves a narrower release scope. Release

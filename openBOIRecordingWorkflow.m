@@ -28,6 +28,7 @@ px=uieditfield(g,'text','ValueChangedFcn',@invalidate);place(px,4,4);
 a=uilabel(g,'Text','Detection support');place(a,5,1);
 profile=uidropdown(g,'Items',{'Choose explicitly','Reviewed craniotomy ROI','Legacy whole image'}, ...
     'ItemsData',{'','craniotomy-roi-1','whole-image'},'Value','','ValueChangedFcn',@invalidate);place(profile,5,2);
+profile.Tooltip='Choose explicitly: a matching saved tissue boundary for Reviewed craniotomy ROI, or the existing method for Legacy whole image.';
 a=uilabel(g,'Text','Mouse / condition');place(a,5,3);
 identity=uigridlayout(g,[1 2]);identity.Padding=[0 0 0 0];place(identity,5,4);
 mouse=uieditfield(identity,'text','Placeholder','Mouse (optional)','ValueChangedFcn',@invalidate);

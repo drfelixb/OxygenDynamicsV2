@@ -88,11 +88,39 @@ To build a clean release copy without raw data or generated outputs, run:
 createOxygenReleasePackage
 ```
 
-The current development snapshot is `v3.1.0-dev.2`, build
-`2026-10-04 21:37:28 +02:00`. Version metadata is maintained in
+The current development checkout is `v3.1.0-dev.3`, build
+`2026-10-13 20:02:39 +02:00`. The preserved ZIPs remain 3.1.0-dev.2;
+this interface delivery does not build a replacement ZIP. Version metadata is maintained in
 `getOxygenPipelineVersion.m`.
 
 This creates `Release_Packages/OxygenDynamics_Release_<timestamp>/`, a matching ZIP file, and `RELEASE_MANIFEST.txt`. The release contains the user-facing scripts, `helpers/`, `external/`, documentation, flow maps, and smoke test, but excludes `Data/`, stats outputs, QC outputs, run logs, verification reports, regression baselines, legacy archives, and previous release packages.
+
+## Current single-recording interface
+
+Follow [installation](INSTALLATION.md) to resolve the updated checkout rather than
+an older extracted copy. `openBOIRecordingWorkflow` provides **New analysis** and
+**Open saved run**. Detection support starts unselected: choose **Reviewed
+craniotomy ROI** only with matching saved tissue-boundary evidence, or **Legacy
+whole image** for the existing whole-image method. **Review settings** explains a
+missing choice and keeps Run disabled. Valid preflight plus explicit confirmation
+is required; changing the choice invalidates confirmation. Timing/calibration
+must be appropriate to the selected recording, not assumed from another example.
+
+After a completed run is selected, **Inspect event traces** and **Inspect recording
+results** read saved evidence. Their **Export selected evidence** and **Export
+selected window evidence** controls create new children under the chosen parent.
+A persistent full path under **Last completed export folder**, **Open folder** and
+**Copy path** make that destination accessible. Changing rows does not erase it.
+Cancellation/failure keeps the last completed destination, rather than offering
+an incomplete one. Reviewed revisions retain their separate save/reopen/export route.
+
+Felix completed and accepted one FB2311 recording in 293.60 s using 3.1.0-dev.2,
+then inspected/exported/reopened its sink results with matching counts and values.
+The [test record](docs/BOI_FB2311_MANUAL_TEST_RESULT.md) retains one event/three
+summary arithmetic checks and missing peak memory. This does not establish all
+recordings, reference/correction suitability, physiological event identity or
+anatomical tissue validity. Full Linux portable evidence and partial final macOS
+evidence remain distinct; see [support limits](DISTRIBUTION_STATUS.md).
 
 ## 3. Recording Folder Requirements
 

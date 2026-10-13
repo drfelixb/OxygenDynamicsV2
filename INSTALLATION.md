@@ -1,41 +1,61 @@
-# Install this development candidate
+# Open the current development checkout
 
-Requires MATLAB. The named saved-data routes were checked on macOS/R2025a;
-the portable calculation gate passed on Linux/R2025b. Required toolboxes vary
-by route: Image Processing Toolbox and, for some analyses, Statistics and
-Machine Learning Toolbox. See [support and distribution limits](DISTRIBUTION_STATUS.md).
-Extract the ZIP into a new folder. Keep previous installations and result folders.
-In MATLAB, change Current Folder to the extracted folder and run:
+13 October 2026 · **3.1.0-dev.3**, build **2026-10-13 20:02:39 +02:00**.
+
+Use `development-existing-analysis-v3` for the detection-support guidance and
+persistent export-folder controls. The preserved development ZIPs remain
+**3.1.0-dev.2** and do not contain these interface fixes. No replacement ZIP is
+built by this delivery. Keep older installations and all result folders.
+
+In a fresh ordinary MATLAB desktop, make the updated `existing-analysis` checkout
+Current Folder. Close older BOI viewer windows before switching installations.
+Run:
 
 ```matlab
+addpath(pwd,'-begin');
 setupOxygenDynamicsPath;
 getOxygenPipelineVersion
+which openBOIRecordingWorkflow -all
+which openBOIEventReview -all
+which openBOIWindowReview -all
+which createBOIExportFolderPanel -all
 openBOIRecordingWorkflow
 ```
 
-Avoid keeping another OxygenDynamics checkout on the MATLAB path. Confirm
-`which openBOIEventReview -all` and `which openBOIReviewedPocketEvidence -all`
-point to this installation. Select an existing completed BOI run to inspect
-saved events/windows; this package contains no recordings or saved results.
-For reviewed pockets: select saved event, enter explicit frames/reference and
-suitability/recovery judgment, Preview draft, Save NEW revision, then Export
-SAVED revision. Reopen portable exports with `openBOIReviewedPocketEvidence`.
-Follow the [short saved-result walkthrough](docs/BOI_ORDINARY_MATLAB_WALKTHROUGH.md)
-and [two worked calculations](docs/BOI_SAVED_CALCULATION_WORKED_EXAMPLES.md).
-See also the [reviewed-pocket guide](docs/POCKET_MEASUREMENTS.md),
-[duration/area/rate guide](docs/BOI_DURATION_AREA_AND_EVENT_RATES.md) and
-[integral/composite/summary guide](docs/BOI_INTEGRALS_COMPOSITES_AND_SUMMARIES.md).
+Expected: version/build above; the functions resolve from this checkout and its
+`helpers` folder. Remove conflicting OxygenDynamics path entries if an older
+extraction resolves instead. Click **Open saved run → Choose BOIRun.mat** and
+select an existing completed run. No recording is rerun by reopening it.
+The software checkout contains no recordings or example results.
 
-This candidate retains software version 3.1.0-dev.2 and its original software
-build timestamp; the package creation time is recorded separately.
-RELEASE_MANIFEST.txt records the actual committed source through its source-state
-entry and per-file SHA256 values, alongside the ancestry/base field and policy hash. It is a development candidate,
-not a published release or verification of fresh recording execution.
-The per-file hashes identify the actual packaged bytes; a base commit alone
-does not identify a modified snapshot. Fresh recording/runtime/platform evidence,
-licensing of new V2 contributions, declared support and release approval remain
-incomplete. Retain the [original MIT notice](licenses/Science_2024-MIT.txt) and
-[dependency terms](THIRD_PARTY_NOTICES.md); see [licensing and credits](LICENSING.md). C02 references remain
-conditional, FB2312 recovery unresolved, reviewed corrected troughs exploratory.
-Automatic and reviewed results remain separate; unknown original calculator
-identity stays unknown. Use a new output folder for each saved revision/export.
+For new analysis, choose **Detection support** explicitly: **Reviewed craniotomy
+ROI** requires a matching saved tissue boundary; **Legacy whole image** uses the
+existing whole-image method. Click **Review settings**, inspect required corrections,
+scientific warnings and unknowns, then confirm. A changed support choice clears
+confirmation; no method is selected automatically.
+
+In the event viewer use **Export selected evidence**; in recording/window review
+use **Export selected window evidence**. Choose an existing parent; a new child
+is created without overwriting older exports. **Last completed export folder**
+keeps its full path visible, with **Open folder** and **Copy path**. Cancellation
+or failure leaves the last completed path unchanged; an incomplete destination
+is not enabled as a completed export. These controls do not alter export formats.
+
+For reviewed pockets, use Preview draft → Save NEW revision → Reopen saved
+revision → Export SAVED revision as described in the
+[saved-result guide](docs/BOI_ORDINARY_MATLAB_WALKTHROUGH.md).
+Reviewed measurements remain separate from automatic statistics.
+
+MATLAB and Image Processing Toolbox are required for imaging; some analyses need
+Statistics and Machine Learning Toolbox. The
+[support record](DISTRIBUTION_STATUS.md) separates Felix's single completed
+FB2311 case from portable Linux checks, assistant UI checks and missing evidence.
+Peak memory and broad recording/platform support remain unverified. See the
+[manual-test result](docs/BOI_FB2311_MANUAL_TEST_RESULT.md) and
+[measurement guides](docs/BOI_DURATION_AREA_AND_EVENT_RATES.md).
+
+C02's reference stays conditional, FB2312 recovery unresolved, and fixed-footprint
+and automatic/reviewed qualifications remain. Original calculator versions stay
+unknown where not recorded. Original [MIT](licenses/Science_2024-MIT.txt) and
+[dependency notices](THIRD_PARTY_NOTICES.md) remain exact; licensing of new V2
+contributions and publication are separate decisions. No release approval is implied.

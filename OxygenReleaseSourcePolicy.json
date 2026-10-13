@@ -35,6 +35,7 @@
     "createOxygenReleasePackage.m",
     "docs/AUTOMATIC_AMPLITUDE_EXPORTS.md",
     "docs/BOI_DURATION_AREA_AND_EVENT_RATES.md",
+    "docs/BOI_FB2311_MANUAL_TEST_RESULT.md",
     "docs/BOI_INTEGRALS_COMPOSITES_AND_SUMMARIES.md",
     "docs/BOI_ORDINARY_MATLAB_WALKTHROUGH.md",
     "docs/BOI_SAVED_CALCULATION_WORKED_EXAMPLES.md",
@@ -123,6 +124,7 @@
     "helpers/createAutomaticAmplitudeExportData.m",
     "helpers/createBOIBaselinePanel.m",
     "helpers/createBOIBoundaryPanel.m",
+    "helpers/createBOIExportFolderPanel.m",
     "helpers/createBOIImportReview.m",
     "helpers/createBOIImportReviewPanel.m",
     "helpers/createBOIMeasurementPanel.m",
@@ -494,5 +496,5 @@
       "to": "OxygenDynamics_Master.m"
     }
   ],
-  "distribution_status": "development_candidate_saved_data_verified_only_not_release_ready"
+  "distribution_status": "development_checkout_with_saved_FB2311_interface_checks_not_release_ready"
 }

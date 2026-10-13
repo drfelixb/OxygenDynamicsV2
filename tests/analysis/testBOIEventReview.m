@@ -4,6 +4,15 @@ end
 function setupOnce(~)
 setupOxygenDynamicsPath;
 end
+function testGuiExportFolderPersistsAcrossSelection(t)
+[path,root]=fixture;cleanup=onCleanup(@()rmdir(root,'s'));
+[fig,ui]=openBOIEventReview(path);closeFig=onCleanup(@()delete(fig));ui.Select(1);
+target=fullfile(root,'event export with spaces');ui.ExportSelected(target);ui.Select(2);
+verifyEqual(t,ui.ExportFolder.Folder(),target);verifyEqual(t,ui.ExportFolder.Path.Value,{target});
+verifyEqual(t,ui.ExportFolder.OpenButton.Enable,matlab.lang.OnOffSwitchState.on);
+verifyError(t,@()ui.ExportSelected(target),'OxygenDynamics:ReviewOutputExists');
+verifyEqual(t,ui.ExportFolder.Folder(),target);
+end
 function [path,root,masters]=fixture(nativeVariation)
 if nargin<1,nativeVariation=false;end
 root=tempname;mkdir(root);source=fullfile(root,'source.tif');

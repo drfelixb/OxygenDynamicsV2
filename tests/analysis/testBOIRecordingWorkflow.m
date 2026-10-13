@@ -24,6 +24,32 @@ verifyEqual(t,r.AnalysisParams,createOxygenMasterParams(4.75,2));
 o.SampleHZ=1;verifyError(t,@()prepareBOIRecordingRequest(o),'OxygenDynamics:InvalidRunRequest');
 o=rmfield(o,'SampleHZ');o.SampleHz=NaN;verifyError(t,@()prepareBOIRecordingRequest(o),'OxygenDynamics:InvalidRunRequest');
 end
+function testMissingSupportGivesActionableGuidance(t)
+[o,root]=inputFixture();cleanup=onCleanup(@()rmdir(root,'s'));o.SupportProfile='';
+try
+    prepareBOIRecordingRequest(o);verifyFail(t,'Missing support must be rejected.');
+catch err
+    verifyEqual(t,err.identifier,'OxygenDynamics:InvalidRunRequest');
+    verifyTrue(t,contains(err.message,'Choose a Detection support option'));
+    verifyTrue(t,contains(err.message,'Reviewed craniotomy ROI'));
+    verifyTrue(t,contains(err.message,'Legacy whole image'));
+end
+verifyFalse(t,isfolder(o.OutputFolder));
+end
+function testGuiMissingSupportAndChoiceInvalidation(t)
+[o,root]=inputFixture();cleanup=onCleanup(@()rmdir(root,'s'));o.SupportProfile='';
+[fig,ui]=openBOIRecordingWorkflow(o);closeFig=onCleanup(@()delete(fig));
+verifyError(t,@()ui.Prepare(),'OxygenDynamics:InvalidRunRequest');
+verifyTrue(t,contains(strjoin(string(ui.Details.Value),newline),'Choose a Detection support option'));
+verifyEqual(t,ui.RunButton.Enable,matlab.lang.OnOffSwitchState.off);
+ui.SupportProfile.Value='whole-image';ui.Prepare();ui.Confirm.Value=true;ui.Confirm.ValueChangedFcn([],[]);
+verifyEqual(t,ui.RunButton.Enable,matlab.lang.OnOffSwitchState.on);
+ui.SupportProfile.Value='craniotomy-roi-1';ui.SupportProfile.ValueChangedFcn([],[]);
+verifyFalse(t,ui.Confirm.Value);verifyEmpty(t,ui.State().Request);
+verifyEqual(t,ui.RunButton.Enable,matlab.lang.OnOffSwitchState.off);
+verifyError(t,@()ui.Prepare(),'OxygenDynamics:InvalidDetectionSupport');
+verifyFalse(t,isfolder(o.OutputFolder));
+end
 function testSupportIsExplicitAndSourceBound(t)
 [o,root]=inputFixture();cleanup=onCleanup(@()rmdir(root,'s'));
 o.SupportProfile='craniotomy-roi-1';

@@ -1,6 +1,7 @@
-# Development candidate contents
+# Preserved candidate and future package contents
 
-The explicit `OxygenReleaseSourcePolicy.json` includes the GUI/batch sources,
+The current explicit `OxygenReleaseSourcePolicy.json` includes the new export-folder
+presentation helper for a future build, alongside the GUI/batch sources,
 reviewed-pocket preview/save/reopen/export, automatic amplitude companions,
 provenance helpers, required definitions and reader guides. It also includes
 [licensing and credits](LICENSING.md), the exact
@@ -11,7 +12,9 @@ provenance helpers, required definitions and reader guides. It also includes
 
 No folder is copied recursively. `RELEASE_MANIFEST.txt` lists the exact paths,
 policy hash and per-file SHA-256 values. It identifies the committed package
-source separately from the unchanged software version/build and creation time.
+source separately from software version/build and package creation time.
+Current checkout 3.1.0-dev.3 is not a new package: preserved candidate03 remains
+3.1.0-dev.2/source 44f3031 and does not contain the new interface controls.
 The reviewed-optical contract retains all scientific fields and judgment hashes;
 historical paths use portable labels, with the matching loader checksum updated.
 
@@ -24,7 +27,8 @@ paths. Saved examples must be supplied separately. See
 
 Earlier candidate ZIPs and results are preserved. This development distribution
 has no stable-release approval. Licensing of new V2 contributions, declared
-support/claims and publication remain decisions. Fresh-recording integration,
-runtime and peak memory are unverified. Static packaging and the definition-load
+support/claims and publication remain decisions. Felix’s FB2311 test supplies
+integration and 293.60 s elapsed time for one case; peak memory and broader
+fresh-recording/platform behavior remain unverified. Static packaging and the definition-load
 check do not extend the historical numerical or desktop evidence; see
 [support limits](DISTRIBUTION_STATUS.md).

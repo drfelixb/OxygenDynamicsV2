@@ -1,14 +1,13 @@
 # OxygenDynamics release decisions
 
-5 October 2026 · For the researcher and project rights holder
+13 October 2026 · For the researcher and project rights holder
 
-The previous **3.1.0-dev.2 portable-guides distribution** is accepted within its
-demonstrated scope. The newer licensing candidate has separate package/loader
-verification in its delivery record; researcher acceptance is not presumed. Recommend publication wording limited to saved results and
-checked calculations. Project licence selection, further tests/recordings and
-publication remain separate decisions. The dependency reconciliation below was
-completed afterward and is included in the new licensing candidate; the earlier
-ZIPs keep their original contents.
+Current development checkout **3.1.0-dev.3** adds support guidance and accessible
+export folders. Felix accepted the single FB2311 manual test on **3.1.0-dev.2**;
+new interface verification uses that saved result. The licensing candidate03
+(source 44f3031) and earlier ZIPs remain unchanged and do not contain these fixes.
+No replacement package, blanket new V2 licence or publication is approved.
+Recommend wording limited to the actual recording and saved/portable evidence.
 
 ## Licence and dependency decisions
 
@@ -44,21 +43,24 @@ rights clearance. Users need their own MATLAB/toolbox access.
 
 | Environment | Accurate support scope | Evidence limit |
 |---|---|---|
-| macOS, Apple silicon, MATLAB R2025a | Named saved-result inspection, review/save/reopen/export | Assistant-operated checks. Prior full portable gate: 132/133, then three targeted passes; no final complete rerun. |
+| macOS, Apple silicon, MATLAB R2025a | Named saved workflows; Felix’s completed FB2311 recording/sink inspection/export/reopen; focused 3.1.0-dev.3 saved-result interface checks | FB2311 elapsed 293.60 s; peak memory not measured. Felix’s feedback and assistant checks are separate. Prior full gate 132/133 then three targeted passes; no final full rerun. |
 | Linux, MATLAB R2025b | Portable automated calculation/export/compatibility checks | Complete 133/133 pass on `5c23b02`; no Linux desktop/native-chooser or fresh-recording demonstration. |
 | Windows, other releases/platforms | No support claim yet | Not demonstrated in this work. |
 
 Imaging routes require Image Processing Toolbox; some analyses need Statistics
 and Machine Learning Toolbox. Whole-application compatibility is not established.
-Acceptance of assistant checks is distinct from independent scientist walkthrough
-feedback, still absent. [Environment evidence](SOFTWARE_NEXT_05_DELIVERY.md).
+Felix’s FB2311 feedback is recorded separately from assistant checks; an unfamiliar
+scientist’s independent walkthrough is still absent. [Environment evidence](SOFTWARE_NEXT_05_DELIVERY.md).
 
 ## Evidence gaps and release choice
 
-Fresh-recording integration, runtime and peak memory are **unverified**; optional/
-legacy paths and broader compatibility remain incompletely checked. Disclose these
-limits. Claims of fresh-recording support or a complete final macOS gate need
-separately approved finite checks. VM/watchdog/custom containment and worker
+One FB2311 case supplies completed integration and **293.60 s** saved elapsed
+time, with matching sink results after reopening. **Peak memory remains unknown**;
+resource limits were not agreed before that run. Surge inspection, native-mask
+attachment and its indexed-workbook launch were not demonstrated by Felix.
+Other recordings, optional/legacy routes and broader compatibility remain
+incompletely checked. A broader recording or complete final macOS claim requires
+separately approved finite evidence. See [the test record](BOI_FB2311_MANUAL_TEST_RESULT.md). VM/watchdog/custom containment and worker
 qualification remain deferred to a possible v4.
 
 Retain C02's conditional reference, FB2312's unresolved recovery, fixed-footprint
@@ -87,17 +89,18 @@ or DOI. This sheet is a repository decision record, outside the candidate/result
 
 Use the following only after the licence/notices and publication are approved:
 
-> OxygenDynamics 3.1.0-dev.2 is a MATLAB development version for inspecting saved
-> BOI analyses, saving reviewed optical measurements and exporting their values
-> and ingredients. Named saved-data workflows were demonstrated on macOS with
-> MATLAB R2025a. The portable calculation suite passed 133/133 on Linux with
-> MATLAB R2025b at commit 5c23b02; a final complete macOS suite was not repeated.
-> This distribution corresponds to packaged source at commit 44f3031.
-> It adds licensing documents and a portable provenance-label/checksum repair;
-> package and extracted-definition checks passed without repeating the numerical suite.
-> Fresh-recording integration, runtime and memory remain unverified. Measurements
-> retain their reference, footprint and recovery qualifications and do not
-> establish oxygen concentration or physiological validity.
+> OxygenDynamics 3.1.0-dev.3 is a MATLAB development checkout for analysing BOI
+> recordings and inspecting/exporting saved automatic and reviewed optical values.
+> Felix completed one FB2311 recording using 3.1.0-dev.2 in 293.60 s and accepted
+> the demonstrated sink inspection/export/reopen workflow. One event amplitude
+> and three sink summaries were independently replayed from their ingredients.
+> The updated interface has focused saved-result checks; previous ZIPs remain
+> 3.1.0-dev.2 and do not contain those fixes. Historical portable checks passed
+> 133/133 on Linux/R2025b at 5c23b02; the new delivery’s CI outcome must be stated
+> with its exact commit. No final complete macOS gate was repeated. Peak memory,
+> broad recording/platform performance and scientific suitability remain open.
+> Optical measurements retain reference, footprint and recovery qualifications;
+> they do not establish oxygen concentration or physiological validity.
 
 Link the approved licence/notices and exact archive hash. No testing, recording,
 commit/push or publication is authorized by preparing this sheet.

@@ -6,6 +6,20 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Development snapshot — 3.1.0-dev.3 (13 October 2026)
+
+- Explain the required Detection support choice in ordinary words, retaining
+  explicit selection, source-bound ROI requirements and confirmation invalidation.
+- Keep the last completed event/window export path visible with Open folder and
+  Copy path. Preserve prior successful destinations after cancellation/failure;
+  open paths with separate arguments, including spaces/quotes.
+- Record Felix's accepted FB2311 test: 328 candidates, 293.60 s elapsed, one event
+  and three sink-summary replay checks, matching after reopening. Peak memory and
+  scientific suitability remain unknown; broad support/release is not established.
+- Add focused checks for the interface state and portable missing-support guidance.
+  Preserve calculations, saved creator identity, original results and 3.1.0-dev.2
+  ZIPs. New reader/exporter identity is separate; no new ZIP or recording run.
+
 ### Development snapshot — 3.1.0-dev.2 (4 October 2026)
 
 - Package portable saved-result instructions and actual event/recording worked

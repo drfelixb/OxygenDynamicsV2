@@ -1,6 +1,12 @@
 # Use the accepted candidate with saved results
 
-5 October 2026 · 3.1.0-dev.2 · saved-data workflow
+13 October 2026 · current checkout 3.1.0-dev.3 · saved-data instructions
+
+The exact named saved-example journey below was demonstrated with 3.1.0-dev.2.
+Those values and qualifications are historical evidence, not a repeated test on
+new code. The current support/export-control checks use the saved FB2311 result.
+Use [checkout installation](../INSTALLATION.md) for 3.1.0-dev.3; earlier ZIPs remain
+3.1.0-dev.2.
 
 This is the assistant's demonstrated route, accepted by the researcher within
 its saved-data scope. No new independent scientist walkthrough or native-chooser
@@ -8,10 +14,11 @@ check is claimed. Acceptance is not feedback from independently following these 
 The supplied examples need their saved result folders separately; the ZIP
 contains software, not recordings/results. Keep previous installations/results.
 
-1. Extract the development candidate ZIP into a new folder.
-   In MATLAB, make that folder Current Folder and run:
+1. Open a fresh MATLAB session with the updated `existing-analysis` checkout as
+   Current Folder (older ZIP instructions remain historical), then run:
 
    ```matlab
+   addpath(pwd,'-begin');
    setupOxygenDynamicsPath;
    getOxygenPipelineVersion
    which openBOIEventReview -all
@@ -19,8 +26,8 @@ contains software, not recordings/results. Keep previous installations/results.
    openBOIRecordingWorkflow
    ```
 
-   Expected: version **3.1.0-dev.2**, build **2026-10-04 21:37:28 +02:00**;
-   functions resolve from this extraction. Remove another OxygenDynamics
+   Expected: version **3.1.0-dev.3**, build **2026-10-13 20:02:39 +02:00**;
+   functions resolve from this checkout. Remove another OxygenDynamics
    installation from the path if it appears in `which`.
 
 2. Click **Open saved run**, choosing an existing completed run folder supplied
@@ -93,5 +100,12 @@ arbitrary saved run. Neither those ingredients nor the demonstration captures
 are bundled in this software-only ZIP. Other supported completed runs can be
 inspected using their own saved values; missing ingredients are not regenerated.
 
-Fresh-recording integration/runtime/memory remain unverified. Independent
-researcher walkthrough feedback and release approval remain outstanding.
+Felix’s later FB2311 test supplies integration and 293.60 s elapsed time for one
+case; see [its accepted result](BOI_FB2311_MANUAL_TEST_RESULT.md). Peak memory and
+broad recording/runtime support remain unknown. His feedback is distinct from
+an unfamiliar scientist’s independent walkthrough. Release approval remains open.
+
+For event/window evidence exports in 3.1.0-dev.3, the persistent **Last completed
+export folder** displays the full destination with **Open folder** and **Copy
+path**. Selection changes do not erase it. Cancellation/failure keeps the last
+completed destination; incomplete exports are not offered as completed folders.

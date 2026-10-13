@@ -29,6 +29,15 @@
     "testBOIRecordingWorkflow/testSavedAnalysisAndStatisticsFailuresRequireNewOutput",
     "testBOIRecordingWorkflow/testGuiZeroEventResultRemainsExplicit",
     "testBOIRecordingWorkflow/testGuiDiscoveryAndDirectOpenRejectUnsupportedAndCorruptIndexes",
-    "testBOIRecordingWorkflow/testSavedRunEntryAndNeutralEventChoice"
+    "testBOIRecordingWorkflow/testSavedRunEntryAndNeutralEventChoice",
+    "testBOIRecordingWorkflow/testGuiMissingSupportAndChoiceInvalidation",
+    "testBOIEventReview/testGuiExportFolderPersistsAcrossSelection",
+    "testBOIWindowReview/testGuiExportFolderPersistsAcrossSelection",
+    "testBOIExportFolderPanel/testInitiallyDisabled",
+    "testBOIExportFolderPanel/testCancellationNeverWrites",
+    "testBOIExportFolderPanel/testSuccessfulPathPersistsAndCopies",
+    "testBOIExportFolderPanel/testFailedIncompleteExportDoesNotEnableControls",
+    "testBOIExportFolderPanel/testFailureOrCancelKeepsPreviousSuccess",
+    "testBOIExportFolderPanel/testExistingDestinationRemainsProtected"
   ]
 }

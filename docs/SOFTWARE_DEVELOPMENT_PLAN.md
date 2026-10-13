@@ -1,13 +1,91 @@
 # OxygenDynamics: software development plan
 
-**Latest task status, 5 October 2026:** original MIT notice restoration and
-licensing documentation are complete locally. The researcher requested task
-closure and a [next implementation handoff](SOFTWARE_LICENSING_DISTRIBUTION_HANDOFF.md).
-That handoff proposes one bounded documentation/GitHub/development-download
-update; its execution approval is pending. No application calculation changes,
-MATLAB session, build, commit/push or publication occurred during this closure.
+**Current delivery, 13 October 2026:** the approved detection-support/export-folder
+usability task is locally verified. Current checkout **3.1.0-dev.3**, build
+**2026-10-13 20:02:39 +02:00**, preserves calculations, definitions and saved results.
+Missing support now gives an actionable choice; event/window exports retain their
+full completed destination with **Open folder** and **Copy path**. Thirteen unique
+focused checks pass after one retained getter repair; the named FB2311 saved
+exports preserve the four measures, frames, reference contributors and original
+calculator identity. Folder destinations were observed in Finder and two layouts
+captured. Native chooser cancellation is verified through the shared continuation,
+not a new manual chooser sequence. [Delivery](BOI_USABILITY_GITHUB_DELIVERY.md)
+records the finite scope and final source/Git transport handoff. No recording,
+detector/statistics run, correction refit or package build. Felix’s manual test
+remains accepted within its original scope, with peak memory unmeasured. Normal
+branch delivery is the final approved action; stop afterward. No automatic next
+test, implementation, package, containment or release task follows.
+
+**Handoff preparation, 13 October 2026 (historical):** the
+[interface and GitHub handoff](BOI_USABILITY_GITHUB_HANDOFF.md) covers actionable
+detection-support guidance, accessible event/window export folders, current
+documentation and a proposed 3.1.0-dev.3 development snapshot. It uses the saved
+FB2311 run for focused verification and includes routine repairs within one
+bounded task. This chat prepared the handoff; implementation awaits Felix's
+explicit execution prompt in the implementation chat. No application change,
+MATLAB start, test, version change, commit/push or new package occurred here.
+
+**Latest manual-test status, 13 October 2026:** Felix completed and accepted the
+demonstrated FB2311 recording, sink inspection/export and saved-run reopening
+workflow. The [test result](BOI_FB2311_MANUAL_TEST_RESULT.md) records one event
+amplitude and three sink-summary arithmetic checks, with matching values after
+reopening. This supplies fresh-recording integration and elapsed-time evidence
+for this one case; peak memory and scientific interpretation remain unverified.
+No further execution is scheduled; release remains a separate decision.
+
+**Latest task status, 5 October 2026:** the corrected licensing documents and
+verified development download are complete and accepted within their demonstrated
+scope. [Delivery](SOFTWARE_LICENSING_DISTRIBUTION_DELIVERY.md): packaged source
+44f3031, final branch commit 029c989, version 3.1.0-dev.2. The approved provenance
+label/checksum repair preserves formulas, values and scientific qualifications.
 New V2 contribution licensing and release decisions remain separate. Earlier
 dated approvals and deliveries below remain historical records.
+
+**Manual-test preparation, 5 October 2026 (historical):** personally test one recording in ordinary MATLAB,
+from import through analysis, inspection, reopening and export. The
+[manual walkthrough and results form](BOI_FELIX_MANUAL_RECORDING_TEST.md) are
+prepared under the [planning handoff](SOFTWARE_RESEARCHER_RECORDING_TEST_HANDOFF.md).
+Felix's recording selection, settings, new unused output and feasible numeric
+resource limits remain pending. Preparation read controls/definitions only;
+no MATLAB launch, recording, numerical test, application repair, build or
+commit/push occurred. The existing candidate remains unchanged. Keep the test
+pending until Felix reports the outcome; assistant preparation is not researcher
+feedback. Custom containment and VM/watchdog work remain deferred to a possible v4.
+
+**Manual-test guidance, 13 October 2026:** Felix opened development 3.1.0-dev.2
+and selected the OneDrive FB2311 source folder. Verified local copies of its
+preserved and denoised movies are prepared in
+`reference-validation/felix-fb2311-manual-test-20261013/input`; both have
+512 × 512 pixels and 1,200 frames. Felix confirmed 1 Hz and 2.35 µm/pixel.
+Felix subsequently ran the recording through the interface. The saved status
+in `BOIRun_FB2311_20261013_01` reports complete, elapsed 293.60 seconds,
+with 240 automatic sink candidates and 88 surge candidates in its saved audit.
+Numerical resource limits were not recorded before the manual run; peak memory
+was not measured. No MATLAB or recording was launched by the assistant.
+Felix demonstrated sink site 2/event 5 amplitude, timing and source-footprint
+inspection, then exported its evidence. An independent Python/Pillow replay
+read the original 250 fixed pixels on 20 reference frames (479–498) and 16
+measurement frames (499–514). It reproduced reference mean 5637.9378,
+minimum 5403.236 at frame 508 and automatic optical drop 4.162901548860646%,
+with zero difference from the saved amplitude fraction. Source and export
+hashes were checked; no detector/statistics execution or correction refit.
+Reference suitability, physiological boundaries and the denoised correction
+remain separate questions. Felix also inspected and exported the whole-recording
+sink summary. An independent Python replay checked 1,200 frame intervals,
+240 saved event intervals and the denominator from 156,907 sink-support pixels
+at 2.35 µm/pixel (0.8665189075 mm²), with µm²-to-mm² and seconds-to-minutes
+conversion. Occupied tissue fraction 0.005748436972219212 (0.5748436972%),
+onset rate 13.8485148981 events/mm²/min and concurrent density
+3.9064352442 events/mm² match the saved values within floating/CSV rounding.
+One acquisition-boundary candidate is included by the saved descriptive rule.
+This replay used saved union areas; native mask reconstruction and anatomical
+validation were not performed. Felix subsequently confirmed a reopened completed
+run with 328 automatic events, the same site 2/event 5 frames, amplitude and
+reference count, and all three matching sink-summary values. He accepted this
+demonstrated workflow with “ok, all matches. i think we are good”. Surge inspection,
+native-mask attachment and opening this run's workbook were not demonstrated;
+these are retained limits, with no automatic follow-up. This is not scientific
+validation of the detections or release approval.
 
 Version 0.2 · 23 September 2026 · SW-PLAN-001
 

@@ -4,6 +4,15 @@ end
 function setupOnce(~)
 setupOxygenDynamicsPath;
 end
+function testGuiExportFolderPersistsAcrossSelection(t)
+[path,root]=fixture;cleanup=onCleanup(@()rmdir(root,'s'));
+[fig,ui]=openBOIWindowReview(path);closeFig=onCleanup(@()delete(fig));
+target=fullfile(root,'window export with spaces');ui.ExportSelected(target);ui.Select(2);
+verifyEqual(t,ui.ExportFolder.Folder(),target);verifyEqual(t,ui.ExportFolder.Path.Value,{target});
+verifyEqual(t,ui.ExportFolder.CopyButton.Enable,matlab.lang.OnOffSwitchState.on);
+verifyError(t,@()ui.ExportSelected(target),'OxygenDynamics:WindowReviewOutputExists');
+verifyEqual(t,ui.ExportFolder.Folder(),target);
+end
 function [path,root]=fixture
 root=tempname;mkdir(root);path=fullfile(root,'DataOutput.mat');
 RecordingRegistry=table("R",string(repmat('a',1,64)),"loaded",'VariableNames',{'RecordingID','RawSHA256','AnalysisStatus'});

@@ -2,14 +2,14 @@
   "schema": "oxygen-software-development-status-1",
   "plan_id": "SW-PLAN-001",
   "plan_version": "0.2",
-  "date": "2026-10-05",
+  "date": "2026-10-13",
   "mission": "Make BOI analysis calculations correct and results understandable for scientists",
   "researcher_priority": "Correct analysis calculations and clear outputs; detection refinement is a separate future priority.",
   "communication_preference": "Use plain feature names, calculation meanings, references, units and uncertainty. Keep internal milestone codes in development records.",
   "scope_direction": "researcher_confirmed_calculations_and_ordinary_matlab_use_custom_supervision_deferred",
   "roadmap_status": "approved",
   "active_implementation_milestone": null,
-  "proposed_next_milestone": "researcher_release_scope_and_new_v2_licensing_decisions_no_execution",
+  "proposed_next_milestone": null,
   "approved_implementation_items": [
     "SW-G3-01_saved_run_entry",
     "SW-G3-02_neutral_event_selection",
@@ -169,7 +169,9 @@
     "Six inventoried bundled dependency notices reconciled against five official upstream licence files; original attributions and historical provenance gaps retained. Project holder/year/licence deferred by researcher; documentation returned for review, no code/build/publication.",
     "Original Science_2024 MIT notice restored byte-for-byte, current licensing claims corrected, contributor roles and Zenodo metadata distinction recorded; new V2 contribution grant remains unconfirmed. Documentation only, no numerical work or publication.",
     "LICENCE-02 documentation scope complete and next DOCS-DIST-01 handoff prepared at researcher request; original MIT/source evidence/credits preserved. Next task execution approval pending; no new scientific work, build or push.",
-    "Verified licensing candidate from 44f3031: 447 committed sources/448 folder-ZIP-extraction files, 65 links, exact MIT/five upstream texts, unique historical judgment labels with retained hashes and one checksum-only loader repair. One same-session extracted definition-load check; no numerical suites/recording/CI/release. Final transport identity reported separately."
+    "Verified licensing candidate from 44f3031: 447 committed sources/448 folder-ZIP-extraction files, 65 links, exact MIT/five upstream texts, unique historical judgment labels with retained hashes and one checksum-only loader repair. One same-session extracted definition-load check; no numerical suites/recording/CI/release. Final transport identity reported separately.",
+    "Licensing development download accepted within reviewed scope; stale current status corrected; manual recording-test prompt prepared and Felix personal test retained as pending on the agenda. No test or launch performed.",
+    "Felix accepted the demonstrated FB2311 recording/sink inspection/export/reopen workflow on 13 October 2026: reopened 328 automatic events, the same site 2/event 5 details and three matching sink summary values. One event and three summary calculations independently replayed; scientific, unperformed-workflow and resource limits retained; no further execution."
   ],
   "standing_boundaries": [
     "BOI only",
@@ -544,6 +546,17 @@
       "origin": "researcher instruction",
       "verbatim": "I approve the amendment within the existing total budget. Use unique portable labels for distinct historical judgments, retain their hashes, and preserve all formulas, frames, values and scientific qualifications. Update the loader checksum and perform the proposed definition-load check during the same MATLAB session. Include routine repairs, then complete the verified ZIP and GitHub update and stop.",
       "approved_scope": "DOCS-DIST-01 continuation with 12 provenance-string replacements, unique judgment labels, one loader digest change and the same-session extracted-copy definition-load check; original total limits retained"
+    },
+    {
+      "date": "2026-10-05",
+      "origin": "researcher instruction",
+      "verbatim": "Ok. Give me a prompt and then keep on the agenda that I need to run a test",
+      "decision": "Accept the reviewed documentation/development-download scope, prepare a next-chat prompt and record Felix personal recording test on the project agenda. Planning only; no assistant MATLAB/recording launch, source change, commit/push or publication."
+    },
+    {
+      "date": "2026-10-13",
+      "origin": "researcher instruction in implementation chat",
+      "decision": "Approve complete BOI_USABILITY_GITHUB_HANDOFF.md, including support guidance, event/window folder controls, README/instructions/status, 3.1.0-dev.3 and normal development branch delivery. Routine repairs/focused rechecks within four hours, two MATLAB starts, four batches, 100 MiB, two commits and one successful push. No recording rerun, scientific change, new ZIP or publication."
     }
   ],
   "team_started": false,
@@ -582,12 +595,7 @@
     "SW-G5-06R-08_structured_identity_diagnostics_and_ten_saved_data_cases"
   ],
   "evidence": "docs/SOFTWARE_CC_01_COMPARISON_REPORT.md",
-  "pending_approval": {
-    "Item": "DOCS-DIST-01",
-    "Status": "proposed_not_approved",
-    "Record": "docs/SOFTWARE_LICENSING_DISTRIBUTION_HANDOFF.md",
-    "Scope": "One complete documentation, normal development-branch push and development-candidate build/verification task; no scientific changes or release publication."
-  },
+  "pending_approval": null,
   "previous_evidence": "docs/SOFTWARE_G5_05_DELIVERY.md",
   "verification": {
     "local_matlab": "R2025a MACA64",
@@ -1013,17 +1021,17 @@
       "g5_or_release_acceptance": false
     }
   ],
-  "proposed_next_items": [
-    "DOCS-DIST-01"
-  ],
-  "proposed_next_evidence": "docs/SOFTWARE_LICENSING_DISTRIBUTION_HANDOFF.md",
+  "proposed_next_items": [],
+  "proposed_next_evidence": "docs/BOI_USABILITY_GITHUB_DELIVERY.md",
   "release_blockers": [
     {
       "id": "G5_REAL_ACQUISITION_RESOURCES",
-      "status": "unverified_normal_matlab_workflow_check_may_be_proposed_separately",
-      "reason": "Fresh-recording integration and runtime/peak-memory evidence remain unverified. A finite ordinary MATLAB check can be proposed without the deferred VM/watchdog/custom release prerequisite; no new run is approved.",
-      "evidence": "docs/SOFTWARE_NEXT_STEPS.md",
-      "waived": false
+      "status": "one_FB2311_case_completed_elapsed_time_known_peak_memory_and_broad_evidence_missing",
+      "reason": "Felix completed FB2311 in 293.5957327 seconds and accepted demonstrated sink inspection/export/reopen. Peak memory was not measured, pre-Run numeric resource limits were not agreed, and broad recording/platform or physiological validity is not established. No further recording is automatically authorised.",
+      "evidence": "docs/BOI_FB2311_MANUAL_TEST_RESULT.md",
+      "waived": false,
+      "HistoricalStatus": "unverified_normal_matlab_workflow_check_may_be_proposed_separately",
+      "HistoricalReason": "Fresh-recording integration and runtime/peak-memory evidence remain unverified. A finite ordinary MATLAB check can be proposed without the deferred VM/watchdog/custom release prerequisite; no new run is approved."
     },
     {
       "id": "G5_PROJECT_LICENCE",
@@ -1348,8 +1356,8 @@
       "ExecutionEvidence": "Historical packets, failures, hashes, counts and consumed approvals remain unchanged; this is a documentation-only acceptance"
     }
   },
-  "development_work_status": "stopped_after_verified_delivery_final_transport_reported_separately",
-  "next_requirement": "Review the verified licensing development candidate. New V2 contribution licensing, declared support/claims and explicit publication remain separate decisions. Final Git transport/source identities are reported in the handoff and local receipt. No further tests, recording, containment or release execution authorised.",
+  "development_work_status": "stopped_after_bounded_usability_delivery",
+  "next_requirement": "Review 3.1.0-dev.3 using INSTALLATION.md and the final GitHub commit. FB2311 manual test is closed within its demonstrated sink workflow. No automatic recording, diagnostic, package, containment or release phase follows; licensing/support/publication decisions remain separate.",
   "cc02_scope_closure": {
     "Date": "2026-10-01",
     "Status": "closed_within_accepted_scope",
@@ -1588,7 +1596,7 @@
       "DocumentedLimitationsRetained": true
     }
   },
-  "development_status": "verified_licensing_candidate_and_documentation_delivery_complete",
+  "development_status": "usability_fixes_and_FB2311_documentation_verified_final_Git_transport_reported_separately",
   "next_04": {
     "Status": "accepted_within_demonstrated_saved_data_scope",
     "Record": "docs/SOFTWARE_NEXT_04_TASK.md",
@@ -2079,7 +2087,7 @@
   },
   "next_documentation_distribution_handoff": {
     "ID": "DOCS-DIST-01",
-    "Status": "verified_candidate_and_documentation_delivered_closed_by_final_normal_branch_push",
+    "Status": "accepted_within_verified_documentation_and_development_candidate_scope",
     "Date": "2026-10-05",
     "Owner": "implementation Codex chat",
     "UserBenefit": "Users receive the corrected original licence, contributor credits and dependency notices in GitHub and the development download",
@@ -2119,7 +2127,7 @@
     "ImplementationStarted": true,
     "MATLABSessions": 1,
     "PackageBuilds": 1,
-    "CommitPushPerformed": "See final transport receipt; package source and later delivery-record commit distinguished",
+    "CommitPushPerformed": true,
     "PublicationAuthorized": false,
     "RemainingReleaseDecisions": [
       "Licensing coverage/authority of new V2 contributions",
@@ -2169,7 +2177,220 @@
     "CompletionCondition": "Verified local delivery plus successful normal branch push and remote-tip agreement; reported in the final transport receipt",
     "SourceCommitCI": "skip ci",
     "DeliveryCommitCI": "skip ci",
-    "AcceptanceReceivedForNewCandidate": false,
-    "SourceCommitsCreatedBeforeClosingRecord": 1
+    "AcceptanceReceivedForNewCandidate": true,
+    "SourceCommitsCreatedBeforeClosingRecord": 1,
+    "ResolvedStalePendingApproval": {
+      "Item": "DOCS-DIST-01",
+      "Status": "proposed_not_approved",
+      "Record": "docs/SOFTWARE_LICENSING_DISTRIBUTION_HANDOFF.md",
+      "Scope": "One complete documentation, normal development-branch push and development-candidate build/verification task; no scientific changes or release publication."
+    },
+    "AcceptanceDate": "2026-10-05",
+    "AcceptanceContext": "Researcher replied Ok to the reviewed delivery and requested a prompt and pending personal recording test on the agenda.",
+    "AcceptanceLimit": "Bounded development download only; no new V2 licence, fresh-recording validation, broad support or publication approval.",
+    "TaskComplete": true,
+    "FinalBranchCommit": "029c9897e92986fc2bd5812b568dc8330d031e8a",
+    "TransportReceipt": "reference-validation/software-licensing-distribution-20261005/push-and-remote-verification.json"
+  },
+  "researcher_recording_test": {
+    "ID": "USER-RECORDING-TEST-01",
+    "DateAdded": "2026-10-05",
+    "Status": "completed_and_accepted_within_demonstrated_FB2311_sink_workflow",
+    "Owner": "Felix Beinlich performs the test; implementation Codex chat prepares instructions",
+    "UserBenefit": "Check one real recording through ordinary MATLAB and inspect whether the analysis outputs are understandable and consistent with their ingredients",
+    "AgendaRecord": "docs/SOFTWARE_NEXT_STEPS.md#felixs-recording-test-agenda",
+    "Handoff": "docs/SOFTWARE_RESEARCHER_RECORDING_TEST_HANDOFF.md",
+    "SoftwareVersion": "3.1.0-dev.2",
+    "CandidateSourceCommit": "44f303161dc1ae52541e7e6d8715d0fcb0ce677f",
+    "RecordedBranchCommit": "029c9897e92986fc2bd5812b568dc8330d031e8a",
+    "RecordingSelected": true,
+    "SelectedRecording": "FB2311 (researcher-selected original; private location retained in local input-preparation record)",
+    "SettingsConfirmed": false,
+    "NewOutputDirectory": "reference-validation/felix-fb2311-manual-test-20261013/BOIRun_FB2311_20261013_01",
+    "ResourceLimitsAgreed": false,
+    "WalkthroughPrepared": true,
+    "PromptPreparationAuthorized": true,
+    "AssistantMATLABLaunchAuthorized": false,
+    "AssistantRecordingExecutionAuthorized": false,
+    "ManualRunStarted": true,
+    "TestOutcomeReported": true,
+    "ObservedRuntime": "Saved run elapsed 293.5957 seconds; separate from GUI preflight time.",
+    "ObservedPeakMemory": null,
+    "CompletionCondition": "Met for the demonstrated FB2311 recording/sink inspection/export/reopen workflow by Felix's 13 October report. Unperformed walkthrough items, unknown peak memory and scientific limits remain recorded; no automatic follow-up.",
+    "ScientificValidityEstablished": false,
+    "PreparationBudget": {
+      "MaximumActiveMinutes": 45,
+      "MaximumNewTextBytes": 2097152,
+      "MATLABLaunches": 0,
+      "RecordingRuns": 0,
+      "PackageBuilds": 0,
+      "CommitPushes": 0
+    },
+    "Scope": "Prepare one manual recording guide and results form; input selection and finite run budget precede the manual test. Later numerical replay is scoped to one event and one recording summary once ingredients exist.",
+    "StoppingCondition": "Test accepted within the demonstrated scope; no further checks or launches. Await Felix's next requirement.",
+    "Excluded": [
+      "Scientific calculation adoption",
+      "Detector tuning",
+      "Correction refits",
+      "VM/watchdog/custom containment",
+      "Diagnostic campaigns",
+      "Public release"
+    ],
+    "Walkthrough": "docs/BOI_FELIX_MANUAL_RECORDING_TEST.md",
+    "PreparationDate": "2026-10-05",
+    "InputSelectionRequested": true,
+    "PreparationEvidence": "Static review of existing GUI/request/export controls and accepted calculation guides; MathWorks ordinary interrupt documentation. No MATLAB or recording launch; no runtime or scientific outcome evidence.",
+    "PreparationChecks": {
+      "CodeAndScientificContractHashes": "617 protected files match preparation-start hashes: all 542 MATLAB files, 72 existing planning/definition JSONs and three candidate ZIPs",
+      "LocalGuideLinks": "4 links resolve; named controls verified against existing implementation",
+      "PriorAgendaAndHandoffPreserved": "Original agenda test remains pending; plan/agenda history, status history and handoff preserved",
+      "RuntimeChecks": "None; static documentation checks only"
+    },
+    "ResearcherFeedbackReceived": true,
+    "GuidanceDate": "2026-10-13",
+    "ResearcherInterfaceOpened": true,
+    "SelectedRecordingFile": "01_FB2311_bin2_950ms_2x_1Hz_1_MMStack_Default.ome_mcor.tif",
+    "PreparedLocalInputFolder": "reference-validation/felix-fb2311-manual-test-20261013/input",
+    "PreparedInputVerification": "Both source copies SHA-256 verified; 512 x 512 x 1200 dimensions match. No analysis or numerical measurement executed.",
+    "InputPreparationRecord": "reference-validation/felix-fb2311-manual-test-20261013/input-preparation.json",
+    "ConfirmedSampleHz": 1,
+    "ConfirmedPixelSizeUm": 2.35,
+    "AcquisitionValuesConfirmation": "Felix confirmed both values in this chat on 13 October 2026.",
+    "UserReportedInputFieldsFilled": true,
+    "ProposedSupportProfile": "whole-image",
+    "ProposedSupportReason": "No reviewed craniotomy ROI declaration in the prepared input; use established legacy whole-image route for this named manual software test.",
+    "ProposedNewOutputDirectory": "reference-validation/felix-fb2311-manual-test-20261013/BOIRun_FB2311_20261013_01",
+    "ProposedOutputVerifiedAbsentOn": "2026-10-13",
+    "ManualRunSavedStatus": "complete",
+    "ObservedRuntimeSeconds": 293.59573270833334,
+    "SavedAutomaticCandidateCounts": {
+      "sink": 240,
+      "surge": 88
+    },
+    "ManualRunObservationRecord": "reference-validation/felix-fb2311-manual-test-20261013/manual-run-observation.json",
+    "EventInspectionRecord": "reference-validation/felix-fb2311-manual-test-20261013/event-inspection.json",
+    "EventAmplitudeAndTimingViewsDemonstrated": true,
+    "InspectedEvent": {
+      "Sign": "sink",
+      "SiteID": 2,
+      "EventID": 5
+    },
+    "IndependentEventCalculationReplayPerformed": true,
+    "SourceFrameFootprintViewDemonstrated": true,
+    "EventEvidenceExportDemonstrated": true,
+    "EventEvidenceExportFolder": "reference-validation/felix-fb2311-manual-test-20261013/BOIEventReview_tpbec838ab_fbe1_4c53_b6da_f6e034d0ca38",
+    "IndependentEventCalculationReplayStatus": "pass",
+    "IndependentEventCalculationReplayRecord": "reference-validation/felix-fb2311-manual-test-20261013/independent-event-replay.json",
+    "IndependentRecordingSummaryReplayPerformed": true,
+    "RecordingSummaryViewDemonstrated": true,
+    "RecordingSummaryInspectionRecord": "reference-validation/felix-fb2311-manual-test-20261013/recording-summary-inspection.json",
+    "IndependentRecordingSummaryReplayStatus": "pass",
+    "IndependentRecordingSummaryReplayRecord": "reference-validation/felix-fb2311-manual-test-20261013/independent-sink-window-replay.json",
+    "RecordingSummaryEvidenceExportFolder": "reference-validation/felix-fb2311-manual-test-20261013/BOIWindowReview_tp0b5173e7_04d3_4017_b0cf_ced062eada80",
+    "IndependentlyReplayedSummaryMeasures": [
+      "occupied_tissue_fraction",
+      "event_onset_rate_per_mm2_per_min",
+      "mean_concurrent_events_per_mm2"
+    ],
+    "NativeDetectorMasksIndependentlyReconstructed": false,
+    "ReopeningCompletedRunDemonstrated": true,
+    "ResearcherFeedbackDate": "2026-10-13",
+    "ResearcherAcceptanceQuote": "ok, all matches. i think we are good",
+    "ResearcherAcceptanceScope": "One FB2311 recording completed in ordinary MATLAB; demonstrated sink event and recording-summary inspection, export and reopening with matching values. Independent replay covers one event amplitude and three sink summary calculations.",
+    "ReopenVerification": {
+      "Evidence": "Felix reports in this chat; no new screenshot or assistant MATLAB session after reopening.",
+      "AutomaticEvents": 328,
+      "Event": {
+        "Sign": "sink",
+        "SiteID": 2,
+        "EventID": 5,
+        "MeasurementFrames": [
+          499,
+          514
+        ],
+        "DisplayedAmplitudePercent": 4.1629,
+        "CleanReferenceSamples": 20
+      },
+      "RecordingSummary": {
+        "Sign": "sink",
+        "Window": "whole_recording",
+        "DisplayedOccupiedFraction": 0.0057,
+        "DisplayedOnsetRatePerMm2PerMin": 13.8485,
+        "DisplayedConcurrentDensityPerMm2": 3.9064
+      },
+      "AllListedChecksReportedMatching": true
+    },
+    "TestClosedWithinDemonstratedScope": true,
+    "FullWalkthroughChecklistCompleted": false,
+    "SurgeInspectionDemonstratedInThisTest": false,
+    "NativeMaskAttachmentDemonstratedInThisTest": false,
+    "IndexedWorkbookLaunchDemonstratedInThisTest": false,
+    "ResultRecord": "docs/BOI_FB2311_MANUAL_TEST_RESULT.md",
+    "CompletionEvidence": "reference-validation/felix-fb2311-manual-test-20261013/manual-test-completion.json",
+    "PreparationChecksEvidenceDate": "2026-10-05",
+    "SettingsConfirmationScope": "Felix confirmed sampling rate and pixel calibration; no full pre-Run numeric resource/settings agreement record is claimed.",
+    "ManualTestOutcomeScope": "Felix manual run/inspection/export/reopen on 3.1.0-dev.2; assistant saved-only interface checks on 3.1.0-dev.3 do not rerun or relabel it."
+  },
+  "usability_finish_handoff": {
+    "ID": "UI-FINISH-01",
+    "Date": "2026-10-13",
+    "Status": "locally_verified_delivery_closed_after_final_normal_branch_transport",
+    "Owner": "Implementation Codex chat",
+    "Record": "docs/BOI_USABILITY_GITHUB_HANDOFF.md",
+    "UserBenefit": "Understand the required detection-support choice and find exported event/recording folders; keep documentation and GitHub current",
+    "CurrentVersion": "3.1.0-dev.3",
+    "ProposedVersion": null,
+    "StartingCommit": "029c9897e92986fc2bd5812b568dc8330d031e8a",
+    "Branch": "development-existing-analysis-v3",
+    "Fixture": "Existing completed FB2311 run and accepted exports; no recording rerun",
+    "Budget": {
+      "MaximumActiveHours": 4,
+      "MaximumMATLABStarts": 2,
+      "MaximumFocusedValidationBatches": 4,
+      "MaximumNewEvidenceBytes": 104857600,
+      "MaximumCommits": 2,
+      "MaximumSuccessfulBranchPushes": 1,
+      "ExistingCIExecutionsTriggeredByPush": 1
+    },
+    "RoutineRepairsAndNecessaryRechecksIncluded": true,
+    "ScientificCalculationsAndOriginalOutputsPreserved": true,
+    "ImplementationStarted": true,
+    "ExecutionChecksPerformed": true,
+    "StoppingCondition": "Deliver both usability fixes, reconciled documentation, version metadata, focused verification and confirmed normal development-branch push; report the updated checkout launch instructions and stop",
+    "Excluded": [
+      "Recording/detector/statistics execution",
+      "Correction refits and scientific-output changes",
+      "VM/watchdog work",
+      "New package ZIP",
+      "Main merge/release tag/publication",
+      "Unrequested delegation"
+    ],
+    "ExecutionApprovalReceived": true,
+    "Version": "3.1.0-dev.3",
+    "BuildTimestamp": "2026-10-13 20:02:39 +02:00",
+    "DeliveryRecord": "docs/BOI_USABILITY_GITHUB_DELIVERY.md",
+    "TaskComplete": "Local verification complete; final branch/push/CI identities and outcome reported in the final handoff and local transport receipt",
+    "Usage": {
+      "MATLABStarts": 2,
+      "ExistingFelixSessionPreserved": true,
+      "FocusedValidationBatches": 4,
+      "UniqueFocusedTestsFinalPassing": 13,
+      "InitialTestResult": "9/13 pass; four folder-getter failures retained",
+      "TargetedRepairRecheck": "4/4 pass",
+      "SavedFB2311Measurements": "four preserved; accepted event/window CSV values match",
+      "NativeFileManagerFoldersObserved": 2,
+      "NativeChooserClicksClaimed": false,
+      "HostedCIExecutions": "one delivery push may trigger existing CI; exact outcome reported separately",
+      "PackageBuilds": 0,
+      "RecordingRuns": 0,
+      "DetectorRuns": 0,
+      "StatisticsPipelineRuns": 0,
+      "CorrectionRefits": 0
+    },
+    "CalculationContractsChanged": false,
+    "OriginalEventCalculator": "unknown",
+    "OriginalStatisticsCalculator": "3.1.0-dev.2",
+    "PreviousZIPsVersion": "3.1.0-dev.2",
+    "PrivatePreparationDataStaged": false
   }
 }
