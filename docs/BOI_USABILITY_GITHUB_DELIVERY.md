@@ -20,7 +20,10 @@ provenance and new-child/no-overwrite behavior remain.
 
 - Version/build: **3.1.0-dev.3**, **2026-10-13 20:02:39 +02:00**.
 - Branch: `development-existing-analysis-v3`; starting commit `029c989`.
-- Exact source commit: recorded in the closing delivery-record update before push.
+- Exact implementation/check source: [7eb3cc8](https://github.com/drfelixb/OxygenDynamicsV2/commit/7eb3cc8f8291d0ead01f18069d9ec1b390cbf5a9).
+  The later delivery-record commit changes documentation/status only. All 543
+  committed MATLAB file hashes match the verified snapshot; existing local
+  historical recipes outside Git remain preserved separately.
 - Final branch, normal-push and single CI execution identities/outcome: reported
   in the final GitHub handoff and local transport receipt.
 - All prior ZIPs remain **3.1.0-dev.2**. None contains these new controls; this
@@ -102,7 +105,10 @@ Numeric limits were not agreed before that run; **peak memory was not measured**
 Felix did not demonstrate surge inspection, native-mask attachment or that run's
 indexed-workbook launch. Broader recording/platform support remains open.
 
-Final static checks cover unchanged original/source copies, saved index/status/
+Final static checks passed: **199 repository reader links**, **68 future-policy
+local reader links**, **96 protected artifacts**, **533/542 unchanged existing
+MATLAB files** (nine approved UI/request/version/test edits, plus two new helper/
+test files), and unchanged original/source copies, saved index/status/
 audit/statistics/workbook and accepted exports, all three previous ZIPs and the
 72 existing planning/definition JSON files. Only approved UI/request/version/test
 MATLAB files change; calculation and export-writer source files retain their hashes.
@@ -128,5 +134,8 @@ Used **two MATLAB starts**, **four focused validation batches**, approximately
 detector/statistics run, refit or package build. Budget allows four active hours,
 100 MiB, two commits and one successful normal push; all limits remain. One static
 link check ran before this delivery file existed; the completed-document recheck
-is retained with the preservation receipt. Stop after verified branch delivery:
+is retained with the preservation receipt. A later source-freeze check attempted
+Git binding for ignored local historical recipes; the repaired check separates
+committed code from preserved local recipes. No application change was required.
+Stop after verified branch delivery:
 no automatic further test, recording, diagnostic, merge/tag or public release.

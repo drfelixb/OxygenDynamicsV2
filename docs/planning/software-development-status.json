@@ -2385,12 +2385,21 @@
       "RecordingRuns": 0,
       "DetectorRuns": 0,
       "StatisticsPipelineRuns": 0,
-      "CorrectionRefits": 0
+      "CorrectionRefits": 0,
+      "NewEvidenceBytesBeforeTransportReceipts": 13295642,
+      "RepositoryReaderLinksResolved": 199,
+      "FuturePackageReaderLinksIncluded": 68,
+      "Commits": "implementation/source commit plus closing documentation record, maximum two"
     },
     "CalculationContractsChanged": false,
     "OriginalEventCalculator": "unknown",
     "OriginalStatisticsCalculator": "3.1.0-dev.2",
     "PreviousZIPsVersion": "3.1.0-dev.2",
-    "PrivatePreparationDataStaged": false
+    "PrivatePreparationDataStaged": false,
+    "ImplementationSourceCommit": "7eb3cc8f8291d0ead01f18069d9ec1b390cbf5a9",
+    "CommittedMATLABFileHashesMatched": 543,
+    "All544LocalMATLABFileHashesStillMatchVerifiedSnapshot": true,
+    "VerificationReceipt": "reference-validation/boi-usability-fb2311-20261013/final-static-preservation.json",
+    "GitTransport": "One normal development branch push; exact final commit, remote verification and CI outcome in final handoff/local transport receipt"
   }
 }
