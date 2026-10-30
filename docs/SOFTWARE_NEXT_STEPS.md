@@ -1,5 +1,7 @@
 # Software priorities and working plan
 
+**Current checkpoint and next plan, 30 October 2026:** **3.1.0-dev.10** is saved and pushed as source `5408db9` on `development-existing-analysis-v3`. The local portable gate passes 204/204 on macOS/R2025a; source inventory and preserved scientific artifacts pass. Linux CI is tracked separately. Felix stops this scientific inspection and keeps the shorter FB2412 pocket as an unsaved preview. The [broader workflow plan](BOI_BROADER_WORKFLOW_PLAN.md) proposes finishing the existing minimal-CSV → ready queue → combined export → postprocessing route first. Reuse current services/calculations/formats; individual review stays optional, with strict burden missingness. Reliability and scientific method validation are distinct later proposals. No active implementation, scientific adoption, new cohort/export campaign, replacement package or release follows automatically. Historical dated next steps below are superseded for current scope.
+
 **Pre-episode baseline delivered, 16 October 2026:** local **3.1.0-dev.9**
 implements the approved recurrent-pocket reference through existing batch stats
 and future BOI master outputs. Original automatic columns and historical files

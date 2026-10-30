@@ -81,9 +81,9 @@
   "researcher_priority": "Correct analysis calculations and clear outputs; detection refinement is a separate future priority.",
   "communication_preference": "Use plain feature names, calculation meanings, references, units and uncertainty. Keep internal milestone codes in development records.",
   "scope_direction": "researcher_confirmed_calculations_and_ordinary_matlab_use_custom_supervision_deferred",
-  "roadmap_status": "approved",
-  "active_implementation_milestone": "DEV-CHECKPOINT-20261030",
-  "proposed_next_milestone": "Researcher decision on a defensible area measurement for the extended FB2412 pocket; no further method or export milestone approved.",
+  "roadmap_status": "checkpoint_delivered_next_milestone_proposed",
+  "active_implementation_milestone": null,
+  "proposed_next_milestone": "WORKFLOW-CLOSE-01: finish the existing routine minimal-CSV-to-combined-export workflow; planning only, awaiting approval.",
   "approved_implementation_items": [
     "SW-G3-01_saved_run_entry",
     "SW-G3-02_neutral_event_selection",
@@ -691,7 +691,7 @@
     "BATCH-EXPORT-03_finite_verification_and_17_recording_export"
   ],
   "evidence": "docs/SOFTWARE_CC_01_COMPARISON_REPORT.md",
-  "pending_approval": "Commit and normal development-branch push are explicitly authorized by Felix on 30 October 2026. Broader planning only; no next implementation, scientific-method adoption, dataset campaign or release approved.",
+  "pending_approval": "The requested development checkpoint commit/push is fulfilled. The broader workflow plan is proposed only; future implementation, scientific adoption, cohort work, package/release and further unrequested Git transport need separate authorization.",
   "previous_evidence": "docs/SOFTWARE_G5_05_DELIVERY.md",
   "verification": {
     "local_matlab": "R2025a MACA64",
@@ -1475,7 +1475,7 @@
     }
   },
   "development_work_status": "approved_batch_to_existing_stats_export_in_progress",
-  "next_requirement": "Complete the authorized checkpoint/push and broader workflow plan. Shorter FB2412 pocket stays an unsaved preview; scientific review is stopped.",
+  "next_requirement": "Researcher review of docs/BOI_BROADER_WORKFLOW_PLAN.md before implementation. Scientific inspection is stopped; shorter pocket remains preview-only. No new data campaign or scientific method approved.",
   "cc02_scope_closure": {
     "Date": "2026-10-01",
     "Status": "closed_within_accepted_scope",
@@ -3916,7 +3916,7 @@
     "save_proposal_status": "declined_keep_preview"
   },
   "development_checkpoint_20261030": {
-    "status": "checks_passed_ready_for_commit",
+    "status": "delivered",
     "scope": "reference-validation/boi-development-checkpoint-20261030/scope.json",
     "software_version": "3.1.0-dev.10",
     "build_timestamp": "2026-10-30 11:14:26 +01:00",
@@ -3935,6 +3935,15 @@
     "changed_matlab_files_inspected": 67,
     "code_analyzer_style_performance_advisories": 53,
     "headless_starts": 1,
-    "repair_passes": 0
+    "repair_passes": 0,
+    "source_commit": "5408db968bc74bc19bd65e5b8f20607454ff2e2f",
+    "push_verified": true,
+    "transport": "normal SSH push after HTTPS credential failure; origin URL unchanged",
+    "remote_branch": "development-existing-analysis-v3",
+    "scientific_artifacts_unchanged": true,
+    "github_ci_run": "https://github.com/drfelixb/OxygenDynamicsV2/actions/runs/41040080980",
+    "github_ci_snapshot_status": "in_progress",
+    "broader_plan": "docs/BOI_BROADER_WORKFLOW_PLAN.md",
+    "documentation_followup_matlab_sources_unchanged": true
   }
 }

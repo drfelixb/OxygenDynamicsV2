@@ -6,9 +6,9 @@ The local development checkout adds **Batch recordings** for CSV preparation,
 shared settings, optional metadata, row checks and sequential execution with
 saved status/history. Choose the output parent and review/confirm selected ready
 rows before starting; see [batch execution](docs/BOI_BATCH_EXECUTION.md). The preserved development ZIPs
-remain **3.1.0-dev.2**. This development checkpoint is being saved to the
+remain **3.1.0-dev.2**. This development checkpoint is saved to the
 existing development branch; it builds no replacement ZIP. Keep older installations
-and results. See [checkpoint details](docs/BOI_DEVELOPMENT_CHECKPOINT_20261030.md).
+and results. Repository-only checkpoint details: `docs/BOI_DEVELOPMENT_CHECKPOINT_20261030.md`.
 
 In a fresh ordinary MATLAB desktop, make the updated `existing-analysis` checkout
 Current Folder. Close older BOI viewer windows before switching installations.

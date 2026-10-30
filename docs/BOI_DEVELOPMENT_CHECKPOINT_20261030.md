@@ -34,9 +34,21 @@ One headless MATLAB start was used, with no repair or repeat gate. This runs
 finite synthetic fixtures, not the 17 source recordings. Native desktop checks
 are excluded from the portable gate and are not newly claimed.
 
-The software checkpoint is ready for a normal push to
-`development-existing-analysis-v3`. The final transport identity and subsequent
-planning decision are recorded after push verification; no force push is used.
+The software checkpoint [5408db9](https://github.com/drfelixb/OxygenDynamicsV2/commit/5408db968bc74bc19bd65e5b8f20607454ff2e2f)
+is pushed to `development-existing-analysis-v3`; remote fetch confirms the
+exact same commit. HTTPS transport could not obtain credentials; the existing
+SSH identity completed a normal fast-forward push without changing credential
+configuration or host trust. No force push was used.
+
+The Linux R2025b [GitHub Actions run](https://github.com/drfelixb/OxygenDynamicsV2/actions/runs/41040080980)
+was in progress when this transport record was prepared; no remote pass is
+claimed here. The subsequent planning commit changes documentation/status only,
+retains all tested MATLAB source hashes and skips a duplicate CI run.
+
+The [broader workflow plan](BOI_BROADER_WORKFLOW_PLAN.md) proposes completing the
+routine batch-to-export journey first, followed by reliability work and a
+separate scientifically approved burden-method track. This is planning, not
+approval to implement it. Scientific inspection remains stopped.
 
 Work item DEV-CHECKPOINT-20261030; owner root, no delegation. The bounded scope
 allows source/inventory/version reconciliation, portable regression, normal

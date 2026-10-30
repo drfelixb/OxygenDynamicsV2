@@ -1,5 +1,7 @@
 # OxygenDynamics release decisions
 
+30 October 2026 · **3.1.0-dev.10** is a tested development checkpoint, source `5408db9`, pushed to the existing development branch at Felix’s explicit request. Local portable checks pass 204/204 on macOS/R2025a; remote CI is separate. This creates no release tag, package, broader support declaration or new licence decision. Scientific inspection is stopped and experimental previews are not adopted. Current delivery: `docs/BOI_DEVELOPMENT_CHECKPOINT_20261030.md`; next scope is the proposed broader workflow plan. Earlier dated entries below retain their original scope.
+
 14 October 2026 · For the researcher and project rights holder
 
 Local **3.1.0-dev.4** now adds the batch preparation editor. Its
