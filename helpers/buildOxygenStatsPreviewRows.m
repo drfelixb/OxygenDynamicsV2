@@ -102,6 +102,11 @@ end
 if isfield(Data.HypoxicBurden,'EventTable') && istable(Data.HypoxicBurden.EventTable)
     EventTable = Data.HypoxicBurden.EventTable;
     PreviewRows(end+1,:) = {'Hypoxic burden event rows',num2str(height(EventTable))};
+    if ismember('PerEventBurdenContribution',EventTable.Properties.VariableNames)
+        Values = tableColumnToDouble(EventTable.PerEventBurdenContribution);
+        PreviewRows(end+1,:) = {'Available event contributions', ...
+            sprintf('%d / %d (count only)',sum(isfinite(Values)),numel(Values))};
+    end
     PreviewRows = appendTableColumnSum(PreviewRows,EventTable, ...
         'PerEventBurdenContribution','Hypoxic burden event sum');
     PreviewRows = appendTableColumnSum(PreviewRows,EventTable, ...
@@ -115,6 +120,11 @@ end
 if isfield(Data.HypoxicBurden,'RecordingTable') && istable(Data.HypoxicBurden.RecordingTable)
     RecordingTable = Data.HypoxicBurden.RecordingTable;
     PreviewRows(end+1,:) = {'Hypoxic burden recordings',num2str(height(RecordingTable))};
+    if ismember('HypoxicBurden_per_mm2_per_min',RecordingTable.Properties.VariableNames)
+        Values = tableColumnToDouble(RecordingTable.HypoxicBurden_per_mm2_per_min);
+        PreviewRows(end+1,:) = {'Complete normalized recording burdens', ...
+            sprintf('%d / %d (count only)',sum(isfinite(Values)),numel(Values))};
+    end
     PreviewRows = appendTableColumnSum(PreviewRows,RecordingTable,'HypoxicBurden','Hypoxic burden total');
     PreviewRows = appendTableColumnSum(PreviewRows,RecordingTable,'HypoxicBurden_per_mm2', ...
         'Hypoxic burden total per 1 mm2');
@@ -187,7 +197,7 @@ function PreviewRows = appendTableColumnSum(PreviewRows,TableData,ColumnName,Lab
 
 if ismember(ColumnName,TableData.Properties.VariableNames)
     Values = tableColumnToDouble(TableData.(ColumnName));
-    PreviewRows(end+1,:) = {LabelText,sprintf('%.6g',sum(Values,'omitnan'))};
+    PreviewRows(end+1,:) = {LabelText,completeBurdenStatistic(Values,'sum')};
 end
 
 end
@@ -196,7 +206,23 @@ function PreviewRows = appendTableColumnMean(PreviewRows,TableData,ColumnName,La
 
 if ismember(ColumnName,TableData.Properties.VariableNames)
     Values = tableColumnToDouble(TableData.(ColumnName));
-    PreviewRows(end+1,:) = {LabelText,sprintf('%.6g',mean(Values,'omitnan'))};
+    if ismember(ColumnName,{'AreaCorrectionFactor_1mm2','EventSpecificAreaMatchRate'})
+        Text = sprintf('%.6g',mean(Values,'omitnan'));
+    else
+        Text = completeBurdenStatistic(Values,'mean');
+        % Exported group means intentionally identify their valid mice. Do not
+        % present a mean over only those mice as a complete GUI summary.
+        CountColumn = [regexprep(ColumnName,'_Mean$','') '_NValidMice'];
+        if all(ismember({'NumMice',CountColumn},TableData.Properties.VariableNames))
+            Required = tableColumnToDouble(TableData.NumMice);
+            Available = tableColumnToDouble(TableData.(CountColumn));
+            if all(isfinite([Required;Available])) && any(Available<Required)
+                Text = sprintf('Unavailable (%d of %d mouse summaries unresolved)', ...
+                    sum(Required-Available),sum(Required));
+            end
+        end
+    end
+    PreviewRows(end+1,:) = {LabelText,Text};
 end
 
 end
@@ -205,9 +231,26 @@ function PreviewRows = appendTableColumnMax(PreviewRows,TableData,ColumnName,Lab
 
 if ismember(ColumnName,TableData.Properties.VariableNames)
     Values = tableColumnToDouble(TableData.(ColumnName));
-    PreviewRows(end+1,:) = {LabelText,sprintf('%.6g',max(Values,[],'omitnan'))};
+    PreviewRows(end+1,:) = {LabelText,completeBurdenStatistic(Values,'max')};
 end
 
+end
+
+function Text = completeBurdenStatistic(Values,Operation)
+% A display summary must not silently discard required missing inputs.
+Missing = sum(~isfinite(Values));
+if Missing>0
+    Text = sprintf('Unavailable (%d of %d inputs unresolved)',Missing,numel(Values));
+elseif isempty(Values) && ~strcmp(Operation,'sum')
+    Text = 'Unavailable (no inputs)';
+else
+    switch Operation
+        case 'sum', Value = sum(Values);
+        case 'mean', Value = mean(Values);
+        case 'max', Value = max(Values);
+    end
+    if isfinite(Value),Text = sprintf('%.6g',Value);else,Text = 'Unavailable (nonfinite result)';end
+end
 end
 
 function Values = tableColumnToDouble(Column)

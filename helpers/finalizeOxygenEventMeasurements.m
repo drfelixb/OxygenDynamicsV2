@@ -56,6 +56,7 @@ else
     Events.AmplitudeSignConvention(:)="positive_increase_percent";
 end
 % No preliminary site-trace amplitude is exported; event raw pixels are authoritative.
+episodeEvidence=cell(height(Events),1);
 for e=1:height(Events)
     s=Events.(siteCol)(e); k=Events.EventID(e);
     first=Events.StartFrame(e); last=Events.EndFrame(e);
@@ -69,6 +70,9 @@ for e=1:height(Events)
     trace=nan(1,N);
     flat=reshape(Raw,[],N);
     trace(:)=mean(double(flat(footprint,:)),1);
+    if strcmp(kind,'sink')
+        episodeEvidence{e}=struct('Raw',trace,'Footprint',footprint,'DetectedFrames',detected);
+    end
     b=max(1,first-round(baselineSec*fs)):first-1;
     % Exclude other events on any overlapping spatial support, not only this site.
     clean=true(size(b));
@@ -127,5 +131,8 @@ for e=1:height(Events)
     for j=1:3, Events.(fields{j})(e)=mean(extra(:,j)); end
     scales=[pixelSize^2,pixelSize^2,pixelSize,pixelSize]; names={'Area_um','FilledArea_um','Diameter_um','Perimeter_um'};
     for j=1:4, Events.([prefix names{j}])(e)=mean(vals(:,j))*scales(j); end
+end
+if strcmp(kind,'sink')
+    Events=deriveBOIPreEpisodeReferences(Events,episodeEvidence,allPixels,fs,baselineSec);
 end
 end

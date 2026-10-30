@@ -16,9 +16,13 @@ Burden = struct();
 Burden.EventTable = table();
 Burden.RecordingTable = table();
 Burden.MetricBasis = createHypoxicBurdenBasisTable();
+if istable(TableOxygenSinkEvents)&&ismember('EpisodeReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
+    Burden.ReferencePolicy=struct2table(boiEpisodeReferencePolicy());
+end
 
 if isempty(TableOxygenSinkEvents)
     Burden.RecordingTable=aggregateOxygenRecordingBurden(table(),RecordingRegistry);
+    Burden.RecordingTable=appendBOIEpisodeReferenceSummary(Burden.RecordingTable,TableOxygenSinkEvents);
     Burden.GroupSummaryTable=summarizeOxygenMouseMetrics(Burden.RecordingTable);
     Burden.TimeSeriesTable=completeOxygenBurdenTimeSeries(table(),RecordingRegistry);
     Burden.TimeSeriesBasis=createBurdenTimeSeriesBasisTable();
@@ -32,7 +36,7 @@ if ~ismember('DurationSec',TableOxygenSinkEvents.Properties.VariableNames)
 end
 
 [AmplitudePercent,AmplitudeSource,AmplitudeSignConvention] = ...
-    getPositiveDropAmplitudePercent(TableOxygenSinkEvents);
+    getBOISinkBurdenAmplitude(TableOxygenSinkEvents);
 if isempty(AmplitudePercent)
     warning('OxygenDynamics:HypoxicBurdenMissingAmplitude', ...
         'Hypoxic burden was skipped because no event-level amplitude column was found.');
@@ -42,7 +46,7 @@ end
 EventTable = TableOxygenSinkEvents;
 EventTable.MetricBasis = repmat({'EventBased'},height(EventTable),1);
 EventTable.BurdenAmplitudePercent = AmplitudePercent;
-EventTable.BurdenAmplitudeSource = repmat({AmplitudeSource},height(EventTable),1);
+EventTable.BurdenAmplitudeSource = cellstr(AmplitudeSource);
 EventTable.BurdenAmplitudeSignConvention = repmat({AmplitudeSignConvention},height(EventTable),1);
 [BurdenArea,AreaSource,EventSpecificMatched] = getEventSpecificBurdenArea(EventTable,EventSpecificMetrics);
 if isempty(BurdenArea)
@@ -93,35 +97,10 @@ EventTable.BurdenInterfaceFormula = repmat( ...
 Burden.EventTable = EventTable;
 Burden.RecordingTable = createRecordingBurdenTable(EventTable);
 if ~isempty(RecordingRegistry), Burden.RecordingTable=aggregateOxygenRecordingBurden(EventTable,RecordingRegistry); end
+Burden.RecordingTable=appendBOIEpisodeReferenceSummary(Burden.RecordingTable,EventTable);
 Burden.GroupSummaryTable = summarizeOxygenMouseMetrics(Burden.RecordingTable);
 [Burden.TimeSeriesTable,Burden.TimeSeriesBasis] = createBurdenTimeSeriesTable(EventTable);
 if ~isempty(RecordingRegistry),Burden.TimeSeriesTable=completeOxygenBurdenTimeSeries(Burden.TimeSeriesTable,RecordingRegistry);end
-
-end
-
-function [AmplitudePercent,AmplitudeSource,SignConvention] = getPositiveDropAmplitudePercent(EventTable)
-
-AmplitudePercent = [];
-AmplitudeSource = '';
-SignConvention = '';
-
-if ismember('NormOxySinkAmpPercent',EventTable.Properties.VariableNames)
-    RawAmplitude = tableColumnToDouble(EventTable.NormOxySinkAmpPercent);
-    AmplitudeSource = 'NormOxySinkAmpPercent';
-elseif ismember('NormOxySinkAmp',EventTable.Properties.VariableNames)
-    RawAmplitude = tableColumnToDouble(EventTable.NormOxySinkAmp) .* 100;
-    AmplitudeSource = 'NormOxySinkAmp_x100';
-else
-    return
-end
-
-AmplitudePercent = RawAmplitude;
-SignConvention = 'positive_drop_percent';
-if ismember('AmplitudeSignConvention',EventTable.Properties.VariableNames)
-    Negative = string(EventTable.AmplitudeSignConvention)=="negative_drop_percent";
-    AmplitudePercent(Negative) = -AmplitudePercent(Negative);
-end
-AmplitudePercent(AmplitudePercent<0) = NaN; % wrong direction, not hypoxic deficit
 
 end
 
@@ -517,10 +496,10 @@ MetricBasis = {'Event-based'; 'Recording-level sum of true event rows'; ...
     'count x duration x within-recording rank/quantile-transformed amplitude, normalized per mm2 and per minute'; ...
     'original amplitude x area x duration composite'};
 Notes = {'One row per oxygen sink event from OxySinkEvents'; ...
-    'Grouped by available recording metadata'; ...
+    'Strict event sum: an unavailable included contribution withholds the total and every normalized total. Blank/NaN means unavailable, not zero; no partial sums'; ...
     'Uses native EventArea_um2 when unmatched; missing native morphology remains NaN'; ...
     'Eligible analyzed tissue area from the event table or recording registry'; ...
-    'Amplitude is converted to positive drop percent from the event amplitude column'; ...
+    'BurdenAmplitudeSource selects versioned pre-episode amplitude when present; otherwise original automatic amplitude. Withheld derived references never fall back'; ...
     'Units are percent * um^2 * seconds per 1 mm^2 recording area'; ...
     'Preferred source is TableOxygenSinks.RecDuration'; ...
     'Units are percent * um^2 * seconds'; ...
@@ -529,7 +508,7 @@ Notes = {'One row per oxygen sink event from OxySinkEvents'; ...
     'Same as per-second burden, reported on a per-minute scale'; ...
     'Use this metric when both recording duration and FOV size differ'; ...
     'Recommended compact burden-rate metric for mixed FOV and recording durations'; ...
-    'Long-format sheet: one row per recording frame/time point for EEG/ECG/sleep-state alignment'; ...
+    'One row per recording frame. Missing active contributions produce gaps; integrating only finite frames does not give a complete recording burden'; ...
     'Raw recorded-FOV burden signal over time; not FOV-normalized and not per-minute normalized'; ...
     'Recommended frame-aligned burden signal for recordings with different FOV sizes'; ...
     'Concurrent event-time density; not tissue occupancy or a calibrated oxygen deficit.'; ...

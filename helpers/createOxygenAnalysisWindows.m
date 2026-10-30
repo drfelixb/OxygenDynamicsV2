@@ -35,8 +35,8 @@ for i=1:height(Windows)
         boundaryCounted=sum(E.StartSec==0 & E.StartSec>=a & E.StartSec<b);
         ongoing=sum(E.StartSec<a & E.EndSec>a);
         if strcmp(kind,'sink') && ismember('EventArea_um2',E.Properties.VariableNames)
-            amplitude=E.NormOxySinkAmpPercent(active);
-            amplitude(amplitude<0)=NaN; % wrong-direction raw signal is not a hypoxic composite
+            amplitude=getBOISinkBurdenAmplitude(E);
+            amplitude=amplitude(active);
             composite=sum(amplitude.*E.EventArea_um2(active).*overlap(active));
         elseif any(active), composite=NaN; end
     end

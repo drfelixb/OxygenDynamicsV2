@@ -32,7 +32,7 @@ catch err
     verifyEqual(t,err.identifier,'OxygenDynamics:InvalidRunRequest');
     verifyTrue(t,contains(err.message,'Choose a Detection support option'));
     verifyTrue(t,contains(err.message,'Reviewed craniotomy ROI'));
-    verifyTrue(t,contains(err.message,'Legacy whole image'));
+    verifyTrue(t,contains(err.message,'Automatic tissue estimate (legacy)'));
 end
 verifyFalse(t,isfolder(o.OutputFolder));
 end

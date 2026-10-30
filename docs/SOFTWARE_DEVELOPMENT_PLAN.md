@@ -1,5 +1,382 @@
 # OxygenDynamics: software development plan
 
+**Scientific review stopped; development checkpoint authorized, 30 October 2026:** Felix explicitly keeps FB2412 site 1/event 2 shorter 659-672 as an unsaved preview, stops this inspection and requests committing/pushing current software before a broader plan. DEV-CHECKPOINT-20261030 is the active delivery item: root/no delegation, normal current-branch transport, development version/inventory reconciliation, existing portable checks and source review. Preserve automatic results, saved longer review, the live 43-frame area draft, old exports and all exploratory previews. No shorter-pocket save, area-rule adoption, baseline/detector/correction change, new cohort run/export, package, release tag or next-plan implementation. Budget 90 active minutes/128 MiB, at most three headless starts, two full portable gates and one focused repair run/two repairs. Stop after verified push and proposed broader workflow plan. Scope: `reference-validation/boi-development-checkpoint-20261030/scope.json`.
+
+**Short native-mask candidate checked; save proposal pending, 30 October 2026:** At Felix’s “go on,” read-only follow-up confirms masks in all 14 frames 659-672, counts 100,216,223,275,413,584,686,668,596,547,518,463,290,149. Their exact union equals the accepted 718-pixel event-2 footprint; their mean area reproduces the original 2259.491429 um2. Retaining the previously accepted 631-650 reference would retain minimum frame 664 and 6.942974529% raw amplitude. Conditional full-14-frame contribution is 219626.280112 and normalized contribution 13546.159907 with saved recording exposure, independently replayed with Decimal arithmetic. These are complete single-candidate preview values, not adopted judgments or partial recording sums. Frame 672 remains the detector endpoint, not confirmed full signal recovery. Sources and saved artifacts match; no image read, detector/correction/segmentation run, scientific save or cohort export. Existing longer review and live area draft remain unchanged. Propose one new immutable shorter review/reference/event artifact, preserving all history and qualifying the endpoint; 20 active minutes/20 MiB, existing MATLAB/no source images, eight finite checks/two repairs. Deferral leaves the preview unsaved. Explicit scientific choice is pending; no implementation active. Records: `reference-validation/boi-fb2412-short-interval-preview-20261030/short-candidate-measurement-preview.json` and `short-review-save-proposal.json`.
+
+**Shorter-interval comparison delivered, 30 October 2026:** Felix identifies 659-672 as the shorter candidate. A display-only companion tab shows this 14-second native-mask interval on the accepted 718-pixel event-2 raw/corrected traces, with saved 631-650 reference and unaccepted immediate 639-658 comparison. The earlier longer-pocket tab uses event-3 pixels, as its label states; this new tab avoids mixing its values with event-2 measurements. At 672 raw 806.757660 and corrected -139.317603 remain below saved reference means 833.873329 / -96.852065; the immediate window includes preceding decline. These observations do not automatically reject a mask-defined pocket or establish full recovery. Six independent numeric checks, native visible check, exact live draft/frame preservation and five protected saved-artifact hashes pass. Scope FB2412-S1-SHORT-PREVIEW-01: root/no delegation, 15 minutes/5 MiB ceiling, one existing-session display run, no new image reads, scientific save, area method, burden or export. Existing saved 651-693 timing and 631-650 reference remain unchanged. Preview complete; no active implementation. Evidence: `reference-validation/boi-fb2412-short-interval-preview-20261030/verification.json`.
+
+**Strict completeness delivered, 29 October 2026:** [BURDEN-COMPLETENESS-01](BOI_BURDEN_COMPLETENESS.md) repairs the stats GUI preview’s omit-missing sums/means/maxima and incomplete-mouse presentation; unavailable required values now show explicit counts. Recording/reviewed-export totals were already strict. Workbook basis notes clarify missingness and gapped traces; no numeric formula, normalization, export schema, scientific result or live draft changes. Twenty-five synthetic tests pass, including XLSX/CSV readback; six Code Analyzer reports are empty and 39 protected artifacts match. One headless start, no repair, below 0.1 MiB evidence. Existing saved reviewed CSVs confirm all 17 complete burdens remain unavailable (3,257 available / 2,147 missing retained contributions). No source images, cohort rerun/export or area-rule adoption. Root/no delegation. Delivered and stopped; no active implementation. The extended pocket’s area/burden remains unresolved. Evidence: `reference-validation/boi-burden-completeness-20261029/verification.json`.
+
+**Strict burden completeness check approved, 29 October 2026:** Felix’s “Go on” advances the directly proposed GUI/export completeness preservation. BURDEN-COMPLETENESS-01 audits existing strict recording sums, repairs the stats preview’s omit-missing display aggregates, adds explicit availability counts and workbook guidance, and checks finite synthetic fixtures plus existing saved CSVs read-only. Formula, normalization, baseline/correction/detector, scientific revisions, live draft and prior exports remain unchanged. Root/no delegation; 35 active minutes, 10 MiB evidence, at most two headless MATLAB starts/two repairs. Stop at focused verified delivery; no area-rule adoption or new cohort export. Scope: `reference-validation/boi-burden-completeness-20261029/scope.json`.
+
+**Area-preview visual inspection complete, 29 October 2026:** At Felix’s “go on,” compare denoised frame 664 at all three frozen cutoffs, then play recovered 694-713 at 1 frame/s. Lower cutoff adds an upper neighboring extension; higher cutoff leaves scattered core fragments. Primary 3x still marks small lower/right-edge patches after the central darkening has largely faded in the accepted recovered context. These observations do not establish a biological boundary or absence/continuation; agent recommendation remains not to adopt any cutoff solely from this example. MATLAB is stopped at frame 713 / 3x. No new source read, segmentation run, code/default/calculation change or scientific judgment/save. All 24 protected files match. Record: `reference-validation/boi-fb2412-area-rule-preview-20261029/visual-inspection.json`. Inspection is complete and stopped; researcher method decision remains pending, with reviewed area/burden unavailable and no further tuning or dataset work authorized.
+
+**One-pocket area preview delivered; rule not adopted, 29 October 2026:** FB2412-S1-AREA-RULE-PREVIEW-01 is visibly open in MATLAB at denoised frame 664 / 3x baseline fluctuation, with candidate outlines, fixed-contrast reference/current/loss maps, area curves and all six source/cutoff summaries. Native source/cutoff and leave-one-out/recovered image checks, episode/recovery playback, Stop, reload identity and original live draft/form/cache preservation pass; old frame-marker accumulation is repaired. All 498 exact candidate-mask digests and 5,478 per-frame numeric checks match independent NumPy replay; five native Code Analyzer reports are empty. Four uncertain and 39 unreviewed choices, original review frame 676 and all 24 protected saved/calculation files remain unchanged. The previously documented numerical sensitivity, recovered-context activity and spatial mismatch remain; all six conditional burdens are explicitly unavailable. No scientific judgment/save/adoption, formula/exposure/correction/default change, source image read, recording or combined export. One complete cached preparation with two preparation fixes and two small display-only technical repairs; less than 10 MiB of the 16 MiB allowance, within 60 active minutes excluding unlock wait. Root/no delegation. Evidence: `reference-validation/boi-fb2412-area-rule-preview-20261029/verification.json`. The approved preview is complete and stopped; no active implementation. Researcher inspection is next; no further method or dataset work is approved.
+
+**Area-rule numerical preview verified; MATLAB display pending unlock, 29 October 2026:** The approved one-pocket preview completes all 498 source/cutoff/frame mask cases; independent NumPy pixel digests and 5,478 frame numeric checks match. Denoised mean candidate areas are 6097.739, 1750.119 and 529.133 um2 at 2/3/4 times fluctuation; primary 3x has outside-footprint candidates in 38/43 event frames and candidates in all 20 recovered frames (mean 77.6 pixels versus 2.2 in leave-one-out reference checks). Raw 3x has no event candidate; its much larger per-pixel noise does not reject the recognized pocket. All six conditional contributions remain unavailable. Exact threshold geometry/missingness/normalization cases pass; 24 protected artifacts/calculation files match and no review revision is saved. One complete cached preparation, two preparation fixes plus one bounded additional display-only frame-size-orientation repair, below 10 MiB of the 16 MiB allowance; no source reads or scientific-rule tuning. The corrected preview tab still needs native reopening/checks because CUA reports the Mac locked; manual unlock requested. No method adoption or completion claim. Evidence: `reference-validation/boi-fb2412-area-rule-preview-20261029/findings.json`. The same approved item remains active only for the pending native display/acceptance checks.
+
+**One-pocket area-rule preview approved, 29 October 2026:** Felix replies “yes” to the concrete automatic candidate area preview. FB2412-S1-AREA-RULE-PREVIEW-01 is the one active item: use only existing cached FB2412 site 1 frames 631-713, per-pixel 631-650 mean/sample-SD, frozen loss multipliers 2/3/4, 8-connected footprint-associated candidates, exact pixels and reference/recovery/raw-source diagnostics. Full-interval conditional arithmetic retains formula/exposure and withholds spatial mismatch or invalid data; no scientific adoption, area revision, source read, detector/correction/default change, partial sum or combined export. Preserve the original live draft/form/cache and all saved artifacts. Root/no delegation; 60 active minutes, 16 MiB, one cache preparation/two repairs/eight finite checks. Stop at verified MATLAB preview or clear infeasibility. Scope: `reference-validation/boi-fb2412-area-rule-preview-20261029/scope.json`.
+
+**Automatic area-rule proposal prepared, 29 October 2026:** Felix asks to continue after a reproducible area rule was proposed. Read-only review confirms original mask-based area and the mismatch between 18 detected frames and the accepted 43-frame interval; manual tracing remains uncertain after flicker/playback. Propose FB2412-S1-AREA-RULE-PREVIEW-01 for this one pocket: event-specific per-pixel reference/fluctuation, provisional 3-times-fluctuation loss with fixed 2/4 sensitivity, connected candidate masks linked to the accepted footprint, reference/recovery and raw/denoised consistency checks. Threshold-defined optical area is a new candidate measurement, not a published validated physiological boundary. No constant footprint, imputed detector zeros, partial sums or silent clipping; preserve formula, exposure, amplitude, timing, originals and live draft. Preview proposal: 60 active minutes, 16 MiB, existing cache only/no source reads, one preparation/two repairs, eight finite checks. No numerical preview, production change, area adoption or export has been executed or approved. Scope/details: `reference-validation/boi-fb2412-area-rule-proposal-20261029/proposal.json`. Alternative: retain explicitly unavailable area/burden. Proposal delivered; no active implementation; await approval for the bounded preview.
+
+**Cached baseline comparison/playback delivered, 29 October 2026:** FB2412-S1-AREA-DISPLAY-01 is visibly open in MATLAB at denoised frame 664. Reference 631-650 and current input use matched fixed contrast beside the existing percentage-change map. Raw/denoised selection, one-pass episode playback through 693, bounded reference flicker, Stop, overlays and return to the existing area-review frame pass native checks. Exact image/scales at four named source/frame pairs pass. The original frame 676, all form values, cached images and full unsaved document digest are preserved: four uncertain and 39 unreviewed, zero accepted/empty. All 22 protected saved/calculation files remain unchanged; source diff adds only the comparison entry. Two targeted repair passes addressed timer test timing/shared-state reporting, followed by a short label fit; final static/native Code Analyzer reports no messages for the new comparison. No source image reads, scientific save, new area/burden, formula/normalization/default change or export. Evidence remains below 0.1 MiB, within the 10 MiB ceiling; bounded active work excludes the Mac-lock wait. Owner root/no delegation. Evidence: `reference-validation/boi-fb2412-area-display-20261027/verification.json`. Display milestone delivered and stopped; no active implementation. The next step is researcher judgment using these views; uncertain boundaries remain unresolved rather than inferred.
+
+
+**Cached area comparison/playback approved, 27 October 2026:** Felix says “go on” to the display-only baseline/current comparison and playback proposal. FB2412-S1-AREA-DISPLAY-01 adds a companion tab using the existing 83 cached frames/source, matched grayscale limits, the existing change map/overlays, raw/denoised selection, bounded playback/flicker and read-only return to an event frame. Preserve the live unsaved review, form state and all saved artifacts; do not reopen/reset the area editor or create a scientific revision. No source image read, segmentation/threshold/correction/detector, area/burden/export or default change. Owner root/no delegation; 30 active minutes, 10 MiB new evidence, one cached preparation plus at most two display repairs. Finite GUI checks cover exact image data/scales, playback stop and draft preservation. Stop with a usable view for researcher review. Scope: `reference-validation/boi-fb2412-area-display-20261027/scope.json`.
+
+
+**Area-review usability feedback, 27 October 2026:** Felix reports that manual assessment is difficult from the grayscale images. The live FB2412 site 1/event 2 panel is at frame 676 with unsaved uncertain choices and 0/43 accepted; the last saved revision remains 2 with all frames unreviewed. No draft is discarded, no zero is inferred and no judgment is saved by the agent. Improve temporal/reference visualization before further exact tracing: a baseline/current comparison at shared contrast, cached short playback and the existing change-map overlay are possible display-only improvements. This is a recommendation, not an approved new implementation, segmentation rule, threshold, area definition, burden calculation or export. Original data, formula, normalization and strict missingness remain unchanged. No active implementation.
+
+
+**Single-pocket area panel delivered; researcher review pending, 26 October 2026:** [Reviewed frame areas](BOI_REVIEWED_FRAME_AREA.md) is open in the existing FB2412 site 1/event 2 reviewer. All 43 frames remain unreviewed; 18 saved masks are unaccepted suggestions. Exact pixels, components/holes, explicit empty/uncertain states, responsive drawing cancellation, undo, immutable save/reopen and latest-revision loading are supported. Complete interval mean area and the existing burden/exposure product are available only after all frames are accepted without spatial mismatch. The existing reviewed-event importer validates the new area artifact and withholds missing area instead of using the old automatic contribution; legacy site 20 behavior is preserved. Six focused area cases and 12 existing reviewed-burden cases pass, alongside native incomplete/legacy loaders, parent/source rejection, 83 raw trace means, all 7,002 suggested pixels and 149 protected prior hashes. One preparation reads 83 image planes/source (166 total), with two targeted display/drawing repair passes using the cache; no image reread or scientific frame acceptance. New evidence is below 1 MiB, within the 20 MiB allowance; implementation is within the approved 60-active-minute budget. Source recordings, automatic outputs, prior revisions and workbook remain unchanged. Technical future-export snapshot 08 explicitly holds the new event's area/burden; no 17-recording workbook is built. Owner root/no delegation. Engineering delivery is complete and stopped; researcher review of this one event remains within the approved scope. Evidence: `reference-validation/boi-fb2412-area-review-20261026/verification.json`; no active implementation or subsequent milestone authorization.
+
+**Single-pocket reviewed area implementation approved, 26 October 2026:** Felix explicitly selects “Build single-pocket area review.” FB2412-S1-REVIEWED-AREA-01 is active: existing MATLAB reviewer panel for frames 651-693, source-bound immutable per-frame masks, explicit empty/uncertain/unreviewed states, complete reviewed mean area and existing single-event burden/normalization only after all frames are accepted. Existing masks are suggestions, never accepted on initialization; no interpolation, zero imputation or silent footprint expansion. Extend the existing importer for complete or withheld reviewed area while preserving legacy site 20 behavior and all automatic outputs. Six focused checks plus named GUI acceptance; one preparation of 83 frames/source (166 total), at most two repairs, 60 active minutes / 20 MiB new evidence/output, no delegation. No 17-recording export, detector/correction/threshold work, source copy or default change. Scope: `reference-validation/boi-fb2412-area-review-20261026/scope.json`.
+
+**Full-event area feasibility reviewed; implementation proposal pending, 26 October 2026:** Felix asks to continue toward full-event mean area. Read-only source review confirms the paper-linked stats script and current code average native detected event-frame area; the 718-pixel trace union is not that mean. Existing 18 positive selected masks and 25 empty selected detection frames are saved evidence, not missing files; empty detections do not establish zero biological area. Final binary maps are built from the same tracked masks, not independent earlier detections. The old curation app only includes/excludes pockets and exports Included_Pocs; current BOI pocket review has no per-frame area editor. All 7,002 saved native-pixel rows and 43 coverage rows match; the saved amplitude/decisions remain unchanged. Evidence: `reference-validation/boi-fb2412-area-review-plan-20261026/verification.json`. Proposed FB2412-S1-REVIEWED-AREA-01, not approved: existing-reviewer area panel for exactly 43 frames; initial masks remain unaccepted suggestions; each frame must have accepted geometry or explicit empty judgment, with uncertainty withholding complete mean/burden. Source-bound masks, geometry/spatial checks, no interpolation/zero imputation or silent footprint expansion, then existing single-event burden product and exposure normalization only after complete researcher review. Add reviewed-area validation/missingness to the existing importer, preserve automatic values/formats, no combined workbook. Up to 60 active minutes / 20 MiB, six focused checks plus existing site 20 compatibility, 83 image frames per source (166 total), one preparation/two repairs; no detector/correction/threshold campaign or source copy. Concrete proposal: `reference-validation/boi-fb2412-area-review-plan-20261026/proposal.json`. No active implementation; await explicit approval for new reviewed masks and area definition. Alternative is retaining the saved amplitude/duration with unavailable burden.
+
+**Approved longer-pocket timing, reference and amplitude saved, 26 October 2026:** Felix explicitly selects saving FB2412 site 1 onset 651, recovery 693 and individual 20 s reference 631-650, linked to saved event 2 while preserving event 3 exclusion. FB2412-S1-TIMING-REFERENCE-SAVE-01 appends one immutable boundary revision retaining all six earlier revisions and saves one source-bound reference through the existing validator/loader. Existing reviewed optical calculation and standard selected-event export deliver raw drop 6.942974529%, duration 43 inclusive seconds, baseline 833.873329 and minimum 775.977716 at frame 664 on the accepted 718-pixel footprint. JSON null / CSV-MAT NaN explicitly retain unavailable full-event mean area, burden and normalized contribution; no constant footprint area, zero-filled masks or partial sum. MATLAB visibly shows the saved result and missingness. Exact prior history, accepted pixel identity, 63 reference/event sample rows, 131 prior trace samples, native MAT readback, 25 result-manifest / 20 standard-evidence file hashes, source audit and 116 protected earlier artifact/code hashes pass. One save/export invocation plus one display-only table-height adjustment. Existing exporter cannot yet apply an amplitude-only missing-area hold: the reconciled next-export manifest is explicitly NOT READY and forbids silently keeping old automatic event 2 burden. Evidence: `reference-validation/boi-fb2412-site1-reviewed-20261026/verification.json`; manifest: `pending-reviewed-export-07.json`. Owner root/no delegation; 10-active-minute plan. Standard export required 5.55 MiB versus planned 5 MiB; one bounded 6.5 MiB technical allowance preserves its existing formats, with no repeat export or source expansion. No source movie, detector/correction/statistics run, new area, burden product, recording total, workbook rebuild, global default or original write. Save/amplitude task delivered and stopped; no active implementation. Remaining scientific work is full-event mean area; existing burden formula and exposure normalization remain unchanged.
+
+**Accepted-footprint measurement decision preview delivered, 26 October 2026:** Felix asks to continue timing/reference/area finalization. FB2412-S1-MEASUREMENT-DECISION-01 uses the exact saved event 2 raw trace, whose 718 pixels match the accepted cyan footprint, over 600-730; no source image read. Previously previewed references on this accepted footprint give 6.942974529% (individual 20 s 631-650), 6.111216901% (10 s 641-650) and 6.849980155% (local 20 s pre/post line). Minimum is 664; the older 411-pixel preview is preserved and not mixed into these values. Pre/post raw means are 833.873329 / 831.641574. Both matching native masters and all audit event identities/support pass the existing attachment service; both 20-s windows are native-clean. MATLAB visibly shows candidate interval 651-693 (43 inclusive samples), raw references and sparse existing native area evidence. Existing area code and import path use mean native area, not union area: saved event 2 mean 409.142857 pixels over 14 frames; event 3 318.5 over four. Full 43-frame mean area remains unavailable; no zero filling or constant 718-pixel area is adopted. Independent Decimal arithmetic, four half means, 131 earlier-footprint samples, 40 native-contact frames, three source audit/master hashes, 32 prior spatial artifact and 66 earlier protected hashes pass. One extraction plus one display, no MATLAB code repair; one transient CUA timeout recovered without a rerun. Evidence: `reference-validation/boi-fb2412-spatial-review-20261026/measurement-decision-verification.json`. Owner root/no delegation, 15 active minutes / 5 MiB ceiling. Preview delivered and stopped; no active implementation or new scientific adoption. Explicit exact timing/reference choice requested before the bounded save/amplitude-only proposal in `proposed-timing-baseline-save.json`. Burden formula/normalization, original results and strict completeness remain unchanged; no burden product, partial sum, workbook, detector/correction/statistics run, new segmentation or default change.
+
+**Cyan footprint accepted and saved, 26 October 2026:** Felix replies “ja passt” to the displayed cyan outline covering the recognized FB2412 site 1 longer pocket. FB2412-S1-FOOTPRINT-JUDGMENT-01 records this explicit selection as one immutable existing-workflow note revision, preserving all five earlier revisions, event 1/3 exclusions, recovered background 694-713 and pre-651 background interpretation. The accepted footprint is precisely the existing event 2 fixed union (718 source-bound pixels); this does not adopt constant area over 651-693 or establish time-varying/mean area. Event 2 recognition/mapping stays unreviewed; exact timing and reference-method adoption remain open. MATLAB visibly shows the saved acceptance. Validator/save/reload, exact history chain, 718 unique pixel identities/table hash, audit hash, prior spatial/protected artifacts and nonconflicting next-export sources pass. Evidence: `reference-validation/boi-fb2412-spatial-review-20261026/footprint-judgment-verification.json`; next-export manifest: `pending-reviewed-export-06.json`. Owner root/no delegation, running session, one note-save invocation/no MATLAB repair; one verification-only singleton JSON normalization repair. Ten active minutes / 2 MiB ceiling. No source image read, remeasurement, detector/correction/statistics run, merged event, new burden/export or original write. Judgment recording delivered and stopped; no active implementation.
+
+**Spatial comparison continuation delivered, 26 October 2026:** Felix asks to continue the proposed comparison of FB2412 site 1 frames 665/693 against the larger cyan outline. The same MATLAB figure now visibly shows cached denoised source crops and existing change maps side by side at shared scales, zoomed to rows 312-382 / columns 187-257. No source frame is reread or new image calculation made. Cyan encloses the main localized trough reduction; smaller yellow omits part of its upper-left region. The reduction largely fades by 693, while pale surrounding differences leave the precise outer boundary uncertain. This is an assessment, not adoption of the union as full-pocket area. Two exact copied footprint means and prior spatial artifacts pass; the initial presentation recipe is archived unchanged. Two display-only shape/assertion repairs, one successful rendering. Evidence: `reference-validation/boi-fb2412-spatial-review-20261026/comparison-verification.json` and `trough-recovery-comparison.png`. Owner root/no delegation, 10 active minutes / 5 MiB additional ceiling; no scientific judgment/reference/timing/mask/area adoption, source movie/detector/correction/statistics run, burden/export or original write. Presentation complete and stopped; no active implementation. Await researcher judgment of visible cyan extent before any quantified area proposal.
+
+**One-pocket spatial inspection delivered, 26 October 2026:** FB2412-S1-SPATIAL-REVIEW-01 validates the exact saved event 2/3 native masks with the existing attachment service and source receipt, then displays eight fixed raw/denoised frames against accepted recovery context 694-713 (27 unique frames/source, 54 total). MATLAB visibly shows raw and denoised trough 665 and denoised recovery 693; raw eight-frame gallery inspected. Denoised changes localize a reduction around the saved outlines at 665 that largely fades by 693. The saved unions contain 718/411 pixels, with 408 common; this supports considering fragments at the same location but does not establish a full pocket boundary or merge. Native intervals 659-672 and 674-677 cover only 18/43 provisional frames. Full time-varying area remains unmeasured. Independent validation checks all 7,002 native pixel rows, union membership, coordinates, coverage/crop, 16 source means, four source hashes and 66 protected prior artifact hashes. Evidence: `reference-validation/boi-fb2412-spatial-review-20261026/verification.json` and `inspection.json`. One preparation, one cached callback rebinding after delayed dropdown refresh; both selectors visibly verified. Owner root/no delegation, current MATLAB session, within 20 active minutes / 32 MiB evidence. No source copy, new segmentation/mask/area, exact timing/reference/method adoption, review revision, burden/export, detector/correction/statistics run, production change or original write. Read-only comparison delivered and stopped; no active implementation. Next decision is whether the larger cyan outline captures the pocket at trough, before proposing any quantitative area rule.
+
+**One-pocket spatial inspection approved, 26 October 2026:** Felix requests the proposed full spatial review of the recognized FB2412 site 1 pocket before finalizing its reviewed measurement. FB2412-S1-SPATIAL-REVIEW-01 validates saved event 2/3 native masks and compares raw/denoised images at eight fixed frames with accepted recovery context 694-713 (27 unique frames per source, 54 total). Display-only change maps and source overlays expose coverage without segmentation or a new area. Owner root, no delegation; current session, 20 active minutes / 32 MiB evidence, one display preparation plus at most two repairs. Scope: `reference-validation/boi-fb2412-spatial-review-20261026/scope.json`. Stop at verified spatial comparison and extent assessment. No source copy/modification, detector/correction/statistics run, mask/area/timing/reference adoption, merge, burden/export or default change.
+
+**Recovered-background window accepted by researcher, 26 October 2026:** Felix explicitly judges frames 694-713 to represent recovered background for the recognized FB2412 site 1 pocket. FB2412-S1-RECOVERED-WINDOW-01 saves one new immutable existing-workflow note revision, preserving all four earlier revisions, pre-651 background interpretation, longer-pocket recognition and short event 3 exclusion. MATLAB visibly records the accepted-window judgment on the local-line preview. The acceptance does not select an exact recovery frame, adopt the line measurement method or establish wider pocket area. Review validator/save/reload, exact previous history, source audit hash, 55 prior artifact hashes and conflict-free future export sources pass. Evidence: `reference-validation/boi-fb2412-local-background-line-20261026/recovered-window-verification.json`; manifest: `pending-reviewed-export-05.json`. Owner root, no delegation; current session, 10 active minutes / 2 MiB; no repair, new reference calculation, detector/correction/statistics run, scientific default, burden or export. Judgment recording delivered and stopped. Existing workbook remains unchanged and predates these notes; exact timing and spatial extent remain open before quantification.
+
+**Approved one-pocket local-line preview delivered, 26 October 2026:** FB2412-S1-LINEAR-REFERENCE-PREVIEW-01 constructs the authorized straight reference between fixed means 631-650 and 694-713 at centers 640.5/703.5, with interpolation only. Same cached raw/denoised vectors and 411-pixel saved footprint; provisional interval 651-693. Conditional raw depth is 7.867265% versus 7.830724% for the constant immediate 20-second reference. At 693 the raw signal is +9.901926 above its line; denoised is -0.483652 below, small relative to post-window SD 4.488885. Later 20 samples are native-clean but denoised half means 814.418712 / 817.918478 still rise slightly. The post window is a plausible candidate, not independently validated recovery; using its mean as an anchor cannot itself prove recovery. MATLAB visibly shows signals, local-reference residuals, before/after diagnostics and four-reference comparison. Independent verification checks 284 values (linear reference, signed residual/depth, endpoint, half-mean/SD arithmetic), interpolation limits and 52 prior artifact hashes. Evidence: `reference-validation/boi-fb2412-local-background-line-20261026/verification.json`. About 39.4 KiB evidence, no repair, owner root/no delegation, current session, 15 active minutes / 5 MiB. No method/reference/exact endpoint adoption, additional source image read, global correction fit, event merge, area/burden/export, detector/statistics run or default change. Preview complete and stopped; no active implementation.
+
+**One-pocket local-background line preview approved, 26 October 2026:** Felix explicitly approves the proposed line joining fixed 20-second means from 631-650 and 694-713 for the recognized FB2412 site 1 pocket. FB2412-S1-LINEAR-REFERENCE-PREVIEW-01 uses cached stages on the same footprint, interpolates between mean-window centers only, compares with the existing three constant references and assesses the post-window recovery assumption. Owner root, no delegation; current session, 15 active minutes, 5 MiB evidence, one preview plus at most two targeted repairs. Scope: `reference-validation/boi-fb2412-local-background-line-20261026/scope.json`. Stop at visible and independently verified single-pocket comparison; no method adoption, new global correction/detection, source movie read, exact timing/reference/area/burden/export or default change.
+
+**Pre-pocket background interpretation saved, 26 October 2026:** Felix classifies the decline before frame 651 as background variation. FB2412-S1-BACKGROUND-NOTE-01 appends one immutable existing-workflow note revision, preserving longer-pocket recognition around 651-693, short event 3 rejection and all three earlier revisions. MATLAB visibly states this background/pocket distinction on the existing local-reference preview. Exact timing, baseline duration/model and spatial extent remain unselected. Review validator/save/reload, exact previous history, source audit hash, 43 prior artifact hashes and conflict-free next-export source selection pass. Evidence: `reference-validation/boi-fb2412-local-reference-preview-20261026/background-verification.json`; manifest: `pending-reviewed-export-04.json`. Owner root, no delegation; current session, 10 active minutes / 2 MiB. No new calculation, reference model, fit, burden, export, detector/correction/statistics run or original write. Recording the judgment is complete. Proposed next, not yet approved: one-event local-background reference preview using a straight line between fixed 20-second means 631-650 and 694-713, checking the post-window recovery assumption and comparing with the already shown constant references. This changes the reference assumption and requires separate approval; no adoption or quantified longer event is authorized.
+
+**Local-reference and recovery preview delivered, 26 October 2026:** Felix's “go on” advances the single recognized longer-pocket preview. FB2412-S1-LOCAL-REFERENCE-PREVIEW-01 compares exactly three fixed references on the unchanged saved footprint and cached components: earlier 20 s 621-640 (raw mean 845.067153, conditional raw drop 9.697209%), immediate 20 s 631-650 (827.954015, 7.830724%) and immediate 10 s 641-650 (819.524574, 6.882692%). Existing computeBOIReviewedOpticalInterval supplies raw previews on provisional 651-693; no burden/area product is calculated. All three references are native-clean but already falling. First raw mean reaches after trough are 705/693/689; denoised reaches are absent through 730 / 699 / 693. These are descriptive noisy crossings, not accepted recovery endpoints. Shortening samples a lower background level and does not resolve reference suitability. The remaining scientific question is whether pre-651 decline belongs to the pocket or background variation; no method is adopted to decide it. MATLAB visibly shows full and recovery views; 45 independent means/drop/half-change/crossing/count checks and 40 prior artifact hashes pass. One header-only display repair. Evidence: `reference-validation/boi-fb2412-local-reference-preview-20261026/verification.json`; owner root, no delegation, current session, 15 active minutes / 5 MiB. No source image read, new fit/correction/detector/statistics run, judgment/reference/exact timing/area/burden/export or default change. Named preview delivered and stopped.
+
+**Longer-pocket correction components explained, 26 October 2026:** Felix observes that the recognized FB2412 site 1 pocket is clear in raw context but loses its return in corrected context. FB2412-S1-CORRECTION-COMPONENTS-01 verifies the saved denoised detection input, distinct from the original TIFF used for raw quantification. Read only frames 600-730, one at a time, on the saved event-3 union footprint (411 pixels). Matching denoised-input minus saved-corrected means recover the existing removed component without a fit. Recovery 665-693 is +75.440389 raw, +41.829440 denoised, rising removed component +14.438614, leaving +27.390826 corrected. Denoising reduces contrast; the rising subtracted component further suppresses the return. This is computational attribution; biological validity of the removed component remains unresolved. MATLAB visibly shows four stages and segment changes. All 131 saved raw/corrected samples, 131 component identities, 131 input differences, eight segment checks, original raw/denoised/audit hashes and 30 prior artifact hashes pass. Four relevant loader/detrending/capture helpers match the run manifest; whole current master differs. An optional exact-cubic finite-difference criterion at 1e-8 does not pass (maximum 1.99e-5); the source is 32-bit IEEE float and no exact coefficient/polynomial reconstruction or new fit is claimed. The direct saved-stage attribution is independently verified. Evidence: `reference-validation/boi-fb2412-correction-components-20261026/verification.json`. Owner root, no delegation, current session, 20 active minutes / 10 MiB; one diagnostic/display invocation plus a zero-frame precision-tag check. No correction/detector/statistics run, scientific choice, reference/area/amplitude/burden/export or method/default change. Read-only component review delivered and stopped.
+
+**Longer pocket recognized by researcher, 26 October 2026:** Felix confirms that the displayed broader interval would cover a pocket. FB2412-S1-LONGER-RECOGNITION-01 appends one immutable note revision using the existing review service: positive recognition of a longer site 1 pocket around 651-693, retaining short event 3 as not recognized separately. Exact timing, baseline, spatial extent and mapping to original event 2 remain unselected; event 2 status is unchanged. MATLAB visibly states researcher-recognized longer pocket with approximate green bounds and open measurement choices. The exact two prior revisions, 17 protected earlier artifacts, source audit checksum, validator/save/reload and conflict-free future export source list pass. Evidence: `reference-validation/boi-fb2412-site1-longer-preview-20261026/recognition-verification.json`; source selection: `pending-reviewed-export-03.json`. Owner root, no delegation; current session, 10 active minutes / 5 MiB, no display repair. No new merged event, area/amplitude/burden or export, detector/correction/statistics rerun, method/default change or original overwrite. Existing workbook predates the new notes. Recognition recording delivered and stopped; measurement remains pending.
+
+**Short detection rejected; longer candidate preview delivered, 26 October 2026:** Felix rejects FB2412 site 1/event 3 and tentatively suggests a broader pocket around 651-693. Existing review services save one new immutable snapshot containing the unchanged earlier site 1/event 1 rejection and the new short-event rejection with blank endpoints. Event 2 remains unreviewed. MATLAB visibly shows green candidate 651-693 against raw/corrected contexts 600-730 and details 630-710 on the saved short-event footprint. Raw values at 651/minimum 665/693 are 850.187348 / 763.119221 / 838.559611; corrected values are -102.545928 / -160.981981 / -133.591155, with decline already present before 651. This supports investigation of the broader raw dip but does not establish corrected recovery at 693 or its spatial extent. Seventeen independent numeric checks, exact trace/audit binding, saved revision reload/chain, 10 prior artifact hashes and visible display pass. One table-vector shape repair reuses the saved revision. Scope/evidence: `reference-validation/boi-fb2412-site1-longer-preview-20261026/scope.json` and `verification.json`; owner root, no delegation, current session, 15 active minutes / 5 MiB. No longer recognition/merge, onset/recovery/baseline/area/amplitude/burden adoption, source movie/detector/correction/statistics run or combined export. The existing workbook remains unchanged and predates this rejection; a conflict-free explicit source list for the next requested export is in `pending-reviewed-export.json`. Named review delivered and stopped; longer pocket remains tentative.
+
+**Next saved detection opened for recognition, 26 October 2026:** Felix's “go on” advances the proposed next flagged example, beginning with event recognition. The next unreviewed case in the fixed eight-example order is FB2412 site 1/event 3, saved 674-677. The same MATLAB recording viewer visibly shows corrected/raw contexts 600-730 and details 650-695, preceding detection 2 at 659-672 and the single intervening frame 673. A small target dip sits within a wider depressed trace; no return to the earlier corrected level is evident between these labels. No classification is adopted. Eighteen independent saved sample/minimum/boundary/gap checks, exact audit/trace binding, five protected source/decision/result artifacts and retained loaded site 1/event 1 rejection pass. Scope/evidence: `reference-validation/boi-fb2412-site1-event3-review-20261026/scope.json` and `verification.json`; owner root, no delegation, current session, one named case, 15 active minutes / 5 MiB. No review revision, baseline/recovery choice, amplitude/burden/export, source movie/detector/correction/statistics run or method/default change. Presentation complete; target recognition awaits Felix.
+
+**FB2412 recording-start rejection delivered, 26 October 2026:** REVIEW-BURDEN-03 saves Felix's explicit not-a-sink judgment for site 1/event 1 as one immutable standalone not_recognized snapshot. MATLAB visibly shows the saved status, reason, blank endpoints and history. A fresh burden-only workbook from the same 17 saved recordings carries this third exclusion, both earlier rejections and the exact approved site 20 event result. There are 5,404 retained detections, 3,257 available and 2,147 missing contributions; all 17 complete burdens remain unavailable under strict sums. Original results/formats/formula/normalization and every retained event value remain unchanged; no reference/recovery preview is adopted. Native MAT/CSV/workbook checks, 17 strict totals/frame traces, 626,864 independent retained-cell comparisons, exact approved artifact, original source SHA, 113 prior artifact hashes and 579 protected MATLAB sources pass. One export attempt; one verification-only JSON scalar/list normalization repair. About 105 MiB new output/evidence, below 256 MiB. Evidence: `reference-validation/boi-fb2412-start-rejected-20261026/final-verification.json`. Owner root, no delegation; no detector/correction/movie/statistics rerun, production code/default change, partial sum or Git transport. Delivered and stopped; no active implementation.
+
+**FB2412 recording-start rejection in progress, 26 October 2026:** Felix rejects site 1/event 1 as not a sink event during the active review. REVIEW-BURDEN-03 records one standalone immutable not_recognized judgment and follows the existing reviewed-export workflow for the same saved 17 recordings, retaining prior two rejections and exact approved site 20 event artifact. Existing MATLAB services/formats only; no production code, reference/timing adoption, detector/correction/statistics run, partial sum or original overwrite. Owner root, no delegation; current session, 30 active minutes, one export plus one targeted repair, 256 MiB output/evidence. Scope: `reference-validation/boi-fb2412-start-rejected-20261026/scope.json`. Stop at saved visible rejection and verified separate export.
+
+**FB2412 recording-start recovery detail delivered, 26 October 2026:** Felix's “go on” advances the named recovery review, without adopting a scientific choice. A presentation-only tab in the same MATLAB viewer visibly shows saved raw/corrected samples 45-82, candidate mean/reference 56-75 and proposed end 55. Corrected values at 54/55/56/57 are -35.722671 / -23.577349 / -15.199086 / -25.288179 versus candidate mean -24.642261: 55 first reaches that mean, 56 overshoots, then local fluctuations cross it repeatedly. Propose observed interval 1-55 and separate later reference 56-75, preserving unknown true onset/pre-recording state; a mean crossing is descriptive, not an adopted recovery rule. Twenty-one independent numeric checks, exact source trace binding, original audit checksum, 32 prior artifact hashes and visible MATLAB detail pass. Scope/evidence: `reference-validation/boi-fb2412-start-review-20261025/recovery-detail-scope-20261026.json` and `recovery-detail-verification-20261026.json`; owner root, no delegation, one named case, current session, 15 active minutes / 5 MiB. No judgment/reference acceptance, timing/result change, amplitude/burden/area calculation, export, detector/correction rerun or method/default change. Preview delivered; explicit endpoint/reference choice remains open.
+
+**FB2412 recording-start view verified and assessed, 26 October 2026:** Following manual unlock, the existing MATLAB figure visibly shows the exact site 1/event 1 recording-start tab, full raw/corrected context 1-140, recovery zoom 25-90 and unchanged candidate table. Frames 56-75 are a reasonable candidate for a reviewed post-recovery reference: corrected half means -24.341626 / -24.942896 support a local plateau, while raw half means 885.914183 / 873.159026 show a modest -1.450213% change. The cached 9.034434% comparison still uses saved interval 1-35 and is not a newly accepted amplitude. Missing pre-event state, early overshoot and later separate rise limit recovery/comparability inference; endpoint near 55-56 remains unselected. Prior 18 numeric checks, unchanged source audit and 32 prior artifact hashes pass; manual-lock blocker cleared. Evidence: `reference-validation/boi-fb2412-start-review-20261025/recovery-assessment-20261026.json`. Inspection/recommendation complete, owner root, no delegation. No reference/judgment adoption, timing/burden/export update, partial sum, detector/correction rerun or method/default change.
+
+**FB2412 recording-start walkthrough prepared, 25 October 2026:** At Felix's request the running MATLAB session loaded FB2412 sink site 1/event 1 in its existing recording viewer and selected the presentation-only recording-start tab. Saved interval 1-35, unresolved search limit 55, raw/corrected traces and the four previously calculated later-window comparisons are shown; no pre-event samples exist. Eighteen independent numerical checks, original audit hash and 32 prior artifact hashes pass. No judgment, recovery/reference acceptance, amplitude/burden update, export, detector/correction rerun or method/default change. MATLAB receipt confirms display creation, but visual verification is pending because the Mac is locked; manual unlock requested. Scope/evidence: `reference-validation/boi-fb2412-start-review-20261025/`. Owner root, no delegation, one named example, current session, 15 active minutes / 5 MiB evidence. Resume only visual verification of the existing tab, then deliver the walkthrough; reference suitability remains undecided.
+
+**Current reviewed decisions exported, 25 October 2026:** [REVIEW-BURDEN-02](BOI_REVIEWED_DECISIONS_20261025.md) saves Felix's explicit FB2319 sink site 7/event 2 rejection in the existing immutable workflow and excludes it with the previous FB2317 rejection. The fresh reviewed burden workbook also imports the exact already-approved FB2412 event revision (114-182, reference 104-113, 69 s; normalized contribution 187950.456671 using unchanged saved area). Same 17 recordings: 5,405 retained detections, two rejected, one approved value import, 3,257 available and 2,148 missing contributions; all 17 complete recording burdens remain unavailable. Automatic source columns/results and earlier artifacts are preserved; active reviewed timing is explicit in BurdenStartFrame/BurdenEndFrame/BurdenDuration_sec. Twelve focused synthetic cases, named artifact/tamper validation, MAT/workbook/CSV readback, 17 strict totals and frame traces, 583,274 independent unchanged-cell comparisons, 17 rank replays, original source MAT/workbook checksums, 32 prior artifacts and 574 protected MATLAB source hashes pass. About 111 MiB new evidence/output. One attempt stopped before export on two-ULP area serialization differences; the next completed, followed by a verification-only CSV precision repair (exact missingness, observed max 39 ULPs). No new scientific choices, formula/normalization/default change, partial sum, movie/detector/correction run, area remeasurement or Git transport. MATLAB visually shows the saved FB2319 Not recognized revision. Delivered and stopped; no active implementation.
+
+**FB2319 rejection and current reviewed export approved, 25 October 2026:** Felix explicitly rejects FB2319 sink site 7/event 2 and requests saving/excluding it from reviewed burden while preserving the automatic result. REVIEW-BURDEN-02 saves one new immutable rejection and carries forward the prior FB2317 rejection and exact approved FB2412 event result. Extend only the existing opt-in reviewed exporter with source-bound import of the approved event artifact; preserve automatic evidence columns and add explicit active burden interval/source fields. Reuse existing formulas on all retained events with full exposure and strict missingness. Same 17 saved recordings; 12 focused synthetic checks plus named artifact verification, 60 active minutes, 256 MiB new evidence/output, at most two export attempts/two repairs, current MATLAB session, owner root, no delegation. No new reference/timing/area choice, detector/correction/movie run, partial sum, original overwrite or global-default change. Scope: `reference-validation/boi-reviewed-decisions-20261025/scope.json`. Stop at verified current reviewed export.
+
+**FB2319 trace/reference walkthrough delivered, 25 October 2026:** At Felix's request the existing viewer opens FB2319 sink site 7/event 2 (saved frames 45-51), with full raw/corrected context and a corrected local zoom. This is the same named event in the previously authorized eight-example set. Both signals broadly rise through the series. Immediate references have 5/20 and 1/10 clean samples because of the preceding native run; saved episode reference 5-24 gives -13.294471% raw drop. Earlier nearest clean 20/10 s means 1072.019241 / 1095.420812 remain below the event minimum 1195.291885, yielding -11.499107% / -9.117142%; corrected companion checks are also wrong-direction. The later 93-112 mean gives +14.597747% only as an unaccepted higher-state comparison. No classification or alternative baseline is adopted. Correct MATLAB display, 12 independent numeric checks, unchanged original audit and 25 prior FB2412 reviewed artifact checksums pass. Evidence/scope: `reference-validation/boi-fb2319-baseline-review-20261025/verification.json` and `scope.json`; owner root, no delegation, running MATLAB session, 15 active minutes / 5 MiB evidence. No amplitude/burden update, new recording total, partial sum, export, source movie/detector/correction/statistics run, production code/default change or next method adoption. Named walkthrough complete; researcher recognition remains open.
+
+**Reviewed FB2412 event recalculation delivered, 25 October 2026:** FB2412-REVIEWED-EVENT-01 saves the researcher-approved onset 114, recovery 182 and reference 104-113 in new immutable boundary/reference revision 02. Existing raw reviewed optical arithmetic gives baseline 575.076065, minimum 532.194743 at frame 161, positive drop 7.456634830% and inclusive duration 69 s. Unchanged saved native mean area 5922.697166667 um^2 yields single-event contribution 3047273.908463444 percent*um^2*s; unchanged full-recording exposure (810658.82 um^2, 1200 s) gives normalized event contribution 187950.456670751 percent*um^2*s per mm^2 per minute. Earlier/later spatial extent is explicitly not remeasured. The separate MAT/CSV/JSON single-event artifact and existing selected-event evidence export reload correctly; 14 independent numeric checks, 25 artifact checksums, 10 exported reference / 69 event samples, original audit/earlier revision preservation and 574 preexisting MATLAB code hashes pass. MATLAB visibly shows the saved reviewed result. Artifact bytes: 5867694 (below 16 MiB). No recording/cohort total, partial sum, combined-workbook rebuild, detector/correction/movie run, global scientific-default change or production code edit. Evidence: `reference-validation/boi-fb2412-site20-reviewed-20261025/single-event-final-verification.json`. Delivered and stopped; no active implementation.
+
+**Recovery 182 and single-event recalculation approved, 25 October 2026:** Felix selects frame 182 after the recovery comparison. FB2412-REVIEWED-EVENT-01 completes only FB2412 sink site 20/event 1 using onset 114, reference 104-113 and inclusive duration 69 s. Save a new boundary/reference revision, reuse the existing raw reviewed optical calculation, saved native mean event area and existing burden/exposure formulas, and write a separate single-event result plus existing event-evidence export. The unchanged area is explicitly qualified: earlier/later spatial extent has not been remeasured. Independent event arithmetic, source/revision preservation, reload/checksums and visible MATLAB result are acceptance checks. Owner root; no delegation; running session, 15 active minutes, 16 MiB artifacts, at most two targeted repairs. No recording/cohort total, partial sum, combined-workbook rebuild, movie/detector/correction run or default change. Scope: `reference-validation/boi-fb2412-site20-reviewed-20261025/recalculation-scope.json`. Stop at the verified single-event contribution.
+
+**Selected onset/reference saved; recovery checked, 25 October 2026:** Felix explicitly selects onset 114 and baseline 104-113 for FB2412 sink site 20/event 1 and requests recovery inspection before burden recalculation, preserving formula, normalization and originals. Existing immutable boundary and source-bound reference services save/reload those choices, with recovery blank. The selected raw/corrected means are 575.076065 / 27.617396. Saved end 172 remains below both. Corrected intensity crosses at 180, falls below at 181, and stays above through 182-205; raw is within the observed reference range at 182 and above its mean at 183-201. MATLAB shows full corrected context and corrected/raw recovery zooms; 182 (69 inclusive seconds) is recommended using corrected-primary timing, with 183 (70 seconds) an explicit alternative. Twelve independent reference/recovery values and the original audit checksum pass. Exact recovery choice requested from Felix; no recovery revision, amplitude, event burden, combined export, area remeasurement or default/algorithm change is made. Evidence: `reference-validation/boi-fb2412-site20-reviewed-20261025/recovery-check.json`; bounded scope in `scope.json`, owner root, no delegation, current MATLAB session, 15 active minutes / 5 MiB evidence. Original and previous reviewed exports remain intact; the existing burden formula and exposure normalization are preserved for the pending recalculation.
+
+**Earlier-onset preview delivered, 25 October 2026:** Felix recognizes FB2412 sink site 20/event 1 as a real pocket starting earlier and requests checking onset around frame 120 and showing a reference before the decline. The existing saved viewer now displays the original raw/corrected traces on the same footprint over frames 70-200, candidate onset 120 and visible early fall around 114-120, preserving saved bounds 142-172. Three explicit windows (94-113, 104-113, 100-119) are compared without a search or optimization. The 104-113 short plateau has raw mean 575.076065; the longer 94-113 mean 570.172242 includes a preceding rise; 100-119 mean 571.099024 includes the initial fall. Six independent window-mean checks and the unchanged source audit hash pass; correct MATLAB display visually verified. Evidence/scope: `reference-validation/boi-baseline-review-20261025/earlier-onset-preview.json` and `earlier-onset-scope.json`. This is one bounded saved-event preview in the running MATLAB session (15-minute / 5-MiB limit), owner root, no delegation. No formal onset/reference revision, new amplitude or burden, export, detector/correction/statistics rerun, reference-age/gap/default change or method adoption. Preview complete; await exact event/reference judgment before modifying scientific results.
+
+**Saved pocket rejection and reviewed export delivered, 16 October 2026:** [REVIEW-BURDEN-01](BOI_REVIEWED_BURDEN_EXCLUSION.md) saves Felix's explicit FB2317 sink site 13/event 5 rejection in the existing immutable review workflow. MATLAB visibly shows Not recognized and the saved reason/history. A separate opt-in burden export reuses existing calculations/formats and excludes exactly one detection: 5,406 retained rows, 3,256 available and 2,150 missing contributions; all 17 complete burdens remain unavailable under strict missingness. Eight focused cases, 17-recording products/totals/normalization, workbook readback, 583,848 independent retained-cell comparisons, unchanged original workbook checksum and 574 protected MATLAB code hashes pass. Source MAT checksum checked before/after preparation. Approximately 105 MiB new evidence/output; no original write, partial sum, detector/correction/statistics rerun, baseline adoption, MATLAB restart or Git transport. Ordinary automatic batch exports retain automatic detections; saved decisions are supplied explicitly to the reviewed exporter. Delivered and stopped; no active implementation.
+
+**Saved pocket rejection and reviewed export approved, 16 October 2026:** Felix explicitly requests marking FB2317 sink site 13/event 5 as not a pocket, preserving the automatic result and excluding it from reviewed burden. [REVIEW-BURDEN-01](BOI_REVIEWED_BURDEN_EXCLUSION.md) is the active bounded item: existing immutable review save/reload, opt-in identity-bound reviewed burden adapter and fresh burden-only export for the same 17 saved recordings using existing calculations/formats. Eight focused synthetic cases plus the named example, running MATLAB session, two repair passes, 30 active minutes, 256 MiB new output/evidence. Other missing contributions retain strict missingness. No detector/correction/statistics rerun, new baseline rule, partial sum or original-file overwrite. Owner root, no delegation; stop at verified export.
+
+**Event-specific reference preview delivered, 16 October 2026:** the
+[eight-example preview](BOI_EVENT_REFERENCE_DURATION_PREVIEW.md) compares 80
+candidate windows at 20 and 10 seconds, preserving individual footprints,
+intervals, formula and exposure. Earlier code confirms each event's own temporal
+reference even within a shared ROI; the current episode addition can share an
+earlier period. Nearest clean pre-event candidates yield four positive values
+at 20 s and five at 10 s, but the additional FB2317 value (1.029012% raw) disagrees
+with corrected local direction and remains unresolved. FB2413 has a clean local
+20 s reference despite its contaminated inherited window. Shortening changes
+other conditional event products by −2.39%, +5.84%, −7.50% and −40.64%; no products
+were summed or adopted. One 24.94-second MATLAB invocation, 13 synthetic cases,
+554 independent numeric comparisons, three exact signed current-result replays
+and 595 unchanged protected hashes pass. Both figures inspected. No production
+code/default, original result, movie/detector/correction/statistics/export run,
+recording total or partial sum. Preview complete; no active implementation.
+Recommended scientific decision: event-specific local references, retain 20 s
+as current default and consider a flagged 10 s option only with supported local
+state. Method adoption and an all-17 export remain unapproved.
+
+**Event-specific reference preview approved, 16 October 2026:** Felix approves
+previewing the reference rules on the same eight saved examples before method
+adoption, and adds a 20-versus-10-second comparison and the earlier requirement
+for a separate baseline for each individual event, including shared ROIs.
+AMP-RECOVERY-PREVIEW-01 is the single active preview: same fixed event footprints,
+intervals, formula, normalization and original results; compare immediate,
+nearest clean within the total 20-second displacement, approved episode-window
+and post-episode sensitivity candidates. Keep reference age and episode gap at
+20 seconds independently of averaging duration. Four active hours, at most four
+five-minute MATLAB starts, 100 MiB evidence, finite synthetic checks. No movie,
+detector, correction, 17-recording statistics/export, partial sums or production
+adoption. Owner root, no delegation. Deliver the numerical/visual preview and
+concrete recommendation, then stop.
+
+**Remaining-reference review delivered, 16 October 2026:** the same 5,407 saved
+sink events in 17 recordings are examined without new calculations/export.
+[Findings and proposal](BOI_COMPLETE_BURDEN_REFERENCE_PROPOSAL.md): 912 of 973
+incomplete references overlap native masks; 61 have acquisition truncation
+without overlap. Three overlap cases also truncate. Of 1,007 over-age references,
+782 are sample-complete but not thereby physiologically validated. The 72 start
+flags represent 48 native-frame-1 series. Direction disagreement remains separate
+(99 events). Eight fixed examples expose old-level drift and overly broad
+reference grouping; 60 protected hashes remain unchanged. Three native starts
+include two retained diagnostic-collector failures and a successful 29.36-second
+extraction. Technical allowance was expanded to three starts; no scientific scope
+expansion, movie/detector/correction/statistics/export run, new amplitudes or
+recording totals, partial sums, or production method adoption. Propose a bounded
+recovery-aware reference preview using existing services before another all-17
+export. This review is complete; no implementation is active or approved.
+
+**Remaining-reference review authorized, 16 October 2026:** Felix requests a
+read-only examination and proposal for complete burden in the same 17 recordings.
+AMP-COMPLETE-REVIEW-01 keeps the formula, exposure normalization and strict sums.
+Use the saved export, audits and masters plus eight fixed illustrative events;
+one five-minute native extraction and one targeted repair initially, 100 MiB
+evidence; the delivered record above documents the bounded technical expansion. No source-movie, detector, correction, statistics/export run or method
+adoption. Deliver the concrete reference proposal and stop; no implementation
+is active. Owner root, no delegation.
+
+**Fresh pre-episode export delivered, 16 October 2026:** the same 17 saved
+recordings export into a new complete workbook/MAT bundle. [Delivery and counts](BOI_PRE_EPISODE_COMBINED_EXPORT.md):
+3,256/5,407 event contributions are available (490 newly available, one newly
+withheld; previously 2,767). All 17 complete recording burdens remain unavailable
+under strict missingness. Remaining reasons: 1,007 old references, 973 incomplete
+clean references, 72 unresolved acquisition-start references and 99 wrong-direction
+signals. Original measurements, formulas, normalization, 700 protected hashes,
+40 original movie size/timestamps and three source holds are preserved. All event
+products/exposure scaling, strict totals, saved audits and workbook readback pass;
+109 sheets retain the existing formats plus approved policy metadata. No detector
+or correction rerun, method adjustment, partial-burden endpoint or Git transport.
+The named export/availability task is complete; no active implementation remains.
+
+**Fresh combined export approval record, 16 October 2026:** Felix explicitly requests
+one fresh export of the same 17 completed recordings using the approved
+pre-episode policy, with burden availability checked. BATCH-EPISODE-EXPORT-01
+was the approved active item; owner root, no delegation. Preserve the three source
+holds, source recordings, previous outputs, formulas and normalization. Use the
+existing batch stats service, a new output folder, at most two 60-minute attempts
+including a necessary repair, 32 GiB combined output ceiling and 100 MiB review
+evidence. Verify original-column preservation, selected reference policy,
+event products/exposure scaling, strict recording totals and workbook readback.
+Report available and missing contributions by recording without promoting
+partial sums. No detector/correction rerun, new dataset campaign, package or
+Git transport. Stop at verified export and availability delivery.
+
+**Pre-episode baseline delivered, 16 October 2026:** local **3.1.0-dev.9**
+implements the approved recurrent-pocket reference through existing batch stats
+and future BOI master outputs. Original automatic columns and historical files
+remain. References shifted more than 20 seconds and unclear acquisition-start
+series are withheld explicitly; strict burden/normalization remain. The named
+FB2412 fixture reproduces 6.012181% and normalized event contribution 2608.970113,
+with the isolated control unchanged. 129 distinct focused cases pass across
+final reports (102 compatibility cases and 15 final reference/loader cases,
+with overlap); nine historical hashes are unchanged. Six bounded headless starts,
+including retained fixture/inventory failures, total 236.99 seconds.
+No supplied movie/detector processing, all-17 export, complete recording total,
+package or Git transport. [Delivery](BOI_PRE_EPISODE_IMPLEMENTATION.md).
+The approved milestone is complete; implementation stops here. A fresh combined
+export from saved runs is the practical next step, not a recording rerun.
+
+**Pre-episode baseline approval record, 16 October 2026:** Felix approves
+implementation for recurrent pockets, retaining unresolved acquisition-start
+references, the burden formula, normalization and original results. He explicitly
+selects withholding references shifted more than 20 seconds from the usual
+baseline. [AMP-EPISODE-01](BOI_PRE_EPISODE_IMPLEMENTATION.md) was the approved active
+milestone: shared versioned reference calculation, existing saved/live stats
+integration and export provenance, bounded synthetic checks and the same named
+FB2412 regression fixture. Owner root, no delegation. Four active hours, at most
+six focused MATLAB invocations (five minutes each) plus two targeted repairs,
+100 MiB evidence and 200 MiB synthetic exports. No detector/movie processing,
+17-recording re-export, package or Git transport. Stop at verified local delivery.
+
+
+**Episode-reference preview delivered, 15 October 2026:** the [unadopted proposal](BOI_EPISODE_BASELINE_PROPOSAL.md)
+uses a common pre-series period on each event's own footprint. For FB2412 site-1
+event 3, frames 639–658 have all 20 samples without native overlap and give a
+6.012181% candidate drop, versus the immediate-window 2.561716% containing the
+preceding dip. Event 2 and the isolated control remain unchanged. Adjacent
+post-event windows for event 1 give 7.403022% and 9.034434%; neither is adopted
+as a proven recovered reference. Observed-window burden can retain acquisition
+censoring if a boundary reference is justified; no unobserved time is added.
+Existing areas, durations, burden formula and exposure normalization are retained.
+Four reference/product calculations and 15 protected hashes pass verification;
+one 18.39-second headless preview. No recording totals, source movie, detector,
+correction/statistics run or production-method adoption. The preview is complete;
+episode/recovery definitions need review before implementation. No next execution
+or active implementation milestone is inferred.
+
+**Episode-reference preview authorized, 15 October 2026:** Felix requests a
+biologically sensible recurrent/start-event reference and demonstration before
+any method change. [AMP-REFERENCE-PREVIEW-01](BOI_EPISODE_BASELINE_PROPOSAL.md)
+uses the same three saved FB2412 examples, with event 2 as recurrence context.
+Test the pre-series window 639–658 on event 3's own footprint; retain the isolated
+control; show post-event windows 36–55 and 56–75 as boundary-reference sensitivity.
+Existing event areas/durations and burden/normalization remain. One bounded
+headless MATLAB preview, no source movie, detector/correction/statistics run or
+production adoption. Deliver and stop; implementation remains none.
+
+**Saved baseline comparison delivered, 15 October 2026:** the three fixed FB2412
+examples replay their current saved measurements. The [comparison](BOI_AMPLITUDE_BASELINE_COMPARISON.md)
+separates baseline eligibility, spatial support and original timing: the
+recurrent event has 14 preceding-event frames in its 20-frame reference; the
+recording-start fallback uses later signal; site-union versus event-footprint
+amplitudes differ substantially; the old global search expands the isolated
+event's interval from 801–804 to 678–903. All 12 readouts are independently
+verified and 11 protected hashes are unchanged. One completed 17.58-second
+headless MATLAB comparison after one retained launcher failure. No raw movie,
+detector/correction/statistics run, burden/normalization or production-method
+change. The named comparison is complete. Reference and duration meaning need
+scientific definition before any candidate-method adoption; no next execution
+or implementation milestone is active.
+
+**Saved baseline comparison authorized, 15 October 2026:** Felix requests
+comparison of original/current amplitude and baseline rules on the saved
+isolated, recurrent and recording-start examples before any method change.
+[AMP-BASELINE-REVIEW-01](BOI_AMPLITUDE_BASELINE_COMPARISON.md) fixes three FB2412
+site-1 events and separates baseline, footprint and timing effects. One bounded
+headless MATLAB comparison, no detector/correction/statistics run, no source
+movie read and no production-method or burden/normalization change. Deliver
+the comparison and stop. Owner root, no delegation; implementation remains none.
+
+**Burden interpretation correction, 15 October 2026:** Felix questioned the
+scientific and biological meaning of partial burden. The proposed promotion of
+partial sums into the routine GUI/export is withdrawn. They remain diagnostic
+evidence only: baseline eligibility depends on event overlap, so the retained
+subset may exclude recurrence that the cumulative burden is intended to include.
+Area/time normalization and event-count coverage do not repair that selection.
+Keep the intended composite burden and normalization. The appropriateness of the
+current baseline/reference rule needs scientific discussion before an export
+change; no new investigation campaign or implementation is active. The dated
+review below and its separate preview are preserved as historical evidence.
+
+**Burden availability review, 15 October 2026:** Felix requested checking missing
+event contributions against the supplied script while preserving normalization
+and showing a usable, explicit export. The [saved-data review and candidate](BOI_BURDEN_EXPORT_REVIEW.md)
+matches all 5,407 sink events to their existing audits: 2,767 contribute, 2,572
+lack the full clean baseline and 68 have wrong-direction amplitude. The old
+omit-missing aggregation applied to current saved ingredients gives partial
+normalized sums for all 17 recordings, with counts, reasons and coverage in a
+separate preview. Complete totals remain unavailable; normalization is retained.
+No detector/statistics/amplitude run, production calculation change or export
+overwrite. Review only; implementation remains stopped. Adoption of the proposed
+additional observed-burden and missingness fields needs scientific-output review.
+
+**Combined batch export delivered, 15 October 2026:** local **3.1.0-dev.8**
+connects the batch GUI to the existing stats/export service. The 17 completed
+recordings export together into 108 workbook sheets with 5,407 sink events and
+1,320 surge events. All 204 per-recording table and 136 stored-trace comparisons
+match their saved individual results; final focused checks pass 44/44. Three
+source holds, originals, earlier results, optional stimulation metadata and
+review flags remain. Large MAT variables use v7.3 storage with the same filenames
+and schemas; calculation rules and worksheet formats remain unchanged. See the
+[delivery](BOI_BATCH_STATS_EXPORT_DELIVERY.md). No new recording/detector run,
+MATLAB desktop, package, commit/push or release. Implementation is stopped after
+verified local delivery; Felix can now use the combined exports for postprocessing.
+
+**Combined batch export approved, 15 October 2026:** Felix explicitly requests
+connecting the batch GUI to the existing stats/export workflow for the 17
+completed recordings, retaining formats and calculations. BATCH-EXPORT is the
+single active milestone: exact saved-run adapter, GUI review/run/output access,
+finite checks and one named combined export, with at most one repair attempt.
+See the [bounded work items](BOI_BATCH_GUI_PLAN.md#batch-connection-to-existing-stats-and-export).
+Owner: root Codex without delegation. Six active hours, four focused test
+invocations plus two targeted rechecks, 100 MiB evidence, 200 MiB synthetic
+output and initially 2 GiB estimated named export output; complete large-table
+MAT storage requires a corrected finite allowance of 16 GiB, with ample local
+space. The same 17 recordings and two-attempt limit remain; at most 60 minutes
+per export attempt.
+No detector/new-recording run, new MATLAB desktop, package or Git transport.
+Stop after verified local delivery. Earlier stopped milestones remain historical.
+
+**GUI polish delivered, 15 October 2026:** Felix's “Good. Continue” approved
+the proposed clearer check progress and faster saved-run opening.
+[BATCH-UX](BOI_BATCH_GUI_PLAN.md#gui-progress-and-saved-run-opening) delivers local
+**3.1.0-dev.7**: recording/stage progress and verification of only the selected
+recording when opening its saved run. Batch-wide duplicate checks and selected
+source/settings/metadata/artifact checks remain. Final 26/26 focused cases pass;
+one read-only FB2412 reopening checked one of 20 rows in 16.39 seconds, with
+progress and restored controls observed. Owner: root Codex, no delegation.
+No new MATLAB desktop, recording execution, calculation change, package or Git
+transport. The completed batch and source holds are preserved. Implementation
+is stopped at this local delivery; another milestone or release needs agreement.
+
+**Batch inspection round closed, 15 October 2026:** Felix started the reviewed
+queue himself on 14 October; all 17 selected recordings completed and passed
+the queue's saved-result verification, with no recorded execution errors and
+no pending rows. FB2416, FB2417 and FB2318 remain held. Felix inspected FB2412
+event traces, sink/surge recording summaries and surge frame ingredients,
+reported that the trace viewer worked fine, and requested closure of this
+inspection round. See the [closeout](BOI_BATCH_EXECUTION_DELIVERY.md#researcher-run-and-inspection-closeout).
+This closes the demonstrated inspection round, without changing scientific
+review flags or approving a release. At that closeout, implementation was stopped;
+the GUI candidates were subsequently approved and delivered as recorded above.
+The dated implementation and pre-run accounts below retain their original scope.
+
+**GUI batch execution delivered, 14 October 2026:** Felix requested execution of the 17 ready rows from the GUI, retaining the three source holds. [BATCH-RUN-01 through BATCH-RUN-03](BOI_BATCH_EXECUTION_TASK.md) implement the sequential queue, status/history persistence, output/queue review, stop-after-current, verified skip/retry and failure handling using the existing recording workflow. The bounded engineering checks do not start the supplied recordings. Local **3.1.0-dev.6** is [delivered](BOI_BATCH_EXECUTION_DELIVERY.md): final 15/15 focused checks plus one targeted unwind recheck pass, with zero final cleanup warnings. Both layouts are inspected and the named 20-row preflight retains 17 ready/3 held. The updated window is open with 17 selected; Felix chooses output storage and starts the reviewed queue. No supplied recording, scientific algorithm change, new package, Git transport or release. Implementation is stopped.
+
+**Setup repair delivered, 14 October 2026:** [BATCH-SETUP-FIX-01](BOI_BATCH_SETUP_REPAIR.md) delivers local **3.1.0-dev.5**: stimulation fields remain descriptive metadata, the automatic tissue estimate needs no preset ROI, and the separate 20-row input mapping passes native preflight for 17 rows with three explicit source holds (FB2416/FB2417/FB2318). Four focused tests, one targeted GUI recheck and linked-source/hold checks pass. Originals and scientific engines are preserved; the prepared copy is open in existing MATLAB. Implementation is stopped pending Felix's trial/source reconciliation. No analysis, queue execution, release or Git transport occurred.
+
+**First batch editor milestone delivered, 14 October 2026:**
+[BATCH-SETUP-01 through BATCH-SETUP-04](BOI_BATCH_EDITOR_DELIVERY.md) deliver local
+**3.1.0-dev.4**, CSV import/export and shared settings/overrides, optional/custom
+metadata, per-row preflight and verified saved-run reopening. Final 10/10
+focused cases pass, with the initial dropdown failure retained; both planned
+window sizes are inspected. One MATLAB start, 31 case evaluations and below
+2 MiB evidence; zero detector/statistics/recorded-movie execution. Separate
+Codex static review is complete; Felix's editor usability acceptance remains
+pending. Of 544 existing MATLAB files, 541 are unchanged; launcher, version and
+test registration are the only existing MATLAB edits. No active implementation
+remains. Queue execution/live status writeback require their next bounded
+proposal and approval. No package, commit/push or publication occurred.
+
+**Approved first batch editor milestone, 14 October 2026:** Felix agreed to the
+field set and [batch plan](BOI_BATCH_GUI_PLAN.md) and requested implementation of
+the first milestone as proposed. BATCH-SETUP-01 through BATCH-SETUP-04 are active:
+CSV contract/adapter, editor, explicit shared settings and row overrides,
+optional metadata, per-row preflight and existing-run status display. Budget:
+eight active hours, two MATLAB starts, 100 MiB, zero detector/statistics/recorded
+movie executions. Routine repairs, focused rechecks and separate technical
+review are included. Deliver the editor and stop before queue execution/live
+status writeback, packaging, commit/push or publication. The earlier planning-only
+entry below is historical for this approved scope.
+
+**Current direction, 14 October 2026:** Felix requested skipping the second
+user review and prioritising GUI usability, especially batch CSV preparation,
+optional metadata and visible analysis completion. The proposed colleague
+walkthrough and its preparation are skipped for the current plan; no unfamiliar
+user evidence is claimed. The [batch CSV and GUI plan](BOI_BATCH_GUI_PLAN.md)
+proposes a batch editor with one recording folder entered per row, explicitly
+confirmed shared acquisition/support settings, optional metadata and durable
+run-status tracking. The first proposed milestone is CSV/editor/preflight work;
+queue execution and live status writeback follow separately. Planning only:
+no implementation milestone is active. Existing software, saved results and
+scientific rules are preserved; release remains a separate decision. This
+direction supersedes the colleague-task next step in the dated entry below.
+
+**Acceptance and next handoff, 14 October 2026:** Felix accepted the
+[3.1.0-dev.3 interface/GitHub delivery](BOI_USABILITY_GITHUB_DELIVERY.md), final
+branch commit 984288f. The [next handoff](BOI_COLLEAGUE_WALKTHROUGH_HANDOFF.md)
+prepares a current development test ZIP and a short colleague installation,
+saved-result/export and arithmetic walkthrough using FB2311. Actual unfamiliar
+scientist feedback remains pending. This chat records acceptance and prepares
+that bounded task only; its pasted execution prompt is the next authorization.
+No new build, MATLAB session, test, commit/push or publication occurred here.
+
 **Current delivery, 13 October 2026:** the approved detection-support/export-folder
 usability task is locally verified. Current checkout **3.1.0-dev.3**, build
 **2026-10-13 20:02:39 +02:00**, preserves calculations, definitions and saved results.
@@ -451,8 +828,9 @@ combined in a smaller team; they do not require three full-time hires.
 The technical lead owns integration. The author of a calculation, persistence or
 schema change should not be its sole reviewer when another engineer is available.
 If working alone, report that limitation; an automated replay is not an
-independent human review. A researcher unfamiliar with development participates
-in the final usability demonstration.
+independent human review. The originally planned unfamiliar-researcher usability
+demonstration is skipped for the current plan by Felix's 14 October direction;
+no such feedback is claimed. Technical review remains distinct.
 
 One delivery milestone is active at a time. At most two implementation items
 run concurrently when their files/contracts are independent. Core interfaces
@@ -603,14 +981,18 @@ or create performance optimization work without a measured release blocker.
   example configuration and a concise measurement/review guide.
 - G6.2 Package the required software, schemas and appropriately licensed small
   fixtures; keep bulky/private development evidence outside the release package.
-- G6.3 Complete an unfamiliar-researcher walkthrough, including one local input;
-  have a second person reproduce one numerical result from exported ingredients.
+- G6.3 Originally proposed an unfamiliar-researcher walkthrough and second-person
+  numerical replay. Felix requested skipping that second user review on
+  14 October 2026; its preparation is also skipped for the current plan. Retain
+  the absence of unfamiliar-user feedback as an evidence limit.
 - G6.4 Publish release notes, supported versions, known limitations and migration
   instructions. Prepare a version/tag/release candidate for your final approval.
 
-**Acceptance:** fresh-install walkthrough succeeds, results/reviews reopen, the
-independent replay succeeds, and the product owner accepts essential usability
-and scientific limitations. Publication/merge is explicitly approved before action.
+**Acceptance:** fresh-install walkthrough succeeds, results/reviews reopen, and
+the product owner accepts essential usability and scientific limitations with
+the available calculation evidence. The skipped second
+user review is not a pending task or a claimed pass. Publication/merge is
+explicitly approved before action.
 
 **Stop:** agreed release delivered; additional features belong to a subsequent
 version. Completion does not require reanalyzing your full dataset.

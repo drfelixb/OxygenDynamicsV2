@@ -2,14 +2,88 @@
   "schema": "oxygen-software-development-status-1",
   "plan_id": "SW-PLAN-001",
   "plan_version": "0.2",
-  "date": "2026-10-13",
+  "date": "2026-10-30",
+  "episode_reference_preview": {
+    "date": "2026-10-15",
+    "status": "delivered_unadopted_candidate_preview",
+    "record": "docs/BOI_EPISODE_BASELINE_PROPOSAL.md",
+    "recording": "FB2412",
+    "site": 1,
+    "primary_events": [
+      1,
+      3,
+      4
+    ],
+    "preceding_context_event": 2,
+    "candidate_recurrence_reference_frames": [
+      639,
+      658
+    ],
+    "boundary_reference_sensitivity_frames": [
+      [
+        36,
+        55
+      ],
+      [
+        56,
+        75
+      ]
+    ],
+    "burden_formula_and_normalization_preserved": true,
+    "production_method_adoption": false,
+    "candidate_recurrence_amplitude_percent": 6.012181174339028,
+    "start_event_reference_sensitivity_amplitudes_percent": [
+      7.403022145099729,
+      9.034433643030697
+    ],
+    "candidate_reference_windows_verified": 4,
+    "protected_file_hashes_unchanged": 15,
+    "new_recording_totals_computed": false,
+    "recommended_direction": "Local pre-episode reference for short recurrent series; conditional supported post-recovery reference for acquisition-start events, with explicit censoring. No automatic start-reference adoption on this example."
+  },
+  "saved_amplitude_baseline_comparison": {
+    "date": "2026-10-15",
+    "status": "delivered_saved_data_comparison_no_method_adoption",
+    "record": "docs/BOI_AMPLITUDE_BASELINE_COMPARISON.md",
+    "recording": "FB2412",
+    "site": 1,
+    "events": [
+      1,
+      3,
+      4
+    ],
+    "production_method_adoption": false,
+    "burden_formula_and_normalization_preserved": true,
+    "current_saved_measurement_replays": 3,
+    "independent_arithmetic_readouts": 12,
+    "protected_hashes_unchanged": 11,
+    "findings": [
+      "Recurrence loses 14 of 20 immediate baseline frames to the preceding event; old mean includes them",
+      "Recording-start old fallback references later signal without observed pre-event baseline",
+      "Site-union and event-footprint amplitudes measure different spatial supports",
+      "Old global timing expands isolated current interval 801-804 to 678-903; current timing retains uncertainty flags"
+    ]
+  },
+  "burden_export_review": {
+    "date": "2026-10-15",
+    "status": "diagnostic_only_partial_burden_adoption_proposal_withdrawn",
+    "record": "docs/BOI_BURDEN_EXPORT_REVIEW.md",
+    "detected_sink_events": 5407,
+    "contributing_events": 2767,
+    "missing_baseline_amplitude_events": 2572,
+    "wrong_direction_excluded_events": 68,
+    "normalization_preserved": true,
+    "production_rules_changed": false,
+    "proposed_adoption": null,
+    "scientific_interpretation": "Partial sums do not establish the intended cumulative burden because overlap-related baseline eligibility can select against recurrent events. Resolve the measurement reference before proposing export adoption."
+  },
   "mission": "Make BOI analysis calculations correct and results understandable for scientists",
   "researcher_priority": "Correct analysis calculations and clear outputs; detection refinement is a separate future priority.",
   "communication_preference": "Use plain feature names, calculation meanings, references, units and uncertainty. Keep internal milestone codes in development records.",
   "scope_direction": "researcher_confirmed_calculations_and_ordinary_matlab_use_custom_supervision_deferred",
   "roadmap_status": "approved",
-  "active_implementation_milestone": null,
-  "proposed_next_milestone": null,
+  "active_implementation_milestone": "DEV-CHECKPOINT-20261030",
+  "proposed_next_milestone": "Researcher decision on a defensible area measurement for the extended FB2412 pocket; no further method or export milestone approved.",
   "approved_implementation_items": [
     "SW-G3-01_saved_run_entry",
     "SW-G3-02_neutral_event_selection",
@@ -51,7 +125,17 @@
     "NEXT-02_bounded_duration_area_occupancy_event_rates",
     "NEXT-03_bounded_integrals_composites_summaries_provenance",
     "NEXT-04_bounded_installation_package",
-    "NEXT-05_portable_automated_checks_named_environments"
+    "NEXT-05_portable_automated_checks_named_environments",
+    "BATCH-SETUP-01",
+    "BATCH-SETUP-02",
+    "BATCH-SETUP-03",
+    "BATCH-SETUP-04",
+    "BATCH-UX-01_check_progress",
+    "BATCH-UX-02_selected_saved_run_opening",
+    "BATCH-UX-03_bounded_verification_and_handoff",
+    "BATCH-EXPORT-01_exact_saved_run_adapter",
+    "BATCH-EXPORT-02_gui_review_run_and_output_access",
+    "BATCH-EXPORT-03_finite_verification_and_17_recording_export"
   ],
   "completed_work": [
     "planning inspection",
@@ -70,12 +154,12 @@
     "SW-G3-01 through SW-G3-03 saved-result usability slice delivered for researcher acceptance",
     "131/131 bounded MATLAB BOI regression tests passed; saved G2 both-sign event/window export walkthrough passed",
     "SW-G3-02 usability feedback: event-row click remains on Saved event evidence and updates its trace",
-    "Researcher confirmed saved event row-click usability: “good. works.”",
+    "Researcher confirmed saved event row-click usability: \u201cgood. works.\u201d",
     "SW-G3-04 through SW-G3-06 bounded pre-run/progress/synthetic journey slice delivered for researcher usability acceptance",
     "one 96x96x100 synthetic GUI end-to-end execution; staging, analysis, statistics and complete visually captured",
     "synthetic event inspection/export and exact saved-run reopen verified; saved failed-status fixture excluded",
     "133/133 bounded MATLAB BOI regression tests passed after G3 pre-run/progress changes",
-    "Researcher accepted the demonstrated SW-G3-04 through SW-G3-06 partial workflow: “its ok”",
+    "Researcher accepted the demonstrated SW-G3-04 through SW-G3-06 partial workflow: \u201cits ok\u201d",
     "Researcher used native folder chooser to reopen the completed G2 gui-run and launched its indexed workbook in MATLAB; no analysis rerun",
     "SW-G3-07 one disposable synthetic staging failure: GUI and RunStatus showed stage/error/incomplete folder; completed-run list/reopen rejected it; zero detector and statistics executions",
     "SW-G3-07 presentation revision: source-unavailable recovery wording and exact error/folder preserved; saved failure fixture shows disabled Run, 14/14 focused GUI tests passed; no new execution",
@@ -155,13 +239,13 @@
     "30 September 2026: researcher accepted CC-02 bounded numerical/integration delivery and demonstrated main-window workflow only. C02 remains conditional, FB2312 recovery unresolved, and all saved-footprint qualifications retained. Native chooser interaction and standalone viewer layout remain open; overall usability, G5 and release remain unaccepted. Acceptance recorded in documentation only; no further checks or launches started. Historical execution packets, containment_failure and consumed approvals unchanged.",
     "30 September 2026: CC-02U bounded usability-completion proposal prepared only: standalone 1120x800/900x650 layout, researcher native save/reopen/export and cancellation, three existing saved fixtures, six focused checks/twelve evaluations, two active hours/one saved-data session/100 MiB. Routine UI repairs included if approved; exact scientific payload preservation and final hashes required. No implementation, checks or MATLAB launch started; overall usability/G5/release unaccepted.",
     "1 October 2026: CC-02U bounded delivery: six focused checks passed in twelve recorded evaluations/five phase groups, one existing MATLAB session with zero starts, one unchanged ID400 preview. Native save/reopen/export/cancel researcher-performed; exact payloads, 71 protected inputs and 528 final code pins preserved. Retained failed/superseded layout iterations, wrong-window guard rejection and deleted-window restoration. Standalone C02 shown at supported smaller size; researcher usability acceptance pending, no further execution; overall usability/G5/release unaccepted.",
-    "1 October 2026: researcher accepted CC-02U bounded usability workflow at 1120 × 800 and 900 × 650, including demonstrated native selections and cancellations. Both CC-02 usability items closed within that scope. C02 conditional reference, FB2312 unresolved recovery, all footprint qualifications and documented limitations retained. Documentation only; no checks, launches or implementation. Broader usability/G5/release unaccepted; release paused and historical containment/consumed approvals unchanged.",
+    "1 October 2026: researcher accepted CC-02U bounded usability workflow at 1120 \u00d7 800 and 900 \u00d7 650, including demonstrated native selections and cancellations. Both CC-02 usability items closed within that scope. C02 conditional reference, FB2312 unresolved recovery, all footprint qualifications and documented limitations retained. Documentation only; no checks, launches or implementation. Broader usability/G5/release unaccepted; release paused and historical containment/consumed approvals unchanged.",
     "1 October 2026: researcher confirms CC-02 closed within its accepted scope and keeps development and release paused. No automatic next validation phase, planning, checks or launches; researcher will supply the next requirement after using the workflow. Scientific qualifications, documented limits and G5/release non-acceptance retained.",
     "AMP-EXPORT-01: automatic amplitude meanings and site/recording/mouse/group average counts exported additively; final six synthetic and three saved cases passed, existing numerical tables/calculation files/saved inputs preserved. Four batches/36 evaluations, two working MATLAB starts plus one unsuccessful invocation. Storage ceiling exceeded before lossless earlier-evidence compression; disclosed exception. No detector/statistics-pipeline/recorded runs, correction refits or release work.",
     "NEXT-01: accepted exports and planning saved; development identity 3.1.0-dev.1 reconciled using static checks only",
     "NEXT-02: duration, native event area, union occupancy, onset rate and concurrent density checked for both signs; final 9/9 named cases passed; no scientific-output change",
     "NEXT-03: 8/8 final signed-integral/composite/summary/provenance cases; three batches/24 evaluations, two saved-data sessions; formulas preserved; local 3.1.0-dev.2 export identity repair; no commit/push",
-    "NEXT-04: one fresh modified dev.2 installation build; source/folder/ZIP/extraction hashes match; 6/6 extracted saved-data routes; five batches/one MATLAB session; previous candidate and uncommitted Steps 2–3 preserved; no commit/push/publication",
+    "NEXT-04: one fresh modified dev.2 installation build; source/folder/ZIP/extraction hashes match; 6/6 extracted saved-data routes; five batches/one MATLAB session; previous candidate and uncommitted Steps 2\u20133 preserved; no commit/push/publication",
     "NEXT-05: 26 new portable cases; 133/133 final hosted Linux R2025b gate on 5c23b02; one macOS R2025a gate and three targeted repairs; 29 desktop cases separate; accepted source pushed; all 443 candidate source hashes and 1725 protected files unchanged",
     "NEXT-07: researcher accepted assistant saved-data readiness within scope; portable guides and one new development candidate delivered, application calculations unchanged; original candidate/results preserved; independent scientist walkthrough feedback remains absent.",
     "NEXT-07-DIST: 446 source files plus manifest match folder/ZIP/extraction, 38 package links pass; one packaging-only invocation; accepted documentation and deferred custom-supervision scope saved to development branch with CI skipped.",
@@ -171,7 +255,14 @@
     "LICENCE-02 documentation scope complete and next DOCS-DIST-01 handoff prepared at researcher request; original MIT/source evidence/credits preserved. Next task execution approval pending; no new scientific work, build or push.",
     "Verified licensing candidate from 44f3031: 447 committed sources/448 folder-ZIP-extraction files, 65 links, exact MIT/five upstream texts, unique historical judgment labels with retained hashes and one checksum-only loader repair. One same-session extracted definition-load check; no numerical suites/recording/CI/release. Final transport identity reported separately.",
     "Licensing development download accepted within reviewed scope; stale current status corrected; manual recording-test prompt prepared and Felix personal test retained as pending on the agenda. No test or launch performed.",
-    "Felix accepted the demonstrated FB2311 recording/sink inspection/export/reopen workflow on 13 October 2026: reopened 328 automatic events, the same site 2/event 5 details and three matching sink summary values. One event and three summary calculations independently replayed; scientific, unperformed-workflow and resource limits retained; no further execution."
+    "Felix accepted the demonstrated FB2311 recording/sink inspection/export/reopen workflow on 13 October 2026: reopened 328 automatic events, the same site 2/event 5 details and three matching sink summary values. One event and three summary calculations independently replayed; scientific, unperformed-workflow and resource limits retained; no further execution.",
+    "Felix accepted the delivered 3.1.0-dev.3 interface and development-branch GitHub update on 14 October 2026; no extra personal control retest or release approval inferred. A bounded colleague-walkthrough preparation handoff is ready, with execution and actual unfamiliar-user feedback pending.",
+    "First batch CSV/editor/preflight milestone delivered locally as 3.1.0-dev.4: final ten cases pass, 31 evaluations/one MATLAB start, both layout sizes inspected, separate Codex static review; zero engines/recordings/builds/pushes. Felix editor usability acceptance pending; queue/live writeback remains later scope.",
+    "2026-10-14 researcher-started GUI queue: 17/17 complete with saved-result verification, zero recorded execution errors, three original source holds retained; 5274 seconds total queue elapsed.",
+    "2026-10-15 BATCH-INSPECT-01: researcher reported FB2412 trace viewer worked fine and closed saved-trace/sink-surge-summary/surge-frame-input inspection; no new runs/tests or scientific review flags changed.",
+    "BATCH-EXPORT delivered locally: batch GUI uses existing stats/export for 17 completed recordings; 44/44 focused checks, 204 saved-table and 136 trace comparisons pass; large MAT storage repaired, originals/holds preserved, no detector or new recording run.",
+    "AMP-EPISODE-01: pre-episode sink references through batch stats/export, original measurements preserved; focused checks and named fixture delivered",
+    "BATCH-EPISODE-EXPORT-01: fresh 17-recording export verified; 3256 event contributions available, all complete recording burdens remain unavailable with explicit reasons"
   ],
   "standing_boundaries": [
     "BOI only",
@@ -244,7 +335,7 @@
     {
       "date": "2026-09-27",
       "origin": "researcher decision",
-      "verbatim": "I accept G3’s demonstrated daily-use workflow.",
+      "verbatim": "I accept G3\u2019s demonstrated daily-use workflow.",
       "approved_scope": "G3 usability acceptance only. No validation of a fresh real-acquisition run or every failure path; no more G3 tests and no release approval. Analysis/statistics failures, incomplete-run recovery and relevant real-acquisition checks move to bounded G5 release work. G4 proposal requested, not implementation approval."
     },
     {
@@ -364,7 +455,7 @@
     {
       "date": "2026-09-28",
       "origin": "researcher instruction",
-      "verbatim": "I approve SW-G5-06R-07 implementation, up to eight named offline schema evaluations, and—only if the static and offline gates pass—one startup-only MATLAB launch under the card’s 100-second total limit and resource and containment stops. No retry.",
+      "verbatim": "I approve SW-G5-06R-07 implementation, up to eight named offline schema evaluations, and\u2014only if the static and offline gates pass\u2014one startup-only MATLAB launch under the card\u2019s 100-second total limit and resource and containment stops. No retry.",
       "approved_scope": "New no-Run startup worker/caller, eight one-use saved-data cases and one conditional 100-second MATLAB startup only after static and offline final-code gates. No Run, master, detector, statistics, attempt marker, recorded movie, SW-G5-07, G5 acceptance or release."
     },
     {
@@ -376,13 +467,13 @@
     {
       "date": "2026-09-28",
       "origin": "researcher instruction",
-      "verbatim": "Please hold the unspent SW-G5-06R-07 MATLAB launch. The final process snapshot is captured before the caller’s final preflight and the controller’s second `preflight_ok()` call. Revise the boundary so a new process snapshot is obtained after all potentially slow preflight work and assessed immediately before token publication. Propose a bounded offline test with a delayed preflight that proves a stale snapshot cannot publish a token, plus the final-code hash gate required after the change. Do not launch MATLAB under this request.",
+      "verbatim": "Please hold the unspent SW-G5-06R-07 MATLAB launch. The final process snapshot is captured before the caller\u2019s final preflight and the controller\u2019s second `preflight_ok()` call. Revise the boundary so a new process snapshot is obtained after all potentially slow preflight work and assessed immediately before token publication. Propose a bounded offline test with a delayed preflight that proves a stale snapshot cannot publish a token, plus the final-code hash gate required after the change. Do not launch MATLAB under this request.",
       "approved_scope": "Revise the final-snapshot/preflight boundary and prepare a finite offline test/hash-gate proposal; hold all MATLAB and recorded-movie launches. No new offline evaluations approved by this instruction."
     },
     {
       "date": "2026-09-28",
       "origin": "researcher instruction",
-      "verbatim": "I approve SW-G5-06R-07B’s 13 named, one-use offline evaluations under the decision card’s no-launch limits. Pin the final executable and harness hashes before testing, stop at the first failed case without retry, and report the ordered traces, claim/token counts, and post-test hash gate. Keep the MATLAB startup on hold; this approval does not authorize a live worker token or recording run.",
+      "verbatim": "I approve SW-G5-06R-07B\u2019s 13 named, one-use offline evaluations under the decision card\u2019s no-launch limits. Pin the final executable and harness hashes before testing, stop at the first failed case without retry, and report the ordered traces, claim/token counts, and post-test hash gate. Keep the MATLAB startup on hold; this approval does not authorize a live worker token or recording run.",
       "approved_scope": "Thirteen named saved-data evaluations once each, with exact pre/post executable/harness hashes and stop on first failure. Zero child process/MATLAB launch, live worker token or recorded movie; startup remains held pending separate decision."
     },
     {
@@ -436,7 +527,7 @@
     {
       "date": "2026-09-29",
       "origin": "researcher instruction",
-      "verbatim": "approve SW-G5-07’s one local inventory and six named static assessments under the decision card. Produce only the audit document, manifests, and factual plan/status updates. Record missing evidence as untested and contradictory claims as failures. Do not run tests or MATLAB, access the network or excluded recordings, repair code, package, publish, or treat this audit as G5 or release acceptance. Present the findings and bounded follow-up choices when complete.",
+      "verbatim": "approve SW-G5-07\u2019s one local inventory and six named static assessments under the decision card. Produce only the audit document, manifests, and factual plan/status updates. Record missing evidence as untested and contradictory claims as failures. Do not run tests or MATLAB, access the network or excluded recordings, repair code, package, publish, or treat this audit as G5 or release acceptance. Present the findings and bounded follow-up choices when complete.",
       "approved_scope": "One local inventory and six static assessments, documentation/manifests/plan/status only; no execution, network, excluded data, repairs, packaging or release acceptance."
     },
     {
@@ -448,7 +539,7 @@
     {
       "date": "2026-09-29",
       "origin": "researcher instruction",
-      "verbatim": "I approve F07-03’s bounded source-list repair and at most ten one-use offline manifest evaluations under the decision card. Pin final code and fixture hashes before testing; stop at the first failure without retry. Verify that the harness checks the same policy the packager uses and that required-file validation precedes directory creation. Do not run MATLAB, build a folder or ZIP, include excluded data, or mark the package release-ready. Report the patch, case results, hashes, and remaining integration gaps.",
+      "verbatim": "I approve F07-03\u2019s bounded source-list repair and at most ten one-use offline manifest evaluations under the decision card. Pin final code and fixture hashes before testing; stop at the first failure without retry. Verify that the harness checks the same policy the packager uses and that required-file validation precedes directory creation. Do not run MATLAB, build a folder or ZIP, include excluded data, or mark the package release-ready. Report the patch, case results, hashes, and remaining integration gaps.",
       "approved_scope": "Source-list-only patch and at most ten one-use offline manifest evaluations; pin final code/fixtures, stop first failure with no retry; no MATLAB or package folder/ZIP."
     },
     {
@@ -567,7 +658,9 @@
     "G2": "complete",
     "G3": "demonstrated_daily_use_usability_accepted_release_checks_deferred_to_G5",
     "G4": "bounded_named_example_usability_accepted_release_checks_open",
-    "G5": "incomplete_static_release_audit_delivered_defects_and_deferred_blockers_open"
+    "G5": "incomplete_static_release_audit_delivered_defects_and_deferred_blockers_open",
+    "BATCH-RUN": "delivered_researcher_run_complete_named_inspection_round_closed",
+    "BATCH-EXPORT": "delivered_existing_stats_export_17_completed_recordings"
   },
   "completed_implementation_items": [
     "SW-G1-01_workflow_map",
@@ -592,10 +685,13 @@
     "SW-G5-06R-04_offline_guarded_controller_eight_saved_evaluations",
     "SW-G5-06R-05_offline_one_shot_two_saved_evaluations",
     "SW-G5-06R-06_durable_writer_five_disposable_filesystem_evaluations",
-    "SW-G5-06R-08_structured_identity_diagnostics_and_ten_saved_data_cases"
+    "SW-G5-06R-08_structured_identity_diagnostics_and_ten_saved_data_cases",
+    "BATCH-EXPORT-01_exact_saved_run_adapter",
+    "BATCH-EXPORT-02_gui_review_run_and_output_access",
+    "BATCH-EXPORT-03_finite_verification_and_17_recording_export"
   ],
   "evidence": "docs/SOFTWARE_CC_01_COMPARISON_REPORT.md",
-  "pending_approval": null,
+  "pending_approval": "Commit and normal development-branch push are explicitly authorized by Felix on 30 October 2026. Broader planning only; no next implementation, scientific-method adoption, dataset campaign or release approved.",
   "previous_evidence": "docs/SOFTWARE_G5_05_DELIVERY.md",
   "verification": {
     "local_matlab": "R2025a MACA64",
@@ -915,7 +1011,16 @@
     "f07_03_archives_created": 0,
     "f07_03_matlab_launches": 0,
     "f07_03_independent_review": false,
-    "f07_03_researcher_acceptance": "pending"
+    "f07_03_researcher_acceptance": "pending",
+    "batch_combined_stats_export": {
+      "Status": "pass",
+      "FocusedCases": 44,
+      "TableComparisons": 204,
+      "TraceComparisons": 136,
+      "Included": 17,
+      "Excluded": 3,
+      "Evidence": "reference-validation/boi-batch-stats-export-20261015/final-verification.json"
+    }
   },
   "delivered_partial_implementation_items": [
     "SW-G5-06R-07_startup_only_worker_caller_and_ten_final_code_offline_cases_live_launch_untested",
@@ -979,7 +1084,7 @@
     {
       "date": "2026-09-27",
       "item": "G3 demonstrated daily-use workflow",
-      "verbatim": "I accept G3’s demonstrated daily-use workflow.",
+      "verbatim": "I accept G3\u2019s demonstrated daily-use workflow.",
       "acceptance": "researcher usability acceptance only; fresh real-acquisition and non-staging failure paths untested; no release approval"
     },
     {
@@ -1019,10 +1124,23 @@
       ],
       "further_checks_or_launches_authorized": false,
       "g5_or_release_acceptance": false
+    },
+    {
+      "date": "2026-10-15",
+      "work_item": "BATCH-INSPECT-01",
+      "verbatim": "the trace viewer worked fine. can you open the recording results for FB2412 so i can inspect the summaries?",
+      "acceptance": "FB2412 saved trace viewer usability; no event-level scientific adjudication or general release acceptance."
+    },
+    {
+      "date": "2026-10-15",
+      "work_item": "BATCH-INSPECT-01",
+      "verbatim": "ok, i have inspected everything. lets continue and finish this inspection round.",
+      "context": "Researcher inspected FB2412 saved traces, whole-recording sink/surge summaries and surge frame ingredients including rightmost columns after personally running the 17-row queue.",
+      "acceptance": "Close the demonstrated inspection round; retain scientific qualifications, per-recording Not reviewed flags and three held sources."
     }
   ],
   "proposed_next_items": [],
-  "proposed_next_evidence": "docs/BOI_USABILITY_GITHUB_DELIVERY.md",
+  "proposed_next_evidence": null,
   "release_blockers": [
     {
       "id": "G5_REAL_ACQUISITION_RESOURCES",
@@ -1278,7 +1396,7 @@
       "UsabilityResolution": {
         "Date": "2026-10-01",
         "WorkItem": "CC-02U",
-        "Scope": "CC-02U bounded standalone workflow at 1120 × 800 and 900 × 650, including demonstrated native save/reopen/export selections and cancellations",
+        "Scope": "CC-02U bounded standalone workflow at 1120 \u00d7 800 and 900 \u00d7 650, including demonstrated native save/reopen/export selections and cancellations",
         "AcceptanceRecord": "cc02_usability_completion_proposal.Acceptance",
         "FurtherChecksOrLaunchesAuthorized": false
       }
@@ -1330,7 +1448,7 @@
     "Acceptance": {
       "Date": "2026-10-01",
       "Authority": "researcher",
-      "Scope": "CC-02U bounded standalone workflow at 1120 × 800 and 900 × 650, including demonstrated native save/reopen/export selections and cancellations",
+      "Scope": "CC-02U bounded standalone workflow at 1120 \u00d7 800 and 900 \u00d7 650, including demonstrated native save/reopen/export selections and cancellations",
       "ClosedUsabilityItems": [
         "Standalone viewer layout at the two named sizes",
         "Native chooser interaction for the demonstrated save, reopen and export paths, including cancellation"
@@ -1356,8 +1474,8 @@
       "ExecutionEvidence": "Historical packets, failures, hashes, counts and consumed approvals remain unchanged; this is a documentation-only acceptance"
     }
   },
-  "development_work_status": "stopped_after_bounded_usability_delivery",
-  "next_requirement": "Review 3.1.0-dev.3 using INSTALLATION.md and the final GitHub commit. FB2311 manual test is closed within its demonstrated sink workflow. No automatic recording, diagnostic, package, containment or release phase follows; licensing/support/publication decisions remain separate.",
+  "development_work_status": "approved_batch_to_existing_stats_export_in_progress",
+  "next_requirement": "Complete the authorized checkpoint/push and broader workflow plan. Shorter FB2412 pocket stays an unsaved preview; scientific review is stopped.",
   "cc02_scope_closure": {
     "Date": "2026-10-01",
     "Status": "closed_within_accepted_scope",
@@ -1596,7 +1714,7 @@
       "DocumentedLimitationsRetained": true
     }
   },
-  "development_status": "usability_fixes_and_FB2311_documentation_verified_final_Git_transport_reported_separately",
+  "development_status": "local_3_1_0_dev_7_batch_gui_polish_delivered",
   "next_04": {
     "Status": "accepted_within_demonstrated_saved_data_scope",
     "Record": "docs/SOFTWARE_NEXT_04_TASK.md",
@@ -2334,7 +2452,7 @@
   "usability_finish_handoff": {
     "ID": "UI-FINISH-01",
     "Date": "2026-10-13",
-    "Status": "locally_verified_delivery_closed_after_final_normal_branch_transport",
+    "Status": "delivered_and_researcher_accepted_within_demonstrated_scope",
     "Owner": "Implementation Codex chat",
     "Record": "docs/BOI_USABILITY_GITHUB_HANDOFF.md",
     "UserBenefit": "Understand the required detection-support choice and find exported event/recording folders; keep documentation and GitHub current",
@@ -2369,7 +2487,7 @@
     "Version": "3.1.0-dev.3",
     "BuildTimestamp": "2026-10-13 20:02:39 +02:00",
     "DeliveryRecord": "docs/BOI_USABILITY_GITHUB_DELIVERY.md",
-    "TaskComplete": "Local verification complete; final branch/push/CI identities and outcome reported in the final handoff and local transport receipt",
+    "TaskComplete": true,
     "Usage": {
       "MATLABStarts": 2,
       "ExistingFelixSessionPreserved": true,
@@ -2400,6 +2518,1423 @@
     "CommittedMATLABFileHashesMatched": 543,
     "All544LocalMATLABFileHashesStillMatchVerifiedSnapshot": true,
     "VerificationReceipt": "reference-validation/boi-usability-fb2311-20261013/final-static-preservation.json",
-    "GitTransport": "One normal development branch push; exact final commit, remote verification and CI outcome in final handoff/local transport receipt"
+    "GitTransport": "One normal development branch push; exact final commit, remote verification and CI outcome in final handoff/local transport receipt",
+    "ResearcherAccepted": true,
+    "ResearcherAcceptanceDate": "2026-10-14",
+    "ResearcherAcceptanceQuote": "ok, i accept this delivery.",
+    "ResearcherAcceptanceScope": "Delivered 3.1.0-dev.3 support guidance, event/window export-folder controls, preservation of checked saved values and documentation/development-branch GitHub update; no additional personal retest, scientific validity or release approval inferred.",
+    "FinalBranchCommit": "984288f1f16a57abb8cbc13e3a962b9ab923d624",
+    "NewPersonalControlRetestClaimed": false,
+    "ReleaseApproved": false
+  },
+  "colleague_walkthrough_handoff": {
+    "ID": "USER-READY-02",
+    "Date": "2026-10-14",
+    "Status": "skipped_by_researcher_for_current_plan",
+    "SkippedDate": "2026-10-14",
+    "SkippedScope": "Second user review and associated colleague package/material preparation; no unfamiliar-user evidence claimed",
+    "SupersedingPlan": "docs/BOI_BATCH_GUI_PLAN.md",
+    "Owner": "Implementation Codex prepares materials; Felix arranges a human colleague",
+    "UserBenefit": "Another scientist can install the current software, locate saved exports and reproduce two optical/occupancy calculations",
+    "Record": "docs/BOI_COLLEAGUE_WALKTHROUGH_HANDOFF.md",
+    "StartingCommit": "984288f1f16a57abb8cbc13e3a962b9ab923d624",
+    "CurrentVersion": "3.1.0-dev.3",
+    "SourceBuildTimestamp": "2026-10-13 20:02:39 +02:00",
+    "Fixture": "Existing FB2311 run and accepted event/window exports; no new recording or correction",
+    "ProposedLocalPacket": "reference-validation/boi-colleague-preparation-20261014",
+    "Budget": {
+      "MaximumActiveEngineeringHours": 4,
+      "MaximumDevelopmentPackageBuilds": 2,
+      "MaximumAssistantMATLABStarts": 2,
+      "MaximumFocusedBatches": 4,
+      "MaximumNewBytes": 104857600,
+      "PlannedHumanSessions": 1,
+      "PlannedHumanMinutes": 45
+    },
+    "HumanReviewerIdentified": false,
+    "HumanWalkthroughStarted": false,
+    "HumanWalkthroughGatePassed": false,
+    "ImplementationStarted": false,
+    "PackageBuildsPerformed": 0,
+    "ExecutionChecksPerformed": false,
+    "PreparationCompletionCondition": "Verified current development ZIP/extraction, manifest/checksum, opening instructions, one-page colleague sheet, formula/ingredient kit, feedback form and concise release decisions are delivered; human feedback is recorded only if actually received",
+    "StoppingCondition": "Do not execute this skipped proposal; retained for history. Follow the batch CSV and GUI planning direction instead.",
+    "Excluded": [
+      "Recording/detector/statistics executions",
+      "Scientific calculation/reference/boundary/label changes",
+      "VM/watchdog work",
+      "Broad compatibility/performance campaigns",
+      "Commit/push/publication",
+      "Unrequested delegation or external messages"
+    ]
+  },
+  "batch_csv_gui_plan": {
+    "ID": "BATCH-SETUP",
+    "Date": "2026-10-14",
+    "Status": "delivered_pending_researcher_usability_acceptance",
+    "Record": "docs/BOI_BATCH_GUI_PLAN.md",
+    "Owner": "Implementation Codex chat; separate Codex technical reviewer; Felix accepts usability",
+    "UserBenefit": "Prepare batch CSVs in the GUI with minimal manual fields, optional metadata and clear analysis status",
+    "ResearcherDirection": "Skip the second user review; prioritise GUI user experience and batch CSV preparation, more optional fields and status updated after analysis",
+    "ProposedItems": [
+      "BATCH-SETUP-01",
+      "BATCH-SETUP-02",
+      "BATCH-SETUP-03",
+      "BATCH-SETUP-04"
+    ],
+    "RequiredManualPerRow": [
+      "Paths"
+    ],
+    "RequiredEffectiveSettings": [
+      "SampleF",
+      "Pixelsize",
+      "BOISupportProfile"
+    ],
+    "SharedSettingsMustBeExplicitlyConfirmed": true,
+    "OutputParentRequiredOnceAtExecution": true,
+    "PortableCSVResolvesSettingsPerRow": true,
+    "OptionalMetadataAndCustomColumnsPreserved": true,
+    "TechnicalCompletionSeparateFromScientificReview": true,
+    "FirstMilestoneScope": "CSV contract/legacy adapter, batch editor, shared settings/overrides, optional metadata roundtrip, per-row preflight and existing-run completion display",
+    "LaterMilestones": [
+      "Sequential queue and durable history/automatic live CSV status writeback",
+      "Broader main GUI navigation and usability"
+    ],
+    "ProposedFirstMilestoneBudget": {
+      "MaximumActiveEngineeringHours": 8,
+      "MaximumMATLABStarts": 2,
+      "MaximumNewEvidenceBytes": 104857600,
+      "NamedAcceptanceCases": 10,
+      "DetectorExecutions": 0,
+      "StatisticsPipelineExecutions": 0,
+      "RecordedMovieExecutions": 0,
+      "PackageBuilds": 0,
+      "CommitPushes": 0
+    },
+    "ImplementationStarted": true,
+    "MATLABOrTestsStarted": true,
+    "ScientificChangesAuthorized": false,
+    "PublicationAuthorized": false,
+    "StoppingCondition": "First editor milestone delivered; implementation stopped. Queue/live writeback, new analysis executions, package, commit/push and publication are not authorized by this completed milestone.",
+    "ApprovalDate": "2026-10-14",
+    "ApprovalQuote": "Ok, I agree with the field set and plan. Go ahead with the first batch editor milestone as proposed.",
+    "ExecutionRecord": "docs/BOI_BATCH_EDITOR_DELIVERY.md",
+    "Delivery": "docs/BOI_BATCH_EDITOR_DELIVERY.md",
+    "Guide": "docs/BOI_BATCH_EDITOR.md",
+    "Version": "3.1.0-dev.4",
+    "BuildTimestamp": "2026-10-14 11:04:10 +02:00",
+    "ResearcherUsabilityAccepted": false,
+    "TechnicalReview": "Separate Codex static reviewer, final re-review reports no remaining high-confidence blockers; not independent human review",
+    "Usage": {
+      "MATLABStarts": 1,
+      "MATLABNormalExitCode": 0,
+      "TestInvocations": 4,
+      "CaseEvaluations": 31,
+      "FinalCasesPassed": 10,
+      "FinalCasesFailed": 0,
+      "InitialResult": "9/10; empty popup item rejected by MATLAB R2025a; retained and repaired",
+      "PresentationPasses": 2,
+      "FinalInspectedLayouts": [
+        [
+          1120,
+          800
+        ],
+        [
+          900,
+          650
+        ]
+      ],
+      "FinalTabCaptures": 4,
+      "NativeChooserOrRecoveryDialogClicksClaimed": false,
+      "DetectorExecutions": 0,
+      "StatisticsPipelineExecutions": 0,
+      "RecordedMovieExecutions": 0,
+      "PackageBuilds": 0,
+      "Commits": 0,
+      "Pushes": 0,
+      "HostedCIExecutions": 0,
+      "OriginalMATLABFilesUnchanged": 541,
+      "ExistingMATLABFilesChanged": [
+        "OxygenDynamics_GUI.m",
+        "getOxygenPipelineVersion.m",
+        "runBOISoftwareChecks.m"
+      ],
+      "FuturePackageSourceListValidatedWithoutBuild": true,
+      "ConservativeElapsedMinutesUpperBound": 29,
+      "EvidenceBytesBeforeFinalRecord": 1442682,
+      "ReaderLinksResolved": 210,
+      "FutureSourceReaderLinksResolved": 73
+    },
+    "ManualTrial": {
+      "Date": "2026-10-14",
+      "Status": "researcher_started_batch_completed_FB2412_inspection_round_closed",
+      "Record": "reference-validation/boi-batch-path-repair-20261014/path-repair.json",
+      "CorrectedWorkingCSV": "reference-validation/boi-batch-path-repair-20261014/HP_Compartments_mac_paths.csv",
+      "ChangedRows": 20,
+      "ChangedColumn": "Paths",
+      "SourceFoldersExist": 20,
+      "OriginalCSVAndOtherFieldsPreserved": true,
+      "ReopenedInUserEditor": true,
+      "ReadyRows": 17,
+      "CurrentMessage": "Stimulation metadata preserved without analysis forwarding; automatic tissue estimate explicit; unresolved source identity/pairing held.",
+      "AdditionalSetupIssues": [
+        "FB2416/FB2417 duplicate source identity",
+        "FB2318 raw/denoised correspondence unverified"
+      ],
+      "Scope": "User-authorized setup repair in BATCH-SETUP-FIX-01; source-only hashes/native preflight, no analysis.",
+      "ResearcherUsabilityAccepted": false,
+      "PreparedCSV": "reference-validation/boi-batch-ready-20261014/HP_Compartments_BOI.csv",
+      "HeldRows": [
+        "FB2416",
+        "FB2417",
+        "FB2318"
+      ],
+      "ResearcherInspectionClosed": true,
+      "InspectionClosureDate": "2026-10-15",
+      "InspectionCloseout": "reference-validation/boi-batch-execution-20261014/inspection-closeout-20261015.json"
+    }
+  },
+  "batch_setup_repair": {
+    "ID": "BATCH-SETUP-FIX-01",
+    "Status": "delivered",
+    "Record": "docs/BOI_BATCH_SETUP_REPAIR.md",
+    "Owner": "Root Codex integration with independent metadata/source/review tasks",
+    "ApprovalQuote": "Can you fix the remaining setup issues so I can use this BOI batch? Keep the stimulation fields as optional metadata and leave the original recordings unchanged.",
+    "RecordingExecutions": 0,
+    "OriginalRecordingsMustRemainUnchanged": true,
+    "Version": "3.1.0-dev.5",
+    "BuildTimestamp": "2026-10-14 13:02:57 +02:00",
+    "PreparedCSV": "reference-validation/boi-batch-ready-20261014/HP_Compartments_BOI.csv",
+    "ReadyRows": 17,
+    "SourceHeldRows": [
+      "FB2416",
+      "FB2417",
+      "FB2318"
+    ],
+    "OriginalCSVAndMoviesPreserved": true,
+    "StimulationMetadataOnly": true,
+    "AutomaticTissueEstimateRequested": true,
+    "SupportClarificationQuote": "i actually do not know. because i do not have any preset rois or so. i thought the script decides that and finds the edges of the ROI",
+    "SupportChoiceReason": "Researcher expects the existing automatic image-based tissue estimate without preset ROI; mapped to unchanged whole-image method with clearer displayed label.",
+    "NewMATLABInstances": 0,
+    "FocusedUniqueTestsPassed": 4,
+    "TargetedGUIRecheckPassed": 1,
+    "NamedMovieFilesHashed": 40,
+    "NamedMovieBytes": 37811452803,
+    "HistoricalWholeFileMatches": 10,
+    "HistoricalWholeFileBaselineUnavailable": 30,
+    "PreparedSourceSetsVerified": 17,
+    "ScientificEngineFilesChanged": false,
+    "TechnicalReview": "Separate Codex static reviewer; two draft evidence defects closed before preflight; no remaining actionable defect",
+    "Verification": "reference-validation/boi-batch-ready-20261014/delivery-verification.json",
+    "ResearcherUsabilityAccepted": false,
+    "QueueExecutionImplemented": false,
+    "Builds": 0,
+    "Commits": 0,
+    "Pushes": 0,
+    "StoppingCondition": "Setup delivered. Await user trial and actual source evidence for three held rows; no automatic analysis, queue, build or Git transport."
+  },
+  "batch_execution": {
+    "ID": "BATCH-RUN",
+    "Status": "delivered",
+    "Record": "docs/BOI_BATCH_EXECUTION_TASK.md",
+    "ApprovalQuote": "Ok, keep those three on hold. Let\u2019s implement batch execution so I can run the 17 ready recordings from the GUI.",
+    "Owner": "queue service Codex; GUI Codex; root integration/tests; separate technical reviewer",
+    "ReadyRows": 17,
+    "HeldRows": [
+      "FB2416",
+      "FB2417",
+      "FB2318"
+    ],
+    "MaximumSuppliedRecordingRuns": 0,
+    "MaximumTinySyntheticFullWorkflows": 1,
+    "NewMATLABDesktopInstances": 0,
+    "Delivery": "docs/BOI_BATCH_EXECUTION_DELIVERY.md",
+    "Version": "3.1.0-dev.6",
+    "BuildTimestamp": "2026-10-14 13:44:29 +02:00",
+    "WorkingCSV": "reference-validation/boi-batch-execution-20261014/HP_Compartments_BOI_run.csv",
+    "SelectedReadyRows": 17,
+    "UserQueueStarted": true,
+    "FinalFocusedCasesPassed": 15,
+    "TargetedUnwindRecheckPassed": 1,
+    "InitialFocusedCasesPassed": 10,
+    "InitialFocusedCasesFailed": 5,
+    "TestInvocations": 3,
+    "CaseEvaluations": 31,
+    "FinalCleanupWarnings": 0,
+    "NativeReadySelectionAndReviewClicksObserved": true,
+    "InspectedLayouts": [
+      [
+        1120,
+        800
+      ],
+      [
+        900,
+        650
+      ]
+    ],
+    "OriginalInputsPreserved": true,
+    "SuppliedRecordingRuns": 0,
+    "SyntheticEngineRuns": 0,
+    "SourcePolicyPathsChecked": 467,
+    "ReaderLinksChecked": 56,
+    "PackageBuilds": 0,
+    "Commits": 0,
+    "Pushes": 0,
+    "ScientificEngineChanges": false,
+    "IndependentTechnicalReview": "Separate Codex reviewer; all production findings repaired/reviewed; no unresolved static finding",
+    "Verification": "reference-validation/boi-batch-execution-20261014/final-verification.json",
+    "ResearcherUsabilityAccepted": true,
+    "StoppingCondition": "Implementation delivered, researcher-started 17-recording queue completed, and demonstrated FB2412 inspection round closed. Three source holds and scientific qualifications remain. No automatic run, implementation, package, Git transport or release.",
+    "ImplementationVerificationCountsScope": "Existing test/run/build counts and zero-supplied-recording limits describe the 14 October implementation verification only. The subsequent researcher-started queue is recorded separately under ResearcherRun.",
+    "ResearcherRun": {
+      "QueueID": "50c02732-cf69-4817-a7df-043fe1f17a42",
+      "StartedBy": "Felix through the GUI",
+      "StartedCopenhagen": "2026-10-14T16:54:10+02:00",
+      "CompletedCopenhagen": "2026-10-14T18:22:04+02:00",
+      "TotalQueueElapsedSeconds": 5274,
+      "Status": "complete",
+      "CompletedAndVerified": 17,
+      "Pending": 0,
+      "Failed": 0,
+      "RecordedExecutionErrors": 0,
+      "HeldRows": [
+        "FB2416",
+        "FB2417",
+        "FB2318"
+      ],
+      "Source": "reference-validation/boi-batch-execution-20261014/inspection-closeout-20261015.json",
+      "FullNumericalOrArtifactReplayDuringCloseout": false
+    },
+    "ResearcherUsabilityAcceptanceScope": "Explicit trace-viewer usability acceptance and closure of the demonstrated researcher-started batch/FB2412 saved-trace, sink/surge-summary and surge-frame-input inspection. Not a blanket feature/platform, scientific, per-event review or release acceptance.",
+    "ResearcherInspectionClosed": true,
+    "InspectionClosureDate": "2026-10-15",
+    "InspectionCloseout": "reference-validation/boi-batch-execution-20261014/inspection-closeout-20261015.json"
+  },
+  "batch_inspection_closeout": {
+    "ID": "BATCH-INSPECT-01",
+    "Status": "closed",
+    "Date": "2026-10-15",
+    "Owner": "root Codex records saved execution evidence and researcher feedback",
+    "Record": "docs/BOI_BATCH_EXECUTION_DELIVERY.md#researcher-run-and-inspection-closeout",
+    "Evidence": "reference-validation/boi-batch-execution-20261014/inspection-closeout-20261015.json",
+    "Scope": "Documentation and saved JSON/CSV metadata check only; close the demonstrated inspection round. No code or saved research-output changes.",
+    "TraceViewerFeedback": "the trace viewer worked fine.",
+    "ClosureQuote": "ok, i have inspected everything. lets continue and finish this inspection round.",
+    "InspectedRecording": "FB2412",
+    "ObservedViews": [
+      "Saved event traces",
+      "Whole-recording sink summary",
+      "Whole-recording surge summary",
+      "Surge Frame ingredients including rightmost columns"
+    ],
+    "CompletedAndVerifiedRecordings": 17,
+    "RecordedExecutionErrors": 0,
+    "HeldRows": [
+      "FB2416",
+      "FB2417",
+      "FB2318"
+    ],
+    "ScientificReviewFlagsChanged": false,
+    "NewRunsOrTests": 0,
+    "ReleaseAccepted": false,
+    "FollowupCandidates": [
+      "Show per-recording progress while source checks disable editing",
+      "Open one saved recording without rechecking unrelated batch rows; retain required integrity checks"
+    ],
+    "FurtherImplementationAuthorized": false,
+    "StoppingCondition": "Round closed and current documentation/status agree; stop without additional inspections, runs or implementation."
+  },
+  "batch_gui_polish": {
+    "ID": "BATCH-UX",
+    "Status": "delivered",
+    "Date": "2026-10-15",
+    "Owner": "root Codex; no delegation",
+    "ApprovalQuote": "Good. Continue",
+    "ApprovalContext": "Direct continuation of the proposed GUI polish for clearer check progress and faster saved-run opening after inspection closeout.",
+    "Record": "docs/BOI_BATCH_GUI_PLAN.md#gui-progress-and-saved-run-opening",
+    "MaximumActiveHours": 4,
+    "MaximumFocusedTestInvocations": 3,
+    "MaximumTargetedRepairRechecks": 2,
+    "MaximumReadOnlyFB2412Reopenings": 1,
+    "NewMATLABDesktops": 0,
+    "RecordingExecutions": 0,
+    "AlgorithmChanges": false,
+    "VerificationRulesMustRemain": true,
+    "MaximumEvidenceBytes": 104857600,
+    "MaximumSyntheticOutputBytes": 209715200,
+    "PackagesCommitsPushes": 0,
+    "Evidence": "reference-validation/boi-batch-gui-polish-20261015",
+    "StoppingCondition": "Delivered and stopped. Updated editor and FB2412 saved viewer remain open. No automatic further implementation, inspection campaign, recording execution, package, Git transport or release.",
+    "Version": "3.1.0-dev.7",
+    "BuildTimestamp": "2026-10-15 11:29:23 +02:00",
+    "DeliveryRecord": "docs/BOI_BATCH_GUI_PLAN.md#local-delivery-15-october-2026",
+    "Verification": "reference-validation/boi-batch-gui-polish-20261015/final-verification.json",
+    "CompletedItems": [
+      "BATCH-UX-01",
+      "BATCH-UX-02",
+      "BATCH-UX-03"
+    ],
+    "Usage": {
+      "FocusedTestInvocations": 2,
+      "CaseEvaluations": 52,
+      "InitialPassed": 24,
+      "InitialFailed": 2,
+      "FinalPassed": 26,
+      "FinalFailed": 0,
+      "FinalIncomplete": 0,
+      "FinalRuntimeWarnings": 0,
+      "ReadOnlyFB2412Reopenings": 1,
+      "FB2412ElapsedSeconds": 16.393764083333334,
+      "SelectedOnlyChecked": 1,
+      "BatchRecordings": 20,
+      "NativeProgressObserved": true,
+      "ProgressDialogClosedAndControlsRestored": true,
+      "ExistingMATLABFilesUnchanged": 557,
+      "ExistingMATLABFilesChanged": [
+        "checkBOIBatch.m",
+        "getOxygenPipelineVersion.m",
+        "openBOIBatchEditor.m",
+        "prepareBOIBatchQueue.m",
+        "tests/analysis/testBOIBatchEditor.m"
+      ],
+      "NewRepositoryMATLABFiles": [],
+      "ProtectedResearchFilesUnchanged": 36,
+      "OriginalSourceCSVUnchanged": true,
+      "PreparedCSVUnchanged": true,
+      "OriginalMovieSizesAndMTimeUnchanged": 40,
+      "FullMovieOrArtifactRehashDuringCloseout": false,
+      "SourcePolicyPathsExist": 467,
+      "ReaderLinksResolvedAndIncluded": 58,
+      "RecordingExecutions": 0,
+      "DetectorExecutions": 0,
+      "StatisticsPipelineExecutions": 0,
+      "NewMATLABDesktops": 0,
+      "PackageBuilds": 0,
+      "Commits": 0,
+      "Pushes": 0
+    },
+    "Review": "Root self-review; no delegated or independent reviewer",
+    "KnownLimits": [
+      "Per-recording/stage progress only; no byte ETA or within-file cancellation",
+      "One read-only saved-run reopening; no full-batch performance or memory claim",
+      "Prior scientific qualifications and source holds remain"
+    ],
+    "WorkingCSVAndSavedStatusBytesPreserved": true,
+    "SourceHeldRows": [
+      "FB2318",
+      "FB2416",
+      "FB2417"
+    ],
+    "ScientificReviewFlagsChanged": false
+  },
+  "batch_export_workflow_assessment": {
+    "Date": "2026-10-15",
+    "Status": "read_only_assessment_complete_no_implementation_authorized",
+    "Owner": "root Codex; no delegation",
+    "ResearcherRequest": "can you check the old workflow. there is an export etc included. i feel like we reinventing something here again.",
+    "Record": "docs/BOI_BATCH_GUI_PLAN.md#existing-stats-and-export-workflow",
+    "OlderV2SourceChecked": "85884af",
+    "ExistingFlow": "Metadata CSV -> wrapper -> multi-recording runOxygenDynamicsStats -> existing Excel/MAT/event/grouped metric and trace exports",
+    "CurrentQueueFlow": "runBOIBatchQueue -> single-recording runBOIRecordingWorkflow -> one-row input.csv -> same runOxygenDynamicsStats/exportStatsResults",
+    "CompletedRunWorkbooksFound": 17,
+    "CompletedRunSingleRowStatsInputsFound": 17,
+    "NamedWorkbookSheetInventoryChecked": "FB2413",
+    "Finding": "The existing exporter already exists and is reused. The missing end-to-end queue handoff is combined dataset stats/export and clear GUI access.",
+    "EarlierNewExporterSuggestion": "Premature; superseded by reuse-first assessment",
+    "SourceAndOutputMapping": "Working batch Paths refer to prepared source folders; saved analysis outputs live under each exact selected run/Recording folder.",
+    "CodeOrResearchOutputsChanged": false,
+    "MATLABExecutions": 0,
+    "NumericalTests": 0,
+    "StoppingCondition": "Assessment delivered. Agree a bounded reuse/adaptation scope before implementation or running combined stats; no detector rerun, replacement export framework, package or Git transport."
+  },
+  "batch_combined_stats_export": {
+    "ID": "BATCH-EXPORT",
+    "Status": "delivered",
+    "Date": "2026-10-15",
+    "Owner": "root Codex; no delegation",
+    "ApprovalQuote": "yes, let\u2019s connect the batch GUI to the existing stats and export workflow so i can export the 17 completed recordings together. keep the existing export formats and calculations.",
+    "Record": "docs/BOI_BATCH_GUI_PLAN.md#batch-connection-to-existing-stats-and-export",
+    "Items": [
+      "BATCH-EXPORT-01_exact_saved_run_adapter",
+      "BATCH-EXPORT-02_gui_review_run_and_output_access",
+      "BATCH-EXPORT-03_finite_verification_and_17_recording_export"
+    ],
+    "MaximumActiveHours": 6,
+    "MaximumFocusedTestInvocations": 4,
+    "MaximumTargetedRepairRechecks": 2,
+    "MaximumNamedCombinedExportAttempts": 2,
+    "NamedInputRows": 20,
+    "NamedCompletedRows": 17,
+    "HeldRows": [
+      "FB2416",
+      "FB2417",
+      "FB2318"
+    ],
+    "MaximumNewOutputBytes": 17179869184,
+    "MaximumEvidenceBytes": 104857600,
+    "MaximumSyntheticOutputBytes": 209715200,
+    "MaximumCombinedExportMinutesPerAttempt": 60,
+    "DetectorRuns": 0,
+    "NewRecordingRuns": 0,
+    "NewMATLABDesktops": 0,
+    "PackagesCommitsPushes": 0,
+    "Evidence": "reference-validation/boi-batch-stats-export-20261015",
+    "StoppingCondition": "Verified local GUI handoff and named combined existing-format export delivered; no next milestone or scientific/campaign work.",
+    "Version": "3.1.0-dev.8",
+    "BuildTimestamp": "2026-10-15 12:58:02 +02:00",
+    "VerificationProgress": {
+      "FocusedInvocations": 3,
+      "TargetedRepairInvocations": 1,
+      "CaseEvaluations": 129,
+      "UniqueCasesPassingAcrossFinalChecks": 44,
+      "LastFullSuite": "44/44 after large-variable persistence and missing-table guard repairs",
+      "TargetedRepair": "1/1 exact-file/newer-folder case passes",
+      "InitialFullSuite": "32/42; ten new cases blocked by omitted Condition column in synthetic empty-event fixture",
+      "NamedReviewIncluded": 17,
+      "NamedReviewExcluded": 3,
+      "NamedExportAttemptsStarted": 2,
+      "NativeReviewAndConfirmationObserved": true,
+      "SourcePolicyPathsChecked": 470,
+      "RootSelfReviewOnly": true,
+      "FirstNamedAttempt": "Preserved incomplete: legacy v7 omitted two large site-table variables; explicit status/marker retained.",
+      "NamedExportAttemptsCompleted": 2,
+      "FinalNamedAttempt": "Complete, no omitted variables or execution errors; 17 exact identities and separate core files verified.",
+      "FinalValueComparison": "204 tables and 136 traces match per-recording saved outputs; collection row indices ignored"
+    },
+    "InitialEstimatedOutputBytes": 2147483648,
+    "StorageEstimateCorrection": "Initial 2 GiB engineering estimate was too small: the first incomplete export omitted two >2 GiB variables; complete v7.3 MAT serialization has now exceeded it. Revised finite storage allowance to 16 GiB for the unchanged 17-recording combined export and its preserved first attempt. No additional recording, detector, export attempt, scientific change or transport is authorized by this estimate correction.",
+    "DeliveryRecord": "docs/BOI_BATCH_STATS_EXPORT_DELIVERY.md",
+    "CompletedUTC": "2026-10-15T12:18:59.634872+00:00",
+    "CombinedExport": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-batch-combined-export-20261015/BOIBatchStats_f017a002-ae44-4b20-b3e3-e6298a12ddc0",
+    "Workbook": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-batch-combined-export-20261015/BOIBatchStats_f017a002-ae44-4b20-b3e3-e6298a12ddc0/statistics/Stats_Output_20261015T131405/FilteredData_HP_Compartments_BOI_run.xlsx",
+    "OutputBytes": 11867761414,
+    "TotalNamedAttemptBytes": 12023814627,
+    "FinalVerification": "reference-validation/boi-batch-stats-export-20261015/final-verification.json",
+    "FinalFocusedCases": "44/44",
+    "PerRecordingTableComparisons": 204,
+    "PerRecordingTraceComparisons": 136,
+    "SeparateCoreMATTablesMatch": true,
+    "ProtectedResearchFilesUnchanged": 699,
+    "OriginalMoviesSizeMTimeUnchanged": 40,
+    "SourcePolicyPaths": 470,
+    "WorkbookSheets": 108,
+    "SinkEvents": 5407,
+    "SurgeEvents": 1320,
+    "StatsServiceLogMinutes": 24.7,
+    "ObservedNativeAttemptMinutes": 30.6420527,
+    "NativeOutputFolderAccessVerified": true,
+    "NativeWorkbookLaunchPerformed": false,
+    "ScientificCalculationChanges": false,
+    "ReleaseAuthorized": false,
+    "Stopped": true
+  },
+  "pre_episode_implementation": {
+    "status": "delivered_local",
+    "record": "docs/BOI_PRE_EPISODE_IMPLEMENTATION.md",
+    "reference_max_shift_sec": 20,
+    "long_reference_policy": "withhold_and_flag",
+    "original_results_preserved": true,
+    "owner": "root",
+    "delegation": false,
+    "version": "3.1.0-dev.9",
+    "unique_focused_cases_passed": 129,
+    "reference_and_loader_cases": 15,
+    "broader_compatibility_cases": 102,
+    "protected_historical_hashes_unchanged": 9,
+    "named_fixture": "FB2412 site 1 events 1,3,4; event 2 context",
+    "reference_amplitude_percent": 6.012181174339028,
+    "normalized_event_contribution": 2608.970112849447,
+    "matlab_invocations": 6,
+    "all_17_reexported": false,
+    "new_recording_total_computed": false,
+    "stopped": true,
+    "verification": "reference-validation/boi-pre-episode-implementation-20261016/final-verification.json"
+  },
+  "pre_episode_combined_export": {
+    "status": "delivered_verified",
+    "record": "docs/BOI_PRE_EPISODE_COMBINED_EXPORT.md",
+    "owner": "root",
+    "delegation": false,
+    "recordings": 17,
+    "source_holds": 3,
+    "new_output_parent": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-pre-episode-combined-export-20261016",
+    "baseline_policy": "boi-pre-episode-1",
+    "burden_formula_and_normalization_preserved": true,
+    "max_attempts": 2,
+    "output_directory": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-pre-episode-combined-export-20261016/BOIBatchStats_a5d0f863-5240-4304-a93c-aea629f0d2b0",
+    "workbook": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-pre-episode-combined-export-20261016/BOIBatchStats_a5d0f863-5240-4304-a93c-aea629f0d2b0/statistics/Stats_Output_20261016T090151/FilteredData_HP_Compartments_BOI_run.xlsx",
+    "availability_csv": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-pre-episode-combined-export-20261016/BOIBatchStats_a5d0f863-5240-4304-a93c-aea629f0d2b0/BurdenAvailabilityByRecording.csv",
+    "available_contributions": 3256,
+    "previously_available_contributions": 2767,
+    "newly_available_contributions": 490,
+    "previously_available_now_missing": 1,
+    "complete_recording_burdens_available": 0,
+    "missing_contributions": 2151,
+    "missing_reasons": {
+      "recording_start_recovery_unclear": 72,
+      "valid": 3256,
+      "insufficient_clean_pre_episode_reference": 973,
+      "reference_too_old_review": 1007,
+      "wrong_direction": 99
+    },
+    "original_columns_and_exposure_preserved": true,
+    "protected_file_hashes_unchanged": 700,
+    "original_movies_size_mtime_unchanged": 40,
+    "independent_event_product_checks": 5407,
+    "workbook_rows_verified": 5424,
+    "workbook_sheets": 109,
+    "export_service_runs": 1,
+    "detector_runs": 0,
+    "correction_reruns": 0,
+    "output_bytes": 11871945564,
+    "stopped": true,
+    "verification": "reference-validation/boi-pre-episode-export-review-20261016/final-verification.json"
+  },
+  "complete_burden_reference_review": {
+    "date": "2026-10-16",
+    "status": "delivered_proposal_no_method_adoption",
+    "item": "AMP-COMPLETE-REVIEW-01",
+    "owner": "root",
+    "record": "docs/BOI_COMPLETE_BURDEN_REFERENCE_PROPOSAL.md",
+    "recordings": 17,
+    "method_adoption": false,
+    "new_recording_totals": false,
+    "no_partial_sums": true,
+    "scope": "reference-validation/boi-complete-burden-review-20261016/review_scope.json",
+    "findings": {
+      "events": 5407,
+      "available": 3256,
+      "missing": 2151,
+      "complete_recording_burdens": 0,
+      "old_references": 1007,
+      "incomplete_references": 973,
+      "incomplete_due_to_overlap": 912,
+      "incomplete_due_to_boundary_without_overlap": 61,
+      "unresolved_start_events": 72,
+      "unresolved_start_series": 48,
+      "wrong_direction": 99
+    },
+    "verification": "reference-validation/boi-complete-burden-review-20261016/review-findings.json",
+    "protected_files_unchanged": 60,
+    "native_starts": 3,
+    "native_seconds": 42.60012712399475,
+    "implementation_active": false,
+    "proposed_next": "Bounded eight-example recovery-aware reference preview; approval pending"
+  },
+  "event_reference_preview": {
+    "date": "2026-10-16",
+    "status": "delivered_unadopted_preview",
+    "item": "AMP-RECOVERY-PREVIEW-01",
+    "owner": "root",
+    "delegation": false,
+    "record": "docs/BOI_EVENT_REFERENCE_DURATION_PREVIEW.md",
+    "examples": 8,
+    "durations_sec": [
+      20,
+      10
+    ],
+    "reference_age_limit_sec": 20,
+    "episode_gap_sec": 20,
+    "scope": "reference-validation/boi-event-reference-preview-20261016/preview_scope.json",
+    "new_recording_totals": false,
+    "no_partial_sums": true,
+    "production_adoption": false,
+    "candidate_windows": 80,
+    "native_invocations": 1,
+    "native_seconds": 24.938760166987777,
+    "synthetic_cases": 13,
+    "independent_numeric_checks": 554,
+    "current_finite_signed_results_replayed": 3,
+    "protected_files_unchanged": 595,
+    "plots_inspected_original_resolution": 2,
+    "positive_nearest_pre_event_candidates_20s": 4,
+    "positive_nearest_pre_event_candidates_10s": 5,
+    "additional_10s_case_remains_scientifically_unresolved": true,
+    "verification": "reference-validation/boi-event-reference-preview-20261016/independent-verification.json",
+    "recommendation": "Assess a separate local reference for each event; keep 20 s default pending scientific decision; 10 s may be an explicitly identified option, not an automatic rescue.",
+    "stopped": true
+  },
+  "baseline_review_desktop_session": {
+    "date": "2026-10-16",
+    "status": "FB2317_not_recognized_saved_and_visually_verified",
+    "requested_first_example": "FB2413 sink site 3/event 6",
+    "audit_row": 89,
+    "launcher": "reference-validation/boi-event-reference-preview-20261016/openFB2413BaselineReview.m",
+    "viewer": "existing openBOIEventReview plus fixed, clearly labeled candidate display",
+    "verification": "reference-validation/boi-event-reference-preview-20261016/review-launcher-test.json",
+    "preservation": "595 original code/evidence/result hashes unchanged",
+    "blocker": null,
+    "scientific_choices_saved": true,
+    "production_method_changes": false,
+    "researcher_approved_restart_and_discard": true,
+    "old_blank_session_closed": true,
+    "event_selected": {
+      "recording": "FB2317",
+      "site": 13,
+      "event": 5,
+      "audit_row": 89
+    },
+    "selected_tab": "FB2317 site 13/event 5 preview",
+    "evidence": "reference-validation/boi-event-reference-preview-20261016/desktop-review-handoff.json",
+    "previous_event_selected": {
+      "recording": "FB2413",
+      "site": 3,
+      "event": 6,
+      "audit_row": 22
+    },
+    "current_review_interpretation": "Felix explicitly rejected FB2317 site 13/event 5 as not a pocket. One saved not_recognized revision excludes it from a separate reviewed burden export; automatic outputs and baseline policy remain unchanged.",
+    "baseline_choices_saved": false,
+    "saved_recognition_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2317-not-pocket-review-20261016/FB2317-site13-event5-review-01.json"
+  },
+  "reviewed_burden_exclusion": {
+    "date": "2026-10-16",
+    "status": "delivered_verified",
+    "owner": "root",
+    "delegation": false,
+    "record": "docs/BOI_REVIEWED_BURDEN_EXCLUSION.md",
+    "event": {
+      "recording": "FB2317",
+      "site": 13,
+      "event": 5
+    },
+    "scientific_decision": "not_recognized",
+    "scope": "One immutable saved judgment and opt-in reviewed burden export from the same 17 saved recordings; preserve automatic results, formula, normalization and strict missingness.",
+    "tests_max": 8,
+    "new_output_limit_mib": 256,
+    "workbook": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2317-not-pocket-review-20261016/ReviewedBurden/ReviewedHypoxicBurden.xlsx",
+    "saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2317-not-pocket-review-20261016/FB2317-site13-event5-review-01.json",
+    "verification": "reference-validation/boi-fb2317-not-pocket-review-20261016/final-verification.json",
+    "rejected_detections": 1,
+    "retained_detections": 5406,
+    "available_contributions": 3256,
+    "missing_contributions": 2150,
+    "complete_recording_burdens": 0,
+    "focused_cases_passed": 8,
+    "retained_cells_independently_compared": 583848,
+    "preexisting_matlab_files_unchanged": 574,
+    "automatic_results_preserved": true,
+    "formula_and_normalization_preserved": true,
+    "no_partial_sums": true,
+    "reviewer_status_visually_verified": true,
+    "stopped": true
+  },
+  "baseline_review_followup_20261025": {
+    "status": "single_reviewed_event_recalculated_verified_and_displayed",
+    "recording": "FB2412",
+    "site": 20,
+    "event": 1,
+    "audit_row": 66,
+    "evidence": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site20-reviewed-20261025/single-event-final-verification.json",
+    "selected_tab": "Reviewed event burden",
+    "displayed_20_second_candidate_frames": [
+      113,
+      132
+    ],
+    "displayed_10_second_candidate_frames": [
+      123,
+      132
+    ],
+    "candidate_raw_drop_percent": [
+      4.219117687533532,
+      2.5045131226372996
+    ],
+    "scientific_decision_saved": true,
+    "scientific_method_changes": false,
+    "prior_FB2317_rejection_unchanged": true,
+    "scope": "Completed single-event revision only. No combined export rebuilt; the existing recording/cohort totals are unchanged.",
+    "researcher_recognition": "real pocket; earlier start",
+    "candidate_onset_frame": 120,
+    "visible_decline_region_frames": [
+      114,
+      120
+    ],
+    "displayed_pre_decline_windows": [
+      [
+        94,
+        113
+      ],
+      [
+        104,
+        113
+      ]
+    ],
+    "immediate_before_120_comparison": [
+      100,
+      119
+    ],
+    "independent_window_mean_checks": 6,
+    "new_burden_calculated": true,
+    "selected_onset_frame": 114,
+    "selected_reference_frames": [
+      104,
+      113
+    ],
+    "recovery_frame_saved": 182,
+    "recovery_candidates": [
+      182,
+      183
+    ],
+    "proposed_durations_sec": [
+      69,
+      70
+    ],
+    "recommended_recovery_frame": 182,
+    "boundary_revision": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site20-reviewed-20261025/FB2412-site20-event1-boundary-02.json",
+    "reference_acceptance": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site20-reviewed-20261025/FB2412-site20-event1-reference-02.json",
+    "independent_reference_recovery_values_verified": 12,
+    "approved_recovery_frame": 182,
+    "recalculation_scope": "reference-validation/boi-fb2412-site20-reviewed-20261025/recalculation-scope.json",
+    "reviewed_interval_frames": [
+      114,
+      182
+    ],
+    "duration_sec": 69,
+    "raw_drop_percent": 7.456634829530969,
+    "event_burden": 3047273.908463444,
+    "normalized_event_contribution": 187950.4566707511,
+    "result_csv": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site20-reviewed-20261025/ReviewedEvent-02/ReviewedEventBurden.csv",
+    "result_json": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site20-reviewed-20261025/ReviewedEvent-02/ReviewedEventBurden.json",
+    "area_remeasured": false,
+    "recording_total_calculated": false,
+    "partial_sums": false,
+    "original_results_preserved": true,
+    "formula_and_normalization_preserved": true,
+    "independent_numeric_checks": 14,
+    "global_defaults_changed": false,
+    "stopped": true
+  },
+  "fb2319_site7_event2_walkthrough_20261025": {
+    "status": "researcher_rejection_saved_and_excluded",
+    "scope": "reference-validation/boi-fb2319-baseline-review-20261025/scope.json",
+    "recording": "FB2319",
+    "site": 7,
+    "event": 2,
+    "audit_row": 34,
+    "selected_tab": "FB2319 trace and references",
+    "evidence": "reference-validation/boi-fb2319-baseline-review-20261025/verification.json",
+    "saved_interval_frames": [
+      45,
+      51
+    ],
+    "saved_episode_reference_frames": [
+      5,
+      24
+    ],
+    "saved_episode_raw_drop_percent": -13.294470678545661,
+    "nearest_clean_comparison_raw_drop_percent": [
+      -11.49910741179704,
+      -9.117142220440542
+    ],
+    "later_window_raw_drop_percent": 14.597747312566318,
+    "independent_numeric_checks": 12,
+    "scientific_decision_saved": true,
+    "new_burden_calculated": false,
+    "original_results_changed": false,
+    "prior_FB2412_reviewed_files_unchanged": 25,
+    "saved_status": "not_recognized",
+    "saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-reviewed-decisions-20261025/FB2319-site7-event2-review-01.json",
+    "reviewed_workbook": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-reviewed-decisions-20261025/ReviewedBurden/ReviewedHypoxicBurden.xlsx"
+  },
+  "current_desktop_example": {
+    "date": "2026-10-26",
+    "recording": "FB2412",
+    "site": 1,
+    "event": 2,
+    "figure": "FB2412 - site 1 - recognized longer pocket (approx 651-693)",
+    "tab": "Site 1: saved measurement",
+    "scientific_choice_saved": true,
+    "recognition_status": "recognized_longer_pocket_linked_to_event2",
+    "longer_pocket_recognized_by_researcher": true,
+    "approximate_longer_span_frames": [
+      651,
+      693
+    ],
+    "exact_interval_selected": true,
+    "event2_recognition": "recognized",
+    "visually_verified": true,
+    "correction_components_visually_verified": true,
+    "local_reference_preview_unaccepted": true,
+    "before_651_interpretation": "background variation",
+    "latest_saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site1-reviewed-20261026/FB2412-site1-events1-to3-review-07.json",
+    "local_background_line_preview_unaccepted": true,
+    "recovered_background_frames_accepted": [
+      694,
+      713
+    ],
+    "displayed_frame": 665,
+    "displayed_source": "denoised",
+    "spatial_comparison_visually_verified": true,
+    "full_pocket_area_established": false,
+    "displayed_frames": [
+      665,
+      693
+    ],
+    "spatial_footprint_selected": true,
+    "accepted_footprint_pixels": 718,
+    "time_varying_area_measured": false,
+    "displayed_accepted_footprint_pixels": 718,
+    "measurement_choices_preview_visually_verified": true,
+    "reviewed_interval_frames": [
+      651,
+      693
+    ],
+    "accepted_reference_frames": [
+      631,
+      650
+    ],
+    "reference_judgment": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site1-reviewed-20261026/FB2412-site1-event2-reference-01.json",
+    "raw_amplitude_percent": 6.942974528789338,
+    "reviewed_duration_seconds": 43,
+    "burden_available": false,
+    "saved_measurement_visually_verified": true
+  },
+  "reviewed_decisions_20261025": {
+    "status": "delivered_verified",
+    "owner": "root",
+    "delegation": false,
+    "scope": "reference-validation/boi-reviewed-decisions-20261025/scope.json",
+    "new_rejection": "FB2319 site 7/event 2",
+    "carried_forward": [
+      "FB2317 site 13/event 5 rejection",
+      "FB2412 site 20/event 1 approved single-event calculation"
+    ],
+    "no_new_measurement_choices": true,
+    "record": "docs/BOI_REVIEWED_DECISIONS_20261025.md",
+    "workbook": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-reviewed-decisions-20261025/ReviewedBurden/ReviewedHypoxicBurden.xlsx",
+    "verification": "reference-validation/boi-reviewed-decisions-20261025/final-verification.json",
+    "rejected_detections": 2,
+    "retained_detections": 5405,
+    "approved_event_imports": 1,
+    "available_contributions": 3257,
+    "missing_contributions": 2148,
+    "complete_recording_burdens": 0,
+    "focused_cases_passed": 12,
+    "unchanged_cells_independently_compared": 583274,
+    "independent_recording_frame_trace_checks": 17,
+    "prior_artifacts_unchanged": 32,
+    "protected_matlab_files_unchanged": 574,
+    "original_results_preserved": true,
+    "formula_and_normalization_preserved": true,
+    "partial_sums": false,
+    "saved_status_visually_verified": true,
+    "stopped": true
+  },
+  "latest_reviewed_burden_workbook": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-start-rejected-20261026/ReviewedBurden/ReviewedHypoxicBurden.xlsx",
+  "fb2412_site1_event1_walkthrough_20261025": {
+    "status": "researcher_rejected_detection_saved_and_excluded",
+    "owner": "root",
+    "delegation": false,
+    "recording": "FB2412",
+    "site": 1,
+    "event": 1,
+    "audit_row": 1,
+    "scope": "reference-validation/boi-fb2412-start-review-20261025/scope.json",
+    "receipt": "reference-validation/boi-fb2412-start-review-20261025/opened-example.json",
+    "verification": "reference-validation/boi-fb2412-start-review-20261025/verification.json",
+    "saved_interval_frames": [
+      1,
+      35
+    ],
+    "timing_search_end_frame": 55,
+    "pre_event_acquired_samples": 0,
+    "raw_minimum_frame": 12,
+    "corrected_minimum_frame": 11,
+    "later_reference_frames": [
+      [
+        36,
+        55
+      ],
+      [
+        56,
+        75
+      ],
+      [
+        36,
+        45
+      ],
+      [
+        46,
+        55
+      ]
+    ],
+    "later_reference_raw_drop_percent": [
+      7.403022145099729,
+      9.034433643030697,
+      6.820696868960107,
+      7.978114126916488
+    ],
+    "independent_numeric_checks": 18,
+    "prior_artifacts_unchanged": 32,
+    "original_audit_unchanged": true,
+    "reference_accepted": false,
+    "judgment_saved": false,
+    "new_burden_calculated": false,
+    "original_results_changed": false,
+    "visual_check_completed": true,
+    "blocker": null,
+    "next": "No baseline/recovery adoption: researcher rejected the detection. Named review complete.",
+    "visual_check_date": "2026-10-26",
+    "assessment": "reference-validation/boi-fb2412-start-review-20261025/recovery-assessment-20261026.json",
+    "recommendation": "Reasonable candidate for an explicitly reviewed post-recovery reference: corrected trace shows a local plateau after its rise, preceding a separate later rise. Comparable recovered state cannot be established from a missing pre-event trace; retain recording-start censoring. Raw trend and brief early overshoot remain qualifications. No acceptance threshold or scientific rule is adopted.",
+    "stopped": true,
+    "saved_recognition": "not_recognized",
+    "saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-start-rejected-20261026/FB2412-site1-event1-review-01.json",
+    "timing_changed": false
+  },
+  "fb2412_site1_event1_recovery_detail_20261026": {
+    "status": "researcher_rejected_detection_saved_and_excluded",
+    "item": "FB2412-S1-E1-RECOVERY-DETAIL-01",
+    "owner": "root",
+    "delegation": false,
+    "scope": "reference-validation/boi-fb2412-start-review-20261025/recovery-detail-scope-20261026.json",
+    "verification": "reference-validation/boi-fb2412-start-review-20261025/recovery-detail-verification-20261026.json",
+    "proposed_recovery_frame": 55,
+    "proposed_observed_interval_frames": [
+      1,
+      55
+    ],
+    "candidate_later_reference_frames": [
+      56,
+      75
+    ],
+    "recording_start_censoring_retained": true,
+    "independent_numeric_checks": 21,
+    "visual_check_completed": true,
+    "reference_accepted": false,
+    "timing_changed": false,
+    "burden_recalculated": false,
+    "stopped": true,
+    "saved_recognition": "not_recognized",
+    "saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-start-rejected-20261026/FB2412-site1-event1-review-01.json"
+  },
+  "fb2412_start_rejection_20261026": {
+    "status": "delivered_verified",
+    "owner": "root",
+    "delegation": false,
+    "scope": "reference-validation/boi-fb2412-start-rejected-20261026/scope.json",
+    "researcher_judgment": "not a sink event",
+    "event": "FB2412 site 1/event 1",
+    "source_and_prior_outputs_preserved": true,
+    "reference_and_recovery_previews_unaccepted": true,
+    "saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-start-rejected-20261026/FB2412-site1-event1-review-01.json",
+    "workbook": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-start-rejected-20261026/ReviewedBurden/ReviewedHypoxicBurden.xlsx",
+    "verification": "reference-validation/boi-fb2412-start-rejected-20261026/final-verification.json",
+    "rejected_detections": 3,
+    "retained_detections": 5404,
+    "available_contributions": 3257,
+    "missing_contributions": 2147,
+    "complete_recording_burdens": 0,
+    "prior_artifacts_unchanged": 113,
+    "protected_matlab_files_unchanged": 579,
+    "unchanged_retained_cells_compared": 626864,
+    "formula_and_normalization_preserved": true,
+    "partial_sums": false,
+    "reviewer_status_visually_verified": true,
+    "stopped": true
+  },
+  "fb2412_site1_event3_recognition_20261026": {
+    "status": "researcher_rejected_short_event_longer_candidate_pending",
+    "owner": "root",
+    "delegation": false,
+    "scope": "reference-validation/boi-fb2412-site1-event3-review-20261026/scope.json",
+    "verification": "reference-validation/boi-fb2412-site1-event3-review-20261026/verification.json",
+    "recording": "FB2412",
+    "site": 1,
+    "event": 3,
+    "audit_row": 3,
+    "saved_frames": [
+      674,
+      677
+    ],
+    "previous_native_frames": [
+      659,
+      672
+    ],
+    "gap_frame": 673,
+    "independent_numeric_checks": 18,
+    "visual_check_completed": true,
+    "judgment_saved": true,
+    "reference_or_timing_accepted": false,
+    "burden_recalculated": false,
+    "stopped": true,
+    "recognition_status": "not_recognized",
+    "saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site1-longer-preview-20261026/FB2412-site1-events1-and3-review-02.json"
+  },
+  "fb2412_site1_longer_preview_20261026": {
+    "status": "longer_pocket_recognized_measurement_pending",
+    "scope": "reference-validation/boi-fb2412-site1-longer-preview-20261026/scope.json",
+    "verification": "reference-validation/boi-fb2412-site1-longer-preview-20261026/verification.json",
+    "saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site1-longer-preview-20261026/FB2412-site1-events1-and3-review-03.json",
+    "candidate_frames": [
+      651,
+      693
+    ],
+    "candidate_accepted": false,
+    "event2_recognition": "not_reviewed",
+    "independent_numeric_checks": 17,
+    "visually_verified": true,
+    "new_burden_calculated": false,
+    "combined_export_updated": false,
+    "stopped": true,
+    "longer_pocket_recognized_by_researcher": true,
+    "exact_interval_selected": false,
+    "recognition_verification": "reference-validation/boi-fb2412-site1-longer-preview-20261026/recognition-verification.json"
+  },
+  "pending_reviewed_export": {
+    "manifest": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-area-review-20261026/pending-reviewed-export-08.json",
+    "saved_decision_not_yet_in_latest_workbook": "FB2412 site 1/event 3 not_recognized",
+    "longer_candidate_not_included": true,
+    "longer_pocket_recognized": true,
+    "longer_pocket_quantified": false,
+    "current_workbook_predates_latest_notes": true,
+    "reviewed_area_hold_enforced": true
+  },
+  "fb2412_correction_components_20261026": {
+    "status": "delivered_verified_saved_stage_attribution",
+    "owner": "root",
+    "delegation": false,
+    "scope": "reference-validation/boi-fb2412-correction-components-20261026/scope.json",
+    "verification": "reference-validation/boi-fb2412-correction-components-20261026/verification.json",
+    "detection_input": "saved denoised TIFF",
+    "footprint_pixels": 411,
+    "frames_read": [
+      600,
+      730
+    ],
+    "recovery_665_to_693": {
+      "Raw": 75.44038929440387,
+      "Denoised": 41.82943970617589,
+      "Removed": 14.43861363171959,
+      "Corrected": 27.390826074456356
+    },
+    "stage_identity_checks": 131,
+    "independent_segment_checks": 8,
+    "source_raw_denoised_audit_hashes_verified": true,
+    "relevant_helpers_match_historical_manifest": true,
+    "exact_polynomial_reconstruction_established": false,
+    "biological_validity_of_removed_trend_established": false,
+    "prior_artifacts_unchanged": 30,
+    "method_changed": false,
+    "new_burden_calculated": false,
+    "stopped": true
+  },
+  "fb2412_local_reference_preview_20261026": {
+    "status": "delivered_unadopted_fixed_preview",
+    "owner": "root",
+    "delegation": false,
+    "scope": "reference-validation/boi-fb2412-local-reference-preview-20261026/scope.json",
+    "verification": "reference-validation/boi-fb2412-local-reference-preview-20261026/verification.json",
+    "reference_frames": [
+      [
+        621,
+        640
+      ],
+      [
+        631,
+        650
+      ],
+      [
+        641,
+        650
+      ]
+    ],
+    "raw_mean": [
+      845.0671532846716,
+      827.9540145985402,
+      819.5245742092459
+    ],
+    "conditional_raw_drop_percent": [
+      9.697209453113619,
+      7.830723934442803,
+      6.8826920599029995
+    ],
+    "provisional_event_frames": [
+      651,
+      693
+    ],
+    "independent_numeric_checks": 45,
+    "prior_artifacts_unchanged": 40,
+    "visually_verified": true,
+    "reference_or_exact_endpoint_accepted": false,
+    "burden_calculated": false,
+    "new_fits": 0,
+    "additional_source_frames_read": 0,
+    "stopped": true
+  },
+  "fb2412_background_interpretation_20261026": {
+    "status": "saved_verified",
+    "scope": "reference-validation/boi-fb2412-local-reference-preview-20261026/background-interpretation-scope.json",
+    "verification": "reference-validation/boi-fb2412-local-reference-preview-20261026/background-verification.json",
+    "saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-local-reference-preview-20261026/FB2412-site1-events1-and3-review-04.json",
+    "interpretation": "decline before 651 is background variation",
+    "reference_model_selected": false,
+    "burden_recalculated": false,
+    "stopped": true,
+    "local_line_preview_status": "explicitly approved and completed; method not adopted"
+  },
+  "fb2412_local_background_line_20261026": {
+    "status": "delivered_verified_preview_only",
+    "scope": "reference-validation/boi-fb2412-local-background-line-20261026/scope.json",
+    "owner": "root",
+    "delegation": false,
+    "before_window": [
+      631,
+      650
+    ],
+    "after_window": [
+      694,
+      713
+    ],
+    "method_adoption": false,
+    "verification": "reference-validation/boi-fb2412-local-background-line-20261026/verification.json",
+    "raw_conditional_drop_percent": 7.867265193576442,
+    "raw_at_693_minus_reference": 9.901926196269187,
+    "denoised_at_693_minus_reference": -0.4836518286883802,
+    "post_window_assessment": "Plausible candidate with 20 finite/native-clean samples, but a small continued rise. An anchor-window mean match is not independent recovery validation.",
+    "independent_numeric_checks": 284,
+    "prior_artifacts_unchanged": 52,
+    "visually_verified": true,
+    "method_adopted": false,
+    "reference_or_endpoint_accepted": false,
+    "burden_calculated": false,
+    "stopped": true,
+    "post_window_researcher_judgment": "694-713 accepted as recovered background; local-line method and exact boundaries remain unselected"
+  },
+  "fb2412_recovered_window_20261026": {
+    "status": "saved_verified",
+    "scope": "reference-validation/boi-fb2412-local-background-line-20261026/recovered-window-scope.json",
+    "verification": "reference-validation/boi-fb2412-local-background-line-20261026/recovered-window-verification.json",
+    "saved_review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-local-background-line-20261026/FB2412-site1-events1-and3-review-05.json",
+    "frames": [
+      694,
+      713
+    ],
+    "recovered_background_accepted_by_researcher": true,
+    "local_line_method_adopted": false,
+    "exact_boundary_selected": false,
+    "burden_recalculated": false,
+    "stopped": true
+  },
+  "fb2412_spatial_review_20261026": {
+    "status": "delivered_read_only_spatial_comparison",
+    "scope": "reference-validation/boi-fb2412-spatial-review-20261026/scope.json",
+    "owner": "root",
+    "delegation": false,
+    "new_area_or_mask_authorized": false,
+    "verification": "reference-validation/boi-fb2412-spatial-review-20261026/verification.json",
+    "inspection": "reference-validation/boi-fb2412-spatial-review-20261026/inspection.json",
+    "native_frame_coverage": [
+      18,
+      43
+    ],
+    "saved_union_pixels": [
+      718,
+      411
+    ],
+    "common_pixels": 408,
+    "full_pocket_area_established": false,
+    "new_burden_calculated": false,
+    "preparation_runs": 1,
+    "display_callback_repairs": 1,
+    "original_results_preserved": true,
+    "comparison_continuation": "delivered_cached_side_by_side",
+    "comparison_verification": "reference-validation/boi-fb2412-spatial-review-20261026/comparison-verification.json",
+    "comparison_frames": [
+      665,
+      693
+    ],
+    "comparison_source_frames_read": 0,
+    "comparison_display_repairs": 2
+  },
+  "fb2412_footprint_judgment_20261026": {
+    "status": "delivered_saved_and_visible",
+    "scope": "reference-validation/boi-fb2412-spatial-review-20261026/footprint-judgment-scope.json",
+    "verification": "reference-validation/boi-fb2412-spatial-review-20261026/footprint-judgment-verification.json",
+    "accepted_footprint_pixels": 718,
+    "review": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-spatial-review-20261026/FB2412-site1-events1-and3-review-06.json",
+    "pending_export_sources": "reference-validation/boi-fb2412-spatial-review-20261026/pending-reviewed-export-06.json",
+    "time_varying_area_measured": false,
+    "new_burden_calculated": false
+  },
+  "fb2412_measurement_decision_20261026": {
+    "status": "preview_delivered_choices_explicitly_accepted_and_saved",
+    "scope": "reference-validation/boi-fb2412-spatial-review-20261026/measurement-decision-scope.json",
+    "method_adoption_authorized": false,
+    "verification": "reference-validation/boi-fb2412-spatial-review-20261026/measurement-decision-verification.json",
+    "proposal": "reference-validation/boi-fb2412-spatial-review-20261026/proposed-timing-baseline-save.json",
+    "raw_drop_20s_percent": 6.942974528789339,
+    "raw_drop_10s_percent": 6.11121690143693,
+    "raw_drop_local_line_percent": 6.849980155191653,
+    "mean_full_event_area_available": false,
+    "new_burden_calculated": false,
+    "scientific_choices_adopted": false
+  },
+  "fb2412_saved_measurement_20261026": {
+    "status": "delivered_saved_and_verified",
+    "scope": "reference-validation/boi-fb2412-site1-reviewed-20261026/scope.json",
+    "burden_authorized": false,
+    "verification": "reference-validation/boi-fb2412-site1-reviewed-20261026/verification.json",
+    "boundary_revision": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site1-reviewed-20261026/FB2412-site1-events1-to3-review-07.json",
+    "reference_judgment": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site1-reviewed-20261026/FB2412-site1-event2-reference-01.json",
+    "evidence_folder": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-fb2412-site1-reviewed-20261026/ReviewedAmplitude-01",
+    "raw_drop_percent": 6.942974528789338,
+    "duration_seconds": 43,
+    "full_event_mean_area_available": false,
+    "burden_available": false,
+    "next_burden_export_ready": true,
+    "next_export_manifest": "reference-validation/boi-fb2412-area-review-20261026/pending-reviewed-export-08.json",
+    "next_export_qualification": "Technical reviewed-area missingness support is delivered. Current area is unavailable; no combined export run. Resolve latest area revision before a future export."
+  },
+  "fb2412_area_feasibility_20261026": {
+    "status": "proposal_approved_engineering_delivered_researcher_area_review_pending",
+    "findings": "reference-validation/boi-fb2412-area-review-plan-20261026/findings.json",
+    "proposal": "reference-validation/boi-fb2412-area-review-plan-20261026/proposal.json",
+    "verification": "reference-validation/boi-fb2412-area-review-plan-20261026/verification.json",
+    "new_area_or_burden_adopted": false
+  },
+  "fb2412_reviewed_area_20261026": {
+    "status": "engineering_delivered_researcher_frame_review_pending",
+    "scope": "reference-validation/boi-fb2412-area-review-20261026/scope.json",
+    "owner": "root",
+    "delegation": false,
+    "date": "2026-10-26",
+    "record": "docs/BOI_REVIEWED_FRAME_AREA.md",
+    "verification": "reference-validation/boi-fb2412-area-review-20261026/verification.json",
+    "focused_tests_passed": 18,
+    "native_incomplete_area_loader_passed": true,
+    "legacy_site20_loader_passed": true,
+    "required_frames": 43,
+    "accepted_frames": 0,
+    "initial_suggestion_frames": 18,
+    "source_image_frames_read": 166,
+    "image_preparation_runs": 1,
+    "area_and_burden_available": false,
+    "formula_and_normalization_preserved": true,
+    "original_results_preserved": true,
+    "combined_export_run": false,
+    "implementation_stopped": true,
+    "researcher_review_pending": true,
+    "next_export_manifest": "reference-validation/boi-fb2412-area-review-20261026/pending-reviewed-export-08.json",
+    "usability_feedback_20261027": {
+      "researcher_quote": "i went through it by hand and its not easy to say fro mthe greyscale image.",
+      "observed_frame": 676,
+      "observed_live_draft": "unsaved; several early frames visibly marked uncertain; 0/43 accepted",
+      "saved_revision": 2,
+      "saved_frames_reviewed": 0,
+      "scientific_decisions_saved_by_agent": false,
+      "interpretation": "Precise per-frame boundaries remain difficult to judge from grayscale. Improved temporal/reference display is a proposal only; no new segmentation or area rule adopted."
+    }
+  },
+  "fb2412_area_display_20261027": {
+    "status": "delivered_display_only_researcher_judgments_pending",
+    "owner": "root",
+    "delegation": false,
+    "scope": "reference-validation/boi-fb2412-area-display-20261027/scope.json",
+    "new_source_image_reads_allowed": 0,
+    "live_unsaved_draft_must_be_preserved": true,
+    "static_checks_passed": true,
+    "native_GUI_verification_complete": true,
+    "live_before_document_sha256": "279cfcc99dec048c8c8a2291d5d8a7ec0bf6d451f0cbf47b066a25a8ee3e767b",
+    "saved_review_artifacts_unchanged": true,
+    "verification": "reference-validation/boi-fb2412-area-display-20261027/verification.json",
+    "delivered_date": "2026-10-29",
+    "visible_comparison_frame": 664,
+    "visible_source": "denoised",
+    "live_uncertain_choices_preserved": 4,
+    "scientific_revision_saved": false,
+    "targeted_repair_passes": 2
+  },
+  "fb2412_area_rule_proposal_20261029": {
+    "status": "proposal_prepared_preview_not_approved",
+    "scope": "reference-validation/boi-fb2412-area-rule-proposal-20261029/proposal.json",
+    "owner": "root",
+    "delegation": false,
+    "scientific_calculations_run": false,
+    "production_changes": false,
+    "new_source_image_reads": 0,
+    "scientific_revision_saved": false,
+    "preview_authorized": "Researcher yes on 29 October 2026; see completed preview record."
+  },
+  "fb2412_area_rule_preview_20261029": {
+    "status": "delivered_preview_not_adopted",
+    "scope": "reference-validation/boi-fb2412-area-rule-preview-20261029/scope.json",
+    "owner": "root",
+    "delegation": false,
+    "scientific_adoption_authorized": false,
+    "new_source_image_reads_allowed": 0,
+    "preserve_live_unsaved_draft": true,
+    "numerical_verification": "reference-validation/boi-fb2412-area-rule-preview-20261029/independent-verification.json",
+    "candidate_pixel_checks": 498,
+    "conditional_burden_cases_available": 0,
+    "native_gui_verification_complete": true,
+    "scientific_revision_saved": false,
+    "verification": "reference-validation/boi-fb2412-area-rule-preview-20261029/verification.json",
+    "completed_utc": "2026-10-29T09:36:19Z",
+    "live_draft_preserved": true,
+    "visible_frame": 664,
+    "visible_multiplier": 3,
+    "visual_inspection": "reference-validation/boi-fb2412-area-rule-preview-20261029/visual-inspection.json",
+    "last_displayed_frame": 713
+  },
+  "burden_completeness_20261029": {
+    "status": "delivered",
+    "ID": "BURDEN-COMPLETENESS-01",
+    "evidence": "reference-validation/boi-burden-completeness-20261029/verification.json",
+    "tests_passed": 25,
+    "tests_failed": 0,
+    "code_analyzer_messages": 0,
+    "scientific_calculation_changes": false,
+    "partial_sums": false,
+    "saved_results_changed": false,
+    "native_panel_reopened": false
+  },
+  "fb2412_short_interval_preview_20261030": {
+    "status": "delivered_preview_no_scientific_save",
+    "candidate": [
+      659,
+      672
+    ],
+    "duration_sec": 14,
+    "footprint_pixels": 718,
+    "existing_saved_interval": [
+      651,
+      693
+    ],
+    "existing_saved_reference": [
+      631,
+      650
+    ],
+    "draft_preserved": true,
+    "source_images_read": 0,
+    "evidence": "reference-validation/boi-fb2412-short-interval-preview-20261030/verification.json",
+    "native_mask_support_checked": true,
+    "complete_native_frames": 14,
+    "conditional_measurement_preview": "reference-validation/boi-fb2412-short-interval-preview-20261030/short-candidate-measurement-preview.json",
+    "save_proposal": "reference-validation/boi-fb2412-short-interval-preview-20261030/short-review-save-proposal.json",
+    "researcher_decision": "Keep as preview; do not save shorter scientific revision. Stop this inspection and return to broader workflow focus.",
+    "save_proposal_status": "declined_keep_preview"
+  },
+  "development_checkpoint_20261030": {
+    "status": "checks_passed_ready_for_commit",
+    "scope": "reference-validation/boi-development-checkpoint-20261030/scope.json",
+    "software_version": "3.1.0-dev.10",
+    "build_timestamp": "2026-10-30 11:14:26 +01:00",
+    "branch": "development-existing-analysis-v3",
+    "scientific_review_stopped": true,
+    "shorter_pocket_saved": false,
+    "broader_plan_implementation_approved": false,
+    "portable_tests": {
+      "release": "R2025a",
+      "platform": "MACA64",
+      "passed": 204,
+      "failed": 0,
+      "incomplete": 0
+    },
+    "source_policy_files": 492,
+    "changed_matlab_files_inspected": 67,
+    "code_analyzer_style_performance_advisories": 53,
+    "headless_starts": 1,
+    "repair_passes": 0
   }
 }

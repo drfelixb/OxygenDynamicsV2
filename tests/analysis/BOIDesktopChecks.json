@@ -38,6 +38,14 @@
     "testBOIExportFolderPanel/testSuccessfulPathPersistsAndCopies",
     "testBOIExportFolderPanel/testFailedIncompleteExportDoesNotEnableControls",
     "testBOIExportFolderPanel/testFailureOrCancelKeepsPreviousSuccess",
-    "testBOIExportFolderPanel/testExistingDestinationRemainsProtected"
+    "testBOIExportFolderPanel/testExistingDestinationRemainsProtected",
+    "testBOIBatchEditor/test05MetadataReorderAndGUI",
+    "testBOIBatchEditor/test08VerifiedFailedAndIncompleteDisplay",
+    "testBOIBatchQueue/test10GUIProtectsBusyQueueAndStopsAfterCurrent",
+    "testBOIBatchEditor/test14GUIOpensOnlySelectedSavedRecording",
+    "testBOIBatchEditor/test15GUISelectedOpeningRejectsChangedInputsAndArtifacts",
+    "testBOIBatchEditor/test16GUIProgressBusyProtectionAndRecovery",
+    "testBOIBatchStats/test09GUIReviewConfirmationAndInvalidation",
+    "testBOIBatchStats/test10GUIBusySuccessAndFailureRecovery"
   ]
 }

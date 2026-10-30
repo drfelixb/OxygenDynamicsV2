@@ -1,5 +1,64 @@
 # Development checkout and preserved downloads
 
+30 October 2026 · **3.1.0-dev.10**, build **2026-10-30 11:14:26 +01:00** is the authorized development checkpoint of batch CSV/queue/export, approved pre-episode references, reviewed burden/area services and strict completeness displays. Scientific inspection is stopped; the shorter FB2412 interval and experimental area rule remain unadopted previews. Checkpoint checks and normal branch transport are recorded in [delivery](docs/BOI_DEVELOPMENT_CHECKPOINT_20261030.md). No replacement package, stable-release claim or source-recording change. Dated local-only statements below describe their original deliveries.
+
+16 October 2026 · Local **3.1.0-dev.9** adds the approved pre-episode reference to the existing batch statistics/export path. Original amplitudes and files remain; old references and unclear acquisition-start cases are withheld. No all-17 re-export or package build. See [verification](docs/BOI_PRE_EPISODE_IMPLEMENTATION.md).
+
+15 October 2026 · Local **3.1.0-dev.8** connects the batch GUI to the existing
+multi-recording stats/export workflow. The named 17-recording export and final
+44/44 focused checks pass. Per-recording saved tables/traces match their earlier
+runs; three source holds and originals remain. Workbook/CSV layouts and scientific
+calculations are unchanged. Large MAT variables use compressed v7.3 storage to
+avoid omission; the full named folder is about 11.9 GB. The
+[batch guide](docs/BOI_BATCH_EXECUTION.md) describes selection, export and output
+access. This is local macOS/R2025a evidence, with no new detector/recording run,
+MATLAB desktop, package, Git transport or release. Implementation is stopped.
+
+15 October 2026 · Local **3.1.0-dev.7** shows recording/stage progress during
+checks. **Open saved run** verifies only the selected recording, retaining
+batch-wide duplicate-source guards and selected source/settings/metadata/artifact
+checks. The [editor guide](docs/BOI_BATCH_EDITOR.md) describes this workflow.
+Final 26/26 focused cases pass. One read-only FB2412 reopening checked one of
+20 rows in 16.39 seconds; the other rows stayed unchanged and unchecked. This
+is named local GUI evidence, without a new recording run or general performance
+claim. Calculations, original recordings and the completed batch are preserved.
+No package, commit/push or release is included.
+
+15 October 2026 · The researcher-started **3.1.0-dev.6** batch completed all
+17 selected recordings on 14 October at 18:22 Copenhagen time. Queue, attempt,
+native run and CSV states agree; no execution error or pending recording is
+recorded. Three unresolved sources remain held. Felix's demonstrated FB2412
+trace/summary/frame-input inspection round is closed. The
+[batch guide](docs/BOI_BATCH_EXECUTION.md) describes the inspected workflow.
+This adds named local workflow evidence. The implementation-only counts below,
+scientific qualifications, preserved downloads and release boundary remain.
+No new package, commit/push or publication occurred during this inspection.
+
+14 October 2026 · Local **3.1.0-dev.6** adds sequential GUI batch execution,
+stage CSV updates, immutable attempt metadata/history, verified skip/retry and
+stop-after-current. Final 15/15 focused cases pass, plus one targeted unwind
+recheck; the first 10/15 result and cleanup warnings remain recorded. The
+[execution guide](docs/BOI_BATCH_EXECUTION.md) describes storage and failure
+recovery. Supplied recordings were not run. Original recordings, calculations,
+prior downloads and the last pushed development snapshot remain preserved.
+No package, commit/push or release is included.
+
+14 October 2026 · Local **3.1.0-dev.5** repairs BOI batch setup: stimulation
+fields remain descriptive metadata, and support choices explain the existing
+automatic tissue estimate. The [batch editor guide](docs/BOI_BATCH_EDITOR.md)
+explains these controls. The private prepared input mapping retains source holds. No calculation change, recording
+execution, package or GitHub update is included.
+
+14 October 2026 · Local **3.1.0-dev.4** adds the
+[batch CSV editor](docs/BOI_BATCH_EDITOR.md): shared settings/overrides, optional
+metadata, safe CSV persistence, row checks and linked saved-result verification.
+Ten focused macOS/R2025a cases pass; layout inspection uses 1120 × 800 and
+900 × 650. This is preparation-only evidence, separate from prior numerical
+and real-recording checks. No queue execution, new recording, package or push
+is included. The last pushed development snapshot remains 3.1.0-dev.3 and the
+preserved ZIP remains 3.1.0-dev.2. The dated account below describes that earlier
+interface delivery, with its original limits.
+
 13 October 2026 · **3.1.0-dev.3**, build **2026-10-13 20:02:39 +02:00** · no release approval.
 
 The current development branch contains clearer detection-support guidance and
@@ -42,3 +101,9 @@ for new V2 contributions, declared release/support claims and publication approv
 remain separate decisions; see [licensing](LICENSING.md). VM/watchdog/custom
 containment and worker qualification remain deferred to a possible v4. There is
 no automatic follow-up recording, diagnostic campaign, package or release.
+
+
+16 October 2026: local 3.1.0-dev.9 implements the approved pre-episode sink
+reference with a separate derived version, retaining original detector and
+measurement provenance. Source policy includes the new helpers and guide; tests remain in the development checkout.
+No package rebuild, Git transport or release publication is authorized/performed.

@@ -1,7 +1,9 @@
-function SurgeData = loadStatsSurgeRecordingData(SurgesDataFolder,RecordingMetadata,IncludeROITraces)
+function SurgeData = loadStatsSurgeRecordingData(SurgesDataFolder,RecordingMetadata,IncludeROITraces,SurgesMatFile)
 %LOADSTATSSURGERECORDINGDATA Load and prepare surge stats for one recording.
 
-SurgesMatFile = selectStatsMatFile(SurgesDataFolder,'Surges','oxygen surges',RecordingMetadata.DatafileID);
+if nargin<4||isempty(SurgesMatFile)
+    SurgesMatFile = selectStatsMatFile(SurgesDataFolder,'Surges','oxygen surges',RecordingMetadata.DatafileID);
+end
 SurgeTable = loadRequiredMatVar(SurgesMatFile,'Table_OxygenSurges_Out');
 SurgeEventTable = loadOptionalMatVar(SurgesMatFile,'Table_OxygenSurgeEvents_Out',[]);
 [SurgeTable,SurgeEventTable] = upgradeStatsAnalysisTables(SurgeTable,SurgeEventTable,RecordingMetadata,SurgesMatFile,'surge');

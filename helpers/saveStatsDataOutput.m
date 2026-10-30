@@ -16,6 +16,6 @@ if IsBLI
 end
 FieldsToSave = FieldsToSave(isfield(StatsDataOutput,FieldsToSave));
 
-save(OutputPath,'-struct','StatsDataOutput',FieldsToSave{:});
+saveStatsMATFile(OutputPath,StatsDataOutput,FieldsToSave);
 
 end

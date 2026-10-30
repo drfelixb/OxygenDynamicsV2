@@ -6,6 +6,85 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Development checkpoint — 3.1.0-dev.10 (30 October 2026)
+
+- Save the accumulated batch preparation/execution/export and source-bound
+  reviewed burden/area tools to the development branch.
+- Retain strict complete burden and approved reference rules; keep the shorter
+  FB2412 pocket and experimental segmentation as unadopted previews.
+- Reconcile the future-package source inventory and development identity; no
+  new package or stable release.
+
+### Complete burden in the stats preview (29 October 2026)
+
+- Show unavailable burden summaries with missing-input counts instead of
+  silently skipping unresolved events, recordings or mouse summaries.
+- Retain strict exported totals, existing formats, formula and normalization;
+  clarify that gaps and blank values cannot be converted into complete burden.
+- Cover GUI summaries, reviewed missingness and XLSX/CSV readback in the
+  existing synthetic regression gate.
+
+### Pre-episode reference for recurrent pockets — 3.1.0-dev.9 (16 October 2026)
+
+- Add a versioned pre-episode sink reference on unchanged event footprints and
+  intervals. Carry a common reference period through spatially overlapping close
+  native runs at one site, measuring each event footprint separately.
+- Withhold references shifted more than 20 seconds, contaminated/incomplete
+  windows and unresolved acquisition-start series; retain explicit reasons.
+- Use receipt-verified saved traces in the existing batch stats/export path,
+  preserving original automatic columns and all historical files. Future master
+  outputs retain both original and derived measurements.
+- Keep amplitude × area × duration, strict missingness and area/time scaling.
+  Append reference provenance and counts to existing workbook/MAT exports.
+  No detector rerun, all-17 re-export or release is performed by this milestone.
+
+### Existing stats/export from the batch GUI — 3.1.0-dev.8 (15 October 2026)
+
+- Collect verified completed recordings into the existing multi-recording stats
+  exporter, keeping workbook/event/grouped metric/trace formats and calculations.
+- Review exact saved sink/surge files, included/excluded rows and a fresh output
+  destination. Preserve saved labels, optional metadata and descriptive stimulation.
+- Show loading/export progress and reuse completed-folder opening/copy controls.
+- Preserve large batch tables with compressed MATLAB v7.3 storage when a variable
+  exceeds the v7 limit; retain MAT filenames/schemas and reject missing tables.
+
+### Local batch GUI polish — 3.1.0-dev.7 (15 October 2026)
+
+- Show recording count, recording identity and verification stage while source
+  and saved-result checks run. Keep editing protected and restore controls after
+  completion or error; checking does not run analysis.
+- Open a linked saved run by checking only the selected recording. Keep
+  batch-wide duplicate-source validation and selected source/settings/row/
+  metadata/artifact checks; leave unrelated rows and saved results untouched.
+
+### Local GUI batch execution — 3.1.0-dev.6 (14 October 2026)
+
+- Run explicitly reviewed ready rows sequentially through the existing BOI
+  recording workflow; exclude held rows and skip verified matching completions.
+- Save stage/outcome CSV updates, immutable metadata/request snapshots and
+  row-linked history. Retry creates new output folders; stop after current,
+  failure and writeback conflict prevent later dispatch.
+- Show selected/excluded rows, effective settings, source-copy storage and new
+  destinations before confirmation. Protect active queues across MATLAB windows.
+- Keep stimulation metadata descriptive, originals and scientific engines intact.
+  Supplied recordings are started by the researcher after choosing output storage.
+
+### Local setup repair — 3.1.0-dev.5 (14 October 2026)
+
+- Preserve stimulation columns as optional descriptive metadata in the BOI
+  batch editor; exclude their values from the BOI analysis request.
+- Explain the existing automatic tissue estimate without requiring preset ROIs.
+  Keep the saved support value and all scientific calculations unchanged.
+- Prepare a separate local HP input mapping, preserving original recordings
+  and explicit holds for unresolved source identity/pairing. Setup checks do
+  not execute a batch or establish scientific eligibility.
+
+### Local batch editor — 3.1.0-dev.4 (14 October 2026)
+
+- Add CSV preparation, explicit shared acquisition/support settings, optional
+  metadata, per-row input checks and verified existing-run status display.
+  This milestone prepares inputs; queue execution remains separate.
+
 ### Development snapshot — 3.1.0-dev.3 (13 October 2026)
 
 - Explain the required Detection support choice in ordinary words, retaining

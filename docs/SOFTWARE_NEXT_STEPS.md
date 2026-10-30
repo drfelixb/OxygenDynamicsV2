@@ -1,11 +1,74 @@
 # Software priorities and working plan
 
+**Pre-episode baseline delivered, 16 October 2026:** local **3.1.0-dev.9**
+implements the approved recurrent-pocket reference through existing batch stats
+and future BOI master outputs. Original automatic columns and historical files
+remain. References shifted more than 20 seconds and unclear acquisition-start
+series are withheld explicitly; strict burden/normalization remain. The named
+FB2412 fixture reproduces 6.012181% and normalized event contribution 2608.970113,
+with the isolated control unchanged. 129 distinct focused cases pass across
+final reports (102 compatibility cases and 15 final reference/loader cases,
+with overlap); nine historical hashes are unchanged. Six bounded headless starts,
+including retained fixture/inventory failures, total 236.99 seconds.
+No supplied movie/detector processing, all-17 export, complete recording total,
+package or Git transport. [Delivery](BOI_PRE_EPISODE_IMPLEMENTATION.md).
+The approved milestone is complete; implementation stops here. A fresh combined
+export from saved runs is the practical next step, not a recording rerun.
+
 4 October 2026. Prepared for the researcher and the next implementation chat.
 
 The priority is correct analysis calculations and understandable results. This
 plan first preserves the accepted software, then checks the remaining main
 measurements, repairs demonstrated defects, and prepares a usable distribution.
 Detector refinement stays a later priority.
+
+## Next priority is batch preparation and GUI usability
+
+**GUI polish delivered, 15 October 2026:** Felix approved the two inspection
+follow-ups with “Good. Continue”. Local **3.1.0-dev.7** shows recording/stage
+progress during checks and opens a saved result after checking only its selected
+recording. Global duplicate-source guards and selected integrity checks remain.
+Final 26/26 focused cases pass; the single read-only FB2412 reopening checked
+one of 20 rows in 16.39 seconds. The [delivery record](BOI_BATCH_GUI_PLAN.md#local-delivery-15-october-2026)
+retains the initial failures, repairs and limits. Updated MATLAB windows are
+open; no recording rerun or new desktop was needed. Implementation is stopped.
+No further milestone, recording campaign, package, Git transport or release
+follows automatically. Earlier entries below retain their dated scope.
+
+**Inspection round closed, 15 October 2026:** Local **3.1.0-dev.6** now has a
+researcher-started 17-recording queue completed with saved-result verification,
+no recorded execution errors and three retained source holds. Felix's FB2412
+trace/summary/frame-input inspection is closed; he explicitly reported that the
+trace viewer worked fine. The [closeout](BOI_BATCH_EXECUTION_DELIVERY.md#researcher-run-and-inspection-closeout)
+records the demonstrated scope and remaining qualifications. No further run,
+test, code change, Git transport or release follows automatically. The next GUI
+candidates were visible check progress and opening one saved run without checking
+unrelated rows; these were subsequently approved and delivered as recorded above.
+
+**First editor milestone delivered, 14 October 2026:** the approved
+[delivery](BOI_BATCH_EDITOR_DELIVERY.md) provides local **3.1.0-dev.4** with CSV
+editing, explicit shared settings and overrides, optional metadata, per-row
+checks and verified linked-result opening. Final 10/10 focused cases pass;
+one MATLAB start, both layout sizes inspected and no analysis engine run.
+Open `openBOIBatchEditor` or **Batch recordings** in the launcher; see the
+[guide](BOI_BATCH_EDITOR.md). Felix's editor acceptance remains pending.
+The proposed next milestone adds the sequential queue, attempt history and
+live CSV status writeback; its concrete scope/fixtures/budget need approval.
+The dated planning text below describes the proposal before implementation.
+
+On **14 October 2026**, Felix requested skipping the second user review and
+prioritising GUI usability, especially the batch CSV, optional fields and
+analysis-completion tracking. The [batch CSV and GUI plan](BOI_BATCH_GUI_PLAN.md)
+proposes entering one recording folder per row, setting acquisition/support
+values once per batch, preserving optional metadata, and showing verified run
+status. First deliver the CSV contract, batch editor and per-row checks; queue
+execution and automatic live CSV updates follow under the agreed contract.
+That first milestone was subsequently approved and delivered as recorded above.
+
+The [colleague walkthrough handoff](BOI_COLLEAGUE_WALKTHROUGH_HANDOFF.md) is
+retained as a skipped proposal, including its package/material preparation.
+No unfamiliar-user evidence is claimed. Licensing/support/publication decisions
+remain separate.
 
 ## Current interface delivery — 13 October 2026
 

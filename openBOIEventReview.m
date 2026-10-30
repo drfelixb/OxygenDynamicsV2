@@ -243,8 +243,9 @@ if height(A)>0&&~StartOnEventList,selectEvent(initialIndex);end
         try,loadBoundaries(fullfile(folder,file));catch err,uialert(Fig,err.message,'Boundary review not loaded');end
     end
     function closeReview(~,~)
-        if BoundaryPanel.HasDrafts()||PocketPanel.HasDrafts()
-            choice=uiconfirm(Fig,'Unsaved researcher drafts will be lost. Save NEW revisions in Researcher boundaries or Reviewed optical to retain them.', ...
+        area=getappdata(Fig,'BOIAreaReviewUI');areaDirty=isstruct(area)&&isfield(area,'HasDrafts')&&area.HasDrafts();
+        if BoundaryPanel.HasDrafts()||PocketPanel.HasDrafts()||areaDirty
+            choice=uiconfirm(Fig,'Unsaved researcher drafts will be lost. Save NEW revisions in the corresponding boundary, optical or area review tab to retain them.', ...
                 'Unsaved researcher drafts','Options',{'Keep reviewing','Discard drafts and close'},'DefaultOption',1,'CancelOption',1);
             if strcmp(choice,'Keep reviewing'),return;end
         end

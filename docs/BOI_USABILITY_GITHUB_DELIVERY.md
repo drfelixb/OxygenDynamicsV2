@@ -2,6 +2,13 @@
 
 13 October 2026 · Development **3.1.0-dev.3** · No new package or release
 
+**Researcher acceptance, 14 October 2026:** Felix stated “ok, i accept this
+delivery.” Acceptance covers the delivered support guidance, export-folder
+controls, preserved saved values and development-branch documentation/GitHub
+delivery. It does not claim an additional personal retest of the new controls
+or authorize publication. The next [colleague walkthrough preparation](BOI_COLLEAGUE_WALKTHROUGH_HANDOFF.md)
+is a separate handoff.
+
 The approved interface task fixes the observed missing-choice message and makes
 the last completed event/window export easy to locate. **Detection support** still
 starts unselected. Missing support now names the two choices and directs the

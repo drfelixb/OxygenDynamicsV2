@@ -1,0 +1,4 @@
+Paths,SampleF,Pixelsize,BOISupportProfile,Mouse,Condition,RecordingLabel,RecordingDate,Session,Sex,AgeDays,BrainRegion,Project,Operator,Notes,Lab notes
+REPLACE_WITH_RECORDING_FOLDER_A,2,4.75,whole-image,0012,,Illustrative recording A,2026-10-14,0007,,84,,Example project,,"Descriptive labels are optional","Illustrative custom note, with a comma and ÆØÅ
+Second line; quoted text: ""keep this text""."
+REPLACE_WITH_RECORDING_FOLDER_B,2,4.75,whole-image,0007,,Illustrative recording B,2026-10-14,0008,,,,Example project,,,""

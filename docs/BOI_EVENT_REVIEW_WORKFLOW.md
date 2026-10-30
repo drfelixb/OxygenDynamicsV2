@@ -468,3 +468,62 @@ Earlier conversation feedback remains in its separate, versioned evidence
 records; it is not silently imported or assigned a new reviewer timestamp.
 The phase-054 verification files contain explicitly labelled developer
 fixtures, which must not be treated as new researcher annotations.
+
+## Export burden after a saved recognition decision
+
+`exportBOIReviewedBurden(savedDataOutputMAT, {savedRevisionJSON}, newFolder)`
+creates a separate reviewed **burden-only** workbook, MAT file and CSV tables
+from an existing combined stats export. Save **Not recognized** in Researcher
+boundaries first. Supply the new revision explicitly; unsaved drafts are never
+used. Multiple recording revisions may be supplied in the cell array. Two
+snapshots claiming the same event are rejected until a single reconciled
+snapshot is selected.
+
+The reviewed burden calculation excludes saved `not_recognized` sink
+detections. The decision ledger records every automatic identity, recognition
+status, exclusion flag, reason, reviewer and revision checksum; the rejected
+automatic rows remain in `ExcludedDetections`. Unreviewed and uncertain
+detections retain their automatic ingredients and missingness. They are not
+thereby accepted as biological pockets. Other saved timing/reference judgments
+do not recalculate the original ingredients through this exporter.
+
+The existing burden calculator and sheet formats are reused, including strict
+totals, area/time normalization and frame-wise burden. An unavailable required
+contribution among retained detections keeps the complete burden unavailable.
+The recording exposure denominator does not shrink when a detection is rejected.
+All-rejected recordings have a known empty reviewed event set and zero event
+burden when exposure is valid; this does not convert a retained missing value
+to zero. The original combined stats/export remains automatic and unchanged.
+
+Use the new reviewed workbook for this selection of saved decisions. Ordinary
+batch stats export still produces automatic results; it does not discover or
+silently apply review files. Unrelated statistics sheets and large site/trace
+matrices remain in the original combined bundle.
+
+The first explicit researcher rejection and its finite verification are recorded
+in [the reviewed burden delivery](BOI_REVIEWED_BURDEN_EXCLUSION.md).
+
+To carry forward an already approved single-event recalculation, pass its
+completed artifact folder explicitly as the optional fourth argument:
+`exportBOIReviewedBurden(savedDataOutputMAT, savedRevisionFiles, newFolder, {reviewedEventFolder})`.
+Include that event's matching recognized boundary revision in
+`savedRevisionFiles`, alongside any rejection snapshots for other recordings.
+The importer validates the event manifest, audit/source, saved recognition,
+onset/recovery, accepted reference and raw optical arithmetic. A rejected event
+cannot also supply reviewed values. No reference or endpoint is inferred.
+
+`EventRevisions` identifies imported values and their sources, including the
+saved area qualification. `BurdenStartFrame`, `BurdenEndFrame` and
+`BurdenDuration_sec` govern reviewed burden and its time series. Original
+`StartFrame`, `EndFrame`, `DurationSec`, automatic amplitudes and `Episode*`
+columns retain automatic evidence. The episode-reference summaries therefore
+describe that automatic evidence separately from the imported reviewed value.
+`ReviewSummary` availability counts use the actual reviewed contributions.
+The unchanged within-recording rank calculation includes a newly available
+reviewed amplitude, so its sensitivity ranks may change for that recording.
+
+For the approved FB2412 site 1 extended pocket, the bounded
+[reviewed frame area panel](BOI_REVIEWED_FRAME_AREA.md) adds explicit per-frame
+geometry and missingness. Its saved event artifact uses the same fourth
+exporter argument. Incomplete area withholds that event's contribution and the
+strict recording sum; the old automatic contribution cannot substitute.

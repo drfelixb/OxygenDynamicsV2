@@ -1,6 +1,12 @@
 # OxygenDynamics release decisions
 
-13 October 2026 · For the researcher and project rights holder
+14 October 2026 · For the researcher and project rights holder
+
+Local **3.1.0-dev.4** now adds the batch preparation editor. Its
+[delivery](BOI_BATCH_EDITOR_DELIVERY.md) has ten passing focused checks and two
+inspected window sizes; it includes no queue execution, new recording, package
+or push. Researcher editor acceptance and release decisions remain separate.
+The earlier checkout/download account below retains its original identities.
 
 Current development checkout **3.1.0-dev.3** adds support guidance and accessible
 export folders. Felix accepted the single FB2311 manual test on **3.1.0-dev.2**;
@@ -49,8 +55,10 @@ rights clearance. Users need their own MATLAB/toolbox access.
 
 Imaging routes require Image Processing Toolbox; some analyses need Statistics
 and Machine Learning Toolbox. Whole-application compatibility is not established.
-Felix’s FB2311 feedback is recorded separately from assistant checks; an unfamiliar
-scientist’s independent walkthrough is still absent. [Environment evidence](SOFTWARE_NEXT_05_DELIVERY.md).
+Felix’s FB2311 feedback is recorded separately from assistant checks. On
+14 October he requested skipping the second user review; its preparation is
+also skipped for the current plan. An unfamiliar scientist's walkthrough remains
+absent and is not claimed as passed. [Environment evidence](SOFTWARE_NEXT_05_DELIVERY.md).
 
 ## Evidence gaps and release choice
 

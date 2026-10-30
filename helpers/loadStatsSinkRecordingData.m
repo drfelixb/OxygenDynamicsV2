@@ -1,7 +1,9 @@
-function SinkData = loadStatsSinkRecordingData(SinksDataFolder,UseCurated,RecordingFolder,RecordingMetadata)
+function SinkData = loadStatsSinkRecordingData(SinksDataFolder,UseCurated,RecordingFolder,RecordingMetadata,SinksMatFile)
 %LOADSTATSSINKRECORDINGDATA Load and prepare sink stats for one recording.
 
-SinksMatFile = selectStatsMatFile(SinksDataFolder,'Urefined','Urefined oxygen sink',RecordingMetadata.DatafileID);
+if nargin<5||isempty(SinksMatFile)
+    SinksMatFile = selectStatsMatFile(SinksDataFolder,'Urefined','Urefined oxygen sink',RecordingMetadata.DatafileID);
+end
 SinkTable = loadRequiredMatVar(SinksMatFile,'Table_OxygenSinks_Out');
 SinkEventTable = loadOptionalMatVar(SinksMatFile,'Table_OxygenSinkEvents_Out',[]);
 

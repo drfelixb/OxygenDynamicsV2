@@ -1,0 +1,62 @@
+function Batch=createBOIBatch(InputTable,BaseFolder)
+%CREATEBOIBATCH Create a text-only batch preparation document; never run it.
+% Only Paths is entered per recording. Acquisition values may remain blank
+% in a draft, and no scientific defaults are inferred. Custom columns remain
+% descriptive text, including leading-zero IDs and empty labels.
+if nargin<1||(isempty(InputTable)&&~istable(InputTable)),InputTable=table();end
+if nargin<2||isempty(BaseFolder),BaseFolder=pwd;end
+assert(istable(InputTable),'OxygenDynamics:InvalidBatch','Batch rows must be a table.');
+assert((ischar(BaseFolder)&&isrow(BaseFolder))||(isstring(BaseFolder)&&isscalar(BaseFolder)&&~ismissing(BaseFolder)), ...
+    'OxygenDynamics:InvalidBatch','Supply one batch base folder.');
+assert(strlength(string(BaseFolder))>0,'OxygenDynamics:InvalidBatch','Supply one batch base folder.');
+baseFile=java.io.File(char(BaseFolder));
+if ~baseFile.isAbsolute(),baseFile=java.io.File(fullfile(pwd,char(BaseFolder)));end
+BaseFolder=char(baseFile.getCanonicalPath());
+names=InputTable.Properties.VariableNames;
+reserved={'Paths','SampleF','Pixelsize','BOISupportProfile', ...
+    'Mouse','Condition','DrugID','Genotype','Promoter','RecordingLabel','RecordingDate', ...
+    'Session','Sex','AgeDays','BrainRegion','Project','Operator','Notes', ...
+    'PostureFile','PupilFile','PuffsFile','BatchRowID', ...
+    'InputStatus','AnalysisStatus','ResultCheck','ReviewStatus','RunID','RunFolder', ...
+    'StartedUTC','CompletedUTC','SoftwareVersion','Stage','ElapsedSeconds','Message','AttemptHistory', ...
+    'BOIBatchSampleFOrigin','BOIBatchPixelsizeOrigin','BOIBatchBOISupportProfileOrigin', ...
+    'BOIBatchSharedSampleF','BOIBatchSharedPixelsize','BOIBatchSharedBOISupportProfile','BOIBatchSharedConfirmed'};
+assert(numel(unique(lower(string(names))))==numel(names), ...
+    'OxygenDynamics:BatchColumnCollision','Batch column names must be unique, including their letter case.');
+for k=1:numel(names)
+    assert(strlength(strtrim(string(names{k})))>0,'OxygenDynamics:BatchColumnCollision','CSV headers cannot be blank.');
+    match=find(strcmpi(names{k},reserved),1);
+    if ~isempty(match)&&~strcmp(names{k},reserved{match})
+        error('OxygenDynamics:BatchColumnCollision','Column %s conflicts with the reserved name %s. Use its exact spelling.',names{k},reserved{match});
+    end
+    try
+        value=string(InputTable.(names{k}));
+    catch
+        error('OxygenDynamics:InvalidBatch','Column %s must contain one text value per row.',names{k});
+    end
+    assert(size(value,2)==1&&size(value,1)==height(InputTable), ...
+        'OxygenDynamics:InvalidBatch','Column %s must contain one text value per row.',names{k});
+    value(ismissing(value))="";
+    InputTable.(names{k})=value;
+end
+assert(height(InputTable)==0||ismember('Paths',names), ...
+    'OxygenDynamics:BatchMissingPaths','The CSV needs a Paths column, with one recording folder per row.');
+defaults={'Paths','';'SampleF','';'Pixelsize','';'BOISupportProfile',''; ...
+    'BatchRowID','';'InputStatus','Unchecked';'AnalysisStatus','Not analyzed'; ...
+    'ResultCheck','Unchecked';'ReviewStatus','Not reviewed';'RunID','';'RunFolder',''; ...
+    'StartedUTC','';'CompletedUTC','';'SoftwareVersion','';'Stage','';'ElapsedSeconds','';'Message','';'AttemptHistory','[]'};
+for k=1:size(defaults,1)
+    if ~ismember(defaults{k,1},InputTable.Properties.VariableNames)
+        InputTable.(defaults{k,1})=repmat(string(defaults{k,2}),height(InputTable),1);
+    end
+end
+for k=find(strlength(strtrim(InputTable.BatchRowID))==0)'
+    InputTable.BatchRowID(k)=string(char(java.util.UUID.randomUUID()));
+end
+assert(numel(unique(InputTable.BatchRowID))==height(InputTable), ...
+    'OxygenDynamics:BatchDuplicateRowID', ...
+    'BatchRowID values repeat. Keep one row or explicitly give the copied row a new identity before attaching results.');
+Batch=struct('Schema','boi-batch-1','Rows',InputTable,'BaseFolder',BaseFolder, ...
+    'Shared',struct('SampleF','','Pixelsize','','BOISupportProfile',''), ...
+    'SharedConfirmed',false,'FilePath','','FileSHA256','');
+end

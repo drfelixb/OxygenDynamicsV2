@@ -8,6 +8,9 @@ end
 if isfield(HypoxicBurden,'MetricBasis') && ~isempty(HypoxicBurden.MetricBasis)
     writetable(HypoxicBurden.MetricBasis,OutputXlsx,'Sheet','HypoxicBurden_Basis');
 end
+if isfield(HypoxicBurden,'ReferencePolicy') && ~isempty(HypoxicBurden.ReferencePolicy)
+    writetable(HypoxicBurden.ReferencePolicy,OutputXlsx,'Sheet','HypoxicBurden_ReferencePolicy');
+end
 
 if isfield(HypoxicBurden,'EventTable') && ~isempty(HypoxicBurden.EventTable)
     writetable(HypoxicBurden.EventTable,OutputXlsx,'Sheet','HypoxicBurden_EventBased');

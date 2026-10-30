@@ -26,9 +26,9 @@ fs=uieditfield(g,'text','ValueChangedFcn',@invalidate,'Tooltip','Supply the acqu
 a=uilabel(g,'Text','Pixel size (µm/pixel)');place(a,4,3);
 px=uieditfield(g,'text','ValueChangedFcn',@invalidate);place(px,4,4);
 a=uilabel(g,'Text','Detection support');place(a,5,1);
-profile=uidropdown(g,'Items',{'Choose explicitly','Reviewed craniotomy ROI','Legacy whole image'}, ...
+profile=uidropdown(g,'Items',{'Choose explicitly','Reviewed craniotomy ROI','Automatic tissue estimate (legacy)'}, ...
     'ItemsData',{'','craniotomy-roi-1','whole-image'},'Value','','ValueChangedFcn',@invalidate);place(profile,5,2);
-profile.Tooltip='Choose explicitly: a matching saved tissue boundary for Reviewed craniotomy ROI, or the existing method for Legacy whole image.';
+profile.Tooltip='Automatic tissue estimate (legacy) estimates tissue from intensity; no preset ROI is needed. Inspect the estimated edge after analysis. Reviewed craniotomy ROI requires a matching saved tissue boundary.';
 a=uilabel(g,'Text','Mouse / condition');place(a,5,3);
 identity=uigridlayout(g,[1 2]);identity.Padding=[0 0 0 0];place(identity,5,4);
 mouse=uieditfield(identity,'text','Placeholder','Mouse (optional)','ValueChangedFcn',@invalidate);

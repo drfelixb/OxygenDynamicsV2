@@ -88,8 +88,8 @@ To build a clean release copy without raw data or generated outputs, run:
 createOxygenReleasePackage
 ```
 
-The current development checkout is `v3.1.0-dev.3`, build
-`2026-10-13 20:02:39 +02:00`. The preserved ZIPs remain 3.1.0-dev.2;
+The current development checkout is `v3.1.0-dev.8`, build
+`2026-10-15 12:58:02 +02:00`. The preserved ZIPs remain 3.1.0-dev.2;
 this interface delivery does not build a replacement ZIP. Version metadata is maintained in
 `getOxygenPipelineVersion.m`.
 
@@ -154,9 +154,20 @@ Vascular annotation rules:
 
 ## 4. Input CSV Format
 
-The wrapper, stats, and verification scripts use a metadata CSV.
+For the BOI batch preparation window, use `openBOIBatchEditor` or **Batch
+recordings** in the launcher. Enter a folder per row and confirm shared sampling
+rate, pixel calibration and detection support, with optional row overrides.
+The portable CSV resolves `Paths`, `SampleF`, `Pixelsize`, `BOISupportProfile`;
+subject/experimental labels and custom columns are optional. Review and confirm
+selected ready rows to run them sequentially with saved status/history. See the
+[batch editor guide](docs/BOI_BATCH_EDITOR.md) and
+[execution guide](docs/BOI_BATCH_EXECUTION.md).
 
-Required columns:
+The existing wrapper, stats and verification routes continue to use their
+legacy metadata CSV. The small editor CSV is consumed by the new preparation
+adapter and must not be passed directly to the legacy scripts.
+
+Legacy wrapper/verification required columns:
 
 ```text
 Paths
@@ -171,6 +182,10 @@ Promoter
 SampleF
 Pixelsize
 ```
+
+Direct legacy statistics additionally requires `WhiskingFile` and `Puff_2use`.
+Leave irrelevant behaviour values empty/NaN as appropriate for that route. The
+new BOI preparation adapter generates the verbose compatibility columns internally.
 
 Optional methoxy-X04 column:
 
@@ -1026,3 +1041,27 @@ For first-pass figures after stats:
 ```matlab
 runOxygenSummaryFigures
 ```
+
+
+## Sequential BOI batch execution
+
+Use **Batch recordings** to check a CSV and select ready rows. Choose an output
+parent, review the queue and confirm before running. Held rows remain excluded;
+verified matching completed rows are skipped by default. Progress/history are
+saved, and failure or **Stop after current recording** prevents later dispatch.
+See the [batch execution guide](docs/BOI_BATCH_EXECUTION.md).
+
+After completion, choose **Stats / export…** to collect verified saved recordings
+through the existing multi-recording stats/export service. Review the included
+and excluded rows and fresh destination, confirm, then **Run stats / export**.
+The usual combined Excel/MAT event, metric and trace exports are available through
+**Open workbook** and **Open folder**. The recording/window inspector is optional.
+See [combined export](docs/BOI_BATCH_EXECUTION.md#collect-completed-recordings-for-postprocessing).
+
+
+## Pre-episode references in batch burden exports
+
+Local 3.1.0-dev.9 adds the approved recurrent-pocket reference to **Review combined export** and **Run stats / export** through the existing statistics workflow. It uses saved trace
+and native-mask evidence; no extra mandatory batch CSV fields or event-by-event
+review are required. See [reference and export columns](docs/BOI_PRE_EPISODE_BASELINE.md).
+Original automatic measurements and earlier output folders remain preserved.

@@ -96,9 +96,31 @@ if nargin > 0
 end
 
 Masterfolder=StatsConfig.masterFolder;
-InputD=readInputTable(StatsConfig.inputCsv);
+if isfield(StatsConfig,'savedRecordingSources')
+    % Batch collection preserves saved text labels, including leading-zero IDs.
+    opts=detectImportOptions(StatsConfig.inputCsv,'Delimiter',',');
+    opts=setvartype(opts,{'Paths','Mouse','Genotype','Condition','DrugID','Promoter','RecordingID'},'char');
+    InputD=readtable(StatsConfig.inputCsv,opts);
+else
+    InputD=readInputTable(StatsConfig.inputCsv);
+end
 RequiredInputColumns = {'Paths','PostureFile','PupilFile','PuffsFile','WhiskingFile','Mouse','Genotype','Condition','DrugID','Promoter','SampleF','Pixelsize','Puff_2use'};
 validateInputTableColumns(InputD,RequiredInputColumns,StatsConfig.inputCsv);
+SavedSources=[];StatsProgress=[];
+if isfield(StatsConfig,'savedRecordingSources')
+    SavedSources=StatsConfig.savedRecordingSources;
+    assert(isstruct(SavedSources)&&numel(SavedSources)==height(InputD)&& ...
+        all(isfield(SavedSources,{'RecordingID','RecordingFolder','SinkMaster','SurgeMaster'}))&& ...
+        ismember('RecordingID',InputD.Properties.VariableNames)&& ...
+        isequal(string({SavedSources.RecordingID})',string(InputD.RecordingID)), ...
+        'OxygenDynamics:StatsSavedSource','Exact saved sources must match the CSV recording identities and row order.');
+end
+if isfield(StatsConfig,'progressFcn')
+    StatsProgress=StatsConfig.progressFcn;
+    assert(isempty(StatsProgress)||isa(StatsProgress,'function_handle'), ...
+        'OxygenDynamics:StatsProgress','Supply an optional progress function handle.');
+    StatsConfig=rmfield(StatsConfig,'progressFcn'); % Never serialize a GUI closure.
+end
 %%
 Paths=table2cell(InputD(:,{'Paths'}));
 validateRecordingPaths(Paths,Masterfolder,StatsConfig.inputCsv);
@@ -223,6 +245,7 @@ StatsRunTimer = tic;
 fprintf('[Stats %s] Loading recording outputs from %d CSV rows...\n', ...
     char(datetime('now','Format','HH:mm:ss')),length(Paths));
 for datai=1:length(Paths)
+    reportProgress('loading',datai,length(Paths),string(Mice{datai}));
     fprintf('[Stats %s] Loading recording %d/%d: mouse %s, condition %s, path %s\n', ...
         char(datetime('now','Format','HH:mm:ss')),datai,length(Paths), ...
         string(Mice{datai}),string(Conditions{datai}),string(Paths{datai}));
@@ -231,6 +254,7 @@ for datai=1:length(Paths)
         Genotypes{datai},Promoters{datai},DrugIDs{datai},Postures{datai}, ...
         Pupils{datai},Puffs{datai},Whiskings{datai},Pixelsizes{datai});
     RecordingInput.SampleF = SampleFs{datai};
+    if ~isempty(SavedSources),RecordingInput.SavedSources=SavedSources(datai);end
     if ismember('RecordingID',InputD.Properties.VariableNames)
         RecordingInput.RecordingID = string(InputD.RecordingID(datai));
     end
@@ -241,6 +265,7 @@ for datai=1:length(Paths)
 end
 
 fprintf('[Stats %s] Combining loaded recording tables...\n',char(datetime('now','Format','HH:mm:ss')));
+reportProgress('combining',length(Paths),length(Paths),'');
 StatsInfo.LoadSummary = warnStatsLoadedDataIssues(StatsInfo,StatsRecordingCells,IsBLI);
 StatsLoadedData=createStatsLoadedRecordingData(StatsRecordingCells);
 RecordingRegistry=vertcatCellTables(StatsRecordingCells.RecordingRegistry);
@@ -249,6 +274,7 @@ if IsBLI
     [RecordingRegistry,BOIInputContracts,RecordingInputQC,RecordingFrameExposure] = ...
         buildBOIRecordingInputContracts(RecordingRegistry,StatsInfo.Recordings);
     if ~isempty(BOIInputContracts),StatsInfo.PipelineContract=BOIInputContracts{1}.PipelineContract;end
+    StatsInfo.EpisodeReferencePolicy=boiEpisodeReferencePolicy();
     StatsInfo.BOIInputContractVersion = 'boi-recording-input-1';
     StatsInfo.BOIWindowAuditVersion = 'boi-window-exposure-1';
 end
@@ -532,6 +558,7 @@ if isfield(StatsConfig,'baselinePairsCsv') && strlength(string(StatsConfig.basel
 end
 StatsCoreData.BaselineContrasts=createOxygenBaselineContrasts(StatsCoreData.HypoxicBurden.RecordingTable,Pairs);
 fprintf('[Stats %s] Exporting stats results and workbook...\n',char(datetime('now','Format','HH:mm:ss')));
+reportProgress('exporting',length(Paths),length(Paths),'');
 StatsExportInfo = exportStatsResults(StatsoutputfolderPath,StatsConfig.inputCsv, ...
     IsBLI,StatsCoreData,StatsBLIData,StatsBLIWorkbookData,ExportReady, ...
     EventSnippetTables,EventSnippetSheetNames);
@@ -549,4 +576,9 @@ StatsResult.DataOutputMat = StatsExportInfo.DataOutputMat;
 StatsResult.EventSpecificOutputXlsx = StatsExportInfo.EventSpecificOutputXlsx;
 StatsResult.EventSpecificDataMat = StatsExportInfo.EventSpecificDataMat;
 
+reportProgress('complete',length(Paths),length(Paths),'');
+    function reportProgress(stage,index,count,mouse)
+        if isempty(StatsProgress),return;end
+        StatsProgress(struct('Stage',stage,'Index',index,'Count',count,'Mouse',char(mouse)));
+    end
 end

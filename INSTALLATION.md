@@ -1,11 +1,14 @@
 # Open the current development checkout
 
-13 October 2026 · **3.1.0-dev.3**, build **2026-10-13 20:02:39 +02:00**.
+30 October 2026 · **3.1.0-dev.10**, build **2026-10-30 11:14:26 +01:00**.
 
-Use `development-existing-analysis-v3` for the detection-support guidance and
-persistent export-folder controls. The preserved development ZIPs remain
-**3.1.0-dev.2** and do not contain these interface fixes. No replacement ZIP is
-built by this delivery. Keep older installations and all result folders.
+The local development checkout adds **Batch recordings** for CSV preparation,
+shared settings, optional metadata, row checks and sequential execution with
+saved status/history. Choose the output parent and review/confirm selected ready
+rows before starting; see [batch execution](docs/BOI_BATCH_EXECUTION.md). The preserved development ZIPs
+remain **3.1.0-dev.2**. This development checkpoint is being saved to the
+existing development branch; it builds no replacement ZIP. Keep older installations
+and results. See [checkpoint details](docs/BOI_DEVELOPMENT_CHECKPOINT_20261030.md).
 
 In a fresh ordinary MATLAB desktop, make the updated `existing-analysis` checkout
 Current Folder. Close older BOI viewer windows before switching installations.
@@ -28,9 +31,15 @@ extraction resolves instead. Click **Open saved run → Choose BOIRun.mat** and
 select an existing completed run. No recording is rerun by reopening it.
 The software checkout contains no recordings or example results.
 
+For the batch editor run `openBOIBatchEditor`, or start `OxygenDynamics_GUI`
+and click **Batch recordings**. See the [batch editor guide](docs/BOI_BATCH_EDITOR.md)
+and repository template `examples/boi-batch-draft.csv`. Adding/opening/checking a
+batch does not start recording analysis; execution requires a reviewed, confirmed queue.
+
 For new analysis, choose **Detection support** explicitly: **Reviewed craniotomy
-ROI** requires a matching saved tissue boundary; **Legacy whole image** uses the
-existing whole-image method. Click **Review settings**, inspect required corrections,
+ROI** requires a matching saved tissue boundary; **Automatic tissue estimate (legacy)** estimates tissue
+from image intensity without a preset ROI. Inspect the estimated edge after
+analysis; the saved support value remains `whole-image`. Click **Review settings**, inspect required corrections,
 scientific warnings and unknowns, then confirm. A changed support choice clears
 confirmation; no method is selected automatically.
 

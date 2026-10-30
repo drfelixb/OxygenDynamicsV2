@@ -1,5 +1,7 @@
-> Development snapshot: **3.1.0-dev.3**, build `2026-10-13 20:02:39 +02:00`.
+> Development snapshot: **3.1.0-dev.10**, build `2026-10-30 11:14:26 +01:00`.
 > This is not a release; prior saved-run metadata remains unchanged.
+
+> Approved pre-episode sink references are available in the existing batch stats/export workflow; [reference rules and output columns](docs/BOI_PRE_EPISODE_BASELINE.md). Original measurements and historical outputs are preserved.
 
 # OxygenDynamicsV2
 
@@ -12,6 +14,7 @@ make your own measurement choices before interpreting the results.
 
 ## What you can do now
 
+- Prepare a batch CSV in **Batch recordings**: add folders, confirm shared acquisition/support settings, edit optional metadata, and check each row. [Batch editor guide](docs/BOI_BATCH_EDITOR.md).
 - Reopen an existing analysis and inspect its event traces and saved image regions.
 - Review one recording's explicit timing, calibration and detection-support choice before starting analysis yourself.
 - Mark an interval as a pocket and choose the exact frames before it to use as a reference.
@@ -23,6 +26,15 @@ make your own measurement choices before interpreting the results.
 The recent work made this reviewed-measurement workflow usable from the MATLAB
 interface, including folder selection, cancellation and a readable saved-result
 viewer. Original automatic results remain available separately.
+
+The batch editor prepares CSVs, verifies saved results and runs explicitly
+reviewed ready rows sequentially, with status/history saved after each stage.
+Checks show the current recording and verification stage. **Open saved run**
+checks only the selected recording before opening its linked results.
+After a batch, **Stats / export…** collects completed saved recordings into the
+existing combined stats workbook, event tables and trace exports for postprocessing.
+Start it with `openBOIBatchEditor`, or choose **Batch recordings** in
+`OxygenDynamics_GUI`.
 
 ## What the numbers mean
 
@@ -91,7 +103,7 @@ which createBOIExportFolderPanel -all
 openBOIRecordingWorkflow
 ```
 
-Expected: version 3.1.0-dev.3 and the build above, with functions resolving from
+Expected: version 3.1.0-dev.7 and the build above, with functions resolving from
 this checkout, not an older extracted installation. Close older viewer windows
 before switching installations.
 
@@ -203,3 +215,10 @@ includes those documents; earlier ZIPs are preserved. The software builds on the
 associated with [the 2024 Science paper](https://doi.org/10.1126/science.adn1011).
 When comparing results with earlier software versions, check the calculation
 and units: some measurement definitions have changed.
+
+
+Batch execution: **Batch recordings → Select ready → Run selected…** opens the
+review for a sequential BOI queue. Choose an output parent, review the settings,
+exclusions, new destinations and source-copy storage, then confirm and run.
+[Batch execution guide](docs/BOI_BATCH_EXECUTION.md) covers progress, history,
+verified skips, fresh retries and stop-after-current behavior.

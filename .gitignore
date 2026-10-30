@@ -25,6 +25,9 @@ old Versions/
 *.tiff
 *.mat
 *.csv
+!examples/boi-batch-draft.csv
+!examples/boi-batch-minimal.csv
+!examples/boi-batch-metadata.csv
 *.xls
 *.xlsx
 *.prism
