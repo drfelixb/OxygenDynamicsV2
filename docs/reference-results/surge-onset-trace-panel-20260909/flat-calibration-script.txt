@@ -1,0 +1,18 @@
+setupOxygenDynamicsPath; addpath('tests/analysis');
+records=cell(96,1);idx=0;x=100*ones(1,240);native=120:180;
+for context=["fixed","available"]
+ for amplitude=[.02 .05 .10 .20]
+  for rise=[5 15 30]
+   for shape=["linear","sine_squared"]
+    for delay=[10 25]
+     onset=native(1)-delay;env=surgeTracePanelEnvelope(numel(x),onset,rise,shape);
+     R=estimateSurgeLocalOnset(x.*(1+amplitude*env),native,1,false(size(x)),context);
+     R.Context=context;R.AmplitudeFraction=amplitude;R.RiseFrames=rise;R.Shape=shape;R.DelayFrames=delay;
+     R.TruthOnsetFrame=onset;R.OnsetErrorSec=R.OnsetFrame-onset;R.WithinFiveSec=abs(R.OnsetErrorSec)<=5;
+     R.PosthocCalibration=true;idx=idx+1;records{idx}=R;
+    end
+   end
+  end
+ end
+end
+assert(idx==96);writetable(struct2table(vertcat(records{:})),'../reference-validation/surge-onset-trace-panel-20260909/flat-calibration.csv');

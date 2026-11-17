@@ -1,0 +1,18 @@
+{
+  "InputDesignMatches": true,
+  "RowsCompared": 28,
+  "PreviousContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-sd-1",
+    "Measurement": "event-footprint-local-timing-2",
+    "Statistics": "mouse-strict-3",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  },
+  "CurrentContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-sd-retain-close-2",
+    "Measurement": "event-footprint-local-timing-recurrence-3",
+    "Statistics": "mouse-strict-recurrence-4",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  }
+}

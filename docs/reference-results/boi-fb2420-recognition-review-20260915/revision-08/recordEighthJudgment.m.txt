@@ -1,0 +1,32 @@
+function recordEighthJudgment
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(fileparts(here)));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+f=fullfile(here,'feedback.json');d=jsondecode(fileread(f));s=d.SourceBindings;names=fieldnames(s);
+for k=1:numel(names),v=s.(names{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+R=loadBOIEventReview(s.Audit.Path);Previous=loadBOIBoundaryReview(R,s.PreviousReview.Path);
+A=struct('Status','not_recognized','OnsetFrames',[],'RecoveryFrames',[], ...
+ 'PreferredOnsetFrame',[],'PreferredRecoveryFrame',[],'Reviewer','Researcher (user)', ...
+ 'Reason',['User: "i do not recognize a surge there" for case 8, surge site 11/event 5, automatic native/measured frames 971-1034. No additional rationale, boundaries, alternative interval or reference inferred. Exact reply/context SHA256: ' oxygenFileSHA256(f)]);
+newpath=fullfile(here,'BOI-researcher-review-08.json');
+Store=saveBOIBoundaryReview(R,309,A,newpath,Previous);
+assert(numel(Store.Document.Revisions)==8);
+assert(isequaln(Store.Document.Revisions(1:7),Previous.Document.Revisions));
+R.BoundaryReview=Store;B=getBOIBoundaryReview(R,309);
+assert(strcmp(B.Status,'not_recognized')&&isempty(B.Annotation.OnsetFrames)&&isempty(B.Annotation.RecoveryFrames));
+assert(strcmp(getBOIBoundaryReview(R,34).Status,'not_recognized'));
+assert(strcmp(getBOIBoundaryReview(R,283).Status,'not_reviewed'));
+assert(strcmp(getBOIBoundaryReview(R,291).Status,'recognized'));
+priorSurge=getBOIBoundaryReview(R,291);assert(isequal(priorSurge.Annotation.OnsetFrames,130)&&isequal(priorSurge.Annotation.RecoveryFrames,150));
+addpath(fullfile(root,'reference-validation','boi-fb2420-first-roi-run-20260915'));
+for pos=[8 9]
+ [Fig,UI]=openFB2420Review(pos);UI.LoadBoundaries(newpath);drawnow;
+ exportapp(Fig,fullfile(here,sprintf('case-%02d-timing.png',pos)));close(Fig);
+end
+for k=1:numel(names),v=s.(names{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+v=struct('Status','saved_reloaded_and_rendered','CumulativeRevisionCount',8, ...
+ 'AnnotationAuditRow',309,'AnnotationStatus','not_recognized','NoBoundaryFrames',true, ...
+ 'NoAdditionalContextInferred',true,'PreviousRevisionPreserved',true, ...
+ 'AutomaticSourcesUnchanged',true,'NextQueuePosition',9,'NextAuditRow',283, ...
+ 'NextStatus','not_reviewed','BoundaryArtifact',struct('Path',Store.Path,'SHA256',Store.SHA256));
+fid=fopen(fullfile(here,'verification.json'),'w');fprintf(fid,'%s\n',jsonencode(v,'PrettyPrint',true));fclose(fid);
+end

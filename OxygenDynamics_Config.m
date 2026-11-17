@@ -8,6 +8,7 @@ function Config = OxygenDynamics_Config()
 Config = struct();
 
 Config.OxygenWrapper = struct();
+Config.OxygenWrapper.BOISupportProfile = 'whole-image'; % Explicit legacy default; reviewed ROI is craniotomy-roi-1.
 Config.OxygenWrapper.inputCsv = 'GFAP_GeNL_Ctrl.csv';
 Config.OxygenWrapper.interactive = false;
 Config.OxygenWrapper.reanalyseExisting = true;
@@ -50,6 +51,9 @@ Config.Stats.sinkFolderSelection = 'Recent'; % 'Recent' or 'Oldest'
 Config.Stats.surgeFolderSelection = 'Recent'; % 'Recent' or 'Oldest'
 Config.Stats.behaviourFolderSelection = 'Recent'; % 'Recent' or 'Oldest'
 Config.Stats.outputRoot = 'Stats_Runs';
+Config.Stats.analysisWindowsCsv = '';
+Config.Stats.windowPairsCsv = '';
+Config.Stats.baselinePairsCsv = ''; % Explicit BaselineRecordingID,ComparisonRecordingID pairs
 Config.Stats.behaviourTimeWindows = {'3','3','3','3'}; % manual, movement/whisking, pupil, puff
 
 Config.Verification = struct();

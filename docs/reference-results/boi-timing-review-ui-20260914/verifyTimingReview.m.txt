@@ -1,0 +1,53 @@
+function verifyTimingReview
+workspace='/Users/zcm361/Documents/Github/OxygenDynamicsV2';
+repo=fullfile(workspace,'existing-analysis');cd(repo);setupOxygenDynamicsPath;
+out=fullfile(workspace,'reference-validation/boi-timing-review-ui-20260914');
+audit=fullfile(workspace,'reference-validation/boi-c02-strict-roi-20260912/audit-01/source-amplitude-audit/event-amplitude-audit.mat');
+R=loadBOIEventReview(audit);hash=oxygenFileSHA256(audit);results={};
+out=fullfile(out,'run-04');mkdir(out);
+% Snapshot the preceding implementation under a separate name: same helper
+% dependencies, all original measurement fields compared without source edits.
+old=fileread(fullfile(out,'../before/helpers/buildBOIEventReviewData.m'));
+old=strrep(old,'function Data=buildBOIEventReviewData(','function Data=priorBuildBOIEventReviewData(');
+scratch=tempname;mkdir(scratch);cleanup=onCleanup(@()cleanScratch(scratch));
+writeText(fullfile(scratch,'priorBuildBOIEventReviewData.m'),old);addpath(scratch);
+for k=1:height(R.Audit)
+    D=buildBOIEventReviewData(R,k);B=priorBuildBOIEventReviewData(R,k);
+    assert(isequaln(D.Row,B.Row)&&isequaln(D.Frames(:,B.Frames.Properties.VariableNames),B.Frames));
+    assert(isequaln(D.BaselineDiagnostic,B.BaselineDiagnostic));
+    assert(isequaln(D.ReplayedAmplitude,B.ReplayedAmplitude)&&isequaln(D.ReplayedBaseline,B.ReplayedBaseline));
+    assert(isequaln(D.Frames.CorrectedIntensity,double(R.Traces{k}.DetectionDetrended(:))));
+    assert(isequaln(D.Frames.FilteredDetectionScore,double(R.Traces{k}.Filtered(:))));
+    assert(isequaln(D.Frames.SavedSiteTimingTrace,double(R.Traces{k}.TimingTrace(:))));
+end
+[fig,UI]=openBOIEventReview(audit);closeFig=onCleanup(@()delete(fig));
+for row=[186 321]
+    UI.Select(row);UI.Tabs.SelectedTab=UI.TimingTab;UI.Timing.RawToggle.Value=true;UI.Timing.RawToggle.ValueChangedFcn([],[]);
+    drawnow;pause(.5);drawnow;exportapp(fig,fullfile(out,sprintf('timing-row-%d.png',row)));
+    D=buildBOIEventReviewData(R,row);receipt=exportBOIEventReview(R,row,fullfile(out,sprintf('event-row-%d',row)));
+    results{end+1}=struct('AuditRow',row,'EventType',char(D.Row.EventType),'SiteID',D.Row.SiteID,'EventID',D.Row.EventID, ...
+        'AmplitudeUnchanged',true,'SavedStagesExact',true,'ExportSchema',receipt.Schema); %#ok<AGROW>
+end
+UI.Select(186);UI.Tabs.SelectedTab=UI.TimingTab;UI.Timing.RawToggle.Value=false;UI.Timing.RawToggle.ValueChangedFcn([],[]);
+drawnow;pause(.5);drawnow;exportapp(fig,fullfile(out,'timing-primary-view.png'));
+delete(fig);clear closeFig;
+% Actual earlier saved audit, without reconstructed detection stages.
+historic=fullfile(workspace,'reference-validation/boi-hp-workflow-20260910/event-audit/event-amplitude-audit.mat');
+H=loadBOIEventReview(historic);historicHash=oxygenFileSHA256(historic);D=buildBOIEventReviewData(H,1);
+assert(strcmp(D.TimingReview.Corrected.Status,'not_saved'));
+assert(all(isnan(D.Frames.CorrectedIntensity))&&D.ReplayMatches);
+[fig,UI]=openBOIEventReview(historic);closeFig=onCleanup(@()delete(fig));UI.Tabs.SelectedTab=UI.TimingTab;
+drawnow;pause(.5);drawnow;exportapp(fig,fullfile(out,'timing-historical-missing-stage.png'));
+exportBOIEventReview(H,1,fullfile(out,'historical-event-row-1'));
+assert(strcmp(hash,oxygenFileSHA256(audit))&&strcmp(historicHash,oxygenFileSHA256(historic)));
+report=struct('Status','passed','MeasurementRowsCompared',height(R.Audit),'SavedStageSamplesCompared',height(R.Audit)*R.AnalysisInfo.NFrames*3, ...
+    'ActualEvents',{results},'AuditPath',audit,'AuditSHA256',hash,'HistoricalAuditPath',historic,'HistoricalAuditSHA256',historicHash, ...
+    'HistoricalMissingStagesRemainUnavailable',true,'PriorMeasurementFieldsUnchanged',true,'DetectorReruns',0,'NewTimingFits',0);
+writeText(fullfile(out,'saved-audit-verification.json'),jsonencode(report,'PrettyPrint',true));disp(report);
+end
+function cleanScratch(scratch)
+rmpath(scratch);rmdir(scratch,'s');
+end
+function writeText(path,value)
+fid=fopen(path,'w');assert(fid>=0);c=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',value);
+end

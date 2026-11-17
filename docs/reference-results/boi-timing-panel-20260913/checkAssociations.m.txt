@@ -1,0 +1,16 @@
+root=fileparts(mfilename('fullpath'));ws=fileparts(fileparts(root));cd(fullfile(ws,'existing-analysis'));setupOxygenDynamicsPath;
+R=jsondecode(fileread(fullfile(root,'recordings.json')));sel=jsondecode(fileread(fullfile(root,'selection.json')));results=cell(numel(R),1);timer=tic;
+for k=1:numel(R)
+    r=R(k);V=loadBOIEventReview(r.AuditMat);I=V.AnalysisInfo;ids=find(strcmp({sel.UniqueEvents.RecordingKey},r.RecordingKey));cases=cell(numel(ids),1);
+    for q=1:numel(ids)
+        e=sel.UniqueEvents(ids(q));master=r.SinkMaster;if strcmp(e.EventType,'surge'),master=r.SurgeMaster;end
+        V=attachBOINativeMasks(V,e.AuditRow,master);a=V.NativeMasks{e.AuditRow};
+        cases{q}=struct('EventType',e.EventType,'SiteID',e.SiteID,'EventID',e.EventID,'AuditRow',e.AuditRow,'MasterSHA256',a.MasterSHA256,'Association',a.Association);
+    end
+    denoised='';if isfield(I,'DenoisedFile'),denoised=I.DenoisedFile;end
+    profile=getBOISupportProfile(I);
+    results{k}=struct('RecordingKey',r.RecordingKey,'Cases',{vertcat(cases{:})},'RawFile',I.RawFile,'RawSHA256',I.RawSHA256,'DenoisedFile',denoised,'SavedDetectionSupportProfile',profile,'QuantitativeSource','saved Raw fixed-footprint trace','CorrectedStageSource','saved DetectionDetrended; follows original raw/denoised detection source','SameSourceForRawAndCorrected',isempty(denoised));
+    clear V
+end
+out=struct('Status','passed','DecisionID','R2-TIMING-PANEL-042','Records',{vertcat(results{:})},'SelectedNativeAssociationsVerified',numel(sel.UniqueEvents),'ElapsedSeconds',toc(timer),'MovieReads',0,'NewTimingCalculations',0);
+fid=fopen(fullfile(root,'native-associations.json'),'w');fprintf(fid,'%s\n',jsonencode(out,'PrettyPrint',true));fclose(fid);disp(out.Status);

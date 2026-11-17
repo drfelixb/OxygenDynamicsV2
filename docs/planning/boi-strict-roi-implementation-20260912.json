@@ -1,0 +1,76 @@
+{
+  "DecisionID": "R1-C02-STRICT-032",
+  "Status": "implementation_phase_complete_scientific_validation_open",
+  "DistinctTestsPassed": 53,
+  "SyntheticReport": {
+    "Schema": "boi-strict-roi-verification-1",
+    "Status": "passed_synthetic_implementation_checks",
+    "MatlabVersion": "25.1.0.2943329 (R2025a)",
+    "StatsSeconds": 9.571196583333334,
+    "EventCounts": [
+      [
+        10,
+        4
+      ],
+      [
+        10,
+        4
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "AuditCounts": [
+      14,
+      14,
+      0
+    ],
+    "MasterSeconds": [
+      3.4466199583333332,
+      2.7663792916666665,
+      1.4145469583333334
+    ],
+    "ExteriorIndependence": "exact_final_native_pixels_and_event_measurements",
+    "Containment": "all_final_native_pixels_inside_sign_support",
+    "StatsMat": "local-evidence/integration-02/statistics/Stats_Output_20260912T154257/DataOutput.mat",
+    "ElapsedSeconds": 26.781950875
+  },
+  "LegacyIntegrationSeconds": 8.620518791666667,
+  "Preservation": {
+    "Prior031ImmutableFilesVerified": 181,
+    "UpdatedStandingDocuments": [
+      {
+        "Path": "docs/REANALYSIS_STATUS.md",
+        "HistoricalSHA256": "1aa6e202ab98f48dcc53d22f90beb8ad7966315cc3dc4936e8270a8e423fbf11",
+        "CurrentSHA256": "6b4255d22a75fb9630a1d274bec4d097ea6994f2c47497132262ccaef842874d"
+      },
+      {
+        "Path": "docs/BOI_SCIENTIFIC_DECISIONS.md",
+        "HistoricalSHA256": "7007f377b5e6f583fde8a0a248e3576cc837d6de6251b393074d4d0b80922641",
+        "CurrentSHA256": "c7a43510e363194f3d36d641868a90f4ba49f20ba0495e1d4f381cbf80a88f63"
+      },
+      {
+        "Path": "docs/BOI_REVIEWED_TISSUE_SUPPORT.md",
+        "HistoricalSHA256": "4a3488c60209d4c7f3585f56330c2fbc5396844e606dad72d2993bd35209cbe3",
+        "CurrentSHA256": "468979909557433ee37ac7004005599d98492b665476806f33d8ca791f367385"
+      }
+    ],
+    "OriginalLegacyFilesUnchanged": [
+      {
+        "path": "OxygenSinks_Output/OxygenSinks_Urefinedbaseline_awake.mat",
+        "sha256": "7244fbb377eea2a4dbab1a8b54af9a0a041649641f1e0f4e984ec67b6601c85b"
+      },
+      {
+        "path": "OxygenSurges_Output/OxygenSurgesbaseline_awake.mat",
+        "sha256": "b111f697b991ac77509f160f7d481434a1655e502c070a19a368b9d084be61da"
+      },
+      {
+        "path": "ManualCurOxySinksData/ManualCurationbaseline_awake.mat",
+        "sha256": "96dd57d66e73b1c53fe22390d1fa604c4ac0c9d33fe53f7aada879a36bda970f"
+      }
+    ],
+    "OriginalSourceUnchanged": true,
+    "FinalMatlabSourceFilesSnapshotted": 467
+  }
+}

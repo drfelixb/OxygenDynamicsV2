@@ -1,0 +1,16 @@
+# Real-acquisition gate: decision after SW-G5-06R-08
+
+29 September 2026. Planning only. The researcher accepts SW-G5-06R-08 as bounded offline diagnostic evidence. Its ten-case result does not complete startup, G5 or release. The historical `containment_failure` and consumed launch approval remain unchanged.
+
+**Recommendation: defer the real-acquisition gate for now and retain it as an explicit release blocker.** The recent work improved diagnostics but did not establish successful live acknowledgement or reliable containment. More incremental diagnostics should not become an automatic continuation. Deferral pauses this work; it does not waive the gate or authorize other implementation.
+
+| Choice | Bounded next step | Consequence |
+| --- | --- | --- |
+| Defer (recommended now) | Record the gate as deferred/open when the researcher selects this option; perform no further containment implementation, checks or launches. Revisit only on an explicit decision to prioritize release readiness. | Real-acquisition integration, measured runtime/memory and required live containment evidence remain unverified. G5/release cannot be signed off with this blocker open. Existing usability and offline acceptances stand. |
+| Pursue independent containment review | Separately approve one independent reviewer and one written, read-only review of the current code and saved evidence. No execution, platform change, implementation or live-attempt proposal during that review. | May identify a defensible containment design or conclude the available evidence/approach is insufficient. The release blocker remains open throughout. |
+
+If review is chosen, the reviewer must not be the implementer of the containment code. Review ownership/birth identity, reparenting and escape, unobserved descendants, lookup races, signal authority, deadline enforcement and the limits of sampled absence. Request one report: findings with severity, whether the containment approach is defensible, required changes, and the minimum finite evidence needed before any live-attempt proposal. An unresolved critical finding or inability to justify containment ends the review with the gate still blocked; no automatic implementation or retry follows. Selecting or contacting a reviewer requires separate authorization; no reviewer has participated in this planning task.
+
+A favorable review would not itself authorize a launch. Any implementation and offline verification would first need their own bounded approval; only afterward could a new live-attempt decision be prepared with exact final hashes, containment evidence, source/output identity and stop limits. The consumed startup cannot be retried under its old approval.
+
+**Decision recorded, 29 September 2026:** the researcher chose deferral. Successful live acknowledgement, verified containment and real-acquisition resource measurements remain explicit open release blockers; real-acquisition integration is also unverified. Historical `containment_failure` and consumed launch approval are unchanged. No further containment diagnostics, MATLAB launch or automatic retry are authorized. Independent containment review was not selected. The [SW-G5-07 audit scope](SOFTWARE_G5_07_AUDIT_PROPOSAL.md) is proposed separately and remains unapproved. G5 and release remain incomplete.

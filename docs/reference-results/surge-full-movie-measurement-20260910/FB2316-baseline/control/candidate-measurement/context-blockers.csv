@@ -1,0 +1,2 @@
+Component,AssignedEventIndex,OnsetStatus,Imposed,NativeStartFrame,LatestBlockedFrame,ContiguousPreNativeFrames,BlockerEventIndex,BlockerEventType,BlockerNativeStartFrame,BlockerNativeEndFrame,SharedPixelsAtLatestBlock,BlockerIntersectsComponent,LatestBlockWithinComponentWindow
+2,2,insufficient_clean_context,False,121,117,3,1,surge,99,117,4264,False,False

@@ -1,0 +1,17 @@
+Stage,Window,FramesWithIntersection,InjectedVolumeCoverage,IntersectingRuns,RowAndNativeBounds
+percentile,1,20,0.461347869177403,1,1:1-180;
+percentile,2,20,0.46209117938553,1,1:1-180;
+candidate_geometry_tissue,1,20,0.461347869177403,1,1:53-82;
+candidate_geometry_tissue,2,20,0.462041625371655,1,1:96-115;
+tracking,1,20,0.461347869177403,1,1:61-80;
+tracking,2,20,0.462041625371655,1,1:96-115;
+duration_only_diagnostic,1,20,0.461347869177403,1,1:61-80;
+duration_only_diagnostic,2,20,0.462041625371655,1,1:96-115;
+duration_and_spacing,1,0,0,0,
+duration_and_spacing,2,20,0.462041625371655,1,1:96-115;
+correlation_1,1,0,0,0,
+correlation_1,2,20,0.462041625371655,1,1:96-115;
+correlation_2,1,0,0,0,
+correlation_2,2,20,0.462041625371655,1,1:96-115;
+correlation_3,1,0,0,0,
+correlation_3,2,20,0.462041625371655,1,1:96-115;

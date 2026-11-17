@@ -1,0 +1,9 @@
+Cohort,Before,After,Criterion,Retained,Gained,Lost,Neither
+development,pulse,selection,Resolved,1082,149,20,2601
+development,pulse,selection,WithinFiveSec,848,84,29,2891
+additional,pulse,selection,Resolved,1150,117,23,5298
+additional,pulse,selection,WithinFiveSec,920,84,46,5538
+noiseless,pulse,selection,Resolved,36,0,0,0
+noiseless,pulse,selection,WithinFiveSec,33,0,0,3
+cached_development,pulse,selection,Resolved,1309,247,28,3552
+cached_development,pulse,selection,WithinFiveSec,1013,158,43,3922

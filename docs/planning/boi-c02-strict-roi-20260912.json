@@ -1,0 +1,152 @@
+{
+  "DecisionID": "R1-C02-STRICT-RUN-033",
+  "Status": "bounded_development_comparison_complete_scientific_acceptance_open",
+  "Session": "FB2314-baseline-awake",
+  "SourceSHA256": "08381f8ef4cb0da80a09645aeffc9416188cf7937eaf207c0536f1f997494cf8",
+  "MethodProfile": "craniotomy-roi-1",
+  "Comparison": [
+    {
+      "Sign": "sink",
+      "BeforeEvents": 175,
+      "AfterEvents": 305,
+      "BeforeFiniteAmplitudes": 100,
+      "AfterFiniteAmplitudes": 143,
+      "BeforeUnavailableAmplitudes": 75,
+      "AfterUnavailableAmplitudes": 162,
+      "BeforeNegativeAmplitudes": 0,
+      "AfterNegativeAmplitudes": 1,
+      "AnalyzedAreaUm2": 714650.1575000001,
+      "BeforeOccupiedFraction": 0.002744184369212382,
+      "AfterOccupiedFraction": 0.005004758887334791,
+      "BeforeUnavailableOnlyCoveredShare": 0.5713615243816587,
+      "AfterUnavailableOnlyCoveredShare": 0.560310918563372,
+      "AfterBoundaryTouchEvents": 150,
+      "AfterBoundaryPixelTimeFraction": 0.037763403891757516,
+      "AfterExteriorPixelTimeFraction": 0
+    },
+    {
+      "Sign": "surge",
+      "BeforeEvents": 21,
+      "AfterEvents": 41,
+      "BeforeFiniteAmplitudes": 11,
+      "AfterFiniteAmplitudes": 10,
+      "BeforeUnavailableAmplitudes": 10,
+      "AfterUnavailableAmplitudes": 31,
+      "BeforeNegativeAmplitudes": 0,
+      "AfterNegativeAmplitudes": 2,
+      "AnalyzedAreaUm2": 724193.0375000001,
+      "BeforeOccupiedFraction": 0.008931578144660083,
+      "AfterOccupiedFraction": 0.022438714556246107,
+      "BeforeUnavailableOnlyCoveredShare": 0.6154390173967674,
+      "AfterUnavailableOnlyCoveredShare": 0.7758782849395965,
+      "AfterBoundaryTouchEvents": 36,
+      "AfterBoundaryPixelTimeFraction": 0.014162556170332435,
+      "AfterExteriorPixelTimeFraction": 0
+    }
+  ],
+  "AllEventSourceAudits": 346,
+  "MeasurementMismatches": 0,
+  "SignedDisagreements": [
+    {
+      "AuditRow": 100,
+      "CaseID": "sink-site10-event1",
+      "Sign": "sink",
+      "SiteID": 10,
+      "EventID": 1,
+      "NativeFrame": 67,
+      "BaselineMean": 1192.1994239631338,
+      "CleanBaselineSamples": 20,
+      "MinSourceChangePercent": 0.39454823989777305,
+      "MaxSourceChangePercent": 10.080012245500237,
+      "StoredAmplitudeFraction": -0.00394548239897773,
+      "AllFootprintPixelsInsideROI": true,
+      "Selection": "all wrong-direction finite events; retain source sign and existing baseline"
+    },
+    {
+      "AuditRow": 308,
+      "CaseID": "surge-site1-event3",
+      "Sign": "surge",
+      "SiteID": 1,
+      "EventID": 3,
+      "NativeFrame": 503,
+      "BaselineMean": 1998.335681672907,
+      "CleanBaselineSamples": 20,
+      "MinSourceChangePercent": -9.164543763876065,
+      "MaxSourceChangePercent": -2.0644933043439226,
+      "StoredAmplitudeFraction": -0.020644933043439225,
+      "AllFootprintPixelsInsideROI": true,
+      "Selection": "all wrong-direction finite events; retain source sign and existing baseline"
+    },
+    {
+      "AuditRow": 309,
+      "CaseID": "surge-site1-event4",
+      "Sign": "surge",
+      "SiteID": 1,
+      "EventID": 4,
+      "NativeFrame": 540,
+      "BaselineMean": 1857.987124945958,
+      "CleanBaselineSamples": 20,
+      "MinSourceChangePercent": -7.942010388483649,
+      "MaxSourceChangePercent": -0.983012959028783,
+      "StoredAmplitudeFraction": -0.00983012959028783,
+      "AllFootprintPixelsInsideROI": true,
+      "Selection": "all wrong-direction finite events; retain source sign and existing baseline"
+    }
+  ],
+  "PriorPreservation": [
+    {
+      "packet": "boi-strict-roi-implementation-20260912",
+      "immutable_files_verified_before_standing_updates": 664,
+      "artifact_record_sha256": "a8e27dc76dff002c19786b331845da2f087e051912a20006016295bdda9a25d1"
+    },
+    {
+      "packet": "boi-c02-reviewed-roi-20260912",
+      "immutable_files_verified_before_standing_updates": 181,
+      "artifact_record_sha256": "98f778fff7d6815281b7efaf89540a5580ee2d733a9790fccd2a3a635ff95080"
+    }
+  ],
+  "OriginalLegacyFilesUnchanged": [
+    {
+      "path": "OxygenSinks_Output/OxygenSinks_Urefinedbaseline_awake.mat",
+      "sha256": "7244fbb377eea2a4dbab1a8b54af9a0a041649641f1e0f4e984ec67b6601c85b"
+    },
+    {
+      "path": "OxygenSurges_Output/OxygenSurgesbaseline_awake.mat",
+      "sha256": "b111f697b991ac77509f160f7d481434a1655e502c070a19a368b9d084be61da"
+    },
+    {
+      "path": "ManualCurOxySinksData/ManualCurationbaseline_awake.mat",
+      "sha256": "96dd57d66e73b1c53fe22390d1fa604c4ac0c9d33fe53f7aada879a36bda970f"
+    }
+  ],
+  "MatlabFilesUnchanged": 467,
+  "ResourceSummary": {
+    "workflow": {
+      "process_seconds": 123.4,
+      "max_rss_bytes": 14827012096,
+      "peak_memory_footprint_bytes": 19795296240
+    },
+    "audit": {
+      "process_seconds": 60.79,
+      "max_rss_bytes": 16451321856,
+      "peak_memory_footprint_bytes": 22592194224
+    },
+    "comparison": {
+      "process_seconds": 12.87,
+      "max_rss_bytes": 1505083392,
+      "peak_memory_footprint_bytes": 1080396536
+    },
+    "signed_case_export": {
+      "process_seconds": 8.1,
+      "max_rss_bytes": 1165819904,
+      "peak_memory_footprint_bytes": 745376216
+    },
+    "master_seconds": 55.002092041666664,
+    "statistics_seconds": 40.757289916666664,
+    "initial_output_bytes": 3244552736.0,
+    "workers": 2,
+    "worker_type": "MATLAB threads",
+    "camera_exposure": "unknown; external 1 Hz is cadence only"
+  },
+  "Next": "Audit how the ROI reference and detrending contribute to the three source-sign disagreements, then specify a fixed global/local signal challenge before further detector changes or cohort expansion."
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "boi-transfer-decision-1",
+  "decision_id": "R1-HP-INPUT-001",
+  "date": "2026-09-10",
+  "source_root": "/Volumes/extZCM361_2/Analysis/HP_indepth/Data",
+  "case": "GFAP-ECS-GeNL/FB2412",
+  "role": "development_input_transfer_check_not_independent_biological_evaluation",
+  "selection_basis": "First CSV row in the ECS-labelled stratum; mouse ID absent from the existing archive ledger. Chosen for input-contract feasibility, not event appearance or expected biological differences.",
+  "inspection_before_record": "CSV and filenames reviewed; first TIFF header and page metadata at indices 0,1,2,1199 inspected. No image pixels or previous event outcomes inspected. Embedded prefix FB2411 conflicts with CSV/folder FB2412. Source timestamps depart from exact 1 Hz. Historical researcher inspection/tuning is unknown.",
+  "decision_to_inform": "Can a source-bound local recording enter the same MATLAB preflight while retaining acquisition facts, unknowns and holds?",
+  "frozen_scope": "One complete source movie, metadata inventory for all 20 CSV rows, zero detector runs, zero outcome tuning, no cohort pooling. Existing source and derived files remain unchanged.",
+  "technical_criteria": "All CSV rows retained; source/staged SHA256 equality; frame metadata correspondence checked for every selected TIFF page; MATLAB reports unsupported timing without replacing timestamps. Technical success is not scientific acceptance.",
+  "budget": "One metadata inventory and one selected-recording preflight. At most one correction of an import/export defect if needed; preserve failed evidence. Stage only the selected source movie and metadata, with no analysis workers.",
+  "stopping_rule": "Stop after the preflight report. Preserve unresolved identity, timing semantics, calibration and signal preparation. A hold leads to an acquisition decision before a biological run, not a substitute case selected for a convenient outcome.",
+  "standing_requirements": ["BOI only; IOSI excluded", "Biological variability and animal-level dependence", "Physiological relevance without inferred mechanisms", "Feasible resource use", "Readable researcher review", "Source and decision traceability"],
+  "approved_analysis_windows": [],
+  "biological_acceptance_criteria": "not established; no biological evaluation in this input check"
+}

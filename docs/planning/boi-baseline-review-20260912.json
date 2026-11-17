@@ -1,0 +1,111 @@
+{
+  "DecisionID": "R2-BASELINE-REVIEW-038",
+  "Status": "diagnostic_review_implementation_complete_scientific_choice_open",
+  "Scope": "BOI saved-event review only",
+  "ReviewChanged": true,
+  "MeasurementDetectorStatisticsChanged": false,
+  "DiagnosticMethod": "boi-baseline-linear-review-1",
+  "DiagnosticSchema": "boi-baseline-diagnostic-1",
+  "ExportSchema": "boi-event-review-export-3",
+  "Tests": {
+    "Tests": 29,
+    "Passed": 29,
+    "Failed": 0,
+    "Incomplete": 0,
+    "Names": [
+      "testBOIEventReview/testBothSignsAndReplay",
+      "testBOIEventReview/testMissingAndMismatchRemainVisible",
+      "testBOIEventReview/testMalformedAndMismatchedAudits",
+      "testBOIEventReview/testSourcePixelsAndMissingOrChangedSource",
+      "testBOIEventReview/testExportReproducesAndPreservesPrior",
+      "testBOIEventReview/testGuiSelectionAndDefinitions",
+      "testBOIEventReview/testEmptyAudit",
+      "testBOIEventReview/testIOSIDeclarationIsRejected",
+      "testBOIEventReview/testNativeFramesDoNotBecomeUnionOrRecurrentEvent",
+      "testBOIEventReview/testNativeMismatchAndMutation",
+      "testBOIEventReview/testNativeExportAndGui",
+      "testBOIEventReview/testDiagnosticUsesOnlySavedBaselineAndPreservesSource",
+      "testBOIEventReview/testDiagnosticUnavailableDoesNotRepairBaseline",
+      "testBOIEventReview/testDiagnosticNonpositiveExtrapolationAndFlatTrace",
+      "testBOIEventReview/testDiagnosticExportSnapshotAndReopening",
+      "testBOIEventReview/testDiagnosticGuiSelectionAndUnavailableState",
+      "testBOIConnectedReview/testMappedIdentityBothSignsAndPartialWindow",
+      "testBOIConnectedReview/testMappingAndMeasurementMismatch",
+      "testBOIConnectedReview/testConnectedExportAndChangedResults",
+      "testBOIConnectedReview/testWindowGuiToEventAndBack",
+      "testBOIConnectedReview/testAuditCreationReceiptAndOriginalPreservation",
+      "testBOIConnectedReview/testAuditFailureRecordAndReceiptMismatch",
+      "testBOIWindowReview/testPartialFramesOnsetsAndUnits",
+      "testBOIWindowReview/testMissingSupportAndZeroDenominator",
+      "testBOIWindowReview/testValidZeroIsDifferent",
+      "testBOIWindowReview/testDisagreementsAndMissingFrameRemainVisible",
+      "testBOIWindowReview/testIdentityScopeAndDuplicateFrames",
+      "testBOIWindowReview/testExportCsvReplayAndMutation",
+      "testBOIWindowReview/testGuiSelectionAndSupport"
+    ]
+  },
+  "Verification": {
+    "Status": "passed",
+    "RepresentativeCases": 3,
+    "MissingBaselineCases": 1,
+    "MaximumDiagnosticArithmeticError": 6.821210263296962e-12,
+    "MaximumOriginalAmplitudeError": 1.9463597400459776e-15,
+    "VerifiedExportArtifacts": 32,
+    "OriginalAuditUnchanged": true,
+    "ChangedExistingMatlabFiles": [
+      "helpers/buildBOIEventReviewData.m",
+      "helpers/exportBOIEventReview.m",
+      "openBOIEventReview.m",
+      "tests/analysis/testBOIEventReview.m"
+    ],
+    "NewMatlabFiles": [
+      "helpers/buildBOIBaselineDiagnostic.m",
+      "helpers/createBOIBaselinePanel.m"
+    ],
+    "UnchangedPriorMatlabFiles": 463,
+    "MeasurementDictionarySHA256": "1eea8f70f37a0794800f764498f4fefc0e89bfc6b195ee1f3aa198ea810186a2",
+    "Scope": "Implementation and arithmetic verification only; no physiological acceptance, cross-mouse validation or independent researcher usability claim."
+  },
+  "Resources": {
+    "FinalCombinedMatlabProcessSeconds": 44.88,
+    "RepresentativeReviewSeconds": 16.983734458333334,
+    "MaximumResidentBytes": 2229157888,
+    "PeakMemoryFootprintBytes": 1768557664,
+    "DetectorRuns": 0,
+    "StatisticsRuns": 0,
+    "FullRecordingReprocessingRuns": 0,
+    "NewBiologicalMoviesCopied": 0,
+    "Scope": "One process running 29 tests plus the saved-audit representative UI/export check; not a cohort throughput benchmark."
+  },
+  "Prior037FilesPreserved": 64,
+  "VisualReview": {
+    "Status": "passed",
+    "Reviewer": "Codex visual inspection; not independent researcher usability validation",
+    "FinalCaptureFolder": "representative-02",
+    "Screenshots": [
+      "missing-baseline-ui.png",
+      "sink-site10-event1-ui.png",
+      "surge-site1-event3-ui.png",
+      "surge-site1-event4-ui.png"
+    ],
+    "Checks": [
+      "Correct selected recording and event identity",
+      "Saved amplitude distinguished from diagnostic and percentage-point difference",
+      "Same clean baseline samples and saved mean visible",
+      "Fitted baseline and event extrapolation, measurement and native bounds visible",
+      "Unavailable baseline clearly labeled without numeric substitute",
+      "No interval markers retained from prior selections",
+      "End-exclusive event bound visible",
+      "Metric table is scrollable; methodology limits remain visible"
+    ],
+    "History": "Initial representative-01 screenshots exposed hidden xline markers surviving cla. The final implementation uses cla reset, tagged marker regression checks, and visible end-bound margins. Earlier outputs retained."
+  },
+  "ScientificLimits": [
+    "Three selected cases from one mouse; no cross-mouse validation",
+    "No independent researcher usability claim",
+    "No automatic stability threshold, correction, exclusion or substrate kinetics",
+    "No physiological classification from diagnostic amplitude sign",
+    "Net local source change versus deviation from an expected/shared signal remains unresolved"
+  ],
+  "Next": "Researcher walkthrough of diagnostic and saved evidence before a scientific baseline choice; retain unresolved physiological interpretation and biological variability."
+}

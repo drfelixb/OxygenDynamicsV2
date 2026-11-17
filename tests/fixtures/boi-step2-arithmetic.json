@@ -1,0 +1,964 @@
+{
+  "FrozenUTC": "2026-10-04T19:08:24.113425+00:00",
+  "Cases": [
+    {
+      "NFrames": 4,
+      "SampleHz": 2,
+      "PixelSizeUm": 2,
+      "SinkSupport": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "SurgeSupport": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "Window": [
+        0,
+        2
+      ],
+      "ID": "F01",
+      "Name": "single frame at 2 Hz",
+      "Pixels": [
+        [
+          [],
+          [
+            1
+          ],
+          [],
+          []
+        ]
+      ],
+      "SinkBounds": [
+        [
+          2,
+          2
+        ]
+      ],
+      "SurgeBounds": [
+        [
+          2,
+          2
+        ]
+      ],
+      "Expected": {
+        "sink": {
+          "EventDurationSec": [
+            0.5
+          ],
+          "EventAreaUm2": [
+            4.0
+          ],
+          "CountSeries": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            0,
+            4,
+            0,
+            0
+          ],
+          "AreaUm2": 16,
+          "WindowOverlapSec": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "EventOnsets": 1,
+          "ActiveEventSeconds": 0.5,
+          "CoveredAreaTime": 2.0,
+          "TissueTime": 32,
+          "Occupancy": 0.0625,
+          "OnsetRate": 1875000.0,
+          "ConcurrentDensity": 15625.0,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 0
+        },
+        "surge": {
+          "EventDurationSec": [
+            0.5
+          ],
+          "EventAreaUm2": [
+            4.0
+          ],
+          "CountSeries": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            0,
+            4,
+            0,
+            0
+          ],
+          "AreaUm2": 32,
+          "WindowOverlapSec": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "EventOnsets": 1,
+          "ActiveEventSeconds": 0.5,
+          "CoveredAreaTime": 2.0,
+          "TissueTime": 64,
+          "Occupancy": 0.03125,
+          "OnsetRate": 937500.0,
+          "ConcurrentDensity": 7812.5,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 0
+        }
+      }
+    },
+    {
+      "NFrames": 4,
+      "SampleHz": 1,
+      "PixelSizeUm": 2,
+      "SinkSupport": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "SurgeSupport": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "Window": [
+        0,
+        4
+      ],
+      "ID": "F02",
+      "Name": "native area and distinct refined sink duration",
+      "Pixels": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [],
+          []
+        ]
+      ],
+      "SinkBounds": [
+        [
+          1,
+          3
+        ]
+      ],
+      "SurgeBounds": [
+        [
+          1,
+          2
+        ]
+      ],
+      "Expected": {
+        "sink": {
+          "EventDurationSec": [
+            3.0
+          ],
+          "EventAreaUm2": [
+            8.0
+          ],
+          "CountSeries": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            8,
+            8,
+            0,
+            0
+          ],
+          "AreaUm2": 16,
+          "WindowOverlapSec": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "EventOnsets": 1,
+          "ActiveEventSeconds": 3.0,
+          "CoveredAreaTime": 16.0,
+          "TissueTime": 64,
+          "Occupancy": 0.25,
+          "OnsetRate": 937500.0,
+          "ConcurrentDensity": 46875.0,
+          "AcquisitionStartOnsetsCounted": 1,
+          "OngoingAtWindowStart": 0
+        },
+        "surge": {
+          "EventDurationSec": [
+            2.0
+          ],
+          "EventAreaUm2": [
+            8.0
+          ],
+          "CountSeries": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            8,
+            8,
+            0,
+            0
+          ],
+          "AreaUm2": 32,
+          "WindowOverlapSec": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "EventOnsets": 1,
+          "ActiveEventSeconds": 2.0,
+          "CoveredAreaTime": 16.0,
+          "TissueTime": 128,
+          "Occupancy": 0.125,
+          "OnsetRate": 468750.0,
+          "ConcurrentDensity": 15625.0,
+          "AcquisitionStartOnsetsCounted": 1,
+          "OngoingAtWindowStart": 0
+        }
+      }
+    },
+    {
+      "NFrames": 4,
+      "SampleHz": 1,
+      "PixelSizeUm": 2,
+      "SinkSupport": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "SurgeSupport": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "Window": [
+        0,
+        4
+      ],
+      "ID": "F03",
+      "Name": "overlapping native masks count pixels once",
+      "Pixels": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [],
+          []
+        ],
+        [
+          [],
+          [
+            3,
+            4
+          ],
+          [],
+          []
+        ]
+      ],
+      "SinkBounds": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "SurgeBounds": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "Expected": {
+        "sink": {
+          "EventDurationSec": [
+            2.0,
+            1.0
+          ],
+          "EventAreaUm2": [
+            8.0,
+            8.0
+          ],
+          "CountSeries": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            8,
+            12,
+            0,
+            0
+          ],
+          "AreaUm2": 16,
+          "WindowOverlapSec": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "EventOnsets": 2,
+          "ActiveEventSeconds": 3.0,
+          "CoveredAreaTime": 20.0,
+          "TissueTime": 64,
+          "Occupancy": 0.3125,
+          "OnsetRate": 1875000.0,
+          "ConcurrentDensity": 46875.0,
+          "AcquisitionStartOnsetsCounted": 1,
+          "OngoingAtWindowStart": 0
+        },
+        "surge": {
+          "EventDurationSec": [
+            2.0,
+            1.0
+          ],
+          "EventAreaUm2": [
+            8.0,
+            8.0
+          ],
+          "CountSeries": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            8,
+            12,
+            0,
+            0
+          ],
+          "AreaUm2": 32,
+          "WindowOverlapSec": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "EventOnsets": 2,
+          "ActiveEventSeconds": 3.0,
+          "CoveredAreaTime": 20.0,
+          "TissueTime": 128,
+          "Occupancy": 0.15625,
+          "OnsetRate": 937500.0,
+          "ConcurrentDensity": 23437.5,
+          "AcquisitionStartOnsetsCounted": 1,
+          "OngoingAtWindowStart": 0
+        }
+      }
+    },
+    {
+      "NFrames": 4,
+      "SampleHz": 1,
+      "PixelSizeUm": 2,
+      "SinkSupport": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "SurgeSupport": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "Window": [
+        0.5,
+        2.5
+      ],
+      "ID": "F04",
+      "Name": "fractional window edges",
+      "Pixels": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [],
+          []
+        ],
+        [
+          [],
+          [
+            3,
+            4
+          ],
+          [],
+          []
+        ]
+      ],
+      "SinkBounds": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "SurgeBounds": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "Expected": {
+        "sink": {
+          "EventDurationSec": [
+            2.0,
+            1.0
+          ],
+          "EventAreaUm2": [
+            8.0,
+            8.0
+          ],
+          "CountSeries": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            8,
+            12,
+            0,
+            0
+          ],
+          "AreaUm2": 16,
+          "WindowOverlapSec": [
+            0.5,
+            1.0,
+            0.5,
+            0
+          ],
+          "EventOnsets": 1,
+          "ActiveEventSeconds": 2.5,
+          "CoveredAreaTime": 16.0,
+          "TissueTime": 32.0,
+          "Occupancy": 0.5,
+          "OnsetRate": 1875000.0,
+          "ConcurrentDensity": 78125.0,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 1
+        },
+        "surge": {
+          "EventDurationSec": [
+            2.0,
+            1.0
+          ],
+          "EventAreaUm2": [
+            8.0,
+            8.0
+          ],
+          "CountSeries": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            8,
+            12,
+            0,
+            0
+          ],
+          "AreaUm2": 32,
+          "WindowOverlapSec": [
+            0.5,
+            1.0,
+            0.5,
+            0
+          ],
+          "EventOnsets": 1,
+          "ActiveEventSeconds": 2.5,
+          "CoveredAreaTime": 16.0,
+          "TissueTime": 64.0,
+          "Occupancy": 0.25,
+          "OnsetRate": 937500.0,
+          "ConcurrentDensity": 39062.5,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 1
+        }
+      }
+    },
+    {
+      "NFrames": 4,
+      "SampleHz": 1,
+      "PixelSizeUm": 2,
+      "SinkSupport": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "SurgeSupport": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "Window": [
+        1,
+        3
+      ],
+      "ID": "F05",
+      "Name": "ongoing event and onset at excluded window end",
+      "Pixels": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          []
+        ],
+        [
+          [],
+          [],
+          [],
+          [
+            3
+          ]
+        ]
+      ],
+      "SinkBounds": [
+        [
+          1,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "SurgeBounds": [
+        [
+          1,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "Expected": {
+        "sink": {
+          "EventDurationSec": [
+            3.0,
+            1.0
+          ],
+          "EventAreaUm2": [
+            8.0,
+            4.0
+          ],
+          "CountSeries": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "OccupiedAreaUm2": [
+            8,
+            8,
+            8,
+            4
+          ],
+          "AreaUm2": 16,
+          "WindowOverlapSec": [
+            0,
+            1.0,
+            1.0,
+            0
+          ],
+          "EventOnsets": 0,
+          "ActiveEventSeconds": 2.0,
+          "CoveredAreaTime": 16.0,
+          "TissueTime": 32,
+          "Occupancy": 0.5,
+          "OnsetRate": 0.0,
+          "ConcurrentDensity": 62500.0,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 1
+        },
+        "surge": {
+          "EventDurationSec": [
+            3.0,
+            1.0
+          ],
+          "EventAreaUm2": [
+            8.0,
+            4.0
+          ],
+          "CountSeries": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "OccupiedAreaUm2": [
+            8,
+            8,
+            8,
+            4
+          ],
+          "AreaUm2": 32,
+          "WindowOverlapSec": [
+            0,
+            1.0,
+            1.0,
+            0
+          ],
+          "EventOnsets": 0,
+          "ActiveEventSeconds": 2.0,
+          "CoveredAreaTime": 16.0,
+          "TissueTime": 64,
+          "Occupancy": 0.25,
+          "OnsetRate": 0.0,
+          "ConcurrentDensity": 31250.0,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 1
+        }
+      }
+    },
+    {
+      "NFrames": 4,
+      "SampleHz": 1,
+      "PixelSizeUm": 2,
+      "SinkSupport": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "SurgeSupport": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "Window": [
+        0,
+        4
+      ],
+      "ID": "F06",
+      "Name": "empty analyzed events with valid support",
+      "Pixels": [],
+      "SinkBounds": [],
+      "SurgeBounds": [],
+      "Expected": {
+        "sink": {
+          "EventDurationSec": [],
+          "EventAreaUm2": [],
+          "CountSeries": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "AreaUm2": 16,
+          "WindowOverlapSec": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "EventOnsets": 0,
+          "ActiveEventSeconds": 0,
+          "CoveredAreaTime": 0.0,
+          "TissueTime": 64,
+          "Occupancy": 0.0,
+          "OnsetRate": 0.0,
+          "ConcurrentDensity": 0.0,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 0
+        },
+        "surge": {
+          "EventDurationSec": [],
+          "EventAreaUm2": [],
+          "CountSeries": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "OccupiedAreaUm2": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "AreaUm2": 32,
+          "WindowOverlapSec": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "EventOnsets": 0,
+          "ActiveEventSeconds": 0,
+          "CoveredAreaTime": 0.0,
+          "TissueTime": 128,
+          "Occupancy": 0.0,
+          "OnsetRate": 0.0,
+          "ConcurrentDensity": 0.0,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 0
+        }
+      }
+    },
+    {
+      "NFrames": 4,
+      "SampleHz": 1,
+      "PixelSizeUm": null,
+      "SinkSupport": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "SurgeSupport": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "Window": [
+        0,
+        4
+      ],
+      "ID": "F07",
+      "Name": "missing calibration unavailable not zero",
+      "Pixels": [
+        [
+          [],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          []
+        ]
+      ],
+      "SinkBounds": [
+        [
+          2,
+          3
+        ]
+      ],
+      "SurgeBounds": [
+        [
+          2,
+          3
+        ]
+      ],
+      "Expected": {
+        "sink": {
+          "EventDurationSec": [
+            2.0
+          ],
+          "EventAreaUm2": null,
+          "CountSeries": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "OccupiedAreaUm2": null,
+          "AreaUm2": null,
+          "WindowOverlapSec": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "EventOnsets": 1,
+          "ActiveEventSeconds": 2.0,
+          "CoveredAreaTime": null,
+          "TissueTime": null,
+          "Occupancy": null,
+          "OnsetRate": null,
+          "ConcurrentDensity": null,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 0
+        },
+        "surge": {
+          "EventDurationSec": [
+            2.0
+          ],
+          "EventAreaUm2": null,
+          "CountSeries": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "OccupiedAreaUm2": null,
+          "AreaUm2": null,
+          "WindowOverlapSec": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "EventOnsets": 1,
+          "ActiveEventSeconds": 2.0,
+          "CoveredAreaTime": null,
+          "TissueTime": null,
+          "Occupancy": null,
+          "OnsetRate": null,
+          "ConcurrentDensity": null,
+          "AcquisitionStartOnsetsCounted": 0,
+          "OngoingAtWindowStart": 0
+        }
+      }
+    },
+    {
+      "NFrames": 4,
+      "SampleHz": 0,
+      "PixelSizeUm": 2,
+      "SinkSupport": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "SurgeSupport": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "Window": [
+        0,
+        4
+      ],
+      "ID": "F08",
+      "Name": "invalid clock blocked not zero",
+      "Pixels": [
+        [
+          [],
+          [
+            1
+          ],
+          [],
+          []
+        ]
+      ],
+      "SinkBounds": [
+        [
+          2,
+          2
+        ]
+      ],
+      "SurgeBounds": [
+        [
+          2,
+          2
+        ]
+      ],
+      "Expected": {
+        "Error": "OxygenDynamics:InvalidExposure",
+        "FinalizerError": "OxygenDynamics:InvalidQuantificationScale"
+      }
+    }
+  ],
+  "IndependentWriter": "Python explicit frame arithmetic and set union; no MATLAB calculation helper"
+}

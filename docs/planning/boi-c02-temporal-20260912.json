@@ -1,0 +1,44 @@
+{
+  "decision_id": "R1-C02-TEMPORAL-025",
+  "status": "diagnostic_complete_not_validity_approval",
+  "question": "Where do full-recording spatial-pattern or projected field changes warrant temporal-observability review?",
+  "scope": "Eight published BOI sources, all 7200 frames at exact external 1 Hz. Diagnostic transforms only; no source resampling, detector, mask adoption, exclusion, correction or window approval.",
+  "method": {
+    "registration": "MATLAB R2025a imregcorr(moving,fixed,translation,Method=gradcorr), explicit method. Native single source pixels, whole image, no mask, smoothing or intensity threshold. First frame is fixed reference for every frame; preceding frame is second reference except frame 1.",
+    "coordinates": "Translation returned is the estimated correction taking moving coordinates into fixed coordinates. Export column/x and row/y corrections in pixels and micrometres. It is not independently established physical tissue motion.",
+    "quality": "Retain peak correlation for both references and direct unregistered Pearson correlation to frame 1. No score or displacement acceptance threshold. Failed estimates remain NaN with error text.",
+    "profiles": "Exact whole-frame row sums and column sums of stored intensities for every frame; cast original exact-integer source pixels to double before summation and store projections as uint32.",
+    "review_selection": "For each source select earliest largest correction magnitude to first reference, earliest largest adjacent correction magnitude (frames 2..N), earliest smallest fixed-reference peak score (frames 2..N). Show first reference and before/at each selection; choices are diagnostic clues, not exclusions.",
+    "figures": "Full time traces plus row/column mean kymographs, fixed shared source display ranges from 021. No tissue denominator or frame-valid declaration inferred.",
+    "synthetic_check": "Three translated copies of deterministic random-pattern reference, including gain/offset and unchanged cases. Known correction direction verified within 0.15 pixel; numerical harness check only, not scientific motion tolerance.",
+    "limits": "Rigid translation cannot certify local deformation, focus, occlusion or signal validity. Biological intensity-pattern changes may alter estimates. Frame-1 reference may itself be imperfect; no reference selection tuning."
+  },
+  "reference_documentation": "https://www.mathworks.com/help/images/ref/imregcorr.html",
+  "source_evidence_search": "Case-insensitive filename search for shift/motion/regist/align/reference/mean/std/moco/template within each source recording subtree found no matches. Limited filename evidence, not proof that historical transforms or references do not exist elsewhere.",
+  "budget": {
+    "source_scans": 1,
+    "source_recordings": 8,
+    "thread_workers": 4,
+    "maximum_seconds_before_starting_next_recording": 600,
+    "registration_methods": 1,
+    "detector_runs": 0
+  },
+  "success": "Synthetic direction check passes; every original frame has a diagnostic row with original index; projection conservation matches prior independently verified pixel sums; source/implementation hashes unchanged; selected frames inspected.",
+  "stop": "One fixed diagnostic pass. No iterative registration tuning, anatomical acceptance, exclusion or motion correction follows automatically.",
+  "approved_masks": [],
+  "approved_windows": [],
+  "excluded_frames": [],
+  "scientific_eligibility": "not_assessed",
+  "completion": {
+    "verification": "passed",
+    "frame_rows": 7200,
+    "selected_source_frames": 56,
+    "source_hashes_unchanged": 8,
+    "implementation_files_unchanged": 460,
+    "source_contact_sheets_reviewed": 8,
+    "projection_timelines_reviewed": 8,
+    "registration_failures": 0,
+    "report": "docs/reference-results/boi-c02-temporal-20260912/README.md",
+    "remaining": "Focused local-sequence/landmark review, uncertain boundary evidence and measurement-specific validity decisions; no automatic exclusions."
+  }
+}

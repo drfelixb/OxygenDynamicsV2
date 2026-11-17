@@ -6,7 +6,6 @@ function ManifestPath = writeOxygenAnalysisManifest(StatsInput,varargin)
 % ManifestPath = writeOxygenAnalysisManifest(StatsInput,'figuresFolder',FolderPath)
 
 setupOxygenDynamicsPath();
-VersionInfo = getOxygenPipelineVersion();
 
 Options = parseManifestOptions(varargin{:});
 [StatsFolder,DataOutputMat,WorkbookPath] = resolveManifestInputs(StatsInput);
@@ -20,6 +19,7 @@ else
 end
 
 Data = load(DataOutputMat);
+ExportProvenance = createOxygenExportProvenance(Data,{'getOxygenPipelineVersion','createOxygenExportProvenance','writeOxygenAnalysisManifest'});
 StatsResult = struct('DataOutputMat',DataOutputMat);
 if isfield(Data,'StatsInfo')
     StatsResult.StatsInfo = Data.StatsInfo;
@@ -34,8 +34,15 @@ FigureManifest = readManifestFigureManifest(StatsFolder,Data,Options.figuresFold
 Lines = strings(0,1);
 Lines(end+1) = "# Oxygen Dynamics Analysis Manifest";
 Lines(end+1) = "";
-Lines(end+1) = sprintf("Pipeline version: `v%s`",VersionInfo.Version);
-Lines(end+1) = sprintf("Pipeline build: `%s`",VersionInfo.BuildTimestamp);
+Lines(end+1) = sprintf("Original calculation software version: `%s`",ExportProvenance.OriginalCalculation.SoftwareVersion);
+Lines(end+1) = sprintf("Original calculation build: `%s`",ExportProvenance.OriginalCalculation.BuildTimestamp);
+Lines(end+1) = sprintf("Original software identity status: `%s`",ExportProvenance.OriginalCalculation.SoftwareIdentityStatus);
+Lines(end+1) = sprintf("Saved calculation contract: `%s`",jsonencode(ExportProvenance.OriginalCalculation.CalculationContract));
+Lines(end+1) = sprintf("Saved event calculation schemas: `%s` (not software release versions)",strjoin(ExportProvenance.OriginalCalculation.EventCalculationSchemas,', '));
+Lines(end+1) = sprintf("Current reader/exporter software version: `v%s`",ExportProvenance.CurrentReaderExporter.Version);
+Lines(end+1) = sprintf("Current reader/exporter build: `%s`",ExportProvenance.CurrentReaderExporter.BuildTimestamp);
+Lines(end+1) = "Saved calculation values are not recomputed or relabelled by generating this manifest.";
+Lines(end+1) = sprintf("Current reader/exporter implementation: `%s`",jsonencode(ExportProvenance.CurrentReaderExporter.Implementation));
 Lines(end+1) = sprintf("Generated: %s",char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')));
 Lines(end+1) = sprintf("Stats output: `%s`",StatsFolder);
 Lines(end+1) = sprintf("Stats workbook: `%s`",WorkbookPath);

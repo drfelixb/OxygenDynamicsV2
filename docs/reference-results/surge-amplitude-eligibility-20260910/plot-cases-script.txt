@@ -1,0 +1,39 @@
+% Execute from repository root after independent verification.
+root='../reference-validation/surge-amplitude-eligibility-20260910';
+T=readtable(fullfile(root,'flagged-trace-samples.csv'),'Delimiter',',','TextType','string');
+R=readtable(fullfile(root,'flagged-case-decomposition.csv'),'Delimiter',',','TextType','string');
+[~,worstReference]=min(R.OracleBaselineEffect);[~,worstNegative]=min(R.SignedRawAmplitude);
+flip=find(R.OracleFailureMechanism=="reference_changes_sign",1);
+chosen=[worstReference worstNegative flip];
+names={ 'Largest reference-denominator effect', 'Most negative raw amplitude', 'Small reference effect reverses the sign'};
+fig=figure('Visible','off','Color','white','Position',[100 100 1400 800]);
+tl=tiledlayout(fig,2,3,'TileSpacing','compact','Padding','compact');
+for j=1:3
+ r=R(chosen(j),:);S=T(T.Case==r.ReviewCase,:);t=S.Frame-r.TruthOnsetFrame;
+ ax=nexttile(tl,j);hold(ax,'on');
+ lo=min([S.Source;S.Constructed]);hi=max([S.Source;S.Constructed]);pad=max(1e-6,(hi-lo)*.1);yl=[lo-pad hi+pad];
+ a=r.ReferenceStartFrame-r.TruthOnsetFrame;b=r.ReferenceEndFrame-r.TruthOnsetFrame;
+ patch(ax,[a b b a],yl([1 1 2 2]),[.85 .91 1],'EdgeColor','none','HandleVisibility','off');
+ a=r.NativeStartFrame-r.TruthOnsetFrame;b=r.NativeEndFrame-r.TruthOnsetFrame;
+ patch(ax,[a b b a],yl([1 1 2 2]),[.90 .94 .88],'EdgeColor','none','HandleVisibility','off');
+ h1=plot(ax,t,S.Source,'Color',[.2 .2 .2],'LineWidth',1.5);
+ h2=plot(ax,t,S.Constructed,'Color',[.85 .36 .1],'LineWidth',1.5);
+ h3=yline(ax,r.ReferenceMean,'--','Color',[.15 .4 .75],'LineWidth',1.2);
+ h4=xline(ax,0,':','Color',[.15 .5 .2],'LineWidth',1.5);
+ h5=xline(ax,r.OnsetFrame-r.TruthOnsetFrame,':','Color',[.55 .2 .6],'LineWidth',1.5);
+ xlim(ax,[min(t) max(t)]);ylim(ax,yl);ax.Color='white';ax.XColor='black';ax.YColor='black';
+ title(ax,names{j},'Color','black');
+ subtitle(ax,sprintf('%s, event %d, case %d',r.Session,r.EventRow,r.ReviewCase),'Color','black','Interpreter','none');
+ xlabel(ax,'Seconds from imposed start','Color','black');ylabel(ax,'Archived intensity (support mean)','Color','black');
+ ax=nexttile(tl,j+3);
+ vals=100*[r.OracleSourceAtObservedPeak r.OracleImposedAtObservedPeak r.OracleBaselineEffect r.SignedRawAmplitude];
+ bb=bar(ax,vals,'FaceColor','flat');bb.CData=[.35 .35 .35;.85 .36 .1;.15 .4 .75;.55 .2 .6];
+ ax.XTick=1:4;ax.XTickLabel={'Source','Imposed','Reference','Raw total'};ax.Color='white';ax.XColor='black';ax.YColor='black';
+ ylabel(ax,'Percentage points at the same observed peak','Color','black');
+ title(ax,sprintf('Source + imposed + reference = %.3f%%',100*r.SignedRawAmplitude),'Color','black');
+end
+lg=legend([h1 h2 h3 h4 h5],{'Recorded source','Constructed trace','Reference mean','Known start','Estimated start'},'Orientation','horizontal');
+lg.Layout.Tile='south';lg.Color='white';lg.TextColor='black';lg.EdgeColor='white';
+title(tl,'Surge amplitude failures: exact paired-source decomposition','Color','black');
+subtitle(tl,'Blue shading: proposed reference. Green shading: unchanged native peak interval. Cases selected to expose failures.','Color','black');
+exportgraphics(fig,fullfile(root,'failure-examples.png'),'Resolution',160,'BackgroundColor','white');close(fig);

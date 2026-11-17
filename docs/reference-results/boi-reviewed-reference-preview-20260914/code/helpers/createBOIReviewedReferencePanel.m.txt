@@ -1,0 +1,96 @@
+function Panel=createBOIReviewedReferencePanel(Parent,Attach,ViewTiming,OpenContributor)
+%CREATEBOIREVIEWEDREFERENCEPANEL Explain reference membership without adoption.
+G=uigridlayout(Parent,[9 1]);G.RowHeight={30,48,34,42,'2x',150,110,32,50};G.Scrollable='on';
+Identity=uilabel(G,'Text','Select an event.','Interpreter','none','WordWrap','on');
+Status=uilabel(G,'Text','Saved boundaries and both native masters are required.','WordWrap','on');
+buttons=uigridlayout(G,[1 3]);buttons.Padding=[0 0 0 0];buttons.ColumnWidth={220,180,'1x'};
+AttachButton=uibutton(buttons,'Enable','off','Text','Attach both native sources...','ButtonPushedFcn',@(~,~)Attach());
+uibutton(buttons,'Text','View timing traces','ButtonPushedFcn',@(~,~)ViewTiming());
+Onset=uidropdown(buttons,'Items',{'No saved onset'},'ItemsData',0,'Value',0,'Enable','off','ValueChangedFcn',@(~,~)chooseOnset());
+Summary=uilabel(G,'Text','No reviewed amplitude is calculated.','WordWrap','on');
+host=uigridlayout(G,[1 1]);host.Padding=[0 0 0 0];Axes=uiaxes(host);
+Frames=uitable(G,'Data',table(),'RowName',{},'ColumnEditable',false, ...
+    'ColumnName',{'Frame','Elapsed time (s)','Input finite','Native overlap (pixels)','A eligible','Reviewed contact','B eligible'});
+Contributors=uitable(G,'Data',table(),'RowName',{},'SelectionType','row','Multiselect','off','CellSelectionCallback',@pickContributor);
+Open=uibutton(G,'Text','Open selected contributor in timing review','Enable','off','ButtonPushedFcn',@openContributor);
+uilabel(G,'Text',['A: proposed native eligibility; B: proposed additional reviewed-interval veto. Neither is adopted. ' ...
+    '1 = yes, 0 = no, NaN = unknown. Recognition and physiological suitability remain separate. Draft boundaries are excluded.'], 'WordWrap','on');
+Current=[];R=[];Index=[];Picked=[];
+Panel=struct('Update',@update,'Data',@currentData,'Status',Status,'Onset',Onset,'Summary',Summary, ...
+    'Axes',Axes,'Frames',Frames,'Contributors',Contributors,'Open',Open,'Attach',AttachButton,'Grid',G);
+    function value=currentData()
+        value=Current;
+    end
+    function chooseOnset()
+        chosen=Onset.Value;update(R,Index);
+        if ~isempty(Current)&&~isempty(Current.Windows)&&any([Current.Windows.OnsetFrame]==chosen)
+            Onset.Value=chosen;render();
+        end
+    end
+    function update(Review,index)
+        Current=[];R=Review;Index=index;Picked=[];Open.Enable='off';cla(Axes,'reset');
+        Frames.Data=table();Contributors.Data=table();Summary.Text='No reviewed amplitude is calculated.';
+        Onset.Enable='off';Onset.ItemsData=[];Onset.Items={'No saved onset'};Onset.ItemsData=0;Onset.Value=0;
+        AttachButton.Enable='on';a=Review.Audit(index,:);Identity.Text=sprintf('Saved %s site %d / event %d | reviewed reference preview',a.EventType,a.SiteID,a.EventID);
+        try
+            Current=buildBOIReviewedReferencePreview(Review,index);Status.Text=Current.Message;
+            if isempty(Current.Windows),return;end
+            values=[Current.Windows.OnsetFrame];labels=cell(1,numel(values));
+            for j=1:numel(values)
+                labels{j}=sprintf('Onset frame %d',values(j));if Current.Windows(j).PreferredOnset,labels{j}=[labels{j} ' (preferred)'];end
+            end
+            Onset.ItemsData=[];Onset.Items=labels;Onset.ItemsData=values;
+            preferred=find([Current.Windows.PreferredOnset],1);if isempty(preferred),preferred=1;end
+            Onset.Value=values(preferred);Onset.Enable='on';render();
+        catch err
+            Current=[];Frames.Data=table();Contributors.Data=table();cla(Axes,'reset');Onset.Enable='off';Open.Enable='off';
+            Summary.Text='No reviewed amplitude is calculated.';Status.Text=['Preview unavailable: ' err.message];
+        end
+    end
+    function render()
+        Picked=[];Open.Enable='off';w=Current.Windows([Current.Windows.OnsetFrame]==Onset.Value);
+        Summary.Text=sprintf('Candidate frames %s | A: %s / %d eligible | B: %s / %d | %d missing before recording.\nReviewed onset %d; recovery alternatives [%s]. No new mean or amplitude.', ...
+            frameRange(w.CandidateFrames),number(w.OptionAEligibleCount),w.RequiredSamples,number(w.OptionBEligibleCount),w.RequiredSamples,w.MissingBeforeRecording,w.OnsetFrame,char(strjoin(string(w.RecoveryFrames),', ')));
+        F=Current.Frames(Current.Frames.OnsetFrame==Onset.Value,:);
+        Frames.Data=F(:,{'Frame','ModeledTimeSec','FiniteInput','NativeOverlapPixels','OptionAEligible','ReviewedContact','OptionBEligible'});
+        D=Current.Contributors(Current.Contributors.OnsetFrame==Onset.Value,{'Frame','AuditRow','EventType','SiteID','EventID','OverlapPixels'});
+        D.EventType=string(D.EventType);D=renamevars(D,'OverlapPixels','NativeOverlapPixels');
+        D.Evidence=repmat("Native mask",height(D),1);D.SharedFootprintPixels=nan(height(D),1);
+        D=D(:,{'Evidence','Frame','AuditRow','EventType','SiteID','EventID','NativeOverlapPixels','SharedFootprintPixels'});
+        for j=1:numel(Current.Contacts)
+            c=Current.Contacts{j};if c.OnsetFrame~=Onset.Value,continue;end
+            for frame=c.Frames(:)'
+                D=[D;table("Reviewed interval contact",frame,c.OtherAuditRow,string(c.OtherEvent.EventType),c.OtherEvent.SiteID,c.OtherEvent.EventID,NaN,c.SharedFootprintPixels,'VariableNames',D.Properties.VariableNames)]; %#ok<AGROW>
+            end
+        end
+        Contributors.Data=D;
+        Contributors.ColumnName={'Evidence','Frame','Audit row (link)','Saved sign','Site','Event','Native overlap pixels','Shared fixed pixels'};
+        cla(Axes,'reset');hold(Axes,'on');[~,stages]=buildBOITimingReviewData(R.Traces{Index},R.AnalysisInfo,R);
+        ends=[w.OnsetFrame;w.RecoveryFrames(:)];lo=max(1,min([w.CandidateFrames(:);ends])-20);hi=min(R.AnalysisInfo.NFrames,max(ends)+20);
+        f=(lo:hi)';plot(Axes,f,stages.CorrectedIntensity(f),'k.-','Tag','BOIReferenceCorrectedTrace');
+        eligible=F.Frame(F.OptionAEligible==1);excluded=F.Frame(F.NativeOverlapPixels>0|F.FiniteInput==0);
+        scatter(Axes,eligible,stages.CorrectedIntensity(eligible),28,[0 .55 .3],'filled','Tag','BOIReferenceEligible');
+        scatter(Axes,excluded,stages.CorrectedIntensity(excluded),34,[.85 .2 .12],'x','Tag','BOIReferenceExcluded');
+        for bound=ends',xline(Axes,bound,':','Color',[.6 .15 .7],'LineWidth',1.5);end
+        for contact=w.ReviewedContactFrames',xline(Axes,contact,'--','Color',[.8 .5 0],'LineWidth',1.3);end
+        xlim(Axes,[lo-.5 hi+.5]);grid(Axes,'on');xlabel(Axes,'Recording frame (1-based; elapsed seconds = (frame-1)/fs)');
+        ylabel(Axes,'Saved corrected intensity');title(Axes,{'Corrected trace: green = A eligible; red = excluded; amber = reviewed contact','Purple = selected onset and saved recovery alternatives; no boundary adoption'});
+        if ~any(isfinite(stages.CorrectedIntensity(f)))
+            text(Axes,.5,.5,'Corrected stage unavailable; no signal substituted','Units','normalized','HorizontalAlignment','center');
+        end
+        hold(Axes,'off');
+    end
+    function pickContributor(~,event)
+        if isempty(event.Indices),Picked=[];Open.Enable='off';return;end
+        Picked=Contributors.Data.AuditRow(event.Indices(1,1));Open.Enable='on';
+    end
+    function openContributor(~,~)
+        if ~isempty(Picked),OpenContributor(Picked);end
+    end
+end
+function s=number(n)
+s='unknown';if isfinite(n),s=sprintf('%d',n);end
+end
+function s=frameRange(f)
+s='none observed';if ~isempty(f),s=sprintf('%d-%d',f(1),f(end));end
+end

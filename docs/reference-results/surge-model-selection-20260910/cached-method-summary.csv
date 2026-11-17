@@ -1,0 +1,4 @@
+Context,Planned,Constructible,Resolved,WithinFiveSec,BaselineUnderOnePercent,WithinFiveSecAndClean,AvailableAmplitudes,SameOnsetAsControl,ResolvedFraction,WithinFiveSecFractionAll,WithinFiveSecFractionResolved,MedianOnsetErrorSec,MedianBaselineImposedFraction,MedianBaselineEffectPP,MedianAbsoluteErrorSec,P90AbsoluteErrorSec
+available,5520,5136,1303,856,1259,856,1303,103,0.2536993769470405,0.16666666666666666,0.656945510360706,-1.0,0.0,0.0,4.0,13.0
+pulse,5520,5136,1337,1056,1307,1051,1337,28,0.26031931464174457,0.205607476635514,0.7898279730740464,0.0,0.0,0.0,2.0,9.0
+selection,5520,5136,1556,1171,1506,1167,1556,100,0.3029595015576324,0.22799844236760125,0.7525706940874036,0.0,0.0,0.0,2.0,11.0

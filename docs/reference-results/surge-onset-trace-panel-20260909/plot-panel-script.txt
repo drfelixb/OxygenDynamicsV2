@@ -1,0 +1,27 @@
+root='../reference-validation/surge-onset-trace-panel-20260909';
+T=readtable(fullfile(root,'panel-results.csv'),'TextType','string');
+F=figure('Visible','off','Position',[100 100 1100 520],'Color','white');
+tiledlayout(1,2,'Padding','compact','TileSpacing','compact');
+contexts=["fixed","available"];A=zeros(2,3);B=zeros(4,2);amps=[.02 .05 .1 .2];
+for j=1:2
+ rows=T.Context==contexts(j)&T.Constructible;den=nnz(rows);
+ resolved=rows&T.Status=="resolved";good=resolved&T.WithinFiveSec;
+ A(j,:)=100*[nnz(good) nnz(resolved&~good) nnz(rows&~resolved)]/den;
+ for k=1:4
+  selected=rows&T.AmplitudeFraction==amps(k);
+  B(k,j)=100*nnz(selected&T.WithinFiveSec)/nnz(selected);
+ end
+end
+nexttile;h=bar(A,'stacked');h(1).FaceColor=[.15 .48 .64];h(2).FaceColor=[.86 .57 .23];h(3).FaceColor=[.83 .85 .87];
+xticklabels({'Fixed context','Available context'});ylim([0 100]);ylabel('% of constructible traces');
+title('All onset outcomes');legend({'Within 5 s','Resolved, outside 5 s','Unresolved'},'Location','southoutside');box off;
+nexttile;h=bar(B);h(1).FaceColor=[.5 .56 .60];h(2).FaceColor=[.15 .48 .64];
+xticklabels({'2%','5%','10%','20%'});xlabel('Imposed peak mean-trace increment');
+ylabel('% within 5 s of known first positive sample');ylim([0 40]);
+title('Recovery by imposed rise size');legend({'Fixed context','Available context'},'Location','southoutside');box off;
+sgtitle({'Conditional surge-onset test on archived backgrounds', ...
+ '5,136 constructible traces per method; three BOI recordings + one fluorescence control'},'FontWeight','normal','Color',[.12 .12 .12]);
+set(findall(F,'Type','axes'),'Color','white','XColor',[.12 .12 .12],'YColor',[.12 .12 .12]);
+set(findall(F,'Type','text'),'Color',[.12 .12 .12]);
+set(findall(F,'Type','legend'),'Color','white','TextColor',[.12 .12 .12],'EdgeColor','white');
+exportgraphics(F,fullfile(root,'onset-panel-overview.png'),'Resolution',160,'BackgroundColor','white');close(F);

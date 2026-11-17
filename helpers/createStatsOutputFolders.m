@@ -8,7 +8,11 @@ end
 Timestamp = char(datetime('now','Format','yyyyMMdd''T''HHmmss'));
 OutputFolders = struct();
 OutputFolders.Timestamp = Timestamp;
-OutputFolders.Root = fullfile(MasterFolder,OutputRoot);
+if java.io.File(OutputRoot).isAbsolute()
+    OutputFolders.Root=char(OutputRoot);
+else
+    OutputFolders.Root = fullfile(MasterFolder,OutputRoot);
+end
 OutputFolders.Stats = fullfile(OutputFolders.Root,['Stats_Output_',Timestamp]);
 OutputFolders.Figures = fullfile(OutputFolders.Root,['Figures_Output_',Timestamp]);
 

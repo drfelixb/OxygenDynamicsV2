@@ -1,0 +1,9 @@
+Session,Role,SinkEvents,TimingResolved,TimingUnresolved,OldFiniteAmplitudes,NewFiniteAmplitudes,OldWrongDirection,NewWrongDirection,SameSiteOverlappingPairs,MaxStartExtensionSec,MaxEndExtensionSec
+M400-01-baseline-awake,BOI_reference,137,106,31,92,98,1,0,0,20,20
+M400-03-baseline-iso,BOI_reference,84,69,15,72,71,0,0,0,20,15
+M401-01-baseline-awake,BOI_reference,92,62,30,74,74,1,2,0,18,20
+M401-03-baseline-iso,BOI_reference,43,36,7,33,34,0,0,0,19,19
+FB2312-baseline-awake,BOI_reference,192,136,56,149,164,3,3,0,20,19
+FB2316-baseline,BOI_reference,193,91,102,134,143,1,1,0,20,20
+ID13-20200917,BOI_reference,235,121,114,169,174,1,2,0,20,20
+FB2411,fluorescence_control,26,24,2,24,24,0,0,0,19,16

@@ -1,0 +1,94 @@
+{
+  "schema": "oxygen-independent-launch-code-review-hashes-1",
+  "date": "2026-10-05",
+  "review_type": "Independent Codex code review, not a human systems audit",
+  "reviewer": "/root/independent_launch_review",
+  "implementation_chat_history_supplied": false,
+  "application_repository_base_commit": "1d4b6631935a2d95730f365fae70c900a8bff107",
+  "application_version": "3.1.0-dev.2",
+  "path_root": "/Users/zcm361/Documents/Github/OxygenDynamicsV2",
+  "launch_helpers_are_outside_application_git_repository": true,
+  "code_files": [
+    {
+      "path": "reference-validation/software-g5-isolation-revision-20260928/isolation_guard.py",
+      "sha256": "7b587a8c04ec09eb1eaceba676f41dfe4ed12260a7f6307a4252ec04f5d5deca"
+    },
+    {
+      "path": "reference-validation/software-g5-isolation-revision-20260928/process_identity_evidence.py",
+      "sha256": "9195f191506e24314a0ec4f4f724eadd71974cf8847a04349d3f3fd71f5d3299"
+    },
+    {
+      "path": "reference-validation/software-g5-isolation-revision-20260928/startup_helper_policy.py",
+      "sha256": "882d062a203efc4d9c50992c6e5d54ba336514371c02084f91d77ed278a6fade"
+    },
+    {
+      "path": "reference-validation/software-g5-isolation-revision-20260928/guarded_run_controller.py",
+      "sha256": "7310ba9fa4ba016f94a65bddf1ee7fdf2c7aa5970461f68fb6d8e6f6c2d82cab"
+    },
+    {
+      "path": "reference-validation/software-g5-isolation-revision-20260928/durable_release_writer.py",
+      "sha256": "0f9bf646e8eb227ecb1212febb81f5c1a38a79a21d2d9c6edc4294b6b9c98999"
+    },
+    {
+      "path": "reference-validation/software-g5-isolation-revision-20260928/run_startup_diagnostic.py",
+      "sha256": "9cb9686794ee6c734d0e6a994bb2c0e1c4a09f58ff07084af39805e0e1680f34"
+    },
+    {
+      "path": "reference-validation/software-g5-isolation-revision-20260928/runG506RStartupDiagnostic.m",
+      "sha256": "8188e00f4dbb2da1ff00b75d753849a3e5c56786e6179d4908b4f075ff48c5e6"
+    },
+    {
+      "path": "reference-validation/software-g5-isolation-revision-20260928/run_g506r08_saved_cases.py",
+      "sha256": "5f282bb7f16a7b68aafa3ec3ff5e16ccc078c1026975aeacdea725eef8baebba"
+    },
+    {
+      "path": "reference-validation/software-g5-r07-code-20260928/supervise_r07_startup.py",
+      "sha256": "d74d30957af1e9dd5d2872105b2ed2a42b2b3196430254fa44b72fce257c5d36"
+    },
+    {
+      "path": "reference-validation/software-g5-r07-code-20260928/startup_ack_contract.py",
+      "sha256": "7b4fcd6809f79911d61dbeeef050f88f7bc8a36e22ee26cecca7b3a3da42e691"
+    },
+    {
+      "path": "reference-validation/software-g5-r07-code-20260928/runG506R07StartupWorker.m",
+      "sha256": "880bda7f43ca537721ad66f544d79a9d6fa7f68a041dbb31ad51c911747de626"
+    },
+    {
+      "path": "reference-validation/software-g5-r07-code-20260928/run_r07_final_deadline_gate.py",
+      "sha256": "bc4587b5944f9eb455a9352d1540ee17f08cd04d0a43bc6f2b48eeed97ccd5d3"
+    },
+    {
+      "path": "reference-validation/software-g5-real-id400-worker-20260928/supervise_g506.py",
+      "sha256": "c80df15d821c52d2e3ea94b1d57b1e236bf5bf96a2ad25d543c945e1d36d7643"
+    },
+    {
+      "path": "reference-validation/software-g5-real-id400-worker-20260928/runG506Worker.m",
+      "sha256": "778efc83e5b611fd7647fd0485085e9888996ea3dd8c82fede8720ae75568a79"
+    }
+  ],
+  "saved_evidence_anchors": [
+    {
+      "path": "reference-validation/software-g5-r07-startup-only-20260928/summary.json",
+      "sha256": "33fa02891fc5485b90cd3e13348cb8e6cfb5aebff81c6d8aba59524329898338"
+    },
+    {
+      "path": "reference-validation/software-g5-r07-startup-only-20260928/evidence/stop-report.json",
+      "sha256": "1c7126af988f29f7e658a23434ea1c23482348533a189d0063b152f032863b20"
+    },
+    {
+      "path": "reference-validation/software-g5-r07-startup-only-20260928/evidence/trigger.json",
+      "sha256": "65e1ee2c067bd47072a582eb4c8c540b7b8f7dfbf8c72f59c88e40b7c8bd3a47"
+    },
+    {
+      "path": "reference-validation/software-g5-r08-saved-child-20260929/summary.json",
+      "sha256": "1020ed3665ad00d3124daf72bb79f585ccdbcf7e30f119063e55cc5275332c5d"
+    },
+    {
+      "path": "reference-validation/software-g5-r07-final-deadline-gate-20260929/summary.json",
+      "sha256": "83475cb5fef5d792eff3bf13214bd3a639860287940a309f741990a13634fbe1"
+    }
+  ],
+  "reviewer_initial_and_final_hashes_matched": true,
+  "parent_checksum_reconciliation_matched": true,
+  "tests_or_research_launches_performed": false
+}

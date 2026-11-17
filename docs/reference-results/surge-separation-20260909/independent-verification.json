@@ -1,0 +1,10 @@
+{
+  "ChallengeMoviesVerified": 16,
+  "UnchangedControlsVerified": 4,
+  "PixelsVerified": 2621419496,
+  "ToleratedHalfCountRoundingTies": 0,
+  "ScoreRowsVerified": 112,
+  "IndependentMaskMembershipRecalculation": true,
+  "FullFramePixelConservationVerified": true,
+  "IndependentImageSegmentation": false
+}

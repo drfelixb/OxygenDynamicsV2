@@ -1,0 +1,16 @@
+VERIFIED AMPLITUDE ELIGIBILITY M400-01-baseline-awake
+VERIFIED AMPLITUDE ELIGIBILITY M401-01-baseline-awake
+VERIFIED AMPLITUDE ELIGIBILITY FB2312-baseline-awake
+VERIFIED AMPLITUDE ELIGIBILITY FB2411
+VERIFIED AMPLITUDE ELIGIBILITY ID13-20200917
+VERIFIED AMPLITUDE ELIGIBILITY FB2316-baseline
+VERIFIED AMPLITUDE ELIGIBILITY flat
+{
+  "RowsVerified": 11433,
+  "FlaggedCasesVerified": 89,
+  "DecompositionsVerified": 2534,
+  "TraceSamplesExported": 8711,
+  "InputHashesVerified": 10,
+  "OnsetRefits": 0,
+  "ProductionChanged": false
+}

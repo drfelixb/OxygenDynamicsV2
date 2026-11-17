@@ -1,0 +1,14 @@
+test_checks_survive_optimization (test_verify_surge_separation.SeparationVerifierTests.test_checks_survive_optimization) ... ok
+test_corrupt_coverage (test_verify_surge_separation.SeparationVerifierTests.test_corrupt_coverage) ... ok
+test_duplicate_source (test_verify_surge_separation.SeparationVerifierTests.test_duplicate_source) ... ok
+test_empty_retained_set (test_verify_surge_separation.SeparationVerifierTests.test_empty_retained_set) ... ok
+test_nonfinite_mass (test_verify_surge_separation.SeparationVerifierTests.test_nonfinite_mass) ... ok
+test_recipe_excludes_outside_window (test_verify_surge_separation.SeparationVerifierTests.test_recipe_excludes_outside_window) ... ok
+test_reused_run (test_verify_surge_separation.SeparationVerifierTests.test_reused_run) ... ok
+test_suboptimal_assignment (test_verify_surge_separation.SeparationVerifierTests.test_suboptimal_assignment) ... ok
+test_valid (test_verify_surge_separation.SeparationVerifierTests.test_valid) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+OK

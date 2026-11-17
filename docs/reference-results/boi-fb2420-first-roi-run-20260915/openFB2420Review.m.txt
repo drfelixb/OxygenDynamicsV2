@@ -1,0 +1,19 @@
+function [Fig,UI]=openFB2420Review(queuePosition)
+% Open one frozen queue entry; no detector, annotations or adoption are performed.
+if nargin<1,queuePosition=1;end
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+s=jsondecode(fileread(fullfile(here,'review-02','source-bindings.json')));keys=fieldnames(s);
+for k=1:numel(keys),v=s.(keys{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256),'OxygenDynamics:ExampleSourceChanged','Review source changed; inspect the revision.');end
+Q=readtable(s.Queue.Path,'TextType','string');
+assert(isscalar(queuePosition)&&queuePosition==fix(queuePosition)&&queuePosition>=1&&queuePosition<=height(Q),'Choose an existing queue position.');
+row=Q.AuditRow(queuePosition);[Fig,UI]=openBOIEventReview(s.Audit.Path);
+UI.Select(row);UI.AttachReferenceSources(s.SinkMaster.Path,s.SurgeMaster.Path);
+if Q.SavedSign(queuePosition)=="sink",UI.AttachNative(s.SinkMaster.Path);else,UI.AttachNative(s.SurgeMaster.Path);end
+reviewPath=fullfile(here,'researcher-review','BOI-researcher-review-01.json');
+assert(strcmp(oxygenFileSHA256(reviewPath),'5db8d7980a82524e7c4c676fa2bcba47e09f27220605d0877df1e9ae5b21fb4f'),'Saved researcher revision changed.');
+UI.LoadBoundaries(reviewPath);
+UI.Tabs.SelectedTab=UI.TimingTab;
+Fig.Name=sprintf('FB2420 review %d/%d | audit row %d',queuePosition,height(Q),row);
+fprintf('Queue %d/%d: %s site %d event %d; %s\n',queuePosition,height(Q),Q.SavedSign(queuePosition),Q.SiteID(queuePosition),Q.EventID(queuePosition),Q.SelectionReasons(queuePosition));
+end

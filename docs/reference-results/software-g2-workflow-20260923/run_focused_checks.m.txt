@@ -1,0 +1,6 @@
+packet=fileparts(mfilename('fullpath'));repo=fullfile(fileparts(fileparts(packet)),'existing-analysis');
+addpath(repo);setupOxygenDynamicsPath;addpath(fullfile(repo,'tests','analysis'));
+results=run(matlab.unittest.TestSuite.fromFile(fullfile(repo,'tests','analysis','testBOIRecordingWorkflow.m')));
+save(fullfile(packet,'focused-results.mat'),'results');
+writeBOIRunJSON(fullfile(packet,'focused-results.json'),table2struct(table(results)));
+assert(all([results.Passed])&&~any([results.Incomplete]));

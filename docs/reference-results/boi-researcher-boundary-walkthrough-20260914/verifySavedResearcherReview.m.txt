@@ -1,0 +1,29 @@
+function verifySavedResearcherReview
+workspace='/Users/zcm361/Documents/Github/OxygenDynamicsV2';repo=fullfile(workspace,'existing-analysis');cd(repo);setupOxygenDynamicsPath;
+out=fullfile(workspace,'reference-validation/boi-researcher-boundary-walkthrough-20260914');
+folder=fullfile(workspace,'reference-validation/boi-c02-strict-roi-20260912/audit-01/source-amplitude-audit');
+audit=fullfile(folder,'event-amplitude-audit.mat');path=fullfile(folder,'BOI-researcher-review.json');
+originalHash=oxygenFileSHA256(path);R=loadBOIEventReview(audit);before=buildBOIEventReviewData(R,309);
+S=loadBOIBoundaryReview(R,path);assert(numel(S.Document.Revisions)==1);r=S.Document.Revisions;
+assert(r.AuditRow==309&&r.Event.SiteID==1&&r.Event.EventID==4&&strcmp(r.Event.EventType,'surge'));
+a=r.Annotation;assert(a.OnsetFrames==536&&a.RecoveryFrames==556&&a.PreferredOnsetFrame==536&&a.PreferredRecoveryFrame==556);
+assert(strcmp(a.Status,'uncertain')&&strcmp(a.Reviewer,'Felix')&&strcmp(a.Reason,'New endpoints include the onset peak and offset peak.'));
+[fig,UI]=openBOIEventReview(audit);cleanup=onCleanup(@()delete(fig));UI.LoadBoundaries(path);UI.Select(309);UI.Tabs.SelectedTab=UI.BoundaryTab;
+assert(isequal(UI.Boundaries.ReadDraft(),a));assert(~UI.Boundaries.HasDrafts());
+assert(isequal(sort([findall(UI.Timing.CorrectedAxes,'Tag','BOIResearcherBound').Value]),[536 556]));
+drawnow;pause(.5);drawnow;exportapp(fig,fullfile(out,'reopened-researcher-review.png'));
+D=buildBOIEventReviewData(UI.CurrentReview(),309);assert(isequaln(rmfield(D,'ResearcherBoundaryReview'),rmfield(before,'ResearcherBoundaryReview')));
+receipt=exportBOIEventReview(UI.CurrentReview(),309,fullfile(out,'selected-event-export'));
+assert(isequal(receipt.ResearcherBoundaryReview.Annotation,a));
+E=loadBOIBoundaryReview(R,fullfile(out,'selected-event-export/ResearcherBoundaryHistory.json'));assert(isequal(E.Document,S.Document));
+checks=jsondecode(fileread(fullfile(out,'selected-event-export/ArtifactChecksums.json')));
+for k=1:numel(checks),assert(strcmp(checks(k).SHA256,oxygenFileSHA256(fullfile(out,'selected-event-export',checks(k).Name))));end
+assert(strcmp(originalHash,oxygenFileSHA256(path))&&strcmp(R.AuditSHA256,oxygenFileSHA256(audit)));
+result=struct('Status','passed','UserReportedSave',true,'ReopenedBy','assistant MATLAB verification', ...
+    'IndependentResearcherReopenReported',false,'ScientificAcceptance','not_established', ...
+    'ReviewPath',path,'ReviewSHA256',originalHash,'SavedAuditSHA256',R.AuditSHA256,'AuditRow',309, ...
+    'Revision',r,'UIFieldsMatch',true,'SavedManualOverlayFrames',[536 556],'DraftsCreated',false, ...
+    'PriorMeasurementFieldsUnchanged',true,'ExportHistoryReopens',true,'ExportArtifactsVerified',numel(checks), ...
+    'OriginalFilesUnchanged',true,'VerifiedUTC',char(datetime('now','TimeZone','UTC','Format','yyyy-MM-dd''T''HH:mm:ss''Z''')));
+fid=fopen(fullfile(out,'verification.json'),'w');c=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(result,'PrettyPrint',true));disp(result);
+end

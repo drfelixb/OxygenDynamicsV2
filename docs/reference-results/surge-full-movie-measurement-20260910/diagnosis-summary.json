@@ -1,0 +1,20 @@
+{
+  "ImposedPositiveComponents": 10,
+  "UniquelyAssignedPositiveComponents": 8,
+  "ComponentsWithSameSignIntersection": 10,
+  "AssignedResolved": 2,
+  "AssignedInsufficientCleanContext": 6,
+  "ResolvedNativeAndExpandedNearPeak": 2,
+  "LatestSinkBlockers": 5,
+  "LatestSurgeBlockers": 1,
+  "ContiguousPreNativeFrames": [
+    0,
+    0,
+    4,
+    15,
+    18,
+    18
+  ],
+  "BlockingRows": 6,
+  "AssignedTraceSamples": 737
+}

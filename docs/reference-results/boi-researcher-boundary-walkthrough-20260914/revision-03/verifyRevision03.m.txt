@@ -1,0 +1,24 @@
+function verifyRevision03
+root='/Users/zcm361/Documents/Github/OxygenDynamicsV2';cd(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(root,'reference-validation/boi-researcher-boundary-walkthrough-20260914/revision-03');I=jsondecode(fileread(fullfile(out,'input.json')));
+R=loadBOIEventReview(fullfile(fileparts(I.ReviewPath),'event-amplitude-audit.mat'));
+old=loadBOIBoundaryReview(R,I.PriorReviewPath);new=loadBOIBoundaryReview(R,I.ReviewPath);
+assert(strcmp(new.SHA256,I.SHA256)&&strcmp(old.SHA256,I.PriorSHA256));
+assert(numel(new.Document.Revisions)==3&&isequal(new.Document.Revisions(1:2),old.Document.Revisions));
+assert(strcmp(new.Document.PreviousArtifact.SHA256,old.SHA256));
+reviewed=R;reviewed.BoundaryReview=new;rows=[309 308 321];expected=[536 556;496 516;177 195];
+for k=1:3
+    row=rows(k);before=buildBOIEventReviewData(R,row);after=buildBOIEventReviewData(reviewed,row);
+    assert(isequaln(rmfield(before,'ResearcherBoundaryReview'),rmfield(after,'ResearcherBoundaryReview')));
+    A=after.ResearcherBoundaryReview.Annotation;
+    assert(isequal([A.OnsetFrames A.RecoveryFrames],expected(k,:))&&isequal([A.PreferredOnsetFrame A.PreferredRecoveryFrame],expected(k,:)));
+    assert(strcmp(A.Status,'uncertain')&&strcmp(A.Reviewer,'Felix'));
+end
+assert(strcmp(oxygenFileSHA256(R.AuditPath),R.AuditSHA256)&&strcmp(oxygenFileSHA256(I.ReviewPath),I.SHA256)&&strcmp(oxygenFileSHA256(I.PriorReviewPath),I.PriorSHA256));
+V=struct('Status','passed','VerifiedUTC',char(datetime('now','TimeZone','UTC','Format','yyyy-MM-dd''T''HH:mm:ss''Z''')), ...
+    'ReviewSHA256',new.SHA256,'PriorReviewSHA256',old.SHA256,'AuditSHA256',R.AuditSHA256, ...
+    'RevisionCount',3,'AuditRows',rows,'SavedEndpointFrames',expected,'EarlierRevisionsUnchanged',true, ...
+    'SavedStatuses','uncertain','PriorMeasurementFieldsUnchanged',true,'OriginalFilesUnchanged',true, ...
+    'UserReportedSave',true,'ReopenedBy','assistant MATLAB loader','ScientificAcceptance','not_established');
+fid=fopen(fullfile(out,'verification.json'),'w');cleanup=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(V,'PrettyPrint',true));disp(V);
+end

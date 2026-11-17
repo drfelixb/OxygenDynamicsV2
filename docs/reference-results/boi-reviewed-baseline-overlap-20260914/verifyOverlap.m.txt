@@ -1,0 +1,47 @@
+function verifyOverlap
+root='/Users/zcm361/Documents/Github/OxygenDynamicsV2';cd(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(root,'reference-validation/boi-reviewed-baseline-overlap-20260914');C=jsondecode(fileread(fullfile(out,'baseline-overlap.json')));I=jsondecode(fileread(fullfile(out,'inputs.json')));
+R=loadBOIEventReview(C.SavedAuditPath);assert(strcmp(R.AuditSHA256,C.SavedAuditSHA256));
+S=loadBOIBoundaryReview(R,I.Sources.ResearcherReview.Path);assert(strcmp(S.SHA256,C.ResearcherReviewSHA256));reviewed=R;reviewed.BoundaryReview=S;
+intervals=0;uniqueOverlapFrames=cell(4,1);savedCounts=zeros(4,1);
+for k=1:numel(C.Events)
+    E=C.Events(k);row=E.AuditRow;t=R.Traces{row};A=R.Audit(row,:);D=buildBOIEventReviewData(R,row);H=buildBOIEventReviewData(reviewed,row);
+    assert(isequaln(rmfield(D,'ResearcherBoundaryReview'),rmfield(H,'ResearcherBoundaryReview')));
+    baseline=double(t.CleanBaselineFrames(:));assert(isequal(baseline,double(E.RetainedBaselineCandidateFrames(:))));
+    assert(isequal(find(D.Frames.CleanBaseline),baseline)&&numel(baseline)==E.RetainedCount);
+    candidate=(max(1,A.StartFrame-A.BaselineWindowFrames):A.StartFrame-1)';assert(isequal(candidate,E.OriginalCandidateFrames(:)));
+    assert(isequal(setdiff(candidate,baseline),E.ExcludedOriginalCandidateFrames(:)));
+    assert(numel(candidate)==20&&A.BaselineWindowFrames==E.RequiredBaselineFrameCount);
+    assert(all(isfinite(t.Raw(candidate)))&&A.NonfiniteBaselineFrames==0&&isempty(E.NonfiniteCandidateFrames));
+    assert(A.OverlapExcludedFrames==E.SavedNativeOverlapExcludedCount&&numel(setdiff(candidate,baseline))==A.OverlapExcludedFrames);
+    assert(strcmp(A.StoredStatus,E.SavedBaselineStatus)&&strcmp(A.RecomputedStatus,E.AuditedBaselineStatus));
+    sameNumber(E.SavedBaselineValue,A.StoredBaseline);sameNumber(E.AuditedBaselineValue,A.RecomputedBaseline);
+    sameNumber(E.SavedAmplitude,A.StoredAmplitude);sameNumber(E.AuditedAmplitude,A.RecomputedAmplitude);
+    assert(E.BaselineReplayMatches==D.BaselineReplayMatches&&E.AmplitudeReplayMatches==D.ReplayMatches);
+    annotation=H.ResearcherBoundaryReview.Annotation;[ons,offs]=ndgrid(annotation.OnsetFrames,annotation.RecoveryFrames);pairs=zeros(numel(E.ReviewedAlternatives),2);allOverlap=[];
+    for j=1:numel(E.ReviewedAlternatives)
+        V=E.ReviewedAlternatives(j);human=(V.OnsetFrame:V.RecoveryFrame)';inside=intersect(baseline,human);before=baseline(baseline<V.OnsetFrame);
+        assert(isequal(inside,V.OverlapFrames(:))&&numel(inside)==V.OverlapCount);
+        assert(isequal(before,V.RetainedFramesStrictlyBeforeOnset(:))&&numel(before)==V.StrictlyBeforeOnsetCount);
+        assert(isequal(intersect(candidate,human),V.CandidateWindowFramesInsideReviewedInterval(:)));
+        assert(isempty(V.RetainedFramesAfterOffset)&&numel(before)+numel(inside)==numel(baseline));
+        assert(V.CountMeetsOriginalRequirementAfterRemovingOverlapOnly==(numel(before)==A.BaselineWindowFrames));
+        pairs(j,:)=[V.OnsetFrame V.RecoveryFrame];allOverlap=union(allOverlap,inside);intervals=intervals+1;
+    end
+    assert(isequal(sortrows(pairs),sortrows([ons(:) offs(:)])));
+    uniqueOverlapFrames{k}=allOverlap;savedCounts(k)=numel(baseline);
+end
+assert(intervals==7);assert(isequal(savedCounts,[20;20;0;14]));assert(isequal(cellfun(@numel,uniqueOverlapFrames),[4;7;0;2]));
+assert(strcmp(oxygenFileSHA256(R.AuditPath),R.AuditSHA256)&&strcmp(oxygenFileSHA256(S.Path),S.SHA256));
+V=struct('Status','passed','VerificationMethod','Independent MATLAB intersections against actual saved Traces.CleanBaselineFrames and audit metadata', ...
+    'EventsVerified',4,'ReviewedIntervalsVerified',intervals,'RetainedFrameMembershipsVerified',sum(savedCounts), ...
+    'OriginalCandidateFrameMembershipsVerified',80,'UniqueOverlappingFramesPerEvent',[4 7 0 2], ...
+    'RetainedStrictlyBeforeReviewedOnsetCounts',[16 13 0 12],'NoReferenceOrAmplitudeRecalculation',true, ...
+    'ExistingMeasurementFieldsUnchanged',true,'OriginalFilesUnchanged',true,'AuditSHA256',R.AuditSHA256, ...
+    'ReviewSHA256',S.SHA256,'ComparisonSHA256',oxygenFileSHA256(fullfile(out,'baseline-overlap.json')),'ScientificAcceptance','not_established');
+fid=fopen(fullfile(out,'verification.json'),'w');cleanup=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(V,'PrettyPrint',true));disp(V);
+end
+function sameNumber(jsonValue,saved)
+if isnan(saved),assert(isempty(jsonValue)||(isscalar(jsonValue)&&isnan(jsonValue)));
+else,assert(isscalar(jsonValue)&&abs(jsonValue-saved)<=4*eps(max(1,abs(saved))));end
+end

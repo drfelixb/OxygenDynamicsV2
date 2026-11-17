@@ -22,7 +22,9 @@ if ~isempty(TableOxygenSinkEvents)
     EventOriginalSinkID = EventOriginalSinkID(KeepEvent);
     [~,RemappedSinkID] = ismember(EventOriginalSinkID,OriginalSinkIDs);
     TableOxygenSinkEvents.OriginalSinkID = EventOriginalSinkID;
-    TableOxygenSinkEvents.SinkID = RemappedSinkID;
+    if ~ismember('SiteID',TableOxygenSinks.Properties.VariableNames)
+        TableOxygenSinkEvents.SinkID = RemappedSinkID;
+    end
 end
 end
 

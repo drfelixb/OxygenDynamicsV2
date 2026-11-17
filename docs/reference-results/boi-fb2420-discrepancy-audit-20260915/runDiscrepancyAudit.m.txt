@@ -1,0 +1,106 @@
+function runDiscrepancyAudit
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+timer=tic;s=jsondecode(fileread(fullfile(here,'source-bindings.json')));names=fieldnames(s);
+for k=1:numel(names),v=s.(names{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+P=jsondecode(fileread(fullfile(here,'prespecification.json')));out=fullfile(here,'run-01');assert(~isfolder(out));mkdir(out);
+R=loadBOIEventReview(s.Audit.Path);R.BoundaryReview=loadBOIBoundaryReview(R,s.Review.Path);
+R=attachBOIReferenceSources(R,s.SinkMaster.Path,s.SurgeMaster.Path);A=R.Audit;N=R.AnalysisInfo.NFrames;assert(N==1200);
+Q=readtable(s.Queue.Path,'TextType','string');assert(isequal(Q.AuditRow(:),P.Cases(:)));
+M1=load(s.SinkMaster.Path,'Table_OxygenSinks_Out','Table_OxygenSinkEvents_Out');M2=load(s.SurgeMaster.Path,'Table_OxygenSurges_Out','Table_OxygenSurgeEvents_Out');
+ST={M1.Table_OxygenSinks_Out,M2.Table_OxygenSurges_Out};ET={M1.Table_OxygenSinkEvents_Out,M2.Table_OxygenSurgeEvents_Out};
+writeJSON(fullfile(out,'analysis-params.json'),R.AnalysisInfo.AnalysisParams);
+layout=jsondecode(fileread(s.DisplayLayout.Path));fid=fopen(s.DisplayArrays.Path,'rb','ieee-le');fseek(fid,512*512*8,'bof');background=fread(fid,[512 512],'double')';fclose(fid);
+assert(isequal(size(background),[512 512]));
+metrics=cell(height(Q),1);fullFig=figure('Visible','off','Position',[50 50 1500 1000]);fullLayout=tiledlayout(fullFig,3,3,'TileSpacing','compact');
+mapFig=figure('Visible','off','Position',[50 50 1300 1300]);mapLayout=tiledlayout(mapFig,3,3,'TileSpacing','compact');
+for k=1:height(Q)
+ row=Q.AuditRow(k);a=A(row,:);z=R.Traces{row};B=getBOIBoundaryReview(R,row);g=1;if a.EventType=="surge",g=2;end
+ tab=ST{g};site=find(tab.SiteID==a.SiteID);assert(isscalar(site));cells=tab.FramePixels{site};sitePixels=unique(vertcat(cells{:}));foot=double(z.Footprint(:));
+ assert(all(ismember(foot,sitePixels)));native=R.ReferenceSources.EventFramePixels{row};assert(isequal(unique(vertcat(native{:})),foot));
+ nCount=zeros(N,1);nCount(z.DetectedFrames)=cellfun(@numel,native);siteCount=cellfun(@numel,cells(:));fixedSiteCount=zeros(N,1);
+ for f=1:N,fixedSiteCount(f)=numel(intersect(foot,cells{f}));end
+ Frame=(1:N)';Raw=z.Raw(:);RemovedTrend=z.RawCubicTrend(:);Corrected=z.DetectionDetrended(:);SpatialZ=z.SpatialNormalized(:);Normalized=z.Normalized(:);Filtered=z.Filtered(:);SavedSite=z.TimingTrace(:);
+ RetainedAutomaticBaseline=ismember(Frame,z.CleanBaselineFrames);Native=nCount>0;
+ Tr=table(Frame,Raw,RemovedTrend,Corrected,SpatialZ,Normalized,Filtered,SavedSite,nCount,siteCount,fixedSiteCount,Native,RetainedAutomaticBaseline, ...
+  'VariableNames',{'Frame','Raw','SavedRawCubicTrend','Corrected','SpatialZ','Normalized','Filtered','SavedSiteTrace','SelectedNativePixels','SiteNativePixels','SiteNativePixelsInsideFixedFootprint','SelectedNative','RetainedAutomaticBaseline'});
+ writetable(Tr,fullfile(out,sprintf('case-%02d-full-traces.csv',k)));
+ edges=[a.StartFrame a.EndFrame];human=[];if ~isempty(B.Annotation),human=[B.Annotation.OnsetFrames B.Annotation.RecoveryFrames];end
+ lim=[max(1,min([edges human])-40),min(N,max([edges human])+40)];w=(lim(1):lim(2))';
+ m=struct('QueuePosition',k,'AuditRow',row,'Sign',char(a.EventType),'SiteID',a.SiteID,'EventID',a.EventID,'ResearcherStatus',B.Status, ...
+ 'NativeFrames',[a.DetectedStartFrame a.DetectedEndFrame],'MeasuredFrames',edges,'HumanFrames',human,'DisplayWindow',lim,'FixedFootprintPixels',numel(foot),'LifetimeSitePixels',numel(sitePixels), ...
+ 'EventToSiteFootprintFraction',numel(foot)/numel(sitePixels),'NativePixelMin',min(nCount(Native)),'NativePixelMax',max(nCount),'NativeMeanFractionOfFixed',mean(nCount(Native))/numel(foot), ...
+ 'CorrectedSpatialLocalCorrelation',rho(Corrected(w),SpatialZ(w)),'SpatialTemporalLocalCorrelation',rho(SpatialZ(w),Normalized(w)), ...
+ 'TemporalFilteredLocalCorrelation',rho(Normalized(w),Filtered(w)),'CorrectedFilteredLocalCorrelation',rho(Corrected(w),Filtered(w)), ...
+ 'FilteredSiteLocalCorrelation',rho(Filtered(w),SavedSite(w)),'CorrectedFilteredFullCorrelation',rho(Corrected,Filtered), ...
+ 'BaselineStatus',char(a.StoredStatus),'RetainedAutomaticBaselineCount',numel(z.CleanBaselineFrames),'AutomaticBaselineTruncated',a.TruncatedBaseline, ...
+ 'AutomaticBaselineExcludedOverlapCount',a.OverlapExcludedFrames,'RawMinusSavedTrendCorrectedMaxDifference',max(abs((Raw-RemovedTrend)-Corrected)));
+ same=find(A.EventType==a.EventType&A.SiteID==a.SiteID);writetable(A(same,:),fullfile(out,sprintf('case-%02d-same-site-events.csv',k)));
+ m.SameSiteNativeEventCount=numel(same);prev=same(A.DetectedEndFrame(same)<a.DetectedStartFrame);next=same(A.DetectedStartFrame(same)>a.DetectedEndFrame);
+ m.PreviousNativeGap=NaN;m.NextNativeGap=NaN;if ~isempty(prev),m.PreviousNativeGap=a.DetectedStartFrame-max(A.DetectedEndFrame(prev))-1;end
+ if ~isempty(next),m.NextNativeGap=min(A.DetectedStartFrame(next))-a.DetectedEndFrame-1;end
+ metrics{k}=m;
+ fig=figure('Visible','off','Position',[50 50 1400 1250]);t=tiledlayout(fig,6,1,'TileSpacing','compact','Padding','compact');
+ title(t,sprintf('FB2420 case %d | %s site %d/event %d | %s | fixed event footprint %d pixels',k,a.EventType,a.SiteID,a.EventID,B.Status,numel(foot)),'Interpreter','none');
+ ax=nexttile(t);plot(ax,Frame(w),[Raw(w) RemovedTrend(w)]);ylabel(ax,'Input units');legend(ax,{'Preserved input','Saved cubic trend'},'Location','best');title(ax,'Original correction QA; no new fit');
+ ax=nexttile(t);plot(ax,Frame(w),Corrected(w),'Color',[.1 .35 .65]);ylabel(ax,'Corrected');title(ax,'Primary recognition trace');
+ ax=nexttile(t);plot(ax,Frame(w),SpatialZ(w));ylabel(ax,'Spatial Z');title(ax,'After within-frame ROI normalization');
+ ax=nexttile(t);plot(ax,Frame(w),Normalized(w));ylabel(ax,'Temporal Z');title(ax,'Then per-pixel temporal normalization, before smoothing');
+ ax=nexttile(t);plot(ax,Frame(w),[Filtered(w) SavedSite(w)]);ylabel(ax,'Score');legend(ax,{'Filtered event footprint','Saved site timing trace'},'Location','best');title(ax,'Different spatial support; sink site trace also has fifth-order removal');
+ ax=nexttile(t);plot(ax,Frame(w),[nCount(w) fixedSiteCount(w)]/numel(foot));ylabel(ax,'Native fraction');legend(ax,{'Selected native event / fixed footprint','Same-site native pixels / fixed footprint'},'Location','best');xlabel(ax,'One-based recording frame; external 1 Hz');
+ axs=findall(fig,'Type','axes');
+ for ax=axs',hold(ax,'on');xlim(ax,lim+[-.5 .5]);grid(ax,'on');for e=edges,xline(ax,e,'r--','HandleVisibility','off');end
+  for e=[a.DetectedStartFrame a.DetectedEndFrame],xline(ax,e,'b:','HandleVisibility','off');end
+  for e=reshape(human,1,[]),xline(ax,e,':','Color',[.55 .1 .65],'LineWidth',1.5,'HandleVisibility','off');end
+ end
+ exportgraphics(fig,fullfile(out,sprintf('case-%02d-stages.png',k)),'Resolution',120);close(fig);
+ ax=nexttile(fullLayout);plot(ax,Frame,Corrected);hold(ax,'on');for e=edges,xline(ax,e,'r--');end
+ for e=reshape(human,1,[]),xline(ax,e,':','Color',[.55 .1 .65]);end
+ title(ax,sprintf('%d: %s %d/%d | %s',k,a.EventType,a.SiteID,a.EventID,B.Status),'Interpreter','none');xlim(ax,[1 N]);grid(ax,'on');ylabel(ax,'Corrected');
+ ax=nexttile(mapLayout);imagesc(ax,background,layout.SourceDisplayLimits');axis(ax,'image');colormap(ax,gray);hold(ax,'on');
+ siteMask=false(512);siteMask(sitePixels)=true;eventMask=false(512);eventMask(foot)=true;
+ contour(ax,siteMask,[.5 .5],'Color',[1 .55 0],'LineWidth',1);contour(ax,eventMask,[.5 .5],'Color',[0 .9 1],'LineWidth',1.3);
+ title(ax,sprintf('%d: %s %d/%d | event %d / site %d px',k,a.EventType,a.SiteID,a.EventID,numel(foot),numel(sitePixels)));set(ax,'YDir','reverse');xlabel(ax,'Column');ylabel(ax,'Row');
+end
+exportgraphics(fullFig,fullfile(out,'full-corrected-overview.png'),'Resolution',120);close(fullFig);
+title(mapLayout,'Cyan: event-union footprint; orange: lifetime site union. Cached source mean, native coordinates.');exportgraphics(mapFig,fullfile(out,'footprint-map.png'),'Resolution',120);close(mapFig);
+Metrics=struct2table(vertcat(metrics{:}));writetable(Metrics,fullfile(out,'stage-support-metrics.csv'));writeJSON(fullfile(out,'stage-support-metrics.json'),vertcat(metrics{:}));
+C=P.ContextIntervals;contextSummary=cell(numel(C),1);
+for k=1:numel(C)
+ c=C(k);row=c.AuditRow;foot=R.Traces{row}.Footprint;frames=(c.Start:c.End)';frameRows=zeros(numel(frames),6);hits={};
+ for j=1:numel(frames)
+  f=frames(j);unions={[],[]};selected=[];
+  for r=1:height(A)
+   idx=find(R.Traces{r}.DetectedFrames==f);if isempty(idx),continue;end
+   shared=intersect(foot,R.ReferenceSources.EventFramePixels{r}{idx});if isempty(shared),continue;end
+   g=1;if A.EventType(r)=="surge",g=2;end
+   unions{g}=union(unions{g},shared);if r==row,selected=shared;end
+   hits(end+1,:)={f,r,char(A.EventType(r)),A.SiteID(r),A.EventID(r),numel(shared),numel(shared)/numel(foot),A.DetectedStartFrame(r),A.DetectedEndFrame(r)}; %#ok<AGROW>
+  end
+  frameRows(j,:)=[f numel(unions{1}) numel(unions{2}) numel(union(unions{1},unions{2})) numel(selected) numel(foot)];
+ end
+ FT=array2table(frameRows,'VariableNames',{'Frame','SinkOverlapPixels','SurgeOverlapPixels','AnyOverlapPixels','SelectedEventOverlapPixels','FootprintPixels'});
+ writetable(FT,fullfile(out,[char(c.ID) '-frame-contacts.csv']));
+ vars={'Frame','AuditRow','Sign','SiteID','EventID','OverlapPixels','FootprintFraction','NativeStart','NativeEnd'};
+ if isempty(hits),HT=cell2table(cell(0,9),'VariableNames',vars);else,HT=cell2table(hits,'VariableNames',vars);end
+ writetable(HT,fullfile(out,[char(c.ID) '-event-contacts.csv']));
+ contextSummary{k}=struct('ID',c.ID,'AuditRow',row,'Frames',[c.Start c.End],'TimingQualifier',c.Qualifier,'FixedFootprintPixels',numel(foot), ...
+ 'SinkContactFrames',FT.Frame(FT.SinkOverlapPixels>0)','SurgeContactFrames',FT.Frame(FT.SurgeOverlapPixels>0)', ...
+ 'NoNativeContactFrames',FT.Frame(FT.AnyOverlapPixels==0)','MaximumSinkFraction',max(FT.SinkOverlapPixels)/numel(foot), ...
+ 'MeanSinkFraction',mean(FT.SinkOverlapPixels)/numel(foot),'MeanSelectedEventFraction',mean(FT.SelectedEventOverlapPixels)/numel(foot));
+end
+writeJSON(fullfile(out,'context-summary.json'),vertcat(contextSummary{:}));
+Ref=buildBOIReviewedReferencePreview(R,291);assert(strcmp(Ref.Status,'available'));assert(~Ref.NewBaselineOrAmplitudeCalculations);assert(isempty(Ref.ResearcherJudgments));
+writetable(Ref.Frames,fullfile(out,'recognized-surge-reference-frames.csv'));writetable(Ref.Contributors,fullfile(out,'recognized-surge-reference-contributors.csv'));
+writeJSON(fullfile(out,'recognized-surge-reference-summary.json'),rmfield(Ref,{'Frames','Contributors','BoundaryReview','SourceEvidence'}));
+for k=1:numel(names),v=s.(names{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+files=dir(fullfile(out,'**','*'));bytes=sum([files(~[files.isdir]).bytes]);assert(bytes<P.ResourceBudget.MaximumOutputBytes);assert(toc(timer)<P.ResourceBudget.MaximumMatlabMinutes*60);
+result=struct('DecisionID',P.DecisionID,'Status','saved_stage_support_and_reference_audit_passed','Cases',height(Q),'ContextIntervalsWithRecoveryAlternatives',numel(C), ...
+ 'AllNativeEventsAssociated',height(A),'MatlabSeconds',toc(timer),'OutputBytes',bytes,'DetectorRuns',0,'NewCorrectionFits',0,'NewBaselines',0,'SourceHashesUnchanged',true,'ReferenceSelected',false);
+writeJSON(fullfile(out,'verification.json'),result);disp(result);disp(Metrics(:,{'QueuePosition','CorrectedSpatialLocalCorrelation','SpatialTemporalLocalCorrelation','TemporalFilteredLocalCorrelation','CorrectedFilteredLocalCorrelation','EventToSiteFootprintFraction'}));
+end
+function r=rho(x,y)
+ x=double(x(:));y=double(y(:));if numel(x)<2||std(x)==0||std(y)==0,r=NaN;else,c=corrcoef(x,y);r=c(1,2);end
+end
+function writeJSON(p,x)
+f=fopen(p,'w');assert(f>=0);fprintf(f,'%s\n',jsonencode(x,'PrettyPrint',true));fclose(f);
+end

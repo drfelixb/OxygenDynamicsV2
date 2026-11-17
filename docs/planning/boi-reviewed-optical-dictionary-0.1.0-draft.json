@@ -1,0 +1,73 @@
+{
+  "Schema": "boi-measurement-dictionary-1",
+  "Version": "0.1.0-draft",
+  "Scope": "supplemental draft for separate researcher-reviewed BOI optical descriptions; does not replace production dictionary 0.3.0-draft",
+  "AggregationRule": "No cohort aggregation or derived amplitude-area-duration composite in this increment.",
+  "Status": "proposed_not_implemented",
+  "Measurements": [
+    {
+      "MeasurementID": "BOI-RM01",
+      "DefinitionVersion": "0.1.0-draft",
+      "Name": "Reviewed signed optical extrema",
+      "ProposedTier": "exploratory reviewed optical description",
+      "Question": "What signed changes occur within the reviewed interval relative to its accepted reference?",
+      "Formula": "q=(r(a:b)-B)/B; minimum=min(q); maximum=max(q); percent=100*fraction; retain all tied extremum frames",
+      "Units": "fraction or percent (explicit)",
+      "SignalAndBaseline": "Preserved-input mean on original fixed native union; B=mean of exactly the researcher-accepted pre-onset frames. Corrected trace supports review, not the denominator.",
+      "SupportAndExposure": "Source-bound reference and reviewed inclusive event interval; external 1 Hz frame clock. Reference count is explicit, including 12 samples at 165\u2013176. Native overlaps remain context.",
+      "MissingnessAndIdentity": "No accepted reference for the onset, invalid reference mean or nonfinite samples withholds dependent quantities. Preserve all alternatives and uncertain recognition.",
+      "ClaimLimits": "Local exploratory optical result, not oxygen concentration/deficit or independent physiological validation. No cohort pooling or native-mask changes.",
+      "Implementation": "not yet implemented; proposed separate reviewed optical helper/export",
+      "ImplementationStatus": "proposed; no new recording quantity calculated",
+      "WorkedExample": "Teaching only: B=100, event=[100,80,100] gives signed minimum -0.2 and maximum 0."
+    },
+    {
+      "MeasurementID": "BOI-RM02",
+      "DefinitionVersion": "0.1.0-draft",
+      "Name": "Reviewed amplitude under the saved sign convention",
+      "ProposedTier": "exploratory reviewed optical description",
+      "Question": "What amplitude would the existing directional convention give for the reviewed interval/reference?",
+      "Formula": "sink=-min(q); surge=max(q), using the preserved saved detection label; no absolute value",
+      "Units": "fraction or percent (explicit)",
+      "SignalAndBaseline": "Preserved-input mean on original fixed native union; B=mean of exactly the researcher-accepted pre-onset frames. Corrected trace supports review, not the denominator.",
+      "SupportAndExposure": "Source-bound reference and reviewed inclusive event interval; external 1 Hz frame clock. Reference count is explicit, including 12 samples at 165\u2013176. Native overlaps remain context.",
+      "MissingnessAndIdentity": "No accepted reference for the onset, invalid reference mean or nonfinite samples withholds dependent quantities. Preserve all alternatives and uncertain recognition.",
+      "ClaimLimits": "Local exploratory optical result, not oxygen concentration/deficit or independent physiological validation. No cohort pooling or native-mask changes.",
+      "Implementation": "not yet implemented; proposed separate reviewed optical helper/export",
+      "ImplementationStatus": "proposed; no new recording quantity calculated",
+      "WorkedExample": "Teaching only: the preceding signed minimum -0.2 gives sink amplitude +0.2; saved surge convention gives 0. Neither relabels an event."
+    },
+    {
+      "MeasurementID": "BOI-RM03",
+      "DefinitionVersion": "0.1.0-draft",
+      "Name": "Reviewed signed trace integral",
+      "ProposedTier": "exploratory reviewed optical description",
+      "Question": "What signed optical change accumulates over the reviewed interval?",
+      "Formula": "sum(q)/fs; optional descriptive mean=mean(q); uniform frame rectangle sum, not trapezoidal integration",
+      "Units": "fraction*seconds; mean is fraction",
+      "SignalAndBaseline": "Preserved-input mean on original fixed native union; B=mean of exactly the researcher-accepted pre-onset frames. Corrected trace supports review, not the denominator.",
+      "SupportAndExposure": "Source-bound reference and reviewed inclusive event interval; external 1 Hz frame clock. Reference count is explicit, including 12 samples at 165\u2013176. Native overlaps remain context.",
+      "MissingnessAndIdentity": "No accepted reference for the onset, invalid reference mean or nonfinite samples withholds dependent quantities. Preserve all alternatives and uncertain recognition.",
+      "ClaimLimits": "Local exploratory optical result, not oxygen concentration/deficit or independent physiological validation. No cohort pooling or native-mask changes.",
+      "Implementation": "not yet implemented; proposed separate reviewed optical helper/export",
+      "ImplementationStatus": "proposed; no new recording quantity calculated",
+      "WorkedExample": "Teaching only: q=[0,-0.2,0] at 1 Hz integrates to -0.2 fraction*seconds."
+    },
+    {
+      "MeasurementID": "BOI-RM04",
+      "DefinitionVersion": "0.1.0-draft",
+      "Name": "Reviewed interval duration",
+      "ProposedTier": "exploratory reviewed optical description",
+      "Question": "How many modeled frame intervals belong to the saved reviewed bounds?",
+      "Formula": "duration=(b-a+1)/fs; endpoint span=(b-a)/fs; keep both explicitly named",
+      "Units": "seconds",
+      "SignalAndBaseline": "Saved reviewed frame boundaries; reference is not required for duration.",
+      "SupportAndExposure": "Source-bound reference and reviewed inclusive event interval; external 1 Hz frame clock. Reference count is explicit, including 12 samples at 165\u2013176. Native overlaps remain context.",
+      "MissingnessAndIdentity": "Missing/invalid boundaries withhold duration; absent optical reference does not erase valid timing. Preserve discrete alternatives.",
+      "ClaimLimits": "Local exploratory optical result, not oxygen concentration/deficit or independent physiological validation. No cohort pooling or native-mask changes.",
+      "Implementation": "not yet implemented; proposed separate reviewed optical helper/export",
+      "ImplementationStatus": "proposed; no new recording quantity calculated",
+      "WorkedExample": "Teaching only: frames 10\u201312 at 1 Hz give duration 3 s and endpoint span 2 s; neither defines camera exposure."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "F07-03.ten-one-use-fixtures-1",
+  "cases": [
+    {
+      "name": "complete_boi_source_list",
+      "mutation": "none",
+      "path": null,
+      "expected": "accepted_manifest_only"
+    },
+    {
+      "name": "missing_workflow_entry",
+      "mutation": "remove",
+      "path": "openBOIRecordingWorkflow.m",
+      "expected": "missing_required"
+    },
+    {
+      "name": "missing_master_delegate",
+      "mutation": "remove",
+      "path": "helpers/runOxygenDynamicsMaster.m",
+      "expected": "missing_required"
+    },
+    {
+      "name": "missing_abf_reader",
+      "mutation": "remove",
+      "path": "external/abfload.m",
+      "expected": "missing_required"
+    },
+    {
+      "name": "recording_inclusion",
+      "mutation": "include",
+      "path": "helpers/recording.tif",
+      "expected": "excluded"
+    },
+    {
+      "name": "result_inclusion",
+      "mutation": "include",
+      "path": "helpers/DataOutput.mat",
+      "expected": "excluded"
+    },
+    {
+      "name": "development_evidence_inclusion",
+      "mutation": "include",
+      "path": "docs/reference-results/example/evidence.json",
+      "expected": "excluded"
+    },
+    {
+      "name": "machine_specific_script_inclusion",
+      "mutation": "include",
+      "path": "tests/analysis/reviewHPCachedReferenceEvidence.py",
+      "expected": "excluded"
+    },
+    {
+      "name": "outside_root_path",
+      "mutation": "include",
+      "path": "../private_source.m",
+      "expected": "unsafe_path"
+    },
+    {
+      "name": "source_hash_drift",
+      "mutation": "hash",
+      "path": "runBOIRecordingWorkflow.m",
+      "expected": "source_changed"
+    }
+  ]
+}

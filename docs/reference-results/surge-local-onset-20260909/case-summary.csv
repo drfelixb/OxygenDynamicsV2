@@ -1,0 +1,9 @@
+Session,Case,Events,PreselectedEventRow,ConstructedResolved,SourceResolved
+M400-01-baseline-awake,growing_clean,51,14,2,2
+M400-01-baseline-awake,shrinking_clean,51,14,2,2
+M401-01-baseline-awake,growing_clean,12,6,0,0
+M401-01-baseline-awake,shrinking_clean,12,5,0,0
+FB2312-baseline-awake,growing_clean,40,20,2,2
+FB2312-baseline-awake,shrinking_clean,39,0,2,2
+FB2411,growing_clean,12,0,0,0
+FB2411,shrinking_clean,11,0,0,0

@@ -320,7 +320,7 @@ toc;
 fprintf('Tracking putative oxygen surges across the imaging session... \n'); 
 tic;
 %this will contain putative oxygen surges(rows) and the pixels belonging to events for every frame of the recording.
-Overall_OxygenSurges_Pxllist = trackSurgeCandidates(OxygenSurgesInfo_all, ...
+Overall_OxygenSurges_Pxllist = trackiOSSurgeCandidates(OxygenSurgesInfo_all, ...
     ThresholMinddur_Surges,ThresholdMinsize_Surges-SurgeOverlapSizeMarginPixels);
 
 clear OxygenSurgesInfo_all

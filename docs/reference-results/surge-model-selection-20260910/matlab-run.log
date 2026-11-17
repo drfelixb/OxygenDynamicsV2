@@ -1,0 +1,144 @@
+Running testAnalysisCorrections
+.......... ....
+Done testAnalysisCorrections
+__________
+
+Running testDandiConversion
+WARNING: package sun.awt.X11 not in java.desktop
+WARNING: package sun.awt.X11 not in java.desktop
+..
+Done testDandiConversion
+__________
+
+Running testEventAmplitudeAudit
+.....
+Done testEventAmplitudeAudit
+__________
+
+Running testLocalSinkTiming
+.........
+Done testLocalSinkTiming
+__________
+
+Running testMeasurementAvailability
+....
+Done testMeasurementAvailability
+__________
+
+Running testPipelineContract
+....
+Done testPipelineContract
+__________
+
+Running testReviewCorrections
+....Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp99b07fbf_9362_4b75_8ea2_8abb7e4f5362/tpa65aea28_94fa_413a_a442_997db38c9b5f/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp99b07fbf_9362_4b75_8ea2_8abb7e4f5362/tpa65aea28_94fa_413a_a442_997db38c9b5f/Summary_Figures
+.Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp99b07fbf_9362_4b75_8ea2_8abb7e4f5362/tp02f708b6_0065_4cb1_8aa8_d30c2dfa9b15/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp99b07fbf_9362_4b75_8ea2_8abb7e4f5362/tp02f708b6_0065_4cb1_8aa8_d30c2dfa9b15/Summary_Figures
+Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp99b07fbf_9362_4b75_8ea2_8abb7e4f5362/tpa23d8852_abfa_42f2_9b38_d221df8cdf2a/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp99b07fbf_9362_4b75_8ea2_8abb7e4f5362/tpa23d8852_abfa_42f2_9b38_d221df8cdf2a/Summary_Figures
+.
+Done testReviewCorrections
+__________
+
+Running testSinkRecurrence
+......
+Done testSinkRecurrence
+__________
+
+Running testSurgeAmplitudeCounterfactual
+.........
+Done testSurgeAmplitudeCounterfactual
+__________
+
+Running testSurgeBranchPolicy
+.........
+Done testSurgeBranchPolicy
+__________
+
+Running testSurgeCandidateEvidence
+[Warning: Name is nonexistent or not a directory:
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/tests/analysis/tests/analysis]
+[> In path (line 109)
+In addpath (line 96)
+In testSurgeCandidateEvidence>setupOnce (line 5)]
+.......
+Done testSurgeCandidateEvidence
+__________
+
+Running testSurgeContactReview
+........
+Done testSurgeContactReview
+__________
+
+Running testSurgeContactSeparation
+.......... ..
+Done testSurgeContactSeparation
+__________
+
+Running testSurgeContinuity
+.......... .
+Done testSurgeContinuity
+__________
+
+Running testSurgeCorrections
+.....
+Done testSurgeCorrections
+__________
+
+Running testSurgeLocalOnset
+.......... ..
+Done testSurgeLocalOnset
+__________
+
+Running testSurgeOnsetModelSelection
+.......... ..
+Done testSurgeOnsetModelSelection
+__________
+
+Running testSurgeOnsetTracePanel
+..........
+Done testSurgeOnsetTracePanel
+__________
+
+Running testSurgePulseOnset
+......
+Done testSurgePulseOnset
+__________
+
+Running testSurgeSpatialTracking
+..........
+Done testSurgeSpatialTracking
+__________
+
+Running testSurgeUnseenEnvelope
+....
+Done testSurgeUnseenEnvelope
+__________
+
+Running testiOSSurgeTrackingEquivalence
+..
+Done testiOSSurgeTrackingEquivalence
+__________
+
+New file was loaded successfully. Elapsed time : 2.453 s.
+EXTRACTED ADDITIONAL BACKGROUND ID13-20200917: 131 event supports
+New file was loaded successfully. Elapsed time : 1.093 s.
+EXTRACTED ADDITIONAL BACKGROUND FB2316-baseline: 62 event supports
+COMPLETED UNSEEN PANEL M400-01-baseline-awake
+COMPLETED UNSEEN PANEL M401-01-baseline-awake
+COMPLETED UNSEEN PANEL FB2312-baseline-awake
+COMPLETED UNSEEN PANEL FB2411
+COMPLETED UNSEEN PANEL ID13-20200917
+COMPLETED UNSEEN PANEL FB2316-baseline
+COMPLETED UNSEEN PANEL flat
+The file was saved successfully. Elapsed time : 0.035 s.
+New file was loaded successfully. Elapsed time : 0.010 s.
+Hypoxia-amyloid synthetic tests passed.
+Repository checks passed: 404 MATLAB files inspected, 84 Code Analyzer messages, focused tests run: 1.

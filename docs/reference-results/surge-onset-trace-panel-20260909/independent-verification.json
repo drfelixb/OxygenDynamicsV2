@@ -1,0 +1,10 @@
+{
+  "ConstructedRowsVerified": 11040,
+  "ConstructedFitsVerified": 10272,
+  "SourceFitsVerified": 230,
+  "FixedSupportsVerified": 115,
+  "IndependentMaskExclusions": true,
+  "IndependentPulseConstruction": true,
+  "ProductionChanged": false,
+  "SeparatePosthocFlatFitsVerified": 96
+}

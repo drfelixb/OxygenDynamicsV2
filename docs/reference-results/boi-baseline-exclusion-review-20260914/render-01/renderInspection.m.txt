@@ -1,0 +1,100 @@
+function renderInspection
+out='/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-baseline-exclusion-review-20260914';
+E=load(fullfile(out,'inspection-evidence.mat'));D=E.traceEvidence;
+% All plotted vectors are saved stages; independent axes preserve their units.
+tracePanel(D,[321 320 315],[130 215],[157 176],[157 176],out,'onset-177-traces', ...
+    'Onset 177: two saved surge events account for all 20 excluded candidate samples');
+tracePanel(D,[186 312],[1110 1190],[1133 1152],[1148 1152],out,'onset-1153-traces', ...
+    'Preferred onset 1153: a saved surge overlaps the small sink footprint before onset');
+tracePanel(D,[308 309],[470 570],[516 535],[],out,'shared-516-traces', ...
+    'Frame 516: reviewed recovery endpoint and first candidate sample before onset 536');
+spatialPanel(D,321,[320 315],[164 172],out,'onset-177-spatial');
+spatialPanel(D,186,[312 312],[1148 1152],out,'onset-1153-spatial');
+sharedPanel(D,out);
+fid=fopen(fullfile(out,'render-verification.json'),'w');c=onCleanup(@()fclose(fid));
+fprintf(fid,'%s\n',jsonencode(struct('Status','passed','FigureCount',6,'NewFits',0,'AmplitudeCalculations',0, ...
+    'TraceSource','Exact saved audit stages in inspection-evidence.mat','AnatomicalROIInferred',false),'PrettyPrint',true));
+end
+function e=event(D,row)
+ix=find(cellfun(@(x)x.AuditRow==row,D));assert(isscalar(ix));e=D{ix};
+end
+function label=identity(e)
+a=e.Identity;label=sprintf('%s site %d / event %d (row %d)',a.EventType,a.SiteID,a.EventID,e.AuditRow);
+end
+function tracePanel(D,rows,limits,candidate,excluded,out,name,heading)
+fig=figure('Visible','off','Color','w','Position',[30 30 1550 1000]);cleanup=onCleanup(@()delete(fig));
+tl=tiledlayout(fig,4,numel(rows),'TileSpacing','compact','Padding','compact');
+title(tl,{heading,'FB2314 awake | frames are 1-based; elapsed seconds = frame - 1 at external 1 Hz'},'FontSize',17);
+for k=1:numel(rows)
+    e=event(D,rows(k));T=e.Trace;sel=T.Frame>=limits(1)&T.Frame<=limits(2);f=T.Frame(sel);
+    ax=nexttile(tl,k,[2 1]);y=T.CorrectedIntensity(sel);plot(ax,f,y,'k.-','LineWidth',1.4,'MarkerSize',7);hold(ax,'on');
+    shade(ax,candidate,[.90 .92 .94]);if ~isempty(excluded),shade(ax,excluded,[1 .84 .73]);end
+    % Replot saved curve above membership shading, without any new correction.
+    plot(ax,f,y,'k.-','LineWidth',1.4,'MarkerSize',7);markers(ax,e,true);
+    title(ax,{identity(e),sprintf('Corrected intensity | fixed footprint: %d pixels',numel(e.FixedFootprint))},'FontSize',13);
+    ylabel(ax,'Saved corrected intensity (input units)');xlim(ax,limits);grid(ax,'on');
+    ax=nexttile(tl,2*numel(rows)+k);plot(ax,f,T.FilteredDetectionScore(sel),'Color',[.85 .36 .05],'LineWidth',1.5);hold(ax,'on');
+    plot(ax,f,T.SavedSiteTimingTrace(sel),':','Color',[.4 .4 .4],'LineWidth',1.5);markers(ax,e,false);
+    title(ax,'Supporting score: orange = event footprint; gray = saved site','FontSize',11);ylabel(ax,'Saved score');xlim(ax,limits);grid(ax,'on');
+    ax=nexttile(tl,3*numel(rows)+k);plot(ax,f,T.PreservedInputMean(sel),'Color',[.15 .4 .65],'LineWidth',1.2);hold(ax,'on');
+    plot(ax,f,T.ExistingRemovedTrend(sel),':','Color',[.65 .4 .2],'LineWidth',1.3);
+    title(ax,'Correction QA: blue = preserved input; brown = removed trend','FontSize',11);ylabel(ax,'Input units');xlabel(ax,'Recording frame (1-based)');xlim(ax,limits);grid(ax,'on');
+end
+subtitle(tl,{sprintf('Gray band: candidate frames %d-%d. Orange band: excluded candidates. Axes retain separate scales.',candidate(1),candidate(2)), ...
+    'Purple: saved manual alternatives (thick = preferred). Blue dashed: native run bounds. Saved sign labels are not new physiological classifications.'},'FontSize',11);
+exportgraphics(fig,fullfile(out,[name '.png']),'Resolution',150);
+end
+function shade(ax,bounds,color)
+y=ylim(ax);patch(ax,[bounds(1)-.5 bounds(2)+.5 bounds(2)+.5 bounds(1)-.5],[y(1) y(1) y(2) y(2)],color, ...
+    'EdgeColor','none','FaceAlpha',.45,'HandleVisibility','off');ylim(ax,y);
+end
+function markers(ax,e,manual)
+a=e.Identity;
+xline(ax,a.DetectedStartFrame,'--','Color',[.1 .5 .7],'LineWidth',.8,'HandleVisibility','off');
+xline(ax,a.DetectedEndFrame,'--','Color',[.1 .5 .7],'LineWidth',.8,'HandleVisibility','off');
+if manual
+    row=e.AuditRow;bounds=[];preferred=[];
+    if row==321,bounds=[177 195];preferred=bounds;end
+    if row==186,bounds=[1149 1153 1166 1167];preferred=1153;end
+    if row==308,bounds=[496 516];preferred=bounds;end
+    if row==309,bounds=[536 556];preferred=bounds;end
+    for b=bounds
+        width=.8;if ismember(b,preferred),width=2;end
+        xline(ax,b,':','Color',[.6 .15 .7],'LineWidth',width,'HandleVisibility','off');
+        text(ax,b,1,sprintf(' %d',b),'Units','data','VerticalAlignment','top','Color',[.6 .15 .7], ...
+            'Clipping','on','Position',[b max(ylim(ax)) 0],'FontSize',10);
+    end
+end
+end
+function spatialPanel(D,targetRow,contributorRows,frames,out,name)
+t=event(D,targetRow);mask=false(512);mask(t.FixedFootprint)=true;[yy,xx]=find(mask);
+xrange=[max(1,min(xx)-20),min(512,max(xx)+20)];yrange=[max(1,min(yy)-20),min(512,max(yy)+20)];
+fig=figure('Visible','off','Color','w','Position',[40 40 1300 1000]);cleanup=onCleanup(@()delete(fig));
+tl=tiledlayout(fig,2,numel(frames),'TileSpacing','compact','Padding','compact');
+title(tl,{['Native spatial support on ' identity(t)],'Gray: target fixed footprint | orange: contributor native mask | purple: intersection'},'FontSize',16);
+subtitle(tl,'Top: full 512 x 512 source field. Bottom: coordinate-preserving target detail, not a new analysis ROI.');
+for k=1:numel(frames)
+    e=event(D,contributorRows(k));p=e.NativeFramePixels{frames(k)};native=false(512);native(p)=true;
+    m=zeros(512);m(mask)=1;m(native)=2;m(mask&native)=3;
+    for r=1:2
+        ax=nexttile(tl,(r-1)*numel(frames)+k);imagesc(ax,1:512,1:512,m,[0 3]);axis(ax,'image');hold(ax,'on');
+        contour(ax,mask,[.5 .5],'k','LineWidth',1);colormap(ax,[1 1 1;.82 .85 .89;.96 .64 .34;.63 .32 .78]);
+        if r==2,xlim(ax,xrange);ylim(ax,yrange);end
+        title(ax,{sprintf('Frame %d | %s',frames(k),identity(e)), ...
+            sprintf('%d / %d target pixels intersect (%.1f%%)',nnz(mask&native),nnz(mask),100*nnz(mask&native)/nnz(mask))},'FontSize',12);
+        xlabel(ax,'Source column');ylabel(ax,'Source row');
+    end
+end
+exportgraphics(fig,fullfile(out,[name '.png']),'Resolution',150);
+end
+function sharedPanel(D,out)
+a=event(D,308);b=event(D,309);m1=false(512);m1(a.FixedFootprint)=true;m2=false(512);m2(b.FixedFootprint)=true;
+m=zeros(512);m(m1)=1;m(m2)=2;m(m1&m2)=3;
+fig=figure('Visible','off','Color','w','Position',[40 40 1000 900]);cleanup=onCleanup(@()delete(fig));
+ax=axes(fig);imagesc(ax,1:512,1:512,m,[0 3]);axis(ax,'image');
+colormap(ax,[1 1 1;.3 .65 .8;.95 .65 .3;.65 .35 .8]);
+title(ax,{'Shared fixed footprints of site 1 events 3 and 4', ...
+    'Blue: event 3 only | orange: event 4 only | purple: shared 9,614 pixels', ...
+    'This is not native occupancy at frame 516; that frame has zero native overlap'},'FontSize',14);
+xlabel(ax,'Source column');ylabel(ax,'Source row');exportgraphics(fig,fullfile(out,'shared-516-spatial.png'),'Resolution',150);
+end

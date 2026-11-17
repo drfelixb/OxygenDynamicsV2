@@ -1,0 +1,85 @@
+{
+  "DecisionID": "R2-C02-NORMALIZATION-034",
+  "Status": "mechanism_audit_complete_scientific_acceptance_open",
+  "Cases": [
+    {
+      "CaseID": "sink-site10-event1",
+      "Frame": 69,
+      "RawLocalChangePercent": 4.7115895755154105,
+      "RawROIChangePercent": 11.920564894701068,
+      "LocalBaselineInputUnits": 1192.19942396313,
+      "ROIBaselineInputUnits": 3391.50037709231,
+      "LocalResidualChange": -18.1149577268258,
+      "ROIResidualChange": 268.631345917119,
+      "LocalResidualScoreTerm": -0.0368281145837727,
+      "ROIReferenceScoreTerm": -0.546133539885566,
+      "VariableSDScoreTerm": 0.0245370272672725,
+      "SpatialScoreChange": -0.558424627202066,
+      "TemporalScoreChange": -0.990636643325323
+    },
+    {
+      "CaseID": "surge-site1-event3",
+      "Frame": 508,
+      "RawLocalChangePercent": -9.164543763876068,
+      "RawROIChangePercent": -9.12958644258077,
+      "LocalBaselineInputUnits": 1998.33568167291,
+      "ROIBaselineInputUnits": 4453.36478972052,
+      "LocalResidualChange": -173.670437822437,
+      "ROIResidualChange": -377.143544962019,
+      "LocalResidualScoreTerm": -0.28645463605039,
+      "ROIReferenceScoreTerm": 0.622066243774344,
+      "VariableSDScoreTerm": -0.00285489709561949,
+      "SpatialScoreChange": 0.332756710628334,
+      "TemporalScoreChange": 0.661234990759313
+    },
+    {
+      "CaseID": "surge-site1-event4",
+      "Frame": 545,
+      "RawLocalChangePercent": -7.369936823765005,
+      "RawROIChangePercent": -8.704658201080495,
+      "LocalBaselineInputUnits": 1857.98712494596,
+      "ROIBaselineInputUnits": 4320.46482784916,
+      "LocalResidualChange": -124.444022037623,
+      "ROIResidualChange": -340.857633270672,
+      "LocalResidualScoreTerm": -0.21115451733294,
+      "ROIReferenceScoreTerm": 0.578361482167116,
+      "VariableSDScoreTerm": -0.0445160666196075,
+      "SpatialScoreChange": 0.322690898214569,
+      "TemporalScoreChange": 0.614770208723568
+    }
+  ],
+  "Verification": {
+    "DecisionID": "R2-C02-NORMALIZATION-034",
+    "Status": "passed",
+    "CaseFramesReplayed": 3600,
+    "ROIReferenceSourceFramesReplayed": 1200,
+    "NativePixelTimeMembershipChecks": 193344,
+    "AnchorRowsReplayed": 6,
+    "SpatialDecompositionMaxAbsError": 3.674838211509268e-14,
+    "AllSavedNativePixelsMetSignThreshold": true,
+    "ImplementationFilesUnchanged": 467,
+    "Seconds": 2.0808769159484655,
+    "Limit": "Python independently recomputes arithmetic identities from exported stage ingredients and all raw ROI/footprint means from source. MATLAB reconstructs the actual per-pixel detrending, smoothing and percentile membership. This is not independent physiological validation."
+  },
+  "Preservation": {
+    "Prior033SealedFilesVerifiedBeforeStandingUpdates": 227,
+    "Prior033ArtifactRecordSHA256": "1e53c1fe4566fcc1603245bf2290590e2fa3692d9b19bdad14ddf94d0a42e87d",
+    "MatlabImplementationFilesUnchanged": 467,
+    "SourceSHA256": "08381f8ef4cb0da80a09645aeffc9416188cf7937eaf207c0536f1f997494cf8",
+    "SourceUnchanged": true,
+    "PriorOutputsUnchanged": true
+  },
+  "ResourceSummary": {
+    "MatlabAuditSeconds": 34.922301166666664,
+    "ProcessSeconds": 43.89,
+    "MaxRSSBytes": 15192653824,
+    "PeakMemoryFootprintBytes": 21861369016,
+    "Workers": 2,
+    "WorkerType": "MATLAB threads",
+    "SourceCopiesCreated": 0,
+    "DetectorRuns": 0,
+    "StatisticsRuns": 0
+  },
+  "ScientificInterpretation": "At these anchors the ROI mean reference dominates the local residual, producing a relative spatial score with a direction that differs from source-baseline change. This is not evidence of a raw local intensity increase or decrease of the detector sign.",
+  "Next": "A prespecified synthetic global/local and baseline-brightness challenge; no method changes or cohort expansion during this audit."
+}

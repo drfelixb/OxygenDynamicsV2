@@ -1,0 +1,49 @@
+{
+  "DecisionID": "R2-BASELINE-REVIEW-FIXES-039",
+  "Status": "two_review_findings_fixed_and_verified",
+  "ProductionMeasurementChanged": false,
+  "FitMethodChanged": false,
+  "DiagnosticSchema": "boi-baseline-diagnostic-2",
+  "ExportSchema": "boi-event-review-export-4",
+  "Verification": {
+    "Status": "passed",
+    "VerifiedExportArtifacts": 48,
+    "OriginalBiologicalTraceFootprintDictionaryCSVByteMatches": 12,
+    "OriginalSelectedEventRowsUnchanged": 4,
+    "ChangedMatlabFiles": [
+      "helpers/buildBOIBaselineDiagnostic.m",
+      "helpers/createBOIBaselinePanel.m",
+      "helpers/exportBOIEventReview.m",
+      "tests/analysis/testBOIEventReview.m"
+    ],
+    "UnchangedMatlabFiles": 465,
+    "NewMatlabFiles": 0,
+    "Prior038FilesPreserved": 229,
+    "CodeReviewFilesPreserved": 18,
+    "ScientificScope": "Review corrections only; no measurement/detector/statistics change or scientific acceptance."
+  },
+  "TestsPassed": 31,
+  "VisualReview": {
+    "Status": "passed",
+    "Reviewer": "Codex implementation QA; independent researcher usability remains open",
+    "Screenshots": [
+      "fixed-case-1.png",
+      "fixed-case-2.png",
+      "missing-baseline.png",
+      "sink-site10-event1.png",
+      "surge-site1-event3.png",
+      "surge-site1-event4.png"
+    ],
+    "Checks": [
+      "Audit mismatch warning and saved/audited/line amplitudes readable",
+      "Flat-baseline reference sensitivity zero despite saved-result disagreement",
+      "Stored baseline 90 and audited mean 100 distinctly labeled",
+      "Both native bounds visible, including the previously clipped end at +6 seconds",
+      "Baseline and event calculation windows unchanged",
+      "All three prior FB2314 cases and unavailable-baseline view inspected",
+      "Scrollable metrics retain unavailable values and comparison roles"
+    ]
+  },
+  "ScientificStatus": "Diagnostic only; no physiological acceptance or baseline policy change",
+  "Next": "Researcher walkthrough of corrected diagnostic and original event evidence."
+}

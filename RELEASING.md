@@ -1,58 +1,60 @@
-# Release Process
+# Release decisions and future publication
 
-OxygenDynamicsV2 does not currently have a fully reconciled public release
-line. The repository tag `v3.0` and the internal version reported by
-`getOxygenPipelineVersion.m` must be reconciled before creating another tag.
+`v3.1.0-rc.1` is the public prerelease for the BOI Batch Editor workflow.
+The researcher confirmed clearance for public redistribution of the new V2
+contributions under MIT on 17 November 2026. The release uses the exact
+verified source snapshot and source archive. See [licensing](LICENSING.md)
+and the [release comparisons](docs/RELEASE_NOTES_3.1.0_RC1.md).
 
-## Release Preconditions
+## Before proposing publication
 
-- The project-level licence has been approved and added.
-- Third-party notices and source headers are complete.
-- `development` is clean, reviewed, and passing CI.
-- `checkOxygenPipelineHealth` reports no failures.
-- Dataset verification has been reviewed for the release validation dataset.
-- Accepted regression tests and scientific guardrails pass.
-- User-visible changes are recorded under `Unreleased` in `CHANGELOG.md`.
-- Scientific changes have an accepted regression comparison and documented
-  compatibility impact.
-- No raw data, generated outputs, secrets, or absolute local paths are tracked.
+- Retain the [original Science_2024 MIT notice](licenses/Science_2024-MIT.txt)
+  and confirm licensing coverage/authority for new V2 contributions. See
+  [licensing and credits](LICENSING.md).
+- Retain [dependency notices](THIRD_PARTY_NOTICES.md), required disclaimers and
+  attributions, and disclose the unknown historical dependency origins.
+- Declare support and claims within the actual evidence in
+  [distribution status](DISTRIBUTION_STATUS.md). The complete Linux portable pass,
+  partial final macOS gate and named saved workflows are separate evidence.
+- Decide the exact release version, source commit, destination and archive hash.
+  Felix's completed FB2311 case supplies integration and 293.60 s elapsed time;
+  peak memory and broader recording/runtime support remain unverified. His
+  demonstrated sink workflow is distinct from an unfamiliar scientist's walkthrough.
+- Review source/citation metadata, applicable notices and package exclusions.
+  Keep original calculations, results and scientific qualifications traceable.
 
-## Prepare a Candidate
+Any additional tests, recording runs or numerical adoption must have their own
+finite approval. Preparing these instructions or a development archive does
+not authorize those activities or establish physiological validity. VM/watchdog/
+custom containment and worker qualification are deferred to a possible v4.
 
-1. Choose a semantic version and update the central version metadata.
-2. Move the relevant changelog entries into a dated release section.
-3. Run:
+## Prepare an approved candidate
 
-   ```matlab
-   setupOxygenDynamicsPath
-   checkOxygenPipelineHealth
-   runRepositoryChecks
-   runOxygenPipelineSmokeTest
-   createOxygenReleasePackage
-   ```
+1. Work from the intended reviewed source on `development-existing-analysis-v3`.
+   Freeze the committed file list and hashes. Update version/build metadata only
+   when the approved task calls for it; package creation time is separate.
+2. Use `createOxygenReleasePackage` with the approved output root/name, actual
+   source commit and accurate source state. It copies the explicit source list;
+   it does not recursively gather recordings, results or development evidence.
+3. Compare exact source/folder/ZIP/extracted file sets and hashes, check local
+   reader links and retained notices, and verify exclusions.
+4. Record the archive hash, limitations and any implementation changes. A base
+   commit alone does not identify modified files. See [package contents](PACKAGE_CONTENTS.md).
 
-4. Inspect the generated manifest and archive contents.
-5. Confirm that documentation, citation metadata, and release metadata agree.
-6. Open a pull request from `development` to `main`.
+The preserved licensing candidate received static/package and definition-load
+checks. The later interface task uses focused saved-FB2311 checks and no recording
+rerun or package build. Publication claims must identify those scopes separately.
 
-## Publish
+## Publish only after a separate release decision
 
-After the pull request is approved and merged:
+After the approved release review and any separately authorised integration:
+confirm the exact source and archive, then follow the approved merge/tag/GitHub
+release procedure. Include compatibility, evidence and limitation statements.
+Do not move existing tags or replace published archives; correct a publication
+with a newly identified version and archive.
 
-1. Confirm CI passes on `main`.
-2. Create an annotated tag matching the approved version.
-3. Create a GitHub release from that tag.
-4. Attach the generated source package only after inspecting it.
-5. Include compatibility notes, validation evidence, and known limitations.
-
-Do not retag an existing commit or replace a published archive. Correct a
-release with a new patch version and document the reason in the changelog.
-
-## Future Software DOI
-
-A future GitHub release can be archived through Zenodo after the maintainers
-enable the repository integration. Confirm the GitHub release metadata,
-`CITATION.cff`, authors, licence, and version before publishing the archive.
-Record the resulting DOI in the README and citation metadata only after Zenodo
-has issued it. Do not create a `.zenodo.json` file unless Zenodo metadata needs
-cannot be met by `CITATION.cff` and the GitHub release.
+A future release can be archived through Zenodo if maintainers approve and enable
+that integration. Confirm [CITATION.cff](CITATION.cff), author order, licensing
+scope and release metadata before publication. Record a new DOI only after it is
+issued. Preserve the original deposit's CC BY 4.0 metadata observation separately
+from the MIT code notice; this task changes neither published record.

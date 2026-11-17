@@ -1,0 +1,238 @@
+{
+  "Schema": "boi-working-analysis-specification-1",
+  "Version": "1.0-working",
+  "DecisionID": "R0-R2-WORKING-SPEC-089",
+  "Date": "2026-09-21",
+  "Status": "consolidated_existing_rules_no_method_change",
+  "ResearcherDirection": {
+    "DecisionID": "R0-PROCEED-CURRENT-DETECTION-088",
+    "CurrentDetector": "continue",
+    "Correction": "retain_original_recording_specific",
+    "MislabeledActivity": "accepted_to_some_extent_at_this_stage",
+    "QuantitativeErrorThreshold": null,
+    "FurtherOptimization": "not_planned_without_concrete_output_or_comparison_failure",
+    "ExhaustiveManualRelabelingRequired": false
+  },
+  "Scope": {
+    "Modality": "BOI",
+    "Signs": [
+      "sink",
+      "surge"
+    ],
+    "IOSI": "excluded",
+    "ClockHz": 1,
+    "FrameOneModeledSeconds": 0,
+    "ExposureEqualsSampleInterval": false
+  },
+  "Dictionary": {
+    "Path": "boi-measurement-dictionary.json",
+    "SHA256": "1eea8f70f37a0794800f764498f4fefc0e89bfc6b195ee1f3aa198ea810186a2",
+    "Version": "0.3.0-draft",
+    "Changed": false
+  },
+  "Measurements": [
+    {
+      "MeasurementID": "BOI-M01",
+      "Name": "Mean occupied tissue fraction",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M01",
+      "ExistingProposedTier": "candidate primary (sink)",
+      "WorkingUse": "implemented_descriptive_candidate_primary_sink",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M02",
+      "Name": "Detected event onset rate",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M02",
+      "ExistingProposedTier": "candidate primary (sink)",
+      "WorkingUse": "implemented_descriptive_candidate_primary_sink_claim_censoring_open",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M03",
+      "Name": "Mean concurrent event density",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M03",
+      "ExistingProposedTier": "required companion",
+      "WorkingUse": "implemented_descriptive_required_companion",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M04",
+      "Name": "Event duration and timing",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M04",
+      "ExistingProposedTier": "secondary explanatory",
+      "WorkingUse": "implemented_descriptive_timing_not_physiological_recovery",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M05",
+      "Name": "Mean native projected event area",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M05",
+      "ExistingProposedTier": "secondary explanatory",
+      "WorkingUse": "implemented_descriptive_physical_scale_required",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M06",
+      "Name": "Relative optical event amplitude",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M06",
+      "ExistingProposedTier": "secondary explanatory; both signs",
+      "WorkingUse": "implemented_automatic_optical_reference_conditional",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M07",
+      "Name": "Signed trace integral",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M07",
+      "ExistingProposedTier": "secondary explanatory; both signs",
+      "WorkingUse": "implemented_automatic_signed_optical_integral",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M08",
+      "Name": "Local recurrence and event history",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M08",
+      "ExistingProposedTier": "secondary explanatory",
+      "WorkingUse": "implemented_native_gap_history_confirmatory_estimator_open",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M09",
+      "Name": "Local recovery",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M09",
+      "ExistingProposedTier": "secondary explanatory",
+      "WorkingUse": "no_frozen_physiological_recovery_estimator",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M10",
+      "Name": "Amplitude-area-duration composite",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M10",
+      "ExistingProposedTier": "secondary composite (sink)",
+      "WorkingUse": "implemented_secondary_sink_composite_no_surge_composite",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M11",
+      "Name": "Experimental response and positive dynamics",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M11",
+      "ExistingProposedTier": "comparison-specific",
+      "WorkingUse": "comparison_specific_windows_and_reference_required",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M12",
+      "Name": "Measurement availability",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M12",
+      "ExistingProposedTier": "required companion for every summary",
+      "WorkingUse": "implemented_required_availability_companion",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M13",
+      "Name": "Animal-level summaries and contrasts",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M13",
+      "ExistingProposedTier": "comparison-specific",
+      "WorkingUse": "implemented_descriptive_aggregation_final_statistical_plan_open",
+      "NewScientificAdoption": false
+    },
+    {
+      "MeasurementID": "BOI-M14",
+      "Name": "Spatial and cross-sign association",
+      "DefinitionReference": "boi-measurement-dictionary.json#BOI-M14",
+      "ExistingProposedTier": "exploratory",
+      "WorkingUse": "exploratory_estimator_alignment_nulls_open",
+      "NewScientificAdoption": false
+    }
+  ],
+  "Branches": {
+    "Automatic": "unchanged saved outputs and full preceding native-screened optical reference",
+    "Reviewed": "implemented separate exploratory outputs using exact event/onset-specific accepted selections",
+    "Context": "optional descriptive windows; no baseline or classifier adoption"
+  },
+  "ReviewedOpticalDefinition": {
+    "Path": "boi-reviewed-optical-contract-0.1.0-draft.json",
+    "SHA256": "dcf0fa405a4f9d768133e8210d8c7dfa3104fc586994f09416f477e3557e0e63",
+    "Version": "0.1.0-draft",
+    "ImplementationStatus": "implemented_exploratory_preview",
+    "GlobalBaselinePolicyAdopted": false
+  },
+  "CurrentReviewedCases": [
+    {
+      "AuditRow": 186,
+      "Onset": 1154,
+      "Offsets": [
+        1166,
+        1167
+      ],
+      "ReferenceFirstFrame": 1134,
+      "ReferenceLastFrame": 1153,
+      "ReferenceCount": 20,
+      "PreferredOnset": true
+    },
+    {
+      "AuditRow": 186,
+      "Onset": 1149,
+      "Offsets": [
+        1166,
+        1167
+      ],
+      "ReferenceFirstFrame": null,
+      "ReferenceLastFrame": null,
+      "ReferenceCount": null,
+      "PreferredOnset": false
+    },
+    {
+      "AuditRow": 308,
+      "Onset": 496,
+      "Offsets": [
+        516
+      ],
+      "ReferenceFirstFrame": 476,
+      "ReferenceLastFrame": 495,
+      "ReferenceCount": 20
+    },
+    {
+      "AuditRow": 309,
+      "Onset": 536,
+      "Offsets": [
+        556
+      ],
+      "ReferenceFirstFrame": 516,
+      "ReferenceLastFrame": 535,
+      "ReferenceCount": 20
+    },
+    {
+      "AuditRow": 321,
+      "Onset": 177,
+      "Offsets": [
+        195
+      ],
+      "ReferenceFirstFrame": 165,
+      "ReferenceLastFrame": 176,
+      "ReferenceCount": 12
+    }
+  ],
+  "NextWork": {
+    "Task": "recording_and_measurement_eligibility_matrix_from_existing_evidence",
+    "WorkedComparison": "C02",
+    "CandidateMice": [
+      "FB2312",
+      "FB2314",
+      "FB2315",
+      "ID400",
+      "ID401",
+      "ID402",
+      "ID403"
+    ],
+    "FinalPriorityAdopted": false,
+    "AutomaticWindowApproval": false
+  },
+  "OpenFinalChoices": [
+    "comparison_priority_and_primary_secondary_claims",
+    "recording_specific_support_and_observation_windows",
+    "animal_weighting_repeated_sessions_uncertainty_multiplicity"
+  ],
+  "NewDetectorRuns": 0,
+  "NewSignalInspections": 0,
+  "NewStatisticalResults": 0
+}

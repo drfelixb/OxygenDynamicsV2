@@ -1,0 +1,83 @@
+function D=diagnoseCandidate(corrected,raw,overlap,native,lo,hi,direction,candidate,eventType,bounds)
+% Diagnostic implementation of frozen candidate-contract-1; no production use.
+z=direction*double(corrected(:));raw=double(raw(:));overlap=logical(overlap(:));N=numel(z);native=double(native(:));
+assert(numel(raw)==N&&numel(overlap)==N&&lo>=1&&hi<=N&&lo<=hi&&all(native>=lo&native<=hi));
+D=struct('Candidate',char(candidate),'Direction',direction,'SearchLower',lo,'SearchUpper',hi,'Seed',NaN,'TiedSeeds',[],'CompetingSeed',false,'SeedPlateau',[],'FiniteSegment',[],'LeftBarriers',{{}},'RightBarriers',{{}},'SeedLeftRelation','unavailable','SeedRightRelation','unavailable','TimingStatus','missing_native_signal','OnsetPlateau',[],'RecoveryPlateau',[],'StartFrame',NaN,'EndFrame',NaN,'EndpointSeparationSec',NaN,'IncludedSamples',NaN,'CoversWholeNative',false,'InterveningExtrema',zeros(0,3),'InternalPeakCount',NaN,'IntervalOverlapFrames',[],'ProminenceLeft',NaN,'ProminenceRight',NaN,'Prominence',NaN,'ShoulderLevelDifference',NaN,'Context',{{}},'ContextScaleDisagreement',false,'Amplitude',emptyAmplitude());
+valid=native(isfinite(z(native)));if isempty(valid),return;end
+D.TiedSeeds=valid(z(valid)==max(z(valid)))';D.Seed=D.TiedSeeds(1);s=D.Seed;L=s;U=s;
+while L>lo&&isfinite(z(L-1)),L=L-1;end
+while U<hi&&isfinite(z(U+1)),U=U+1;end
+D.FiniteSegment=[L U];D.LeftBarriers=barriers(L,lo,true,N,bounds);D.RightBarriers=barriers(U,hi,false,N,bounds);
+E=zeros(0,3);plateaus=zeros(0,2);a=L;
+while a<=U
+ b=a;while b<U&&z(b+1)==z(a),b=b+1;end
+ plateaus(end+1,:)=[a b]; %#ok<AGROW>
+ if a>L&&b<U
+  if z(a)>z(a-1)&&z(b)>z(b+1),E(end+1,:)=[a b 1];end %#ok<AGROW>
+  if z(a)<z(a-1)&&z(b)<z(b+1),E(end+1,:)=[a b -1];end %#ok<AGROW>
+ end
+ a=b+1;
+end
+sp=plateaus(plateaus(:,1)<=s&plateaus(:,2)>=s,:);D.SeedPlateau=sp;D.CompetingSeed=any(D.TiedSeeds<sp(1)|D.TiedSeeds>sp(2));
+D.SeedLeftRelation=relation(z,sp(1)-1,s,L,U);D.SeedRightRelation=relation(z,sp(2)+1,s,L,U);
+if ~any(E(:,1)==sp(1)&E(:,2)==sp(2)&E(:,3)==1),D.TimingStatus='seed_not_bracketed_peak';return;end
+left=E(E(:,3)==-1&E(:,2)<sp(1),:);right=E(E(:,3)==-1&E(:,1)>sp(2),:);
+if ~isempty(left)
+ if strcmp(candidate,'T3'),left=left(z(left(:,1))==min(z(left(:,1))),:);end
+ D.OnsetPlateau=left(end,1:2);D.StartFrame=D.OnsetPlateau(2);
+end
+if ~isempty(right)
+ if strcmp(candidate,'T3'),right=right(z(right(:,1))==min(z(right(:,1))),:);end
+ D.RecoveryPlateau=right(1,1:2);D.EndFrame=D.RecoveryPlateau(1);
+end
+if isempty(left)||isempty(right)
+ D.TimingStatus='partial_shoulders';if isempty(left)&&isempty(right),D.TimingStatus='no_observed_shoulders';end
+ if isempty(left),D.LeftBarriers{end+1}='no_observed_shoulder';end
+ if isempty(right),D.RightBarriers{end+1}='no_observed_shoulder';end
+ return;
+end
+a=D.StartFrame;b=D.EndFrame;D.TimingStatus='complete';D.EndpointSeparationSec=b-a;D.IncludedSamples=b-a+1;D.CoversWholeNative=a<=min(native)&&b>=max(native);
+D.InterveningExtrema=E(E(:,1)>a&E(:,2)<b,:);D.InternalPeakCount=nnz(D.InterveningExtrema(:,3)==1);D.IntervalOverlapFrames=find(overlap(a:b))'+a-1;
+D.ProminenceLeft=z(s)-z(a);D.ProminenceRight=z(s)-z(b);D.Prominence=min(D.ProminenceLeft,D.ProminenceRight);D.ShoulderLevelDifference=z(b)-z(a);
+for W=[10 20]
+ pre=context(z,overlap,a-W:a-1,D.Prominence,z(s));post=context(z,overlap,b+1:b+W,D.Prominence,z(s));status='context_unresolved';
+ if strcmp(pre.Status,'complete')&&strcmp(post.Status,'complete')
+  status='does_not_exceed_both_context_ranges';if D.Prominence>pre.Range&&D.Prominence>post.Range,status='exceeds_both_context_ranges';end
+ end
+ D.Context{end+1}=struct('SamplesPerSide',W,'Before',pre,'After',post,'ScreenStatus',status);
+end
+D.ContextScaleDisagreement=~strcmp(D.Context{1}.ScreenStatus,D.Context{2}.ScreenStatus);
+B=emptyAmplitude();pre=max(1,a-20):a-1;clean=pre(isfinite(raw(pre))&~overlap(pre));B.RequestedFrames=a-20:a-1;B.AvailableFrames=pre;B.CleanFrames=clean;B.OverlapFrames=pre(overlap(pre));B.NonfiniteFrames=pre(~isfinite(raw(pre)));B.Status='insufficient_clean_prebaseline';
+if numel(clean)==20
+ B.BaselineMean=mean(raw(clean));B.Status='nonpositive_baseline_or_missing_event_signal';
+ if isfinite(B.BaselineMean)&&B.BaselineMean>0&&all(isfinite(raw(a:b)))
+  delta=(raw(a:b)-B.BaselineMean)/B.BaselineMean;if strcmp(eventType,'sink'),B.Fraction=-min(delta);else,B.Fraction=max(delta);end;B.Status='valid';
+ end
+end
+D.Amplitude=B;
+end
+function B=emptyAmplitude()
+B=struct('Status','timing_unresolved','RequestedFrames',[],'AvailableFrames',[],'CleanFrames',[],'OverlapFrames',[],'NonfiniteFrames',[],'BaselineMean',NaN,'Fraction',NaN);
+end
+function C=context(z,overlap,requested,P,peak)
+ids=requested(requested>=1&requested<=numel(z));finite=ids(isfinite(z(ids)));C=struct('RequestedFrames',requested,'AvailableFrames',ids,'FiniteFrames',finite,'OverlapFrames',ids(overlap(ids)),'NonfiniteFrames',ids(~isfinite(z(ids))),'Status','incomplete_context','Median',NaN,'Minimum',NaN,'Maximum',NaN,'MAD',NaN,'Range',NaN,'ProminenceMinusRange',NaN,'ProminenceRangeRatio',NaN,'RatioStatus','context_unresolved','SeedExceedsMaximum',NaN);
+if numel(finite)~=numel(requested),return;end
+v=z(ids);C.Status='complete';C.Median=median(v);C.Minimum=min(v);C.Maximum=max(v);C.MAD=median(abs(v-C.Median));C.Range=C.Maximum-C.Minimum;C.ProminenceMinusRange=P-C.Range;C.SeedExceedsMaximum=double(peak>C.Maximum);C.RatioStatus='zero_context_range';
+if C.Range>0,C.ProminenceRangeRatio=P/C.Range;C.RatioStatus='available';end
+end
+function s=relation(z,p,seed,L,U)
+s='barrier';if p<L||p>U,return;end
+if z(p)<z(seed),s='lower';elseif z(p)>z(seed),s='higher';else,s='equal';end
+end
+function out=barriers(edge,bound,isLeft,N,B)
+out={};if edge~=bound,out={'nonfinite_sample'};return;end
+out={'search_limit'};
+if (isLeft&&edge==1)||(~isLeft&&edge==N),out{end+1}='acquisition_boundary';end
+if isLeft
+ if edge==B.NativeStart-30,out{end+1}='30_frame_limit';end
+ if isfinite(B.PreviousNativeEnd)&&edge==floor((B.PreviousNativeEnd+B.NativeStart)/2)+1,out{end+1}='same_site_neighbor_partition';end
+else
+ if edge==B.NativeEnd+30,out{end+1}='30_frame_limit';end
+ if isfinite(B.NextNativeStart)&&edge==floor((B.NativeEnd+B.NextNativeStart)/2),out{end+1}='same_site_neighbor_partition';end
+end
+end

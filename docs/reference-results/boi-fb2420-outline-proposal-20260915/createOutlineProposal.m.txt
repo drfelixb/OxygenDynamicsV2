@@ -1,0 +1,49 @@
+function createOutlineProposal
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+S=jsondecode(fileread(fullfile(here,'inputs.json')));
+for k=1:numel(S),assert(strcmp(oxygenFileSHA256(S(k).Path),S(k).SHA256));end
+P=jsondecode(fileread(fullfile(here,'outline-proposal.json')));V=P.VerticesXY;
+assert(all(V(:)>=1&V(:)<=512));[x,y]=meshgrid(1:512,1:512);Mask=inpolygon(x,y,V(:,1),V(:,2));
+assert(islogical(Mask)&&bwconncomp(Mask).NumObjects==1&&isequal(imfill(Mask,'holes'),Mask));
+assert(Mask(350,150)&&Mask(330,432)); % Keep dark interior and known transient location.
+assert(~isfile(fullfile(P.Case.StageFolder,'BOITissueSupport.json')));
+assert(strcmp(oxygenFileSHA256(P.Case.SourcePath),P.Case.SHA256));
+Proposal=reviewBOITissueSupport(P.Case.StageFolder,Mask,fullfile(here,'proposal-01'));
+assert(strcmp(Proposal.RawSHA256,P.Case.SHA256));
+prior=fullfile(root,'reference-validation','boi-fb2420-source-support-20260915','run-01');
+L=jsondecode(fileread(fullfile(prior,'display-layout.json')));
+fid=fopen(fullfile(prior,'display-arrays.bin'),'r','ieee-le');A=fread(fid,inf,'double');fclose(fid);
+A=permute(reshape(A,[512 512 11]),[2 1 3]);
+fig=figure('Visible','off','Color','w','Position',[50 50 1180 1080]);
+tiledlayout(fig,2,2,'TileSpacing','compact','Padding','compact');
+indices=[1 3 4 5];titles={'490 nm after reference | own scale','BOI mean frames 1-30','BOI mean frames 586-615','BOI mean frames 1171-1200'};
+for k=1:4
+    ax=nexttile;if k==1,limits=L.ReferenceDisplayLimits;else,limits=L.SourceDisplayLimits;end
+    imagesc(ax,1:512,1:512,A(:,:,indices(k)),limits');axis(ax,'image');colormap(ax,gray(256));hold(ax,'on');
+    plot(ax,[V(:,1);V(1,1)],[V(:,2);V(1,2)],'-','Color',[0 .85 1],'LineWidth',1.6);
+    for edge=P.UncertainEdgesOneBased(:)'
+        pair=[edge mod(edge,size(V,1))+1];plot(ax,V(pair,1),V(pair,2),'--','Color',[1 .65 0],'LineWidth',2);
+    end
+    plot(ax,[215 280],[1 1],':','Color',[1 .2 .65],'LineWidth',3);
+    plot(ax,432,330,'+','Color',[1 .2 .65],'MarkerSize',8,'LineWidth',1.2);
+    title(ax,titles{k});xlabel(ax,'Native column');ylabel(ax,'Native row');
+end
+sgtitle({'FB2420 provisional support outline — NOT adopted', ...
+    'Cyan: draft outline | amber dashes: uncertain margins | pink top: FOV cap', ...
+    'Pink +: inspected transient location, retained inside | dark interior retained'});
+exportgraphics(fig,fullfile(here,'proposal-01','reference-source-outline.png'),'Resolution',140);
+exportgraphics(fig,fullfile(here,'proposal-01','reference-source-outline.pdf'),'ContentType','vector');close(fig);
+MaskPixels=find(Mask);save(fullfile(here,'proposal-01','OutlineGeometry.mat'),'V','Mask','MaskPixels','P');
+writematrix(V,fullfile(here,'proposal-01','vertices-column-row.csv'));
+result=struct('DecisionID',P.DecisionID,'Status','proposal_created_not_adopted','MaskPixels',nnz(Mask), ...
+    'FieldPixels',numel(Mask),'IncludedFieldFraction',nnz(Mask)/numel(Mask), ...
+    'ConnectedComponents',1,'Holes',0,'IncludesTopImageRow',any(Mask(1,:)), ...
+    'DarkInteriorTestPointIncluded',Mask(350,150),'TransientLocationIncluded',Mask(330,432), ...
+    'OriginalSourceSHA256',P.Case.SHA256,'ProposalMaskSHA256',Proposal.MaskFileSHA256, ...
+    'ResearcherReviewed',false,'TissueDeclarationWritten',false,'DetectorRuns',0);
+assert(~isfile(fullfile(P.Case.StageFolder,'BOITissueSupport.json')));
+assert(strcmp(oxygenFileSHA256(P.Case.SourcePath),P.Case.SHA256));
+for k=1:numel(S),assert(strcmp(oxygenFileSHA256(S(k).Path),S(k).SHA256));end
+fid=fopen(fullfile(here,'proposal-01','verification.json'),'w');fprintf(fid,'%s\n',jsonencode(result,'PrettyPrint',true));fclose(fid);disp(result);
+end

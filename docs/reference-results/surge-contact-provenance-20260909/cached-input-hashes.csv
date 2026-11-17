@@ -1,0 +1,7 @@
+Session,Case,Path,SHA256
+FB2312-baseline-awake,growing_clean,/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-branch-replay-20260909/FB2312-baseline-awake/growing_clean/candidate-input.mat,b1824ec9b11d64140dea1a119c5c618ab2af1030fde3cb99287d1c9c0d8ffd8e
+FB2312-baseline-awake,shrinking_clean,/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-branch-replay-20260909/FB2312-baseline-awake/shrinking_clean/candidate-input.mat,55d24da1c36c914e3db438fbb48075d8976ffe5d31130c5c6fe97bd9e48f406e
+FB2411,growing_clean,/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-branch-replay-20260909/FB2411/growing_clean/candidate-input.mat,65469abe94743e88979a94b660b3c8b2e041cb5fade347ce3eef6f0d472880c8
+FB2411,shrinking_clean,/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-branch-replay-20260909/FB2411/shrinking_clean/candidate-input.mat,e7323d90e9d17d3a183234e9c8c99b753df632ad8e02f9e22107c0bad4875293
+M400-01-baseline-awake,moving_clean,/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-branch-replay-20260909/M400-01-baseline-awake/moving_clean/candidate-input.mat,a8ddda04a0a76753fdc3f755e432f4d5c9f4f7942a762b25460c42f948d06916
+M401-01-baseline-awake,smooth_pairs,/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-branch-replay-20260909/M401-01-baseline-awake/smooth_pairs/candidate-input.mat,00b83c28d514ccaf8386e281e131b20ae87fd8deb010abf2374659476c40cc88

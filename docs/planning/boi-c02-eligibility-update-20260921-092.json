@@ -1,0 +1,47 @@
+{
+  "Schema": "boi-c02-eligibility-update-1",
+  "DecisionID": "R1-FB2314-ISO-RUN-092",
+  "Date": "2026-09-21",
+  "BaseMatrix": "boi-c02-eligibility-20260921.json",
+  "BaseMatrixSHA256": "cf6818d5c24974ac2e4aa4e0f96b016bea7ca012f8a33fec71671fe4ce4bfcd7",
+  "Changes": [
+    {
+      "Session": "FB2314-baseline-iso",
+      "AssetID": "5ca61eac-9461-44e5-b222-1599aecc7ca8",
+      "SourceSHA256": "e83acb45ebffd2c61a0035bd6d11c52719180658a8c3cd10a257a477dc882e7c",
+      "WorkingROI": "accepted_source_specific_working_support",
+      "RunStatus": "restricted_profile_run_verified",
+      "MethodProfile": "craniotomy-roi-1",
+      "NativeFrameCount": 1200,
+      "SampleHz": 1,
+      "ModelExtentSec": [
+        0,
+        1200
+      ],
+      "FinalComparisonWindows": [],
+      "SourceDecision": "R1-FB2314-ISO-RUN-092",
+      "Evidence": "reference-results/boi-fb2314-iso-run-20260921/README.md"
+    }
+  ],
+  "CurrentCounts": {
+    "CandidateMice": 7,
+    "CandidateRecordings": 14,
+    "RecordingsWithRunEvidence": 7,
+    "NoEquivalentRunInBaseInventory": 7,
+    "AcceptedWorkingROIs": 2,
+    "ExistingUnacceptedDrafts": 6,
+    "NoReviewedROIInBaseInventory": 6,
+    "PairsWithBothRestrictedProfileRuns": 1
+  },
+  "PairReadiness": {
+    "Mouse": "FB2314",
+    "BothStatesHaveVerifiedRestrictedProfileRuns": true,
+    "EffectiveMasterParametersEqual": true,
+    "SourceSpecificMasks": true,
+    "ScientificProcessingCodeUnchangedSinceAwake": true,
+    "FinalComparisonWindowsApproved": false,
+    "FinalStatisticalContrastPerformed": false
+  },
+  "OtherRows": "unchanged from the dated base evidence inventory",
+  "NewScientificExclusions": 0
+}

@@ -2,9 +2,9 @@ function [SurgeTables,SurgeEventTables,SurgeAreas,ROITraces] = storeStatsSurgeRe
     SurgeTables,SurgeEventTables,SurgeAreas,ROITraces,RecordingIndex,SurgeData,IncludeROITraces)
 %STORESTATSSURGERECORDINGDATA Store one recording's prepared surge data.
 
-if SurgeData.HasSurges
+if true
     SurgeTables{RecordingIndex}=SurgeData.Table;
-    if ~isempty(SurgeData.EventTable)
+    if istable(SurgeData.EventTable)
         SurgeEventTables{RecordingIndex}=SurgeData.EventTable;
     end
     SurgeAreas(RecordingIndex,:)=SurgeData.AreaRow;

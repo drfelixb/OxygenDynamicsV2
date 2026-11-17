@@ -1,0 +1,40 @@
+% Source-specific proposals only; original TIFFs and pipeline code remain unchanged.
+root=fileparts(mfilename('fullpath'));workspace=fileparts(fileparts(root));repo=fullfile(workspace,'existing-analysis');cd(repo);setupOxygenDynamicsPath;
+inputs=jsondecode(fileread(fullfile(root,'inputs.json')));drafts=jsondecode(fileread(fullfile(root,'outline-drafts.json')));
+output=fullfile(root,'run-01');assert(~isfolder(output));mkdir(output);timer=tic;results=cell(numel(inputs),1);[X,Y]=meshgrid(1:512,1:512);
+for i=1:numel(inputs)
+ assert(toc(timer)<240,'Start-next-recording preview budget reached.');x=inputs(i);d=drafts.records(i);assert(strcmp(x.Session,d.session));
+ fprintf('DRAFT %s\n',x.Session);folder=fullfile(output,x.Session);vertices=d.vertices_column_row;
+ Mask=inpolygon(X,Y,vertices(:,1),vertices(:,2));assert(bwconncomp(Mask,8).NumObjects==1&&isequal(Mask,imfill(Mask,'holes')));
+ for k=1:size(d.interior_retention_checks_column_row,1)
+  pt=d.interior_retention_checks_column_row(k,:);assert(Mask(pt(2),pt(1)),'Interior retention anchor excluded.');
+ end
+ Proposal=reviewBOITissueSupport(x.RecordingFolder,Mask,folder);assert(strcmp(Proposal.RawSHA256,x.ExpectedLocalSHA256));
+ imwrite(Mask,fullfile(folder,'ProposedNativeMask.png'));
+ params=createOxygenMasterParams(x.Metadata.PixelSize,x.Metadata.SampleHz);b=params.Pixel_frame;
+ proposedSink=false(size(Mask));proposedSink(b+1:end-b,b+1:end-b)=Mask(b+1:end-b,b+1:end-b);
+ imwrite(proposedSink,fullfile(folder,'ProposedSinkMask.png'));
+ r=struct('Session',x.Session,'SourceSHA256',Proposal.RawSHA256,'Frames',x.Frames,'SampleHz',1,'PixelSizeUm',x.Metadata.PixelSize, ...
+  'DraftSurgePixels',nnz(Mask),'DraftSinkPixels',nnz(proposedSink),'DraftSurgeAreaUm2',nnz(Mask)*x.Metadata.PixelSize^2, ...
+  'DraftSinkAreaUm2',nnz(proposedSink)*x.Metadata.PixelSize^2,'SinkBorderPixels',b,'Status','draft_not_adopted');
+ save(fullfile(folder,'DraftGeometry.mat'),'Mask','proposedSink','vertices','d','r','-v7');
+ file=fullfile(x.RecordingFolder,x.ExpectedSourceName);info=imfinfo(file);assert(numel(info)==x.Frames);frames=x.PreviewFrames;limits=x.DisplayLimits(:)';
+ fig=figure('Visible','off','Color','w','Position',[20 20 1500 1130]);cl=onCleanup(@()close(fig));
+ annotation(fig,'textbox',[.03 .94 .94 .05],'String',sprintf('%s | draft outer-field outline',x.Session),'Interpreter','none','EdgeColor','none','FontSize',18,'FontWeight','bold','HorizontalAlignment','center');
+ annotation(fig,'textbox',[.03 .905 .94 .04],'String','Unadopted proposal | green: tentative outline | orange: specifically uncertain segments | native source coordinates','EdgeColor','none','FontSize',12,'HorizontalAlignment','center');
+ for k=1:numel(frames)
+  col=mod(k-1,3);row=floor((k-1)/3);ax=axes(fig,'Position',[.055+.325*col,.54-.435*row,.255,.335]);
+  B=imread(file,frames(k),'Info',info);imagesc(ax,B,limits);axis(ax,'image');colormap(ax,'gray');hold(ax,'on');
+  plot(ax,[vertices(:,1);vertices(1,1)],[vertices(:,2);vertices(1,2)],'g-','LineWidth',1.4);
+  for idx=d.uncertain_segments_one_based(:)'
+   j=mod(idx,size(vertices,1))+1;plot(ax,vertices([idx j],1),vertices([idx j],2),'-','Color',[1 .55 0],'LineWidth',1.8);
+  end
+  xlabel(ax,'Native column');ylabel(ax,'Native row');title(ax,sprintf('Frame %d | %g s',frames(k),frames(k)-1),'FontSize',12);
+ end
+ ax=axes(fig,'Position',[.71 .105 .26 .335]);axis(ax,'off');
+ text(ax,0,1,sprintf('DRAFT ONLY — NOT ADOPTED\n\nSingle outline; no internal holes\nShared display [%g,%g]\nNo cross-session mask transfer\nNo anatomical reference established\n\nImage-edge segments bound only\nthe recorded field.\n\nDark interior tissue retained.\nRead the source-specific uncertainty\nnote before accepting the outline.',limits(1),limits(2)),'Units','normalized','VerticalAlignment','top','FontSize',12,'Interpreter','none');
+ exportgraphics(fig,fullfile(folder,'FiveFrameOutlineReview.png'),'Resolution',110);clear cl
+ results{i}=r;
+end
+fid=fopen(fullfile(output,'summary.json'),'w');fprintf(fid,'%s\n',jsonencode(vertcat(results{:}),'PrettyPrint',true));fclose(fid);
+fprintf('COMPLETE %.3f seconds; no detector or adoption run\n',toc(timer));

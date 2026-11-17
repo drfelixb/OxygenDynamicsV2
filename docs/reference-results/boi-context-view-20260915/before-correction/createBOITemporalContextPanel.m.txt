@@ -1,0 +1,103 @@
+function Panel=createBOITemporalContextPanel(Parent,AttachSources,LoadReferences)
+%CREATEBOITEMPORALCONTEXTPANEL Optional, read-only context with separate references.
+G=uigridlayout(Parent,[5 1]);G.RowHeight={36,32,'2x',205,125};
+Buttons=uigridlayout(G,[1 4]);Buttons.Padding=[0 0 0 0];Buttons.ColumnWidth={150,180,180,'1x'};
+Show=uibutton(Buttons,'Text','Show context','ButtonPushedFcn',@compute);
+uibutton(Buttons,'Text','Attach both native sources','ButtonPushedFcn',@(~,~)AttachSources());
+uibutton(Buttons,'Text','Load accepted references','ButtonPushedFcn',@(~,~)LoadReferences());
+Export=uibutton(Buttons,'Text','Export context evidence','Enable','off','ButtonPushedFcn',@exportContext);
+Controls=uigridlayout(G,[1 3]);Controls.Padding=[0 0 0 0];Controls.ColumnWidth={'1x',190,250};
+Choice=uidropdown(Controls,'Items',{'No context calculated'},'ItemsData',1,'Enable','off','ValueChangedFcn',@render);
+Scale=uidropdown(Controls,'Items',{'10 samples per side','20 samples per side'},'ItemsData',[10 20],'Value',10,'Enable','off','ValueChangedFcn',@render);
+uilabel(Controls,'Text','Diagnostic windows are not baselines.');
+Axes=uiaxes(G);Table=uitable(G,'RowName',{},'ColumnName',{'Corrected-intensity descriptor','Before interval','After interval'},'ColumnWidth',{'1x','1x','1x'});
+Info=uitextarea(G,'Editable','off','Value',{'Select an event, then Show context. No detector or measurement is changed.'});
+R=[];Index=[];P=[];
+Panel=struct('SetReview',@setReview,'Compute',@compute,'Preview',@preview,'Choice',Choice,'Scale',Scale,'Axes',Axes,'Table',Table,'Info',Info,'Export',Export,'Show',Show,'Grid',G);
+    function setReview(review,index)
+        R=review;Index=index;P=[];clearAxes();Table.Data={};Choice.Enable='off';Scale.Enable='off';Export.Enable='off';
+        Choice.ItemsData=[];Choice.Items={'No context calculated'};Choice.ItemsData=1;Choice.Value=1;
+        Info.Value={'Context has not been calculated for this selection. Press Show context.';'Automatic intervals and saved researcher alternatives stay separate. Draft edits are not used.';'Accepted reference frames appear separately when their saved judgments are loaded.'};
+    end
+    function value=preview(),value=P;end
+    function compute(~,~)
+        if isempty(R),return;end
+        P=[];clearAxes();Table.Data={};Export.Enable='off';Choice.Enable='off';Scale.Enable='off';
+        try,P=buildBOITemporalContextPreview(R,Index);catch err,Info.Value={['Context unavailable: ' err.message]};rethrow(err);end
+        if isempty(P.Rows),Info.Value={P.Message};return;end
+        labels=cell(numel(P.Rows)/2,1);
+        for k=1:numel(labels)
+            c=P.Rows{2*k-1}.Interval;prefix='Automatic';if c.Revision>0,prefix=sprintf('Saved researcher revision %d',c.Revision);end
+            preferred='';if c.PreferredOnset,preferred='; preferred onset';end
+            labels{k}=sprintf('%s: %d-%d%s',prefix,c.StartFrame,c.EndFrame,preferred);
+        end
+        Choice.ItemsData=[];Choice.Items=labels;Choice.ItemsData=1:numel(labels);Choice.Value=1;Choice.Enable='on';Scale.Enable='on';Export.Enable='on';render();
+    end
+    function render(~,~)
+        if isempty(P)||isempty(P.Rows),return;end
+        try,verifySnapshot();catch err,P=[];clearAxes();Table.Data={};Export.Enable='off';Choice.Enable='off';Scale.Enable='off';Info.Value={['Context unavailable: ' err.message]};return;end
+        q=P.Rows{2*(Choice.Value-1)+1+(Scale.Value==20)};d=q.Descriptor;c=q.Interval;
+        a=c.StartFrame;b=c.EndFrame;lim=[max(1,a-30),min(numel(P.CorrectedTrace),b+30)];
+        for k=1:numel(P.AcceptedReferences),f=P.AcceptedReferences(k).Frames;lim=[min(lim(1),min(f)),max(lim(2),max(f))];end
+        clearAxes();hold(Axes,'on');parts={'Before','After'};colors={[.15 .55 .85],[.15 .65 .4]};
+        for k=1:2
+            s=d.(parts{k});color=colors{k};if ~strcmp(s.Status,'available'),continue;end
+            x=[s.Frames(1)-.45,s.Frames(end)+.45];patch(Axes,x([1 2 2 1]),[s.Minimum s.Minimum s.Maximum s.Maximum],color,'FaceAlpha',.12,'EdgeColor','none','HandleVisibility','off','Tag','BOIContextRange');
+            patch(Axes,x([1 2 2 1]),s.Median+s.MAD*[-1 -1 1 1],color,'FaceAlpha',.22,'EdgeColor','none','HandleVisibility','off','Tag','BOIContextMAD');
+            plot(Axes,x,[s.Median s.Median],'Color',color,'LineWidth',2,'HandleVisibility','off');
+        end
+        f=lim(1):lim(2);plot(Axes,f,P.CorrectedTrace(f),'Color',[.1 .25 .4],'LineWidth',1.3,'Tag','BOIContextTrace');xlim(Axes,lim+[-.5 .5]);
+        yr=ylim(Axes);span=diff(yr);ylim(Axes,[yr(1)-.2*span yr(2)]);
+        for v=[P.Event.StartFrame P.Event.EndFrame],xline(Axes,v,'r--','Tag','BOIContextBound');end
+        if c.Revision>0,for v=[a b],xline(Axes,v,':','Color',[.55 .1 .65],'LineWidth',1.8,'Tag','BOIContextBound');end;end
+        for part=parts
+            nc=q.([part{1} 'Native']);ff=cellfun(@(v)v.Frame,nc(cellfun(@(v)v.AnyPixels>0,nc)));
+            plot(Axes,ff,repmat(yr(1)-.04*span,size(ff)),'k|','Tag','BOIContextNative');
+            hc=q.([part{1} 'Human']);ff=[];for j=1:numel(hc),ff=union(ff,hc{j}.Frames);end
+            plot(Axes,ff,repmat(yr(1)-.10*span,size(ff)),'|','Color',[.55 .1 .65],'Tag','BOIContextHuman');
+        end
+        refLines={};
+        for k=1:numel(P.AcceptedReferences)
+            j=P.AcceptedReferences(k);plot(Axes,j.Frames,repmat(yr(1)-.16*span,size(j.Frames)),'|','Color',[.85 .4 0],'Tag','BOIContextAcceptedReference');
+            refLines{end+1}=sprintf('Orange: accepted reference for onset %d, %d samples, frames %s. Kept separate from the selected diagnostic interval.',j.OnsetFrame,numel(j.Frames),mat2str(j.Frames(:)')); %#ok<AGROW>
+        end
+        hold(Axes,'off');grid(Axes,'on');xlabel(Axes,'One-based recording frame; external 1 Hz');ylabel(Axes,'Corrected input-intensity units');
+        title(Axes,sprintf('Saved %s site %d/event %d | selected %d-%d | %d samples/side',P.Event.EventType,P.Event.SiteID,P.Event.EventID,a,b,Scale.Value),'Interpreter','none');
+        Table.Data={'Availability',d.Before.Status,d.After.Status; ...
+            'Observed / required samples',sprintf('%d / %d',d.Before.ObservedCount,Scale.Value),sprintf('%d / %d',d.After.ObservedCount,Scale.Value); ...
+            'Median',number(d.Before.Median),number(d.After.Median);'Range (max - min)',number(d.Before.Range),number(d.After.Range); ...
+            'Unscaled MAD',number(d.Before.MAD),number(d.After.MAD);'Rise (interval max - side median)',number(d.BeforeContrasts.Rise),number(d.AfterContrasts.Rise); ...
+            'Decline (side median - interval min)',number(d.BeforeContrasts.Decline),number(d.AfterContrasts.Decline); ...
+            'Endpoint - side median (onset / recovery)',number(d.OnsetVsBefore.Value),number(d.RecoveryVsAfter.Value)};
+        lines={P.Message;['Saved corrected stage: ' P.CorrectedStage.Message]; ...
+            sprintf('Native support: %s. Black ticks = native contact; purple ticks = saved human/context contact. Flags do not exclude samples.',P.NativeStatus); ...
+            'Blue/green bands: before/after min–max range (pale), median +/- unscaled MAD (dark), median line. Red dashed = automatic; purple dotted = selected saved bounds.'; ...
+            sprintf('After median minus before median: %s. Unavailable values are not zero.',number(d.ContextLevelDifference.Value)); ...
+            ['Reference status: ' P.ReferenceStatus '. Context never selects, replaces or averages an accepted reference.']};
+        lines=[lines;refLines(:)];
+        if ~isempty(P.BoundaryReview.Annotation),lines{end+1}=['Current researcher status: ' P.BoundaryReview.Status '. History below is not plotted as current bounds.'];end
+        for k=1:numel(P.BoundaryReview.History)
+            h=P.BoundaryReview.History(k);lines{end+1}=sprintf('History revision %d: onset %s; recovery %s; preferred onset %s.',h.Revision,mat2str(h.Annotation.OnsetFrames),mat2str(h.Annotation.RecoveryFrames),mat2str(h.Annotation.PreferredOnsetFrame));
+        end
+        Info.Value=lines;
+    end
+    function verifySnapshot()
+        assert(strcmp(oxygenFileSHA256(R.AuditPath),R.AuditSHA256),'Audit changed; reopen.');
+        if isfield(R,'BoundaryReview')&&~isempty(R.BoundaryReview),assert(strcmp(oxygenFileSHA256(R.BoundaryReview.Path),R.BoundaryReview.SHA256),'Boundaries changed; reload.');end
+        if isfield(R,'ReferenceJudgments'),for k=1:numel(R.ReferenceJudgments),j=R.ReferenceJudgments(k);assert(strcmp(oxygenFileSHA256(j.Path),j.SHA256),'Reference judgment changed; reload.');end;end
+        if isfield(R,'ReferenceSources'),for k=1:2,assert(strcmp(oxygenFileSHA256(R.ReferenceSources.MasterPaths{k}),R.ReferenceSources.MasterSHA256{k}),'Native source changed; reattach.');end;end
+    end
+    function clearAxes()
+        delete(findall(Axes,'Tag','BOIContextBound'));cla(Axes);Axes.YLimMode='auto';
+    end
+    function exportContext(~,~)
+        if isempty(P),return;end
+        parent=uigetdir(fileparts(R.AuditPath),'Choose a parent folder for a new context export');if isequal(parent,0),return;end
+        folder=fullfile(parent,['BOI-context-' char(datetime('now','Format','yyyyMMdd-HHmmssSSS'))]);
+        try,exportBOITemporalContext(R,Index,folder,struct('IntervalChoice',Choice.Value,'ContextSamples',Scale.Value));Info.Value=[Info.Value;{['Exported context evidence: ' folder]}];
+        catch err,uialert(ancestor(G,'figure'),err.message,'Context export failed');end
+    end
+end
+function s=number(x)
+if isfinite(x),s=sprintf('%.6g',x);else,s='unavailable';end
+end

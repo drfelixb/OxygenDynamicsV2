@@ -45,7 +45,7 @@ end
 
 function ScriptOutput = collectScriptOutput()
 
-OutputFields = {'Tifffiles','RecDur','OutputFolders','AnalysisInfo','DatafileID'};
+OutputFields = {'Tifffiles','RecDur','OutputFolders','AnalysisInfo','DatafileID','ReviewAuditPath'};
 ScriptOutput = struct();
 
 for fieldi = 1:numel(OutputFields)

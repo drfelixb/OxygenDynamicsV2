@@ -1,8 +1,8 @@
 function [AlignedTraces,MouseLabels] = extractPuffAlignedTraceRows(PuffLogical,SelectedPuffs,TraceSources,SampleFs,PuffsSFs,MouseLabel)
 %EXTRACTPUFFALIGNEDTRACEROWS Extract trace windows around selected puff starts.
 
-PreFrames = 30*SampleFs;
-PostFrames = 60*SampleFs;
+PreFrames = round(30*SampleFs);
+PostFrames = round(60*SampleFs);
 WindowLength = PreFrames+PostFrames+1;
 PuffLabels = labelLogicalRuns(PuffLogical);
 NumPuffs = max(PuffLabels);
@@ -15,7 +15,7 @@ for PuffIdx = 1:NumPuffs
         continue
     end
 
-    PuffStart = round(find(PuffLabels==PuffIdx,1,'first')/PuffsSFs*SampleFs);
+    PuffStart = round((find(PuffLabels==PuffIdx,1,'first')-1)/PuffsSFs*SampleFs)+1;
     WindowStart = PuffStart-PreFrames;
     WindowEnd = PuffStart+PostFrames;
 

@@ -1,0 +1,4976 @@
+{
+  "schema": "SW-G5-07.candidate-manifest.v1",
+  "not_a_package": true,
+  "candidate_text_files_scanned": 547,
+  "patterns": {
+    "personal_or_volume_path": "/Users/[^\\s\\'\\\";,)]+|/Volumes/[^\\s\\'\\\";,)]+|[A-Za-z]:\\\\\\\\?[^\\s\\'\\\";,)]*",
+    "development_payload_reference": "reference-validation|docs/reference-results|\\.local-sources\\.json",
+    "private_recording_identifier": "FB\\d{4}|ID40[0-3]|HP_indepth",
+    "external_dependency_call": "\\b(?:actxserver|bwconncomp|regionprops|imfilter|imgaussfilt|fitlm|fitlme|anova\\w*|ranksum|ttest2?|pdist2|prctile|java\\.io|java\\.security)\\b"
+  },
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "9bff8846286df57e32f96744c65811577e2944f358966da74d186a2156a36fa0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": ".github/workflows/matlab-ci.yml",
+      "sha256": "4e89983d6886e9d52fa46c8cc3aab6d4ff489d73c9fe6aa8eaecc480ce9b73e8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "6112f5a8a96b0cfe80df625629deced1fbc60396ad12a256590a52387e131c47",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "d81ec49a728fe3bab9b51d8fbef02c7f17dce5f22c2293174a0f834f06deda30",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "592db149ba350c9341600dd2cfb2c4f4222bab479e060cccc67724ec1cf2ff61",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "MakeRecording_3D.m",
+      "sha256": "cc36e5bb2e4cf5eac01eb9171b6e97b166f84cd8b1472be561af33a0900ba885",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "OxygenDynamics_Behaviour.m",
+      "sha256": "ac4589c85e20b1d5028cb1b67219c33c0971f3bfa81d6efe42aa9b5e71c95053",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "OxygenDynamics_Config.m",
+      "sha256": "2e0bfb37d2a4a3115250133f9d085c31360f4a26942a31bca9eb17fea3b30c2f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "OxygenDynamics_GUI.m",
+      "sha256": "466fd6fed437b113e2cb7f6c13eab70118eeac69e37fe3cc0bfc80c185f2c7e9",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "OxygenDynamics_Master.m",
+      "sha256": "3dfc06fbdcf606e198ba1f0aaca53c2fccb22fdacbf28ddf5ffb1bf2096dbc21",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "OxygenDynamics_Stats.m",
+      "sha256": "24545968ddb8cc7fab5103cf51639aaf777c2f8893eaf83345df89c571e6815b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "OxygenDynamics_Tiffout.m",
+      "sha256": "bb67193203124982bff5a361eeee1139d3f6bd528ea2e6fab3c004a757c5b00d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "OxygenDynamics_VascularAnalysis.m",
+      "sha256": "8d9652604fcf82d970d641a6e4da83e318d0451978ba8fc50fb97099ef067397",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "OxygenDynamics_VascularAnalysis_IndividualEvents.m",
+      "sha256": "fe188e4b0b368ed3b00bd1a722bf419ff2cc1f65848817ccd8b3fec6fa6f3abf",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "OxygenDynamics_Wrapper.m",
+      "sha256": "8aae91f4d0bda4050e9bd1a0cf6ccb9353bbb3b6a899893ff599b44cbd257e58",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "OxygenDynamics_plotvideos.m",
+      "sha256": "6c3656ecd4b118f87b7f572f5a251a111c1748f64b45c6c0ae82aed11b6dad4c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "OxygenPipeline_VerificationReport.m",
+      "sha256": "e28fe5ccc30d35929c1d3d393b0b512fe480819ae3e581801232c1011fedfb24",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "README.md",
+      "sha256": "61ff7d2d28a4b858ff3ecead9f5a5ee58f1edaf0b5aacb8407b4f6dbcdba3830",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "RELEASING.md",
+      "sha256": "30ef9d34c5c004b96d5a6101d118c970466ab14612c91bdb4df3e450f0f7e521",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "Run_Regression_Check.m",
+      "sha256": "773b4b9887f852c0e55083c0e1fbd0aee58da5e1c1af486c54e1b3c0df41de12",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "Run_Verification_Then_Stats.m",
+      "sha256": "4e2440602914a02d7c26e31708913eb22e064d81f21ec80838fd2a085770a523",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "Run_Verification_Then_Wrapper.m",
+      "sha256": "862b231bc7eb045ddaa86f217f514f670f8df3599a410ebb5cec26e3e33ed753",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "d1acb665741b188b6d0292d223fbea83e01942e0384fb5d8c245a3ecb36b2642",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "Start_OxygenPipeline.m",
+      "sha256": "3f282743fa20cab5e7e713dc16568bee22b352dd0cbe70e7562767c1f0ee630e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "d0684b6fe49a6d1d7b1514657bfc6befc7e70bfa190ee1a746694121a055116e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "USER_MANUAL.md",
+      "sha256": "413b3d6989e6f94b77e42132963e4390e8f0ba8778fa71ed12debd8780cb9d8e",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "analyzeHypoxiaAmyloidPair.m",
+      "sha256": "88dff1b0fbd69fb23abdafb13c34341395e35b529560edf4211652ec79b39826",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "archiveOldOutputs.m",
+      "sha256": "7c18691b27e49c368fbd3ad75c20373455c090ef084bbaeea3fd6d34ca6727d6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "auditOxygenEventAmplitudeSource.m",
+      "sha256": "9a6138c594bd1322fd6598c6dfe1b122c2966ada44298e64541b91847257b866",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "auditOxygenSinkAmplitudeSource.m",
+      "sha256": "cb2485165ffaaf150221fd70f5974f984f1dc43f185a7c4733ce6f2470fc4bce",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "checkOxygenPipelineHealth.m",
+      "sha256": "77af3f965f553334423c72e02c03e228d81a96d51ef49e3443e209d703767a08",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "compareRawDenoisedOutputs.m",
+      "sha256": "72e0da60510abd1aa43f5cec052ebfec26d71b073265c4ab376a09ca0b474e49",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "createBOIEventAudit.m",
+      "sha256": "6672df56a58df9947607d39c22abba5a664e803b64fbeb349b23a48f548005d1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "createBOIG4EvidenceBundle.m",
+      "sha256": "a7ce036c1291b51f5b317fbc894fd03f81f58d1a10cbf2439707538298d169c5",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "createOxygenRegressionBaseline.m",
+      "sha256": "eb65059d33be5f17d714f0dcf3b7d3621cd5ed8c58f1c9786eea91d55b347d49",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "createOxygenReleasePackage.m",
+      "sha256": "5ed163cf0245fa2bb9e2552c8790626813c6f0b153b4cd979b3ece2004ad663b",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "external/abfload.m",
+      "sha256": "91e6bbf7888f5a83e9dfb544ea36a3ac3076ca2cd8b18571c8e4a086a1102ea3",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "external/loadtiff.m",
+      "sha256": "c408d9e133a788b858424b781e66bb0d4d967d969b7e62544aeb1f8ebe38570e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "external/saveastiff.m",
+      "sha256": "8d120dd1b86a881c105f4a9843f850d6e86a1069c8026c84ae5541b67f33d880",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "findLatestStatsOutputFolder.m",
+      "sha256": "daa9f63369c26b032a8696f68ac5090fe350a22c18b3925c4afd46a41ecec639",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "getOxygenPipelineVersion.m",
+      "sha256": "041f873dbe04b7f7f33360817ff63d64dc93767870806ee479e747fc2ebb120f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "getOxygenRegressionStatus.m",
+      "sha256": "dec6aa5e3759c6fb2d2ec43cd9c13c18010712515324020b22ef4dcb7d7a5b9e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "getOxygenStatsAcceptanceStatus.m",
+      "sha256": "31988ae1e1f5e5e8fec13911deae7ea56017cdf1f01ebafeb2e763ef28b1d1ac",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/addAlignedSinkEventTraces.m",
+      "sha256": "433021347a123f4f07284822936a5dbc35ebf2516cc6b1daadc5913f2d03c3f5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/addStatsRecordingMetadata.m",
+      "sha256": "a943d3a98cd49e3ed2a7448275502f51bbeed074839ee8dc823ad944d9b8c462",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/addValidationToLegacyContext.m",
+      "sha256": "1b09c410cb896934128bd4b09834793a2e74cd4a94f09d594500837135798f8f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/aggregateOxygenRecordingBurden.m",
+      "sha256": "219bcd0887d465fc6927e288a04eb6c2d7428b53e93ea1c5495993bf8807e2ee",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/alignOxygenTraceSamples.m",
+      "sha256": "7fbc8bf4957576eeb2404960047550b5a2ab5f2a0538e6498f34798f93977fc1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/analyzeHypoxiaAmyloidEventProperties.m",
+      "sha256": "472fcc847d4dd675dcf48b8893f43ab181bdaab8460d576ae0cb3f09c3b33cc5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/annotateOxygenEventRecurrence.m",
+      "sha256": "e23e6a28b18856a3fe2f43020eadec8659a31049e8b98844a0196b3ff3984f8a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/appendFailure.m",
+      "sha256": "cd4ad70cf7a33c865882a35aac04ea32c7ad743301d39fbc0315081fd3e1c0c7",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/applyOxygenDynamicsConfig.m",
+      "sha256": "e7c437dfb4c4ce8931e24e4483762dc4abb0ed83a0a9e2698cfb69f574e85cc0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/applyStatsSinkCuration.m",
+      "sha256": "50122bc16d7c4e7bbd8c8c9805ab9fd8ed37c4d4ae4d1d08413f9d10214d6db0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/assertNoBlockedVerificationRows.m",
+      "sha256": "9a0c086226680dda00a399aa92f6a95bf82e4b595cb595897d89a9bef22a8dfe",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/attachBOINativeMasks.m",
+      "sha256": "edd3938b055ca96bd8324265d607f78e8190018ba24bfd9cd35146e3dc9b2e62",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/attachBOIReferenceSources.m",
+      "sha256": "16464cab183c04671e366f0985b919f9d4e33183a102e54107dc314d097e5d17",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/attachBOITemporalSources.m",
+      "sha256": "68a66e7ec4d9a55a3f01026ec401e90d76104099f05030242a0648217d300963",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/attachSurgeTrackingMetadata.m",
+      "sha256": "8b0ca09180c19dcd437bfa2739a92481f533a6d1cdc065905a0b571e1cfa8a27",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/auditOxygenEventFootprints.m",
+      "sha256": "058bedfe87e2ff59e40d93413cd4258909ae9b6d8a1f53e78a73c4049fbf09f5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/augmentStatsOxygenMetricTables.m",
+      "sha256": "698a3ad56285570a6b65b2a2dc597b7e7a37e7b5bb807bcf47faf6841eed0e5a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/averageOxygenTracesByMouse.m",
+      "sha256": "44249b6a7fbac08a78d64f6c8607cfedbc88479c450c850dd3aa15d3d611de61",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOIBaselineDiagnostic.m",
+      "sha256": "e8cbddf9f20c8dce17fe7b35bfa55d849419467c0930551b7da2e046eba4475b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOIEventReviewData.m",
+      "sha256": "f1906a0ef23b7c8b96770a815362b7df56241501ef2f43e1b7d9ea9c2a48b19b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOIImportReviewRows.m",
+      "sha256": "9497669a6344cf729f6f3479c967f05c3bdefdf4f883f963e29e7d5f15448a23",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOIRecordingInputContracts.m",
+      "sha256": "7ef10aad3b9dad4920ea66982e44d281597d432bd9aaa7d8152ec79ba542045c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOIReviewedOpticalPreview.m",
+      "sha256": "d899d032c0bb0349e67da82cfd09241160ad32997382676b2af99c1987173e6e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOIReviewedReferencePreview.m",
+      "sha256": "6a5580dc3531679089d4c2f26c5a472d9d42c7f50af140e4ba317e173ed27452",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOITemporalContextPreview.m",
+      "sha256": "f7b567cc8c8783dbc4b3c0c2d263df1bbb0ed929ec652de9692e5721dfbb8531",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOITemporalHumanContacts.m",
+      "sha256": "851ad9fa3e7d9776180c228c8e333e4790e024562da57279339d2e32aa9f58be",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOITemporalNativeContacts.m",
+      "sha256": "5d48c331b475789bd9b6174eed1b5a5e239042b86b261eed0a245bf04d9abe3e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOITimingReviewData.m",
+      "sha256": "f1a8fbeeb0f314baf79fb2a1d3c3fac726628c4ee07dad132550ac1219edab4c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildBOIWindowReviewData.m",
+      "sha256": "1bea56dfd1d4d631a02c881f8a6fd94e5e8c09fe042e22cd6851c8b1429d9eb5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildOxygenFigureListItems.m",
+      "sha256": "4a88200d7da23c19ffe61d1b1eee34b53b633a709102bb271a2bbdecbb931ff8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildOxygenRegressionGuiTables.m",
+      "sha256": "7907c348b65e15e88a2507c02b0451cedad7c3b3cace5ecced21231a50f64475",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildOxygenStatsAcceptanceRows.m",
+      "sha256": "c744aee102e470872b332d30f290811635081d96701984f2c6a751b4ac018ad4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildOxygenStatsPreviewRows.m",
+      "sha256": "96ae175b7d0b4dbf02bf8d52034b097177739b0df8df2d30fcb4cbdad1a1fa80",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildOxygenStatsQcRows.m",
+      "sha256": "29b88b3aa265acd82d1b0f52a934b261148ed3d2a0bc3571fb3de9c1b8774ac0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/buildTrackedOxygenSurgeSites.m",
+      "sha256": "b01253b47613e28e3523b8a8a3b029666059f7cf9a0012d23513305e67adce81",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/captureBOIAcquisitionMetadata.m",
+      "sha256": "760e945e5779efa7dfa1e39173ad9f380f6b1f718f5a3ded01160f86cf43017a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/captureBOIRunReview.m",
+      "sha256": "579f4c943871ed22042c2d02b72fafb145cf7bb25f4b027890cf606cb66d1995",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/captureBOITissueSupport.m",
+      "sha256": "e2ad7426b02a8c1c5228c2a95c682024237496e5eaac60dd580a172c2a024281",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/collateOxygenSinkEvents.m",
+      "sha256": "be8b2fb71c1161fe759c33f8f20fad17c47d4d45bdbc3000f8bb221c219e3cec",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/collateOxygenSurgeEvents.m",
+      "sha256": "eff61d5f3b58f5c3d8214bddae22ff5766e050b009a460f480230a701b1758cf",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/collateiOSSinkEvents.m",
+      "sha256": "6687252b9978de1ab798ab00842e11cdbb032a4ea21e4449e48d34deb8d1f44a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/collateiOSSurgeEvents.m",
+      "sha256": "7b7ef244aab954219698ced015f43e648aba7706c6f69354a384ef91d6f18f71",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/completeOxygenBurdenTimeSeries.m",
+      "sha256": "6c1ae22a4a6fb849c02ea6e6ec1fb56323ef00f882882aa83400f6f772a3b724",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeBOIReviewedOpticalInterval.m",
+      "sha256": "72a79cd724faabd0066a8298d4f3929fcdb672845f95f712aeac72824273f057",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeBOITemporalContext.m",
+      "sha256": "2a33701d613a4d61e234196357ce2620109f78b240bba5eae4ae3001e9493fff",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeBehaviourPercentileBins.m",
+      "sha256": "de18c00f90a9beac96d8f0f489aa5b2258df13671d842efa140c97b6c6e55739",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeEventSizeModulation.m",
+      "sha256": "d41d580abc77fc1a52f1fbe19095381ca2182986ac544b8213356e5e17dbbd8b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeFrameDifferenceEventMask.m",
+      "sha256": "c41299a666044061f8c650b9ebeb8d1510af8edce9bbdd5bfc096e64586c1fe8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeOngoingRegionSeries.m",
+      "sha256": "2b3cc311927312f827d74b70b5cad3d02a825790af1e85d122cf0357c7d57fe0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeOngoingSinkTimeSeries.m",
+      "sha256": "b2ce4e9676b6874de28937d6493074fbc2035151d814999e2b21586d600a5b2c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeOngoingSurgeTimeSeries.m",
+      "sha256": "8d734322b70665c7c12327da3d83e4e7672cd6ee816d7c00d0566a8781a75310",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeROITraceFeatures.m",
+      "sha256": "54f33cdb1115c0f4415bfcc2dc56259a8c6b1e8df34dd3896036c486576e9f72",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeRecordingArea.m",
+      "sha256": "cc6cfddb7c20686ea698b72c532fa4fc4fa13fd16880cac0ba21dcc9a94aab96",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeTracePotentialNoise.m",
+      "sha256": "62600baabb26b781f45fa4f7e83f45cda00d0cc1feea7f012cb15052f9995270",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeTrackedRegionMorphology.m",
+      "sha256": "ab388d05ba8afdd32c3bbdabd6bcb34668ef57a32e17898b3b1a85d45fa1b8b4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/computeVascularDistances.m",
+      "sha256": "ed5e17d70f4c572b548866ce7c18098dfcac7e062c42e192b389af5bf9a3083e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/countTrackedEvents.m",
+      "sha256": "9d7260b33b305e84ea1df6e928980bbf972f38aba0b00180699f9c303d5dc2a8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createAdditionalOxygenSinkMetrics.m",
+      "sha256": "1f6b2ac296f8fb8e442fc0fc5cd331a52618876f3a26b2bb4c7a2cf44122ee92",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createAdditionalOxygenSurgeMetrics.m",
+      "sha256": "0636eb1c40ed5a2daa7a061509a8c39006ada895762020eb6fd84a04fe5864eb",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createAlignedOxygenSinkEventTraces.m",
+      "sha256": "41270f7f06a5cbf8d1fb76c8eeb1851e40051663294a60b9005278378b260093",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createAlignedSinkTraceExport.m",
+      "sha256": "d970a3688ea6f7c8a648b7d2ca250e6c52ab13fd057bc0025be985a5b79fbb13",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createAnalysisRecordingRow.m",
+      "sha256": "03c4035005d072cb45b65a8e1e0c8b8516fb8137bf446564c9a1e3942fdaf2f4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOIBaselinePanel.m",
+      "sha256": "9664821c6b9a23e3a5bc728cf9c528f4d8ed2a57556e1e2b7db9dbb1e7275b1b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOIBoundaryPanel.m",
+      "sha256": "635d22f7fe891732d9cfd437acd5c1e0e15cfebca697d016cb0497d85b71d9c5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOIImportReview.m",
+      "sha256": "d1904c4e7efde9a27f229d5b37df04555c525e60bf4dd06cdeb402fceb7155a0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOIImportReviewPanel.m",
+      "sha256": "06e63e1146b31440df1768d863983ac5193b59c6cb7563a9bad9c15b04b9c4f2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOIMeasurementPanel.m",
+      "sha256": "453fbd0b72fc9f4659551d77ac9744a9eb9867633e672d552c312cc4b3e4821e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOIRecordingInputContract.m",
+      "sha256": "f2b146d8529c465b3b94dcbd6e374a8a419950a5606b19bbeaf46c3d738008f7",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOIReviewedOpticalPanel.m",
+      "sha256": "2f9534c6a47ab7e389eb111de625cee38f89328b471625065022497790c90c4a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOIReviewedReferencePanel.m",
+      "sha256": "07600f7e6a4843053d600f467a08e6e0aefc969093e495eb450668c847c08c76",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOISurgeAnalysisWindows.m",
+      "sha256": "c0acb84ff628816c22cb37e68447395cb6eff97f350b331c10df9a5393bf42c2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOITemporalContextPanel.m",
+      "sha256": "f8de18d9725b6d64f8d08d9c765931a2cdff67e1197bb0f265f725248586f390",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBOITimingPanel.m",
+      "sha256": "29d5a740dfb0ee0e478c18a88419211e4bc2e9167a6d5d01ebe54fea5331bf0c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBehaviourBinTraceSources.m",
+      "sha256": "99cb4ed2b7a5ceb311ceee3ed1338351c1a1c38695368e5e5386a02e4a1818b2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBehaviourLogicalTraces.m",
+      "sha256": "5e8271c8255baae416751bdaccfb8b2dacc948bf9309f47ca25f63850a12d097",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createBinnedTraceExport.m",
+      "sha256": "6708170fa7d7d26c983d115a43040fdd68694a18be51da8c86199e96b61c6ff8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createEventSnippetExportTable.m",
+      "sha256": "097982fc9abf6a62540d1a5bdffdbbea8a774babdf6739a071635df1a640bc5a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createHypoxiaAmyloidOutputFolder.m",
+      "sha256": "d82e57ea3f4efe65e1fab4b00c0bdfe762e0b65a898185b9600a95610c4d09c0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createHypoxiaAmyloidRunOptions.m",
+      "sha256": "b6cb9deecbcbeb555907ad3730b60e74257a2303f933de22a7dbd82a04649364",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createHypoxicBurdenMetrics.m",
+      "sha256": "7e61ebe0efa462d10c7650a04948221d96fe4fd177eb54271a99db8464998682",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createHypoxicEventSpecificMetrics.m",
+      "sha256": "7ba60627edba59333ae7c8403eab2432b8c850b90f45fce44930cb35a3ac402a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createLegacyRecordingContext.m",
+      "sha256": "1c28f56545d650410003ba6729fc7a2c22b326c5e2831ae3b9455003dbb65367",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createManualEventSnippetExportTable.m",
+      "sha256": "9f5f4da3d65b5a01c091084aac185422cf105b563aea52a0a91d81719c3ca9ef",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createNanBehaviourPercentileBins.m",
+      "sha256": "c8ecc98e189ce2318fb645681928c29b182b2b7b65a7750adbee38dea0b696fe",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createNanTraceExportTable.m",
+      "sha256": "7e8f9282aa7ff6ce0385925958d3ec5d0128513ebd95c94032bb87cb33cf7b80",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOngoingStatsTimeSeries.m",
+      "sha256": "a2ad11fe90b8f8aff0cdd42f70aec900072cb1702d167bda908f45b6caa49ec4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOutputMetadataVectors.m",
+      "sha256": "6d705d083357c05762e890293d924f30a471b6b2a5329c0b8fb564c04e56d910",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenAnalysisWindows.m",
+      "sha256": "f13a08d072bb8ced8be24a600cb170954fa54b5a2b7224b64651c7d6a074329e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenBaselineContrasts.m",
+      "sha256": "3023b66ae6b1e299b5e70fac608a1f4acda0df5288375d5d19a96b0589307b5c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenMasterOutputData.m",
+      "sha256": "bae3665712b73333a3f5924b28e1a2a0e90b1a5d68bcc910f9fce22adb0d0834",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenMasterParams.m",
+      "sha256": "ab94aca9b3bbd56488af7a8210b112c762d2ad3613a751ac689a97f56d2b3099",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenMeasurementQC.m",
+      "sha256": "c25f99c2d48f81f868cd79d785ef10255ce4004b67104bdccb5ff55c2177b326",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenOutputFolders.m",
+      "sha256": "3948d7cc0a1cf695221e2a4288d8254ace9bbeaf72504b3874c1502891e36ce0",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "helpers/createOxygenRegressionCodeManifest.m",
+      "sha256": "1d62950dcf077f4dd1be44cb5bed2eb898a39170ccabbefde905505ed598d081",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenRegressionFileManifest.m",
+      "sha256": "15ee7c1e8b40ad3a59aaac3f564ec14d37cf7ea3e4a8f6869de9e34a690e3df0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenSinkEventTable.m",
+      "sha256": "cf9931447fb9f08b1b23a720a222a03fd3e06c827be74ad1dc31e4b5f9d26f39",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenSinkSummaryTable.m",
+      "sha256": "fa3cd1bc2a2709dc2fd8857104bd034f5897d6842fa9b1519678dda05a614d4c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenSurgeEventTable.m",
+      "sha256": "1479fdb63512754398ca1895ac6bb4446964e904c42c084cb9028a1f504c0407",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenSurgeSummaryTable.m",
+      "sha256": "a1e90a7f56bfdd33c1d2a07310871705cf24e6e16deb8bd1de5ac6562c15a1f9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createOxygenWindowContrasts.m",
+      "sha256": "8f3606ced89a2158b207958c2237cd1e72e9b2d3cacd77bf8128650bc68b19e7",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createPaddedTraceExportTable.m",
+      "sha256": "682d59c6471829839d2d5ef8e7c11d8f8097480004bd81a5e7340feefd8ba623",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createRecordingMetadata.m",
+      "sha256": "5d927c94ff823543d0ef402f273283f04a0a4c6f0e8dc395c9ddad97e1b34734",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsAnalysisFilters.m",
+      "sha256": "f974367e5472d54ee1c24d54ce2c046c79aec10a9baa9e1759c9bc926d8a7c7f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsBLIData.m",
+      "sha256": "e18d0f34ed0af432af8e5c185d5f3349b841fc9abe51b38b6b5af2fcf69c2061",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsBLIWorkbookData.m",
+      "sha256": "bbfe2ff91040b3ed2590e75a40b01e197aba5e23cf62e2f19f4d277ca89fce3f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsBehaviourInputs.m",
+      "sha256": "8e4ddccd9591f3acf7a37bbcc1f9212d8dd1cfeb20243bb0131fb11bd1bf8ae8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsBehaviourPercentileBins.m",
+      "sha256": "67b1a40320f56bd650589b5835877a110f79d03525085b219a3f0aaa78430bd1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsBinnedTraceExports.m",
+      "sha256": "10bf23e99a14da12c5a3dd6ea0a9c79a44957f59b3969120f272086011afe9b6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsCoreData.m",
+      "sha256": "77b32060cb207addd4288c62337eff2f6afe2d2b17b6364e0e567302c624dcec",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsDataOutput.m",
+      "sha256": "2e6e932b43568972b66d1ace1106af19813fbca73d3692104aedf56391c58a37",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsEventSnippetExports.m",
+      "sha256": "b0e693e1f11db093a69a2896c92e25b4e0465ae29bafb373418fc7dd85b3ab74",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsExcelOutputPath.m",
+      "sha256": "ed584148a7342f5d6a88e865c61bcc584dafd6f3a6fc96ad20cbec3d7639575d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsGroupFilters.m",
+      "sha256": "fba8f69b7bffbc37f824a3ffaf22af0e3d39a22a0e95282130d031b9c71a7c97",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsLoadedRecordingData.m",
+      "sha256": "b694f56a43c4042f6908de899d52c2e6f8fd1cc9bd253df57e456501c06fb99a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsMetadataCellRow.m",
+      "sha256": "99189bd25061cacef58a5a9f477161f8ff46f583413f0096a5e246ae79543d10",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsMetricExportTables.m",
+      "sha256": "0dee06c39b8f1eabf234eef719c827a7d28d23322e6301af7d016c619dd71fec",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsMetricWorkbookData.m",
+      "sha256": "115a20c1ae87d34ee803086bebb87413a27e72e09c7526a07bbb7e441b1d5cf6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsOutputFolders.m",
+      "sha256": "b799613f14e400da67a5e4e1d92dd7dda364cf23420604f4866467cf05c5678f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsPooledPuffTraces.m",
+      "sha256": "0dfd6275973e137431e05530c0b2c8785471a64f5c2c73bfaacc80b2f5a0773b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsRecordingInput.m",
+      "sha256": "954708671847827650b4cf10836fd8e64c1681eedb9d8f54032106ba5b0a8b86",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsRecordingMetadata.m",
+      "sha256": "45ba43c711a14377c3b880f9eb924fef6a2702aca902b33b4602a9b63ff3e10b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsRecordingSourceInfo.m",
+      "sha256": "57a9970ab670e28996a14ea98478f2067f32e2d4a8f22116e3474f19657d8a41",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsTraceExports.m",
+      "sha256": "720024d0f953c4c4be4bb923e9ecad14a2efe6625518998531b1699696c25140",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createStatsWorkbookOptions.m",
+      "sha256": "4c79e12337ebab59d47d0b2a0aa23dd2a590fdc0e0a8473f6546f56a291a03c9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createSurgeContactReview.m",
+      "sha256": "0d4344c5924269a9ac2c807b0184c3de7243b66b7a4e5382cf7c1b5c13ba6ba3",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createSurgeGapReview.m",
+      "sha256": "413f329c0b0f29d2eaa8c247f7f5254dd555ce2ab71793f935cf12e647d1b154",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createTraceCorrelationExportTable.m",
+      "sha256": "473b56ecd44bf1647aacbce9377db872917ff3dc7af3edd1416474074e5f702b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createWindowedEventMask.m",
+      "sha256": "2365bcf5149ba4ad1415ff45a83b9b874912db616d9d3bd812b2fb45560a0835",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createWrapperFinalizeOptions.m",
+      "sha256": "83e50edcb36d0d2f19f5234d2a2fb975f85a2aa2a366c9114772e3ce15dd1c0c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createWrapperRunInfo.m",
+      "sha256": "9f4ba75404b1b2168a36cdbadc96748f2c78d61dda0d9dba4d4434cdfcd9a0f4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createiOSMasterOutputData.m",
+      "sha256": "e475a027b2c6849f9cfac854e068b7298960e43df39501151bf5462053f7a728",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/createiOSMasterParams.m",
+      "sha256": "c9ab4a8f27640c73f384aca6897c9cb4cccefdf7d1917498cb7ddc4d69daf45d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/currentLegacyMetadata.m",
+      "sha256": "9fcf3dca91c97d42a8efea8ecff3d979719133f9c5e4b40aed32770460f0b625",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/detectFrameRegionCandidates.m",
+      "sha256": "aef5a2fb64085396d461a64fb088b4be19fa9a25ad854666f3966e2207f4847b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/detrendOxygenStack.m",
+      "sha256": "d513a16e9921742263586a6fa4503ea554e3adfa3b8940bd2ca25cdbeb442ee4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/detrend_custom.m",
+      "sha256": "89f72375288dfc1698f131871bc116ecb5e3e5b045d904cb4981735ce883988c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/ensureStatsEventPuffStim.m",
+      "sha256": "fed1093afe00997689f8d5a7228d5ba7cab7fab0e778c9a64bc77d823f34931b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/exportBOIEventReview.m",
+      "sha256": "008353117032751042ec68ca168a493cc11939b1b2442a066ef50d9abc0ef94b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/exportBOITemporalContext.m",
+      "sha256": "f29677a08f9f3a3057e47490b2cb5e0d92bcad0a5c1ceda022f61d12534f97a8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/exportBOIWindowReview.m",
+      "sha256": "ce04263f737f34079f0a4ea7f1785c33753bc2236f6f38c9be2eac178459df08",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/exportHypoxicEventSpecificMetrics.m",
+      "sha256": "4415662f0bb73a3209d82ec6a106aa2ef84b563a4efe9c78e3604040c058e94c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/exportStatsResults.m",
+      "sha256": "5a046835053a095e7ac8c477e5a714eec129e6970fec0c7adef2b05180b799ae",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractBehaviourEventMeanTraceSnips.m",
+      "sha256": "9b30741fb2c92f15a86983ed552886cc2cb1dbbcb96e8a5d73eb8b838611ad95",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractCenteredTraceWindow.m",
+      "sha256": "147819415b5fa4416e668f69de173a12823278fba9ff15295d036cc98430e866",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractManualEventMeanTraceSnips.m",
+      "sha256": "2affb60a290136d1e6504e9d33b4add3f0a66cc5b7954c28b863e72bc82eed58",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractOxygenRegressionMetrics.m",
+      "sha256": "409a44086fbae7a08c2130d16c025812a3e5eef1c4b92d79acf8f3aa7b1539c8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractPuffAlignedTraceRows.m",
+      "sha256": "ddf44165937f00228d098063913399a25c0ddfa8e9b04be1f7c492a329d9cd4a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractSinkTraces.m",
+      "sha256": "5c980dc8781e3ae088aced309c6851c4794b313c1b7c3c781a961bbbb396978e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractSpatialBinTraces.m",
+      "sha256": "1b84a7b548555bf75a1d751d1d8ba6de90a540b7279fde10de4f85ac4989d9c8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractStatsBLIEventSnippets.m",
+      "sha256": "5bb2dde3c4b33d8696fee00a44509216ce80907899e96c9a700b8841b333f488",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractStatsBehaviourEventSnips.m",
+      "sha256": "18bb5cc17abd68a06fcb07f5df64b1189e515b6f0b3beea54457dfece5fa3ead",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/extractSurgeTraces.m",
+      "sha256": "bba62295d18fc058cb62500dfaaaf5cdc556ddc16495f3e8107aded2e51384ba",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/fileSha256.m",
+      "sha256": "1f1baf9efb427ab00b5403ee87a857812c222e09788ff998d97459ed43184024",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/filterRegionCandidates.m",
+      "sha256": "849fca2c6a7100c42eefe321b95edf4dda0742eb7f23f9d523c0965ccd402811",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/filterSinkRunsByDuration.m",
+      "sha256": "8f6c465e1c4047bb7e8203d8a824cf4bcb203e4b4c50986f02563f96f69e1d72",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/filterStatsMetricData.m",
+      "sha256": "5c3860f6ac70185af75230f453d82e815dad6c53016811b093b8174143a0e336",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/finalizeOxygenEventMeasurements.m",
+      "sha256": "e274c48e8206de7533cc6fce59ff38236fb68f421cfcc25bc5767c6fa6d92634",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/finalizeWrapperRun.m",
+      "sha256": "2b2c79046e0cd0ae036f1c2c438492d7a75ed71744e1db37d2f335a22b8e5918",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/findFilesMatchingName.m",
+      "sha256": "66077d4476d84897a2d72f3ec5bc2580ff6f7668ba2a14fa5aa9cbfdac7b9f34",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/findStatsSidecarFile.m",
+      "sha256": "9a397923aa6db2e8eb5224fa93832464161bdb5ec0e52db2027c0806dd1ef064",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/firstTiffName.m",
+      "sha256": "7086134bcb7457f3914ef9e3ee1f1df940f82b762f6539b69c6c37f0840b47dd",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/formatBOIWorkflowPreflight.m",
+      "sha256": "ab1ee7cd6af5699257a14fef7c6da274687f5e4b9d502fd0d05b9dbbcaac901e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/formatPooledTracesForExport.m",
+      "sha256": "1338ac9e53b4db4e8ef8ad055a6a84a0254d6aa37f225c38e70efdc42ae893c3",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/formatRegressionTimestamp.m",
+      "sha256": "aa88db81a18fed11c39dd2e75b1f225f0a1d2ff11763f8662f3f572316abaf4b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/getBOIBoundaryReview.m",
+      "sha256": "b970efa787960b0cfc9cb8f6e59c6b6e7df5716d3267798ae65a6cf06c950988",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/getBOIMeasurementDictionary.m",
+      "sha256": "c24553aedcc03e804d12031b71d557cb5673974d31e00a8bea642222e74ff1da",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/getBOIReviewedOpticalDefinition.m",
+      "sha256": "677bec50e089d17b6ff168f8d6c04945a0c5c2a75ad8fbececc9b9746f474e5b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/getBOISupportProfile.m",
+      "sha256": "14a716c2b0a3ebe31d737ec4e5ace7006f3059aa271b08a3dc60e26fd7da336e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/getWrapperEmailDestination.m",
+      "sha256": "696f52df8429687d835ce5249fd222601b5b87a75b5a5e03c7c70a6cd500c36c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/getlatestfile.m",
+      "sha256": "5f3a8ec4637f886f07819c6fcbaa8660ec5fe44420d1e8ea216957df963091d4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/groupSurgeRunsIntoSites.m",
+      "sha256": "7a6ef6f0c04a89dc0289dbdc37014af9e3bd6de3efb567bbaf6dd1740ed27093",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/handleWrapperFailure.m",
+      "sha256": "26e357c640fb523b5e2ad74f5b8fea638aad46b650b1b653fa0c713b8bf5f761",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "helpers/hasStatsBehaviourInputs.m",
+      "sha256": "4695a02d868f722b02c4de6d2d0dad91f4a29327bd55506def80d810e6b0b908",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/hex2rgb.m",
+      "sha256": "94cd90396243d6d041c7726cd5edc0a9e22470845fcde0608c789f5633de3f44",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/inferHypoxiaAmyloidAge.m",
+      "sha256": "06bc30b32cbf87dbd0d59c31fcebb18281e8b3103b9ef35129ed3bfd1e20abf2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/initializeEventMetricCells.m",
+      "sha256": "223e4ae63bde401a52f4760a47cc06d325003327f96341368ec309cb27f81612",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/initializeOxygenSinkEventVectors.m",
+      "sha256": "10be9f795ce0ea3bd09ed28f34aa54c527064e98136de58b8d4f9b2459e8866b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/initializeOxygenSurgeEventVectors.m",
+      "sha256": "a1a5bfdcc4cc8b19add958368e1aa514550a1438539b62782d0fac2e8d1338b3",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/initializeStatsRecordingCells.m",
+      "sha256": "cdf48ad2d3eeb77e8bbbb1e2d8937cd3714c511a5fbe940ff42436489502f1f1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/inspectOxygenTiffs.m",
+      "sha256": "75c4f01b295d51e65685db3b72d2060f1923f9ca72e01de65eaecb7ccc1ff4cf",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/isOptionalMetadataValueConfigured.m",
+      "sha256": "8b6d1d7409c8c040102fcf690d5f6728a7eb1535c789c5258b69b6bf09b3a018",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/isRemovedRegion.m",
+      "sha256": "eb23632c9e5da0f01820c599097b9be07ac94574dd4f21054e1d331f3a1a41b5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/isStatsOptionalInputConfigured.m",
+      "sha256": "4e3a2f19c8e13fdbc9e084de60a2a18aa42bf640a73f2ca0e939a4b258da3e71",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/labelLogicalRuns.m",
+      "sha256": "29ae5184ce51c9678850f7c1fcc433955a5c66aeb79b01b5f064e51d602a639d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/linkBOIWindowEventReview.m",
+      "sha256": "006040f4de0837e6e36acf66fbc22c2bb2f2fd9cd2005b364b8b5a8dcd9f9496",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadBOIBoundaryReview.m",
+      "sha256": "2682e7f3ef0398f840ca0c04e7415acaaff3e3603cf4b90618252125c2ad2fd9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadBOIEventReview.m",
+      "sha256": "12b173a959b6f5608cc025bfbff78528878a465e8d9a8f60c8cb25db89c37bbf",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadBOIReferenceJudgments.m",
+      "sha256": "4eb1c677f7c92f9bdcb11b54742828f7be6642d97d45f18d3f26ccc3da665f58",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadBOITemporalReview.m",
+      "sha256": "31318c9cf1a8d7a11b2e9687949fa2c1ec8f332f6a7cbe1aef904116fe691d29",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadBOIWindowReview.m",
+      "sha256": "2418bc760d956bd93e62d487c4a39485990c8320c304bb852d66362c7156044e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadOptionalMatVar.m",
+      "sha256": "f4b036cb0468c5d74bd41fde3bd19f8919a1c69d2628728e268d712a060c4bc8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadOxygenMasterInputs.m",
+      "sha256": "71ccee0f2e5611de27b3af38767a1b8bcf9256be5b9f796558f272683f5a593a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadOxygenStacks.m",
+      "sha256": "0917a7ba096cc359e5ab01098763d00edb8554de20f6dce3ba76716795b7f119",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadRawTiffStack.m",
+      "sha256": "37952bd229d5065a784271e2b20b2b056d80d6d8ddc6626aef20ed56e6e1f9ba",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadRequiredMatVar.m",
+      "sha256": "a5acce213bf6c5fcd89eeb5a78a4a791ab332e5773e15ff95664b4777fe8b44f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsBehaviourMatRow.m",
+      "sha256": "ab3a2ff462fe9c0d7972bf8a6a4b0910aaad89138125902e31be69aa47af3848",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsBehaviourRow.m",
+      "sha256": "f36354115559581b4dfd36aa30b67fa97ac6928a4761b114d6eb3876089aafd1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsMatVars.m",
+      "sha256": "015ace83292d1899e13d517a01036849727e60c16c391c91b4bb9c662772a3b2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsROITraceRow.m",
+      "sha256": "6b6d3e4e861e4dd61de66a330b86352d9fc0d05270fcfa8a7d570c2498addbc2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsRecordingIntoCells.m",
+      "sha256": "185abb3bf076bc603a409218dce660b87ad555ef8c5df5767cb1f891fc01cf99",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsSinkArrayRows.m",
+      "sha256": "ee8848a60ed46a7e22117ef39ebaeaa53c6377d39c2f8f926cf20502a4573454",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsSinkRecordingData.m",
+      "sha256": "b7671f85cd06571ecfe33532f83e5eef2ba257ba99a956f1e50d5ad4e913b912",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsSurgeArrayRows.m",
+      "sha256": "63b2676797ca1451169eefeb0f85c01cf99ec09f649133c5a384d40eb0b75b9e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsSurgeRecordingData.m",
+      "sha256": "3a7d1aaec2e992e241f295c5aebd3879443908727681785a16afe4c1e826d491",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadStatsWhiskingRow.m",
+      "sha256": "68ac4bfe746af83332901962883472d8be03dc9bd70cc525bbc7d2d3a0702728",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadVascularAnnotationMasks.m",
+      "sha256": "0709c0d1256a0457ca91cb29487a47f130bd2cb0b02a482bfc35f947c12c2206",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/loadiOSMasterInputs.m",
+      "sha256": "7d3b74a716ec496c8668bfe3a9e6eb7dfdc224be7fa6483c78e73d54c6815353",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/makeFullRecordingPath.m",
+      "sha256": "ea2317e7c930a654df78bfa65aaa91cdac7bcf2f688bfad492850d869a28ed75",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/makeValidExcelSheetName.m",
+      "sha256": "0451d910132043de49c0637e1661e9ec8f65a008ddff49509a053573a0216f52",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/mergeStructs.m",
+      "sha256": "50c4b63516202aa113ff371cc9bb33c27842afbe996027036231cf05fdcf603c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/mkdirIfMissing.m",
+      "sha256": "960dc2e41be25e996266ea6d184b00c2e894179f50a04b523ea9d7e864b2968e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/movingAverageShrink.m",
+      "sha256": "69ff45d0e15c4607fc65262eaf7f3afd754103aa92c86a56f25bb955a3646c26",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/normalizeToDfof.m",
+      "sha256": "4de662b097b579e96e046bfd21e43cfc0d0cc8099f3298c36a6112a113147dc5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/normalizeToZStat.m",
+      "sha256": "c1aff46c9d8019ceb62c8f025512ac9cc895604c98f11de552f2dd77fa733888",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/optionalWrapperInputColumn.m",
+      "sha256": "1df115ee85590c227e909f1b0f5d283146e4b1f03907bd7a20d0be4794d4c05f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/oxygenEventJoinKeys.m",
+      "sha256": "ed4a05b27f8a569ec65fe390bf9b5a6414dbae506c3ee8de5c678bf02cde9840",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/oxygenFileSHA256.m",
+      "sha256": "de986886495ac40b6366fa520d38f42454320bd1b9430c2f4deca683b07af6ad",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/oxygenPipelineContract.m",
+      "sha256": "a5c394424dab3b5024f7aae162a489722b4ab35c6a00854ae8d9c36fee3bc299",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/parseNumericList.m",
+      "sha256": "72188f6447a1f7d31ad39018229460f8ee07dc8c286a6fce4e92a36bc8260d9f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/peakfinder.m",
+      "sha256": "057926694660d24a9467ce96aa53e8d510f1de9fab4457db87077ad9e8c64f94",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/plotOxygenEventAudit.m",
+      "sha256": "f4ddabfdbd998906ed594ab08e5f7d74c16e54b342ad50194acc8ec008093e2f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/plot_areaerrorbar.m",
+      "sha256": "a30ff1f359c26ddcd69713aeccdc633fc2fdcc39eede01e1c1c5b92862ff17fc",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/prepareStatsBLIExportData.m",
+      "sha256": "cf473d7881af42269954b48faff2047a3f13f72bc1c0deb47aea2383b24bc13e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/prepareStatsBehaviourAnalysisData.m",
+      "sha256": "4910fea3112659612fe2d6c929178441f539b756a1423051ba47b428b49e865e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/prepareStatsExportBundles.m",
+      "sha256": "a898c8b984f99ad06ba3c58b1f8fff685059ca6b13d1627e6faad832cdf5b24e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/prepareStatsPooledTraceExports.m",
+      "sha256": "3456546eff44553902f82db38058eb403e2eeee187f8324f64091a3c0224ef34",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/prepareStatsROITraceFeatures.m",
+      "sha256": "9f26fead3fcaa692bd8aa5a610478169e1ecb60d8fc8882f0a3d42f69e485baa",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/prepareStatsSinkTables.m",
+      "sha256": "24a2ca427bab88c3859d6d78b6959e21ae14aa6a8f64e7243271e93d02081ea6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/prepareStatsSurgeTables.m",
+      "sha256": "566a1fc2446bdb362f934d7024443a22532e4a6dd81039e3f6e1bb6bcc7a2267",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/prepareStatsTraceExportData.m",
+      "sha256": "39b34209f06ba2c723ebb28d392267e3f8216f09b8e6df234cc5b1fe7ad6c320",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/preprocessDetectionStack.m",
+      "sha256": "93ee66a659167b055477c2a9962ef7ced263a2e0f0554bea47cc1c72961d301b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/printWrapperConfiguration.m",
+      "sha256": "dddf31ae53eee9c64cd714499b987bb338e991aa50194485cbf466ee78b11515",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/printWrapperRecordingStatus.m",
+      "sha256": "a13570545d28cdfc3a0c6a009b5daa38d4d43674d92506560fdc9bd88e875eea",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/prioritizeOxygenStatsPreviewRows.m",
+      "sha256": "4c243cb86591aa5e7fb9db5c473011ee5a4013746a627b00715d6faeadb87fca",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/quantifyOxygenSinkEvent.m",
+      "sha256": "f213d5197d05076b4225dbc39fc0ee4e5c88c51b2c9e4a4b6cdbd41229afe131",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/quantifyiOSSinkEvent.m",
+      "sha256": "cf3570114a3f49cdae61f1cd6519d8fabfb1cf31775aa68e155eb7b93d5b9034",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/quantifyiOSSurgeEvent.m",
+      "sha256": "d0fabb030e6e421215512235c306f2c8363f576ce2e9196be90f2beeee5d78d1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/readBOIEventReviewFrame.m",
+      "sha256": "fa6d0120fc0a02968748b48265e2fee282a1240a69cb06bbd6c84a6b0417abf2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/readInputTable.m",
+      "sha256": "b2a09c5524c3af194c0566f7bcc41990001a89f70396cbddbb55ef95cf4706dd",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/reconstructHypoxicEventFootprints.m",
+      "sha256": "a762949bd457fca0b5d3d7de9c66217b703eea56cf09ede5facc0a0a9bf80f92",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/refineSinkRegionsByTraceCorrelation.m",
+      "sha256": "fffde2b9b312271f4f06651d3b2047d15acf40039ad59a8b2fe80664484f5c46",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/refineTrackedSinkCandidates.m",
+      "sha256": "5fd0939026811633cddf8f445311c30d0ac740b0007b9b8de7b4b5a59006502e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/refineTrackedSurgeCandidates.m",
+      "sha256": "1f4a2ed83ba46d07c77c433cea475da3bcdae630a750205460af7a1f43a945da",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/refreshStatsEventMetadata.m",
+      "sha256": "fe04312ec6cdec9f80dda0fded21b1e6c0916c5fea23963cee8c877a2776b853",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/removeShortLogicalEvents.m",
+      "sha256": "cabad5a91611288529731cca129726c20d29df674adee85a8f8a70850db68b7b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/requiredWrapperInputColumns.m",
+      "sha256": "2fc5bf8849415ef121b7297b522ea1a61eb0a95d0b2b2e67aa5099da5214b31a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/resolveBOIAcquisitionMetadata.m",
+      "sha256": "ebaab32ac17a50d2bd1093f60a9d6e8b8927b122fa7b68933dc602d4f1770110",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/resolveBOITissueSupport.m",
+      "sha256": "05378e2971b2e0df7444dcc6d4ef5d5a2262c0e93bc4538001da17ecb9f48243",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/resolveOptionalRecordingFile.m",
+      "sha256": "d697e9f56208ba32dcd4cffa232e0b8e3813d811abb8a2ab0f36e1337613eacb",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/resolveSinkEventTiming.m",
+      "sha256": "692c82f1a9a347f8e6790cdcd71aad770561743f3f6c243ba6b62ca9b2c32bcf",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/resolveWrapperRunChoices.m",
+      "sha256": "f6c1d6fd0f11a63d6b02ba6982672162df733d1ba9f53af2e9dd1ce790addcd0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/runHypoxiaAmyloidCohortSummary.m",
+      "sha256": "0d03ca16ac1f541e973657011188bac57baf9f696ce15bc99b5280da3926fb99",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/runHypoxiaAmyloidRecordingAnalysis.m",
+      "sha256": "eb0787d7616f6e01cf254abec16c45bb21b0b957a9c4887843f0800a95288411",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/runLegacyAnalysisScript.m",
+      "sha256": "232b664046c5f4f5d6a0c41864a22fefdcc4157420cd45d8af95d3ec13cd1f24",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/runOxygenDynamicsBehaviour.m",
+      "sha256": "dc3e4f9eefb923143ecfd057d140d409bd148a578f7771a304e24542b3a4a4d1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/runOxygenDynamicsMaster.m",
+      "sha256": "eb41bd832d82c5b7518fd0aac11cf2f6105cd2d7dc85643e1a78f5514d82770e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/runOxygenDynamicsTiffout.m",
+      "sha256": "0977843a767e27c3137c3f45fe45a7832486ebaa1b5d2f35936e53947d9e65ab",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/runiOSDynamicsMaster.m",
+      "sha256": "8efef238cbb25186481b1d5ff621f86d7c65c6087b18254e127568a189e4d2fe",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/runiOSTiffout.m",
+      "sha256": "d779b820bd0b9f273bbdb21c237898959a71e893d2e96013f37daf76a60d7557",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/safeCellMean.m",
+      "sha256": "55ffa4c548e7d8e74f90fdbd5c179946711a82b39bed41a40036107d4d2115b3",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/safeCoeffVariation.m",
+      "sha256": "977875357bfb61a436b9a1327178f7bb1ab1e153fc9c03a484a0d0902b687d28",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/safeCorr.m",
+      "sha256": "7a2c82d26abe6b2679ccf7f65e9a413d0d656c88f35e4d0c153419de40661466",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/safeCorrMatrix.m",
+      "sha256": "04b2e14f0894b8021c0dbc41a341e46182579076dc259a96b7fd6d5f3a5ff8aa",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/safeMat2Gray.m",
+      "sha256": "c3c51a80e38bede0a3c3cb02cb778749c2ef36214c24bcbd0cb0ed0fda1ce619",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/safeShannonEntropy.m",
+      "sha256": "1eac57a6312ff8b1dc2b720d7b79f7da75055af079e2a58daddf221c2bd0febc",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/safeZScore.m",
+      "sha256": "848c2285fb388ee6e845694701a7d8315a18f88d37fd6b459a274cb70bb480ab",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/saveBOIBoundaryReview.m",
+      "sha256": "e32f5bdccd3e993e5b90da49a5a09713f87e7ca7cf2b5e27f3bc14345e6c855f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/saveFailureLog.m",
+      "sha256": "3e3a61476f8a16cad7633c6d00ebd5d5c03082feca5cef990fa0404243def920",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/saveMasterImageStacks.m",
+      "sha256": "cc6a2296a40cde1fe524746eabebf9cd415abfe16bc5b65e4b3acbeaa8f50140",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/saveOxygenMasterOutputs.m",
+      "sha256": "ce1d34ad2dc5a7afe1b19f3945eaf2214e3e0440c1cd69543d806eab6d845a4b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/saveOxygenTiffoutStacks.m",
+      "sha256": "2b03e0177fc197488d2f6277bef3e0d2691a27a9a1b04db9934fb54203162590",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/saveStatsCoreTables.m",
+      "sha256": "cfde2c71e126c9b6363e18f5381536dcd2e31bbc6dd42c377e492be162103886",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/saveStatsDataOutput.m",
+      "sha256": "5c7b094ce2ba99af5d04ff259b27689ecfef48fc0947139d838e4860d236e0fd",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/saveiOSMasterOutputs.m",
+      "sha256": "aa1c8765cfe283db5125a1e40efaae423cf8d9c58f242ca3767be20fffe786d1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/saveiOSTiffoutStacks.m",
+      "sha256": "3138b5613904f3b4872c013c949626d41875a765343f7ca6e41a844907d92368",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/scaleStackToUint16.m",
+      "sha256": "d5ca8473c14962b539f4ef5e1df0c3cd0f14bb8614b956ad49b9dc4b4a32b961",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/scaleStackToUint8.m",
+      "sha256": "bb5562b6dd9149a3f7ad7bd6672dfcc3d402645b20c41862cf772137cf8c3f45",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/selectStatsBehaviourTimeWindows.m",
+      "sha256": "a693095ee4f22b07e8a278fb138e54ccf6542724810778eba5286694fcee6166",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/selectStatsMatFile.m",
+      "sha256": "f781c56611027b703e04f147121e555aa4205075d710cfed05ad93916b140926",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/selectStatsOutputFolder.m",
+      "sha256": "56a2f9d8e9b4bfdc7ac453caf74dba88c47979138e9ad4ac2a742545f96cb472",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/selectStatsSinkSummaryColumns.m",
+      "sha256": "f3c4889c76662ed868f19e874da01528aec4178e7f7012406463d3bfcade4fc6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/selectStatsSurgeSummaryColumns.m",
+      "sha256": "0966ed2107bc4409d48a7fc44643fff57d28737f7ab3fc1bab20ff9c1b143d6a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/sendolmail.m",
+      "sha256": "053697c7cd80a057ab39ce980ba4b12ff1fbe71b08cf14d1b048da539dabaaf8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/setOxygenSinkEventVectorRow.m",
+      "sha256": "2ae476d7e9f83d341d6e2cfb074d3040e431c9f6ec383e0fd07774cc9c7e8f47",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/setOxygenSurgeEventVectorRow.m",
+      "sha256": "785573237294cb19236ffc06461a5a38e8a4dc82326a5dd76f35ad7f7f8cf385",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/shouldRunOutputStep.m",
+      "sha256": "213b2d8233cd7e48dc9b551deae518f333ba2c60ce8a24c58d373b78e41e16fa",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/statsLoadIssuesToTable.m",
+      "sha256": "f924ee4f56469991aabbe754d9723afc7358a0121ca9cfeb3017e1c6e6b4b0eb",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/statsLoadSummaryToTable.m",
+      "sha256": "09544ee22d798fd75f368a2dc5469bd155b13501dd65a747c1f504a3333b9e69",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/statsRecordingsToTable.m",
+      "sha256": "ba5c33ea14ac215c966787c7bddd002e880ce16feffd962ad5c58e2446d30b07",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/storeStatsSinkRecordingData.m",
+      "sha256": "80221cb966e233b16d12e88c78a398f48da7a46a20cda1a1e1833c25e84ae025",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/storeStatsSurgeRecordingData.m",
+      "sha256": "67d122c119afc54197ae710cb44382f0339b88774ebb0043f4072e11fe3cd0d4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/summarizeHypoxiaAmyloidProperties.m",
+      "sha256": "fed0b1f7bec1ae4e15a54e811d834cfa6741d81ab23e657046427944f8ddd340",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/summarizeOxygenMouseMetrics.m",
+      "sha256": "be5e4eaeaf8e0a314ec80abd7bbe791fb7040b9ac7de44381c09cb1f367550e5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/summarizeStatsGroupingLevels.m",
+      "sha256": "dd086c789c8851d9074d786b7eb945b4386836bcc4c8da804399125744d47725",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/surgeContactMetadataFields.m",
+      "sha256": "842488e03928413422546e733e67f1baf6aa07738230e68eb4ba104bf40efff5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/textSha256.m",
+      "sha256": "a27790deb214adf26990e08d68c4fd6dd24e7cead3a4695b83920e3fd2470e14",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/trackSinkCandidates.m",
+      "sha256": "6b832e503847baf5e8397eccbb650573f956bb5915fd231694f377ebb1eabdee",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/trackSurgeCandidates.m",
+      "sha256": "8c592aded6a75d99c0fe20b7d81c471065c361906abe5e9af0f71d90d8246f42",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/trackiOSSurgeCandidates.m",
+      "sha256": "b8b83c791bdaadd2891b3083ededa1a437eae03f155ce69f9d8116c3ee7a9a7e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/uniqueStrCell.m",
+      "sha256": "3259aa2f9e2b340fd5a6f33f04e5ad25e6b7d547d0e4d09d390e80cdcbefc696",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/unpackWrapperInputTable.m",
+      "sha256": "44eace6bf5068d4b4e7bb8c623b4781b012b88c719c7dfa028c334331a67d366",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/updateWrapperRecordingInfo.m",
+      "sha256": "17bb0f24fc8548883fff93e3bcbb4c4a529b0ee0c25de83918c94c74ba67564c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/upgradeStatsAnalysisTables.m",
+      "sha256": "ea4ae9f846bdd5ed9d80fff5f41f111405eb2b36673e184795b6ac2a18ac83c9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateBOIBoundaryAnnotation.m",
+      "sha256": "a79d2513f4cdf698d1a35fa23f0fd56bb23bdcb83d25b9a3718d01878f586bbc",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateBOIDetectionMask.m",
+      "sha256": "fc3d08daabb41fbc148c7a172b54216008a74625817b43d208e027f8f2f5976f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateBOINativeMaskSource.m",
+      "sha256": "a8486f866bb3efcc4e5bee2d0d31255d73f4ead06bbefc76f8bf1ff625256573",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateBOINativeSupport.m",
+      "sha256": "1efa7fb21dc9aa196800d74a4e689dcb9beddbb2f779306d8b0187b119c9bab0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateBOISavedDetectionSupport.m",
+      "sha256": "b860a8d051816588ad13c496f3a0c42ed5e52deabf905424e476fea16aef4aea",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateInputTableColumns.m",
+      "sha256": "32a9c1dc75e760f60c8083052f8111b6dc468d2863087c9096249dd678721cac",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateOxygenAnalysisCalibration.m",
+      "sha256": "f07590e2a9359edc3884fa4f88eb91df9ce16eb6159f922b7519ece624a51382",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateOxygenPipelineContract.m",
+      "sha256": "d8deddf2db51e95bf498ba9074bdf1739fa72e5b44799533a5fe73a369ca6417",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateOxygenRecording.m",
+      "sha256": "839ae2edb1089b48340aa5feb1e99fae7db3486bf1e1f386d2a81f193f10d6f0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateOxygenSourceFiles.m",
+      "sha256": "39c093ce16c814b56821ea4f4b9e8bce21fd9bec877353595d56f8473d81858f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/validateRecordingPaths.m",
+      "sha256": "85249032aba8ed71af27e660b55e1ddc595cbbb19e6773cb34433ad5c3b43fe4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/vertcatCellTables.m",
+      "sha256": "576466867d8a685c125f856e70274fc07d43733103c5243c739bf7ce12f489a7",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/warnStatsLoadedDataIssues.m",
+      "sha256": "4879365d80b6b26eaa29a87995c00c47a1695c4fdefc90c0a2a4d07c3b37c2d9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeAlignedSinkTraceSheets.m",
+      "sha256": "59e8cb057a2e4b8b61794763ced9902f27ddbaf4f82dc6ef893ea50266d5f2d1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeBOIEventInspection.m",
+      "sha256": "f3828c4909d616be6c5b3e9baa2b36dfda240d0fb16e38fe071bf6417f640d2c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeBOIMeasurementDictionary.m",
+      "sha256": "03b27fc243764f768b8c720747b6c26ac9555cc0528a66986a052725c6a4deea",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeBOIRecordingInputAudit.m",
+      "sha256": "2983bbc1da544a25135b2447ead2c78a0446e06c919af32d63c2bc743c6d4be7",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeBOIRunJSON.m",
+      "sha256": "952801b8fe77637e6bbcf26d0038ccca4a57420746e78969633bc195e449d961",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeHypoxicBurdenWorkbookSheets.m",
+      "sha256": "b232d166034fdb1b93a60d2e6ba988d4e8166ca26606ba817d372340fa8f6047",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeOptionalStatsSheets.m",
+      "sha256": "b0edf6634588879c2641abfd889885e2ea02b114dbd0f7d7dbd944c7a9cdee8c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsAcceptanceSheet.m",
+      "sha256": "e753eca21979685fd7a4f3a2edec33673bed9710255c43bf09004cc85cb89a82",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsAnalysisWorkbookOutputs.m",
+      "sha256": "db02c6d3e08c2498ed3af807b923037e868fb4db8826fdd704184d06a686b873",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsBinnedTraceSheets.m",
+      "sha256": "29178510a2ace0b764b1f4e85255ca975971f2affdac702e298aa8587a203163",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsEventTables.m",
+      "sha256": "11b48df90acbfd53b0f6244f3f7556c3341509d711e12f95665db287a68d18d5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsGroupedTables.m",
+      "sha256": "e6f290e218b1e1adb88bd8d3147bbd35f77aae7e2dc9a5c57ef78d3bbccb3086",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsMetricBasisSheet.m",
+      "sha256": "8c86f33f809f97a70de1e585d0adef3ccfdf08e3c54c77dbbfd200f83dbefa0c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsMetricDefinitionsSheet.m",
+      "sha256": "9bd2e911a6b5ea3662018871bcf9c9164a4405435a95c21926eccbf933f14cc9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsMetricSheets.m",
+      "sha256": "d123508041a3cd07a1fae47f4a350d34bb9551331ca55b50a074e4bdf12b39b9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsMetricWorkbookSheets.m",
+      "sha256": "42924d8cf8827f7b65d21def8779696661ea2b1f0faa267918bc9af76a3acaa5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsNormalizationGuideSheet.m",
+      "sha256": "f30cb3990ac5e76ceb3da0d2510c7adb5be83654bb79b91004947f20a52cb939",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsPooledTraceSheets.m",
+      "sha256": "4543af1fdd47eb6bcd60e53211fa4670f113d2160eb87460304c6b64a6193b8d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsPuffTraceFigures.m",
+      "sha256": "b6c6aefc9a86941e3dc51e94a4dc46e27b000da3434332017ad9c5ad08b0ae87",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/writeStatsRunSummarySheets.m",
+      "sha256": "5f16454f385b7b7fe9f9eec3925a00c7876d3247b67a8a3a79aae858aab58876",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "helpers/xlscol.m",
+      "sha256": "e9874f56d17e8a8c7e2a38f43017af267e0123f56a896c4c4d2edf22cca405d6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "iOSDynamics_Master.m",
+      "sha256": "cb43e505963b18daa1c9cfe5f991ff89c725c5d797e2c74e762ae3892e88bcab",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "iOSDynamics_Wrapper.m",
+      "sha256": "ecba919c72fdbc0889c582849cefc990ca30414dc37b7610b0ac4777033da730",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "iOS_Tiffout.m",
+      "sha256": "76cc7e80ce8bf4f591de0cde03266768a4ed6b749614d8c1dbb6de56a92da41f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "listOxygenRegressionBaselines.m",
+      "sha256": "32660cb3b679f4e53cb363d74f86a3e852d04d22365cd7b07fa3ba12d92b3069",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "loadBOIG4EvidenceBundle.m",
+      "sha256": "2a1966c7740e615be00b24edd6a6860f175a151b8c1e677d81f17b0446d36ea2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "loadBOIRecordingRun.m",
+      "sha256": "b575c852112aaac854ac56fb12c632b604102f859b0932e5dafd2fbbeed03109",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "openBOIEventReview.m",
+      "sha256": "f9879a3070ce1ed8fa20091c36f81245d6717695aa39aa66e16bd14b096617a3",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "openBOIG4EvidenceBundle.m",
+      "sha256": "40523e42eba877dc3f4ec0d1353f115227af2de88a3a0abdb0ae8d23a128b911",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "openBOIRecordingWorkflow.m",
+      "sha256": "533e8ad288ed973e929994a87796b94598264a4bc211bbc53e39b1434bfb1e2c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "openBOITemporalContext.m",
+      "sha256": "9037cd28aa29b4a0d577184531a48a8f06532e0c355fecffcab936a858397f3d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "openBOIWindowReview.m",
+      "sha256": "87c1a7425773b31810e9368fc138cf6e8412d119ce1e634beac11bd054ca23bf",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "prepareBOIRecordingRequest.m",
+      "sha256": "69f76631da86c41900895c25933449905ef575d3986ea9545860d7337da451f0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "refreshAcceptedOxygenRegressionBaseline.m",
+      "sha256": "57e2b9c677b5550e987846b466ca73c744a83fbc5dc0bcd8ce63a86dc7d7d018",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "restoreOxygenRegressionBaseline.m",
+      "sha256": "2c32fd4b73b8380b8eb4506e90a27561632d1f04b7fe3baf8a8941ea7d8c9659",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "reviewBOIRecordingInput.m",
+      "sha256": "79bc9c6beb5b6cd283f45b63eecf32f83a5228c0fb72bb0bcbc7285a65cf215b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "reviewBOITissueSupport.m",
+      "sha256": "6728d5662042929153b4885b327a62ef4d943945a6d622db15e5de17e56a2ef9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "reviewLatestStatsAcceptance.m",
+      "sha256": "ae324010b25037c6874c0322ac32b5e15e658191b0023e7a26e9ed0fa8fa2b7e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "runBOIRecordingWorkflow.m",
+      "sha256": "4350e4a1b99eeae393073f715e31b860cf5e1e36b30a1a18827be874cf03105d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "runBOISoftwareChecks.m",
+      "sha256": "06ece113133594666b595d53535185531053ef38d3f0071f4d99e81f72b346fa",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "runOxygenDynamicsStats.m",
+      "sha256": "059dffba0725ab05cc220830ae5ac88dc22e77daf8b7f8832562f39c5a737691",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "runOxygenDynamicsVascularAnalysis.m",
+      "sha256": "6ea591b0efeea59a0e1ae7d5709653d6457db5283e6972f3b9dd454394aad932",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "runOxygenDynamicsVascularEventAnalysis.m",
+      "sha256": "effdf96abd04c2ab38b22c8f63fb852203d5488a0fcf4bb756a3032d22212064",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "runOxygenPipelineSmokeTest.m",
+      "sha256": "cd65a789b409fa2c70e919e7b333d77bc84aca6388661ab41588a319f3205b01",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "runOxygenPipelineVerificationReport.m",
+      "sha256": "645ae1e1833272753f738303ce95b7b4649e90f32b34011c7975cacf24e629d1",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "runOxygenRegressionCheck.m",
+      "sha256": "efc8faad02af20d8fc946bc3219450d0dbd09ec7b73a36e3f1661eb3094e8eb9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "runOxygenRegressionTest.m",
+      "sha256": "5b6984d9aacc9bc14c5de077912a05035d8447e871f6111b8fa700cb3d0cf59e",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "runOxygenSummaryFigures.m",
+      "sha256": "4eb03d00b84b24153bfb90c06c6bbe8a40d540da708947508bafb39741f4e2fb",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "runRepositoryChecks.m",
+      "sha256": "f179364bd0784941bd5209499ec19b743bb314505d33ba515cf550fca25fa890",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "setupOxygenDynamicsPath.m",
+      "sha256": "a6fd653363206dc429478930996855ac2c4d4a45ccd9c7baa210bfe2e7f2dd2d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "testHypoxiaAmyloidAnalysis.m",
+      "sha256": "8b06c35121d7906ffbbda83997393c715c7178e514ad83e691219d53155eab51",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/analyzeSurgeAmplitudeCounterfactual.m",
+      "sha256": "9246cabb6ef062fa7ffbb0ba51d200dde2555eae2008280e17b2036d0ba96f74",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/assessSurgeAmplitudeEligibility.m",
+      "sha256": "6cf4d479ad95c69d02d77a556267087d3223d0c46455d15523b9dcd95d3b92df",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/assessSurgeExpandedPeak.m",
+      "sha256": "5b9933e24286d294239d915d3e9ef46cabfdf23992171dfef8a47293687d2523",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditBOISavedMeasurementSupport.m",
+      "sha256": "f08c49203fc1b4ffb38caf424552c80702f094582bdf1f154c284a2ebf396439",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditKnownSignalPilot.m",
+      "sha256": "1ffbba669c20a7e2dc01d2b90b5185bdaac34fe99886731bfecc79f13d69e1f4",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditSmoothSignalOverlaps.m",
+      "sha256": "717bb7732da260e2b689427d12d3ce875319446fb44cdf43879c1d5c3e1f8b59",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditSurgeCandidateEvidence.m",
+      "sha256": "1918da26d3f35fac14c47f739b214d8d378f36f274e044633c1c5b8472549a6c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditSurgeContactLedger.m",
+      "sha256": "e8ed8e5637ff4b40764155da5909ed9ce7a435a7073cc02b895167766c792357",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditSurgeFootprintContributions.m",
+      "sha256": "394af450901dbfce0a113d019caf9abb8e9de2eefa87bec6a3e9a2c7d59dff71",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditSurgeFullMovieMeasurement.m",
+      "sha256": "2e021b57434c7bc7b7e8ab79099ea7e5190b6551fcdddef5903b4e1eb25632bf",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditSurgePhysicalTracking.m",
+      "sha256": "f5ad393a6a2a81322857ec251f1e2d862a1c9b0301b85fcba7a53c57c8220377",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditSurgeShapeSupportScores.m",
+      "sha256": "47813bc18d7d000d27b00fc270c9c6b3f47d2824dc5c3b38426ffaf0ec232aa5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditSurgeTrackingMotion.m",
+      "sha256": "0e56d420d718afed7487b7e5f9e0a157ff2431317e34ed063922a3335e265aae",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/auditSurgeTrackingOutputs.m",
+      "sha256": "12bf8c3216df78cdb7d453ed163b36fee6f1f95d6e67591282a167e2f2cfe82d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/compareLocalTimingReference.m",
+      "sha256": "eabeec8c0811d26f9d71e25e11f9b0e0fbdf803ed42a0901b67bf8eeec653bb0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/compareNativeEventWindows.m",
+      "sha256": "fbc1df0de8293e3abf056b3f9a09a2115a111e4e18cc210c156b8ab6c3323eff",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/compareSurgeBranchPolicy.m",
+      "sha256": "61a499fac52210dec53a066d260f05ad5c005c17e9d27c18ae0da9057eb929b0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/compareSurgeContinuityReference.m",
+      "sha256": "b517957baf51f8183d922a4fd74181c0d7e354a2c3be057b3573c96457438907",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/compareSurgeTrackingReference.m",
+      "sha256": "1490854add35fe6e55c9683adb2d7577080311a5c324955bc3b0d536beaed731",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/compare_known_signal_detectors.py",
+      "sha256": "0aa0bc981c7f5ca12b487502208b940d9b2120e48baab72f0e109c5f30a0e851",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/compare_known_signal_scopes.py",
+      "sha256": "2155c6cf1e6278d76727bfaf1ceb525bb08a075d80a3332e0b13b16564fca423",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/convertDandiReferenceStack.m",
+      "sha256": "703c6a6b5aff6fc985a2f925fba7ac61d62bf0dac9131f780b16ee41aa796cde",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/createSurgeMovieRecipe.m",
+      "sha256": "8f432bf6af35839538c535d4a91983d085677599bbb6d0730391f82cb13d82e7",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/estimateSurgeLocalOnset.m",
+      "sha256": "7e8bc3c23ed213d25e9c91dd94a48d2ef4b243ed889bf7c4a117acdd34a7c3a0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/estimateSurgePulseOnset.m",
+      "sha256": "fd6cf0570b2eecd4917fc9a8d87b1d3b9bce42211ce3e79aebfd21144204c3b0",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/inspectDandiReferenceResults.m",
+      "sha256": "2381afed695f082911a36af6246776064647793e75b00424a5dd70f526556d9f",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/inspectRetainedSinkRuns.m",
+      "sha256": "169dcd023c11f5f2ccf0c2301b28b7c37ff11f1701d1e798ab8b8a4db5fec1d8",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/inventoryHPCompartmentInputs.py",
+      "sha256": "d108c67477af11343e84fd8342ef0b213121b1f225f45a6c81f1a3d1cd7a217a",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/prepareAdditionalOnsetBackgrounds.m",
+      "sha256": "833f6a992232b9956284dba2492c7b2b2dead7a2a83162d950dee877e41cc4a5",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/reviewHPCachedReferenceEvidence.py",
+      "sha256": "170a4ca4e596f41b245a4d48c23df38b93b787a9851dab4570f314505477e579",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runBOIBaselineTimingChallenge.m",
+      "sha256": "f3f41171225e0f181ad6f553e4f7f0dae84160fae488d43bd735e7c5ea26c0ca",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runBOIHPInputPreflight.m",
+      "sha256": "9173a975188bed9d61da3c12cdb3efa7943d5aae958b09212d4fe0251908b23e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runBOIHPWorkflow.m",
+      "sha256": "c2eeab8bc6a8287dcf02dc81a9c14b606966ab81636660ac8e18cbf274cf2585",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runBOIInputContractVerification.m",
+      "sha256": "fdb9f29853841b6d49b5ddbe324e9ac3f05b7272e118ca1896cc9190aaa58f5d",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runBOIStrictROIVerification.m",
+      "sha256": "03f154e4cff01fe56a2ab0cd8e57a48213bc915eaef9ee046d60044e1add12bb",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runBOITissueSupportVerification.m",
+      "sha256": "760e2e90eb808b4986197e7600e090b44395184c06a938681b0f04feb11fce65",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runBOIWorkflowWalkthrough.m",
+      "sha256": "e54081c66590edca09196f96ba0427f0d2f08ff279efca080138e618d0e2e0d8",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runDandiReference.m",
+      "sha256": "598207bbb135f5e258b016c5512bd1dbb6619f0982e6e206b6dc2a525ede034c",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runDandiReferenceSet.m",
+      "sha256": "0a62387e532088be3a191bcfdd4bdf906bd4d0702da91742d94b78f2ca358833",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runDandiSignalAudit.m",
+      "sha256": "beaa248c329ea46614a5e13b165ca17177d7028eea97edc32ac73d0e473fb3d2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runExistingAnalysisIntegration.m",
+      "sha256": "d035046d1127685b40726ad90e8d001ae701d21a921a9190766edab940a803ad",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runG4SavedEvidenceCheck.m",
+      "sha256": "9cef814a1abc4d71c538cd410490c0923a75d20861e2e81bea5e836b2ffc4b6d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runKnownSignalPilot.m",
+      "sha256": "e869131bc12d3d018045b1cce4a138ce643463be9ebed495512ebcdb61f6a466",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSmoothSignalValidation.m",
+      "sha256": "d9389f563e8025da800396180c63010912d4ba4b7a095a70a5eea175b1053873",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSourceAmplitudeRecheck.m",
+      "sha256": "52c0f19170ad9c0529b95916c7816c69bab37ded503776c3db1b0ba684edfe9c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runSurgeAmplitudeEligibilityAudit.m",
+      "sha256": "0b88108d2312e8bbc8501421da7c3ea310b3f99ea897b7aee37a68d41e0b5fc6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runSurgeAmplitudeSupportValidation.m",
+      "sha256": "b1c506440f3fba0676843acf3f1d688b4ffe629c6a7871e9a96ae1da8cb6ecc6",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgeBranchReplay.m",
+      "sha256": "bc1b980f58a8beaf4cdcdf7b682c213b6ebaefaf3d768b8ec789f9e7cd0f0959",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgeContactValidation.m",
+      "sha256": "68b6a0c1fe24e3400657314010fd913ea31d6e27d8c8d84cfbfdb78317621aa0",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgeContinuitySweep.m",
+      "sha256": "62eaa8737f673bc16c48713558aa4f6b099d3e7a807835e383fdbba41233b1e2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runSurgeExpandedPeakAudit.m",
+      "sha256": "cab449d1cf3ad1b8e39293257a2a2523f12ac2a9805087d78a527e8ff103bd4c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/runSurgeFullMovieMeasurement.m",
+      "sha256": "3a7ca8e4c56f3fae6fd814d4cc35d6e20bf7a589659e2b35a8214e4b2bbc43f8",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgeLocalOnsetValidation.m",
+      "sha256": "363429219c36fd43e9317e9f68ecee60a89502bee139e94c704ef75911ec2818",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgeModelSelectionValidation.m",
+      "sha256": "23489c0f93059ee544d32638da93a6af76ec12d92ca9256cc21eacdee39c0530",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgeOnsetTracePanel.m",
+      "sha256": "f116c6cfefa43b7d607b43d91826dbc93e193fb5aaf022882965131e98af5c32",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgePulseOnsetPanel.m",
+      "sha256": "4fd3eeb5584753ce3e3c53d0dcff83178de046b57d6f764750a18bee8d965a5a",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgeSeparationValidation.m",
+      "sha256": "a174c13b6ff1585926593c1c11a415b66a996302bccaaa6d496bfe804fdeee28",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgeShapeEvidenceValidation.m",
+      "sha256": "0ab5e6fef0dfca57f4fbafea54b0db48e52fc3581822f307bc758a1df392b943",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/runSurgeTrackingValidation.m",
+      "sha256": "113c1e4f6be5c4c15042aca983797527f9eeb422db2aafcbc64805d7f5ccccb6",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/scoreSurgeShapeSupport.m",
+      "sha256": "55255ad3a9296d191e4cd90bd56770130c1b0a0b89953e9135f1afa980eb37bd",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/selectSurgeOnsetModel.m",
+      "sha256": "3d00e03c14a8464d1f4090bd51c65f2244e0993f16d464f6e8915266fac988e6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/separateSurgeCandidateContacts.m",
+      "sha256": "437a1e3f9ab196b1c05ee5ed28cee4ffe3c365cf2b2aa219b2a8594de3a3e743",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/summarizeSurgeCandidateTransitions.m",
+      "sha256": "e2df6f6eea7305535a6457a4dc51dbc5d21d0aa6b4c567eed56914bb8c1814cc",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/summarize_audit_timing.py",
+      "sha256": "54cf89d75b53182f3a7d0b7b084a3b23557364216f5734ab39df21686be980f7",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/surgeEvidenceTruthMask.m",
+      "sha256": "8a553a2a4e5188cb742fc3353a3e5fa19efc7989ecd970b3a42422692f3d14bb",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/surgePersistentSupport.m",
+      "sha256": "e9c31f1be2ad13de2d3acfb5533ccbd7592cd6f60ae9de3d5373defad1955e7d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/surgeSeparationRecipe.m",
+      "sha256": "cefe7a81cb81a1a1f6c9eac3f857e2ffb7f87b986db67dd6d7087ceef73f2d8d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/surgeTracePanelEnvelope.m",
+      "sha256": "a50b76adbd874fdbceda62455cdd89a0eab83d6fdea1deb5dfd495bcd3673662",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/surgeUnseenEnvelope.m",
+      "sha256": "839cf8815e48282bb41591b86306eb120f176ebbaeb60378e2c1c49a98765fb1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/sweepLocalSinkTiming.m",
+      "sha256": "c92d44841e997a0561f9f8f480a4538388b0c42ea4fda7e5f55f274a6c5c0827",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testAnalysisCorrections.m",
+      "sha256": "e9aa998f30ffa8fc6ff94d836eafb64525c05230ed8bd8e6e17029422e408874",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOIConnectedReview.m",
+      "sha256": "87497f8ebd15d759eede86a6838beb07322969e9991a5e65d3d3d0b00bea26b5",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOIEventReview.m",
+      "sha256": "82b187cad2ebe1a3eceb162c19408b08f49e0b03cd1f3c5c795403c3a049c65d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOIImportReview.m",
+      "sha256": "5c246b5fe634100153be52f001e7d128e702272caa5d5959214041c47e9e8f03",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOIRecordingInputContract.m",
+      "sha256": "c3d6ad322c251d4385609eb0aad6d692d4cee23fa12698531ea0c1214822ed47",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOIRecordingWorkflow.m",
+      "sha256": "1f5fedbdd89ad1d77055ce73ad88b8bc63a24a01112c18c44239b922b4ce0a34",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOIReviewedOptical.m",
+      "sha256": "e096f1749146637d7b0e16f9a38c32b5aff508b463544aa3ac6fdeeb8637e8ff",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOISavedMeasurementSupport.m",
+      "sha256": "f4ab4b14154530de795615cffd64a921d5eb6206f05f2ea9d6c240a8d7b87f8a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOIStrictROISupport.m",
+      "sha256": "0ac17ad73fe49734fdf9c4034fe17b2192360bfbe5adca27d456353b1512a5a2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOISurgeWindows.m",
+      "sha256": "803dec0f3b6518bd6e681093a45fc9fc47e8f9b409b485258b0b785c3da94714",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOITemporalContext.m",
+      "sha256": "efeb7003c7f55f30543e67da6587b2d2e2998e76f05cb4d4124db7aebf844108",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOITissueSupport.m",
+      "sha256": "6f2cbb490f58939d4b20744e243d2a3a714e5ee1e93e9157eb123f4ba93783a6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testBOIWindowReview.m",
+      "sha256": "67e55ba091c86605e642d65901816f299b475f08e6b5b6b496d0b8824322c766",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testDandiConversion.m",
+      "sha256": "3a9b35911789c3ed7312267e249127fe8de90784d5c7cd4f6a69c07e964664b1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testEventAmplitudeAudit.m",
+      "sha256": "024f59a14ba39dc4379747af134cd87f421f30aa3070c85d00d283f68f3dcdb6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testLocalSinkTiming.m",
+      "sha256": "bf195db9d1c94786031f929df180e984adbd0fac7c733c650747948d9e37603d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testMeasurementAvailability.m",
+      "sha256": "5b8092b7df5ef026ad2736520f997507a08e3f2807340f79ea6a37405c7a7655",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testPipelineContract.m",
+      "sha256": "ca9e1e16c71309336cf749a5d2bea217365aed2ed106f1b2b4eb868780ccbf03",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testReviewCorrections.m",
+      "sha256": "d73c4748d651491c31bf85608450423378a3a8f0cd220a4f45b3866a5a1063e9",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSinkRecurrence.m",
+      "sha256": "bbc72adce7dca65e0d15030056876c89ae136397914212210eb34e54e0351d92",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeAmplitudeCounterfactual.m",
+      "sha256": "c73c74a1e11786b7161657be750e73d5db974d5d9bb353b52bbba4d80422c7f6",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeAmplitudeEligibility.m",
+      "sha256": "50dfe00dcef33d14352f7029e60bb8c9fe8e0a6eb5144632b7cfeece5e74065e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeBranchPolicy.m",
+      "sha256": "0dc58afa1df489627b9ad9dbba6e1268c0d4aabd10b26ce0c0bbbed5e79b1bcb",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeCandidateEvidence.m",
+      "sha256": "4194e494185c93946bb60571c1df84ed7e414e76b32bc61695d028beadbe895e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeContactReview.m",
+      "sha256": "1e93a45647eade46ad816ce4087972643f913a437b3a504c3e3b9c041ddabd19",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeContactSeparation.m",
+      "sha256": "115d10fa51784f37f255f3f2f765a0a214aa1c5d42b10ff9e9d91c7afa059485",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeContinuity.m",
+      "sha256": "a9846e1fb22c64d62bcfb5e4a745f19ffc7141f8e38d8c53465ce33db71a0915",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeCorrections.m",
+      "sha256": "5ae63b0db39b69373e62227e02da49735b52b369c169ecfd22c811a962b35b3b",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeExpandedPeak.m",
+      "sha256": "36f653c9236cd9849eb936602d70fae830ff1f05f53390da7472c0dc24cd9bf1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeLocalOnset.m",
+      "sha256": "7f720600dc3628a27c907fabad4f9096987a5002c741077d41ac7074d38804ad",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeMovieRecipe.m",
+      "sha256": "740162d8bcbe780438dee721b85b5601d6c76572bbd26b26edb7afd088471c14",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeOnsetModelSelection.m",
+      "sha256": "83651b92bfe82ed5f36d96673eb1848616c820915c15623ebb3c4c9f4769e353",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeOnsetTracePanel.m",
+      "sha256": "cab45fe1895a41fa237fff5c95b4d2f523259855bc797f6263ef5ff1c2f9fe24",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgePulseOnset.m",
+      "sha256": "1c8d1672c87e7da5d6a8d64e6ee9548e6e37cb8ab97352034ba30295314e5312",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeSpatialTracking.m",
+      "sha256": "d1da8e6c4ca6448e2d2aaf4e6387b22f6ef79b07d872d6f4326b40c662577d10",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testSurgeUnseenEnvelope.m",
+      "sha256": "7cb24ad484d59bf2eb0210b5ad6866a0086b05c6179c6b98fa11036f854bdbea",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_amplitude_eligibility.py",
+      "sha256": "7498ec458d8107b23818d3dfec3513f0cfe4e8ec2600c5e8b9c2d7b1db853fcf",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_amplitude_support.py",
+      "sha256": "d2e275b4d333f63b861520b323e4c27cceb56f6e1511f13eda25b65c1a5cd4cb",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_branch_replay.py",
+      "sha256": "57f6ec70f9e7ac01d885ae372e3ec9fe4fc6fdc2828242d716b6deb792ec03eb",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_expanded_peak.py",
+      "sha256": "57526ff79d830f0cd5603cb2909d58077e8d01d4870c11b86c40dac20c770d68",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_full_movie.py",
+      "sha256": "f07efe45293e6c29e77616000f57fad5d9b359f750a9656468cf54a008cbd33a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_local_onset.py",
+      "sha256": "5a28de01a8d60769684492bbff1b193dd3c2aff14619d0c50497e204adffd0e2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_model_selection.py",
+      "sha256": "796555393358cb5e79bec1f454114e973c4aa62c79e2969cbf778ec53f0a2e6d",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_onset_trace_panel.py",
+      "sha256": "9ce95c8d490599aebf04614c87fba016f9365ec0c811d88b9fd356c406718d35",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_pulse_onset.py",
+      "sha256": "29eacbe93a90b5bfbf2859557870008c217c43747c49c79d031f0df73bd1882a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/test_verify_surge_separation.py",
+      "sha256": "6f129079c38e71314fb3aa18b293fdbead394a223ccf4e40832dce297f503139",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/testiOSSurgeTrackingEquivalence.m",
+      "sha256": "4b392b44c5ef7a99f75738e1315413fe3fa0caaf047970ecb007b5c8d4f350a2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/traceKnownSignalSinks.m",
+      "sha256": "287f1f4f004ae370a76d61871cbfe0ff37f36854aee00094bcd064d68127dbc1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/traceSurgeDetectionStages.m",
+      "sha256": "c5d97bdd849d268e339a07168ffbbe8341342113462e4b212325feffee699b4e",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/trace_surge_separation.py",
+      "sha256": "d4329a9bd2f8db14f4e17fc2c59ff086efcf35602da079e55101707c955a9d68",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_known_signal_inputs.py",
+      "sha256": "4c2d32e9a268cfa0c44b7edf8efb7245b535a2aec8ea2c81091391cefb885f6c",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_shape_evidence_inputs.py",
+      "sha256": "a20be80870bdca67b503b08834279764dee3af6e1bb414368d9eb8148b73cf81",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_smooth_signal_inputs.py",
+      "sha256": "e6d02b9af71a7f78bf5dcc09a85932c5f37b73fd15cb1256131b34979affd9ff",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_surge_amplitude_eligibility.py",
+      "sha256": "6007830ab7422a052057cdee99d6328b4148468c02009f693fab21c4c4524030",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_surge_amplitude_support.py",
+      "sha256": "ada4baf38bb9998c805e9071e683c8ab6ba7121bcc30ba3ea09d6eb1b2549999",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_surge_branch_replay.py",
+      "sha256": "48cbfaa16714e34e965fbd0877d0888bb6a6960b98ec91b571710f4b2f4e30f6",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/verify_surge_expanded_peak.py",
+      "sha256": "47e675dce6262cab1fe6b3911ff19031a4d3e842871d68395a0e5b17671a340a",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_surge_full_movie.py",
+      "sha256": "79524ca2db93e19ac9f4f39cd0e2d4e9d0d14fb85f5c43f69b357bef770d8286",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/verify_surge_local_onset.py",
+      "sha256": "6b55f3ea5c0a58d69363c36a08a4bd73522603e9a803d4d17af21513dbf3f561",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_surge_model_selection.py",
+      "sha256": "4af906af5a00427d983c6f8b7f8bb2ef7b6c37cb2b180c0bc98f87a19497bfde",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/verify_surge_onset_trace_panel.py",
+      "sha256": "f92d6cd4c96c9c3cdc072938a6618c5be03178144d8c32e11b1ffbee6c3ee362",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_surge_pulse_onset.py",
+      "sha256": "252bb33a32ad750cc52ee32a22ce457a962340ee5b9b27f16d8c237091f57ab2",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "tests/analysis/verify_surge_separation.py",
+      "sha256": "933c5040c3aa68d10a1cf5889847815f1b17c80bf1d091b2d5aa2f6c5378e9d1",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "tests/analysis/verify_tracking_signal_inputs.py",
+      "sha256": "f586ae9210aad66a23d105f8aeed4b8f5c15a0d91bbd3a1c068a35d4c3fc1de1",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "updateHypoxicBurdenStatsOutput.m",
+      "sha256": "94b336c58dc6d6f43b00bd56ddd6a7f5fe138d61f86bc20afb7a0071f5ede5f1",
+      "disposition": "hold_for_review"
+    },
+    {
+      "path": "writeBOITissueSupport.m",
+      "sha256": "ce8d0f502907fb4133abe5c1ce30ec4ec5995ce030c73a0b63c312b825598901",
+      "disposition": "proposed_software_text_include_not_release_cleared"
+    },
+    {
+      "path": "writeOxygenAnalysisManifest.m",
+      "sha256": "3e07c48950c2c840aec06a7d11606d32fb082bc0531d239bed03047c4b1dfcd1",
+      "disposition": "hold_for_review"
+    }
+  ],
+  "static_hits": [
+    {
+      "path": "CHANGELOG.md",
+      "hits": [
+        {
+          "line": 12,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  M400 awake and FB2316 KX. Each challenge contains isolated early/slow surges"
+        },
+        {
+          "line": 26,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  roadmap and [full report](docs/reference-results/surge-full-movie-measurement-20260910/README.md)."
+        },
+        {
+          "line": 45,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  [complete comparison](docs/reference-results/surge-expanded-peak-20260910/README.md)."
+        },
+        {
+          "line": 64,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  [results with trace examples](docs/reference-results/surge-amplitude-eligibility-20260910/README.md)."
+        },
+        {
+          "line": 73,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  including 193 supports from ID13 awake/mobile and FB2316 under KX. Historical"
+        },
+        {
+          "line": 84,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  [results and review list](docs/reference-results/surge-model-selection-20260910/README.md)."
+        },
+        {
+          "line": 104,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  [complete comparison](docs/reference-results/surge-pulse-onset-20260910/README.md)."
+        },
+        {
+          "line": 127,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  [results](docs/reference-results/surge-onset-trace-panel-20260909/README.md)."
+        },
+        {
+          "line": 144,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  [results](docs/reference-results/surge-local-onset-20260909/README.md)."
+        },
+        {
+          "line": 165,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  [complete evidence](docs/reference-results/surge-amplitude-support-20260909/README.md)."
+        },
+        {
+          "line": 186,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  [full comparison](docs/reference-results/surge-separation-20260909/README.md)."
+        },
+        {
+          "line": 204,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  with unchanged masks and identities. Complete one ID401 challenge master and"
+        },
+        {
+          "line": 208,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  [integration report](docs/reference-results/surge-contact-provenance-20260909/README.md)."
+        },
+        {
+          "line": 233,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "- Recover the selected ID401 pulse as a 14-frame run under both extensions."
+        },
+        {
+          "line": 242,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  and retain [compact reproducible evidence](docs/reference-results/surge-branch-replay-20260909/README.md)."
+        },
+        {
+          "line": 286,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "  and timing in all twenty comparisons) in the [continuity report](docs/reference-results/surge-shape-continuity-20260909/README.md)."
+        },
+        {
+          "line": 329,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  plus an unchanged FB2312 recheck: 1,973 event/status records agree numerically,"
+        },
+        {
+          "line": 331,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  FB2312 and document inconsistent smooth-surge detection across backgrounds."
+        },
+        {
+          "line": 352,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  remain unavailable. The unmodified ID400 recording changes from 137 to 196"
+        },
+        {
+          "line": 382,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  checksum-verified ID400 awake crop. Production settings are unchanged."
+        },
+        {
+          "line": 425,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  reversal in the six flagged FB2312 surges."
+        },
+        {
+          "line": 446,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  QC with an unchanged MATLAB source manifest. Both ID400 recordings matched"
+        },
+        {
+          "line": 462,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "- Correct the ID400 reference harness genotype from unspecified to WT and"
+        }
+      ]
+    },
+    {
+      "path": "OxygenDynamics_GUI.m",
+      "hits": [
+        {
+          "line": 329,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    InputCsv=char(java.io.File(char(InputCsv)).getCanonicalPath());"
+        },
+        {
+          "line": 1224,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "        Message = sprintf(['A regression baseline already exists:\\n\\n%s\\n\\n' ..."
+        }
+      ]
+    },
+    {
+      "path": "OxygenDynamics_Master.m",
+      "hits": [
+        {
+          "line": 451,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "AnalysisInfo.RecordingID = char(java.io.File(Tifffiles(1).folder).getCanonicalPath());"
+        }
+      ]
+    },
+    {
+      "path": "OxygenDynamics_Wrapper.m",
+      "hits": [
+        {
+          "line": 17,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "% folders. For example for current folder 'C:\\User\\Alldata\\' that contains folders 'Mouse1' and 'Mouse2' etc"
+        }
+      ]
+    },
+    {
+      "path": "README.md",
+      "hits": [
+        {
+          "line": 64,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "[full HP development workflow](docs/reference-results/boi-hp-workflow-20260910/README.md)"
+        },
+        {
+          "line": 71,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "Known-signal stress testing is described in [the validation protocol](docs/KNOWN_SIGNAL_VALIDATION.md), with [stage tracing and full-recording comparisons](docs/reference-results/known-signal-full-20260909/README.md)."
+        },
+        {
+          "line": 112,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "[shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)"
+        },
+        {
+          "line": 114,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "on four source recordings: ID400, ID401, FB2312 and the separate FB2411"
+        },
+        {
+          "line": 119,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "The preceding [physical tracking sweep](docs/reference-results/surge-physical-adjacent-20260909/README.md)"
+        },
+        {
+          "line": 127,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "[results and next step](docs/reference-results/surge-local-onset-20260909/README.md)."
+        },
+        {
+          "line": 136,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "experimental; see the [full comparison](docs/reference-results/surge-onset-trace-panel-20260909/README.md)."
+        },
+        {
+          "line": 143,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "the [paired comparison](docs/reference-results/surge-pulse-onset-20260910/README.md)"
+        },
+        {
+          "line": 148,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "308 frozen supports from six recordings, including ID13 awake/mobile and FB2316"
+        },
+        {
+          "line": 153,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "the [full report](docs/reference-results/surge-model-selection-20260910/README.md)"
+        },
+        {
+          "line": 163,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "[the mechanisms and next measurement-window test](docs/reference-results/surge-amplitude-eligibility-20260910/README.md)."
+        },
+        {
+          "line": 173,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "See [the results and proposed full-movie validation](docs/reference-results/surge-expanded-peak-20260910/README.md)."
+        },
+        {
+          "line": 177,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "and FB2316 KX. Ten imposed positive components intersect retained events, eight"
+        },
+        {
+          "line": 181,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "frames before injection. The [report](docs/reference-results/surge-full-movie-measurement-20260910/README.md)"
+        },
+        {
+          "line": 190,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "unchanged during this experiment; see its [results](docs/reference-results/surge-shape-evidence-20260909/README.md)."
+        },
+        {
+          "line": 202,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "case replays preserve previous masks and identities; one full ID401 challenge"
+        },
+        {
+          "line": 204,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "checked. See the [integration evidence](docs/reference-results/surge-contact-provenance-20260909/README.md)."
+        },
+        {
+          "line": 215,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "The [completed comparison](docs/reference-results/surge-separation-20260909/README.md)"
+        },
+        {
+          "line": 216,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "covers twenty full movies on four sources. Stationary-pair gains in ID400/ID401"
+        },
+        {
+          "line": 227,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "26 tests. [Results and next onset/baseline work](docs/reference-results/surge-amplitude-support-20260909/README.md)"
+        },
+        {
+          "line": 246,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "[per-recording results and limitations](docs/reference-results/phase1-20260909/README.md),"
+        },
+        {
+          "line": 247,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "[signal-audit findings](docs/reference-results/signal-audit-20260909/README.md),"
+        },
+        {
+          "line": 249,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "[completed timing rerun and remaining limitations](docs/reference-results/local-timing-20260909/README.md)"
+        },
+        {
+          "line": 803,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "- Extracted stats behaviour event-window construction and short-event filtering into `createWindowedEventMask.m` and `removeShortLogicalEvents.m`, reducing duplicated left/right paw and whisking logic while avoiding `regionprops` for this cleanup step."
+        },
+        {
+          "line": 904,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "explicit surge unavailability. [Development verification](docs/reference-results/boi-surge-windows-20260911/README.md)"
+        },
+        {
+          "line": 912,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "explicitly in new folders. [Phase evidence](docs/reference-results/boi-workflow-phase-20260911/README.md)"
+        },
+        {
+          "line": 916,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "The [saved measurement-support diagnostic](docs/reference-results/boi-measurement-support-20260912/README.md)"
+        },
+        {
+          "line": 922,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "The fixed [baseline/timing challenge](docs/reference-results/boi-baseline-timing-20260912/README.md)"
+        }
+      ]
+    },
+    {
+      "path": "USER_MANUAL.md",
+      "hits": [
+        {
+          "line": 687,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "checkOxygenPipelineHealth('D:\\path\\to\\dataset')"
+        }
+      ]
+    },
+    {
+      "path": "analyzeHypoxiaAmyloidPair.m",
+      "hits": [
+        {
+          "line": 46,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "FlatField = imgaussfilt(AmyloidImage,CoarseSigmaPixels);"
+        },
+        {
+          "line": 65,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "HypoxiaSmoothed = imgaussfilt(HypoxiaRelative,RegionSigmaPixels);"
+        },
+        {
+          "line": 72,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "HypoxiaProps = regionprops(HypoxiaMask,HypoxiaSmoothed,PropertyNames);"
+        },
+        {
+          "line": 73,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "AmyloidProps = regionprops(AmyloidMask,AmyloidCorrected,PropertyNames);"
+        },
+        {
+          "line": 75,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "HypoxiaAreaMap = imgaussfilt(HypoxiaRelative,CoarseSigmaPixels);"
+        },
+        {
+          "line": 76,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "AmyloidAreaMap = imgaussfilt(AmyloidRelative,CoarseSigmaPixels);"
+        }
+      ]
+    },
+    {
+      "path": "compareRawDenoisedOutputs.m",
+      "hits": [
+        {
+          "line": 7,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "%   QCSummary = compareRawDenoisedOutputs({'Mouse1/Rec1'},'baseFolder','D:\\Data')"
+        },
+        {
+          "line": 90,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Raw/denoised QC summary saved:\\n%s.mat\\n%s.xlsx\\n',OutputBase,OutputBase);"
+        }
+      ]
+    },
+    {
+      "path": "createBOIG4EvidenceBundle.m",
+      "hits": [
+        {
+          "line": 9,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "localMapPath=[OutputFolder '.local-sources.json'];"
+        },
+        {
+          "line": 218,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "fprintf(fid,'The ID400 measurement examples and C02 review have different source identities; they are separate examples, not a combined recording result.\\n\\n');"
+        },
+        {
+          "line": 219,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "fprintf(fid,'The source paths are intentionally outside this shareable folder. Evidence.json holds portable source hashes, saved per-frame ingredients, both definitions, decision history and availability reasons. The separate .local-sources.json file in the parent is private and must not be shared.\\n\\n');"
+        }
+      ]
+    },
+    {
+      "path": "createOxygenRegressionBaseline.m",
+      "hits": [
+        {
+          "line": 27,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Regression baseline saved:\\n%s\\n',BaselinePath);"
+        },
+        {
+          "line": 28,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Regression baseline workbook saved:\\n%s\\n',BaselineWorkbook);"
+        },
+        {
+          "line": 30,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "    fprintf('Previous regression baseline files archived in:\\n%s\\n',fileparts(ArchivedFiles{1}));"
+        },
+        {
+          "line": 32,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Source stats output:\\n%s\\n',Baseline.DataOutputPath);"
+        }
+      ]
+    },
+    {
+      "path": "createOxygenReleasePackage.m",
+      "hits": [
+        {
+          "line": 37,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Release package created:\\n%s\\n%s\\n',ReleaseInfo.ReleaseFolder,ReleaseInfo.ZipPath);"
+        },
+        {
+          "line": 158,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf(FileId,'Included file manifest:\\n');"
+        },
+        {
+          "line": 163,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "    fprintf(FileId,'\\nSkipped expected files:\\n');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/attachBOINativeMasks.m",
+      "hits": [
+        {
+          "line": 7,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "MasterPath=char(java.io.File(char(MasterPath)).getCanonicalPath());"
+        }
+      ]
+    },
+    {
+      "path": "helpers/attachBOIReferenceSources.m",
+      "hits": [
+        {
+          "line": 8,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    paths{sign}=char(java.io.File(char(paths{sign})).getCanonicalPath());hashes{sign}=oxygenFileSHA256(paths{sign});"
+        }
+      ]
+    },
+    {
+      "path": "helpers/attachBOITemporalSources.m",
+      "hits": [
+        {
+          "line": 9,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    paths{sign}=char(java.io.File(char(paths{sign})).getCanonicalPath());hashes{sign}=oxygenFileSHA256(paths{sign});"
+        }
+      ]
+    },
+    {
+      "path": "helpers/auditOxygenEventFootprints.m",
+      "hits": [
+        {
+          "line": 26,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    runs=regionprops(~cellfun(@isempty,c),'PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/collateOxygenSinkEvents.m",
+      "hits": [
+        {
+          "line": 26,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventsTemp = regionprops(Overall_OxySinks_logical(i,:),'Area','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/collateOxygenSurgeEvents.m",
+      "hits": [
+        {
+          "line": 13,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventsTemp = regionprops(Overall_OxySurges_logical(i,:),'Area','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/collateiOSSinkEvents.m",
+      "hits": [
+        {
+          "line": 14,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventsTemp = regionprops(Overall_OxySinks_logical(i,:),'Area','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/collateiOSSurgeEvents.m",
+      "hits": [
+        {
+          "line": 10,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventsTemp = regionprops(Overall_OxySurges_logical(i,:),'Area','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/computeBehaviourPercentileBins.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "BinEdges = prctile(BehaviourMean,0:10:100);"
+        }
+      ]
+    },
+    {
+      "path": "helpers/computeRecordingArea.m",
+      "hits": [
+        {
+          "line": 24,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "Aboveback = CollapsedArea > prctile(CollapsedArea(:),backgroundPercentile);"
+        }
+      ]
+    },
+    {
+      "path": "helpers/computeTracePotentialNoise.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "Trace_PotentialNoise = ~(HighCorrelationCount > prctile(HighCorrelationCount,noiseCorrelationPercentile));"
+        }
+      ]
+    },
+    {
+      "path": "helpers/computeTrackedRegionMorphology.m",
+      "hits": [
+        {
+          "line": 32,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "        Props = regionprops(SingleRegionMask,'Area','FilledArea','Centroid','Circularity', ..."
+        }
+      ]
+    },
+    {
+      "path": "helpers/computeVascularDistances.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "VeinRegions = regionprops(veinsMask,'PixelIdxList');"
+        },
+        {
+          "line": 5,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "ArteryRegions = regionprops(arteriesMask,'PixelIdxList');"
+        },
+        {
+          "line": 47,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    PixelDistances = pdist2(objectCoords,VascularCoords);"
+        },
+        {
+          "line": 48,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    CentroidDistances = pdist2(centroidCoords,VascularCoords);"
+        }
+      ]
+    },
+    {
+      "path": "helpers/countTrackedEvents.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    totalEvents = totalEvents+numel(regionprops(trackedLogical(i,:),'Area','PixelIdxList'));"
+        }
+      ]
+    },
+    {
+      "path": "helpers/createHypoxicEventSpecificMetrics.m",
+      "hits": [
+        {
+          "line": 36,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventInfo = regionprops(~cellfun(@isempty,TrackedEventPixels(SinkIdx,:)),'Area','PixelIdxList');"
+        },
+        {
+          "line": 86,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    Props = regionprops(SingleMask,'Area','FilledArea','Centroid','Circularity','EquivDiameter','Perimeter');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/createOxygenOutputFolders.m",
+      "hits": [
+        {
+          "line": 47,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Output folders:\\n');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/createStatsOutputFolders.m",
+      "hits": [
+        {
+          "line": 11,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "if java.io.File(OutputRoot).isAbsolute()"
+        }
+      ]
+    },
+    {
+      "path": "helpers/detectFrameRegionCandidates.m",
+      "hits": [
+        {
+          "line": 25,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "        BW(SupportMask)=Values>prctile(Values,DetectionParams.percentileThreshold);"
+        },
+        {
+          "line": 28,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "        BW = Frame > prctile(Frame(:),DetectionParams.percentileThreshold);"
+        },
+        {
+          "line": 32,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    RegionInfoAll{FrameIdx} = regionprops(BW,'Area','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/extractBehaviourEventMeanTraceSnips.m",
+      "hits": [
+        {
+          "line": 17,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    Events=bwconncomp(eventLogicals{recordingIdx});"
+        }
+      ]
+    },
+    {
+      "path": "helpers/fileSha256.m",
+      "hits": [
+        {
+          "line": 5,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "MessageDigest = java.security.MessageDigest.getInstance('SHA-256');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/filterRegionCandidates.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "RegionInfo = regionprops(BW,'Area','PixelIdxList','Circularity');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/filterSinkRunsByDuration.m",
+      "hits": [
+        {
+          "line": 7,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": " runs=regionprops(Logical(s,:),'Area','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/finalizeOxygenEventMeasurements.m",
+      "hits": [
+        {
+          "line": 63,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    runs=regionprops(~cellfun(@isempty,cells),'PixelIdxList');"
+        },
+        {
+          "line": 122,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "        props=regionprops(mask,'Area','FilledArea','Perimeter','Circularity','Centroid');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/handleWrapperFailure.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "errorMessage = sprintf('Error in %s.\\nThe error reported by MATLAB is:\\n\\n%s',scriptName,ME.message);"
+        }
+      ]
+    },
+    {
+      "path": "helpers/loadBOIBoundaryReview.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "Path=char(java.io.File(Path).getCanonicalPath());before=oxygenFileSHA256(Path);"
+        }
+      ]
+    },
+    {
+      "path": "helpers/loadBOIEventReview.m",
+      "hits": [
+        {
+          "line": 3,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "AuditPath=char(java.io.File(char(AuditPath)).getCanonicalPath());"
+        }
+      ]
+    },
+    {
+      "path": "helpers/loadBOIReferenceJudgments.m",
+      "hits": [
+        {
+          "line": 10,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    path=char(java.io.File(Paths{k}).getCanonicalPath());hash=oxygenFileSHA256(path);J=jsondecode(fileread(path));"
+        }
+      ]
+    },
+    {
+      "path": "helpers/loadBOITemporalReview.m",
+      "hits": [
+        {
+          "line": 9,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "AuditPath=char(java.io.File(char(AuditPath)).getCanonicalPath());"
+        },
+        {
+          "line": 29,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "SinkPath=char(java.io.File(char(SinkPath)).getCanonicalPath());sinkHash=oxygenFileSHA256(SinkPath);"
+        }
+      ]
+    },
+    {
+      "path": "helpers/loadBOIWindowReview.m",
+      "hits": [
+        {
+          "line": 3,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "Path=char(java.io.File(char(Path)).getCanonicalPath());before=oxygenFileSHA256(Path);"
+        }
+      ]
+    },
+    {
+      "path": "helpers/loadStatsRecordingIntoCells.m",
+      "hits": [
+        {
+          "line": 13,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "RecordingMetadata.RecordingID = char(java.io.File(RecordingFolder).getCanonicalPath());"
+        }
+      ]
+    },
+    {
+      "path": "helpers/oxygenFileSHA256.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "md=java.security.MessageDigest.getInstance('SHA-256');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/reconstructHypoxicEventFootprints.m",
+      "hits": [
+        {
+          "line": 17,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    FrameRegionInfo{FrameIdx} = regionprops(SinkBinaryStack(:,:,FrameIdx), ..."
+        },
+        {
+          "line": 42,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventInfo = regionprops(Active,'PixelIdxList');"
+        },
+        {
+          "line": 118,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    Props = regionprops(Mask,'Centroid','Area');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/refineSinkRegionsByTraceCorrelation.m",
+      "hits": [
+        {
+          "line": 9,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    prctile(Trace_Convo_CrossCor_High_sum,noiseCorrelationPercentile));"
+        }
+      ]
+    },
+    {
+      "path": "helpers/refineTrackedSinkCandidates.m",
+      "hits": [
+        {
+          "line": 7,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventInfo = regionprops(OverallLogical(SinkIdx,:),'Area','PixelIdxList');"
+        },
+        {
+          "line": 16,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventInfo = regionprops(OverallLogical(SinkIdx,:),'Area','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/refineTrackedSurgeCandidates.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventInfo = regionprops(OverallLogical(SurgeIdx,:),'Area','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/runHypoxiaAmyloidCohortSummary.m",
+      "hits": [
+        {
+          "line": 538,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    P = ranksum(Group1Values,Group2Values);"
+        },
+        {
+          "line": 782,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    CI = prctile(Values,Percentiles);"
+        }
+      ]
+    },
+    {
+      "path": "helpers/saveBOIBoundaryReview.m",
+      "hits": [
+        {
+          "line": 30,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "NewPath=char(java.io.File(NewPath).getCanonicalPath());"
+        },
+        {
+          "line": 32,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "assert(java.io.File(NewPath).createNewFile(),'OxygenDynamics:BoundaryReviewOutputExists','Choose a new filename; earlier review revisions are preserved.');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/sendolmail.m",
+      "hits": [
+        {
+          "line": 7,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "h = actxserver('outlook.Application');"
+        }
+      ]
+    },
+    {
+      "path": "helpers/textSha256.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "MessageDigest = java.security.MessageDigest.getInstance('SHA-256');"
+        }
+      ]
+    },
+    {
+      "path": "iOSDynamics_Wrapper.m",
+      "hits": [
+        {
+          "line": 5,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "% folders. For example for current folder 'C:\\User\\Alldata\\' that contains folders 'Mouse1' and 'Mouse2' etc"
+        }
+      ]
+    },
+    {
+      "path": "loadBOIG4EvidenceBundle.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "Folder=char(java.io.File(char(Folder)).getCanonicalPath());"
+        }
+      ]
+    },
+    {
+      "path": "loadBOIRecordingRun.m",
+      "hits": [
+        {
+          "line": 5,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "Path=char(java.io.File(char(Path)).getCanonicalPath());root=fileparts(Path);"
+        },
+        {
+          "line": 22,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    p=char(java.io.File(fullfile(root,A(k).Path)).getCanonicalPath());"
+        }
+      ]
+    },
+    {
+      "path": "openBOIG4EvidenceBundle.m",
+      "hits": [
+        {
+          "line": 14,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    'ID400 automatic measurements and the C02 researcher review are separate examples.', ..."
+        }
+      ]
+    },
+    {
+      "path": "prepareBOIRecordingRequest.m",
+      "hits": [
+        {
+          "line": 28,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "Options.RecordingFolder=char(java.io.File(Options.RecordingFolder).getCanonicalPath());"
+        },
+        {
+          "line": 29,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "Options.OutputFolder=char(java.io.File(Options.OutputFolder).getCanonicalPath());"
+        }
+      ]
+    },
+    {
+      "path": "refreshAcceptedOxygenRegressionBaseline.m",
+      "hits": [
+        {
+          "line": 29,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Accepted stats baseline refreshed from:\\n%s\\n',Baseline.DataOutputPath);"
+        }
+      ]
+    },
+    {
+      "path": "restoreOxygenRegressionBaseline.m",
+      "hits": [
+        {
+          "line": 42,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Regression baseline restored from archive:\\n%s\\n',ArchivedBaselinePath);"
+        },
+        {
+          "line": 43,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Current regression baseline:\\n%s\\n',BaselinePath);"
+        }
+      ]
+    },
+    {
+      "path": "runOxygenDynamicsVascularEventAnalysis.m",
+      "hits": [
+        {
+          "line": 124,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    EventInfo = regionprops(~cellfun(@isempty,TrackedPixels(SinkIdx,:)),'Area','PixelIdxList');"
+        },
+        {
+          "line": 165,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    FrameRegionInfo{FrameIdx} = regionprops(sinkBinaryStack(:,:,FrameIdx),'Area','PixelIdxList');"
+        },
+        {
+          "line": 233,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    FrameProps = regionprops(SingleMask,'Area','PixelIdxList','Centroid', ..."
+        }
+      ]
+    },
+    {
+      "path": "runOxygenPipelineSmokeTest.m",
+      "hits": [
+        {
+          "line": 82,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Oxygen pipeline smoke test passed in temporary folder:\\n%s\\n',SmokeRoot);"
+        },
+        {
+          "line": 1174,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "SmokeRegionInfo = repmat({regionprops(false(3),'Area','PixelIdxList')},1,4)';"
+        }
+      ]
+    },
+    {
+      "path": "runOxygenPipelineVerificationReport.m",
+      "hits": [
+        {
+          "line": 53,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Pipeline verification report saved:\\n');"
+        }
+      ]
+    },
+    {
+      "path": "runOxygenRegressionTest.m",
+      "hits": [
+        {
+          "line": 82,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "    fprintf('Regression summary:\\n');"
+        }
+      ]
+    },
+    {
+      "path": "runOxygenSummaryFigures.m",
+      "hits": [
+        {
+          "line": 82,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Summary figures saved to:\\n%s\\n',OutputFolder);"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/auditSurgeCandidateEvidence.m",
+      "hits": [
+        {
+          "line": 35,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "  ntruth(t)=numel(truth{t});eligible(t)=nnz(Area.Filter(truth{t}));frame=safeMat2Gray(F(:,:,t));cut=prctile(frame(:),P.PercentileSurgeDetectionThres);BW=frame>cut;"
+        },
+        {
+          "line": 37,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "  selected(t)=nnz(BW(truth{t}));regs=regionprops(BW,'Area','Circularity','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/auditSurgeFullMovieMeasurement.m",
+      "hits": [
+        {
+          "line": 16,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "  pc=sites.FramePixels{E.(id)(e)};runs=regionprops(~cellfun(@isempty,pc),'PixelIdxList');native=runs(E.EventID(e)).PixelIdxList;"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/auditSurgeTrackingMotion.m",
+      "hits": [
+        {
+          "line": 16,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": " for s=1:size(surgeMask,1),surgeEvents=surgeEvents+numel(regionprops(surgeMask(s,:),'PixelIdxList'));end"
+        },
+        {
+          "line": 17,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": " for s=1:size(sinkMask,1),sinkEvents=sinkEvents+numel(regionprops(sinkMask(s,:),'PixelIdxList'));end"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/compareNativeEventWindows.m",
+      "hits": [
+        {
+          "line": 15,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "   c=sites.FramePixels{E.(col)(e)};runs=regionprops(~cellfun(@isempty,c),'PixelIdxList');d=runs(E.EventID(e)).PixelIdxList;"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/compareSurgeContinuityReference.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2411\",\"FB2312-baseline-awake\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/compareSurgeTrackingReference.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2411\",\"FB2312-baseline-awake\"]"
+        },
+        {
+          "line": 6,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": " if session==\"FB2312-baseline-awake\",cases=\"control\";end"
+        },
+        {
+          "line": 8,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "  old=fullfile(previousRoot,session,name);if session==\"FB2312-baseline-awake\",old=fullfile(fbPreviousRoot,'Recording');end"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/convertDandiReferenceStack.m",
+      "hits": [
+        {
+          "line": 12,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "token=regexp(comments,'Resolution:\\s*([0-9.]+)\\s*um/pixel','tokens','once');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/inspectRetainedSinkRuns.m",
+      "hits": [
+        {
+          "line": 12,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "  runs=regionprops(~cellfun(@isempty,sites.FramePixels{s}),'PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/inventoryHPCompartmentInputs.py",
+      "hits": [
+        {
+          "line": 104,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    selected = next(r for r in records if r[\"original_csv_row\"][\"Paths\"] == r\"Data\\GFAP-ECS-GeNL\\FB2412\")"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/prepareAdditionalOnsetBackgrounds.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"ID13-20200917\",\"FB2316-baseline\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/reviewHPCachedReferenceEvidence.py",
+      "hits": [
+        {
+          "line": 41,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    assert selected[\"original_csv_row\"][\"Paths\"] == r\"Data\\GFAP-ECS-GeNL\\FB2412\""
+        },
+        {
+          "line": 77,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "        \"volume_available_at_review\": Path(\"/Volumes/extZCM361_2\").is_dir(),"
+        },
+        {
+          "line": 91,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "            \"No named reference was inventoried for the selected FB2412 folder within the stated search scope; this does not establish absence elsewhere.\","
+        },
+        {
+          "line": 92,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "            \"The FB2413 490 nm reference is a different folder association. An embedded FB2412 prefix does not establish a match to the selected recording.\","
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runBOIInputContractVerification.m",
+      "hits": [
+        {
+          "line": 2,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "%RUNBOIINPUTCONTRACTVERIFICATION Bounded R1 export/entry verification on ID400."
+        },
+        {
+          "line": 11,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    'RecordingID','dandi000891_ID400_awake','Role','previously inspected ID400 development recording', ..."
+        },
+        {
+          "line": 14,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    'Budget','One known-event/zero-event integration, one ID400 stats export; no full detector rerun; ten-minute soft completion review', ..."
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runBOITissueSupportVerification.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "OutputRoot=char(java.io.File(OutputRoot).getCanonicalPath());"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runBOIWorkflowWalkthrough.m",
+      "hits": [
+        {
+          "line": 2,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "%RUNBOIWORKFLOWWALKTHROUGH Complete ID400 development workflow, never held-out QC."
+        },
+        {
+          "line": 9,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "assert(strcmp(oxygenFileSHA256(SourceTiff),expected),'Wrong ID400 reference TIFF.');"
+        },
+        {
+          "line": 12,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    'RecordingID','dandi000891_ID400_awake','Mouse','ID400', ..."
+        },
+        {
+          "line": 41,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    C=struct('SFs',1,'PiSz',4.75,'Mous','ID400','Cond','Awake_immobile', ..."
+        },
+        {
+          "line": 52,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    Mouse={'ID400'};Genotype={'WT'};Condition={'Awake_immobile'};DrugID={'awake'};Promoter={'GFAP.PHP'};"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runDandiReference.m",
+      "hits": [
+        {
+          "line": 14,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "mkdir(outputRoot); rec=fullfile(outputRoot,'ID400_awake'); mkdir(rec);"
+        },
+        {
+          "line": 35,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    'ArchivePath','sub-ID400/sub-ID400_ses-M400-01-baseline-awake_image.nwb', ..."
+        },
+        {
+          "line": 40,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    'LabelsAvailable',false,'Mouse','ID400','Genotype','WT','Condition','Awake_immobile', ..."
+        },
+        {
+          "line": 46,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "C=struct('SFs',rate,'PiSz',4.75,'Mous','ID400','Cond','Awake_immobile', ..."
+        },
+        {
+          "line": 54,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    Mouse={'ID400'};Genotype={'WT'};Condition={'Awake_immobile'};"
+        },
+        {
+          "line": 56,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    RecordingID=\"dandi000891_ID400_awake\";"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runDandiReferenceSet.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "j=java.io.File(char(profileFile));profileFile=char(j.getCanonicalPath());"
+        },
+        {
+          "line": 7,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "j=java.io.File(char(cacheRoot));cacheRoot=char(j.getCanonicalPath());"
+        },
+        {
+          "line": 8,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "j=java.io.File(char(outputRoot));outputRoot=char(j.getCanonicalPath());"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runG4SavedEvidenceCheck.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "if nargin<1,EvidenceRoot=fullfile(project,'reference-validation','software-g4-evidence-20260927');end"
+        },
+        {
+          "line": 9,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "assert(~isfile(fullfile(folder,'saved-bundle-final.local-sources.json')), ..."
+        },
+        {
+          "line": 62,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "runPath=fullfile(project,'reference-validation','software-g2-workflow-20260923','gui-run','BOIRun.mat');"
+        },
+        {
+          "line": 63,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "auditPath=fullfile(project,'reference-validation','software-g2-workflow-20260923','gui-run','Recording','BOIReview','event-amplitude-audit.mat');"
+        },
+        {
+          "line": 64,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "dataPath=fullfile(project,'reference-validation','software-g2-workflow-20260923','gui-run','statistics','Stats_Output_20260923T102730','DataOutput.mat');"
+        },
+        {
+          "line": 65,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "reviewPath=fullfile(project,'reference-validation','boi-c02-strict-roi-20260912','audit-01','source-amplitude-audit','event-amplitude-audit.mat');"
+        },
+        {
+          "line": 66,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "boundaryPath=fullfile(project,'reference-validation','boi-c02-strict-roi-20260912','audit-01','source-amplitude-audit','BOI-researcher-review-05.json');"
+        },
+        {
+          "line": 67,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "priorBoundaryPath=fullfile(project,'reference-validation','boi-c02-strict-roi-20260912','audit-01','source-amplitude-audit','BOI-researcher-review-04.json');"
+        },
+        {
+          "line": 68,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "wrongReference=fullfile(project,'reference-validation','boi-researcher-event4-reference-20260915','researcher-reference-judgment.json');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runKnownSignalPilot.m",
+      "hits": [
+        {
+          "line": 3,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "% This fixed pilot is ID400 awake only, NOT a labelled accuracy benchmark."
+        },
+        {
+          "line": 43,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": " C=struct('SFs',1,'PiSz',4.75,'Mous','ID400','Cond','SyntheticPilot','Drug','None', ..."
+        },
+        {
+          "line": 60,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    pc=S.FramePixels{E.(id)(e)};runs=regionprops(~cellfun(@isempty,pc),'PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSmoothSignalValidation.m",
+      "hits": [
+        {
+          "line": 5,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "Sessions=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2411\"];"
+        },
+        {
+          "line": 70,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "     pc=sites.FramePixels{E.(id)(e)};runs=regionprops(~cellfun(@isempty,pc),'PixelIdxList');frames=runs(E.EventID(e)).PixelIdxList;"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeAmplitudeSupportValidation.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2312-baseline-awake\",\"FB2411\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeBranchReplay.m",
+      "hits": [
+        {
+          "line": 12,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": " shapeRoot,'FB2312-baseline-awake','growing_clean';shapeRoot,'FB2312-baseline-awake','shrinking_clean'; ..."
+        },
+        {
+          "line": 13,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": " shapeRoot,'FB2411','growing_clean';shapeRoot,'FB2411','shrinking_clean'};"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeContactValidation.m",
+      "hits": [
+        {
+          "line": 4,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "outputRoot=char(java.io.File(outputRoot).getCanonicalPath());"
+        },
+        {
+          "line": 5,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "priorRoot=char(java.io.File(priorRoot).getCanonicalPath());"
+        },
+        {
+          "line": 34,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "% Full master path on the ID401 stationary-pulse movie, with identical input."
+        },
+        {
+          "line": 62,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "SampleF=P.SampleHz;Pixelsize=P.PixelSize;Puff_2use=NaN;RecordingID=\"CONTACT_ID401\";"
+        },
+        {
+          "line": 84,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": " 'Interpretation','Metadata/QC extension. Six candidate replays are not six master reruns; only ID401 smooth-pairs was fully rerun here. No biological accuracy estimate.');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeContinuitySweep.m",
+      "hits": [
+        {
+          "line": 18,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "   for t=1:N,Frames{t}=regionprops((x-cx).^2+(y-cy).^2<=(radius(t)/px)^2,'PixelIdxList');end"
+        },
+        {
+          "line": 22,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    two=regionprops(left|right,'PixelIdxList');one=regionprops(merged,'PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeFullMovieMeasurement.m",
+      "hits": [
+        {
+          "line": 5,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"FB2316-baseline\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeLocalOnsetValidation.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2312-baseline-awake\",\"FB2411\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeModelSelectionValidation.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2312-baseline-awake\",\"FB2411\"]"
+        },
+        {
+          "line": 9,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"ID13-20200917\",\"FB2316-baseline\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeOnsetTracePanel.m",
+      "hits": [
+        {
+          "line": 6,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2312-baseline-awake\",\"FB2411\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgePulseOnsetPanel.m",
+      "hits": [
+        {
+          "line": 23,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2312-baseline-awake\",\"FB2411\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeSeparationValidation.m",
+      "hits": [
+        {
+          "line": 7,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2312-baseline-awake\",\"FB2411\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeShapeEvidenceValidation.m",
+      "hits": [
+        {
+          "line": 12,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "for session=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2411\",\"FB2312-baseline-awake\"]"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/runSurgeTrackingValidation.m",
+      "hits": [
+        {
+          "line": 5,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "Sessions=[\"M400-01-baseline-awake\",\"M401-01-baseline-awake\",\"FB2411\",\"FB2312-baseline-awake\"];"
+        },
+        {
+          "line": 86,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "     pc=sites.FramePixels{E.(id)(e)};runs=regionprops(~cellfun(@isempty,pc),'PixelIdxList');frames=runs(E.EventID(e)).PixelIdxList;"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/scoreSurgeShapeSupport.m",
+      "hits": [
+        {
+          "line": 16,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "  pc=S.FramePixels{E.(id)(e)};r=regionprops(~cellfun(@isempty,pc),'PixelIdxList');frames=r(E.EventID(e)).PixelIdxList;"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/separateSurgeCandidateContacts.m",
+      "hits": [
+        {
+          "line": 70,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "cc=bwconncomp(mask,8);ok=false;if cc.NumObjects~=1,return;end"
+        },
+        {
+          "line": 71,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "r=regionprops(cc,'Area','Circularity','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/sweepLocalSinkTiming.m",
+      "hits": [
+        {
+          "line": 13,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "   c=sites.FramePixels{s};runs=regionprops(~cellfun(@isempty,c),'PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/testBOITemporalContext.m",
+      "hits": [
+        {
+          "line": 54,
+          "categories": [
+            "development_payload_reference"
+          ],
+          "text": "here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(fileparts(here)));f=fullfile(root,'reference-validation','boi-fb2420-temporal-comparison-20260915','known-shape-tests.json');S=jsondecode(fileread(f));"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/testBOITissueSupport.m",
+      "hits": [
+        {
+          "line": 10,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "expected=expected>prctile(expected(:),30);"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/testSurgeCandidateEvidence.m",
+      "hits": [
+        {
+          "line": 16,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "A=regionprops(surgeEvidenceTruthMask(M,2,8,101),'Centroid');B=regionprops(surgeEvidenceTruthMask(M,2,8,111),'Centroid');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/testSurgeContactSeparation.m",
+      "hits": [
+        {
+          "line": 66,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "C=repmat({regionprops(two,'Area','PixelIdxList')},4,1);C{4}=regionprops(one,'Area','PixelIdxList');"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/traceKnownSignalSinks.m",
+      "hits": [
+        {
+          "line": 24,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": " im=imcomplement(clip(:,:,t));threshold{t}=find(im>prctile(im(:),P.PercentileDetectionThres));"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/traceSurgeDetectionStages.m",
+      "hits": [
+        {
+          "line": 23,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": " frame=safeMat2Gray(F(:,:,t));BW=frame>prctile(frame(:),P.PercentileSurgeDetectionThres);"
+        },
+        {
+          "line": 55,
+          "categories": [
+            "external_dependency_call"
+          ],
+          "text": "    runs=regionprops(overlap,'Area');longest=max(longest,max([runs.Area]));"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/verify_surge_branch_replay.py",
+      "hits": [
+        {
+          "line": 22,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    (\"FB2312-baseline-awake\", \"growing_clean\"),"
+        },
+        {
+          "line": 23,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    (\"FB2312-baseline-awake\", \"shrinking_clean\"),"
+        },
+        {
+          "line": 24,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    (\"FB2411\", \"growing_clean\"),"
+        },
+        {
+          "line": 25,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    (\"FB2411\", \"shrinking_clean\"),"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/verify_surge_full_movie.py",
+      "hits": [
+        {
+          "line": 41,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    h,w,n=p['Height'],p['Width'],p['Frames'];expected_frames={'M400-01-baseline-awake':600,'FB2316-baseline':1200}"
+        },
+        {
+          "line": 187,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    for session in ('M400-01-baseline-awake','FB2316-baseline'):"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/verify_surge_model_selection.py",
+      "hits": [
+        {
+          "line": 66,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "    for session,count in [('ID13-20200917',131),('FB2316-baseline',62)]:"
+        }
+      ]
+    },
+    {
+      "path": "tests/analysis/verify_surge_separation.py",
+      "hits": [
+        {
+          "line": 17,
+          "categories": [
+            "private_recording_identifier"
+          ],
+          "text": "            'FB2312-baseline-awake', 'FB2411')"
+        }
+      ]
+    },
+    {
+      "path": "updateHypoxicBurdenStatsOutput.m",
+      "hits": [
+        {
+          "line": 77,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Hypoxic burden sheets updated:\\n%s\\n',WrittenWorkbookPath);"
+        }
+      ]
+    },
+    {
+      "path": "writeOxygenAnalysisManifest.m",
+      "hits": [
+        {
+          "line": 56,
+          "categories": [
+            "personal_or_volume_path"
+          ],
+          "text": "fprintf('Analysis manifest written:\\n%s\\n',ManifestPath);"
+        }
+      ]
+    }
+  ],
+  "exclusions": [
+    "docs/reference-results/**",
+    "../reference-validation/**",
+    "raw recordings and acquisition volumes",
+    "saved result payloads",
+    "all docs except a future explicitly reviewed release-document set",
+    "uninspected formats/symlinks listed in input manifest",
+    "AGENTS.md",
+    ".git/**"
+  ],
+  "limits": "Pattern hits are triage, not all defects. Runtime source provenance is not removed. No binary content was opened. Included means proposed software text only, not licensed, complete or sanitized release.",
+  "manual_triage": {
+    "confirmed_machine_specific_path": [
+      {
+        "path": "tests/analysis/reviewHPCachedReferenceEvidence.py",
+        "line": 77,
+        "disposition": "exclude from proposed BOI software release or separately approve a portability change; no code modified"
+      }
+    ],
+    "false_positive_notes": [
+      "Windows-drive regex also matches prose followed by escaped newline, such as saved:\\n; these are not personal paths.",
+      "Generic C:\\User, D:\\Data and D:\\path examples are placeholders, not evidence of private data.",
+      "Recording IDs in synthetic tests are not by themselves private recordings. All 47 automated hold flags remain triage rather than confirmed defects."
+    ],
+    "uninspected_format_note": "Input entries labelled nontext_excluded_not_read mean outside this text allowlist, not necessarily binary. CITATION.cff, SVG, CMD and PS1 were not opened; PDF and MLAPP contents also uninspected.",
+    "package_dependency_defect": {
+      "source": "createOxygenReleasePackage.m:77",
+      "missing_root_entries": [
+        "openBOIRecordingWorkflow.m",
+        "prepareBOIRecordingRequest.m",
+        "runBOIRecordingWorkflow.m",
+        "loadBOIRecordingRun.m",
+        "openBOIG4EvidenceBundle.m",
+        "createBOIG4EvidenceBundle.m",
+        "loadBOIG4EvidenceBundle.m"
+      ],
+      "caller": "OxygenDynamics_GUI.m:40",
+      "classification": "static failure: legacy package list omits current GUI dependencies; no package executed"
+    },
+    "documentation_closure": "Candidate deliberately excludes development documents; README links into excluded docs require a separately approved release-document selection. No completeness claim."
+  }
+}

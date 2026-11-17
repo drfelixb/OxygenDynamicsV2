@@ -45,13 +45,15 @@ else
     fs =1;
 end
 
+if ~exist('BOISupportProfile','var'),BOISupportProfile='whole-image';end
+BOISupportProfile=getBOISupportProfile(struct('BOISupportProfile',BOISupportProfile));
+StrictROISupport=strcmp(BOISupportProfile,'craniotomy-roi-1');
 [AnalysisParams,ParamVars] = createOxygenMasterParams(PixelSize,fs);
 smooth = ParamVars.smooth;
 ThresholdMinsize = ParamVars.ThresholdMinsize;
 ThresholdMaxsize = ParamVars.ThresholdMaxsize;
 CircularityThres = ParamVars.CircularityThres;
 ThresholdMinsize_Surges = ParamVars.ThresholdMinsize_Surges;
-Thesholdtime = ParamVars.Thesholdtime;
 ThresholMinddur = ParamVars.ThresholMinddur;
 ThresholMaxddur = ParamVars.ThresholMaxddur;
 ThresholMinddur_Surges = ParamVars.ThresholMinddur_Surges;
@@ -64,8 +66,6 @@ SinkTraceCorrelationThreshold = ParamVars.SinkTraceCorrelationThreshold;
 SinkNoiseCorrelationPercentile = ParamVars.SinkNoiseCorrelationPercentile;
 EventBaselineReturnTolerance = ParamVars.EventBaselineReturnTolerance;
 SinkDetectionNoiseAmpThreshold = ParamVars.SinkDetectionNoiseAmpThreshold;
-SurgeBaselineWindowFrames = ParamVars.SurgeBaselineWindowFrames;
-SurgeOverlapSizeMarginPixels = ParamVars.SurgeOverlapSizeMarginPixels;
 PercentileSurgeDetectionThres = ParamVars.PercentileSurgeDetectionThres;
 SurgeCircularityThreshold = ParamVars.SurgeCircularityThreshold;
 MaxOutsideRecordingAreaFraction = ParamVars.MaxOutsideRecordingAreaFraction;
@@ -77,6 +77,14 @@ else
     MasterRecordingFolder = pwd;
 end
 [InputData,AnalysisInfo] = loadOxygenMasterInputs(MasterRecordingFolder,AnalysisParams);
+if StrictROISupport
+    AnalysisInfo.BOISupportProfile=BOISupportProfile;
+    RequiredMask=resolveBOITissueSupport(AnalysisInfo.BOITissueSupport,AnalysisInfo.FrameSize,AnalysisInfo.RawSHA256);
+    validateBOIDetectionMask(RequiredMask,AnalysisInfo.FrameSize);
+    validateBOIDetectionMask(RequiredMask(Pixel_frame+1:end-Pixel_frame,Pixel_frame+1:end-Pixel_frame), ...
+        AnalysisInfo.FrameSize-2*Pixel_frame);
+    clear RequiredMask
+end
 IM_Raw = InputData.IM_Raw;
 IM_NoNoise = InputData.IM_NoNoise;
 Miu = InputData.Miu;
@@ -107,9 +115,21 @@ toc;
 %% STEP 3 Defining the area of tissue that is being recorded.
 % This is not as clearcut as one might though simply because of the tissue movement. 
 
+ReviewedTissueMask = resolveBOITissueSupport(AnalysisInfo.BOITissueSupport, ...
+    AnalysisInfo.FrameSize,AnalysisInfo.RawSHA256);
 RecordingArea = computeRecordingArea(IM_Notrend,PixelSize,RecAreaBackgroundPercentile, ...
     'recAreaBinHalfSizeUm',RecAreaBinHalfSizeUm, ...
-    'recAreaMinCoverageFraction',RecAreaMinCoverageFraction);
+    'recAreaMinCoverageFraction',RecAreaMinCoverageFraction,'eligibleMask',ReviewedTissueMask);
+if ~isempty(ReviewedTissueMask)
+    AnalysisInfo.TissueSupportAudit = struct('Schema','boi-tissue-support-application-1', ...
+        'AutomaticTissuePixels',find(RecordingArea.AutomaticMask), ...
+        'AddedPixels',find(ReviewedTissueMask & ~RecordingArea.AutomaticMask), ...
+        'RemovedPixels',find(~ReviewedTissueMask & RecordingArea.AutomaticMask), ...
+        'Application','replace_automatic_support_before_candidate_filtering_and_spatial_bins', ...
+        'CandidatePolicy','existing_outside_fraction_filter; event_footprints_not_clipped', ...
+        'NormalizationSupport','whole_image_unchanged');
+end
+clear ReviewedTissueMask
 RecAreaFilter = RecordingArea.Filter;
 RecArea = RecordingArea.AreaUm2;
 RecArea_bins = RecordingArea.Bins;
@@ -126,7 +146,15 @@ IM_Raw_Notrend = single(IM_Raw_Notrend);
 
 %% STEP 6 Smooth the signal a bit more 
 % This step maybe redundant when working for denoised data
-[IM_Zframetime,IM_Zframetime_smoothed] = preprocessDetectionStack(IM_Notrend,smooth);
+if StrictROISupport
+    [IM_Zframetime,IM_Zframetime_smoothed,AnalysisInfo.DetectionSupportAudit] = ...
+        preprocessDetectionStack(IM_Notrend,smooth,'eligibleMask',logical(RecAreaFilter));
+    AnalysisInfo.DetectionSupportAudit.SinkImageBorderPixels=Pixel_frame;
+    AnalysisInfo.TissueSupportAudit.CandidatePolicy='sign_eligible_intersection_before_components; final_native_containment_required';
+    AnalysisInfo.TissueSupportAudit.NormalizationSupport='craniotomy-roi-1';
+else
+    [IM_Zframetime,IM_Zframetime_smoothed] = preprocessDetectionStack(IM_Notrend,smooth);
+end
 
 %% STEP 7  Detect the oxygen sink events/pockets in the filtered, smoothed data             
 fprintf('Detecting putative oxygen sinks in every frame... \n'); 
@@ -137,6 +165,7 @@ IMclip=IM_Zframetime_smoothed(Pixel_frame+1:end-Pixel_frame,Pixel_frame+1:end-Pi
 %I also clip the recording are so the linear indices to match when I refine
 RecAreaFilterclip=RecAreaFilter(Pixel_frame+1:end-Pixel_frame,Pixel_frame+1:end-Pixel_frame);
 SinkDetectionParams = struct();
+SinkDetectionParams.restrictToSupport=StrictROISupport;
 SinkDetectionParams.percentileThreshold = PercentileDetectionThres;
 SinkDetectionParams.minArea = ThresholdMinsize;
 SinkDetectionParams.maxArea = ThresholdMaxsize;
@@ -161,8 +190,8 @@ toc;
 
 fprintf('Refining putative oxygen sinks based on event duration thresholds... \n'); 
 tic;
-[Overall_OxygenSinks_Pxllist,Overall_OxySinks_logical] = refineTrackedSinkCandidates( ...
-    Overall_OxygenSinks_Pxllist,ThresholMinddur,ThresholMaxddur,Thesholdtime);
+[Overall_OxygenSinks_Pxllist,Overall_OxySinks_logical] = filterSinkRunsByDuration( ...
+    Overall_OxygenSinks_Pxllist,ThresholMinddur,ThresholMaxddur);
 toc;
 
 %% STEP 10 Extracting the mean trace for each identified pocket
@@ -310,14 +339,12 @@ toc;
 %% STEP 12 Detecting Oxygen surges
 fprintf('Identifying oxygen surges now... \n');
 
-%for the oxygen surges I need to follow a different approach. 
-% the spatial distribution is less importnant 
-% there is no maximum size
-% the percentile threshold will be different. I might need to check the original script from Ryszard
+% Surge candidate thresholds are distinct from sink thresholds and remain provisional.
 tic;
 %The putative oxygen surges are identified based on singal intensity.
 
 SurgeDetectionParams = struct();
+SurgeDetectionParams.restrictToSupport=StrictROISupport;
 SurgeDetectionParams.percentileThreshold = PercentileSurgeDetectionThres;
 SurgeDetectionParams.minArea = ThresholdMinsize_Surges;
 SurgeDetectionParams.maxArea = Inf;
@@ -333,20 +360,14 @@ toc;
 fprintf('Tracking putative oxygen surges across the imaging session... \n'); 
 tic;
 %this will contain putative oxygen surges(rows) and the pixels belonging to events for every frame of the recording.
-Overall_OxygenSurges_Pxllist = trackSurgeCandidates(OxygenSurgesInfo_all, ...
-    ThresholMinddur_Surges,ThresholdMinsize_Surges-SurgeOverlapSizeMarginPixels);
+[Overall_OxygenSurges_Pxllist,Overall_OxySurges_logical,SurgeRunMap,SurgeCandidateRunQC,SurgeGapReview,SurgeTrackingEdges,SurgeContactFrames] = ...
+    buildTrackedOxygenSurgeSites(OxygenSurgesInfo_all,AnalysisParams);
 
 clear OxygenSurgesInfo_all
 toc;
 
-%% STEP 14 Refining the identified oxygen surges based on event duration thresholds
-fprintf('Refining putative oxygen surges based on event duration threshold... \n'); 
-tic;
-[Overall_OxygenSurges_Pxllist,Overall_OxySurges_logical] = refineTrackedSurgeCandidates( ...
-    Overall_OxygenSurges_Pxllist,ThresholMinddur_Surges);
-fprintf([num2str(size(Overall_OxygenSurges_Pxllist,1)),' putative oxygen surge loci identified! \n'])
-
-toc;
+% Native runs have already passed duration filtering before recurring-site grouping.
+fprintf('%d retained oxygen surge runs across %d sites.\n',height(SurgeRunMap),size(Overall_OxygenSurges_Pxllist,1));
 
 %% Gathering oxygen surge loci parameters
 
@@ -396,13 +417,22 @@ SurgeEventMorphology = struct('MeanArea_um',MeanOxySurgeArea_um,'MeanFilledArea_
     'MeanCentroid_y',MeanCentroid_Surge_y);
 [NumOxySurgeEvents,Start_Surge,Duration_Surge,NormOxySurgeAmp,Size_Surge_modulation,Table_OxygenSurgeEvents_Out] = ...
     collateOxygenSurgeEvents(Overall_OxygenSurges_Pxllist,Overall_OxySurges_logical, ...
-    Mean_OxySurge_TraceZ,SurgeEventMetadata,SurgeEventMorphology,fs,SurgeBaselineWindowFrames,true);
+    SurgeEventMetadata,SurgeEventMorphology,fs,AnalysisParams);
+Table_OxygenSurgeEvents_Out=attachSurgeTrackingMetadata(Table_OxygenSurgeEvents_Out,SurgeRunMap,AnalysisParams);
 
 clear SurgeEventMetadata SurgeEventMorphology
 
 
 %% extracting traces for spatial bins
-Mean_ROI_TraceZ = extractSpatialBinTraces(IM_Zframetime,RecArea_bins,fix(RecAreaBinHalfSizeUm/PixelSize)*2);
+if StrictROISupport
+    BinSizePixels=fix(RecAreaBinHalfSizeUm/PixelSize)*2;
+    Mean_ROI_TraceZ=extractSpatialBinTraces(IM_Zframetime,RecArea_bins,BinSizePixels,logical(RecAreaFilter));
+    AnalysisInfo.DetectionSupportAudit.SpatialBinTracePolicy='included_pixels_only';
+    AnalysisInfo.DetectionSupportAudit.SpatialBinOrigins=RecArea_bins;
+    AnalysisInfo.DetectionSupportAudit.SpatialBinSizePixels=BinSizePixels;
+else
+    Mean_ROI_TraceZ = extractSpatialBinTraces(IM_Zframetime,RecArea_bins,fix(RecAreaBinHalfSizeUm/PixelSize)*2);
+end
 
 %% The output tables 
 Table_OxygenSinks_Out = createOxygenSinkSummaryTable(Experiment,Mouse,Condition,DrugID,Genotype,Promoter, ...
@@ -415,6 +445,36 @@ Table_OxygenSurges_Out = createOxygenSurgeSummaryTable(Experiment_Surge,Mouse_Su
     MeanCentroid_Surge_y,MeanOxySurgeArea_um,MeanOxySurgeFilledArea_um,MeanOxySurgeDiameter_um, ...
     MeanOxySurgePerimeter_um,MeanCircularity_Surge,MeanOxySurgeBoundingBox,NumOxySurgeEvents, ...
     Start_Surge,Duration_Surge,NormOxySurgeAmp,Size_Surge_modulation,OxySurge_Pxls_all);
+% Analysis schema 2.1: preserve native geometry and quantify each event independently.
+AnalysisInfo.PipelineContract=oxygenPipelineContract(BOISupportProfile);
+AnalysisInfo.AnalysisSchemaVersion=AnalysisInfo.PipelineContract.Schema;
+AnalysisInfo.RecordingID = char(java.io.File(Tifffiles(1).folder).getCanonicalPath());
+AnalysisInfo.NFrames = size(IM_Raw,3);
+AnalysisInfo.RecordingDurationSec = size(IM_Raw,3)/fs;
+AnalysisInfo.RecordingAreaUm2 = nnz(RecAreaFilter(Pixel_frame+1:end-Pixel_frame,Pixel_frame+1:end-Pixel_frame))*PixelSize^2;
+AnalysisInfo.SurgeRecordingAreaUm2 = RecArea;
+SinkTissueMask=false(size(RecAreaFilter));
+SinkTissueMask(Pixel_frame+1:end-Pixel_frame,Pixel_frame+1:end-Pixel_frame)= ...
+    RecAreaFilter(Pixel_frame+1:end-Pixel_frame,Pixel_frame+1:end-Pixel_frame);
+AnalysisInfo.SinkEligibleTissuePixels=find(SinkTissueMask);
+AnalysisInfo.SurgeEligibleTissuePixels=find(RecAreaFilter);
+AnalysisInfo.EpisodeReferencePolicy=boiEpisodeReferencePolicy();
+AnalysisInfo.EventReferencePolicy=boiEventReferencePolicy();
+AnalysisInfo.BurdenSelectionPolicy=boiBurdenSelectionPolicy();
+Table_OxygenSinks_Out.RecAreaSize=repmat({AnalysisInfo.RecordingAreaUm2},height(Table_OxygenSinks_Out),1);
+[Table_OxygenSinks_Out,Table_OxygenSinkEvents_Out] = finalizeOxygenEventMeasurements( ...
+    Table_OxygenSinks_Out,Table_OxygenSinkEvents_Out,Overall_OxygenSinks_Pxllist, ...
+    IM_Raw,fs,PixelSize,Pixel_frame,AnalysisInfo.RecordingID,'sink',AnalysisParams.quantBaselineWindowSec,Overall_OxygenSurges_Pxllist,0,AnalysisInfo.PipelineContract,AnalysisParams.recordingReferenceOverride);
+[Table_OxygenSurges_Out,Table_OxygenSurgeEvents_Out] = finalizeOxygenEventMeasurements( ...
+    Table_OxygenSurges_Out,Table_OxygenSurgeEvents_Out,Overall_OxygenSurges_Pxllist, ...
+    IM_Raw,fs,PixelSize,0,AnalysisInfo.RecordingID,'surge',AnalysisParams.surgeBaselineWindowSec,Overall_OxygenSinks_Pxllist,Pixel_frame,AnalysisInfo.PipelineContract);
+Table_OxygenSinks_Out.EligibleTissuePixels=repmat({AnalysisInfo.SinkEligibleTissuePixels},height(Table_OxygenSinks_Out),1);
+Table_OxygenSurges_Out.EligibleTissuePixels=repmat({AnalysisInfo.SurgeEligibleTissuePixels},height(Table_OxygenSurges_Out),1);
+if StrictROISupport
+    validateBOINativeSupport(Table_OxygenSinks_Out,AnalysisInfo.SinkEligibleTissuePixels,AnalysisInfo.FrameSize);
+    validateBOINativeSupport(Table_OxygenSurges_Out,AnalysisInfo.SurgeEligibleTissuePixels,AnalysisInfo.FrameSize);
+    AnalysisInfo.DetectionSupportAudit.FinalContainment='exact_native_support_checked_both_signs';
+end
 %% Saving outputs
 OverwriteOutputs = exist('strOW','var') && strcmpi(strOW,'Y');
 OutputData = createOxygenMasterOutputData(Tifffiles(1).folder,OverwriteOutputs,DatafileID,AnalysisInfo, ...
@@ -422,8 +482,19 @@ OutputData = createOxygenMasterOutputData(Tifffiles(1).folder,OverwriteOutputs,D
     Table_OxygenSinkEvents_Out,OxySinkArea_all,Mean_ROI_TraceZ,Mean_OxySink_TraceZ, ...
     Mean_OxySink_Trace_Convo,Mean_OxySink_Trace_Raw,OxySink_Map,Trace_PotentialNoise, ...
     Table_OxygenSurges_Out,Table_OxygenSurgeEvents_Out,OxySurgeArea_all,Mean_OxySurge_TraceZ,OxySurge_Map);
+SurgeCandidateRunQC.RecordingID=repmat(string(AnalysisInfo.RecordingID),height(SurgeCandidateRunQC),1);
+SurgeGapReview.RecordingID=repmat(string(AnalysisInfo.RecordingID),height(SurgeGapReview),1);
+OutputData.SurgeCandidateRunQC=SurgeCandidateRunQC;
+OutputData.SurgeGapReview=SurgeGapReview;
+SurgeTrackingEdges.RecordingID=repmat(string(AnalysisInfo.RecordingID),height(SurgeTrackingEdges),1);
+SurgeContactFrames.RecordingID=repmat(string(AnalysisInfo.RecordingID),height(SurgeContactFrames),1);
+OutputData.SurgeTrackingEdges=SurgeTrackingEdges;
+OutputData.SurgeContactFrames=SurgeContactFrames;
+if exist('SaveBOIReviewEvidence','var') && SaveBOIReviewEvidence
+    OutputData.ReviewRaw=IM_Raw;
+end
 SaveResult = saveOxygenMasterOutputs(OutputData);
+ReviewAuditPath=SaveResult.ReviewAuditPath;
 OutputFolders = SaveResult.OutputFolders;
 AnalysisInfo = SaveResult.AnalysisInfo;
 clear OutputData SaveResult
-

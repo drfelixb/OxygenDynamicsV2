@@ -1,0 +1,12 @@
+[
+  {
+    "Session": "M400-01-baseline-awake",
+    "ExactNativeMasks": true,
+    "ExactEventMeasurements": true
+  },
+  {
+    "Session": "M400-03-baseline-iso",
+    "ExactNativeMasks": true,
+    "ExactEventMeasurements": true
+  }
+]

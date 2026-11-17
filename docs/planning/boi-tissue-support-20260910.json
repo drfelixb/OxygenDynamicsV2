@@ -1,0 +1,36 @@
+{
+  "schema": "boi-implementation-decision-1",
+  "decision_id": "R1-TISSUE-004",
+  "date": "2026-09-10",
+  "origin": "Authorized continuation of the BOI reanalysis and researcher traceability work",
+  "scope": "BOI sinks and surges; IOSI excluded",
+  "trigger": "R2-HP-REVIEW-003 found that automatic support admitted dark peripheral image regions",
+  "decision": "Add explicit source-bound reviewed static support as an optional input before a fresh MATLAB master; preserve automatic support and record added/removed pixels",
+  "implementation_status": "implemented_and_synthetically_verified",
+  "scientific_acceptance": "not_established",
+  "unchanged_rules": [
+    "Default automatic mask calculation",
+    "Candidate percentile, morphology and outside-support fraction rules",
+    "Whole-image normalization and source-footprint quantification",
+    "Sink border exclusion and spatial-bin coverage rule",
+    "HP confirmed external 1 Hz timing; unreliable embedded clock retained separately"
+  ],
+  "provenance": [
+    "Proposed native logical mask and source-frame preview saved before adoption",
+    "Source checksum, exact mask indices, reviewer, reason, evidence, alignment evidence and UTC time",
+    "Original JSON snapshot and SHA-256 in master and statistics contracts",
+    "Automatic mask, added pixels and removed pixels retained",
+    "Changed or newly added declaration cannot be applied retrospectively to prior master output"
+  ],
+  "validation": "52 targeted MATLAB tests; complete synthetic reviewed-mask export and existing default known-event/zero-event integration; see reference-results/boi-tissue-support-20260910",
+  "real_HP_mask_adopted": false,
+  "biological_detector_reruns": 0,
+  "open_questions": [
+    "HP anatomical/observable support and reference-image alignment",
+    "Dynamic tissue validity, motion and unexplained broad intensity changes",
+    "HP source identities, physical calibration and biological labels",
+    "Physiological meaning of relative-normalization detections and outside-tissue footprint support",
+    "Researcher GUI mask editor and independent usability release walkthrough"
+  ],
+  "next_owned_work": "Inspect existing HP reference images for observable tissue and alignment evidence before adopting a real mask or tuning the detector"
+}

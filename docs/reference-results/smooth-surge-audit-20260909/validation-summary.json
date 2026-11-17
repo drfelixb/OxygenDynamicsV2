@@ -1,0 +1,21 @@
+{
+  "FullMasterRuns": 13,
+  "DistinctSourceRecordings": 4,
+  "SmoothChallengeRuns": 12,
+  "FocusedAnalysisTestsPassed": 57,
+  "EventRecordsAudited": 1973,
+  "MeasurementMismatches": 0,
+  "FiniteAmplitudes": 941,
+  "AccuracyGroundTruthAvailable": false,
+  "KnownLimitations": [
+    "Native surge timing unrefined",
+    "Fixed pixel overlap and area cutoffs",
+    "No equivalent surge recording-window baseline and equal-mouse summaries",
+    "No manually labelled physiological events"
+  ],
+  "SmokePassed": true,
+  "MasterToStatisticsIntegrationPassed": true,
+  "WorkbookSurgeDefinitionsVerified": true,
+  "RepositoryFilesInspected": 351,
+  "CodeAnalyzerMessages": 60
+}

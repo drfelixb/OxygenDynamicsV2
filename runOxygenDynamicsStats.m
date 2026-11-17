@@ -84,6 +84,9 @@ StatsConfig.behaviourFolderSelection = 'Recent'; % 'Recent' or 'Oldest'
 StatsConfig.outputRoot = 'Stats_Runs';
 StatsConfig.behaviourTimeWindows = {'3','3','3','3'}; % manual, movement/whisking, pupil, puff
 StatsConfig.masterFolder = pwd;
+StatsConfig.baselinePairsCsv = '';
+StatsConfig.analysisWindowsCsv = '';
+StatsConfig.windowPairsCsv = '';
 StatsConfig = applyOxygenDynamicsConfig(StatsConfig,'Stats');
 if nargin > 0
     if nargin ~= 1 || ~isstruct(varargin{1})
@@ -93,9 +96,31 @@ if nargin > 0
 end
 
 Masterfolder=StatsConfig.masterFolder;
-InputD=readInputTable(StatsConfig.inputCsv);
+if isfield(StatsConfig,'savedRecordingSources')
+    % Batch collection preserves saved text labels, including leading-zero IDs.
+    opts=detectImportOptions(StatsConfig.inputCsv,'Delimiter',',');
+    opts=setvartype(opts,{'Paths','Mouse','Genotype','Condition','DrugID','Promoter','RecordingID'},'char');
+    InputD=readtable(StatsConfig.inputCsv,opts);
+else
+    InputD=readInputTable(StatsConfig.inputCsv);
+end
 RequiredInputColumns = {'Paths','PostureFile','PupilFile','PuffsFile','WhiskingFile','Mouse','Genotype','Condition','DrugID','Promoter','SampleF','Pixelsize','Puff_2use'};
 validateInputTableColumns(InputD,RequiredInputColumns,StatsConfig.inputCsv);
+SavedSources=[];StatsProgress=[];
+if isfield(StatsConfig,'savedRecordingSources')
+    SavedSources=StatsConfig.savedRecordingSources;
+    assert(isstruct(SavedSources)&&numel(SavedSources)==height(InputD)&& ...
+        all(isfield(SavedSources,{'RecordingID','RecordingFolder','SinkMaster','SurgeMaster'}))&& ...
+        ismember('RecordingID',InputD.Properties.VariableNames)&& ...
+        isequal(string({SavedSources.RecordingID})',string(InputD.RecordingID)), ...
+        'OxygenDynamics:StatsSavedSource','Exact saved sources must match the CSV recording identities and row order.');
+end
+if isfield(StatsConfig,'progressFcn')
+    StatsProgress=StatsConfig.progressFcn;
+    assert(isempty(StatsProgress)||isa(StatsProgress,'function_handle'), ...
+        'OxygenDynamics:StatsProgress','Supply an optional progress function handle.');
+    StatsConfig=rmfield(StatsConfig,'progressFcn'); % Never serialize a GUI closure.
+end
 %%
 Paths=table2cell(InputD(:,{'Paths'}));
 validateRecordingPaths(Paths,Masterfolder,StatsConfig.inputCsv);
@@ -120,6 +145,9 @@ PuffsSFs=1000;
 
 %% Inputs from the user to check if curated oxygensink data should be used and what folders
 
+SinkFold_OldORNew = StatsConfig.sinkFolderSelection;
+SurgeFold_OldORNew = StatsConfig.surgeFolderSelection;
+BehFold_OldORNew = StatsConfig.behaviourFolderSelection;
 if StatsConfig.interactive
     Currated = questdlg('Do you have curated Oxygen sinks data ready for analysis?',...
         'What data',...
@@ -169,6 +197,8 @@ elseif ~StatsConfig.interactive
 end
 
 StatsInfo = struct();
+StatsInfo.CalculationSoftware = getOxygenPipelineVersion(); % identity at statistics calculation time
+StatsInfo.PipelineContract=oxygenPipelineContract();
 StatsInfo.AnalysisDate = char(datetime('now','Format','yyyy-MM-dd HH:mm:ss'));
 StatsInfo.Masterfolder = Masterfolder;
 StatsInfo.InputCsv = StatsConfig.inputCsv;
@@ -215,6 +245,7 @@ StatsRunTimer = tic;
 fprintf('[Stats %s] Loading recording outputs from %d CSV rows...\n', ...
     char(datetime('now','Format','HH:mm:ss')),length(Paths));
 for datai=1:length(Paths)
+    reportProgress('loading',datai,length(Paths),string(Mice{datai}));
     fprintf('[Stats %s] Loading recording %d/%d: mouse %s, condition %s, path %s\n', ...
         char(datetime('now','Format','HH:mm:ss')),datai,length(Paths), ...
         string(Mice{datai}),string(Conditions{datai}),string(Paths{datai}));
@@ -222,6 +253,11 @@ for datai=1:length(Paths)
     RecordingInput = createStatsRecordingInput(Paths{datai},Mice{datai},Conditions{datai}, ...
         Genotypes{datai},Promoters{datai},DrugIDs{datai},Postures{datai}, ...
         Pupils{datai},Puffs{datai},Whiskings{datai},Pixelsizes{datai});
+    RecordingInput.SampleF = SampleFs{datai};
+    if ~isempty(SavedSources),RecordingInput.SavedSources=SavedSources(datai);end
+    if ismember('RecordingID',InputD.Properties.VariableNames)
+        RecordingInput.RecordingID = string(InputD.RecordingID(datai));
+    end
     [StatsRecordingCells,StatsInfo] = loadStatsRecordingIntoCells( ...
         StatsRecordingCells,StatsInfo,datai,RecordingInput,Masterfolder,FolderSelection,Currated,iOS,BehFs);
     fprintf('[Stats %s] Finished recording %d/%d in %.1f s\n', ...
@@ -229,8 +265,21 @@ for datai=1:length(Paths)
 end
 
 fprintf('[Stats %s] Combining loaded recording tables...\n',char(datetime('now','Format','HH:mm:ss')));
+reportProgress('combining',length(Paths),length(Paths),'');
 StatsInfo.LoadSummary = warnStatsLoadedDataIssues(StatsInfo,StatsRecordingCells,IsBLI);
 StatsLoadedData=createStatsLoadedRecordingData(StatsRecordingCells);
+RecordingRegistry=vertcatCellTables(StatsRecordingCells.RecordingRegistry);
+assert(numel(unique(RecordingRegistry.RecordingID))==height(RecordingRegistry),'Duplicate recording IDs in input.');
+if IsBLI
+    [RecordingRegistry,BOIInputContracts,RecordingInputQC,RecordingFrameExposure] = ...
+        buildBOIRecordingInputContracts(RecordingRegistry,StatsInfo.Recordings);
+    if ~isempty(BOIInputContracts),StatsInfo.PipelineContract=BOIInputContracts{1}.PipelineContract;end
+    StatsInfo.EpisodeReferencePolicy=boiEpisodeReferencePolicy();
+    StatsInfo.EventReferencePolicy=boiEventReferencePolicy();
+    StatsInfo.BurdenSelectionPolicy=boiBurdenSelectionPolicy();
+    StatsInfo.BOIInputContractVersion = 'boi-recording-input-1';
+    StatsInfo.BOIWindowAuditVersion = 'boi-window-exposure-1';
+end
 Table_OxygenSinks_OutCombo=StatsLoadedData.TableOxygenSinks;
 Table_OxygenSinkEvents_OutCombo=StatsLoadedData.TableOxygenSinkEvents;
 HypoxicEventSpecificMetrics=StatsLoadedData.HypoxicEventSpecificMetrics;
@@ -299,7 +348,7 @@ fprintf('[Stats %s] Building ongoing sink/surge time series...\n',char(datetime(
     TotalSinkArea_Norm,TotalSinkArea_um,NumOngoingOxysurges, ...
     TotalSurgeArea,SinksRaster,SurgesRaster,TraceCorrs] = createOngoingStatsTimeSeries( ...
     Sinks_Traces,Surges_Area,ROIs_Traces,Table_OxygenSinks_OutCombo, ...
-    Table_OxygenSurges_OutCombo,Pixelsizes,TraceCorrs,IsBLI);
+    Table_OxygenSurges_OutCombo,Pixelsizes,TraceCorrs,IsBLI,RecordingRegistry);
 StatsInfo.SinkCountAreaNormalization = SinkCountAreaNormalization;
 
 
@@ -378,7 +427,7 @@ Sinks_Traces=addAlignedSinkEventTraces(Sinks_Traces,Table_OxygenSinks_OutCombo,3
 fprintf('[Stats %s] Creating condition/group filters...\n',char(datetime('now','Format','HH:mm:ss')));
 [FiltersOxySinksMetrics,FiltersOxySurgesMetrics,Filters_ROIsandEvents] = ...
     createStatsAnalysisFilters(Table_OxygenSinks_OutCombo,Table_OxygenSurges_OutCombo, ...
-    ROIs_Traces,Drugs_unique,Conditions_unique,StimCond_unique);
+    ROIs_Traces,Drugs_unique,Conditions_unique,StimCond_unique,RecordingRegistry);
 
 %% (6) Now using the filters generated in (5) divide the dataset and prepare the tables for export
 
@@ -484,9 +533,35 @@ StatsBLIWorkbookInputs.FiguresOutputFolder = FiguresoutputfolderPath;
     IsBLI,StatsCoreInputs,StatsBLIInputs,StatsBLIWorkbookInputs);
 StatsCoreData.HypoxicEventSpecificMetrics = HypoxicEventSpecificMetrics;
 fprintf('[Stats %s] Calculating hypoxic burden metrics...\n',char(datetime('now','Format','HH:mm:ss')));
+BurdenSelection=[];if IsBLI,BurdenSelection=boiBurdenSelectionPolicy();end
 StatsCoreData.HypoxicBurden = createHypoxicBurdenMetrics( ...
-    Table_OxygenSinkEvents_OutCombo,HypoxicEventSpecificMetrics,Table_OxygenSinks_OutCombo);
+    Table_OxygenSinkEvents_OutCombo,HypoxicEventSpecificMetrics,Table_OxygenSinks_OutCombo,RecordingRegistry,BurdenSelection);
+Windows=table(); WindowPairs=table();
+if isfield(StatsConfig,'analysisWindowsCsv') && strlength(string(StatsConfig.analysisWindowsCsv))>0
+    Windows=readtable(StatsConfig.analysisWindowsCsv,'TextType','string');
+end
+if isfield(StatsConfig,'windowPairsCsv') && strlength(string(StatsConfig.windowPairsCsv))>0
+    WindowPairs=readtable(StatsConfig.windowPairsCsv,'TextType','string');
+end
+[StatsCoreData.RecordingWindowMetrics,WindowFrameIngredients]=createOxygenAnalysisWindows(RecordingRegistry,Table_OxygenSinks_OutCombo,Table_OxygenSinkEvents_OutCombo,Windows,'sink',BurdenSelection);
+if IsBLI
+    StatsCoreData.BOIInputContracts=BOIInputContracts;
+    StatsCoreData.RecordingInputQC=RecordingInputQC;
+    StatsCoreData.RecordingFrameExposure=RecordingFrameExposure;
+    StatsCoreData.WindowFrameIngredients=WindowFrameIngredients;
+    [StatsCoreData.SurgeRecordingWindowMetrics,StatsCoreData.SurgeWindowFrameIngredients]= ...
+        createBOISurgeAnalysisWindows(RecordingRegistry,BOIInputContracts, ...
+        Table_OxygenSurges_OutCombo,Table_OxygenSurgeEvents_OutCombo,Windows);
+end
+StatsCoreData.WindowBaselineContrasts=createOxygenWindowContrasts(StatsCoreData.RecordingWindowMetrics,WindowPairs);
+StatsCoreData.RecordingRegistry = RecordingRegistry;
+Pairs=table();
+if isfield(StatsConfig,'baselinePairsCsv') && strlength(string(StatsConfig.baselinePairsCsv))>0
+    Pairs=readtable(StatsConfig.baselinePairsCsv,'TextType','string');
+end
+StatsCoreData.BaselineContrasts=createOxygenBaselineContrasts(StatsCoreData.HypoxicBurden.RecordingTable,Pairs);
 fprintf('[Stats %s] Exporting stats results and workbook...\n',char(datetime('now','Format','HH:mm:ss')));
+reportProgress('exporting',length(Paths),length(Paths),'');
 StatsExportInfo = exportStatsResults(StatsoutputfolderPath,StatsConfig.inputCsv, ...
     IsBLI,StatsCoreData,StatsBLIData,StatsBLIWorkbookData,ExportReady, ...
     EventSnippetTables,EventSnippetSheetNames);
@@ -499,8 +574,14 @@ StatsResult = struct();
 StatsResult.StatsInfo = StatsInfo;
 StatsResult.OutputFolders = StatsInfo.OutputFolders;
 StatsResult.OutputXlsx = StatsExportInfo.OutputXlsx;
+StatsResult.AnalysisManifest = StatsExportInfo.AnalysisManifest;
 StatsResult.DataOutputMat = StatsExportInfo.DataOutputMat;
 StatsResult.EventSpecificOutputXlsx = StatsExportInfo.EventSpecificOutputXlsx;
 StatsResult.EventSpecificDataMat = StatsExportInfo.EventSpecificDataMat;
 
+reportProgress('complete',length(Paths),length(Paths),'');
+    function reportProgress(stage,index,count,mouse)
+        if isempty(StatsProgress),return;end
+        StatsProgress(struct('Stage',stage,'Index',index,'Count',count,'Mouse',char(mouse)));
+    end
 end

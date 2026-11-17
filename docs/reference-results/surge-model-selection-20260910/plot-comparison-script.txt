@@ -1,0 +1,35 @@
+% Execute from the repository root with eval(fileread(path)).
+root='../reference-validation/surge-model-selection-20260910';
+T=readtable(fullfile(root,'unseen-cohort-summary.csv'),'Delimiter',',','TextType','string');
+fig=figure('Visible','off','Color','white','Position',[80 80 1100 500]);
+tl=tiledlayout(fig,1,2,'TileSpacing','compact','Padding','compact');
+methods=["rising","pulse","selection"];
+for c=1:2
+ cohorts=["development","additional"];S=T(T.Cohort==cohorts(c),:);v=zeros(3,3);
+ for j=1:3
+  r=S(S.Context==methods(j),:);
+  v(j,:)=[r.WithinFiveSec,r.Resolved-r.WithinFiveSec,r.Constructible-r.Resolved]/r.Constructible*100;
+ end
+ ax=nexttile(tl);b=bar(ax,v,'stacked');b(1).FaceColor=[.16 .48 .66];b(2).FaceColor=[.89 .55 .20];b(3).FaceColor=[.85 .85 .85];
+ ax.Color='white';ax.XColor='black';ax.YColor='black';ax.XTick=1:3;ax.XTickLabel={'Rising','Pulse','Selector'};
+ ylim(ax,[0 100]);ylabel(ax,'Percent of constructible cases','Color','black');
+ title(ax,sprintf('%s backgrounds: %d cases',cohorts(c),r.Constructible),'Color','black');
+ if c==1
+  subtitle(ax,'4 recordings; includes separate fluorescence control','Color','black');
+ else
+  subtitle(ax,'ID13 and FB2316; frozen historical supports','Color','black');
+ end
+end
+lg=legend(b,{'Resolved within 5 s','Resolved outside 5 s','Unresolved'},'Orientation','horizontal');
+lg.Layout.Tile='south';lg.TextColor='black';lg.Color='white';lg.EdgeColor='white';
+title(tl,'Unseen waveform challenge: coverage and timing error','Color','black');
+exportgraphics(fig,fullfile(root,'comparison.png'),'Resolution',160,'BackgroundColor','white');close(fig);
+files={'tests/analysis/selectSurgeOnsetModel.m','tests/analysis/testSurgeOnsetModelSelection.m', ...
+ 'tests/analysis/surgeUnseenEnvelope.m','tests/analysis/testSurgeUnseenEnvelope.m', ...
+ 'tests/analysis/prepareAdditionalOnsetBackgrounds.m','tests/analysis/runSurgeModelSelectionValidation.m'};
+advisories=struct('File',{},'Messages',{});
+for j=1:numel(files)
+ messages=checkcode(files{j},'-id');
+ if ~isempty(messages),advisories(end+1)=struct('File',files{j},'Messages',messages);end %#ok<AGROW>
+end
+f=fopen(fullfile(root,'new-analyzer-advisories.json'),'w');fprintf(f,'%s\n',jsonencode(advisories,'PrettyPrint',true));fclose(f);

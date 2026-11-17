@@ -7,9 +7,9 @@ Table_OxygenSurgeEvents_OutCombo = TableOxygenSurgeEvents;
 Table_OxygenSinks_OutCombo = TableOxygenSinks;
 Table_OxygenSinkEvents_OutCombo = TableOxygenSinkEvents;
 
-save(fullfile(StatsOutputFolderPath,'SurgeTable4LME.mat'),'Table_OxygenSurges_OutCombo');
-save(fullfile(StatsOutputFolderPath,'SurgeEventTable.mat'),'Table_OxygenSurgeEvents_OutCombo');
-save(fullfile(StatsOutputFolderPath,'SinkTable4LME.mat'),'Table_OxygenSinks_OutCombo');
-save(fullfile(StatsOutputFolderPath,'SinkEventTable.mat'),'Table_OxygenSinkEvents_OutCombo');
+saveStatsMATFile(fullfile(StatsOutputFolderPath,'SurgeTable4LME.mat'),struct('Table_OxygenSurges_OutCombo',Table_OxygenSurges_OutCombo));
+saveStatsMATFile(fullfile(StatsOutputFolderPath,'SurgeEventTable.mat'),struct('Table_OxygenSurgeEvents_OutCombo',Table_OxygenSurgeEvents_OutCombo));
+saveStatsMATFile(fullfile(StatsOutputFolderPath,'SinkTable4LME.mat'),struct('Table_OxygenSinks_OutCombo',Table_OxygenSinks_OutCombo));
+saveStatsMATFile(fullfile(StatsOutputFolderPath,'SinkEventTable.mat'),struct('Table_OxygenSinkEvents_OutCombo',Table_OxygenSinkEvents_OutCombo));
 
 end

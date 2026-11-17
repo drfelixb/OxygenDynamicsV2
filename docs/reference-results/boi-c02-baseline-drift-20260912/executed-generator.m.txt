@@ -1,0 +1,48 @@
+root=fileparts(mfilename('fullpath'));ws=fileparts(fileparts(root));repo=fullfile(ws,'existing-analysis');cd(repo);setupOxygenDynamicsPath;
+out=fullfile(root,'run-01');assert(~isfolder(out));mkdir(out);copyfile(mfilename('fullpath')+".m",fullfile(out,'executed-runDriftAudit.m'));timer=tic;
+R=struct('DecisionID','R2-C02-BASELINE-DRIFT-036','Status','started','MatlabVersion',version,'DetectorRuns',0,'StatisticsRuns',0,'ProductionChanges',false,'PrespecSHA256',oxygenFileSHA256(fullfile(root,'prespecification.json')),'GeneratorSHA256',oxygenFileSHA256(fullfile(out,'executed-runDriftAudit.m')));
+try
+ spec=jsondecode(fileread(fullfile(root,'prespecification.json')));
+ for i=1:numel(spec.Inputs),assert(strcmp(oxygenFileSHA256(spec.Inputs(i).path),spec.Inputs(i).sha256));end
+ code=createOxygenRegressionCodeManifest(repo);writetable(code,fullfile(out,'code-manifest-before.csv'));
+ A=load(fullfile(ws,'reference-validation','boi-c02-strict-roi-20260912','audit-01','source-amplitude-audit','event-amplitude-audit.mat'));
+ prior=fullfile(ws,'reference-validation','boi-c02-normalization-audit-20260912','run-01');roi=readtable(fullfile(prior,'roi-reference.csv'));summary=cell(3,1);metrics=cell(6,1);
+ for ci=1:3
+  c=spec.Cases(ci);folder=fullfile(out,c.CaseID);mkdir(folder);a=A.Audit(c.AuditRow,:);tr=A.Traces{c.AuditRow};old=readtable(fullfile(prior,c.CaseID,'decomposition.csv'));b=tr.CleanBaselineFrames(:);raw=tr.Raw(:);rr=roi.ROIRawMean;Frame=old.Frame;
+  assert(numel(raw)==1200 && isequal(b,(c.BaselineFrames(1):c.BaselineFrames(2))') && numel(b)==20);
+  assert(isequal(b,find(old.CleanBaseline)) && isequal(tr.DetectedFrames(:),find(old.NativeWindow)));
+  assert(a.CleanBaselineFrames==20 && a.OverlapExcludedFrames==0 && a.NonfiniteBaselineFrames==0 && a.StoredStatus=="valid");
+  replay=max(abs(raw-old.RawMean));assert(replay<1e-9 && max(abs(rr-old.ROIRawMean))<1e-9);
+  assert(isequal(find(old.MeasurementWindow),(a.StartFrame:a.EndFrame)'));
+  B0=mean(raw(b));RB0=mean(rr(b));delta=(raw(a.StartFrame:a.EndFrame)-B0)/B0;
+  if a.EventType=="sink",amp=-min(delta);else,amp=max(delta);end
+  assert(abs(B0-a.StoredBaseline)<1e-9 && abs(amp-a.StoredAmplitude)<1e-9);
+  loc=measureDrift(raw(b),b,B0,c.CaseID,'local');ref=measureDrift(rr(b),b,RB0,c.CaseID,'ROI');metrics{2*ci-1}=loc;metrics{2*ci}=ref;
+  rho=corrcoef(raw(b),rr(b));S=struct('CaseID',string(c.CaseID),'Subject',"FB2314",'Condition',"awake baseline",'AuditRow',c.AuditRow,'SiteID',a.SiteID,'EventID',a.EventID,'EventType',a.EventType,'BaselineStartFrame',b(1),'BaselineEndFrame',b(end),'BaselineSamples',numel(b),'MeasurementStartFrame',a.StartFrame,'MeasurementEndFrame',a.EndFrame,'NativeStartFrame',tr.DetectedFrames(1),'NativeEndFrame',tr.DetectedFrames(end),'FootprintPixels',numel(tr.Footprint),'BaselineValue',B0,'ROIBaselineValue',RB0,'PreservedAmplitudeFraction',a.StoredAmplitude,'RecomputedAmplitudeFraction',amp,'RawTraceReplayMaxAbsError',replay,'BaselineLocalROICorrelation',rho(1,2),'LocalMinusROISlopePercentPerSec',loc.SlopePercentPerSec-ref.SlopePercentPerSec,'RawSourceSHA256',string(A.AnalysisInfo.RawSHA256));summary{ci}=S;
+  RelativeSec=Frame-a.StartFrame;LocalPercent=100*(raw/B0-1);ROIPercent=100*(rr/RB0-1);Baseline=ismember(Frame,b);Measurement=Frame>=a.StartFrame&Frame<=a.EndFrame;Native=ismember(Frame,tr.DetectedFrames);
+  LocalFitPercent=nan(size(Frame));ROIFitPercent=LocalFitPercent;LocalFitPercent(b)=100*loc.SlopeUnitsPerSec*(b-mean(b))/B0;ROIFitPercent(b)=100*ref.SlopeUnitsPerSec*(b-mean(b))/RB0;
+  T=table(Frame,RelativeSec,raw,rr,LocalPercent,ROIPercent,Baseline,Measurement,Native,LocalFitPercent,ROIFitPercent,'VariableNames',{'Frame','RelativeSec','LocalRawMean','ROIRawMean','LocalPercentOfBaselineChange','ROIPercentOfBaselineChange','CleanBaseline','MeasurementWindow','NativeWindow','LocalBaselineFitPercent','ROIBaselineFitPercent'});
+  writetable(T,fullfile(folder,'source-and-baseline.csv'));writematrix(tr.Footprint(:),fullfile(folder,'native-footprint-pixels.csv'));writetable(T(b,:),fullfile(folder,'baseline-samples.csv'));save(fullfile(folder,'preserved-source-trace.mat'),'tr','S','loc','ref','-v7');
+  drawCase(T,S,loc,ref,fullfile(folder,'baseline-drift.png'));
+  fprintf('%s local slope %+.6f %%/s, first/last10 %+.6f / %+.6f; ROI %+.6f %%/s\n',c.CaseID,loc.SlopePercentPerSec,loc.First10SlopePercentPerSec,loc.Last10SlopePercentPerSec,ref.SlopePercentPerSec);
+ end
+ writetable(struct2table(vertcat(summary{:})),fullfile(out,'case-summary.csv'));writetable(struct2table(vertcat(metrics{:})),fullfile(out,'baseline-drift-metrics.csv'));
+ after=createOxygenRegressionCodeManifest(repo);writetable(after,fullfile(out,'code-manifest-after.csv'));assert(isequal(code,after));R.Status='completed';R.Cases=vertcat(summary{:});R.Metrics=vertcat(metrics{:});R.MatlabFilesUnchanged=height(code);R.ElapsedSeconds=toc(timer);writeJSON(fullfile(out,'drift-report.json'),R);
+catch err
+ R.Status='failed';R.Error=getReport(err,'extended','hyperlinks','off');R.ElapsedSeconds=toc(timer);writeJSON(fullfile(out,'drift-report.json'),R);rethrow(err)
+end
+function m=measureDrift(y,frames,B,id,label)
+ x=double(frames(:));y=double(y(:));xx=x-mean(x);p=polyfit(xx,y,1);fit=polyval(p,xx);first=polyfit(x(1:10)-mean(x(1:10)),y(1:10),1);last=polyfit(x(11:20)-mean(x(11:20)),y(11:20),1);
+ m=struct('CaseID',string(id),'Signal',string(label),'Mean',B,'SampleSD',std(y),'CVPercent',100*std(y)/B,'Minimum',min(y),'Maximum',max(y),'PeakToTroughPercent',100*(max(y)-min(y))/B,'First5Mean',mean(y(1:5)),'Last5Mean',mean(y(16:20)),'Last5MinusFirst5Percent',100*(mean(y(16:20))-mean(y(1:5)))/B,'SlopeUnitsPerSec',p(1),'SlopePercentPerSec',100*p(1)/B,'SlopePercentPerMinute',6000*p(1)/B,'Fitted19SecChangePercent',1900*p(1)/B,'ResidualRMSPercent',100*sqrt(mean((y-fit).^2))/B,'DescriptiveR2',1-sum((y-fit).^2)/sum((y-mean(y)).^2),'First10SlopeUnitsPerSec',first(1),'Last10SlopeUnitsPerSec',last(1),'First10SlopePercentPerSec',100*first(1)/B,'Last10SlopePercentPerSec',100*last(1)/B);
+end
+function drawCase(T,S,loc,ref,p)
+ fig=figure('Visible','off','Position',[0,0,1180,790]);tiledlayout(2,1,'TileSpacing','compact');nexttile;hold on;c=T.RelativeSec>=-60&T.Frame<=S.MeasurementEndFrame+30;t=T.RelativeSec;
+ h1=plot(t(c),T.LocalPercentOfBaselineChange(c),'Color',[0,.35,.75],'LineWidth',1.4);h2=plot(t(c),T.ROIPercentOfBaselineChange(c),'Color',[.85,.3,.05],'LineWidth',1.4);yl=ylim;
+ h3=patch([-20,0,0,-20],yl([1,1,2,2]),[.2,.7,.3],'FaceAlpha',.10,'EdgeColor','none');last=S.MeasurementEndFrame-S.MeasurementStartFrame+1;h4=patch([0,last,last,0],yl([1,1,2,2]),[.95,.7,.2],'FaceAlpha',.12,'EdgeColor','none');
+ plot([S.NativeStartFrame-S.MeasurementStartFrame,S.NativeEndFrame-S.MeasurementStartFrame+1],repmat(yl(1)+.04*diff(yl),1,2),'k-','LineWidth',4);yline(0,':','HandleVisibility','off');grid on;xlim([min(t(c)),max(t(c))]);ylabel('Change from own baseline mean (%)');xlabel('Seconds relative to measurement start');legend([h1,h2,h3,h4],{'Local source','Whole ROI source','20-s baseline','Measurement window'},'Location','best');title('Original source context; black bar marks native detection span');
+ nexttile;hold on;b=T.CleanBaseline;plot(t(b),T.LocalPercentOfBaselineChange(b),'o-','Color',[0,.35,.75],'DisplayName','Local samples');plot(t(b),T.ROIPercentOfBaselineChange(b),'o-','Color',[.85,.3,.05],'DisplayName','ROI samples');plot(t(b),T.LocalBaselineFitPercent(b),'--','Color',[0,.35,.75],'LineWidth',2,'DisplayName','Local 20-s fit');plot(t(b),T.ROIBaselineFitPercent(b),'--','Color',[.85,.3,.05],'LineWidth',2,'DisplayName','ROI 20-s fit');xline(-10.5,':','HandleVisibility','off');yline(0,':','HandleVisibility','off');grid on;legend('Location','best');xlim([-20,-1]);xlabel('Seconds relative to measurement start');ylabel('Change from own baseline mean (%)');title(sprintf('Baseline only: local slope %+.3f %%/s; ROI slope %+.3f %%/s',loc.SlopePercentPerSec,ref.SlopePercentPerSec));
+ sgtitle(sprintf('FB2314 awake — %s | original amplitude %+.3f%%',S.CaseID,100*S.PreservedAmplitudeFraction),'Interpreter','none');exportgraphics(fig,p,'Resolution',140);close(fig);
+end
+function writeJSON(p,v)
+ fid=fopen(p,'w');assert(fid>0);clean=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(v,'PrettyPrint',true));
+end

@@ -1,0 +1,26 @@
+function recordFirstJudgment
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));
+addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+f=fullfile(here,'researcher-review','feedback-01.json');d=jsondecode(fileread(f));
+s=d.SourceBindings;names=fieldnames(s);
+for k=1:numel(names),v=s.(names{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+R=loadBOIEventReview(s.Audit.Path);
+A=struct('Status','not_recognized','OnsetFrames',[],'RecoveryFrames',[], ...
+ 'PreferredOnsetFrame',[],'PreferredRecoveryFrame',[],'Reviewer','Researcher (user)', ...
+ 'Reason',['User: "I do not see a pocket". Prompt concerns corrected-intensity trace near automatic frames 25-31, sink site 6/event 1. Supporting score is context. No biological ground-truth inference. Feedback SHA256: ' oxygenFileSHA256(f)]);
+newpath=fullfile(here,'researcher-review','BOI-researcher-review-01.json');
+Store=saveBOIBoundaryReview(R,34,A,newpath);
+assert(numel(Store.Document.Revisions)==1);
+assert(strcmp(Store.Document.Revisions.Annotation.Status,'not_recognized'));
+assert(isempty(Store.Document.Revisions.Annotation.OnsetFrames));
+[Fig,UI]=openFB2420Review(1);UI.LoadBoundaries(newpath);drawnow;
+exportapp(Fig,fullfile(here,'researcher-review','case-01-not-recognized.png'));close(Fig);
+[Fig,UI]=openFB2420Review(2);UI.LoadBoundaries(newpath);drawnow;
+exportapp(Fig,fullfile(here,'researcher-review','case-02-timing.png'));close(Fig);
+v=struct('Status','saved_reloaded_and_rendered','AuditRow',34,'AnnotationStatus','not_recognized', ...
+ 'BoundaryArtifact',struct('Path',Store.Path,'SHA256',Store.SHA256), ...
+ 'Feedback',struct('Path',f,'SHA256',oxygenFileSHA256(f)), ...
+ 'NextQueuePosition',2,'NextAuditRow',1,'AutomaticSourcesUnchanged',true);
+for k=1:numel(names),a=s.(names{k});assert(strcmp(oxygenFileSHA256(a.Path),a.SHA256));end
+fid=fopen(fullfile(here,'researcher-review','verification-01.json'),'w');fprintf(fid,'%s\n',jsonencode(v,'PrettyPrint',true));fclose(fid);
+end

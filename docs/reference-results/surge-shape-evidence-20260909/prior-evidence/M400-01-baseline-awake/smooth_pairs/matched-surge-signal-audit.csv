@@ -1,0 +1,7 @@
+TruthRow,TruthStartFrame,TruthEndFrame,BestNativeSpacetimeIoU,BestEventRow,NativeStartFrame,NativeEndFrame,ReportedAmplitudeFraction,BaselineStatus,AppliedChangeInNativePrebaselineFraction,NativePrebaselineChangeFromAnchorFraction,FullSupportPeakFromAnchorFraction,PeakAppliedChangeOnEventFootprint,NativePrebaselineFramesTouchingKnownSurge
+1,41,60,0.430527246856132,6,46,57,0.107704227576848,valid,0.00493680568928387,0.00670417258137346,0.11513046788764,0.0925323087670275,5
+2,66,85,0.402089505691564,13,70,82,NaN,insufficient_clean_prebaseline,0.0204855206788476,0.0268443029235159,0.10147268722276,0.0597074937373807,15
+3,111,130,0,0,NaN,NaN,NaN,no_intersection,NaN,NaN,NaN,NaN,NaN
+4,146,165,0,0,NaN,NaN,NaN,no_intersection,NaN,NaN,NaN,NaN,NaN
+5,196,215,0,0,NaN,NaN,NaN,no_intersection,NaN,NaN,NaN,NaN,NaN
+6,246,265,0.369585453642795,43,251,262,NaN,insufficient_clean_prebaseline,0.00211886551953493,-0.0423914978550139,0.0283962502749644,0.0391944965311244,5

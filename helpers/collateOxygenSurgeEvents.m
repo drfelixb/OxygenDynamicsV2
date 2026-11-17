@@ -1,7 +1,6 @@
 function [NumOxySurgeEvents,Start_Surge,Duration_Surge,NormOxySurgeAmp,Size_Surge_modulation, ...
     Table_OxygenSurgeEvents_Out] = collateOxygenSurgeEvents(Overall_OxygenSurges_Pxllist, ...
-    Overall_OxySurges_logical,Mean_OxySurge_TraceZ,metadata,morphology,fs, ...
-    surgeBaselineWindowFrames,useAbsoluteRatio)
+    Overall_OxySurges_logical,metadata,morphology,fs,analysisParams)
 %COLLATEOXYGENSURGEEVENTS Build surge event summaries and event-level output table.
 
 [NumOxySurgeEvents,Start_Surge,Duration_Surge,NormOxySurgeAmp,Size_Surge_modulation] = ...
@@ -19,8 +18,10 @@ for i = 1:size(Overall_OxygenSurges_Pxllist,1)
     Size_Surge_modulation(i) = {NaN(1,length(EventsTemp))};
 
     for q = 1:length(EventsTemp)
-        EventMetrics = quantifyOxygenSurgeEvent(EventsTemp(q).PixelIdxList,Mean_OxySurge_TraceZ(i,:), ...
-            surgeBaselineWindowFrames,useAbsoluteRatio);
+        frames=EventsTemp(q).PixelIdxList;
+        % Amplitudes are filled only by the shared preserved-input finalizer.
+        EventMetrics=struct('StartFrame',frames(1),'EndFrame',frames(end), ...
+            'DurationFrames',numel(frames),'NormAmp',NaN);
         Start_Surge{i}(q) = EventMetrics.StartFrame;
         Duration_Surge{i}(q) = EventMetrics.DurationFrames;
         NormOxySurgeAmp{i}(q) = EventMetrics.NormAmp;
@@ -45,5 +46,12 @@ Table_OxygenSurgeEvents_Out = createOxygenSurgeEventTable(SurgeEventVectors.Surg
     SurgeEventVectors.EventMeanOxySurgeFilledArea_um,SurgeEventVectors.EventMeanOxySurgeDiameter_um, ...
     SurgeEventVectors.EventMeanOxySurgePerimeter_um,SurgeEventVectors.EventMeanCircularity_Surge, ...
     SurgeEventVectors.EventMeanCentroid_Surge_x,SurgeEventVectors.EventMeanCentroid_Surge_y);
+
+Table_OxygenSurgeEvents_Out.NativeStartFrame=Table_OxygenSurgeEvents_Out.StartFrame;
+Table_OxygenSurgeEvents_Out.NativeEndFrame=Table_OxygenSurgeEvents_Out.EndFrame;
+Table_OxygenSurgeEvents_Out.TimingMethod=repmat("native_mask_bounds_not_refined",height(Table_OxygenSurgeEvents_Out),1);
+Table_OxygenSurgeEvents_Out.TouchesRecordingStart=Table_OxygenSurgeEvents_Out.NativeStartFrame==1;
+Table_OxygenSurgeEvents_Out.TouchesRecordingEnd=Table_OxygenSurgeEvents_Out.NativeEndFrame==size(Overall_OxySurges_logical,2);
+Table_OxygenSurgeEvents_Out=annotateOxygenEventRecurrence(Table_OxygenSurgeEvents_Out,fs,analysisParams.surgeCloseNativeGapSec,'SurgeID');
 
 end

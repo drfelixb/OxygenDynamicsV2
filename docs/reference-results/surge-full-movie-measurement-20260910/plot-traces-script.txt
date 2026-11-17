@@ -1,0 +1,37 @@
+% Execute from repository root after diagnosis-script.txt.
+root='../reference-validation/surge-full-movie-measurement-20260910';
+T=readtable(fullfile(root,'assigned-trace-samples.csv'),'Delimiter',',','TextType','string');
+spec={ 'M400-01-baseline-awake',1,'Early surge: clean context unavailable'; ...
+ 'FB2316-baseline',2,'Slow surge: prior surge blocks context'; ...
+ 'FB2316-baseline',4,'Overlapping pair: one compound measurement'};
+fig=figure('Visible','off','Color','white','Position',[80 80 1450 530]);
+tl=tiledlayout(fig,1,3,'TileSpacing','compact','Padding','compact');
+for j=1:3
+ S=T(T.Session==string(spec{j,1})&T.Component==spec{j,2},:);ax=nexttile(tl);hold(ax,'on');
+ t=S.Frame-S.TruthStart(1);lo=min([S.Source;S.Observed]);hi=max([S.Source;S.Observed]);pad=max(1e-6,.1*(hi-lo));yl=[lo-pad hi+pad];
+ a=S.NativeStart(1)-S.TruthStart(1);b=S.NativeEnd(1)-S.TruthStart(1);
+ patch(ax,[a b b a],yl([1 1 2 2]),[.88 .94 .88],'EdgeColor','none','HandleVisibility','off');
+ active=logical(S.PreNativeBlocked);edges=diff([false;active;false]);starts=find(edges==1);ends=find(edges==-1)-1;
+ for k=1:numel(starts)
+  a=t(starts(k))-.5;b=t(ends(k))+.5;
+  patch(ax,[a b b a],yl([1 1 2 2]),[1 .88 .88],'EdgeColor','none','HandleVisibility','off');
+ end
+ h1=plot(ax,t,S.Source,'Color',[.2 .35 .55],'LineWidth',1.4);h2=plot(ax,t,S.Observed,'Color',[.85 .35 .1],'LineWidth',1.6);
+ h3=xline(ax,0,':','Color',[.25 .25 .25],'LineWidth',1.5);
+ if isfinite(S.Onset(1)),h4=xline(ax,S.Onset(1)-S.TruthStart(1),'--','Color',[.55 .2 .6],'LineWidth',1.5);end
+ ax.Color='white';ax.XColor='black';ax.YColor='black';ylim(ax,yl);xlim(ax,[min(t) max(t)]);
+ title(ax,spec{j,3},'Color','black');subtitle(ax,sprintf('%s, component %d',spec{j,1},spec{j,2}),'Interpreter','none','Color','black');
+ xlabel(ax,'Seconds from assigned component onset','Color','black');ylabel(ax,'Preserved intensity (support mean)','Color','black');
+end
+lg=legend([h1 h2 h3 h4],{'Unchanged source','Constructed recording','Assigned component starts','Estimated onset'},'Orientation','horizontal');
+lg.Layout.Tile='south';lg.Color='white';lg.TextColor='black';lg.EdgeColor='white';
+title(tl,'Full-movie detections constrain candidate surge measurements','Color','black');
+subtitle(tl,'Green: assigned native interval. Red: pre-native overlap with retained detections. Supports come from new detector runs.','Color','black');
+exportgraphics(fig,fullfile(root,'measurement-traces.png'),'Resolution',160,'BackgroundColor','white');close(fig);
+files={'tests/analysis/createSurgeMovieRecipe.m','tests/analysis/testSurgeMovieRecipe.m', ...
+ 'tests/analysis/runSurgeFullMovieMeasurement.m','tests/analysis/auditSurgeFullMovieMeasurement.m'};
+R=struct('File',{},'Messages',{});
+for j=1:numel(files)
+ messages=checkcode(files{j},'-id');if ~isempty(messages),R(end+1)=struct('File',files{j},'Messages',messages);end %#ok<AGROW>
+end
+f=fopen(fullfile(root,'new-analyzer-advisories.json'),'w');fprintf(f,'%s\n',jsonencode(R,'PrettyPrint',true));fclose(f);

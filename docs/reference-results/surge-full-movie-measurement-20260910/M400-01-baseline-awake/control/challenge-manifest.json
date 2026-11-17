@@ -1,0 +1,103 @@
+{
+  "SourceProfile": {
+    "Session": "M400-01-baseline-awake",
+    "AssetID": "8ba82dc1-aaba-411d-a196-ff8ef0b61fc3",
+    "ArchivePath": "sub-ID400/sub-ID400_ses-M400-01-baseline-awake_image.nwb",
+    "Mouse": "ID400",
+    "PixelSize": 4.75,
+    "SampleHz": 1,
+    "Condition": "Awake_immobile",
+    "DrugID": "awake",
+    "Promoter": "GFAP.PHP",
+    "Genotype": "WT",
+    "Series": "/acquisition/1hz_mcor.tif",
+    "NwbShape": [
+      512,
+      512,
+      600
+    ],
+    "TimeAxisHdf5": 3,
+    "Frames": 600,
+    "ArchiveSHA256": "dbdb847b52a501eaf826b191f0affb2bcfc7078c95cddf035aa785e1aac3b23f",
+    "Bytes": 1.71377994E+8,
+    "Role": "BOI_reference",
+    "URL": "https://dandiarchive.s3.amazonaws.com/blobs/eb2/f33/eb2f33c8-15fb-4535-afdd-0e535d766984"
+  },
+  "SourceSHA256": "695f8390be5fe18d06685d718b7e99c73d08715f51ef11ec14c694b32b599a05",
+  "Case": "control",
+  "Recipe": {
+    "CentersXY": [
+      [
+        226,
+        123
+      ],
+      [
+        244,
+        123
+      ]
+    ],
+    "RadiusUm": 85.5,
+    "RadiusPixels": 18,
+    "ComponentCenter": [
+      1,
+      1,
+      1,
+      2,
+      1,
+      2
+    ],
+    "Onsets": [
+      101,
+      201,
+      401,
+      409,
+      501,
+      509
+    ],
+    "RiseScales": [
+      7,
+      23,
+      7,
+      7,
+      7,
+      7
+    ],
+    "Shapes": [
+      "quadratic",
+      "gamma",
+      "quadratic",
+      "quadratic",
+      "quadratic",
+      "quadratic"
+    ],
+    "Signs": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      -1
+    ],
+    "Labels": [
+      "isolated_early",
+      "isolated_slow",
+      "target_positive_neighbor",
+      "positive_neighbor",
+      "target_negative_neighbor",
+      "negative_neighbor"
+    ],
+    "ControlEligibleFractions": [
+      0.95143706640237857,
+      0.95044598612487607
+    ]
+  },
+  "MaxRoundingError": 0,
+  "PipelineContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-surge-shape-continuity-5",
+    "Measurement": "event-footprint-contact-ledger-7",
+    "Statistics": "mouse-strict-contact-qc-8",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  },
+  "Placement": "Control eligible tissue only; no challenge detections used."
+}

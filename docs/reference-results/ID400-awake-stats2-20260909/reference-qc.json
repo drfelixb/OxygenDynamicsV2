@@ -1,0 +1,14 @@
+{
+  "MeanOccupiedTissueFraction": 0.0050455035325110767,
+  "LabelsAvailable": false,
+  "SinkSites": 56,
+  "SinkEvents": 137,
+  "SinkFiniteAmplitudes": 92,
+  "SinkWrongDirectionAmplitudes": 1,
+  "SinkValidBaselines": 92,
+  "SurgeSites": 14,
+  "SurgeEvents": 40,
+  "SurgeFiniteAmplitudes": 21,
+  "SurgeWrongDirectionAmplitudes": 0,
+  "SurgeValidBaselines": 21
+}

@@ -1,0 +1,58 @@
+{
+  "Schema": "boi-c02-eligibility-update-1",
+  "DecisionIDs": [
+    "R1-ID401-AWAKE-RUN-116",
+    "R1-ID401-ISO-RUN-117",
+    "R4-ID401-DESCRIPTIVE-118"
+  ],
+  "PreviousUpdate": "boi-c02-eligibility-update-20260921-114.json",
+  "PreviousUpdateSHA256": "562a882cc83a4e73aaaeb51748a79083d5efc14a1bfe3a23c3d3e3354e3ed390",
+  "Changes": [
+    {
+      "Session": "M401-01-baseline-awake",
+      "AssetID": "8f7d2943-1519-4bfd-b631-516985f6b572",
+      "SourceSHA256": "9713bb33939032150e0a6b0485165ec498def41ca87538773aaf243c10eab133",
+      "WorkingROI": "accepted_source_specific_working_support",
+      "RunStatus": "restricted_profile_run_verified",
+      "MethodProfile": "craniotomy-roi-1",
+      "NativeFrameCount": 600,
+      "SampleHz": 1,
+      "PixelSizeUm": 4.75,
+      "ModelExtentSec": [
+        0,
+        600
+      ],
+      "FinalComparisonWindows": [],
+      "Evidence": "reference-results/boi-id401-paired-summary-20260921/awake/verification.json"
+    },
+    {
+      "Session": "M401-03-baseline-iso",
+      "AssetID": "c593b79f-d207-44b8-946c-7462a0af0272",
+      "SourceSHA256": "2899f0e494852f7f52227df652cc8b2746e34d77f6ef8e445e390378ef611f82",
+      "WorkingROI": "accepted_source_specific_working_support",
+      "RunStatus": "restricted_profile_run_verified",
+      "MethodProfile": "craniotomy-roi-1",
+      "NativeFrameCount": 600,
+      "SampleHz": 1,
+      "PixelSizeUm": 4.75,
+      "ModelExtentSec": [
+        0,
+        600
+      ],
+      "FinalComparisonWindows": [],
+      "Evidence": "reference-results/boi-id401-paired-summary-20260921/iso/verification.json"
+    }
+  ],
+  "CurrentCounts": {
+    "CandidateMice": 7,
+    "CandidateRecordings": 14,
+    "RecordingsWithRunEvidence": 14,
+    "NoEquivalentRunInBaseInventory": 0,
+    "AcceptedWorkingROIs": 14,
+    "ExistingUnacceptedDrafts": 0,
+    "NoSourceSpecificProposal": 0,
+    "PairsWithBothRestrictedProfileRuns": 7,
+    "CompletedCurrentPairedDescriptiveSummaries": 7
+  },
+  "NewScientificExclusions": 0
+}

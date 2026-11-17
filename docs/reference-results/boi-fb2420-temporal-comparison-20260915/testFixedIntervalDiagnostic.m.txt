@@ -1,0 +1,33 @@
+function testFixedIntervalDiagnostic
+here=fileparts(mfilename('fullpath'));assert(~isfile(fullfile(here,'known-shape-tests.json')));timer=tic;
+fixtures={};
+fixtures{end+1}=trial('rise',[0 0 0 1 3 1 0 0 0],4,6,3);
+d=fixtures{end}.Result;assert(d.Before.Median==0&&d.After.MAD==0&&d.Before.Range==0&&d.BeforeContrasts.Rise==3&&d.BeforeContrasts.Decline==-1&&d.Interval.MaximumFrames==5);
+fixtures{end+1}=trial('decline',-[0 0 0 1 3 1 0 0 0],4,6,3);
+d=fixtures{end}.Result;assert(d.BeforeContrasts.Decline==3&&d.BeforeContrasts.Rise==-1);
+fixtures{end+1}=trial('flat_zero',zeros(1,9),4,6,3);d=fixtures{end}.Result;assert(d.Before.MAD==0&&d.Before.Range==0&&d.BeforeContrasts.Rise==0&&isequal(d.Interval.MinimumFrames,4:6)&&isequal(d.Interval.MaximumFrames,4:6));
+fixtures{end+1}=trial('sloping_context',1:12,5,8,3);d=fixtures{end}.Result;assert(d.Before.Median==3&&d.After.Median==10&&d.Before.MAD==1&&d.Before.Range==2&&d.ContextLevelDifference.Value==7&&d.BeforeContrasts.Rise==5&&d.AfterContrasts.Rise==-2&&d.OnsetVsBefore.Value==2&&d.RecoveryVsAfter.Value==-2);
+fixtures{end+1}=trial('tied_extrema',[0 0 0 1 3 1 3 0 0 0],4,7,3);d=fixtures{end}.Result;assert(isequal(d.Interval.MinimumFrames,[4 6])&&isequal(d.Interval.MaximumFrames,[5 7]));
+fixtures{end+1}=trial('early_acquisition',1:9,1,3,3);d=fixtures{end}.Result;assert(strcmp(d.Before.Status,'incomplete_acquisition')&&isempty(d.Before.Frames)&&isnan(d.Before.Median)&&strcmp(d.After.Status,'available')&&isnan(d.OnsetVsBefore.Value)&&d.RecoveryVsAfter.Value==-2);
+fixtures{end+1}=trial('nonfinite_flank',[0 NaN 0 1 3 1 0 0 0],4,6,3);d=fixtures{end}.Result;assert(strcmp(d.Before.Status,'nonfinite_samples')&&d.Before.NonfiniteFrames==2&&isnan(d.Before.MAD)&&isnan(d.BeforeContrasts.Rise)&&d.AfterContrasts.Rise==3);
+fixtures{end+1}=trial('nonfinite_interval',[0 0 0 1 Inf 1 0 0 0],4,6,3);d=fixtures{end}.Result;assert(strcmp(d.Interval.Status,'nonfinite_samples')&&isnan(d.Interval.Onset)&&isnan(d.AfterContrasts.Rise)&&d.ContextLevelDifference.Value==0);
+fixtures{end+1}=trial('late_acquisition',1:9,7,9,3);d=fixtures{end}.Result;assert(strcmp(d.After.Status,'incomplete_acquisition')&&isnan(d.RecoveryVsAfter.Value)&&d.OnsetVsBefore.Value==2);
+fixtures{end+1}=trial('missing_and_nonfinite',[NaN 2 3 4 5 6],2,3,3);d=fixtures{end}.Result;assert(strcmp(d.Before.Status,'incomplete_acquisition_and_nonfinite_samples')&&d.Before.MissingAcquisitionCount==2);
+fixtures{end+1}=trial('recovery_alternative_6',[5 4 3 1 2 3 4 5 6 7],4,6,2);
+fixtures{end+1}=trial('recovery_alternative_7',[5 4 3 1 2 3 4 5 6 7],4,7,2);assert(fixtures{end-1}.Result.After.Median==4.5&&fixtures{end}.Result.After.Median==5.5);
+N(1)=struct('AuditRow',1,'Sign','sink','SiteID',1,'EventID',1,'Frames',4,'FramePixels',{{[1 2]}});
+N(2)=struct('AuditRow',2,'Sign','surge','SiteID',2,'EventID',1,'Frames',[4 5],'FramePixels',{{[2 3],[3 4]}});
+C=fixedNativeContacts((3:5)',[1 2 3],N);assert(C{1}.AnyPixels==0&&C{2}.AnyPixels==3&&C{2}.SinkPixels==2&&C{2}.SurgePixels==2&&numel(C{2}.Contributors)==2&&C{3}.AnyPixels==1);
+H(1)=struct('ID','alt6','ParentObservation','one-pocket','Role','contextual_pocket_interval','AuditRow',1,'SourceBinding','synthetic','BoundCertainty','alternative','StartFrame',5,'EndFrame',6,'Footprint',[1 2]);H(2)=H(1);H(2).ID='alt7';H(2).EndFrame=7;
+HC=fixedHumanContacts((6:8)',[2 3],H);assert(numel(HC)==2&&HC{1}.RecoveryEndpointOnly&&~HC{2}.RecoveryEndpointOnly&&isequal(HC{2}.Frames,[6 7])&&HC{1}.SharedFootprintPixels==1);
+assert(isempty(fixedHumanContacts(1:3,[1 2],H)));assert(isempty(fixedHumanContacts(6:8,4,H)));
+result=struct('Status','passed','Fixtures',{fixtures},'NativeInput',N,'NativeFrames',3:5,'NativeFootprint',[1 2 3],'NativeResult',{C}, ...
+ 'HumanInput',H,'HumanFrames',6:8,'HumanFootprint',[2 3],'HumanResult',{HC},'MatlabSeconds',toc(timer),'Role','technical arithmetic and missingness/contact tests only');
+writeJSON(fullfile(here,'known-shape-tests.json'),result);disp('12 known-shape fixtures plus native-union and human-alternative contact assertions passed.');
+end
+function t=trial(name,y,a,b,W)
+t=struct('Name',name,'Input',y,'StartFrame',a,'EndFrame',b,'ContextSamples',W,'Result',fixedIntervalDiagnostic(y,a,b,W));
+end
+function writeJSON(p,x)
+f=fopen(p,'w');assert(f>=0);fprintf(f,'%s\n',jsonencode(x,'PrettyPrint',true));fclose(f);
+end

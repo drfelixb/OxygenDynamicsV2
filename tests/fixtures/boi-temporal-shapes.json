@@ -1,0 +1,1702 @@
+{
+  "Purpose": "Portable synthetic golden fixtures retaining existing temporal definitions",
+  "Fixtures": [
+    {
+      "Name": "rise",
+      "Input": [
+        0,
+        0,
+        0,
+        1,
+        3,
+        1,
+        0,
+        0,
+        0
+      ],
+      "StartFrame": 4,
+      "EndFrame": 6,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 4,
+        "EndFrame": 6,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "available",
+          "RequestedFrames": [
+            1,
+            2,
+            3
+          ],
+          "Frames": [
+            1,
+            2,
+            3
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            7,
+            8,
+            9
+          ],
+          "Frames": [
+            7,
+            8,
+            9
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            4,
+            5,
+            6
+          ],
+          "Values": [
+            1,
+            3,
+            1
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 1,
+          "MinimumFrames": [
+            4,
+            6
+          ],
+          "Maximum": 3,
+          "MaximumFrames": 5,
+          "Onset": 1,
+          "Recovery": 1,
+          "EndpointDifference": 0
+        },
+        "BeforeContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 3,
+          "Decline": -1
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 3,
+          "Decline": -1
+        },
+        "OnsetVsBefore": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 1
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 1
+        },
+        "ContextLevelDifference": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 0
+        }
+      }
+    },
+    {
+      "Name": "decline",
+      "Input": [
+        0,
+        0,
+        0,
+        -1,
+        -3,
+        -1,
+        0,
+        0,
+        0
+      ],
+      "StartFrame": 4,
+      "EndFrame": 6,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 4,
+        "EndFrame": 6,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "available",
+          "RequestedFrames": [
+            1,
+            2,
+            3
+          ],
+          "Frames": [
+            1,
+            2,
+            3
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            7,
+            8,
+            9
+          ],
+          "Frames": [
+            7,
+            8,
+            9
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            4,
+            5,
+            6
+          ],
+          "Values": [
+            -1,
+            -3,
+            -1
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": -3,
+          "MinimumFrames": 5,
+          "Maximum": -1,
+          "MaximumFrames": [
+            4,
+            6
+          ],
+          "Onset": -1,
+          "Recovery": -1,
+          "EndpointDifference": 0
+        },
+        "BeforeContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": -1,
+          "Decline": 3
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": -1,
+          "Decline": 3
+        },
+        "OnsetVsBefore": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": -1
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": -1
+        },
+        "ContextLevelDifference": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 0
+        }
+      }
+    },
+    {
+      "Name": "flat_zero",
+      "Input": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "StartFrame": 4,
+      "EndFrame": 6,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 4,
+        "EndFrame": 6,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "available",
+          "RequestedFrames": [
+            1,
+            2,
+            3
+          ],
+          "Frames": [
+            1,
+            2,
+            3
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            7,
+            8,
+            9
+          ],
+          "Frames": [
+            7,
+            8,
+            9
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            4,
+            5,
+            6
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 0,
+          "MinimumFrames": [
+            4,
+            5,
+            6
+          ],
+          "Maximum": 0,
+          "MaximumFrames": [
+            4,
+            5,
+            6
+          ],
+          "Onset": 0,
+          "Recovery": 0,
+          "EndpointDifference": 0
+        },
+        "BeforeContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 0,
+          "Decline": 0
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 0,
+          "Decline": 0
+        },
+        "OnsetVsBefore": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 0
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 0
+        },
+        "ContextLevelDifference": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 0
+        }
+      }
+    },
+    {
+      "Name": "sloping_context",
+      "Input": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "StartFrame": 5,
+      "EndFrame": 8,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 5,
+        "EndFrame": 8,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "available",
+          "RequestedFrames": [
+            2,
+            3,
+            4
+          ],
+          "Frames": [
+            2,
+            3,
+            4
+          ],
+          "Values": [
+            2,
+            3,
+            4
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 3,
+          "Minimum": 2,
+          "Maximum": 4,
+          "Range": 2,
+          "MAD": 1
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            9,
+            10,
+            11
+          ],
+          "Frames": [
+            9,
+            10,
+            11
+          ],
+          "Values": [
+            9,
+            10,
+            11
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 10,
+          "Minimum": 9,
+          "Maximum": 11,
+          "Range": 2,
+          "MAD": 1
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "Values": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 5,
+          "MinimumFrames": 5,
+          "Maximum": 8,
+          "MaximumFrames": 8,
+          "Onset": 5,
+          "Recovery": 8,
+          "EndpointDifference": 3
+        },
+        "BeforeContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 5,
+          "Decline": -2
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": -2,
+          "Decline": 5
+        },
+        "OnsetVsBefore": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 2
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": -2
+        },
+        "ContextLevelDifference": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 7
+        }
+      }
+    },
+    {
+      "Name": "tied_extrema",
+      "Input": [
+        0,
+        0,
+        0,
+        1,
+        3,
+        1,
+        3,
+        0,
+        0,
+        0
+      ],
+      "StartFrame": 4,
+      "EndFrame": 7,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 4,
+        "EndFrame": 7,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "available",
+          "RequestedFrames": [
+            1,
+            2,
+            3
+          ],
+          "Frames": [
+            1,
+            2,
+            3
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            8,
+            9,
+            10
+          ],
+          "Frames": [
+            8,
+            9,
+            10
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            4,
+            5,
+            6,
+            7
+          ],
+          "Values": [
+            1,
+            3,
+            1,
+            3
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 1,
+          "MinimumFrames": [
+            4,
+            6
+          ],
+          "Maximum": 3,
+          "MaximumFrames": [
+            5,
+            7
+          ],
+          "Onset": 1,
+          "Recovery": 3,
+          "EndpointDifference": 2
+        },
+        "BeforeContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 3,
+          "Decline": -1
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 3,
+          "Decline": -1
+        },
+        "OnsetVsBefore": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 1
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 3
+        },
+        "ContextLevelDifference": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 0
+        }
+      }
+    },
+    {
+      "Name": "early_acquisition",
+      "Input": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "StartFrame": 1,
+      "EndFrame": 3,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 1,
+        "EndFrame": 3,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "incomplete_acquisition",
+          "RequestedFrames": [
+            -2,
+            -1,
+            0
+          ],
+          "Frames": [],
+          "Values": [],
+          "MissingAcquisitionFrames": [
+            -2,
+            -1,
+            0
+          ],
+          "MissingAcquisitionCount": 3,
+          "NonfiniteFrames": [],
+          "ObservedCount": 0,
+          "RequiredCount": 3,
+          "Median": null,
+          "Minimum": null,
+          "Maximum": null,
+          "Range": null,
+          "MAD": null
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            4,
+            5,
+            6
+          ],
+          "Frames": [
+            4,
+            5,
+            6
+          ],
+          "Values": [
+            4,
+            5,
+            6
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 5,
+          "Minimum": 4,
+          "Maximum": 6,
+          "Range": 2,
+          "MAD": 1
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            1,
+            2,
+            3
+          ],
+          "Values": [
+            1,
+            2,
+            3
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 1,
+          "MinimumFrames": 1,
+          "Maximum": 3,
+          "MaximumFrames": 3,
+          "Onset": 1,
+          "Recovery": 3,
+          "EndpointDifference": 2
+        },
+        "BeforeContrasts": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "available",
+            "incomplete_acquisition"
+          ],
+          "Rise": null,
+          "Decline": null
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": -2,
+          "Decline": 4
+        },
+        "OnsetVsBefore": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "available",
+            "incomplete_acquisition"
+          ],
+          "Value": null
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": -2
+        },
+        "ContextLevelDifference": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "incomplete_acquisition",
+            "available"
+          ],
+          "Value": null
+        }
+      }
+    },
+    {
+      "Name": "nonfinite_flank",
+      "Input": [
+        0,
+        null,
+        0,
+        1,
+        3,
+        1,
+        0,
+        0,
+        0
+      ],
+      "StartFrame": 4,
+      "EndFrame": 6,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 4,
+        "EndFrame": 6,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "nonfinite_samples",
+          "RequestedFrames": [
+            1,
+            2,
+            3
+          ],
+          "Frames": [
+            1,
+            2,
+            3
+          ],
+          "Values": [
+            0,
+            null,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": 2,
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": null,
+          "Minimum": null,
+          "Maximum": null,
+          "Range": null,
+          "MAD": null
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            7,
+            8,
+            9
+          ],
+          "Frames": [
+            7,
+            8,
+            9
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            4,
+            5,
+            6
+          ],
+          "Values": [
+            1,
+            3,
+            1
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 1,
+          "MinimumFrames": [
+            4,
+            6
+          ],
+          "Maximum": 3,
+          "MaximumFrames": 5,
+          "Onset": 1,
+          "Recovery": 1,
+          "EndpointDifference": 0
+        },
+        "BeforeContrasts": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "available",
+            "nonfinite_samples"
+          ],
+          "Rise": null,
+          "Decline": null
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 3,
+          "Decline": -1
+        },
+        "OnsetVsBefore": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "available",
+            "nonfinite_samples"
+          ],
+          "Value": null
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 1
+        },
+        "ContextLevelDifference": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "nonfinite_samples",
+            "available"
+          ],
+          "Value": null
+        }
+      }
+    },
+    {
+      "Name": "nonfinite_interval",
+      "Input": [
+        0,
+        0,
+        0,
+        1,
+        null,
+        1,
+        0,
+        0,
+        0
+      ],
+      "StartFrame": 4,
+      "EndFrame": 6,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 4,
+        "EndFrame": 6,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "available",
+          "RequestedFrames": [
+            1,
+            2,
+            3
+          ],
+          "Frames": [
+            1,
+            2,
+            3
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            7,
+            8,
+            9
+          ],
+          "Frames": [
+            7,
+            8,
+            9
+          ],
+          "Values": [
+            0,
+            0,
+            0
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 0,
+          "Minimum": 0,
+          "Maximum": 0,
+          "Range": 0,
+          "MAD": 0
+        },
+        "Interval": {
+          "Status": "nonfinite_samples",
+          "Frames": [
+            4,
+            5,
+            6
+          ],
+          "Values": [
+            1,
+            null,
+            1
+          ],
+          "NonfiniteFrames": 5,
+          "Minimum": null,
+          "MinimumFrames": [],
+          "Maximum": null,
+          "MaximumFrames": [],
+          "Onset": null,
+          "Recovery": null,
+          "EndpointDifference": null
+        },
+        "BeforeContrasts": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "nonfinite_samples",
+            "available"
+          ],
+          "Rise": null,
+          "Decline": null
+        },
+        "AfterContrasts": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "nonfinite_samples",
+            "available"
+          ],
+          "Rise": null,
+          "Decline": null
+        },
+        "OnsetVsBefore": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "nonfinite_samples",
+            "available"
+          ],
+          "Value": null
+        },
+        "RecoveryVsAfter": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "nonfinite_samples",
+            "available"
+          ],
+          "Value": null
+        },
+        "ContextLevelDifference": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 0
+        }
+      }
+    },
+    {
+      "Name": "late_acquisition",
+      "Input": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "StartFrame": 7,
+      "EndFrame": 9,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 7,
+        "EndFrame": 9,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "available",
+          "RequestedFrames": [
+            4,
+            5,
+            6
+          ],
+          "Frames": [
+            4,
+            5,
+            6
+          ],
+          "Values": [
+            4,
+            5,
+            6
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 5,
+          "Minimum": 4,
+          "Maximum": 6,
+          "Range": 2,
+          "MAD": 1
+        },
+        "After": {
+          "Status": "incomplete_acquisition",
+          "RequestedFrames": [
+            10,
+            11,
+            12
+          ],
+          "Frames": [],
+          "Values": [],
+          "MissingAcquisitionFrames": [
+            10,
+            11,
+            12
+          ],
+          "MissingAcquisitionCount": 3,
+          "NonfiniteFrames": [],
+          "ObservedCount": 0,
+          "RequiredCount": 3,
+          "Median": null,
+          "Minimum": null,
+          "Maximum": null,
+          "Range": null,
+          "MAD": null
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            7,
+            8,
+            9
+          ],
+          "Values": [
+            7,
+            8,
+            9
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 7,
+          "MinimumFrames": 7,
+          "Maximum": 9,
+          "MaximumFrames": 9,
+          "Onset": 7,
+          "Recovery": 9,
+          "EndpointDifference": 2
+        },
+        "BeforeContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 4,
+          "Decline": -2
+        },
+        "AfterContrasts": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "available",
+            "incomplete_acquisition"
+          ],
+          "Rise": null,
+          "Decline": null
+        },
+        "OnsetVsBefore": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 2
+        },
+        "RecoveryVsAfter": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "available",
+            "incomplete_acquisition"
+          ],
+          "Value": null
+        },
+        "ContextLevelDifference": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "available",
+            "incomplete_acquisition"
+          ],
+          "Value": null
+        }
+      }
+    },
+    {
+      "Name": "missing_and_nonfinite",
+      "Input": [
+        null,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "StartFrame": 2,
+      "EndFrame": 3,
+      "ContextSamples": 3,
+      "Result": {
+        "StartFrame": 2,
+        "EndFrame": 3,
+        "ContextSamples": 3,
+        "Before": {
+          "Status": "incomplete_acquisition_and_nonfinite_samples",
+          "RequestedFrames": [
+            -1,
+            0,
+            1
+          ],
+          "Frames": 1,
+          "Values": null,
+          "MissingAcquisitionFrames": [
+            -1,
+            0
+          ],
+          "MissingAcquisitionCount": 2,
+          "NonfiniteFrames": 1,
+          "ObservedCount": 1,
+          "RequiredCount": 3,
+          "Median": null,
+          "Minimum": null,
+          "Maximum": null,
+          "Range": null,
+          "MAD": null
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            4,
+            5,
+            6
+          ],
+          "Frames": [
+            4,
+            5,
+            6
+          ],
+          "Values": [
+            4,
+            5,
+            6
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 3,
+          "RequiredCount": 3,
+          "Median": 5,
+          "Minimum": 4,
+          "Maximum": 6,
+          "Range": 2,
+          "MAD": 1
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            2,
+            3
+          ],
+          "Values": [
+            2,
+            3
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 2,
+          "MinimumFrames": 2,
+          "Maximum": 3,
+          "MaximumFrames": 3,
+          "Onset": 2,
+          "Recovery": 3,
+          "EndpointDifference": 1
+        },
+        "BeforeContrasts": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "available",
+            "incomplete_acquisition_and_nonfinite_samples"
+          ],
+          "Rise": null,
+          "Decline": null
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": -2,
+          "Decline": 3
+        },
+        "OnsetVsBefore": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "available",
+            "incomplete_acquisition_and_nonfinite_samples"
+          ],
+          "Value": null
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": -2
+        },
+        "ContextLevelDifference": {
+          "Status": "unavailable_dependency",
+          "Dependencies": [
+            "incomplete_acquisition_and_nonfinite_samples",
+            "available"
+          ],
+          "Value": null
+        }
+      }
+    },
+    {
+      "Name": "recovery_alternative_6",
+      "Input": [
+        5,
+        4,
+        3,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "StartFrame": 4,
+      "EndFrame": 6,
+      "ContextSamples": 2,
+      "Result": {
+        "StartFrame": 4,
+        "EndFrame": 6,
+        "ContextSamples": 2,
+        "Before": {
+          "Status": "available",
+          "RequestedFrames": [
+            2,
+            3
+          ],
+          "Frames": [
+            2,
+            3
+          ],
+          "Values": [
+            4,
+            3
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 2,
+          "RequiredCount": 2,
+          "Median": 3.5,
+          "Minimum": 3,
+          "Maximum": 4,
+          "Range": 1,
+          "MAD": 0.5
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            7,
+            8
+          ],
+          "Frames": [
+            7,
+            8
+          ],
+          "Values": [
+            4,
+            5
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 2,
+          "RequiredCount": 2,
+          "Median": 4.5,
+          "Minimum": 4,
+          "Maximum": 5,
+          "Range": 1,
+          "MAD": 0.5
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            4,
+            5,
+            6
+          ],
+          "Values": [
+            1,
+            2,
+            3
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 1,
+          "MinimumFrames": 4,
+          "Maximum": 3,
+          "MaximumFrames": 6,
+          "Onset": 1,
+          "Recovery": 3,
+          "EndpointDifference": 2
+        },
+        "BeforeContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": -0.5,
+          "Decline": 2.5
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": -1.5,
+          "Decline": 3.5
+        },
+        "OnsetVsBefore": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": -2.5
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": -1.5
+        },
+        "ContextLevelDifference": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 1
+        }
+      }
+    },
+    {
+      "Name": "recovery_alternative_7",
+      "Input": [
+        5,
+        4,
+        3,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "StartFrame": 4,
+      "EndFrame": 7,
+      "ContextSamples": 2,
+      "Result": {
+        "StartFrame": 4,
+        "EndFrame": 7,
+        "ContextSamples": 2,
+        "Before": {
+          "Status": "available",
+          "RequestedFrames": [
+            2,
+            3
+          ],
+          "Frames": [
+            2,
+            3
+          ],
+          "Values": [
+            4,
+            3
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 2,
+          "RequiredCount": 2,
+          "Median": 3.5,
+          "Minimum": 3,
+          "Maximum": 4,
+          "Range": 1,
+          "MAD": 0.5
+        },
+        "After": {
+          "Status": "available",
+          "RequestedFrames": [
+            8,
+            9
+          ],
+          "Frames": [
+            8,
+            9
+          ],
+          "Values": [
+            5,
+            6
+          ],
+          "MissingAcquisitionFrames": [],
+          "MissingAcquisitionCount": 0,
+          "NonfiniteFrames": [],
+          "ObservedCount": 2,
+          "RequiredCount": 2,
+          "Median": 5.5,
+          "Minimum": 5,
+          "Maximum": 6,
+          "Range": 1,
+          "MAD": 0.5
+        },
+        "Interval": {
+          "Status": "available",
+          "Frames": [
+            4,
+            5,
+            6,
+            7
+          ],
+          "Values": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "NonfiniteFrames": [],
+          "Minimum": 1,
+          "MinimumFrames": 4,
+          "Maximum": 4,
+          "MaximumFrames": 7,
+          "Onset": 1,
+          "Recovery": 4,
+          "EndpointDifference": 3
+        },
+        "BeforeContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": 0.5,
+          "Decline": 2.5
+        },
+        "AfterContrasts": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Rise": -1.5,
+          "Decline": 4.5
+        },
+        "OnsetVsBefore": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": -2.5
+        },
+        "RecoveryVsAfter": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": -1.5
+        },
+        "ContextLevelDifference": {
+          "Status": "available",
+          "Dependencies": [
+            "available",
+            "available"
+          ],
+          "Value": 2
+        }
+      }
+    }
+  ]
+}
