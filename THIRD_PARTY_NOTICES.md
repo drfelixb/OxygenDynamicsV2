@@ -3,10 +3,10 @@
 OxygenDynamicsV2 includes or adapts the components below. Retain their copyright
 notices, redistribution conditions and disclaimers when redistributing them.
 Their terms do not license the remaining project code or determine its owner.
-The original Science_2024 code has a preserved
-[MIT licence](licenses/Science_2024-MIT.txt). Licensing of new V2 contributions
-remains unconfirmed; [the licensing guide](LICENSING.md) explains the scope.
-The dependency terms below remain separate from that original code notice.
+The V2 contributions are distributed under the [MIT licence](LICENSE). The
+inherited Science_2024 code retains its [original MIT notice](licenses/Science_2024-MIT.txt).
+The [licensing guide](LICENSING.md) explains how these notices apply. The
+components below retain their own terms.
 
 ## Component inventory and evidence
 
