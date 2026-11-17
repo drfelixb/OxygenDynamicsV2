@@ -162,3 +162,11 @@ E.StartSec=E.StartFrame-1;E.EndSec=E.EndFrame;E.NormOxySinkAmpPercent=amplitude;
 E.NormOxySinkAmp=amplitude/100;E.EventArea_um2=4*ones(n,1);E.RecAreaSize=1000*ones(n,1);E.RecDuration=120*ones(n,1);
 E.SignedTraceAUC_sec=-.25*ones(n,1);
 end
+function refreshChecksums(folder)
+files=dir(folder);M=struct('Path',{},'SHA256',{});
+for i=1:numel(files)
+    if files(i).isdir||strcmp(files(i).name,'Checksums.json'),continue;end
+    M(end+1)=struct('Path',files(i).name,'SHA256',oxygenFileSHA256(fullfile(folder,files(i).name))); %#ok<AGROW>
+end
+writeBOIRunJSON(fullfile(folder,'Checksums.json'),M);
+end
