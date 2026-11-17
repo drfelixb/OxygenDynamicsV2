@@ -95,4 +95,4 @@ normalized event contribution 2608.970112849447 using its saved burden area,
 duration and full recording exposure. Isolated event 4 retains 7.465059534213714%.
 Event 1 remains unresolved. These selected examples establish arithmetic and
 provenance, not a complete recording burden or biological ground truth.
-See the [implementation record](BOI_PRE_EPISODE_IMPLEMENTATION.md).
+See the [implementation record](https://github.com/drfelixb/OxygenDynamicsV2/blob/5408db968bc74bc19bd65e5b8f20607454ff2e2f/docs/BOI_PRE_EPISODE_IMPLEMENTATION.md).

@@ -1,7 +1,7 @@
 function [Fig,UI]=openBOIBatchEditor(InitialBatch)
 %OPENBOIBATCHEDITOR Prepare and run explicitly confirmed recording queues.
 % InitialBatch may be a batch struct, an input table or a CSV path. Opening a
-% CSV never starts analysis. Run uses the reviewed queue and shared service.
+% CSV never starts analysis. A saved working CSV is required for run outcomes.
 setupOxygenDynamicsPath;
 if nargin<1||isempty(InitialBatch)
     Batch=createBOIBatch();
@@ -15,9 +15,12 @@ end
 State=struct('Batch',Batch,'Report',table(),'Requests',{{}}, ...
     'SelectedRows',[],'VisibleMetadata',{{}},'Dirty',false,'Busy',false, ...
     'Running',false,'StopRequested',false,'QueuePlan',[],'QueueConfirmed',false,'Outcome',[], ...
-    'CheckProgress',[],'StatsPlan',[],'StatsConfirmed',false,'StatsResult',[]);
+    'CheckProgress',[],'StatsPlan',[],'StatsConfirmed',false,'StatsResult',[],'StatsHandoff',[]);
 checkDialog=[];
+importActive=false;importConverted=0;importPathSummary=[];importLastPaths=strings(0,1);
 acquisition={'SampleF','Pixelsize','BOISupportProfile'};
+importSettings=acquisition(1:2);
+importLabels={'Sampling rate (Hz)','Pixel size (µm/pixel)'};
 essential={'Paths','InputStatus','AnalysisStatus','ResultCheck',acquisition{:}};
 optional={'Mouse','Condition','DrugID','Genotype','Promoter','RecordingLabel', ...
     'RecordingDate','Session','Sex','AgeDays','BrainRegion','Project','Operator','Notes'};
@@ -27,7 +30,7 @@ reserved={'BatchRowID','InputStatus','AnalysisStatus','ResultCheck','ReviewStatu
 Fig=uifigure('Name','Batch recordings','Position',[70 70 1120 800]);
 Fig.CloseRequestFcn=@closeWindow;
 g=uigridlayout(Fig,[7 1]);g.Padding=[10 10 10 10];g.RowSpacing=7;
-g.RowHeight={34,24,114,32,'1x',136,28};
+g.RowHeight={34,24,76,32,'1x','2x',28};
 top=uigridlayout(g,[1 8]);top.Padding=[0 0 0 0];
 top.ColumnWidth={'1x',65,80,65,80,100,115,125};
 titleLabel=uilabel(top,'Text','Batch recordings','FontSize',18,'FontWeight','bold');
@@ -39,24 +42,24 @@ checkButton=uibutton(top,'Text','Check rows','ButtonPushedFcn',@checkCallback);
 queueButton=uibutton(top,'Text','Run selected…','ButtonPushedFcn',@queueCallback);
 statsButton=uibutton(top,'Text','Stats / export…','ButtonPushedFcn',@statsTabCallback);
 fileLabel=uilabel(g,'Text','','Interpreter','none','WordWrap','on');
-settings=uipanel(g,'Title','Shared acquisition settings — row overrides stay editable in the table');
-sg=uigridlayout(settings,[3 6]);sg.Padding=[8 5 8 5];sg.RowSpacing=4;
-sg.RowHeight={23,25,20};sg.ColumnWidth={110,90,140,90,108,'1x'};
+settings=uipanel(g,'Title','Shared settings');
+sg=uigridlayout(settings,[2 6]);sg.Padding=[8 3 8 3];sg.RowSpacing=3;
+sg.RowHeight={23,25};sg.ColumnWidth={110,90,140,90,108,'1x'};
 uilabel(sg,'Text','Sampling rate (Hz)');
 sample=uieditfield(sg,'text','ValueChangedFcn',@sharedChanged);
 uilabel(sg,'Text','Pixel size (µm/pixel)');
 pixels=uieditfield(sg,'text','ValueChangedFcn',@sharedChanged);
 uilabel(sg,'Text','Detection support');
-support=uidropdown(sg,'Items',{'Choose explicitly','Reviewed craniotomy ROI','Automatic tissue estimate (legacy)'}, ...
-    'ItemsData',{'','craniotomy-roi-1','whole-image'},'Value','', ...
+support=uidropdown(sg,'Items',{'Automatic tissue estimate','Reviewed craniotomy ROI'}, ...
+    'ItemsData',{'whole-image','craniotomy-roi-1'},'Value','whole-image', ...
     'ValueChangedFcn',@sharedChanged);
-support.Tooltip=sprintf(['Automatic tissue estimate (legacy): estimates tissue from image intensity; no preset ROI is needed. Review the estimated edge visually.\n' ...
+support.Tooltip=sprintf(['Automatic tissue estimate uses image intensity. Review the estimated edge visually.\n' ...
     'Detections can extend beyond the estimated tissue edge; inspect the estimate after analysis.\n' ...
     'Reviewed craniotomy ROI uses a matching source-bound reviewed tissue mask.']);
-confirmation=uicheckbox(sg,'Text','I confirm these shared acquisition and tissue-support settings', ...
-    'ValueChangedFcn',@sharedConfirmed);place(confirmation,2,[1 6]);
-settingsHint=uilabel(sg,'Text','Blank rows inherit confirmed settings. Automatic tissue estimate needs no preset ROI; review it visually.', ...
-    'WordWrap','on');place(settingsHint,3,[1 6]);
+confirmation=uicheckbox(sg,'Text','Confirm shared overrides', ...
+    'ValueChangedFcn',@sharedConfirmed);place(confirmation,2,[1 2]);
+settingsHint=uilabel(sg,'Text','Overrides fill blank cells. Detection support defaults to Automatic tissue estimate.', ...
+    'WordWrap','on');place(settingsHint,2,[3 6]);
 actions=uigridlayout(g,[1 8]);actions.Padding=[0 0 0 0];
 actions.ColumnWidth={100,100,85,75,85,150,100,'1x'};
 addButton=uibutton(actions,'Text','Add folder…','ButtonPushedFcn',@addFolderCallback);
@@ -69,11 +72,10 @@ selectReadyButton=uibutton(actions,'Text','Select ready','ButtonPushedFcn',@sele
 selectionLabel=uilabel(actions,'Text','No rows selected','Interpreter','none');
 rowsTable=uitable(g,'Data',cell(0,numel(essential)),'RowName','numbered', ...
     'CellSelectionCallback',@tableSelection,'CellEditCallback',@tableEdit);
-rowsTable.Tooltip=sprintf(['Blank acquisition cells inherit confirmed shared settings. Choose Use shared to clear a support override.\n' ...
-    'Support override: whole-image = Automatic tissue estimate (legacy); craniotomy-roi-1 = Reviewed craniotomy ROI.\n' ...
-    'The automatic estimate needs no preset ROI; inspect the estimated edge after analysis.']);
+rowsTable.Tooltip=sprintf(['Blank cells inherit confirmed shared settings. Detection support otherwise uses the automatic estimate.\n' ...
+    'Choose the displayed default or shared support option to clear a row override.']);
 tabs=uitabgroup(g);
-detailsTab=uitab(tabs,'Title','Selected recording / check details');
+detailsTab=uitab(tabs,'Title','Recording details');
 dg=uigridlayout(detailsTab,[2 3]);dg.RowHeight={28,'1x'};
 dg.ColumnWidth={155,160,'1x'};dg.Padding=[5 5 5 5];dg.RowSpacing=4;
 attachButton=uibutton(dg,'Text','Attach saved run…','ButtonPushedFcn',@attachCallback);
@@ -82,7 +84,7 @@ openRunButton.Tooltip='Checks this recording and its saved artifacts before open
 runHint=uilabel(dg,'Text','Attach an existing run to inspect its saved results.','WordWrap','on');
 details=uitextarea(dg,'Editable','off','Value',{'Add a recording folder, enter acquisition settings, then Check rows.'});
 place(details,2,[1 3]);
-metadataTab=uitab(tabs,'Title','Optional / custom fields');
+metadataTab=uitab(tabs,'Title','Metadata');
 mg=uigridlayout(metadataTab,[3 4]);mg.Padding=[8 6 8 6];mg.RowHeight={28,28,'1x'};
 mg.ColumnWidth={170,'1x',140,140};
 fieldChoice=uidropdown(mg,'Items',optional,'Value','Mouse');
@@ -92,64 +94,92 @@ showFieldButton=uibutton(mg,'Text','Show / add field','ButtonPushedFcn',@showFie
 customName=uieditfield(mg,'text','Placeholder','New custom field name');place(customName,2,[1 2]);
 customButton=uibutton(mg,'Text','Add custom field','ButtonPushedFcn',@customCallback);place(customButton,2,3);
 hideButton=uibutton(mg,'Text','Hide selected field','ButtonPushedFcn',@hideFieldCallback);place(hideButton,2,4);
-metadataHint=uilabel(mg,'Text','All labels are optional. Subject ID uses Mouse; age is in days and dates use YYYY-MM-DD. Custom text and blanks are preserved. Hiding a field keeps its data.', ...
-    'WordWrap','on');place(metadataHint,3,[1 4]);
-queueTab=uitab(tabs,'Title','Review queue / run');
-qg=uigridlayout(queueTab,[5 4]);qg.Padding=[6 6 6 6];qg.RowSpacing=5;
-qg.ColumnWidth={165,'1x',160,150};qg.RowHeight={30,30,'1x',30,32};
+metadataHint=uilabel(mg,'Text','Select recordings above to apply optional metadata. Use days for age and YYYY-MM-DD for dates.', ...
+    'WordWrap','on','VerticalAlignment','top');place(metadataHint,3,[1 4]);
+queueTab=uitab(tabs,'Title','Run');
+qg=uigridlayout(queueTab,[8 4]);qg.Padding=[6 6 6 6];qg.RowSpacing=5;qg.Scrollable='on';
+qg.ColumnWidth={185,205,'1x',180};qg.RowHeight={30,30,28,40,32,34,0,'1x'};
 outputButton=uibutton(qg,'Text','Choose output parent…','ButtonPushedFcn',@outputCallback);
 outputParent=uieditfield(qg,'text','Placeholder','Existing parent folder for fresh recording attempts', ...
     'ValueChangedFcn',@outputChanged);place(outputParent,1,[2 4]);
 runAgain=uicheckbox(qg,'Text','Run again in new folders, including verified results','ValueChangedFcn',@queueOptionsChanged);place(runAgain,2,[1 2]);
-reviewQueueButton=uibutton(qg,'Text','Review selected queue','ButtonPushedFcn',@reviewQueueCallback);place(reviewQueueButton,2,3);
-chooseRowsButton=uibutton(qg,'Text','Back to recording rows','ButtonPushedFcn',@chooseRowsCallback);place(chooseRowsButton,2,4);
-queueDetails=uitextarea(qg,'Editable','off','Value',{'Select ready rows, choose an output parent, then review the selected queue.', ...
-    'Verified matching results are skipped unless Run again is selected. Held rows are excluded.', ...
-    'Each new attempt copies its source movies. Result and temporary storage are additional.'});place(queueDetails,3,[1 4]);
-queueConfirm=uicheckbox(qg,'Text','I checked the selected recordings, settings, destinations and source-copy storage', ...
-    'Enable','off','ValueChangedFcn',@queueConfirmationChanged);place(queueConfirm,4,[1 4]);
-runQueueButton=uibutton(qg,'Text','Run reviewed queue','Enable','off','ButtonPushedFcn',@runQueueCallback);place(runQueueButton,5,1);
+reviewQueueButton=uibutton(qg,'Text','Review selected queue','ButtonPushedFcn',@reviewQueueCallback);place(reviewQueueButton,2,4);
+queuePreview=uilabel(qg,'Text','No queue reviewed','FontWeight','bold','FontSize',15, ...
+    'WordWrap','on','Interpreter','none');place(queuePreview,3,[1 4]);
+queueEstimate=uilabel(qg,'Text','Select recordings, choose an output folder and review the queue.', ...
+    'WordWrap','on','Interpreter','none');place(queueEstimate,4,[1 4]);
+runQueueButton=uibutton(qg,'Text','Start recordings','FontWeight','bold','Enable','off','ButtonPushedFcn',@runQueueCallback);place(runQueueButton,5,1);
 stopButton=uibutton(qg,'Text','Stop after current recording','Enable','off','ButtonPushedFcn',@stopCallback);place(stopButton,5,2);
-queueStatus=uilabel(qg,'Text','No reviewed queue','WordWrap','on','Interpreter','none');place(queueStatus,5,[3 4]);
-statsTab=uitab(tabs,'Title','Combined stats / export');
-eg=uigridlayout(statsTab,[7 4]);eg.Padding=[8 8 8 8];eg.RowHeight={30,30,'1x',30,32,45,55};
-eg.ColumnWidth={155,160,165,'1x'};
+queueDetailsButton=uibutton(qg,'Text','Show details','Enable','off','ButtonPushedFcn',@toggleQueueDetails);place(queueDetailsButton,5,4);
+queueStatus=uilabel(qg,'Text','','WordWrap','on','Interpreter','none');place(queueStatus,6,[1 4]);
+queueDetails=uitextarea(qg,'Editable','off','Visible','off');place(queueDetails,7,[1 4]);
+statsTab=uitab(tabs,'Title','Automatic export');
+eg=uigridlayout(statsTab,[8 4]);eg.Padding=[8 8 8 8];eg.RowSpacing=4;
+eg.RowHeight={30,30,27,32,26,30,55,'1x'};eg.ColumnWidth={175,175,'1x',180};
 statsParentButton=uibutton(eg,'Text','Choose export parent…','ButtonPushedFcn',@statsParentCallback);
 statsParent=uieditfield(eg,'text','Placeholder','Existing parent for a new combined stats/export folder', ...
     'ValueChangedFcn',@statsOptionsChanged);place(statsParent,1,[2 4]);
 statsScope=uidropdown(eg,'Items',{'All completed recordings','Selected recording rows'}, ...
     'ValueChangedFcn',@statsOptionsChanged);place(statsScope,2,[1 2]);
-reviewStatsButton=uibutton(eg,'Text','Review combined export','ButtonPushedFcn',@reviewStatsCallback);place(reviewStatsButton,2,3);
-statsSummary=uilabel(eg,'Text','Review required','WordWrap','on');place(statsSummary,2,4);
-statsDetails=uitextarea(eg,'Editable','off','Value',{'Collect completed saved recordings with the existing stats/export workflow.', ...
-    'Uses the exact saved sink/surge files and their original labels. No detector or new recording run.', ...
-    'Keeps the existing workbook, event, grouped metric and trace formats. Stimulation remains descriptive metadata.'});place(statsDetails,3,[1 4]);
-statsConfirm=uicheckbox(eg,'Text','I checked the included/excluded recordings and new export destination', ...
-    'Enable','off','ValueChangedFcn',@statsConfirmationChanged);place(statsConfirm,4,[1 4]);
-exportStatsButton=uibutton(eg,'Text','Run stats / export','Enable','off','ButtonPushedFcn',@exportStatsCallback);place(exportStatsButton,5,1);
-openStatsButton=uibutton(eg,'Text','Open workbook','Enable','off','ButtonPushedFcn',@openStatsCallback);place(openStatsButton,5,2);
-statsOutcome=uilabel(eg,'Text','No combined export completed in this window.','WordWrap','on','Interpreter','none');place(statsOutcome,5,[3 4]);
-statsFolder=createBOIExportFolderPanel(eg);place(statsFolder.Grid,[6 7],[1 4]);
+reviewStatsButton=uibutton(eg,'Text','Review combined export','ButtonPushedFcn',@reviewStatsCallback);place(reviewStatsButton,2,4);
+statsPreview=uilabel(eg,'Text','Choose an export folder, then review the selection.', ...
+    'WordWrap','on','Interpreter','none','FontWeight','bold');place(statsPreview,3,[1 4]);
+exportStatsButton=uibutton(eg,'Text','Export workbook','FontWeight','bold','Enable','off','ButtonPushedFcn',@exportStatsCallback);place(exportStatsButton,4,1);
+statsDetailsButton=uibutton(eg,'Text','Show details','Enable','off','ButtonPushedFcn',@toggleStatsDetails);place(statsDetailsButton,4,2);
+reopenStatsButton=uibutton(eg,'Text','Open existing export…','ButtonPushedFcn',@reopenStatsCallback);place(reopenStatsButton,4,4);
+reopenStatsButton.Tooltip='Choose a completed combined-export folder. Reads its receipts and tables without rerunning statistics or reading original movies.';
+statsOutcome=uilabel(eg,'Text','','WordWrap','on','Interpreter','none');place(statsOutcome,5,[1 4]);
+openStatsButton=uibutton(eg,'Text','Open workbook','Enable','off','ButtonPushedFcn',@openStatsCallback);place(openStatsButton,6,1);
+statsSummary=uilabel(eg,'Text','No completed workbook loaded.','WordWrap','on');place(statsSummary,6,[2 4]);
+statsFolder=createBOIExportFolderPanel(eg);place(statsFolder.Grid,7,[1 4]);
 statsDestination=statsFolder.Path;statsDestination.Value={'The completed combined export folder will be shown here.'};
 openStatsFolderButton=statsFolder.OpenButton;copyStatsPathButton=statsFolder.CopyButton;
-historyTab=uitab(tabs,'Title','Attempt history');
+statsDetails=uitextarea(eg,'Editable','off','Visible','off');place(statsDetails,8,[1 4]);
+reviewedTab=uitab(tabs,'Title','Reviewed export');
+reviewedExport=createBOIReviewedExportPanel(reviewedTab,struct('AssertIdle',@assertIdle, ...
+    'Begin',@beginReviewedExport,'End',@finishReviewedExport,'AutomaticMAT',@automaticMAT));
+compactTab=uitab(tabs,'Title','Compact workbook');
+compactExport=createBOICompactExportPanel(compactTab,struct('AssertIdle',@assertIdle, ...
+    'Begin',@beginCompactExport,'End',@finishCompactExport,'AutomaticSource',@automaticCompactSource,'BatchContext',@compactBatchContext));
+historyTab=uitab(tabs,'Title','History');
 hg=uigridlayout(historyTab,[2 3]);hg.Padding=[5 5 5 5];hg.RowHeight={28,'1x'};
 hg.ColumnWidth={145,170,'1x'};
 historyButton=uibutton(hg,'Text','Load selected history','ButtonPushedFcn',@historyCallback);
 openAttemptButton=uibutton(hg,'Text','Open selected saved run','Enable','off','ButtonPushedFcn',@openAttemptCallback);
 historyStatus=uilabel(hg,'Text','Select one recording row to view its attempts.','WordWrap','on');
 historyTable=uitable(hg,'Data',cell(0,0),'CellSelectionCallback',@historySelection);place(historyTable,2,[1 3]);
-HistoryRows=table();SelectedHistoryRow=[];
-tabs.SelectionChangedFcn=@tabChanged;
+HistoryRows=table();SelectedHistoryRow=[];HistoryRowID="";
+importTab=uitab(tabs,'Title','CSV setup');
+ig=uigridlayout(importTab,[9 3]);ig.Padding=[10 8 10 8];ig.Scrollable='on';
+ig.ColumnWidth={230,'1x',180};ig.RowHeight={34,32,32,30,38,28,42,32,'1x'};
+importSummary=uilabel(ig,'Text','Open a CSV to check its paths and required settings.', ...
+    'WordWrap','on','Interpreter','none');place(importSummary,1,[1 3]);
+importFields=cell(size(importSettings));importCounts=cell(size(importSettings));
+for k=1:numel(importSettings)
+    fieldLabel=uilabel(ig,'Text',importLabels{k});place(fieldLabel,k+1,1);
+    importFields{k}=uieditfield(ig,'text','Placeholder','Enter the confirmed value');
+    place(importFields{k},k+1,2);
+    importCounts{k}=uilabel(ig,'Text','','WordWrap','on');place(importCounts{k},k+1,3);
+end
+supportHelp=uilabel(ig,'Text','Detection support defaults to Automatic tissue estimate. Set a shared or row override to use a reviewed mask.', ...
+    'WordWrap','on');place(supportHelp,4,[1 3]);
+importFeedback=uilabel(ig,'Text','','WordWrap','on','Interpreter','none');place(importFeedback,5,[1 2]);
+applyImportButton=uibutton(ig,'Text','Apply to missing rows','ButtonPushedFcn',@applyImportCallback);place(applyImportButton,5,3);
+pathSummary=uilabel(ig,'Text','','WordWrap','on','Interpreter','none');place(pathSummary,6,[1 3]);
+pathExample=uilabel(ig,'Text','','WordWrap','on','Interpreter','none');place(pathExample,7,[1 3]);
+prefixLabel=uilabel(ig,'Text','Original folder prefix');place(prefixLabel,8,1);
+importPrefix=uieditfield(ig,'text','Placeholder','Beginning of the original paths');place(importPrefix,8,2);
+mapImportButton=uibutton(ig,'Text','Choose local folder…','ButtonPushedFcn',@mapImportCallback);place(mapImportButton,8,3);
 status=uilabel(g,'Text','Prepare and check rows, then review a selected queue before starting analysis.', ...
     'Interpreter','none','WordWrap','on');
 lockedControls={newButton,openButton,saveButton,saveAsButton,checkButton,queueButton, ...
     sample,pixels,support,confirmation,addButton,pasteButton,deleteButton,upButton,downButton, ...
     resetButton,selectReadyButton,rowsTable,attachButton,openRunButton,fieldChoice,fieldValue, ...
     applyButton,showFieldButton,customName,customButton,hideButton,outputButton,outputParent, ...
-    runAgain,reviewQueueButton,chooseRowsButton,historyButton,openAttemptButton,historyTable, ...
-    statsButton,statsParentButton,statsParent,statsScope,reviewStatsButton,statsConfirm,exportStatsButton, ...
-    openStatsButton,openStatsFolderButton,copyStatsPathButton};
+    runAgain,reviewQueueButton,historyButton,openAttemptButton,historyTable, ...
+    statsButton,statsParentButton,statsParent,statsScope,reviewStatsButton,statsDetailsButton,exportStatsButton, ...
+    openStatsButton,reopenStatsButton,openStatsFolderButton,copyStatsPathButton,reviewedExport.Controls{:},compactExport.Controls{:}, ...
+    importFields{:},applyImportButton,importPrefix,mapImportButton};
 UI=struct('State',@getState,'GetBatch',@getBatch,'SetBatch',@setBatch, ...
     'Check',@checkRows,'Save',@saveBatch,'Open',@openBatch,'AddPaths',@addPaths, ...
     'SelectRows',@selectRows,'Edit',@editCell,'SetShared',@setShared, ...
@@ -165,22 +195,26 @@ UI=struct('State',@getState,'GetBatch',@getBatch,'SetBatch',@setBatch, ...
     'DeleteButton',deleteButton,'ResetButton',resetButton,'ApplyButton',applyButton, ...
     'SetOutputParent',@setOutputParent,'SelectReady',@selectReady, ...
     'ReviewQueue',@reviewQueue,'PrepareQueue',@reviewQueue,'ConfirmQueue',@confirmQueue, ...
-    'RunQueue',@runQueue,'RequestStop',@requestStop,'StopAfterCurrent',@requestStop, ...
+    'RunQueue',@runQueue,'StartReviewedQueue',@startReviewedQueue,'RequestStop',@requestStop,'StopAfterCurrent',@requestStop, ...
     'History',@getHistory,'OpenAttempt',@openAttempt,'OutputParent',outputParent, ...
-    'QueueTab',queueTab,'QueueDetails',queueDetails,'QueueConfirm',queueConfirm, ...
+    'QueueTab',queueTab,'QueuePreview',queuePreview,'QueueEstimate',queueEstimate,'QueueDetails',queueDetails,'QueueDetailsButton',queueDetailsButton, ...
     'RunQueueButton',runQueueButton,'StopButton',stopButton,'ReviewQueueButton',reviewQueueButton, ...
     'SelectReadyButton',selectReadyButton,'RunAgain',runAgain,'QueueStatus',queueStatus, ...
     'CheckDialog',@getCheckDialog, ...
-    'HistoryTable',historyTable,'HistoryTab',historyTab, ...
+    'HistoryTable',historyTable,'HistoryTab',historyTab,'OpenAttemptButton',openAttemptButton, ...
     'StatsTab',statsTab,'StatsButton',statsButton,'StatsOutputParent',statsParent,'StatsScope',statsScope, ...
-    'ReviewStats',@reviewStats,'ConfirmStats',@confirmStats,'RunStats',@runStatsExport, ...
-    'StatsConfirm',statsConfirm,'ReviewStatsButton',reviewStatsButton,'ExportStatsButton',exportStatsButton, ...
-    'StatsDetails',statsDetails,'StatsSummary',statsSummary,'StatsOutcome',statsOutcome,'StatsDestination',statsDestination, ...
-    'OpenStatsButton',openStatsButton,'OpenStatsFolderButton',openStatsFolderButton,'CopyStatsPathButton',copyStatsPathButton, ...
-    'StatsExportFolder',statsFolder);
+    'ReviewStats',@reviewStats,'ConfirmStats',@confirmStats,'RunStats',@runStatsExport,'StartReviewedStats',@startReviewedStats,'ReopenStats',@reopenStats, ...
+    'ReviewStatsButton',reviewStatsButton,'ExportStatsButton',exportStatsButton,'StatsPreview',statsPreview, ...
+    'StatsDetails',statsDetails,'StatsDetailsButton',statsDetailsButton,'StatsSummary',statsSummary,'StatsOutcome',statsOutcome,'StatsDestination',statsDestination, ...
+    'OpenStatsButton',openStatsButton,'ReopenStatsButton',reopenStatsButton,'OpenStatsFolderButton',openStatsFolderButton,'CopyStatsPathButton',copyStatsPathButton, ...
+    'StatsExportFolder',statsFolder,'ReviewedExport',reviewedExport,'ReviewedExportTab',reviewedTab,'CompactExport',compactExport,'CompactExportTab',compactTab);
+UI.ImportTab=importTab;UI.ImportSummary=importSummary;UI.ImportFeedback=importFeedback;
+UI.ImportRate=importFields{1};UI.ImportPixelSize=importFields{2};
+UI.ApplyImportSettingsButton=applyImportButton;UI.MapImportPaths=@mapImportPaths;UI.ImportPrefix=importPrefix;
 if ismember('Mouse',Batch.Rows.Properties.VariableNames),State.VisibleMetadata={'Mouse'};end
 if isfield(Batch,'OutputParent'),outputParent.Value=char(string(Batch.OutputParent));end
 syncShared();invalidate([]);State.Dirty=false;refresh();
+if isfield(Batch,'PathImport'),startImport();end
 
     function s=getState()
         s=State;
@@ -192,11 +226,13 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         assert(~State.Busy,'OxygenDynamics:BatchBusy','Wait for the current check.');
         if istable(b),b=createBOIBatch(b);end
         assert(isstruct(b)&&isfield(b,'Rows'),'OxygenDynamics:InvalidBatch','Supply a BOI batch or input table.');
+        importActive=false;importConverted=0;importPathSummary=[];importLastPaths=strings(0,1);
+        tabs.SelectedTab=detailsTab;
         State.Batch=b;State.SelectedRows=[];State.Report=table();State.Requests={};
         State.VisibleMetadata={};State.Outcome=[];runAgain.Value=false;
         if ismember('Mouse',b.Rows.Properties.VariableNames),State.VisibleMetadata={'Mouse'};end
         if isfield(b,'OutputParent'),outputParent.Value=char(string(b.OutputParent));else,outputParent.Value='';end
-        HistoryRows=table();SelectedHistoryRow=[];historyTable.Data=cell(0,0);
+        clearHistory();
         syncShared();invalidate([]);State.Dirty=false;refresh();
     end
     function openBatch(path,duplicatePolicy)
@@ -213,13 +249,135 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         else
             status.Text='CSV opened as an unchecked draft. Check rows to verify current inputs and saved results.';
         end
+        startImport();
+    end
+    function startImport()
+        importActive=true;
+        importConverted=State.Batch.PathImport.ChangedCount;
+        importPathSummary=State.Batch.PathImport;
+        importLastPaths=State.Batch.Rows.Paths;
+        for k=1:numel(importFields),importFields{k}.Value='';end
+        importPrefix.Value='';importFeedback.Text='';
+        State.Dirty=State.Dirty||importConverted>0;
+        refresh();
+        if any(missingImportSettings(),'all')||~isempty(importPathSummary.NeedsMapping)
+            tabs.SelectedTab=importTab;
+            status.Text='Finish CSV setup, then Check rows.';
+        elseif importConverted>0
+            status.Text=sprintf('Updated path format for %d recordings. Check rows to verify the folders.',importConverted);
+        end
+    end
+    function missing=missingImportSettings()
+        b=State.Batch;
+        missing=false(height(b.Rows),numel(importSettings));
+        for k=1:numel(importSettings)
+            name=importSettings{k};
+            if ~b.SharedConfirmed||strlength(strtrim(string(b.Shared.(name))))==0
+                missing(:,k)=strlength(strtrim(b.Rows.(name)))==0;
+            end
+        end
+    end
+    function refreshImport()
+        missing=false(0,numel(importSettings));
+        needsMapping=table();
+        pathSummary.Text='';pathExample.Text='';
+        if importActive
+            missing=missingImportSettings();
+            n=nnz(any(missing,2));
+            if n>0
+                importSummary.Text=sprintf('%d recordings need settings. Enter a value once for each field that needs it.',n);
+            else
+                importSummary.Text='All recordings have the required settings. Click Check rows to verify inputs.';
+            end
+            current=State.Batch.Rows.Paths;
+            if ~isequal(current,importLastPaths)
+                [~,importPathSummary]=prepareBOIBatchImportPaths(current,State.Batch.BaseFolder);
+                importLastPaths=current;
+            end
+            needsMapping=importPathSummary.NeedsMapping;
+            if importConverted>0
+                pathSummary.Text=sprintf('Updated Windows/macOS path format for %d recordings.',importConverted);
+            end
+            if ~isempty(needsMapping)
+                pathSummary.Text=sprintf('%d recording paths need a local folder on this computer.',height(needsMapping));
+                pathExample.Text=sprintf('Example: %s\nChoose the local folder corresponding to the original prefix below. You can edit that prefix.', ...
+                    char(needsMapping.Path(1)));
+                if isempty(importPrefix.Value),importPrefix.Value=char(importPathSummary.SuggestedPrefix);end
+            end
+        else
+            importSummary.Text='Open a CSV to check its paths and required settings.';
+            importFeedback.Text='';
+        end
+        for k=1:numel(importFields)
+            count=nnz(missing(:,k));
+            importFields{k}.Enable=onoff(count>0&&~State.Busy);
+            if count>0,importCounts{k}.Text=sprintf('%d missing',count);
+            elseif importActive,importCounts{k}.Text='Already supplied';
+            else,importCounts{k}.Text='';end
+        end
+        applyImportButton.Enable=onoff(any(missing,'all')&&~State.Busy);
+        prefixLabel.Visible=onoff(~isempty(needsMapping));importPrefix.Visible=prefixLabel.Visible;
+        mapImportButton.Visible=prefixLabel.Visible;
+        importPrefix.Enable=onoff(~isempty(needsMapping)&&~State.Busy);
+        mapImportButton.Enable=importPrefix.Enable;
+    end
+    function applyImportCallback(~,~)
+        assertIdle();
+        missing=missingImportSettings();values=strings(size(importSettings));
+        for k=1:numel(importSettings)
+            if ~any(missing(:,k)),continue;end
+            values(k)=strtrim(string(importFields{k}.Value));
+            if values(k)=="",continue;end
+            value=str2double(values(k));
+            if ~isreal(value)||~isfinite(value)||value<=0
+                importFeedback.Text=[importLabels{k} ' must be a positive number.'];
+                return;
+            end
+        end
+        targets=missing&(values~="");
+        if ~any(targets,'all')
+            importFeedback.Text='Enter or choose a value to apply to the recordings that need it.';
+            return;
+        end
+        for k=1:numel(importSettings)
+            if ~any(targets(:,k)),continue;end
+            State.Batch.Rows.(importSettings{k})(targets(:,k))=values(k);
+            importFields{k}.Value='';
+        end
+        affected=any(targets,2);invalidate(find(affected));refresh();
+        importFeedback.Text=sprintf('Applied settings to %d recordings. Save to keep these choices.',nnz(affected));
+    end
+    function mapImportCallback(~,~)
+        assertIdle();
+        folder=uigetdir(State.Batch.BaseFolder,'Choose the local folder matching the original prefix');
+        if isequal(folder,0),return;end
+        try,mapImportPaths(importPrefix.Value,folder);
+        catch err,importFeedback.Text=err.message;end
+    end
+    function mapImportPaths(prefix,folder)
+        assertIdle();
+        assert(importActive,'OxygenDynamics:BatchPathMapping','Open a CSV before mapping its paths.');
+        before=State.Batch.Rows.Paths;
+        [paths,info]=prepareBOIBatchImportPaths(before,State.Batch.BaseFolder,prefix,folder);
+        assert(info.MappedCount>0,'OxygenDynamics:BatchPathMapping','No paths match that folder prefix. Check the example path.');
+        State.Batch.Rows.Paths=paths;importLastPaths=paths;importPathSummary=info;
+        importPrefix.Value='';invalidate(find(paths~=before));refresh();
+        importFeedback.Text=sprintf('Mapped %d recording paths. Use Check rows to verify the folders.',info.MappedCount);
+    end
+    function value=hasWorkingCSV()
+        value=~isempty(char(State.Batch.FilePath))&& ...
+            (~isfield(State.Batch,'WorkingCSV')||isequal(State.Batch.WorkingCSV,true));
+    end
+    function requireWorkingCSV()
+        assert(hasWorkingCSV(),'OxygenDynamics:BatchWorkingCSVRequired', ...
+            'Use Save as… to create a working CSV, then review the queue before starting recordings.');
     end
     function [b,backup]=saveBatch(path)
         assert(~State.Busy,'OxygenDynamics:BatchBusy','Wait for the current check.');
         if nargin<1||isempty(path),path=State.Batch.FilePath;end
         assert(~isempty(path),'OxygenDynamics:BatchPathRequired','Choose a CSV filename with Save as.');
         [b,backup]=writeBOIBatchCSV(State.Batch,path);State.Batch=b;State.Dirty=false;invalidateQueue();
-        refresh();status.Text=['Saved CSV: ' char(b.FilePath)];
+        refresh();status.Text=['Working CSV saved: ' char(b.FilePath)];
         if ~isempty(backup),status.Text=[status.Text ' | Prior copy: ' char(backup)];end
     end
     function report=checkRows(rowIDs)
@@ -234,7 +392,7 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         if numel(State.Requests)~=height(State.Batch.Rows),State.Requests=cell(height(State.Batch.Rows),1);end
         State.Requests(selected)=requests(selected);State.Dirty=true;
         refresh();ready=sum(report.InputStatus(selected)=="Ready");
-        status.Text=sprintf('Checked %d rows: %d ready; %d need attention. Save to keep the current status view.', ...
+        status.Text=sprintf('Checked %d rows: %d ready; %d need attention.', ...
             nnz(selected),ready,nnz(selected)-ready);
         clear cleanup
     end
@@ -298,7 +456,7 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         indices=unique(double(indices(:)'),'stable');
         assert(all(isfinite(indices)&indices==fix(indices)&indices>=1&indices<=height(State.Batch.Rows)), ...
             'OxygenDynamics:BatchSelection','Select existing row numbers.');
-        State.SelectedRows=indices;showDetails();
+        State.SelectedRows=indices;syncHistorySelection();showDetails();
     end
     function editCell(row,name,value)
         assert(~State.Busy,'OxygenDynamics:BatchBusy','Wait for the current check.');
@@ -434,31 +592,85 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         for ci=1:numel(lockedControls)
             if isvalid(lockedControls{ci}),lockedControls{ci}.Enable=onoff(~busy);end
         end
+        reviewedExport.SetBusy(busy);compactExport.SetBusy(busy);
         stopButton.Enable=onoff(busy&&running&&~State.StopRequested);
-        queueConfirm.Enable=onoff(~busy&&~isempty(State.QueuePlan));
-        runQueueButton.Enable=onoff(~busy&&State.QueueConfirmed&&~isempty(State.QueuePlan)&&State.QueuePlan.Counts.Run>0);
+        syncQueueStart();
+        syncStatsControls();
         if ~busy
-            statsConfirm.Enable=onoff(~isempty(State.StatsPlan));
-            exportStatsButton.Enable=onoff(State.StatsConfirmed&&~isempty(State.StatsPlan));
-            hasStats=~isempty(State.StatsResult)&&isfile(State.StatsResult.Workbook);
-            openStatsButton.Enable=onoff(hasStats);openStatsFolderButton.Enable=onoff(hasStats);copyStatsPathButton.Enable=onoff(hasStats);
             showDetails();openAttemptButton.Enable='off';
-            if ~isempty(SelectedHistoryRow)&&SelectedHistoryRow<=height(HistoryRows)&& ...
+            if historyMatchesSelection()&&~isempty(SelectedHistoryRow)&&SelectedHistoryRow<=height(HistoryRows)&& ...
                     string(HistoryRows.Status(SelectedHistoryRow))=="Complete"&&HistoryRows.Verified(SelectedHistoryRow)
                 openAttemptButton.Enable='on';
             end
+            refreshImport();
         end
     end
     function invalidateQueue()
         invalidateStats();
         State.QueuePlan=[];State.QueueConfirmed=false;
-        queueConfirm.Value=false;queueConfirm.Enable='off';runQueueButton.Enable='off';
-        queueStatus.Text='Review required';
+        syncQueueStart();
+        queuePreview.Text='No queue reviewed';
+        queueEstimate.Text='Select recordings, choose an output folder and review the queue.';
+        queueEstimate.Tooltip='';
+        queueStatus.Text='';
+        if ~hasWorkingCSV()
+            queueStatus.Text='Use Save as… to create a working CSV for the run.';
+        end
+        queueDetails.Value={''};
+        setQueueDetailsExpanded(false);queueDetailsButton.Enable='off';
+    end
+    function syncQueueStart()
+        count=0;
+        if ~isempty(State.QueuePlan),count=State.QueuePlan.Counts.Run;end
+        runQueueButton.Text='Start recordings';
+        if count==1,runQueueButton.Text='Start 1 recording';
+        elseif count>1,runQueueButton.Text=sprintf('Start %d recordings',count);end
+        runQueueButton.Enable=onoff(~State.Busy&&count>0&&hasWorkingCSV());
+    end
+    function toggleQueueDetails(~,~)
+        setQueueDetailsExpanded(strcmp(queueDetails.Visible,'off'));
+    end
+    function setQueueDetailsExpanded(expanded)
+        heights=qg.RowHeight;heights{7}=0;
+        queueDetailsButton.Text='Show details';
+        if expanded,heights{7}=94;queueDetailsButton.Text='Hide details';end
+        qg.RowHeight=heights;queueDetails.Visible=onoff(expanded);
     end
     function invalidateStats()
         State.StatsPlan=[];State.StatsConfirmed=false;
-        statsConfirm.Value=false;statsConfirm.Enable='off';exportStatsButton.Enable='off';
-        statsSummary.Text='Review required';
+        if isempty(strtrim(statsParent.Value))
+            statsPreview.Text='Choose an export folder, then review the selection.';
+        else
+            statsPreview.Text='Review the selection to prepare a new export.';
+        end
+        statsPreview.Tooltip='';
+        if isempty(State.StatsResult)
+            statsDetails.Value={''};
+        else
+            statsDetails.Value=State.StatsHandoff.Handoff;
+        end
+        setStatsDetailsExpanded(false);syncStatsControls();
+    end
+    function syncStatsControls()
+        ready=~State.Busy&&~isempty(State.StatsPlan)&&State.StatsPlan.Counts.Included>0;
+        exportStatsButton.Enable=onoff(ready);
+        hasStats=~isempty(State.StatsResult)&&isfile(State.StatsResult.Workbook);
+        openResult=~State.Busy&&hasStats;
+        openStatsButton.Enable=onoff(openResult);openStatsFolderButton.Enable=onoff(openResult);copyStatsPathButton.Enable=onoff(openResult);
+        statsDetailsButton.Enable=onoff(~State.Busy&&(~isempty(State.StatsPlan)||hasStats));
+    end
+    function toggleStatsDetails(~,~)
+        setStatsDetailsExpanded(strcmp(statsDetails.Visible,'off'));
+    end
+    function setStatsDetailsExpanded(expanded)
+        statsDetails.Visible=onoff(expanded);
+        if expanded
+            statsDetailsButton.Text='Hide details';
+        elseif isempty(State.StatsPlan)&&~isempty(State.StatsResult)
+            statsDetailsButton.Text='Show export guide';
+        else
+            statsDetailsButton.Text='Show details';
+        end
     end
     function plan=reviewStats(parent,ids)
         assertIdle();
@@ -472,60 +684,171 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         [plan,checked]=prepareBOIBatchStats(State.Batch,statsParent.Value,ids,@checkProgress);
         State.Batch=checked;State.Report=plan.Report;State.Requests={};State.Dirty=true;
         State.StatsPlan=plan;refresh();
-        lines={sprintf('%d verified completed recordings included; %d excluded.',plan.Counts.Included,plan.Counts.Excluded), ...
-            'Uses the existing stats exporter and its workbook/event/metric/trace formats.', ...
-            'Labels come from each saved run. Current optional metadata is retained in BatchSourceRows.csv.', ...
-            'Stimulation remains metadata; no behaviour/protocol reconstruction. No detection is run.', ...
-            ['New combined output: ' plan.OutputFolder], '', 'Included:'};
+        lines={['New combined output: ' plan.OutputFolder]};
+        if ~isempty(plan.Excluded)
+            lines=[lines,{'','Excluded recordings'}];
+            for si=1:height(plan.Excluded)
+                r=plan.Excluded(si,:);lines{end+1}=sprintf('%s | %s',r.Mouse,r.Reason); %#ok<AGROW>
+            end
+        end
+        lines=[lines,{'','Included recordings'}];
         for si=1:height(plan.Included)
             r=plan.Included(si,:);lines{end+1}=sprintf('%s | %s | %s | %s',r.Mouse,r.Condition,r.RunFolder,r.MetadataStatus); %#ok<AGROW>
         end
-        lines{end+1}='';lines{end+1}='Excluded:';
-        for si=1:height(plan.Excluded)
-            r=plan.Excluded(si,:);lines{end+1}=sprintf('%s | %s',r.Mouse,r.Reason); %#ok<AGROW>
-        end
+        lines=[lines,{'','The export uses saved automatic measurements. Burden values can be unavailable.', ...
+            'Labels come from each saved run. Current optional metadata is retained in BatchSourceRows.csv.'}];
         statsDetails.Value=lines;
-        statsSummary.Text=sprintf('%d included | %d excluded',plan.Counts.Included,plan.Counts.Excluded);
-        tabs.SelectedTab=statsTab;tabChanged([],[]);
-        status.Text='Review included/excluded saved recordings and the destination, then confirm combined stats/export.';
+        parent=fileparts(plan.OutputFolder);
+        [~,name,extension]=fileparts(parent);displayParent=[name extension];
+        if isempty(displayParent),displayParent=parent;end
+        statsPreview.Text=sprintf('%d included · %d excluded · Output: %s', ...
+            plan.Counts.Included,plan.Counts.Excluded,displayParent);
+        statsPreview.Tooltip=plan.OutputFolder;
+        setStatsDetailsExpanded(false);
+        tabs.SelectedTab=statsTab;
+        status.Text='Check the preview, then click Export workbook to confirm and start.';
         clear cleanup
     end
     function confirmStats(value)
         assertIdle();assert(~isempty(State.StatsPlan),'OxygenDynamics:BatchStatsNotReviewed','Review combined export first.');
         assert(islogical(value)&&isscalar(value),'OxygenDynamics:BatchStatsConfirmation','Confirm with a single logical value.');
-        State.StatsConfirmed=value;statsConfirm.Value=value;exportStatsButton.Enable=onoff(value);
+        State.StatsConfirmed=value;
+    end
+    function result=startReviewedStats(varargin)
+        confirmStats(true);result=runStatsExport(varargin{:});
     end
     function result=runStatsExport(executor)
         assertIdle();assert(State.StatsConfirmed&&~isempty(State.StatsPlan), ...
             'OxygenDynamics:BatchStatsNotConfirmed','Review and confirm the combined export first.');
         setBusy(true,false);cleanup=onCleanup(@()finishStats());
         checkDialog=uiprogressdlg(Fig,'Title','Combined stats / export','Message','Rechecking reviewed saved recordings. No detection is running.', ...
-            'Value',0,'Cancelable','off');drawnow;
+            'Indeterminate','on','Cancelable','off');drawnow;
         if nargin<1,executor=[];end
-        result=statsFolder.ExportTo(@(~)runBOIBatchStats(State.Batch,State.StatsPlan,@statsProgress,executor),State.StatsPlan.OutputFolder);
-        State.StatsResult=result;
-        statsOutcome.Text=sprintf('Completed combined export: %d recordings. Existing formats and calculations retained.',height(result.Included));
-        status.Text='Combined stats/export completed. Open the workbook or export folder for postprocessing.';
+        try
+            bundle=statsFolder.ExportTo(@(folder)runStatsBundle(folder,executor),State.StatsPlan.OutputFolder);
+        catch err
+            if isempty(State.StatsResult),statsOutcome.Text='Export failed.';
+            else,statsOutcome.Text='Export failed; previous export retained.';end
+            status.Text='Automatic export failed. Retained partial output is not a completed result.';
+            rethrow(err);
+        end
+        result=bundle.Result;presentStats(bundle,'Export completed');
         clear cleanup
+    end
+    function bundle=runStatsBundle(~,executor)
+        result=runBOIBatchStats(State.Batch,State.StatsPlan,@statsProgress,executor);
+        statsProgress(struct('Stage','opening-result','Index',1,'Count',1,'Mouse',''));
+        bundle=readStatsBundle(result.Directory);
+    end
+    function bundle=readStatsBundle(path)
+        [bundle.Result,bundle.Info]=loadBOIBatchStatsResult(path);
+    end
+    function result=reopenStats(path)
+        assertIdle();setBusy(true,false);cleanup=onCleanup(@()finishCheck());
+        checkDialog=uiprogressdlg(Fig,'Title','Open completed automatic export', ...
+            'Message','Reading saved receipts and result tables. No statistics or original-movie reading.', ...
+            'Indeterminate','on','Cancelable','off');drawnow;
+        folder=char(java.io.File(char(string(path))).getCanonicalPath());
+        if isfile(folder),folder=fileparts(folder);end
+        try
+            bundle=statsFolder.LoadExisting(@(~)readStatsBundle(path),folder);
+        catch err
+            statsOutcome.Text='Saved export not opened; previous selection retained.';
+            status.Text='Saved export could not be opened. No analysis or export was started.';
+            rethrow(err);
+        end
+        invalidateStats();result=bundle.Result;presentStats(bundle,'Saved export opened');
+        clear cleanup
+    end
+    function presentStats(bundle,message)
+        State.StatsResult=bundle.Result;State.StatsHandoff=bundle.Info;
+        compactExport.OfferOpenedSource(automaticCompactSource());
+        statsDetails.Value=bundle.Info.Handoff;statsOutcome.Text=message;
+        showStatsAvailability();
+        setStatsDetailsExpanded(false);
+        tabs.SelectedTab=statsTab;
+        status.Text=[message '. Open the workbook, folder or export guide.'];
+    end
+    function showStatsAvailability()
+        a=State.StatsHandoff.Burden;
+        if a.Known
+            statsSummary.Text=sprintf('%d / %d normalized burdens available',a.AvailableNormalizedRecordings,a.Recordings);
+        else
+            statsSummary.Text='Burden availability not recorded';
+        end
+    end
+    function value=automaticCompactSource()
+        assert(~isempty(State.StatsResult),'OxygenDynamics:CompactSource','Open a completed automatic export first.');
+        value=struct('DataOutput',State.StatsResult.DataOutput,'Workbook',State.StatsResult.Workbook, ...
+            'UseWorkbookBurdenTables',true);
+    end
+    function b=compactBatchContext(source)
+        b=struct('FilePath',State.Batch.FilePath,'Metadata',table());
+        if isempty(State.StatsResult)||~isfield(State.StatsResult,'Included'),return;end
+        opened=automaticCompactSource();
+        if isstruct(source)
+            if ~isequaln(source,opened),return;end
+        elseif ~any(string(source)==[string(opened.Workbook),string(opened.DataOutput)]),return;
+        end
+        I=State.StatsResult.Included;rows=State.Batch.Rows;
+        if ~all(ismember({'RecordingID','BatchRowID'},I.Properties.VariableNames)),return;end
+        [m,ix]=ismember(string(I.BatchRowID),string(rows.BatchRowID));
+        if ~all(m),b.FilePath='';return;end
+        allowed={'Mouse','Experiment','SessionID','Session','Condition','DrugID','Genotype','Promoter','PuffStim','FieldOfViewID','ControlRecordingID', ...
+            'RecordingLabel','RecordingDate','Sex','AgeDays','BrainRegion','Project','Operator','Notes','Camera','ExposureTime_ms','Gain','Binning', ...
+            'Treatment','Dose','DoseUnit','Route','TreatmentTime','TimeSinceTreatment_min'};
+        names=intersect(allowed,rows.Properties.VariableNames,'stable');b.Metadata=rows(ix,names);b.Metadata.RecordingID=string(I.RecordingID);
+        if ismember('Session',b.Metadata.Properties.VariableNames)&&~ismember('SessionID',b.Metadata.Properties.VariableNames)
+            b.Metadata.SessionID=b.Metadata.Session;b.Metadata.Session=[];
+        end
+    end
+    function beginCompactExport(message)
+        assertIdle();setBusy(true,false);
+        checkDialog=uiprogressdlg(Fig,'Title','Compact workbook','Message',message,'Indeterminate','on','Cancelable','off');drawnow;
+    end
+    function finishCompactExport()
+        finishCheck();status.Text='Compact workbook operation finished. See the compact tab for source and export status.';
+    end
+    function path=automaticMAT()
+        assertIdle();assert(~isempty(State.StatsResult)&&isfile(State.StatsResult.DataOutput), ...
+            'OxygenDynamics:ReviewedExportSource','Open a completed automatic export first, or choose its DataOutput.mat directly.');
+        path=State.StatsResult.DataOutput;
+    end
+    function beginReviewedExport(message)
+        assertIdle();setBusy(true,false);
+        checkDialog=uiprogressdlg(Fig,'Title','Reviewed burden-only export','Message',message, ...
+            'Indeterminate','on','Cancelable','off');drawnow;
+    end
+    function finishReviewedExport()
+        finishCheck();status.Text='Reviewed burden operation finished. See its preview/export status; automatic results are preserved.';
     end
     function finishStats()
         invalidateStats();finishCheck();
     end
     function statsProgress(event)
         State.CheckProgress=event;
-        checkDialog.Title=sprintf('Combined stats / export — %d recordings',event.Count);
+        checkDialog.Title=sprintf('Automatic export — %d recordings',State.StatsPlan.Counts.Included);
         switch event.Stage
-            case 'verifying',message=sprintf('Verifying saved recording %d of %d: %s',event.Index,event.Count,event.Mouse);value=0;
-            case 'loading',message=sprintf('Loading saved recording %d of %d: %s',event.Index,event.Count,event.Mouse);value=.1+.6*(event.Index-1)/max(1,event.Count);
-            case 'combining',message='Combining saved measurements using the existing stats workflow';value=.75;
-            case 'exporting',message='Writing the existing workbook, event tables, metrics and trace exports';value=.85;
-            otherwise,message='Checking the completed combined export';value=.95;
+            case 'verifying',message=sprintf('Checking saved recording %d of %d: %s',event.Index,event.Count,event.Mouse);
+            case 'verifying-sources',message=sprintf('Checking saved inputs for recording %d of %d: %s',event.Index,event.Count,event.Mouse);
+            case 'preparing',message='Preparing a new export folder';
+            case 'loading',message=sprintf('Loading saved recording %d of %d: %s',event.Index,event.Count,event.Mouse);
+            case 'combining',message='Combining saved measurements';
+            case 'exporting',message='Writing the workbook and companion files';
+            case 'verifying-output',message=sprintf('Checking export output %d of %d: %s',event.Index,event.Count,event.Item);
+            case 'reverifying-runs'
+                if isfield(event,'Item')&&strcmp(event.Item,'Batch CSV'),message='Checking the batch CSV for changes';
+                else,message=sprintf('Final check of saved run %d of %d: %s',event.Index,event.Count-1,event.Mouse);end
+            case 'saving-receipt',message='Saving the completed export receipt';
+            case 'complete',message='Export files verified and saved';
+            case 'opening-result',message='Opening the saved export summary';
+            otherwise,message='Preparing the automatic export';
         end
         checkDialog.Message=[message newline 'No detector or new recording analysis is running.'];
-        checkDialog.Value=value;status.Text=message;drawnow;
+        status.Text=message;drawnow;
     end
     function statsTabCallback(~,~)
-        tabs.SelectedTab=statsTab;tabChanged([],[]);
+        tabs.SelectedTab=statsTab;
     end
     function statsParentCallback(~,~)
         parent=uigetdir(pwd,'Choose an existing parent for a fresh combined stats/export folder');
@@ -534,10 +857,17 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
     end
     function statsOptionsChanged(~,~),invalidateStats();end
     function reviewStatsCallback(~,~),guarded(@()reviewStats());end
-    function statsConfirmationChanged(~,~),guarded(@()confirmStats(logical(statsConfirm.Value)));end
-    function exportStatsCallback(~,~),guarded(@()runStatsExport());end
+    function exportStatsCallback(~,~),guarded(@startReviewedStats);end
+    function reopenStatsCallback(~,~)
+        assertIdle();initial=statsFolder.Folder();if isempty(initial),initial=pwd;end
+        folder=uigetdir(initial,'Choose a COMPLETED combined-export folder (contains BatchStatsResult.mat)');
+        if ~isequal(folder,0),guarded(@()reopenStats(folder));end
+    end
     function openStatsCallback(~,~)
-        assertIdle();if ~isempty(State.StatsResult),open(State.StatsResult.Workbook);end
+        assertIdle();
+        if ~isempty(State.StatsResult)
+            guarded(@()statsFolder.OpenFile(State.StatsResult.Workbook));
+        end
     end
     function setOutputParent(path)
         assertIdle();outputParent.Value=char(string(path));State.Batch.OutputParent=outputParent.Value;
@@ -556,32 +886,63 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         if nargin<2,selectedIDs=State.Batch.Rows.BatchRowID(State.SelectedRows);end
         if nargin<3,retry=runAgain.Value;else,runAgain.Value=logical(retry);end
         assert(~isempty(selectedIDs),'OxygenDynamics:BatchSelection','Select recording rows before reviewing the queue.');
-        assert(~isempty(State.Batch.FilePath),'OxygenDynamics:BatchPathRequired','Save the batch CSV before reviewing the execution queue.');
-        if State.Dirty,saveBatch(State.Batch.FilePath);end
+        assert(~isempty(State.Batch.FilePath),'OxygenDynamics:BatchPathRequired', ...
+            'Use Save as… to create a working CSV before reviewing an unsaved batch.');
         invalidateQueue();setBusy(true,false);cleanup=onCleanup(@()finishCheck());
         status.Text='Reviewing selected sources, settings and destinations. Analysis has not started.';beginCheck();
         [plan,checked]=prepareBOIBatchQueue(State.Batch,outputParent.Value,string(selectedIDs),logical(retry),@checkProgress);
         State.Batch=checked;State.Report=plan.Report;State.Requests={};
         State.QueuePlan=plan;State.QueueConfirmed=false;State.Dirty=true;refresh();
-        queueDetails.Value=formatQueue(plan);queueStatus.Text=sprintf('%d to run | %d skipped | %d excluded', ...
+        queuePreview.Text=sprintf('%d to start · %d skipped · %d excluded', ...
             plan.Counts.Run,plan.Counts.Skipped,plan.Counts.Excluded);
-        tabs.SelectedTab=queueTab;tabChanged([],[]);
-        status.Text='Review the queue, then confirm its recordings, settings, destinations and storage before Run.';
+        [~,folder,extension]=fileparts(plan.OutputParent);
+        destination=[char(folder) char(extension)];
+        if isempty(destination),destination=char(plan.OutputParent);end
+        copyGiB=plan.SourceCopyBytes/1024^3;
+        copyEstimate=sprintf('%.1f GiB',copyGiB);
+        if copyGiB>0&&copyGiB<0.1,copyEstimate='<0.1 GiB';end
+        queueEstimate.Text=sprintf('Output: %s\nSource copies: %s, plus results and temporary files.', ...
+            destination,copyEstimate);
+        queueEstimate.Tooltip=char(plan.OutputParent);
+        queueDetails.Value=formatQueue(plan);queueDetailsButton.Enable='on';
+        tabs.SelectedTab=queueTab;
+        if plan.Counts.Run==0
+            queueStatus.Text='No selected recordings need to start.';
+            status.Text='Open details to see why the selected recordings will be skipped or excluded.';
+        elseif ~hasWorkingCSV()
+            queueStatus.Text='Use Save as… to create a working CSV, then review again to start recordings.';
+            status.Text='Queue preview ready. The run will record outcomes in the working CSV.';
+        else
+            queueStatus.Text='';
+            status.Text='Review the preview. The Start button confirms and starts this queue.';
+        end
         clear cleanup
     end
     function confirmQueue(value)
         assertIdle();assert(~isempty(State.QueuePlan),'OxygenDynamics:BatchQueueNotReviewed','Review the current selected queue first.');
         assert(islogical(value)&&isscalar(value),'OxygenDynamics:BatchQueueConfirmation','Confirm with a single logical value.');
-        State.QueueConfirmed=value;queueConfirm.Value=value;
-        runQueueButton.Enable=onoff(value&&State.QueuePlan.Counts.Run>0);
+        if value,requireWorkingCSV();end
+        State.QueueConfirmed=value;
+    end
+    function outcome=startReviewedQueue(varargin)
+        confirmQueue(true);
+        reset=onCleanup(@()clearQueueConfirmation());
+        outcome=runQueue(varargin{:});
+        clear reset
+    end
+    function clearQueueConfirmation()
+        State.QueueConfirmed=false;
     end
     function outcome=runQueue(executor)
         assertIdle();assert(State.QueueConfirmed&&~isempty(State.QueuePlan), ...
             'OxygenDynamics:BatchQueueNotConfirmed','Review and confirm the selected queue before starting analysis.');
+        requireWorkingCSV();
         assert(State.QueuePlan.Counts.Run>0,'OxygenDynamics:BatchQueueEmpty','No selected rows need a new analysis attempt.');
         if nargin>=1,assert(isempty(executor)||isa(executor,'function_handle'),'OxygenDynamics:BatchExecutor','Supply a test executor function handle.');end
         State.StopRequested=false;State.Outcome=[];setBusy(true,true);
-        cleanup=onCleanup(@()finishQueue());tabs.SelectedTab=queueTab;tabChanged([],[]);
+        cleanup=onCleanup(@()finishQueue());tabs.SelectedTab=queueTab;
+        queuePreview.Text='Analysis running';
+        queueStatus.Text=sprintf('0 of %d completed · Starting',State.QueuePlan.Counts.Run);
         status.Text='Starting the confirmed queue. Stop after current recording does not cancel the current calculation.';drawnow;
         try
             if nargin<1||isempty(executor)
@@ -590,7 +951,10 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
                 [b,outcome]=runBOIBatchQueue(State.Batch,State.QueuePlan,@queueProgress,@shouldStop,executor);
             end
             State.Batch=b;State.Outcome=outcome;State.Dirty=false;State.Report=reportFromBatch(b);
-            refresh();queueStatus.Text=char(string(outcome.Status));
+            refresh();
+            queuePreview.Text=['Queue ' char(outcome.Status)];
+            queueStatus.Text=sprintf('%d completed · %d pending', ...
+                numel(outcome.CompletedRowIDs),numel(outcome.PendingRowIDs));
             lines={['Queue outcome: ' char(string(outcome.Status))],char(string(outcome.Message)), ...
                 ['Queue records: ' char(string(outcome.QueueFolder))], ...
                 sprintf('Completed: %d | Pending: %d',numel(outcome.CompletedRowIDs),numel(outcome.PendingRowIDs))};
@@ -603,18 +967,31 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
                 numel(outcome.CompletedRowIDs),numel(outcome.PendingRowIDs),outcome.Message);
         catch err
             status.Text=['Queue stopped before further dispatch: ' err.message];
+            queuePreview.Text='Queue stopped';
+            queueStatus.Text='Open details for the error.';
             queueDetails.Value=[{status.Text};cellstr(string(queueDetails.Value(:)))];rethrow(err);
         end
     end
     function finishQueue()
-        State.QueueConfirmed=false;State.QueuePlan=[];queueConfirm.Value=false;
+        clearQueueConfirmation();State.QueuePlan=[];
         setBusy(false,false);
     end
     function queueProgress(b,event)
         State.Batch=b;State.Report=reportFromBatch(b);State.Requests={};State.Dirty=false;refresh();
         % Refresh updates row details; controls remain locked throughout drawnow.
         setBusy(true,true);
-        queueStatus.Text=sprintf('%d / %d | %s',event.Index,event.Count,event.Stage);
+        if ~State.StopRequested
+            completed=event.Index-double(~strcmp(event.Status,'Complete'));
+            stage=event.Stage;
+            switch stage
+                case 'staging',stage='Copying source files';
+                case 'analysis',stage='Analyzing';
+                case 'statistics',stage='Calculating statistics';
+                case 'complete',stage='Complete';
+            end
+            queueStatus.Text=sprintf('%d of %d completed · %s — %s',max(0,completed),event.Count, ...
+                rowLabel(find(b.Rows.BatchRowID==string(event.RowID)),false),stage);
+        end
         status.Text=sprintf('Recording %d of %d | %s | %s',event.Index,event.Count,event.Stage,event.Message);
         progressLine=sprintf('%s | row %s | %s | %s',event.Status,event.RowID,event.Stage,event.Message);
         queueDetails.Value=[{progressLine};cellstr(string(queueDetails.Value(:)))];drawnow;
@@ -662,20 +1039,40 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         end
         lines=lines(:);
     end
-    function label=rowLabel(row)
+    function label=rowLabel(row,includePath)
+        if nargin<2,includePath=true;end
         label='Unknown row';if ~isscalar(row),return;end
         label=char(State.Batch.Rows.Paths(row));
+        if ~includePath
+            [~,name,extension]=fileparts(label);label=[name extension];
+        end
         if ismember('Mouse',State.Batch.Rows.Properties.VariableNames)&&strlength(State.Batch.Rows.Mouse(row))>0
-            label=[char(State.Batch.Rows.Mouse(row)) ' | ' label];
+            label=char(State.Batch.Rows.Mouse(row));
+            if includePath,label=[label ' | ' char(State.Batch.Rows.Paths(row))];end
         end
     end
     function history=getHistory(row)
         assertIdle();if nargin<1,row=State.SelectedRows;end
         requireSelection(row);assert(isscalar(row),'OxygenDynamics:BatchSelection','Select one recording row for attempt history.');
-        history=loadBOIBatchHistory(State.Batch,State.Batch.Rows.BatchRowID(row));
+        rowID=State.Batch.Rows.BatchRowID(row);
+        history=loadBOIBatchHistory(State.Batch,rowID);
+        if ~isequal(State.SelectedRows,row),return;end
+        HistoryRowID=rowID;
         HistoryRows=history;SelectedHistoryRow=[];historyTable.Data=history;
         historyTable.ColumnName=history.Properties.VariableNames;openAttemptButton.Enable='off';
         historyStatus.Text=sprintf('%d recorded attempts for %s',height(history),rowLabel(row));
+    end
+    function matches=historyMatchesSelection()
+        matches=isscalar(State.SelectedRows)&&strlength(HistoryRowID)>0&& ...
+            State.Batch.Rows.BatchRowID(State.SelectedRows)==HistoryRowID;
+    end
+    function clearHistory()
+        HistoryRowID="";HistoryRows=table();SelectedHistoryRow=[];
+        historyTable.Data=cell(0,0);openAttemptButton.Enable='off';
+        historyStatus.Text='Select one recording row to view its attempts.';
+    end
+    function syncHistorySelection()
+        if strlength(HistoryRowID)>0&&~historyMatchesSelection(),clearHistory();end
     end
     function [runFig,runUI]=openAttempt(path)
         assertIdle();run=loadBOIRecordingRun(path);[runFig,runUI]=openBOIRecordingWorkflow();
@@ -696,14 +1093,36 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
     function syncShared()
         sample.Value=char(string(State.Batch.Shared.SampleF));pixels.Value=char(string(State.Batch.Shared.Pixelsize));
         p=char(string(State.Batch.Shared.BOISupportProfile));
-        if ismember(p,support.ItemsData),support.Value=p;else,support.Value='';end
+        labels={'Automatic tissue estimate','Reviewed craniotomy ROI'};
+        profiles={'whole-image','craniotomy-roi-1'};
+        if isempty(strtrim(p)),p='whole-image';end
+        if ~ismember(p,profiles)
+            labels{end+1}=['Imported setting: ' p];profiles{end+1}=p;
+        end
+        if ~isequal(support.ItemsData,profiles)
+            support.ItemsData={};support.Items=labels;support.ItemsData=profiles;
+        end
+        support.Value=p;
         confirmation.Value=logical(State.Batch.SharedConfirmed);
+    end
+    function label=blankSupportLabel()
+        label="Automatic (default)";
+        shared=string(State.Batch.Shared.BOISupportProfile);
+        if ~State.Batch.SharedConfirmed||strlength(strtrim(shared))==0,return;end
+        switch shared
+            case "whole-image",label="Automatic (shared)";
+            case "craniotomy-roi-1",label="Reviewed ROI (shared)";
+            otherwise,label="Use shared setting";
+        end
     end
     function refresh()
         names=State.Batch.Rows.Properties.VariableNames;
         State.VisibleMetadata=State.VisibleMetadata(ismember(State.VisibleMetadata,names));
         columns=displayColumns();data=State.Batch.Rows(:,columns);
-        data.BOISupportProfile(strlength(data.BOISupportProfile)==0)="Use shared";
+        blankSupport=blankSupportLabel();
+        data.BOISupportProfile(strlength(strtrim(data.BOISupportProfile))==0)=blankSupport;
+        data.BOISupportProfile(data.BOISupportProfile=="whole-image")="Automatic tissue estimate";
+        data.BOISupportProfile(data.BOISupportProfile=="craniotomy-roi-1")="Reviewed craniotomy ROI";
         % Editable CSV completion cells are never accepted as verification.
         unverified=true(height(State.Batch.Rows),1);
         if ~isempty(State.Report),unverified=State.Report.AnalysisStatus=="Unchecked";end
@@ -713,24 +1132,33 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         rowsTable.Data=cellstrTable(data);rowsTable.ColumnName=columnLabels(columns);
         rowsTable.ColumnEditable=~ismember(columns,reserved);
         formats=repmat({'char'},1,numel(columns));
-        supportChoices={'Use shared','whole-image','craniotomy-roi-1'};
+        supportChoices={char(blankSupport),'Automatic tissue estimate','Reviewed craniotomy ROI'};
         % Keep invalid imported values visible for correction; never replace
         % their underlying text with a valid scientific choice.
         imported=cellstr(unique(data.BOISupportProfile,'stable'))';
         formats{strcmp(columns,'BOISupportProfile')}=unique([supportChoices imported],'stable');
         rowsTable.ColumnFormat=formats;
         widths=repmat({140},1,numel(columns));
-        baseWidths={270,110,115,145,135,155,180};
+        baseWidths={235,105,115,108,85,110,176};
         for wi=1:numel(essential),widths{strcmp(columns,essential{wi})}=baseWidths{wi};end
+        if ismember('Mouse',columns),widths{1}=108;end
         rowsTable.ColumnWidth=widths;
         choices=unique([optional metadataNames(names)],'stable');previous=fieldChoice.Value;
         fieldChoice.Items=choices;
         if ismember(previous,choices),fieldChoice.Value=previous;else,fieldChoice.Value=choices{1};end
         file=char(string(State.Batch.FilePath));
-        if isempty(file),caption='New batch (not saved)';else,[~,stem,extension]=fileparts(file);caption=['CSV: ' stem extension];end
+        if isempty(file)
+            caption='New batch (not saved)';
+        else
+            [~,stem,extension]=fileparts(file);
+            role='Imported CSV';
+            if hasWorkingCSV(),role='Working CSV';end
+            caption=[role ': ' stem extension];
+        end
         if State.Dirty,caption=['Unsaved changes | ' caption];end
         fileLabel.Text=caption;fileLabel.Tooltip=file;
-        State.SelectedRows=State.SelectedRows(State.SelectedRows<=height(State.Batch.Rows));showDetails();
+        State.SelectedRows=State.SelectedRows(State.SelectedRows<=height(State.Batch.Rows));
+        syncHistorySelection();showDetails();refreshImport();
     end
     function showDetails()
         selected=State.SelectedRows;n=numel(selected);
@@ -740,10 +1168,8 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         if n==0
             details.Value={'Select table cells to select their recording rows. Use Shift/Cmd/Ctrl to select more than one.', ...
                 'Enter only a recording folder per row; use shared acquisition settings or row overrides.', ...
-                'Automatic tissue estimate (legacy) uses image intensity and needs no preset ROI; review the estimated tissue edge visually.', ...
-                'Detections can extend beyond the estimated tissue edge; inspect the estimate after analysis.', ...
-                'Shared settings need explicit confirmation. Check rows verifies sources and linked results.', ...
-                'Select ready rows, choose an output parent and review the queue before confirming Run.'};return;
+                'Automatic tissue estimate is the default. Inspect the estimated tissue edge after analysis.', ...
+                'Click Check rows, then select ready recordings and open Run.'};return;
         end
         row=selected(1);b=State.Batch;
         if n==1&&strlength(strtrim(b.Rows.RunFolder(row)))>0
@@ -756,12 +1182,20 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
             lines=[{['Mouse: ' char(b.Rows.Mouse(row))]} lines];
         end
         if n>1,lines{end+1}=sprintf('%d rows selected. Details below describe the first selected row; metadata actions apply to every selected row.',n);end
+        usesAutomatic=false;
         try
             [resolved,origins]=resolveBOIBatch(b);
+            usesAutomatic=resolved.BOISupportProfile(row)=="whole-image";
             if ismember('Paths',resolved.Properties.VariableNames),lines{end+1}=['Resolved source: ' char(resolved.Paths(row))];end
             for k=1:numel(acquisition)
-                name=acquisition{k};value=char(string(resolved.(name)(row)));
-                if isempty(value),value='missing';end
+                name=acquisition{k};value=resolved.(name)(row);
+                if strlength(value)==0,value="missing";end
+                if strcmp(name,'BOISupportProfile')
+                    switch value
+                        case "whole-image",value="Automatic tissue estimate";
+                        case "craniotomy-roi-1",value="Reviewed craniotomy ROI";
+                    end
+                end
                 lines{end+1}=sprintf('%s: %s [%s]',displayName(name),value,char(origins.(name)(row))); %#ok<AGROW>
             end
         catch err,lines{end+1}=['Settings need attention: ' err.message];end
@@ -789,10 +1223,9 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         end
         if strlength(b.Rows.RunFolder(row))>0,lines{end+1}=['Exact linked run folder: ' char(b.Rows.RunFolder(row))];end
         lines{end+1}=['Scientist review: ' char(b.Rows.ReviewStatus(row))];
-        lines{end+1}='Support override choices: Use shared (blank in CSV) = confirmed shared setting; whole-image = Automatic tissue estimate (legacy); craniotomy-roi-1 = Reviewed craniotomy ROI.';
-        lines{end+1}='Automatic tissue estimate (legacy) uses image intensity and needs no preset ROI; review the estimated tissue edge visually.';
-        lines{end+1}='Detections can extend beyond the estimated tissue edge; inspect the estimate after analysis.';
-        lines{end+1}='Automatic completion and scientist review are separate. A queue starts only after its settings and destinations are confirmed.';
+        if usesAutomatic
+            lines{end+1}='Review the estimated tissue edge visually. Detections can extend past the estimate.';
+        end
         details.Value=lines;
     end
     function labels=columnLabels(columns)
@@ -808,13 +1241,13 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
     function label=displayName(name)
         switch name
             case 'Paths',label='Recording folder';
-            case 'InputStatus',label='Input readiness';
+            case 'InputStatus',label='Input status';
             case 'AnalysisStatus',label='Analysis status';
-            case 'ResultCheck',label='Saved result check';
-            case 'SampleF',label='Rate override (Hz)';
-            case 'Pixelsize',label='Pixel override (µm/pixel)';
-            case 'BOISupportProfile',label='Support override';
-            case 'Mouse',label='Subject ID (Mouse)';
+            case 'ResultCheck',label='Result check';
+            case 'SampleF',label='Rate (Hz)';
+            case 'Pixelsize',label='Pixel (µm/px)';
+            case 'BOISupportProfile',label='Detection support';
+            case 'Mouse',label='Mouse ID';
             case 'AgeDays',label='Age (days)';
             case 'RecordingDate',label='Recording date (YYYY-MM-DD)';
             otherwise,label=name;
@@ -828,12 +1261,13 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         cells=cell(height(t),width(t));
         for k=1:width(t),cells(:,k)=cellstr(t.(t.Properties.VariableNames{k}));end
     end
-    function sharedChanged(~,~)
-        shared=struct('SampleF',sample.Value,'Pixelsize',pixels.Value,'BOISupportProfile',support.Value);
+    function sharedChanged(control,~)
+        shared=struct('SampleF',sample.Value,'Pixelsize',pixels.Value);
+        if isequal(control,support),shared.BOISupportProfile=support.Value;end
         setShared(shared,false);
     end
     function sharedConfirmed(~,~)
-        setShared(struct('SampleF',sample.Value,'Pixelsize',pixels.Value,'BOISupportProfile',support.Value),confirmation.Value);
+        setShared(struct('SampleF',sample.Value,'Pixelsize',pixels.Value),confirmation.Value);
     end
     function tableSelection(~,event)
         if isempty(event.Indices),selectRows([]);else,selectRows(unique(event.Indices(:,1),'stable'));end
@@ -841,7 +1275,13 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
     function tableEdit(~,event)
         columns=displayColumns();
         name=columns{event.Indices(2)};value=event.NewData;
-        if strcmp(name,'BOISupportProfile')&&strcmp(string(value),"Use shared"),value='';end
+        if strcmp(name,'BOISupportProfile')
+            switch string(value)
+                case blankSupportLabel(),value='';
+                case "Automatic tissue estimate",value='whole-image';
+                case "Reviewed craniotomy ROI",value='craniotomy-roi-1';
+            end
+        end
         try,editCell(event.Indices(1),name,value);
         catch err,refresh();showError(err);end
     end
@@ -860,7 +1300,7 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
                 choice=uiconfirm(Fig,[ ...
                     'Repeated BatchRowID values usually mean rows were copied. Keep the first identity and create new identities for its copies? ' ...
                     'Saved-run links and outcomes for copied rows will be cleared. Recording paths and metadata will be preserved. ' ...
-                    'The original CSV is unchanged until you save.'], ...
+                    'Save your changes after reviewing the copied rows.'], ...
                     'Create new identities for copied rows?', ...
                     'Options',{'Create new identities','Cancel'},'DefaultOption',2,'CancelOption',2);
                 if strcmp(choice,'Create new identities'),guarded(@()openBatch(selectedPath,'new-copies'));end
@@ -870,14 +1310,23 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         end
     end
     function saveCallback(~,~)
-        if isempty(State.Batch.FilePath),saveAsCallback([],[]);else,guarded(@()saveBatch(State.Batch.FilePath));end
+        if hasWorkingCSV(),guarded(@saveBatch);else,chooseSave();end
     end
     function saveAsCallback(~,~)
         chooseSave();
     end
     function saved=chooseSave()
-        saved=false;initial='BOI_batch.csv';if ~isempty(State.Batch.FilePath),initial=char(State.Batch.FilePath);end
-        [name,path]=uiputfile('*.csv','Save batch CSV',initial);if isequal(name,0),return;end
+        saved=false;initial='BOI_batch.csv';
+        if ~isempty(char(State.Batch.FilePath))
+            [folder,stem]=fileparts(char(State.Batch.FilePath));
+            suffix='_working';if hasWorkingCSV(),suffix='_copy';end
+            stem=[stem suffix];initial=fullfile(folder,[stem '.csv']);
+            k=2;
+            while isfile(initial)||isfolder(initial)
+                initial=fullfile(folder,sprintf('%s_%d.csv',stem,k));k=k+1;
+            end
+        end
+        [name,path]=uiputfile('*.csv','Save working CSV',initial);if isequal(name,0),return;end
         try,saveBatch(fullfile(path,name));saved=true;catch err,showError(err);end
     end
     function checkCallback(~,~)
@@ -932,7 +1381,7 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         guarded(@openRun);
     end
     function queueCallback(~,~)
-        assertIdle();tabs.SelectedTab=queueTab;tabChanged([],[]);
+        assertIdle();tabs.SelectedTab=queueTab;
     end
     function selectReadyCallback(~,~)
         guarded(@selectReady);
@@ -949,18 +1398,10 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         assertIdle();invalidateQueue();
     end
     function reviewQueueCallback(~,~)
-        assertIdle();
-        if isempty(State.Batch.FilePath)&&~chooseSave(),return;end
         guarded(@reviewQueue);
     end
-    function chooseRowsCallback(~,~)
-        tabs.SelectedTab=detailsTab;tabChanged([],[]);
-    end
-    function queueConfirmationChanged(~,~)
-        guarded(@()confirmQueue(queueConfirm.Value));
-    end
     function runQueueCallback(~,~)
-        guarded(@runQueue);
+        guarded(@startReviewedQueue);
     end
     function stopCallback(~,~)
         guarded(@requestStop);
@@ -970,7 +1411,7 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
     end
     function historySelection(~,event)
         SelectedHistoryRow=[];openAttemptButton.Enable='off';
-        if State.Busy||isempty(event.Indices),return;end
+        if State.Busy||isempty(event.Indices)||~historyMatchesSelection(),return;end
         row=event.Indices(1,1);if row>height(HistoryRows),return;end
         SelectedHistoryRow=row;
         if string(HistoryRows.Status(row))=="Complete"&&logical(HistoryRows.Verified(row))
@@ -978,15 +1419,8 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
         end
     end
     function openAttemptCallback(~,~)
-        assertIdle();if isempty(SelectedHistoryRow),return;end
+        assertIdle();if isempty(SelectedHistoryRow)||~historyMatchesSelection()||strcmp(openAttemptButton.Enable,'off'),return;end
         guarded(@()openAttempt(char(HistoryRows.RunFolder(SelectedHistoryRow))));
-    end
-    function tabChanged(~,~)
-        if tabs.SelectedTab==queueTab||tabs.SelectedTab==historyTab||tabs.SelectedTab==statsTab
-            rowsTable.Visible='off';g.RowHeight={34,24,114,32,0,'1x',28};
-        else
-            rowsTable.Visible='on';g.RowHeight={34,24,114,32,'1x',136,28};
-        end
     end
     function guarded(action)
         try,action();catch err,showError(err);end
@@ -997,15 +1431,14 @@ syncShared();invalidate([]);State.Dirty=false;refresh();
     end
     function proceed=mayDiscard()
         proceed=~State.Busy;if ~proceed||~State.Dirty,return;end
+        saveOption='Save as…';if hasWorkingCSV(),saveOption='Save';end
         choice=uiconfirm(Fig,'Save changes to the batch before continuing?', ...
-            'Unsaved batch changes','Options',{'Save','Discard','Cancel'}, ...
+            'Unsaved batch changes','Options',{saveOption,'Discard','Cancel'}, ...
             'DefaultOption',1,'CancelOption',3);
         switch choice
             case 'Save'
-                if isempty(State.Batch.FilePath),proceed=chooseSave();
-                else
-                    try,saveBatch(State.Batch.FilePath);catch err,showError(err);proceed=false;end
-                end
+                try,saveBatch();catch err,showError(err);proceed=false;end
+            case 'Save as…',proceed=chooseSave();
             case 'Discard',proceed=true;
             otherwise,proceed=false;
         end

@@ -5,17 +5,107 @@ optional metadata and links to existing results. Enter one recording folder per
 row, supply the required acquisition settings, then **Check rows**. The window
 can save and reopen the batch without hand editing CSV text.
 
-Use **Select ready**, choose an output parent and review the selected queue.
-Confirm its settings and destinations, then **Run reviewed queue** to execute
-recordings sequentially through the existing BOI workflow. Progress and outcomes
-are saved to the working CSV; source-held rows are excluded. See
-[batch execution](BOI_BATCH_EXECUTION.md) for storage, stop, retry and recovery.
+The recording list and its current selection stay visible when you switch
+tabs. The area below the list shows the selected tab. Scroll inside a tab to
+reach additional controls.
 
-After completion, **Stats / export…** collects verified completed recordings
-through the existing multi-recording stats/export service. Review the included
-rows and new destination, confirm, then run it once to obtain the usual combined
-workbook, event tables and traces for postprocessing. See
-[combined export](BOI_BATCH_EXECUTION.md#collect-completed-recordings-for-postprocessing).
+Use **Save as…** to create a working CSV before starting recordings. Use
+**Select ready**, open **Run**, choose an output parent and click **Review
+selected queue**. You can also preview a queue from the imported CSV. The
+preview shows how many recordings will start, be skipped or be excluded,
+along with the output parent and the space needed to copy the input movies.
+Allow additional space for results and temporary files. Use
+**Show details** to inspect individual settings, paths and exclusion reasons.
+The start button shows the number of recordings it will run, for example
+**Start 20 recordings**. Clicking it confirms the preview and starts the queue.
+Changing the selection, inputs or destination requires a new preview. The
+queue runs one recording at a time and saves progress and outcomes to the
+working CSV. See [batch execution](BOI_BATCH_EXECUTION.md) for storage, stop,
+retry and recovery.
+
+After completion, open **Automatic export** or click **Stats / export…**.
+**Review combined export** shows the included and excluded counts and the new
+output path. Expand **Show details** to check individual recordings and
+exclusion reasons. Click **Export workbook** to confirm the reviewed preview
+and write the combined workbook, event tables and traces for postprocessing.
+See [combined export](BOI_BATCH_EXECUTION.md#collect-completed-recordings-for-postprocessing).
+
+## Reopen a completed combined export
+
+In **Automatic export**, choose **Open existing export…**. Choose the completed
+`BOIBatchStats_...` folder containing
+`BatchStatsResult.mat`, `BatchStatsSelection.mat` and `BatchStatsStatus.json`.
+You can do this in a fresh editor without loading a recording CSV first.
+**Open workbook** opens the saved `.xlsx` in your system's default spreadsheet
+app. **Open folder** and **Copy path** use the same saved export. The last
+completed export stays accessible while you prepare another preview. When the
+tab shows the completed export, **Show export guide** opens its postprocessing
+details.
+
+This reads the saved receipts and result tables, checks required files and
+recorded identities, and starts no statistics or recording run. Original movies
+and master files need not be online. It does not recheck their bytes or certify
+full output-file checksums. Saved calculation/creator identity is preserved;
+opening an old export does not apply newer reference rules. Incomplete, failed,
+wrong-source or outside-folder receipts are rejected. A failed open preserves
+the previous valid export. Moved-folder recovery is not supported by this step;
+select the original export folder.
+
+Export completion and measurement availability are separate. The handoff shows
+available normalized recording burdens and event contributions when recorded.
+Missing required values remain blank/NaN rather than zero or a partial sum.
+The automatic workbook does not apply manual decisions. The separate reviewed
+exporter produces a **burden-only companion**, not a replacement for all
+statistics; individual pocket review is optional for the normal export route.
+
+Start postprocessing with `HypoxicBurden_ByRecording` for recording values and
+`HypoxicBurden_EventBased` for event ingredients. Retain `BurdenAmplitudeSource`,
+the saved reference policy when present, recording area/time denominators, and
+availability counts. `MetricDefinitions`, `MetricBasis` and `NormalizationGuide`
+explain the existing fields and units. For group results, retain each metric's
+`NValidMice`. These instructions do not change any formula or endpoint.
+
+## Optional reviewed-burden companion
+
+In **Reviewed export**, choose the saved automatic combined
+`DataOutput.mat`, or click **Use opened automatic export** after opening its
+completed folder in the automatic tab. Add explicitly selected saved boundary
+review JSON files. Each is a self-contained history: choose the reconciled
+snapshot you intend to use; the GUI does not search for or adopt a latest file.
+
+**Add event result…** optionally selects an already saved single-event result
+folder containing `ReviewedEventBurden.json` and `Checksums.json`. Its matching
+recognition/boundary snapshot must also be selected. Boundary choices alone do
+not replace amplitude, duration or area. Experimental previews and unsaved
+viewer drafts are not inputs. A valid saved area revision with incomplete or
+uncertain frames keeps the corresponding burden unavailable.
+
+Choose an output parent; the GUI proposes a new separate child folder. Click
+**Preview reviewed export** to read the source and saved artifacts without
+writing output or reading original movies. Large saved MAT results may take time
+to hash/load. The preview lists exact revisions/checksums, event identities,
+recognition decisions/reasons, imported timing/reference/amplitude/area values,
+retained/excluded counts, missing contributions and the new destination.
+
+Check the confirmation box, then **Export reviewed burden**. Changing the
+selection clears confirmation; changed source/artifact bytes are checked again
+before output is created. Failure keeps the previous completed export controls
+and clears confirmation. Existing destinations are never overwritten.
+
+This invokes the existing burden-only exporter and preserves its workbook,
+CSV, MAT and provenance formats. `ReviewDecisions`, `ExcludedDetections` and,
+when used, `EventRevisions` explain what was applied. `HypoxicBurden_ByRecording`,
+`HypoxicBurden_EventBased` and `HypoxicBurden_TimeSeries` describe the retained
+set. Only saved `not_recognized` detections are excluded; unreviewed/uncertain
+detections remain included under the existing policy. Missing required retained
+contributions withhold complete/normalized burden; no partial sums or false
+zeros. Original automatic statistics and all earlier outputs stay separate.
+Ordinary automatic export does not require this optional step.
+
+**Open reviewed workbook**, **Open folder** and **Copy path** use the last
+successfully completed companion. Workbook opening follows MATLAB's existing
+`open` behavior (the Import Tool on the checked Mac); use Excel's File → Open
+with that saved workbook path if preferred. No file is saved by opening it.
 
 ## Open the editor
 
@@ -35,33 +125,48 @@ analysis. A CSV can also be supplied directly:
 openBOIBatchEditor('examples/boi-batch-draft.csv');
 ```
 
+**CSV setup** opens automatically when recordings lack a sampling rate or pixel
+size, or when foreign paths need a local folder. It shows how many recordings
+need each value. Enter the values you want to apply and click **Apply to missing
+rows**. Use the recording list to enter individual values where they differ.
+
+Relative recording paths use the CSV folder and accept Windows or macOS
+separators. A legacy path starting with a single backslash is relative to the
+CSV folder too. For foreign absolute paths, **CSV setup** suggests a shared
+original folder prefix. Choose the corresponding folder on this computer with
+**Choose local folder…**. The rest of each matching path stays relative to the
+chosen folder. Repeat for other roots. **Check rows** verifies the resulting
+folders.
+Use **Save as…** to keep the corrected paths and settings in a separate working
+CSV. The imported CSV stays intact.
+
 ## Add recordings and confirm settings
 
 1. Choose **Add folder…**, or **Paste paths…** with one recording folder per
    line. Choose the folder containing the intended original movie and optional
    matching denoised movie. The check reports ambiguous or unavailable sources.
-2. Enter shared **Sampling rate (Hz)**, **Pixel size (µm/pixel)** and
-   **Detection support**. Select **I confirm these shared acquisition and
-   tissue-support settings**. Changing a shared setting clears confirmation.
-3. Leave acquisition cells blank to inherit the confirmed shared values. For a
-   recording with different settings, enter its row overrides. The support
-   choices are `whole-image` (**Automatic tissue estimate (legacy)**) and `craniotomy-roi-1`
-   (**Reviewed craniotomy ROI**). The latter requires a matching source-bound
-   reviewed support declaration; selecting it does not create a tissue mask.
+2. Enter **Sampling rate (Hz)** and **Pixel size (µm/pixel)** for each recording.
+   For values shared across recordings, fill the fields above the list and
+   select **Confirm shared overrides**. Changing a shared setting clears
+   confirmation. Confirmed shared values fill blank fields.
+3. **Automatic tissue estimate** is the default **Detection support**. A
+   confirmed shared support choice applies to rows with blank support. An
+   explicit support choice on a row takes precedence.
 4. To remove overrides, select the recording rows and choose **Use shared for
    selection**. This clears all three acquisition overrides for those rows.
-   **Use shared** in a support cell means a blank value in the CSV.
-5. Select a row to inspect its resolved source path, effective settings and
-   whether each setting came from that row, shared settings or is missing.
+   To clear only the support override, select the displayed default or shared
+   support option in that cell.
+5. Select a row and open **Recording details** to inspect its resolved source path,
+   effective settings and the origin of each value.
 
-**Automatic tissue estimate (legacy)** needs no preset ROI: the existing method estimates tissue from movie intensity. Inspect the estimated boundary visually; detections can extend beyond that estimate. Its saved value remains `whole-image`. **Reviewed craniotomy ROI** requires a previously saved matching reviewed mask.
+**Automatic tissue estimate** (`whole-image`) estimates the tissue area from
+movie intensity. Inspect the estimated boundary visually because detections
+can extend beyond it. **Reviewed craniotomy ROI** (`craniotomy-roi-1`) uses a
+previously saved, reviewed mask that matches the source recording. The editor
+checks its support declaration and source before the run.
 
-There is no universal sampling rate, pixel calibration or support default.
-Supply values established for each acquisition. A matching reviewed support
-declaration must already be present in the recording folder. The editor checks
-that declaration and its source; prepare or review support separately using
-the existing tissue-support tools. Choose an output parent once when reviewing
-the selected execution queue.
+Supply the sampling rate and pixel calibration established for each acquisition.
+Choose an output parent once when reviewing the selected execution queue.
 
 Relative recording paths resolve against the opened CSV's directory. A new,
 unsaved batch uses MATLAB's current folder. Saving to another directory retains
@@ -70,7 +175,7 @@ relative paths use the newly saved CSV's directory.
 
 ## Add optional information
 
-Select recording rows, then open **Optional / custom fields**. Choose a field,
+Select recording rows, then open **Metadata**. Choose a field,
 enter its value and choose **Apply to selection**. **Show / add field** makes it
 visible in the table for individual editing. **Add custom field** accepts an
 additional descriptive column. **Hide selected field** hides its display and
@@ -106,7 +211,7 @@ during these checks. The window closes and controls return after completion or
 an error.
 
 Select each row needing attention to read its specific problem and remedy in
-**Selected recording / check details**. The check reports missing or duplicate
+**Recording details**. The check reports missing or duplicate
 sources, invalid settings, incompatible
 inputs, support problems and linked-result issues. A problematic row does not
 prevent the other rows from being checked. Editing inputs clears the previous
@@ -157,9 +262,12 @@ legacy route. Read the row's explanation before continuing through that route.
 
 ## Save safely and reopen
 
-**Save** updates the opened CSV; **Save as…** creates a new destination. A save
-writes a complete temporary CSV and publishes it atomically. Updating an opened
-CSV retains a prior copy named like `batch.csv.backup-<unique-id>.csv`.
+**Save as…** creates a working CSV at a new destination. **Save** offers the
+same choice when a source CSV is open and updates the working CSV when one is
+open. Reopen a working CSV saved by the editor to continue using it. Older
+unmarked CSVs open as protected source files. A save writes a complete
+temporary CSV and publishes it atomically. Updating a working CSV retains a
+prior copy named like `batch.csv.backup-<unique-id>.csv`.
 
 If another writer changed the opened CSV, the save stops with a conflict and
 leaves that file unchanged. Keep the editor open and use **Save as…** with a
@@ -178,23 +286,22 @@ CSV repeats this identity, the editor offers **Create new identities** or
 **Cancel**. Explicitly creating identities keeps the first row's identity and
 gives later copies new ones. It clears those copies' saved-run links and
 analysis/review states while retaining their source, acquisition and metadata.
-The original CSV is unchanged until you deliberately save. Duplicate source
-folders still need resolving during **Check rows**.
+Save the new identities to the working CSV. Duplicate source folders still
+need resolving during **Check rows**.
 
 ## CSV examples and MATLAB preparation functions
 
-The portable input contract has four essential columns:
-`Paths,SampleF,Pixelsize,BOISupportProfile`. Only the folder needs separate
-manual entry per recording when the other values come from confirmed shared
-settings. A paths-only CSV is accepted as a draft. Export resolves effective
-acquisition settings into every row and adds software status/identity and
-shared-setting provenance columns automatically. Those extra fields require
-no manual entry.
+The batch uses `Paths`, `SampleF`, `Pixelsize` and `BOISupportProfile`.
+A paths-only CSV opens as a draft. Enter the sampling rate and pixel size on
+each row or use confirmed shared settings. Leave support blank to use the
+confirmed shared choice, if present, or the automatic estimate. Saving adds
+status, identity and shared-setting provenance columns. Defaulted support
+cells can stay blank in the saved CSV.
 
 - Paths-only draft: `examples/boi-batch-draft.csv`. Enter real recording
   folders, then confirm shared acquisition settings.
-- Minimal portable CSV: `examples/boi-batch-minimal.csv`. The four essential
-  columns, with illustrative settings.
+- Minimal portable CSV: `examples/boi-batch-minimal.csv`. Example paths and
+  explicit acquisition settings.
 - Optional and custom metadata: `examples/boi-batch-metadata.csv`. Optional
   blanks, leading-zero IDs, Unicode and a quoted multiline custom note.
 
@@ -203,14 +310,13 @@ CSV files; a package user can build the same list through Add folder or start
 from this minimal text:
 
 ```csv
-Paths,SampleF,Pixelsize,BOISupportProfile
-/path/to/recording,2,4.75,whole-image
+Paths,SampleF,Pixelsize
+/path/to/recording,2,4.75
 ```
 
 Every example folder is a placeholder. Replace it with an actual supported
-recording folder. The example values **2 Hz**, **4.75 µm/pixel** and
-**whole-image** are illustrative software-fixture settings, never defaults or
-recommendations for your recording.
+recording folder. Replace the illustrative **2 Hz** and **4.75 µm/pixel** with
+the values for your acquisition.
 
 For noninteractive preparation, assign `csvPath` to the input filename and
 `newCSVPath` to a new destination, then use the same contract/check services:
@@ -225,28 +331,56 @@ b = readBOIBatchCSV(csvPath);
 `createBOIBatch(inputTable, baseFolder)` creates a draft from a table.
 `b.Shared` holds text fields `SampleF`, `Pixelsize` and `BOISupportProfile`;
 set `b.SharedConfirmed=true` only after explicitly confirming them.
+For defaulted support, `resolveBOIBatch` returns `whole-image` and records
+`default` as its origin. The run request carries both the effective value and
+its origin.
 `prepareBOIBatchRow` adapts one resolved row to the existing recording-request
 boundary and generates legacy compatibility fields internally. These functions
 prepare/check inputs and save CSVs; they do not dispatch analysis.
 
-After correcting row issues and saving the batch, use the queue controls below
+After correcting row issues and saving a working CSV, use the queue controls below
 to review and run selected ready recordings through the existing workflow.
 
 
 ## Queue and attempt history
 
-**Run selected…** opens the queue review. **Select ready** selects technically
-prepared rows; the review lists held/excluded and verified skipped rows,
-settings, new destinations and source-copy storage. **Run again in new folders**
-requests fresh attempts explicitly. **Stop after current recording** prevents
-later dispatch after the current recording finishes. Execution and status-saving
-failures also stop the queue. No mid-recording resume is provided.
+**Run selected…** opens the **Run** tab. **Select ready** selects technically
+prepared rows. Expand **Show details** to see held and verified skipped rows,
+recording IDs, effective settings and exact destinations. **Run again in new
+folders** requests fresh attempts explicitly. **Stop after current recording**
+lets the active recording finish and stops later dispatch. Execution and
+status-saving failures also stop the queue. No mid-recording resume is provided.
 
 At each stage, the working CSV receives current state and exact result links.
 The software-owned `AttemptHistory` column stores links to immutable attempt
-snapshots. **Attempt history → Load selected history** verifies a selected row's
+snapshots. **History → Load selected history** verifies a selected row's
 attempts; select a verified completed attempt to **Open selected saved run**.
 Snapshots preserve all metadata as entered; native request artifacts also retain
 the batch metadata and stable row ID. Editable CSV completion text alone is never
 completion evidence. A copied row given a new identity has its attempt history
 cleared alongside its result links.
+
+## Compact saved-value workbook
+
+1. Open **Compact workbook**. A completed automatic export opened in this
+   Batch Editor is offered as the **Source**. Use **Choose automatic export…**
+   or **Change source…** to select a saved automatic workbook or MAT file.
+2. Check **Save as**. The editor suggests an unused filename such as
+   `<source>_compact.xlsx` beside the source. Use **Choose location…** to set
+   your own destination.
+3. Click **Preview compact workbook** to check the worksheets and active
+   options. A successful preview enables **Export compact workbook** beside
+   it. Changes to the source, destination or active options require a fresh
+   preview. After the export passes its source and workbook checks, use
+   **Open compact workbook**.
+
+The workbook is assembled and checked in local temporary storage before it is
+saved to the chosen folder. If the folder cannot accept the completed file, use
+**Choose location…** to select a local folder such as Downloads and preview again.
+
+**Source**, **Save as** and the preview/export button stay at the top of the
+tab. Expand **Optional settings** to add completed compatible reviewed
+exports, supply metadata or phase annotations from CSV, or restore or remember
+review choices for the batch.
+
+Use Events and Recordings for event/whole-recording postprocessing, Sites and TimeSeries for their saved inventories/series, Availability for grouped status counts with exact source-row locators, and Definitions for units/references/normalization. Every primary value and flag stays in the main tables. Reviewed values require a selected compatible saved review snapshot. Source-row locators describe the unchanged export; explicit recording/event/frame identities support sorting and cross-export joins.

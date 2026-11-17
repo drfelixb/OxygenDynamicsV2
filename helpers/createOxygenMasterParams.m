@@ -25,6 +25,9 @@ AnalysisParams.Pixel_frame = AnalysisParams.smooth * 2;
 AnalysisParams.PercentileDetectionThres = 99;
 AnalysisParams.PercentileSurgeDetectionThres = 90;
 AnalysisParams.quantBaselineWindowSec = 20;
+% Optional explicit recording-wide frame interval, never the local baseline.
+% struct('StartFrame',...,'EndFrame',...,'Source',...) or [] for first 20 s.
+AnalysisParams.recordingReferenceOverride = [];
 AnalysisParams.recAreaBackgroundPercentile = 30;
 AnalysisParams.recAreaBinHalfSizeUm = 25;
 AnalysisParams.recAreaMinCoverageFraction = 0.9;

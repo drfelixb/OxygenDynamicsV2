@@ -1,9 +1,13 @@
 function B=applyBOIReviewedBurdenEvents(B,Registry,Events)
 % Import already approved event values; keep automatic columns as evidence.
 id='OxygenDynamics:ReviewedBurdenEvent';E=B.EventTable;input=E;
+selection=[];if isfield(B,'SelectionPolicy'),selection=B.SelectionPolicy;end
+selection=boiBurdenSelectionPolicy(E,selection);
 % Internal calculation inputs use the already selected automatic burden
 % amplitudes, so manual rows cannot fall back to an old episode reference.
 episode=E.Properties.VariableNames(startsWith(E.Properties.VariableNames,'Episode'));
+% Prevent the new automatic selector from overriding an approved manual value.
+episode=[episode intersect({'EventReferenceVersion'},E.Properties.VariableNames)];
 if ~isempty(episode),input=removevars(input,episode);end
 input.NormOxySinkAmpPercent=E.BurdenAmplitudePercent;
 input.AmplitudeSignConvention=repmat("positive_drop_percent",height(E),1);
@@ -13,6 +17,14 @@ refStart=nan(height(E),1);refEnd=refStart;refCount=refStart;revisionRows=cell(0,
 areas=E.BurdenArea_um2;areaStates=strings(height(E),1);areaFrames=nan(height(E),1);hasAreaRevision=false;
 for k=1:numel(Events)
     V=Events{k};S=V.Document;
+    artifact=table();
+    if isfield(S,'BurdenSelectionPolicyVersion')
+        artifact=table(string(S.BurdenSelectionPolicyVersion),'VariableNames',{'BurdenSelectionPolicyVersion'});
+    end
+    artifactPolicy=boiBurdenSelectionPolicy(artifact);
+    assert(strcmp(selection.Version,artifactPolicy.Version)|| ...
+        (selection.IncludeFiniteNegative&&~artifactPolicy.IncludeFiniteNegative&&isfinite(S.BurdenAmplitudePercent)&&S.BurdenAmplitudePercent>=0), ...
+        'OxygenDynamics:BurdenSelectionPolicy','Reviewed event and automatic selection policies are incompatible.');
     K=table(string(S.RecordingID),S.SiteID,S.EventID,'VariableNames',{'RecordingID','SinkID','EventIndex'});
     [~,key]=oxygenEventJoinKeys(E,K);j=find(keys==key);assert(isscalar(j)&&~applied(j),id,'Missing, rejected or duplicate reviewed event.');
     D=B.ReviewDecisions;di=find(string(D.RecordingID)==string(S.RecordingID)&D.SinkID==S.SiteID&D.EventIndex==S.EventID);
@@ -43,7 +55,7 @@ end
 specific=E(:,intersect({'RecordingID','SinkID','EventIndex','EventID'},E.Properties.VariableNames,'stable'));specific.Area_um=areas;
 % All retained events and full recording exposures enter the shared calculator.
 % Missing required contributions still withhold every complete recording sum.
-N=createHypoxicBurdenMetrics(input,specific,table(),Registry);
+N=createHypoxicBurdenMetrics(input,specific,table(),Registry,selection);
 numeric={'BurdenAmplitudePercent','BurdenDuration_sec','PerEventBurdenContribution','PerEventBurdenContribution_per_mm2', ...
     'PerEventBurdenContribution_per_sec','PerEventBurdenContribution_per_min','PerEventBurdenContribution_per_mm2_per_sec', ...
     'PerEventBurdenContribution_per_mm2_per_min','BurdenRankAmplitudeQuantile','PerEventBurdenOccupancy_per_mm2_per_min', ...
@@ -69,6 +81,7 @@ E.BurdenStartFrame=input.StartFrame;E.BurdenEndFrame=input.EndFrame;
 E.ReviewedBurdenValuesApplied=applied;E.ReviewedBurdenArtifact=paths;E.ReviewedBurdenManifestSHA256=hashes;
 E.ReviewedReferenceStartFrame=refStart;E.ReviewedReferenceEndFrame=refEnd;E.ReviewedReferenceSamples=refCount;
 B.EventTable=E;B.RecordingTable=appendBOIEpisodeReferenceSummary(N.RecordingTable,E);
+B.RecordingTable=appendBOIEventReferenceSummary(B.RecordingTable,E);
 B.GroupSummaryTable=summarizeOxygenMouseMetrics(B.RecordingTable);B.TimeSeriesTable=N.TimeSeriesTable;B.TimeSeriesBasis=N.TimeSeriesBasis;
 B.EventRevisions=vertcat(revisionRows{:});
 B.ReviewSummary.ReviewedEventValues=zeros(height(Registry),1);
@@ -86,12 +99,13 @@ for j=find(applied)'
     B.ReviewDecisions.ReviewedValuesApplied(di)=true;B.ReviewDecisions.ReviewedEventArtifact(di)=paths(j);
 end
 B.ReviewPolicy.ReviewedEventValues='Only explicitly supplied, source-bound approved single-event artifacts; no reference inference.';
-B.ReviewPolicy.AutomaticEvidence='StartFrame/EndFrame/DurationSec and Episode* columns retain automatic evidence; burden intervals use BurdenStartFrame/BurdenEndFrame/BurdenDuration_sec.';
+B.ReviewPolicy.AutomaticEvidence='StartFrame/EndFrame/DurationSec, Episode* and Event/RecordingReference* columns retain automatic evidence; burden intervals use BurdenStartFrame/BurdenEndFrame/BurdenDuration_sec. Reference summary contributor counts exclude rows with explicit reviewed values.';
 B.ReviewPolicy.EpisodeSummaryRole='Automatic episode-reference evidence, separate from the imported reviewed event values.';
 B.MetricBasis=[B.MetricBasis;cell2table({'BurdenStartFrame / BurdenEndFrame','Approved reviewed interval when supplied; otherwise automatic interval', ...
     'Frame-wise and recording burden use these intervals and BurdenDuration_sec; original automatic StartFrame/EndFrame/DurationSec remain evidence.'; ...
     'EventRevisions','Explicit saved reviewed contribution import','Lists selected reference, timing, area qualification and exact source/revision hashes. Reviewed area revisions can withhold unavailable area; legacy event areas remain unchanged. Episode* summaries describe automatic evidence.'}, ...
     'VariableNames',B.MetricBasis.Properties.VariableNames)];
+B=appendBOISignedBurdenSummary(B,selection);
 end
 function yes=sameSavedNumber(a,b)
 % JSON serialization can differ from the binary source by a few ULPs.

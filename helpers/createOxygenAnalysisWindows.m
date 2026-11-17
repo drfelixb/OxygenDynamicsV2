@@ -1,6 +1,8 @@
-function [W,FrameIngredients] = createOxygenAnalysisWindows(Registry,Sites,Events,Windows,kind)
+function [W,FrameIngredients] = createOxygenAnalysisWindows(Registry,Sites,Events,Windows,kind,SelectionPolicy)
 % Windowed sign-specific metrics; Registry must hold the selected sign's area.
 if nargin<5,kind='sink';end
+if nargin<6,SelectionPolicy=[];end
+selection=boiBurdenSelectionPolicy(Events,SelectionPolicy);
 assert(ismember(string(kind),["sink","surge"]),'OxygenDynamics:InvalidWindowSign','Choose sink or surge.');
 if nargin<4 || isempty(Windows)
     Windows=Registry(:,{'RecordingID'});
@@ -35,7 +37,7 @@ for i=1:height(Windows)
         boundaryCounted=sum(E.StartSec==0 & E.StartSec>=a & E.StartSec<b);
         ongoing=sum(E.StartSec<a & E.EndSec>a);
         if strcmp(kind,'sink') && ismember('EventArea_um2',E.Properties.VariableNames)
-            amplitude=getBOISinkBurdenAmplitude(E);
+            amplitude=getBOISinkBurdenAmplitude(E,selection);
             amplitude=amplitude(active);
             composite=sum(amplitude.*E.EventArea_um2(active).*overlap(active));
         elseif any(active), composite=NaN; end
@@ -80,6 +82,9 @@ for i=1:height(Windows)
     if strcmp(kind,'surge'),composite=NaN;end % No accepted surge amplitude-area-time composite.
     row.AmplitudeAreaTimePercent_um2_sec=composite;
     row.AmplitudeAreaTime_per_mm2_per_min=composite*1e6/A*60/T;
+    if strcmp(kind,'sink')&&selection.IncludeFiniteNegative
+        row.BurdenSelectionPolicyVersion=string(selection.Version);
+    end
     row.WindowAuditVersion="boi-window-exposure-1";
     row.CoveredAreaTime_um2_sec=occupied;
     row.AnalyzedTissueTime_um2_sec=denominator;

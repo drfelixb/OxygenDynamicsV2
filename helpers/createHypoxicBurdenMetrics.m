@@ -1,10 +1,20 @@
-function Burden = createHypoxicBurdenMetrics(TableOxygenSinkEvents,EventSpecificMetrics,TableOxygenSinks,RecordingRegistry)
+function Burden = createHypoxicBurdenMetrics(TableOxygenSinkEvents,EventSpecificMetrics,TableOxygenSinks,RecordingRegistry,SelectionPolicy)
 %CREATEHYPOXICBURDENMETRICS Compute event and recording hypoxic burden.
 %
 % The primary metric is true event-level:
-%   burden = positive drop amplitude (%) * event area (um^2) * duration (s)
+%   burden = selected signed amplitude (%) * event area (um^2) * duration (s)
+
+if nargin<5,SelectionPolicy=[];end
+selection=boiBurdenSelectionPolicy(TableOxygenSinkEvents,SelectionPolicy);
+if selection.IncludeFiniteNegative
+    TableOxygenSinkEvents.BurdenSelectionPolicyVersion=repmat(string(selection.Version),height(TableOxygenSinkEvents),1);
+end
 
 if nargin<4, RecordingRegistry=table(); end
+if selection.IncludeFiniteNegative&&ismember('AnalysisStatus',RecordingRegistry.Properties.VariableNames)
+    assert(all(string(RecordingRegistry.AnalysisStatus)=="loaded"),'OxygenDynamics:RecordingNotAnalyzed', ...
+        'Failed or unprocessed inventory cannot be summarized as an analyzed zero.');
+end
 if nargin<2
     EventSpecificMetrics = table();
 end
@@ -19,13 +29,21 @@ Burden.MetricBasis = createHypoxicBurdenBasisTable();
 if istable(TableOxygenSinkEvents)&&ismember('EpisodeReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
     Burden.ReferencePolicy=struct2table(boiEpisodeReferencePolicy());
 end
+if istable(TableOxygenSinkEvents)&&ismember('EventReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
+    Burden.ReferencePolicy=struct2table(boiEventReferencePolicy());
+    if ismember('EpisodeReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
+        Burden.PreEpisodeReferencePolicy=struct2table(boiEpisodeReferencePolicy());
+    end
+end
 
 if isempty(TableOxygenSinkEvents)
     Burden.RecordingTable=aggregateOxygenRecordingBurden(table(),RecordingRegistry);
     Burden.RecordingTable=appendBOIEpisodeReferenceSummary(Burden.RecordingTable,TableOxygenSinkEvents);
+    Burden.RecordingTable=appendBOIEventReferenceSummary(Burden.RecordingTable,TableOxygenSinkEvents);
     Burden.GroupSummaryTable=summarizeOxygenMouseMetrics(Burden.RecordingTable);
     Burden.TimeSeriesTable=completeOxygenBurdenTimeSeries(table(),RecordingRegistry);
     Burden.TimeSeriesBasis=createBurdenTimeSeriesBasisTable();
+    Burden=appendBOISignedBurdenSummary(Burden,selection);
     return
 end
 
@@ -98,9 +116,11 @@ Burden.EventTable = EventTable;
 Burden.RecordingTable = createRecordingBurdenTable(EventTable);
 if ~isempty(RecordingRegistry), Burden.RecordingTable=aggregateOxygenRecordingBurden(EventTable,RecordingRegistry); end
 Burden.RecordingTable=appendBOIEpisodeReferenceSummary(Burden.RecordingTable,EventTable);
+Burden.RecordingTable=appendBOIEventReferenceSummary(Burden.RecordingTable,EventTable);
 Burden.GroupSummaryTable = summarizeOxygenMouseMetrics(Burden.RecordingTable);
 [Burden.TimeSeriesTable,Burden.TimeSeriesBasis] = createBurdenTimeSeriesTable(EventTable);
 if ~isempty(RecordingRegistry),Burden.TimeSeriesTable=completeOxygenBurdenTimeSeries(Burden.TimeSeriesTable,RecordingRegistry);end
+Burden=appendBOISignedBurdenSummary(Burden,selection);
 
 end
 

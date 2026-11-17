@@ -211,6 +211,10 @@ RecommendedForComparison = { ...
 
 Guide = table(MetricOrSheet,OutputLocation,AnalysisUnit,AreaNormalization,TimeNormalization, ...
     NormalizationStatus,RecommendedForComparison);
+SignedGuide={
+    'Signed burden selection','Burden_SelectionPolicy / burden tables','Event / recording','Existing factors unchanged','Existing factors unchanged','Signed inputs; original reference normalization unchanged','Compare compatible selection/reference/support versions; retain negative values and sign flags, not a guaranteed nonnegative oxygen deficit.';
+    'Negative-value flags and counts','HypoxicBurden_EventBased / HypoxicBurden_ByRecording','Selected ingredient / retained contribution','None','None','Descriptive, not biological magnitude','Unavailable is not assessable; a flag never changes the value, denominator or inclusion.'};
+Guide=[Guide;cell2table(SignedGuide,'VariableNames',Guide.Properties.VariableNames)];
 writetable(Guide,OutputXlsx,'Sheet','NormalizationGuide');
 
 end

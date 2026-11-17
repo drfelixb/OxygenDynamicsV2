@@ -4,7 +4,14 @@ This file records user-visible changes from the point at which structured
 release notes were introduced. Earlier repository history has not been
 reconstructed into releases.
 
-## Unreleased
+## 3.1.0-rc.1
+
+- Add resumable BOI Batch Editor queues with protected CSV imports, portable path mapping and working-copy save.
+- Reopen verified recording runs and completed automatic exports. Export optional reviewed burden or a compact, verified workbook from saved data.
+- Record current signed burden policy, optical reference and missingness alongside the measurements.
+- Add the [one-page Batch Editor guide](docs/BOI_BATCH_QUICK_START.pdf) and [detailed comparisons with v3.0 and the paper-published code](docs/RELEASE_NOTES_3.1.0_RC1.md).
+
+## Earlier development records
 
 ### Development checkpoint — 3.1.0-dev.10 (30 October 2026)
 

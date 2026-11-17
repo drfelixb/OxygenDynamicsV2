@@ -1,33 +1,17 @@
-function Receipt=exportBOIReviewedBurden(StatsMAT,ReviewPaths,OutputFolder,ReviewedEventFolders)
+function Receipt=exportBOIReviewedBurden(StatsMAT,ReviewPaths,OutputFolder,ReviewedEventFolders,ExpectedPlan)
 % Export a separate burden workbook using saved recognition judgments.
 % The source combined results and automatic burden are never overwritten.
 setupOxygenDynamicsPath;
 if nargin<4,ReviewedEventFolders={};end
-if ischar(ReviewedEventFolders)||isstring(ReviewedEventFolders),ReviewedEventFolders=cellstr(ReviewedEventFolders);end
-StatsMAT=char(java.io.File(StatsMAT).getCanonicalPath());
-OutputFolder=char(java.io.File(OutputFolder).getCanonicalPath());
-assert(~isfolder(OutputFolder)&&~isfile(OutputFolder),'OxygenDynamics:ReviewOutputExists','Choose a NEW reviewed export folder.');
-if ischar(ReviewPaths)||isstring(ReviewPaths),ReviewPaths=cellstr(ReviewPaths);end
-assert(iscell(ReviewPaths)&&~isempty(ReviewPaths),'OxygenDynamics:SavedReviewRequired','Select saved review revision files explicitly.');
-before=oxygenFileSHA256(StatsMAT);S=load(StatsMAT,'HypoxicBurden','RecordingRegistry','StatsInfo');
-assert(all(isfield(S,{'HypoxicBurden','RecordingRegistry','StatsInfo'})),'OxygenDynamics:ReviewedBurdenSource','Saved automatic results are incomplete.');
-Reviews=cell(size(ReviewPaths));sources=struct('Path',{},'SHA256',{},'AuditPath',{},'AuditSHA256',{});
-for k=1:numel(ReviewPaths)
-    doc=jsondecode(fileread(ReviewPaths{k}));R=loadBOIEventReview(doc.AuditPath);
-    R.BoundaryReview=loadBOIBoundaryReview(R,ReviewPaths{k});
-    % Verify the saved stats source and audit belong to the same master run.
-    records=S.StatsInfo.Recordings;j=find(string({records.Path})==string(R.Audit.RecordingID(1)));
-    assert(isscalar(j)&&isfield(R,'AuditCreationReceipt'),'OxygenDynamics:ReviewedBurdenSource','A reviewed audit must match one saved stats recording and its master provenance.');
-    receipt=R.AuditCreationReceipt;record=records(j);
-    assert(strcmp(receipt.MasterPaths{1},record.SinksMatFile)&&strcmp(receipt.MasterPaths{2},record.SurgesMatFile), ...
-        'OxygenDynamics:ReviewedBurdenSource','Saved audit and statistics use different master sources.');
-    Reviews{k}=R;sources(k)=struct('Path',R.BoundaryReview.Path,'SHA256',R.BoundaryReview.SHA256, ...
-        'AuditPath',R.AuditPath,'AuditSHA256',R.AuditSHA256);
+[Plan,Prepared]=prepareBOIReviewedBurdenExport(StatsMAT,ReviewPaths,OutputFolder,ReviewedEventFolders);
+if nargin>=5
+    assert(isstruct(ExpectedPlan)&&isscalar(ExpectedPlan)&&isfield(ExpectedPlan,'Digest')&& ...
+        strcmp(ExpectedPlan.Digest,boiBatchQueueDigest(rmfield(ExpectedPlan,'Digest')))&& ...
+        isequaln(Plan,ExpectedPlan),'OxygenDynamics:ReviewedExportPlanChanged', ...
+        'Selected source, saved reviews, measurements or destination changed. Preview and confirm again.');
 end
-Events=cell(size(ReviewedEventFolders));
-for k=1:numel(Events),Events{k}=loadBOIReviewedBurdenEvent(ReviewedEventFolders{k});end
-HypoxicBurden=createBOIReviewedBurdenMetrics(S.HypoxicBurden,S.RecordingRegistry,Reviews,Events);
-assert(strcmp(before,oxygenFileSHA256(StatsMAT)),'OxygenDynamics:ReviewedBurdenSource','Source results changed while preparing this export.');
+StatsMAT=Plan.StatsMAT;OutputFolder=Plan.OutputFolder;before=Plan.SourceSHA256;sources=Plan.ReviewSources;
+S=Prepared.Source;Reviews=Prepared.Reviews;Events=Prepared.Events;HypoxicBurden=Prepared.HypoxicBurden;
 [ok,~,id]=mkdir(OutputFolder);assert(ok&&isempty(id),'OxygenDynamics:ReviewOutputExists','New export directory could not be claimed.');
 status=struct('Status','writing','SourceStatsMAT',StatsMAT,'SourceStatsSHA256',before,'ReviewSources',sources, ...
     'AutomaticResultsChanged',false,'DetectorReruns',0,'CorrectionReruns',0,'StatisticsReruns',0);
@@ -48,6 +32,7 @@ try
     writetable(HypoxicBurden.TimeSeriesTable,fullfile(OutputFolder,'HypoxicBurden_TimeSeries.csv'));
     Receipt=status;Receipt.Status='complete';Receipt.Workbook=workbook;
     Receipt.Policy=HypoxicBurden.ReviewPolicy;
+    Receipt.BurdenSelectionPolicy=Plan.BurdenSelectionPolicy;
     Receipt.AutomaticDetections=height(S.HypoxicBurden.EventTable);Receipt.RetainedDetections=height(HypoxicBurden.EventTable);
     Receipt.RejectedDetections=height(HypoxicBurden.ExcludedDetections);
     Receipt.ImportedReviewedEvents=numel(Events);

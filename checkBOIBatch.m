@@ -6,7 +6,8 @@ function [Batch,Report,Requests]=checkBOIBatch(Batch,RowIDs,ProgressFcn)
 % Report entries for unselected rows remain Unchecked; their CSV cells are
 % unchanged. ProgressFcn receives recording/stage events, never analysis work.
 setupOxygenDynamicsPath;
-[Rows,Origins]=resolveBOIBatch(Batch);n=height(Rows);Requests=cell(n,1);
+[Rows,Origins,PathImport]=resolveBOIBatch(Batch);n=height(Rows);Requests=cell(n,1);
+foreign=false(n,1);foreign(PathImport.NeedsMapping.RowIndex)=true;
 if nargin<2||isempty(RowIDs),RowIDs=Rows.BatchRowID;end
 if nargin<3,ProgressFcn=[];end
 assert(isempty(ProgressFcn)||isa(ProgressFcn,'function_handle'), ...
@@ -28,6 +29,8 @@ auto={'InputStatus','AnalysisStatus','ResultCheck','Message','RunID','StartedUTC
     'CompletedUTC','SoftwareVersion','Stage','ElapsedSeconds'};
 for k=1:numel(auto),Batch.Rows.(auto{k})(indices)=strings(numel(indices),1);end
 stimulationFields=intersect({'PuffsFile','Puff_2use'},Rows.Properties.VariableNames,'stable');
+settingFields={'SampleF','Pixelsize','BOISupportProfile'};
+settingLabels=["sampling rate","pixel size","detection support"];
 for checkIndex=1:numel(indices)
     i=indices(checkIndex);
     messages=strings(0,1);request=[];
@@ -39,6 +42,8 @@ for checkIndex=1:numel(indices)
     try
         assert(strlength(strtrim(Rows.Paths(i)))>0,'OxygenDynamics:BatchSourceMissing', ...
             'Choose a recording folder for this row.');
+        assert(~foreign(i),'OxygenDynamics:BatchForeignPath', ...
+            'This recording path belongs to another filesystem: %s. Map its old prefix to a local folder.',Rows.Paths(i));
         assert(sum(Rows.Paths==Rows.Paths(i))==1,'OxygenDynamics:BatchDuplicateSource', ...
             'This recording folder occurs more than once. Remove the duplicate row or choose a different recording.');
         unsupported=configuredLegacyAnalyses(Rows(i,:));
@@ -46,9 +51,9 @@ for checkIndex=1:numel(indices)
             'Configured optional analysis fields (%s) require the existing legacy workflow. Keep this CSV and use that route.',strjoin(unsupported,', '));
         assert(isfolder(Rows.Paths(i)),'OxygenDynamics:BatchSourceMissing', ...
             'Recording folder is unavailable: %s. Restore access or correct this row.',Rows.Paths(i));
-        assert(all(strlength(strtrim(string(table2cell(Rows(i,{'SampleF','Pixelsize','BOISupportProfile'})))))>0), ...
-            'OxygenDynamics:BatchSettingsMissing', ...
-            'Supply sampling rate, pixel size and detection support in this row, or explicitly confirm shared settings.');
+        missing=settingLabels(strlength(strtrim(Rows{i,settingFields}))==0);
+        assert(isempty(missing),'OxygenDynamics:BatchSettingsMissing', ...
+            'Missing %s. Open CSV setup to fill missing settings, or edit this row.',strjoin(missing,', '));
         % A read-only request still needs a proposed, unused output path.
         % It is not created, and no untrusted ID becomes a path component.
         proposed=tempname(tempdir);
