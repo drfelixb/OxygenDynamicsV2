@@ -1,11 +1,12 @@
 # Software licensing and contributor credits
 
-5 October 2026
+17 November 2026
 
-The original software published with the Science paper already has an **MIT
-licence**. That permission applies to code covered by the original release.
-The exact notice is preserved in [the original MIT licence](licenses/Science_2024-MIT.txt).
-Licensing of new V2 contributions has not been confirmed or adopted here.
+The new OxygenDynamicsV2 contributions released with `v3.1.0-rc.1` are
+cleared for public redistribution under the [MIT licence](LICENSE). The
+original Science_2024 code retains its [original MIT notice](licenses/Science_2024-MIT.txt).
+Bundled third-party components retain their component-specific terms in
+[Third-party notices](THIRD_PARTY_NOTICES.md).
 
 ## Permission already supplied with the original software
 
@@ -24,24 +25,6 @@ unnecessary for those activities under the existing grant. See the
 This notice preserves the existing grant. It does not assign ownership or apply
 a new licence to every file in the development checkout. Dependencies retain
 their own terms in [Third Party Notices](THIRD_PARTY_NOTICES.md).
-
-## What still needs a decision for V2
-
-Recommend continuing with MIT for new V2 contributions once the authorised rights
-holder confirms their inclusion. That confirmation concerns the new contributions;
-the published MIT permission for inherited code is already present.
-No new copyright holder or year has been assigned. There is no blanket V2 grant
-or licence field in `CITATION.cff` from this correction.
-
-Felix reports that the original contributors were employed by the University of
-Copenhagen during development and remain employed there. If development formed
-part of their university duties, the default employer rule in
-[Danish Copyright Act section 59](https://www.retsinformation.dk/eli/lta/2023/1093/pdf)
-may make KU the party authorised to license new employee contributions;
-section 53(4) permits relevant agreements to alter that default. Project-specific
-authority and any applicable internal release procedure remain unconfirmed.
-This does not establish that a new KU permission is required to exercise the
-already published MIT grant.
 
 ## Contributor roles described by Felix
 
@@ -69,10 +52,3 @@ This correction does not change the published metadata or infer the depositor's
 intent, dual licensing, or the scope of material covered by that metadata label.
 Keep the explicit MIT code notice and the original release reference when sharing
 inherited code; any conflicting source-specific terms also remain relevant.
-
-This development candidate includes the restored notice, this guide and its
-source record. The earlier candidate ZIPs remain unchanged. Version stays
-**3.1.0-dev.2**, with software build `2026-10-04 21:37:28 +02:00`; its package
-creation time and exact committed source are recorded in `RELEASE_MANIFEST.txt`.
-Calculations, scientific results and contributor citation order are preserved.
-Licensing of new V2 contributions and publication approval remain separate.

@@ -3,6 +3,7 @@
   "required_sources": [
     "DISTRIBUTION_STATUS.md",
     "INSTALLATION.md",
+    "LICENSE",
     "LICENSING.md",
     "MakeRecording_3D.m",
     "OxygenDynamics_Behaviour.m",

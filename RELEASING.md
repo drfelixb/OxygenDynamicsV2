@@ -1,12 +1,10 @@
 # Release decisions and future publication
 
-The current checkout is **3.1.0-dev.3**, software build
-`2026-10-13 20:02:39 +02:00`. Preserved candidate ZIPs remain 3.1.0-dev.2 and
-do not contain the later interface fixes; no replacement ZIP is built here.
-Stable 3.1.0, a tag, GitHub release or DOI need
-separate release approval. Existing tags and prior archives remain unchanged.
-The historical v3.0 tag and version decisions are repository records
-(`docs/SOFTWARE_NEXT_STEPS.md`); each existing package manifest identifies its own candidate.
+`v3.1.0-rc.1` is the public prerelease for the BOI Batch Editor workflow.
+The researcher confirmed clearance for public redistribution of the new V2
+contributions under MIT on 17 November 2026. The release uses the exact
+verified source snapshot and source archive. See [licensing](LICENSING.md)
+and the [release comparisons](docs/RELEASE_NOTES_3.1.0_RC1.md).
 
 ## Before proposing publication
 

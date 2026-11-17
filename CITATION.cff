@@ -2,6 +2,9 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it and the related Science article."
 title: "OxygenDynamicsV2"
 type: software
+version: "3.1.0-rc.1"
+date-released: 2026-11-17
+license: MIT
 authors:
   - family-names: "Beinlich"
     given-names: "Felix R. M."

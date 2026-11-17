@@ -13,4 +13,4 @@ Open this folder in MATLAB and run `openBOIBatchEditor`. Open a recording CSV, c
 
 MATLAB with Image Processing Toolbox is required for imaging. Some optional analyses also require Statistics and Machine Learning Toolbox. For saved optical measurements and optional review, see the [measurement guide](docs/POCKET_MEASUREMENTS.md).
 
-The project builds on the analysis for [Oxygen imaging of hypoxic pockets in the mouse cerebral cortex](https://doi.org/10.1126/science.adn1011). See [citation information](CITATION.cff), [licensing and credits](LICENSING.md) and [third-party notices](THIRD_PARTY_NOTICES.md). The inherited Science_2024 code retains its original MIT notice.
+The project builds on the analysis for [Oxygen imaging of hypoxic pockets in the mouse cerebral cortex](https://doi.org/10.1126/science.adn1011). See [citation information](CITATION.cff), [licensing and credits](LICENSING.md) and [third-party notices](THIRD_PARTY_NOTICES.md). The V2 contributions are [MIT-licensed](LICENSE). The inherited Science_2024 code retains its original MIT notice.
