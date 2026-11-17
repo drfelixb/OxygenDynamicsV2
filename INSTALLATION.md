@@ -12,4 +12,4 @@ The version should be `3.1.0-rc.1`. If MATLAB resolves an older installation, us
 
 For the routine batch path, use the [one-page guide](docs/BOI_BATCH_QUICK_START.pdf). To reopen a single completed run independently of a CSV, run `openBOIRecordingWorkflow`, then choose the completed `BOIRun.mat` index. For an existing combined export, use **Automatic export → Open existing export…** in the Batch Editor and select its complete `BOIBatchStats_…` folder.
 
-See [distribution status](DISTRIBUTION_STATUS.md), [measurement definitions](docs/BOI_MEASUREMENT_DICTIONARY.md), [licensing and credits](LICENSING.md) and [third-party notices](THIRD_PARTY_NOTICES.md).
+See [distribution status](DISTRIBUTION_STATUS.md), [measurement definitions](docs/BOI_DURATION_AREA_AND_EVENT_RATES.md), [licensing and credits](LICENSING.md) and [third-party notices](THIRD_PARTY_NOTICES.md).
