@@ -2,14 +2,12 @@ function [SurgeTable,SurgeEventTable,HasSurges] = prepareStatsSurgeTables(SurgeT
 %PREPARESTATSSURGETABLES Select schema, add metadata, and backfill events.
 
 HasSurges = size(SurgeTable,1)>0;
-if ~HasSurges
-    return
-end
+
 
 SurgeTable = selectStatsSurgeSummaryColumns(SurgeTable);
 SurgeTable = addStatsRecordingMetadata(SurgeTable,RecordingMetadata,'RecDuration_Surge');
 
-if ~isempty(SurgeEventTable)
-    SurgeEventTable = ensureStatsEventPuffStim(SurgeEventTable,RecordingMetadata.PuffStim);
+if istable(SurgeEventTable)
+    SurgeEventTable = refreshStatsEventMetadata(SurgeEventTable,RecordingMetadata);
 end
 end

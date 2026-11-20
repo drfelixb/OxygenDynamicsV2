@@ -1,0 +1,44 @@
+function [Fig,UI]=openBOITemporalContext(AuditPath,SinkPath,SurgePath)
+%OPENBOITEMPORALCONTEXT Optional saved-source context viewer, including legacy audits.
+setupOxygenDynamicsPath;
+if nargin<1,[f,p]=uigetfile('*.mat','Choose saved BOI event-amplitude-audit.mat');if isequal(f,0),Fig=[];UI=[];return;end;AuditPath=fullfile(p,f);end
+if nargin<2,SinkPath='';end
+R=loadBOITemporalReview(AuditPath,SinkPath);
+if nargin>=3&&~isempty(SurgePath),R=attachBOITemporalSources(R,SinkPath,SurgePath);end
+Fig=uifigure('Name','BOI optional temporal context','Position',[60 60 1320 1000]);G=uigridlayout(Fig,[3 1]);G.RowHeight={32,85,'1x'};
+Header=uigridlayout(G,[1 2]);Header.Layout.Row=1;Header.Padding=[0 0 0 0];Header.ColumnWidth={'1x',190};
+uilabel(Header,'Text','Read-only context. Use Timing review / Researcher boundaries in the main viewer to edit saved judgments.','WordWrap','on');
+uibutton(Header,'Text','Load saved boundaries','ButtonPushedFcn',@chooseBoundaries);
+List=uitable(G,'Data',R.Audit(:,{'EventType','SiteID','EventID','StartFrame','EndFrame'}),'RowName',{},'SelectionType','row','Multiselect','off','CellSelectionCallback',@selected);
+List.Layout.Row=2;Host=uipanel(G);Host.Layout.Row=3;Panel=createBOITemporalContextPanel(Host,@chooseSources,@chooseReferences);Index=1;
+UI=struct('Context',Panel,'Select',@select,'CurrentReview',@()R,'LoadBoundaries',@loadBoundaries,'LoadReferenceJudgments',@loadReferences,'AttachSources',@attach,'List',List);
+if height(R.Audit)>0,select(1);end
+    function select(index),Index=index;Panel.SetReview(R,index);List.Selection=index;end
+    function selected(~,e),if ~isempty(e.Indices),select(e.Indices(1));end;end
+    function loadBoundaries(path)
+        if isfield(R,'BoundaryReview'),R=rmfield(R,'BoundaryReview');end
+        if isfield(R,'ReferenceJudgments'),R=rmfield(R,'ReferenceJudgments');end
+        select(Index);R.BoundaryReview=loadBOIBoundaryReview(R,path);select(Index);
+    end
+    function loadReferences(paths)
+        if isfield(R,'ReferenceJudgments'),R=rmfield(R,'ReferenceJudgments');end
+        select(Index);R=loadBOIReferenceJudgments(R,paths);select(Index);
+    end
+    function attach(sink,surge)
+        if isfield(R,'ReferenceSources'),R=rmfield(R,'ReferenceSources');end
+        select(Index);R=attachBOITemporalSources(R,sink,surge);select(Index);
+    end
+    function chooseBoundaries(~,~)
+        [f,p]=uigetfile('*.json','Choose saved researcher boundary revision');if isequal(f,0),return;end
+        try,loadBoundaries(fullfile(p,f));catch e,uialert(Fig,e.message,'Boundaries not loaded');end
+    end
+    function chooseReferences()
+        [f,p]=uigetfile('*.json','Choose saved accepted reference judgments','MultiSelect','on');if isequal(f,0),return;end
+        try,loadReferences(fullfile(p,cellstr(string(f))));catch e,uialert(Fig,e.message,'References not loaded');end
+    end
+    function chooseSources()
+        [f,p]=uigetfile('*.mat','Choose matching SINK master');if isequal(f,0),return;end;sink=fullfile(p,f);
+        [f,p]=uigetfile('*.mat','Choose matching SURGE master');if isequal(f,0),return;end
+        try,attach(sink,fullfile(p,f));catch e,uialert(Fig,e.message,'Native sources not attached');end
+    end
+end

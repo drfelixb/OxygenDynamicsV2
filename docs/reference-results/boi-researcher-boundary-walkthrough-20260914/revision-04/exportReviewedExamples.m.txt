@@ -1,0 +1,22 @@
+function exportReviewedExamples
+root='/Users/zcm361/Documents/Github/OxygenDynamicsV2';cd(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(root,'reference-validation/boi-researcher-boundary-walkthrough-20260914/revision-04');I=jsondecode(fileread(fullfile(out,'input.json')));
+C=jsondecode(fileread(fullfile(out,'onset-clarification.json')));assert(C.ConfirmedPreferredOnsetFrame==1153);
+R=loadBOIEventReview(fullfile(fileparts(I.ReviewPath),'event-amplitude-audit.mat'));R.BoundaryReview=loadBOIBoundaryReview(R,I.ReviewPath);assert(strcmp(R.BoundaryReview.SHA256,I.SHA256));
+rows=[309 308 321 186];reports=cell(4,1);total=0;
+for k=1:numel(rows)
+    row=rows(k);folder=fullfile(out,sprintf('reviewed-event-row-%d',row));receipt=exportBOIEventReview(R,row,folder);
+    E=loadBOIBoundaryReview(R,fullfile(folder,'ResearcherBoundaryHistory.json'));assert(isequal(E.Document,R.BoundaryReview.Document));
+    snapshot=load(fullfile(folder,'SelectedEventReview.mat'));D=buildBOIEventReviewData(R,row);assert(isequaln(snapshot.Data,D));
+    checks=jsondecode(fileread(fullfile(folder,'ArtifactChecksums.json')));
+    for j=1:numel(checks),assert(strcmp(checks(j).SHA256,oxygenFileSHA256(fullfile(folder,checks(j).Name))));end
+    total=total+numel(checks);reports{k}=struct('AuditRow',row,'SelectedEvent',receipt.ResearcherBoundaryReview.Event, ...
+        'Annotation',receipt.ResearcherBoundaryReview.Annotation,'Folder',folder,'HistoryReopens',true,'MATSnapshotExact',true,'ArtifactsVerified',numel(checks));
+end
+assert(strcmp(oxygenFileSHA256(R.AuditPath),R.AuditSHA256)&&strcmp(oxygenFileSHA256(I.ReviewPath),I.SHA256));
+V=struct('Status','passed','ReviewSHA256',I.SHA256,'AuditSHA256',R.AuditSHA256,'ReviewedEvents',{reports}, ...
+    'ExportSchema','boi-event-review-export-6','TotalArtifactsVerified',total,'ConfirmedPreferredOnsetFrame',1153, ...
+    'AllEarlierEntriesPreserved',true,'OriginalFilesUnchanged',true,'UserRevisionCreatedByAssistant',false, ...
+    'ScientificAcceptance','not_established','Scope','guided four-example persistence/reopen/export verification; not independent physiological validation');
+fid=fopen(fullfile(out,'export-verification.json'),'w');cleanup=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(V,'PrettyPrint',true));disp(V);
+end

@@ -1,0 +1,70 @@
+[
+  {
+    "File": "tests/analysis/surgeUnseenEnvelope.m",
+    "Messages": {
+      "id": "ALIGN",
+      "message": "This keyword might not be aligned with its matching END on line 17.",
+      "fix": 0,
+      "line": 6,
+      "column": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "File": "tests/analysis/runSurgeModelSelectionValidation.m",
+    "Messages": [
+      {
+        "id": "AGROW",
+        "message": "Variable appears to change size on every loop iteration. Consider preallocating for speed.",
+        "fix": 0,
+        "line": 7,
+        "column": [
+          2,
+          6
+        ]
+      },
+      {
+        "id": "ALIGN",
+        "message": "This keyword might not be aligned with its matching END on line 69.",
+        "fix": 0,
+        "line": 61,
+        "column": [
+          2,
+          4
+        ]
+      },
+      {
+        "id": "ALIGN",
+        "message": "This keyword might not be aligned with its matching END on line 69.",
+        "fix": 0,
+        "line": 61,
+        "column": [
+          22,
+          24
+        ]
+      },
+      {
+        "id": "ALIGN",
+        "message": "This keyword might not be aligned with its matching END on line 69.",
+        "fix": 0,
+        "line": 61,
+        "column": [
+          38,
+          40
+        ]
+      },
+      {
+        "id": "ALIGN",
+        "message": "This keyword might not be aligned with its matching END on line 69.",
+        "fix": 0,
+        "line": 61,
+        "column": [
+          84,
+          86
+        ]
+      }
+    ]
+  }
+]

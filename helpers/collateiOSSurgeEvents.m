@@ -16,7 +16,7 @@ for i = 1:size(Overall_OxygenSurges_Pxllist,1)
     Size_Surge_modulation(i) = {NaN(1,length(EventsTemp))};
 
     for q = 1:length(EventsTemp)
-        EventMetrics = quantifyOxygenSurgeEvent(EventsTemp(q).PixelIdxList, ...
+        EventMetrics = quantifyiOSSurgeEvent(EventsTemp(q).PixelIdxList, ...
             Mean_OxySurge_TraceZ(i,:),surgeBaselineWindowFrames,false);
         Start_Surge{i}(q) = EventMetrics.StartFrame;
         Duration_Surge{i}(q) = EventMetrics.DurationFrames;

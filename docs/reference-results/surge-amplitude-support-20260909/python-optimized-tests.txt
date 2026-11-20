@@ -1,0 +1,12 @@
+test_corruption_rejected_with_optimization (test_verify_surge_amplitude_support.AmplitudeVerifierTests.test_corruption_rejected_with_optimization) ... ok
+test_extrema_are_not_added (test_verify_surge_amplitude_support.AmplitudeVerifierTests.test_extrema_are_not_added) ... ok
+test_known_rising_tail (test_verify_surge_amplitude_support.AmplitudeVerifierTests.test_known_rising_tail) ... ok
+test_missingness_is_not_repaired (test_verify_surge_amplitude_support.AmplitudeVerifierTests.test_missingness_is_not_repaired) ... ok
+test_negative_baseline_contribution (test_verify_surge_amplitude_support.AmplitudeVerifierTests.test_negative_baseline_contribution) ... ok
+test_nonpositive_baseline (test_verify_surge_amplitude_support.AmplitudeVerifierTests.test_nonpositive_baseline) ... ok
+test_truncated_baseline (test_verify_surge_amplitude_support.AmplitudeVerifierTests.test_truncated_baseline) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.037s
+
+OK

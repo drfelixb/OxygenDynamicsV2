@@ -1,0 +1,7 @@
+Session,Case,Component,AssignedEventIndex,OnsetStatus,Imposed,NativeStartFrame,LatestBlockedFrame,ContiguousPreNativeFrames,BlockerEventIndex,BlockerEventType,BlockerNativeStartFrame,BlockerNativeEndFrame,SharedPixelsAtLatestBlock,BlockerIntersectsComponent,LatestBlockWithinComponentWindow,ControlSameSignOverlapPixels,ControlSameSignOverlapFraction,ImposedComponentsIntersectingBlocker
+M400-01-baseline-awake,challenge,1,11,insufficient_clean_context,True,104,85,18,135,sink,79,85,146,False,False,0,0.0,
+M400-01-baseline-awake,challenge,2,28,insufficient_clean_context,True,215,214,0,138,sink,208,215,162,True,True,0,0.0,2
+M400-01-baseline-awake,challenge,3,43,insufficient_clean_context,True,405,389,15,145,sink,354,389,348,False,False,0,0.0,2
+M400-01-baseline-awake,challenge,5,29,insufficient_clean_context,True,504,503,0,150,sink,490,510,115,True,True,115,1.0,5
+FB2316-baseline,challenge,1,2,insufficient_clean_context,True,104,85,18,125,sink,83,85,274,False,False,0,0.0,
+FB2316-baseline,challenge,2,12,insufficient_clean_context,True,253,248,4,11,surge,236,248,6028,True,True,0,0.0,2

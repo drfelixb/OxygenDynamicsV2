@@ -1,0 +1,100 @@
+function compareReviewedAutomatic(runName)
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(here,runName);assert(~isfolder(out));mkdir(out);sources=jsondecode(fileread(fullfile(here,'inputs.json')));keys=fieldnames(sources);
+for k=1:numel(keys),s=sources.(keys{k});assert(strcmp(oxygenFileSHA256(s.Path),s.SHA256));end
+S=load(sources.SinkMaster.Path,'Table_OxygenSinkEvents_Out');U=load(sources.SurgeMaster.Path,'Table_OxygenSurgeEvents_Out');
+R=loadBOIEventReview(sources.Audit.Path);A=R.Audit;rows=[186 309 308 321];records={};summary=table();geometry=table();originals=cell(4,1);identityChecks=0;
+fig=figure('Visible','off','Color','w','Position',[50 50 1450 1120]);cleanup=onCleanup(@()close(fig));tiledlayout(fig,4,1,'TileSpacing','compact','Padding','compact');
+for k=1:numel(rows)
+    row=rows(k);source=sources.(sprintf('Export%d',row));X=load(source.Path,'Data','ReviewedOpticalPreview');D=X.Data;O=X.ReviewedOpticalPreview;a=O.OriginalAutomatic;
+    assert(strcmp(O.AuditSHA256,R.AuditSHA256)&&strcmp(O.RawSourceSHA256,R.AnalysisInfo.RawSHA256));
+    assert(isequaln(table2struct(D.Row),a)&&isequaln(table2struct(A(row,:)),a));
+    assert(isequal(double(D.Footprint(:)),O.FixedFootprint)&&isequal(double(R.Traces{row}.Raw(:)),D.Frames.PreservedInputMean));
+    assert(isequal(double(R.Traces{row}.Footprint(:)),O.FixedFootprint));identityChecks=identityChecks+1;
+    F=D.Frames;raw=F.PreservedInputMean;E=(a.StartFrame:a.EndFrame)';fs=O.SampleHz;assert(fs==1);
+    retained=F.Frame(F.CleanBaseline==1);candidate=(max(1,a.StartFrame-a.BaselineWindowFrames):a.StartFrame-1)';
+    q=F.SignedFraction(E);oldOK=strcmp(a.StoredStatus,'valid')&&isfinite(a.StoredBaseline)&&a.StoredBaseline>0&&all(isfinite(q));
+    oldMin=NaN;oldMax=NaN;oldIntegral=NaN;oldMean=NaN;oldMinFrames=[];oldMaxFrames=[];
+    if oldOK
+        assert(numel(retained)==a.BaselineWindowFrames&&abs(mean(raw(retained))-a.StoredBaseline)<1e-10);
+        assert(max(abs((raw(E)-a.StoredBaseline)/a.StoredBaseline-q))<1e-12);
+        oldMin=min(q);oldMax=max(q);oldIntegral=sum(q)/fs;oldMean=mean(q);oldMinFrames=E(q==oldMin);oldMaxFrames=E(q==oldMax);
+        if strcmp(a.EventType,'sink'),amp=-oldMin;else,amp=oldMax;end
+        assert(abs(amp-a.StoredAmplitude)<1e-12);
+    else
+        assert(isnan(a.StoredBaseline)&&isnan(a.StoredAmplitude)&&all(isnan(q)));
+    end
+    if strcmp(a.EventType,'sink'),T=S.Table_OxygenSinkEvents_Out;site='SinkID';ampcol='NormOxySinkAmp';else,T=U.Table_OxygenSurgeEvents_Out;site='SurgeID';ampcol='NormOxySurgeAmp';end
+    ix=find(string(T.RecordingID)==string(a.RecordingID)&T.(site)==a.SiteID&T.EventID==a.EventID);assert(isscalar(ix));
+    assert(T.StartFrame(ix)==a.StartFrame&&T.EndFrame(ix)==a.EndFrame&&isequaln(T.BaselineValue(ix),a.StoredBaseline)&&isequaln(T.(ampcol)(ix),a.StoredAmplitude));
+    hasIntegral=ismember('SignedTraceAUC_sec',T.Properties.VariableNames);storedIntegral=NaN;integralMatches=NaN;
+    if hasIntegral,storedIntegral=T.SignedTraceAUC_sec(ix);integralMatches=same(storedIntegral,oldIntegral);assert(integralMatches);end
+    hasMean=ismember('MeanSignedChangeFraction',T.Properties.VariableNames);storedMean=NaN;meanMatches=NaN;
+    if hasMean,storedMean=T.MeanSignedChangeFraction(ix);meanMatches=same(storedMean,oldMean);assert(meanMatches);end
+    original=struct('AuditRow',row,'SavedEvent',a,'OriginalCandidateFrames',candidate,'OriginalRetainedCandidateFrames',retained, ...
+        'OriginalReferenceValid',oldOK,'MinimumSignedFractionReplay',oldMin,'MaximumSignedFractionReplay',oldMax,'MinimumFrames',oldMinFrames,'MaximumFrames',oldMaxFrames, ...
+        'SignedIntegralReplaySec',oldIntegral,'MeanSignedFractionReplay',oldMean,'StoredIntegralFieldPresent',hasIntegral,'StoredIntegralSec',storedIntegral, ...
+        'StoredIntegralMatchesReplay',integralMatches,'StoredMeanFieldPresent',hasMean,'StoredMeanFraction',storedMean,'StoredMeanMatchesReplay',meanMatches);
+    originals{k}=original;
+    for j=1:numel(O.Intervals)
+        m=O.Intervals(j);newOK=strcmp(m.Status,'computed_exploratory');
+        if newOK
+            assert(isequal(raw(m.ReferenceFrames),m.ReferenceValues)&&isequal(raw(m.EventFrames),m.EventValues));
+            assert(abs(mean(m.ReferenceValues)-m.ReferenceMean)<1e-10&&max(abs((m.EventValues-m.ReferenceMean)/m.ReferenceMean-m.SignedFraction))<1e-12);
+        end
+        joint=oldOK&&newOK;dB=NaN;dMin=NaN;dMax=NaN;dAmp=NaN;dIntegral=NaN;
+        if joint,dB=m.ReferenceMean-a.StoredBaseline;dMin=100*(m.MinimumSignedChangeFraction-oldMin);dMax=100*(m.MaximumSignedChangeFraction-oldMax);dAmp=100*(m.SavedSignDirectionalAmplitudeFraction-a.StoredAmplitude);dIntegral=m.SignedTraceIntegralSec-oldIntegral;end
+        overlap=intersect(retained,m.EventFrames);candidateOverlap=intersect(candidate,m.EventFrames);
+        c=struct('AuditRow',row,'SavedSign',char(a.EventType),'Original',original,'Reviewed',m,'BothOpticalResultsAvailable',joint, ...
+            'ReferenceMeanDifferenceInputUnits',dB,'MinimumSignedDifferencePercentagePoints',dMin,'MaximumSignedDifferencePercentagePoints',dMax, ...
+            'SavedSignAmplitudeDifferencePercentagePoints',dAmp,'SignedIntegralDifferenceSec',dIntegral, ...
+            'OnsetFrameDifference',m.OnsetFrame-a.StartFrame,'RecoveryFrameDifference',m.RecoveryFrame-a.EndFrame, ...
+            'DurationDifferenceSec',m.DurationSec-numel(E)/fs,'OriginalCandidateFramesInsideReviewedEvent',candidateOverlap,'OriginalRetainedCandidatesInsideReviewedEvent',overlap, ...
+            'Attribution','direct joint comparison; baseline and bounds both changed; no isolated or causal contributions estimated', ...
+            'Missingness','absent original or reviewed quantity leaves its difference NaN; never treat absence as zero');
+        records{end+1}=c; %#ok<AGROW>
+        summary=[summary;table(row,string(a.EventType),a.StartFrame,a.EndFrame,m.OnsetFrame,m.RecoveryFrame, ...
+            numel(retained),m.ReferenceSampleCount,a.StoredBaseline,m.ReferenceMean,100*oldMin,100*m.MinimumSignedChangeFraction,dMin, ...
+            100*a.StoredAmplitude,100*m.SavedSignDirectionalAmplitudeFraction,dAmp,oldIntegral,m.SignedTraceIntegralSec,dIntegral, ...
+            string(a.StoredStatus),string(m.Status),joint, ...
+            'VariableNames',{'AuditRow','SavedSign','OriginalStart','OriginalEnd','ReviewedStart','ReviewedEnd','OriginalRetainedCandidates','ReviewedReferenceSamples', ...
+            'OriginalB','ReviewedB','OriginalMinPercent','ReviewedMinPercent','MinDeltaPP','OriginalSavedSignPercent','ReviewedSavedSignPercent','SavedSignDeltaPP', ...
+            'OriginalIntegralSec','ReviewedIntegralSec','IntegralDeltaSec','OriginalStatus','ReviewedStatus','BothAvailable'})]; %#ok<AGROW>
+        geometry=[geometry;table(row,m.OnsetFrame,m.RecoveryFrame,m.OnsetFrame-a.StartFrame,m.RecoveryFrame-a.EndFrame,numel(E)/fs,m.DurationSec, ...
+            m.DurationSec-numel(E)/fs,numel(candidateOverlap),numel(overlap), ...
+            'VariableNames',{'AuditRow','ReviewedStart','ReviewedEnd','OnsetDeltaFrames','RecoveryDeltaFrames','OriginalDurationSec','ReviewedDurationSec','DurationDeltaSec','OldCandidateFramesInsideReviewed','OldRetainedCandidatesInsideReviewed'})]; %#ok<AGROW>
+    end
+    preferred=O.Intervals([O.Intervals.PreferredOnset]);assert(~isempty(preferred));m=preferred(1);C=m.ReferenceFrames;
+    ax=nexttile;lo=max(1,min([candidate;C;m.EventFrames;E])-3);hi=min(numel(raw),max([m.EventFrames;E])+3);f=(lo:hi)';
+    plot(ax,f,raw(f),'k.-','DisplayName','Preserved input');hold(ax,'on');
+    scatter(ax,retained,raw(retained),36,[.65 .65 .65],'s','DisplayName','Original retained candidates');
+    scatter(ax,C,raw(C),65,[0 .35 .85],'o','LineWidth',1.3,'DisplayName','Researcher reference');
+    if oldOK,yline(ax,a.StoredBaseline,'--','Color',[.45 .45 .45],'DisplayName','Original mean');end
+    yline(ax,m.ReferenceMean,'--','Color',[0 .35 .85],'DisplayName','Reviewed mean');
+    for f=[a.StartFrame a.EndFrame],xline(ax,f,':','Color',[.35 .35 .35],'HandleVisibility','off');end
+    for f=[m.OnsetFrame unique([preferred.RecoveryFrame])],xline(ax,f,'-','Color',[.65 .15 .7],'HandleVisibility','off');end
+    title(ax,sprintf('Row %d | saved %s site %d/event %d | original %d-%d; reviewed onset %d, recovery %s', ...
+        row,a.EventType,a.SiteID,a.EventID,a.StartFrame,a.EndFrame,m.OnsetFrame,char(strjoin(string(unique([preferred.RecoveryFrame])),', '))),'Interpreter','none');
+    ylabel(ax,'Input intensity');xlabel(ax,'Recording frame (1-based; external trigger 1 Hz)');grid(ax,'on');xlim(ax,[lo hi]);
+    if k==1,legend(ax,'Location','northoutside','Orientation','horizontal');end
+end
+sgtitle(fig,{'Original and reviewed references on the same preserved-input footprint trace','Gray dotted = original bounds; purple = reviewed bounds. Retained candidates do not imply a valid original mean.'},'FontSize',13);
+exportgraphics(fig,fullfile(out,'reference-boundary-comparison.png'),'Resolution',150);exportgraphics(fig,fullfile(out,'reference-boundary-comparison.pdf'),'ContentType','vector');
+assert(height(summary)==7&&sum(summary.BothAvailable)==2&&sum(summary.ReviewedStatus=="computed_exploratory")==5);
+assert(all(isnan(summary.SavedSignDeltaPP(~summary.BothAvailable)))&&all(isnan(summary.IntegralDeltaSec(~summary.BothAvailable))));
+assert(all(geometry.DurationDeltaSec>0));
+assert(summary.OriginalRetainedCandidates(summary.AuditRow==321)==0&&summary.ReviewedReferenceSamples(summary.AuditRow==321)==12);
+assert(all(geometry.OldRetainedCandidatesInsideReviewed(geometry.AuditRow==186)==2));
+assert(geometry.OldRetainedCandidatesInsideReviewed(geometry.AuditRow==309)==4&&geometry.OldRetainedCandidatesInsideReviewed(geometry.AuditRow==308)==7);
+for k=1:numel(keys),s=sources.(keys{k});assert(strcmp(oxygenFileSHA256(s.Path),s.SHA256));end
+writetable(summary,fullfile(out,'optical-comparison.csv'));writetable(geometry,fullfile(out,'boundary-reference-comparison.csv'));
+result=struct('Status','passed','EventIdentitiesAndFixedFootprintsVerified',identityChecks,'IntervalsCompared',7,'BothOriginalAndReviewedOpticalAvailable',2, ...
+    'ReviewedComputedExploratory',5,'ReviewedWithoutAcceptedReference',2,'OriginalUnavailableEvents',2,'OriginalIntegralFieldAvailableAndChecked',all(cellfun(@(v)v.StoredIntegralFieldPresent,originals)), ...
+    'OriginalMeanFieldAvailableAndChecked',all(cellfun(@(v)v.StoredMeanFieldPresent,originals)),'MissingDifferencesRemainNaN',true,'IsolatedEffectsCalculated',false,'ProductionCodeChanged',false,'ScientificAdoption',false);
+comparison=struct('Schema','boi-reviewed-automatic-comparison-1','Role','descriptive_joint_comparison_not_isolated_or_causal_effects','Records',{records},'Originals',{originals},'SourceMap',sources,'Verification',result);
+save(fullfile(out,'comparison.mat'),'comparison','summary','geometry','result');fid=fopen(fullfile(out,'comparison.json'),'w');fprintf(fid,'%s\n',jsonencode(comparison,'PrettyPrint',true));fclose(fid);
+fid=fopen(fullfile(out,'verification.json'),'w');fprintf(fid,'%s\n',jsonencode(result,'PrettyPrint',true));fclose(fid);disp(summary);disp(geometry);disp(result);
+end
+function ok=same(a,b)
+ok=(isnan(a)&&isnan(b))||(isfinite(a)&&isfinite(b)&&abs(a-b)<1e-10*max(1,abs(a)));
+end

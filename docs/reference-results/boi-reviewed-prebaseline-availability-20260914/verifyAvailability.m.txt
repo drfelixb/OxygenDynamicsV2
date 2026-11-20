@@ -1,0 +1,48 @@
+function verifyAvailability
+root='/Users/zcm361/Documents/Github/OxygenDynamicsV2';cd(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(root,'reference-validation/boi-reviewed-prebaseline-availability-20260914');I=jsondecode(fileread(fullfile(out,'inputs.json')));C=jsondecode(fileread(fullfile(out,'availability.json')));
+R=loadBOIEventReview(C.AuditPath);S=loadBOIBoundaryReview(R,I.Sources.Review.Path);
+assert(strcmp(R.AuditSHA256,C.AuditSHA256)&&strcmp(S.SHA256,C.ReviewSHA256));
+assert(strcmp(oxygenFileSHA256(I.Sources.Replay.Path),I.Sources.Replay.SHA256));
+V=load(I.Sources.Replay.Path,'Raw','Footprints','NativeUnionPixels');M=jsondecode(fileread(I.Sources.Events.Path));
+rows=[309 308 321 186];overlaps=cell(4,1);totalRaw=0;totalMasks=0;spatialFlags={};
+for k=1:4
+    row=rows(k);m=M([M.AuditRow]==row);assert(isscalar(m));px=V.Footprints{m.TraceColumn};raw=double(V.Raw(:,m.TraceColumn));
+    assert(isequaln(raw,double(R.Traces{row}.Raw(:))));assert(isequal(sort(double(px(:))),sort(double(R.Traces{row}.Footprint(:)))));
+    assert(numel(px)==m.FootprintPixels);assert(strcmp(m.EventType,char(R.Audit.EventType(row)))&&m.SiteID==R.Audit.SiteID(row)&&m.EventID==R.Audit.EventID(row));
+    mask=false(prod(R.AnalysisInfo.FrameSize),1);mask(px)=true;overlap=false(R.AnalysisInfo.NFrames,1);
+    for f=1:numel(overlap),overlap(f)=any(mask(V.NativeUnionPixels{f}));end
+    trace=readtable(I.Sources.(sprintf('Trace%d',row)).Path);
+    assert(isequal(logical(trace.AnyNativeOverlap),overlap));assert(max(abs(trace.RawMean-raw))<1e-9);
+    overlaps{k}=overlap;totalRaw=totalRaw+numel(raw);totalMasks=totalMasks+numel(overlap);
+    % Old saved baseline membership also reproduces using this union, before any manual window.
+    old=(max(1,R.Audit.StartFrame(row)-R.Audit.BaselineWindowFrames(row)):R.Audit.StartFrame(row)-1)';
+    assert(isequal(old(~overlap(old)&isfinite(raw(old))),double(R.Traces{row}.CleanBaselineFrames(:))));
+end
+for i=1:numel(C.Windows)
+    W=C.Windows(i);k=find(rows==W.AuditRow);raw=double(R.Traces{W.AuditRow}.Raw(:));overlap=overlaps{k};candidate=(W.OnsetFrame-20:W.OnsetFrame-1)';
+    eligible=candidate(~overlap(candidate)&isfinite(raw(candidate)));excluded=candidate(overlap(candidate));nonfinite=candidate(~isfinite(raw(candidate)));
+    assert(isequal(candidate,W.CandidateFrames(:))&&isequal(eligible,W.EligibleFrames(:))&&numel(eligible)==W.EligibleCount);
+    assert(isequal(excluded,W.NativeOverlapExcludedFrames(:))&&isequal(nonfinite,W.NonfiniteFrames(:)));
+    assert(W.CompleteUnderExistingSampleRule==(numel(eligible)==20));
+    for j=1:numel(W.CrossReviewedEventTemporalFlags)
+        F=W.CrossReviewedEventTemporalFlags(j);other=(F.OtherOnsetFrame:F.OtherRecoveryFrame)';
+        assert(isequal(intersect(candidate,other),F.CandidateIntersectionFrames(:)));
+        assert(isequal(intersect(eligible,other),F.EligibleIntersectionFrames(:)));
+        shared=numel(intersect(R.Traces{W.AuditRow}.Footprint,R.Traces{F.OtherAuditRow}.Footprint));
+        spatialFlags{end+1}=struct('AuditRow',W.AuditRow,'OnsetFrame',W.OnsetFrame,'OtherAuditRow',F.OtherAuditRow, ...
+            'Frames',F.CandidateIntersectionFrames,'SharedFixedFootprintPixels',shared, ...
+            'CurrentFootprintPixels',numel(R.Traces{W.AuditRow}.Footprint),'OtherFootprintPixels',numel(R.Traces{F.OtherAuditRow}.Footprint), ...
+            'Role','Shared fixed footprints and reviewed endpoint, not observed native mask occupancy or an automatic new exclusion'); %#ok<AGROW>
+    end
+end
+assert(numel(spatialFlags)==1&&spatialFlags{1}.Frames==516&&spatialFlags{1}.SharedFixedFootprintPixels>0);
+assert(strcmp(oxygenFileSHA256(R.AuditPath),R.AuditSHA256)&&strcmp(oxygenFileSHA256(S.Path),S.SHA256));
+assert(strcmp(oxygenFileSHA256(I.Sources.Replay.Path),I.Sources.Replay.SHA256));
+P=struct('Status','passed','VerificationMethod','MATLAB exact audit/raw/footprint association; direct full cached both-sign native-union intersections', ...
+    'UniqueOnsetWindows',5,'CandidateSamplesChecked',100,'ExactRawSamplesCompared',totalRaw,'NativeOverlapFlagsCompared',totalMasks, ...
+    'SavedBaselineListsReproduced',4,'CrossReviewedEndpointFlags',{spatialFlags},'BaselineMeansCalculated',false,'AmplitudesCalculated',false, ...
+    'OriginalFilesUnchanged',true,'AuditSHA256',R.AuditSHA256,'ReviewSHA256',S.SHA256,'ReplaySHA256',I.Sources.Replay.SHA256, ...
+    'AvailabilitySHA256',oxygenFileSHA256(fullfile(out,'availability.json')),'ScientificAcceptance','not_established');
+fid=fopen(fullfile(out,'verification.json'),'w');cleanup=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(P,'PrettyPrint',true));disp(P);
+end

@@ -1,0 +1,14 @@
+{
+  "schema": "SW-G5-07.static-input-drift-gate.v1",
+  "checked_text_files": 561,
+  "drift": [],
+  "passed": true,
+  "input_manifest_sha256": "411a8fe1e959995a5ac9c9b7c5e35d545af88f5b4663f00422b7e3b7b2243309",
+  "candidate_manifest_sha256": "bc20defd892f682b20de39410d74092389b4231ef476526c76127576a0d9eda3",
+  "note": "Compared after static assessments and before authorized factual plan/status updates; no tests executed.",
+  "authorized_factual_updates_after_input_check": {
+    "docs/planning/software-development-status.json": "d9a700600744c07e4acfb11b66c09f732127d47245088c8a4981df3c9bd6f818",
+    "docs/SOFTWARE_DEVELOPMENT_PLAN.md": "2f55360022c5189dc8fd98f33ec409d4942429c59b2ab9056223be2d7a1928a6"
+  },
+  "audit_document_sha256": "640b1f1d9b83587ece367c31427f211ffbe15732c5bb88926a95e24468d5d492"
+}

@@ -1,5 +1,8 @@
 function res = saveastiff(data, path, options)
 %SAVEASTIFF Save a 2-D image or 3-D grayscale stack as a TIFF file.
+% Adapted from "Multipage TIFF stack" by Yoon-Oh Tak.
+% Distributed under upstream BSD-3-Clause-style terms; see
+% ../THIRD_PARTY_NOTICES.md.
 
 if nargin<3
     options = struct();

@@ -1,0 +1,22 @@
+{
+  "Schema": "boi-c02-analysis-proposal-1",
+  "DecisionID": "R4-C02-CONSOLIDATION-119",
+  "Status": "proposed_awaiting_researcher_decision",
+  "ResearcherApproved": false,
+  "CandidatePrimarySinkOutcomes": [
+    "M01_occupied_tissue_fraction",
+    "M02_detected_onset_rate"
+  ],
+  "ProposedWindow": "full_stored_recording_paired_equal_duration_within_mouse",
+  "ProposedContrast": "equal_mouse_mean_of_isoflurane_minus_awake",
+  "InferencePerformed": false,
+  "FinalScientificAdmissionApproved": false,
+  "Unresolved": [
+    "final_outcome_hierarchy",
+    "final_windows",
+    "boundary_onset_estimand",
+    "measurement_specific_admission",
+    "inferential_intent_uncertainty_multiplicity"
+  ],
+  "DecisionSheet": "BOI_C02_ANALYSIS_DECISIONS.md"
+}

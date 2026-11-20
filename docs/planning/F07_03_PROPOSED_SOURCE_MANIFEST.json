@@ -1,0 +1,1658 @@
+{
+  "schema": "F07-03.proposed-source-boundary.v1",
+  "status": "planning_only_not_implemented_or_verified",
+  "groups": {
+    "required_root_additions": [
+      {
+        "path": "auditOxygenEventAmplitudeSource.m",
+        "sha256_at_planning": "9a6138c594bd1322fd6598c6dfe1b122c2966ada44298e64541b91847257b866"
+      },
+      {
+        "path": "createBOIEventAudit.m",
+        "sha256_at_planning": "6672df56a58df9947607d39c22abba5a664e803b64fbeb349b23a48f548005d1"
+      },
+      {
+        "path": "createBOIG4EvidenceBundle.m",
+        "sha256_at_planning": "a7ce036c1291b51f5b317fbc894fd03f81f58d1a10cbf2439707538298d169c5"
+      },
+      {
+        "path": "loadBOIG4EvidenceBundle.m",
+        "sha256_at_planning": "2a1966c7740e615be00b24edd6a6860f175a151b8c1e677d81f17b0446d36ea2"
+      },
+      {
+        "path": "loadBOIRecordingRun.m",
+        "sha256_at_planning": "b575c852112aaac854ac56fb12c632b604102f859b0932e5dafd2fbbeed03109"
+      },
+      {
+        "path": "openBOIEventReview.m",
+        "sha256_at_planning": "f9879a3070ce1ed8fa20091c36f81245d6717695aa39aa66e16bd14b096617a3"
+      },
+      {
+        "path": "openBOIG4EvidenceBundle.m",
+        "sha256_at_planning": "40523e42eba877dc3f4ec0d1353f115227af2de88a3a0abdb0ae8d23a128b911"
+      },
+      {
+        "path": "openBOIRecordingWorkflow.m",
+        "sha256_at_planning": "533e8ad288ed973e929994a87796b94598264a4bc211bbc53e39b1434bfb1e2c"
+      },
+      {
+        "path": "openBOITemporalContext.m",
+        "sha256_at_planning": "9037cd28aa29b4a0d577184531a48a8f06532e0c355fecffcab936a858397f3d"
+      },
+      {
+        "path": "openBOIWindowReview.m",
+        "sha256_at_planning": "87c1a7425773b31810e9368fc138cf6e8412d119ce1e634beac11bd054ca23bf"
+      },
+      {
+        "path": "prepareBOIRecordingRequest.m",
+        "sha256_at_planning": "69f76631da86c41900895c25933449905ef575d3986ea9545860d7337da451f0"
+      },
+      {
+        "path": "reviewBOIRecordingInput.m",
+        "sha256_at_planning": "79bc9c6beb5b6cd283f45b63eecf32f83a5228c0fb72bb0bcbc7285a65cf215b"
+      },
+      {
+        "path": "reviewBOITissueSupport.m",
+        "sha256_at_planning": "6728d5662042929153b4885b327a62ef4d943945a6d622db15e5de17e56a2ef9"
+      },
+      {
+        "path": "runBOIRecordingWorkflow.m",
+        "sha256_at_planning": "4350e4a1b99eeae393073f715e31b860cf5e1e36b30a1a18827be874cf03105d"
+      },
+      {
+        "path": "writeBOITissueSupport.m",
+        "sha256_at_planning": "ce8d0f502907fb4133abe5c1ce30ec4ec5995ce030c73a0b63c312b825598901"
+      },
+      {
+        "path": "writeOxygenAnalysisManifest.m",
+        "sha256_at_planning": "3e07c48950c2c840aec06a7d11606d32fb082bc0531d239bed03047c4b1dfcd1"
+      }
+    ],
+    "existing_root_matlab_files_retained": [
+      {
+        "path": "MakeRecording_3D.m",
+        "sha256_at_planning": "cc36e5bb2e4cf5eac01eb9171b6e97b166f84cd8b1472be561af33a0900ba885"
+      },
+      {
+        "path": "OxygenDynamics_Behaviour.m",
+        "sha256_at_planning": "ac4589c85e20b1d5028cb1b67219c33c0971f3bfa81d6efe42aa9b5e71c95053"
+      },
+      {
+        "path": "OxygenDynamics_Config.m",
+        "sha256_at_planning": "2e0bfb37d2a4a3115250133f9d085c31360f4a26942a31bca9eb17fea3b30c2f"
+      },
+      {
+        "path": "OxygenDynamics_GUI.m",
+        "sha256_at_planning": "466fd6fed437b113e2cb7f6c13eab70118eeac69e37fe3cc0bfc80c185f2c7e9"
+      },
+      {
+        "path": "OxygenDynamics_Master.m",
+        "sha256_at_planning": "3dfc06fbdcf606e198ba1f0aaca53c2fccb22fdacbf28ddf5ffb1bf2096dbc21"
+      },
+      {
+        "path": "OxygenDynamics_Stats.m",
+        "sha256_at_planning": "24545968ddb8cc7fab5103cf51639aaf777c2f8893eaf83345df89c571e6815b"
+      },
+      {
+        "path": "OxygenDynamics_Tiffout.m",
+        "sha256_at_planning": "bb67193203124982bff5a361eeee1139d3f6bd528ea2e6fab3c004a757c5b00d"
+      },
+      {
+        "path": "OxygenDynamics_VascularAnalysis.m",
+        "sha256_at_planning": "8d9652604fcf82d970d641a6e4da83e318d0451978ba8fc50fb97099ef067397"
+      },
+      {
+        "path": "OxygenDynamics_VascularAnalysis_IndividualEvents.m",
+        "sha256_at_planning": "fe188e4b0b368ed3b00bd1a722bf419ff2cc1f65848817ccd8b3fec6fa6f3abf"
+      },
+      {
+        "path": "OxygenDynamics_Wrapper.m",
+        "sha256_at_planning": "8aae91f4d0bda4050e9bd1a0cf6ccb9353bbb3b6a899893ff599b44cbd257e58"
+      },
+      {
+        "path": "OxygenDynamics_plotvideos.m",
+        "sha256_at_planning": "6c3656ecd4b118f87b7f572f5a251a111c1748f64b45c6c0ae82aed11b6dad4c"
+      },
+      {
+        "path": "OxygenPipeline_VerificationReport.m",
+        "sha256_at_planning": "e28fe5ccc30d35929c1d3d393b0b512fe480819ae3e581801232c1011fedfb24"
+      },
+      {
+        "path": "Run_Regression_Check.m",
+        "sha256_at_planning": "773b4b9887f852c0e55083c0e1fbd0aee58da5e1c1af486c54e1b3c0df41de12"
+      },
+      {
+        "path": "Run_Verification_Then_Stats.m",
+        "sha256_at_planning": "4e2440602914a02d7c26e31708913eb22e064d81f21ec80838fd2a085770a523"
+      },
+      {
+        "path": "Run_Verification_Then_Wrapper.m",
+        "sha256_at_planning": "862b231bc7eb045ddaa86f217f514f670f8df3599a410ebb5cec26e3e33ed753"
+      },
+      {
+        "path": "Start_OxygenPipeline.m",
+        "sha256_at_planning": "3f282743fa20cab5e7e713dc16568bee22b352dd0cbe70e7562767c1f0ee630e"
+      },
+      {
+        "path": "analyzeHypoxiaAmyloidPair.m",
+        "sha256_at_planning": "88dff1b0fbd69fb23abdafb13c34341395e35b529560edf4211652ec79b39826"
+      },
+      {
+        "path": "archiveOldOutputs.m",
+        "sha256_at_planning": "7c18691b27e49c368fbd3ad75c20373455c090ef084bbaeea3fd6d34ca6727d6"
+      },
+      {
+        "path": "auditOxygenSinkAmplitudeSource.m",
+        "sha256_at_planning": "cb2485165ffaaf150221fd70f5974f984f1dc43f185a7c4733ce6f2470fc4bce"
+      },
+      {
+        "path": "checkOxygenPipelineHealth.m",
+        "sha256_at_planning": "77af3f965f553334423c72e02c03e228d81a96d51ef49e3443e209d703767a08"
+      },
+      {
+        "path": "compareRawDenoisedOutputs.m",
+        "sha256_at_planning": "72e0da60510abd1aa43f5cec052ebfec26d71b073265c4ab376a09ca0b474e49"
+      },
+      {
+        "path": "createOxygenRegressionBaseline.m",
+        "sha256_at_planning": "eb65059d33be5f17d714f0dcf3b7d3621cd5ed8c58f1c9786eea91d55b347d49"
+      },
+      {
+        "path": "createOxygenReleasePackage.m",
+        "sha256_at_planning": "5ed163cf0245fa2bb9e2552c8790626813c6f0b153b4cd979b3ece2004ad663b"
+      },
+      {
+        "path": "findLatestStatsOutputFolder.m",
+        "sha256_at_planning": "daa9f63369c26b032a8696f68ac5090fe350a22c18b3925c4afd46a41ecec639"
+      },
+      {
+        "path": "getOxygenPipelineVersion.m",
+        "sha256_at_planning": "041f873dbe04b7f7f33360817ff63d64dc93767870806ee479e747fc2ebb120f"
+      },
+      {
+        "path": "getOxygenRegressionStatus.m",
+        "sha256_at_planning": "dec6aa5e3759c6fb2d2ec43cd9c13c18010712515324020b22ef4dcb7d7a5b9e"
+      },
+      {
+        "path": "getOxygenStatsAcceptanceStatus.m",
+        "sha256_at_planning": "31988ae1e1f5e5e8fec13911deae7ea56017cdf1f01ebafeb2e763ef28b1d1ac"
+      },
+      {
+        "path": "iOSDynamics_Master.m",
+        "sha256_at_planning": "cb43e505963b18daa1c9cfe5f991ff89c725c5d797e2c74e762ae3892e88bcab"
+      },
+      {
+        "path": "iOSDynamics_Wrapper.m",
+        "sha256_at_planning": "ecba919c72fdbc0889c582849cefc990ca30414dc37b7610b0ac4777033da730"
+      },
+      {
+        "path": "iOS_Tiffout.m",
+        "sha256_at_planning": "76cc7e80ce8bf4f591de0cde03266768a4ed6b749614d8c1dbb6de56a92da41f"
+      },
+      {
+        "path": "listOxygenRegressionBaselines.m",
+        "sha256_at_planning": "32660cb3b679f4e53cb363d74f86a3e852d04d22365cd7b07fa3ba12d92b3069"
+      },
+      {
+        "path": "refreshAcceptedOxygenRegressionBaseline.m",
+        "sha256_at_planning": "57e2b9c677b5550e987846b466ca73c744a83fbc5dc0bcd8ce63a86dc7d7d018"
+      },
+      {
+        "path": "restoreOxygenRegressionBaseline.m",
+        "sha256_at_planning": "2c32fd4b73b8380b8eb4506e90a27561632d1f04b7fe3baf8a8941ea7d8c9659"
+      },
+      {
+        "path": "reviewLatestStatsAcceptance.m",
+        "sha256_at_planning": "ae324010b25037c6874c0322ac32b5e15e658191b0023e7a26e9ed0fa8fa2b7e"
+      },
+      {
+        "path": "runOxygenDynamicsStats.m",
+        "sha256_at_planning": "059dffba0725ab05cc220830ae5ac88dc22e77daf8b7f8832562f39c5a737691"
+      },
+      {
+        "path": "runOxygenDynamicsVascularAnalysis.m",
+        "sha256_at_planning": "6ea591b0efeea59a0e1ae7d5709653d6457db5283e6972f3b9dd454394aad932"
+      },
+      {
+        "path": "runOxygenDynamicsVascularEventAnalysis.m",
+        "sha256_at_planning": "effdf96abd04c2ab38b22c8f63fb852203d5488a0fcf4bb756a3032d22212064"
+      },
+      {
+        "path": "runOxygenPipelineVerificationReport.m",
+        "sha256_at_planning": "645ae1e1833272753f738303ce95b7b4649e90f32b34011c7975cacf24e629d1"
+      },
+      {
+        "path": "runOxygenRegressionCheck.m",
+        "sha256_at_planning": "efc8faad02af20d8fc946bc3219450d0dbd09ec7b73a36e3f1661eb3094e8eb9"
+      },
+      {
+        "path": "runOxygenRegressionTest.m",
+        "sha256_at_planning": "5b6984d9aacc9bc14c5de077912a05035d8447e871f6111b8fa700cb3d0cf59e"
+      },
+      {
+        "path": "runOxygenSummaryFigures.m",
+        "sha256_at_planning": "4eb03d00b84b24153bfb90c06c6bbe8a40d540da708947508bafb39741f4e2fb"
+      },
+      {
+        "path": "setupOxygenDynamicsPath.m",
+        "sha256_at_planning": "a6fd653363206dc429478930996855ac2c4d4a45ccd9c7baa210bfe2e7f2dd2d"
+      },
+      {
+        "path": "testHypoxiaAmyloidAnalysis.m",
+        "sha256_at_planning": "8b06c35121d7906ffbbda83997393c715c7178e514ad83e691219d53155eab51"
+      },
+      {
+        "path": "updateHypoxicBurdenStatsOutput.m",
+        "sha256_at_planning": "94b336c58dc6d6f43b00bd56ddd6a7f5fe138d61f86bc20afb7a0071f5ede5f1"
+      }
+    ],
+    "required_helper_matlab_files": [
+      {
+        "path": "helpers/addAlignedSinkEventTraces.m",
+        "sha256_at_planning": "433021347a123f4f07284822936a5dbc35ebf2516cc6b1daadc5913f2d03c3f5"
+      },
+      {
+        "path": "helpers/addStatsRecordingMetadata.m",
+        "sha256_at_planning": "a943d3a98cd49e3ed2a7448275502f51bbeed074839ee8dc823ad944d9b8c462"
+      },
+      {
+        "path": "helpers/addValidationToLegacyContext.m",
+        "sha256_at_planning": "1b09c410cb896934128bd4b09834793a2e74cd4a94f09d594500837135798f8f"
+      },
+      {
+        "path": "helpers/aggregateOxygenRecordingBurden.m",
+        "sha256_at_planning": "219bcd0887d465fc6927e288a04eb6c2d7428b53e93ea1c5495993bf8807e2ee"
+      },
+      {
+        "path": "helpers/alignOxygenTraceSamples.m",
+        "sha256_at_planning": "7fbc8bf4957576eeb2404960047550b5a2ab5f2a0538e6498f34798f93977fc1"
+      },
+      {
+        "path": "helpers/analyzeHypoxiaAmyloidEventProperties.m",
+        "sha256_at_planning": "472fcc847d4dd675dcf48b8893f43ab181bdaab8460d576ae0cb3f09c3b33cc5"
+      },
+      {
+        "path": "helpers/annotateOxygenEventRecurrence.m",
+        "sha256_at_planning": "e23e6a28b18856a3fe2f43020eadec8659a31049e8b98844a0196b3ff3984f8a"
+      },
+      {
+        "path": "helpers/appendFailure.m",
+        "sha256_at_planning": "cd4ad70cf7a33c865882a35aac04ea32c7ad743301d39fbc0315081fd3e1c0c7"
+      },
+      {
+        "path": "helpers/applyOxygenDynamicsConfig.m",
+        "sha256_at_planning": "e7c437dfb4c4ce8931e24e4483762dc4abb0ed83a0a9e2698cfb69f574e85cc0"
+      },
+      {
+        "path": "helpers/applyStatsSinkCuration.m",
+        "sha256_at_planning": "50122bc16d7c4e7bbd8c8c9805ab9fd8ed37c4d4ae4d1d08413f9d10214d6db0"
+      },
+      {
+        "path": "helpers/assertNoBlockedVerificationRows.m",
+        "sha256_at_planning": "9a0c086226680dda00a399aa92f6a95bf82e4b595cb595897d89a9bef22a8dfe"
+      },
+      {
+        "path": "helpers/attachBOINativeMasks.m",
+        "sha256_at_planning": "edd3938b055ca96bd8324265d607f78e8190018ba24bfd9cd35146e3dc9b2e62"
+      },
+      {
+        "path": "helpers/attachBOIReferenceSources.m",
+        "sha256_at_planning": "16464cab183c04671e366f0985b919f9d4e33183a102e54107dc314d097e5d17"
+      },
+      {
+        "path": "helpers/attachBOITemporalSources.m",
+        "sha256_at_planning": "68a66e7ec4d9a55a3f01026ec401e90d76104099f05030242a0648217d300963"
+      },
+      {
+        "path": "helpers/attachSurgeTrackingMetadata.m",
+        "sha256_at_planning": "8b0ca09180c19dcd437bfa2739a92481f533a6d1cdc065905a0b571e1cfa8a27"
+      },
+      {
+        "path": "helpers/auditOxygenEventFootprints.m",
+        "sha256_at_planning": "058bedfe87e2ff59e40d93413cd4258909ae9b6d8a1f53e78a73c4049fbf09f5"
+      },
+      {
+        "path": "helpers/augmentStatsOxygenMetricTables.m",
+        "sha256_at_planning": "698a3ad56285570a6b65b2a2dc597b7e7a37e7b5bb807bcf47faf6841eed0e5a"
+      },
+      {
+        "path": "helpers/averageOxygenTracesByMouse.m",
+        "sha256_at_planning": "44249b6a7fbac08a78d64f6c8607cfedbc88479c450c850dd3aa15d3d611de61"
+      },
+      {
+        "path": "helpers/buildBOIBaselineDiagnostic.m",
+        "sha256_at_planning": "e8cbddf9f20c8dce17fe7b35bfa55d849419467c0930551b7da2e046eba4475b"
+      },
+      {
+        "path": "helpers/buildBOIEventReviewData.m",
+        "sha256_at_planning": "f1906a0ef23b7c8b96770a815362b7df56241501ef2f43e1b7d9ea9c2a48b19b"
+      },
+      {
+        "path": "helpers/buildBOIImportReviewRows.m",
+        "sha256_at_planning": "9497669a6344cf729f6f3479c967f05c3bdefdf4f883f963e29e7d5f15448a23"
+      },
+      {
+        "path": "helpers/buildBOIRecordingInputContracts.m",
+        "sha256_at_planning": "7ef10aad3b9dad4920ea66982e44d281597d432bd9aaa7d8152ec79ba542045c"
+      },
+      {
+        "path": "helpers/buildBOIReviewedOpticalPreview.m",
+        "sha256_at_planning": "d899d032c0bb0349e67da82cfd09241160ad32997382676b2af99c1987173e6e"
+      },
+      {
+        "path": "helpers/buildBOIReviewedReferencePreview.m",
+        "sha256_at_planning": "6a5580dc3531679089d4c2f26c5a472d9d42c7f50af140e4ba317e173ed27452"
+      },
+      {
+        "path": "helpers/buildBOITemporalContextPreview.m",
+        "sha256_at_planning": "f7b567cc8c8783dbc4b3c0c2d263df1bbb0ed929ec652de9692e5721dfbb8531"
+      },
+      {
+        "path": "helpers/buildBOITemporalHumanContacts.m",
+        "sha256_at_planning": "851ad9fa3e7d9776180c228c8e333e4790e024562da57279339d2e32aa9f58be"
+      },
+      {
+        "path": "helpers/buildBOITemporalNativeContacts.m",
+        "sha256_at_planning": "5d48c331b475789bd9b6174eed1b5a5e239042b86b261eed0a245bf04d9abe3e"
+      },
+      {
+        "path": "helpers/buildBOITimingReviewData.m",
+        "sha256_at_planning": "f1a8fbeeb0f314baf79fb2a1d3c3fac726628c4ee07dad132550ac1219edab4c"
+      },
+      {
+        "path": "helpers/buildBOIWindowReviewData.m",
+        "sha256_at_planning": "1bea56dfd1d4d631a02c881f8a6fd94e5e8c09fe042e22cd6851c8b1429d9eb5"
+      },
+      {
+        "path": "helpers/buildOxygenFigureListItems.m",
+        "sha256_at_planning": "4a88200d7da23c19ffe61d1b1eee34b53b633a709102bb271a2bbdecbb931ff8"
+      },
+      {
+        "path": "helpers/buildOxygenRegressionGuiTables.m",
+        "sha256_at_planning": "7907c348b65e15e88a2507c02b0451cedad7c3b3cace5ecced21231a50f64475"
+      },
+      {
+        "path": "helpers/buildOxygenStatsAcceptanceRows.m",
+        "sha256_at_planning": "c744aee102e470872b332d30f290811635081d96701984f2c6a751b4ac018ad4"
+      },
+      {
+        "path": "helpers/buildOxygenStatsPreviewRows.m",
+        "sha256_at_planning": "96ae175b7d0b4dbf02bf8d52034b097177739b0df8df2d30fcb4cbdad1a1fa80"
+      },
+      {
+        "path": "helpers/buildOxygenStatsQcRows.m",
+        "sha256_at_planning": "29b88b3aa265acd82d1b0f52a934b261148ed3d2a0bc3571fb3de9c1b8774ac0"
+      },
+      {
+        "path": "helpers/buildTrackedOxygenSurgeSites.m",
+        "sha256_at_planning": "b01253b47613e28e3523b8a8a3b029666059f7cf9a0012d23513305e67adce81"
+      },
+      {
+        "path": "helpers/captureBOIAcquisitionMetadata.m",
+        "sha256_at_planning": "760e945e5779efa7dfa1e39173ad9f380f6b1f718f5a3ded01160f86cf43017a"
+      },
+      {
+        "path": "helpers/captureBOIRunReview.m",
+        "sha256_at_planning": "579f4c943871ed22042c2d02b72fafb145cf7bb25f4b027890cf606cb66d1995"
+      },
+      {
+        "path": "helpers/captureBOITissueSupport.m",
+        "sha256_at_planning": "e2ad7426b02a8c1c5228c2a95c682024237496e5eaac60dd580a172c2a024281"
+      },
+      {
+        "path": "helpers/collateOxygenSinkEvents.m",
+        "sha256_at_planning": "be8b2fb71c1161fe759c33f8f20fad17c47d4d45bdbc3000f8bb221c219e3cec"
+      },
+      {
+        "path": "helpers/collateOxygenSurgeEvents.m",
+        "sha256_at_planning": "eff61d5f3b58f5c3d8214bddae22ff5766e050b009a460f480230a701b1758cf"
+      },
+      {
+        "path": "helpers/collateiOSSinkEvents.m",
+        "sha256_at_planning": "6687252b9978de1ab798ab00842e11cdbb032a4ea21e4449e48d34deb8d1f44a"
+      },
+      {
+        "path": "helpers/collateiOSSurgeEvents.m",
+        "sha256_at_planning": "7b7ef244aab954219698ced015f43e648aba7706c6f69354a384ef91d6f18f71"
+      },
+      {
+        "path": "helpers/completeOxygenBurdenTimeSeries.m",
+        "sha256_at_planning": "6c1ae22a4a6fb849c02ea6e6ec1fb56323ef00f882882aa83400f6f772a3b724"
+      },
+      {
+        "path": "helpers/computeBOIReviewedOpticalInterval.m",
+        "sha256_at_planning": "72a79cd724faabd0066a8298d4f3929fcdb672845f95f712aeac72824273f057"
+      },
+      {
+        "path": "helpers/computeBOITemporalContext.m",
+        "sha256_at_planning": "2a33701d613a4d61e234196357ce2620109f78b240bba5eae4ae3001e9493fff"
+      },
+      {
+        "path": "helpers/computeBehaviourPercentileBins.m",
+        "sha256_at_planning": "de18c00f90a9beac96d8f0f489aa5b2258df13671d842efa140c97b6c6e55739"
+      },
+      {
+        "path": "helpers/computeEventSizeModulation.m",
+        "sha256_at_planning": "d41d580abc77fc1a52f1fbe19095381ca2182986ac544b8213356e5e17dbbd8b"
+      },
+      {
+        "path": "helpers/computeFrameDifferenceEventMask.m",
+        "sha256_at_planning": "c41299a666044061f8c650b9ebeb8d1510af8edce9bbdd5bfc096e64586c1fe8"
+      },
+      {
+        "path": "helpers/computeOngoingRegionSeries.m",
+        "sha256_at_planning": "2b3cc311927312f827d74b70b5cad3d02a825790af1e85d122cf0357c7d57fe0"
+      },
+      {
+        "path": "helpers/computeOngoingSinkTimeSeries.m",
+        "sha256_at_planning": "b2ce4e9676b6874de28937d6493074fbc2035151d814999e2b21586d600a5b2c"
+      },
+      {
+        "path": "helpers/computeOngoingSurgeTimeSeries.m",
+        "sha256_at_planning": "8d734322b70665c7c12327da3d83e4e7672cd6ee816d7c00d0566a8781a75310"
+      },
+      {
+        "path": "helpers/computeROITraceFeatures.m",
+        "sha256_at_planning": "54f33cdb1115c0f4415bfcc2dc56259a8c6b1e8df34dd3896036c486576e9f72"
+      },
+      {
+        "path": "helpers/computeRecordingArea.m",
+        "sha256_at_planning": "cc6cfddb7c20686ea698b72c532fa4fc4fa13fd16880cac0ba21dcc9a94aab96"
+      },
+      {
+        "path": "helpers/computeTracePotentialNoise.m",
+        "sha256_at_planning": "62600baabb26b781f45fa4f7e83f45cda00d0cc1feea7f012cb15052f9995270"
+      },
+      {
+        "path": "helpers/computeTrackedRegionMorphology.m",
+        "sha256_at_planning": "ab388d05ba8afdd32c3bbdabd6bcb34668ef57a32e17898b3b1a85d45fa1b8b4"
+      },
+      {
+        "path": "helpers/computeVascularDistances.m",
+        "sha256_at_planning": "ed5e17d70f4c572b548866ce7c18098dfcac7e062c42e192b389af5bf9a3083e"
+      },
+      {
+        "path": "helpers/countTrackedEvents.m",
+        "sha256_at_planning": "9d7260b33b305e84ea1df6e928980bbf972f38aba0b00180699f9c303d5dc2a8"
+      },
+      {
+        "path": "helpers/createAdditionalOxygenSinkMetrics.m",
+        "sha256_at_planning": "1f6b2ac296f8fb8e442fc0fc5cd331a52618876f3a26b2bb4c7a2cf44122ee92"
+      },
+      {
+        "path": "helpers/createAdditionalOxygenSurgeMetrics.m",
+        "sha256_at_planning": "0636eb1c40ed5a2daa7a061509a8c39006ada895762020eb6fd84a04fe5864eb"
+      },
+      {
+        "path": "helpers/createAlignedOxygenSinkEventTraces.m",
+        "sha256_at_planning": "41270f7f06a5cbf8d1fb76c8eeb1851e40051663294a60b9005278378b260093"
+      },
+      {
+        "path": "helpers/createAlignedSinkTraceExport.m",
+        "sha256_at_planning": "d970a3688ea6f7c8a648b7d2ca250e6c52ab13fd057bc0025be985a5b79fbb13"
+      },
+      {
+        "path": "helpers/createAnalysisRecordingRow.m",
+        "sha256_at_planning": "03c4035005d072cb45b65a8e1e0c8b8516fb8137bf446564c9a1e3942fdaf2f4"
+      },
+      {
+        "path": "helpers/createBOIBaselinePanel.m",
+        "sha256_at_planning": "9664821c6b9a23e3a5bc728cf9c528f4d8ed2a57556e1e2b7db9dbb1e7275b1b"
+      },
+      {
+        "path": "helpers/createBOIBoundaryPanel.m",
+        "sha256_at_planning": "635d22f7fe891732d9cfd437acd5c1e0e15cfebca697d016cb0497d85b71d9c5"
+      },
+      {
+        "path": "helpers/createBOIImportReview.m",
+        "sha256_at_planning": "d1904c4e7efde9a27f229d5b37df04555c525e60bf4dd06cdeb402fceb7155a0"
+      },
+      {
+        "path": "helpers/createBOIImportReviewPanel.m",
+        "sha256_at_planning": "06e63e1146b31440df1768d863983ac5193b59c6cb7563a9bad9c15b04b9c4f2"
+      },
+      {
+        "path": "helpers/createBOIMeasurementPanel.m",
+        "sha256_at_planning": "453fbd0b72fc9f4659551d77ac9744a9eb9867633e672d552c312cc4b3e4821e"
+      },
+      {
+        "path": "helpers/createBOIRecordingInputContract.m",
+        "sha256_at_planning": "f2b146d8529c465b3b94dcbd6e374a8a419950a5606b19bbeaf46c3d738008f7"
+      },
+      {
+        "path": "helpers/createBOIReviewedOpticalPanel.m",
+        "sha256_at_planning": "2f9534c6a47ab7e389eb111de625cee38f89328b471625065022497790c90c4a"
+      },
+      {
+        "path": "helpers/createBOIReviewedReferencePanel.m",
+        "sha256_at_planning": "07600f7e6a4843053d600f467a08e6e0aefc969093e495eb450668c847c08c76"
+      },
+      {
+        "path": "helpers/createBOISurgeAnalysisWindows.m",
+        "sha256_at_planning": "c0acb84ff628816c22cb37e68447395cb6eff97f350b331c10df9a5393bf42c2"
+      },
+      {
+        "path": "helpers/createBOITemporalContextPanel.m",
+        "sha256_at_planning": "f8de18d9725b6d64f8d08d9c765931a2cdff67e1197bb0f265f725248586f390"
+      },
+      {
+        "path": "helpers/createBOITimingPanel.m",
+        "sha256_at_planning": "29d5a740dfb0ee0e478c18a88419211e4bc2e9167a6d5d01ebe54fea5331bf0c"
+      },
+      {
+        "path": "helpers/createBehaviourBinTraceSources.m",
+        "sha256_at_planning": "99cb4ed2b7a5ceb311ceee3ed1338351c1a1c38695368e5e5386a02e4a1818b2"
+      },
+      {
+        "path": "helpers/createBehaviourLogicalTraces.m",
+        "sha256_at_planning": "5e8271c8255baae416751bdaccfb8b2dacc948bf9309f47ca25f63850a12d097"
+      },
+      {
+        "path": "helpers/createBinnedTraceExport.m",
+        "sha256_at_planning": "6708170fa7d7d26c983d115a43040fdd68694a18be51da8c86199e96b61c6ff8"
+      },
+      {
+        "path": "helpers/createEventSnippetExportTable.m",
+        "sha256_at_planning": "097982fc9abf6a62540d1a5bdffdbbea8a774babdf6739a071635df1a640bc5a"
+      },
+      {
+        "path": "helpers/createHypoxiaAmyloidOutputFolder.m",
+        "sha256_at_planning": "d82e57ea3f4efe65e1fab4b00c0bdfe762e0b65a898185b9600a95610c4d09c0"
+      },
+      {
+        "path": "helpers/createHypoxiaAmyloidRunOptions.m",
+        "sha256_at_planning": "b6cb9deecbcbeb555907ad3730b60e74257a2303f933de22a7dbd82a04649364"
+      },
+      {
+        "path": "helpers/createHypoxicBurdenMetrics.m",
+        "sha256_at_planning": "7e61ebe0efa462d10c7650a04948221d96fe4fd177eb54271a99db8464998682"
+      },
+      {
+        "path": "helpers/createHypoxicEventSpecificMetrics.m",
+        "sha256_at_planning": "7ba60627edba59333ae7c8403eab2432b8c850b90f45fce44930cb35a3ac402a"
+      },
+      {
+        "path": "helpers/createLegacyRecordingContext.m",
+        "sha256_at_planning": "1c28f56545d650410003ba6729fc7a2c22b326c5e2831ae3b9455003dbb65367"
+      },
+      {
+        "path": "helpers/createManualEventSnippetExportTable.m",
+        "sha256_at_planning": "9f5f4da3d65b5a01c091084aac185422cf105b563aea52a0a91d81719c3ca9ef"
+      },
+      {
+        "path": "helpers/createNanBehaviourPercentileBins.m",
+        "sha256_at_planning": "c8ecc98e189ce2318fb645681928c29b182b2b7b65a7750adbee38dea0b696fe"
+      },
+      {
+        "path": "helpers/createNanTraceExportTable.m",
+        "sha256_at_planning": "7e8f9282aa7ff6ce0385925958d3ec5d0128513ebd95c94032bb87cb33cf7b80"
+      },
+      {
+        "path": "helpers/createOngoingStatsTimeSeries.m",
+        "sha256_at_planning": "a2ad11fe90b8f8aff0cdd42f70aec900072cb1702d167bda908f45b6caa49ec4"
+      },
+      {
+        "path": "helpers/createOutputMetadataVectors.m",
+        "sha256_at_planning": "6d705d083357c05762e890293d924f30a471b6b2a5329c0b8fb564c04e56d910"
+      },
+      {
+        "path": "helpers/createOxygenAnalysisWindows.m",
+        "sha256_at_planning": "f13a08d072bb8ced8be24a600cb170954fa54b5a2b7224b64651c7d6a074329e"
+      },
+      {
+        "path": "helpers/createOxygenBaselineContrasts.m",
+        "sha256_at_planning": "3023b66ae6b1e299b5e70fac608a1f4acda0df5288375d5d19a96b0589307b5c"
+      },
+      {
+        "path": "helpers/createOxygenMasterOutputData.m",
+        "sha256_at_planning": "bae3665712b73333a3f5924b28e1a2a0e90b1a5d68bcc910f9fce22adb0d0834"
+      },
+      {
+        "path": "helpers/createOxygenMasterParams.m",
+        "sha256_at_planning": "ab94aca9b3bbd56488af7a8210b112c762d2ad3613a751ac689a97f56d2b3099"
+      },
+      {
+        "path": "helpers/createOxygenMeasurementQC.m",
+        "sha256_at_planning": "c25f99c2d48f81f868cd79d785ef10255ce4004b67104bdccb5ff55c2177b326"
+      },
+      {
+        "path": "helpers/createOxygenOutputFolders.m",
+        "sha256_at_planning": "3948d7cc0a1cf695221e2a4288d8254ace9bbeaf72504b3874c1502891e36ce0"
+      },
+      {
+        "path": "helpers/createOxygenRegressionCodeManifest.m",
+        "sha256_at_planning": "1d62950dcf077f4dd1be44cb5bed2eb898a39170ccabbefde905505ed598d081"
+      },
+      {
+        "path": "helpers/createOxygenRegressionFileManifest.m",
+        "sha256_at_planning": "15ee7c1e8b40ad3a59aaac3f564ec14d37cf7ea3e4a8f6869de9e34a690e3df0"
+      },
+      {
+        "path": "helpers/createOxygenSinkEventTable.m",
+        "sha256_at_planning": "cf9931447fb9f08b1b23a720a222a03fd3e06c827be74ad1dc31e4b5f9d26f39"
+      },
+      {
+        "path": "helpers/createOxygenSinkSummaryTable.m",
+        "sha256_at_planning": "fa3cd1bc2a2709dc2fd8857104bd034f5897d6842fa9b1519678dda05a614d4c"
+      },
+      {
+        "path": "helpers/createOxygenSurgeEventTable.m",
+        "sha256_at_planning": "1479fdb63512754398ca1895ac6bb4446964e904c42c084cb9028a1f504c0407"
+      },
+      {
+        "path": "helpers/createOxygenSurgeSummaryTable.m",
+        "sha256_at_planning": "a1e90a7f56bfdd33c1d2a07310871705cf24e6e16deb8bd1de5ac6562c15a1f9"
+      },
+      {
+        "path": "helpers/createOxygenWindowContrasts.m",
+        "sha256_at_planning": "8f3606ced89a2158b207958c2237cd1e72e9b2d3cacd77bf8128650bc68b19e7"
+      },
+      {
+        "path": "helpers/createPaddedTraceExportTable.m",
+        "sha256_at_planning": "682d59c6471829839d2d5ef8e7c11d8f8097480004bd81a5e7340feefd8ba623"
+      },
+      {
+        "path": "helpers/createRecordingMetadata.m",
+        "sha256_at_planning": "5d927c94ff823543d0ef402f273283f04a0a4c6f0e8dc395c9ddad97e1b34734"
+      },
+      {
+        "path": "helpers/createStatsAnalysisFilters.m",
+        "sha256_at_planning": "f974367e5472d54ee1c24d54ce2c046c79aec10a9baa9e1759c9bc926d8a7c7f"
+      },
+      {
+        "path": "helpers/createStatsBLIData.m",
+        "sha256_at_planning": "e18d0f34ed0af432af8e5c185d5f3349b841fc9abe51b38b6b5af2fcf69c2061"
+      },
+      {
+        "path": "helpers/createStatsBLIWorkbookData.m",
+        "sha256_at_planning": "bbfe2ff91040b3ed2590e75a40b01e197aba5e23cf62e2f19f4d277ca89fce3f"
+      },
+      {
+        "path": "helpers/createStatsBehaviourInputs.m",
+        "sha256_at_planning": "8e4ddccd9591f3acf7a37bbcc1f9212d8dd1cfeb20243bb0131fb11bd1bf8ae8"
+      },
+      {
+        "path": "helpers/createStatsBehaviourPercentileBins.m",
+        "sha256_at_planning": "67b1a40320f56bd650589b5835877a110f79d03525085b219a3f0aaa78430bd1"
+      },
+      {
+        "path": "helpers/createStatsBinnedTraceExports.m",
+        "sha256_at_planning": "10bf23e99a14da12c5a3dd6ea0a9c79a44957f59b3969120f272086011afe9b6"
+      },
+      {
+        "path": "helpers/createStatsCoreData.m",
+        "sha256_at_planning": "77b32060cb207addd4288c62337eff2f6afe2d2b17b6364e0e567302c624dcec"
+      },
+      {
+        "path": "helpers/createStatsDataOutput.m",
+        "sha256_at_planning": "2e6e932b43568972b66d1ace1106af19813fbca73d3692104aedf56391c58a37"
+      },
+      {
+        "path": "helpers/createStatsEventSnippetExports.m",
+        "sha256_at_planning": "b0e693e1f11db093a69a2896c92e25b4e0465ae29bafb373418fc7dd85b3ab74"
+      },
+      {
+        "path": "helpers/createStatsExcelOutputPath.m",
+        "sha256_at_planning": "ed584148a7342f5d6a88e865c61bcc584dafd6f3a6fc96ad20cbec3d7639575d"
+      },
+      {
+        "path": "helpers/createStatsGroupFilters.m",
+        "sha256_at_planning": "fba8f69b7bffbc37f824a3ffaf22af0e3d39a22a0e95282130d031b9c71a7c97"
+      },
+      {
+        "path": "helpers/createStatsLoadedRecordingData.m",
+        "sha256_at_planning": "b694f56a43c4042f6908de899d52c2e6f8fd1cc9bd253df57e456501c06fb99a"
+      },
+      {
+        "path": "helpers/createStatsMetadataCellRow.m",
+        "sha256_at_planning": "99189bd25061cacef58a5a9f477161f8ff46f583413f0096a5e246ae79543d10"
+      },
+      {
+        "path": "helpers/createStatsMetricExportTables.m",
+        "sha256_at_planning": "0dee06c39b8f1eabf234eef719c827a7d28d23322e6301af7d016c619dd71fec"
+      },
+      {
+        "path": "helpers/createStatsMetricWorkbookData.m",
+        "sha256_at_planning": "115a20c1ae87d34ee803086bebb87413a27e72e09c7526a07bbb7e441b1d5cf6"
+      },
+      {
+        "path": "helpers/createStatsOutputFolders.m",
+        "sha256_at_planning": "b799613f14e400da67a5e4e1d92dd7dda364cf23420604f4866467cf05c5678f"
+      },
+      {
+        "path": "helpers/createStatsPooledPuffTraces.m",
+        "sha256_at_planning": "0dfd6275973e137431e05530c0b2c8785471a64f5c2c73bfaacc80b2f5a0773b"
+      },
+      {
+        "path": "helpers/createStatsRecordingInput.m",
+        "sha256_at_planning": "954708671847827650b4cf10836fd8e64c1681eedb9d8f54032106ba5b0a8b86"
+      },
+      {
+        "path": "helpers/createStatsRecordingMetadata.m",
+        "sha256_at_planning": "45ba43c711a14377c3b880f9eb924fef6a2702aca902b33b4602a9b63ff3e10b"
+      },
+      {
+        "path": "helpers/createStatsRecordingSourceInfo.m",
+        "sha256_at_planning": "57a9970ab670e28996a14ea98478f2067f32e2d4a8f22116e3474f19657d8a41"
+      },
+      {
+        "path": "helpers/createStatsTraceExports.m",
+        "sha256_at_planning": "720024d0f953c4c4be4bb923e9ecad14a2efe6625518998531b1699696c25140"
+      },
+      {
+        "path": "helpers/createStatsWorkbookOptions.m",
+        "sha256_at_planning": "4c79e12337ebab59d47d0b2a0aa23dd2a590fdc0e0a8473f6546f56a291a03c9"
+      },
+      {
+        "path": "helpers/createSurgeContactReview.m",
+        "sha256_at_planning": "0d4344c5924269a9ac2c807b0184c3de7243b66b7a4e5382cf7c1b5c13ba6ba3"
+      },
+      {
+        "path": "helpers/createSurgeGapReview.m",
+        "sha256_at_planning": "413f329c0b0f29d2eaa8c247f7f5254dd555ce2ab71793f935cf12e647d1b154"
+      },
+      {
+        "path": "helpers/createTraceCorrelationExportTable.m",
+        "sha256_at_planning": "473b56ecd44bf1647aacbce9377db872917ff3dc7af3edd1416474074e5f702b"
+      },
+      {
+        "path": "helpers/createWindowedEventMask.m",
+        "sha256_at_planning": "2365bcf5149ba4ad1415ff45a83b9b874912db616d9d3bd812b2fb45560a0835"
+      },
+      {
+        "path": "helpers/createWrapperFinalizeOptions.m",
+        "sha256_at_planning": "83e50edcb36d0d2f19f5234d2a2fb975f85a2aa2a366c9114772e3ce15dd1c0c"
+      },
+      {
+        "path": "helpers/createWrapperRunInfo.m",
+        "sha256_at_planning": "9f4ba75404b1b2168a36cdbadc96748f2c78d61dda0d9dba4d4434cdfcd9a0f4"
+      },
+      {
+        "path": "helpers/createiOSMasterOutputData.m",
+        "sha256_at_planning": "e475a027b2c6849f9cfac854e068b7298960e43df39501151bf5462053f7a728"
+      },
+      {
+        "path": "helpers/createiOSMasterParams.m",
+        "sha256_at_planning": "c9ab4a8f27640c73f384aca6897c9cb4cccefdf7d1917498cb7ddc4d69daf45d"
+      },
+      {
+        "path": "helpers/currentLegacyMetadata.m",
+        "sha256_at_planning": "9fcf3dca91c97d42a8efea8ecff3d979719133f9c5e4b40aed32770460f0b625"
+      },
+      {
+        "path": "helpers/detectFrameRegionCandidates.m",
+        "sha256_at_planning": "aef5a2fb64085396d461a64fb088b4be19fa9a25ad854666f3966e2207f4847b"
+      },
+      {
+        "path": "helpers/detrendOxygenStack.m",
+        "sha256_at_planning": "d513a16e9921742263586a6fa4503ea554e3adfa3b8940bd2ca25cdbeb442ee4"
+      },
+      {
+        "path": "helpers/detrend_custom.m",
+        "sha256_at_planning": "89f72375288dfc1698f131871bc116ecb5e3e5b045d904cb4981735ce883988c"
+      },
+      {
+        "path": "helpers/ensureStatsEventPuffStim.m",
+        "sha256_at_planning": "fed1093afe00997689f8d5a7228d5ba7cab7fab0e778c9a64bc77d823f34931b"
+      },
+      {
+        "path": "helpers/exportBOIEventReview.m",
+        "sha256_at_planning": "008353117032751042ec68ca168a493cc11939b1b2442a066ef50d9abc0ef94b"
+      },
+      {
+        "path": "helpers/exportBOITemporalContext.m",
+        "sha256_at_planning": "f29677a08f9f3a3057e47490b2cb5e0d92bcad0a5c1ceda022f61d12534f97a8"
+      },
+      {
+        "path": "helpers/exportBOIWindowReview.m",
+        "sha256_at_planning": "ce04263f737f34079f0a4ea7f1785c33753bc2236f6f38c9be2eac178459df08"
+      },
+      {
+        "path": "helpers/exportHypoxicEventSpecificMetrics.m",
+        "sha256_at_planning": "4415662f0bb73a3209d82ec6a106aa2ef84b563a4efe9c78e3604040c058e94c"
+      },
+      {
+        "path": "helpers/exportStatsResults.m",
+        "sha256_at_planning": "5a046835053a095e7ac8c477e5a714eec129e6970fec0c7adef2b05180b799ae"
+      },
+      {
+        "path": "helpers/extractBehaviourEventMeanTraceSnips.m",
+        "sha256_at_planning": "9b30741fb2c92f15a86983ed552886cc2cb1dbbcb96e8a5d73eb8b838611ad95"
+      },
+      {
+        "path": "helpers/extractCenteredTraceWindow.m",
+        "sha256_at_planning": "147819415b5fa4416e668f69de173a12823278fba9ff15295d036cc98430e866"
+      },
+      {
+        "path": "helpers/extractManualEventMeanTraceSnips.m",
+        "sha256_at_planning": "2affb60a290136d1e6504e9d33b4add3f0a66cc5b7954c28b863e72bc82eed58"
+      },
+      {
+        "path": "helpers/extractOxygenRegressionMetrics.m",
+        "sha256_at_planning": "409a44086fbae7a08c2130d16c025812a3e5eef1c4b92d79acf8f3aa7b1539c8"
+      },
+      {
+        "path": "helpers/extractPuffAlignedTraceRows.m",
+        "sha256_at_planning": "ddf44165937f00228d098063913399a25c0ddfa8e9b04be1f7c492a329d9cd4a"
+      },
+      {
+        "path": "helpers/extractSinkTraces.m",
+        "sha256_at_planning": "5c980dc8781e3ae088aced309c6851c4794b313c1b7c3c781a961bbbb396978e"
+      },
+      {
+        "path": "helpers/extractSpatialBinTraces.m",
+        "sha256_at_planning": "1b84a7b548555bf75a1d751d1d8ba6de90a540b7279fde10de4f85ac4989d9c8"
+      },
+      {
+        "path": "helpers/extractStatsBLIEventSnippets.m",
+        "sha256_at_planning": "5bb2dde3c4b33d8696fee00a44509216ce80907899e96c9a700b8841b333f488"
+      },
+      {
+        "path": "helpers/extractStatsBehaviourEventSnips.m",
+        "sha256_at_planning": "18bb5cc17abd68a06fcb07f5df64b1189e515b6f0b3beea54457dfece5fa3ead"
+      },
+      {
+        "path": "helpers/extractSurgeTraces.m",
+        "sha256_at_planning": "bba62295d18fc058cb62500dfaaaf5cdc556ddc16495f3e8107aded2e51384ba"
+      },
+      {
+        "path": "helpers/fileSha256.m",
+        "sha256_at_planning": "1f1baf9efb427ab00b5403ee87a857812c222e09788ff998d97459ed43184024"
+      },
+      {
+        "path": "helpers/filterRegionCandidates.m",
+        "sha256_at_planning": "849fca2c6a7100c42eefe321b95edf4dda0742eb7f23f9d523c0965ccd402811"
+      },
+      {
+        "path": "helpers/filterSinkRunsByDuration.m",
+        "sha256_at_planning": "8f6c465e1c4047bb7e8203d8a824cf4bcb203e4b4c50986f02563f96f69e1d72"
+      },
+      {
+        "path": "helpers/filterStatsMetricData.m",
+        "sha256_at_planning": "5c3860f6ac70185af75230f453d82e815dad6c53016811b093b8174143a0e336"
+      },
+      {
+        "path": "helpers/finalizeOxygenEventMeasurements.m",
+        "sha256_at_planning": "e274c48e8206de7533cc6fce59ff38236fb68f421cfcc25bc5767c6fa6d92634"
+      },
+      {
+        "path": "helpers/finalizeWrapperRun.m",
+        "sha256_at_planning": "2b2c79046e0cd0ae036f1c2c438492d7a75ed71744e1db37d2f335a22b8e5918"
+      },
+      {
+        "path": "helpers/findFilesMatchingName.m",
+        "sha256_at_planning": "66077d4476d84897a2d72f3ec5bc2580ff6f7668ba2a14fa5aa9cbfdac7b9f34"
+      },
+      {
+        "path": "helpers/findStatsSidecarFile.m",
+        "sha256_at_planning": "9a397923aa6db2e8eb5224fa93832464161bdb5ec0e52db2027c0806dd1ef064"
+      },
+      {
+        "path": "helpers/firstTiffName.m",
+        "sha256_at_planning": "7086134bcb7457f3914ef9e3ee1f1df940f82b762f6539b69c6c37f0840b47dd"
+      },
+      {
+        "path": "helpers/formatBOIWorkflowPreflight.m",
+        "sha256_at_planning": "ab1ee7cd6af5699257a14fef7c6da274687f5e4b9d502fd0d05b9dbbcaac901e"
+      },
+      {
+        "path": "helpers/formatPooledTracesForExport.m",
+        "sha256_at_planning": "1338ac9e53b4db4e8ef8ad055a6a84a0254d6aa37f225c38e70efdc42ae893c3"
+      },
+      {
+        "path": "helpers/formatRegressionTimestamp.m",
+        "sha256_at_planning": "aa88db81a18fed11c39dd2e75b1f225f0a1d2ff11763f8662f3f572316abaf4b"
+      },
+      {
+        "path": "helpers/getBOIBoundaryReview.m",
+        "sha256_at_planning": "b970efa787960b0cfc9cb8f6e59c6b6e7df5716d3267798ae65a6cf06c950988"
+      },
+      {
+        "path": "helpers/getBOIMeasurementDictionary.m",
+        "sha256_at_planning": "c24553aedcc03e804d12031b71d557cb5673974d31e00a8bea642222e74ff1da"
+      },
+      {
+        "path": "helpers/getBOIReviewedOpticalDefinition.m",
+        "sha256_at_planning": "677bec50e089d17b6ff168f8d6c04945a0c5c2a75ad8fbececc9b9746f474e5b"
+      },
+      {
+        "path": "helpers/getBOISupportProfile.m",
+        "sha256_at_planning": "14a716c2b0a3ebe31d737ec4e5ace7006f3059aa271b08a3dc60e26fd7da336e"
+      },
+      {
+        "path": "helpers/getWrapperEmailDestination.m",
+        "sha256_at_planning": "696f52df8429687d835ce5249fd222601b5b87a75b5a5e03c7c70a6cd500c36c"
+      },
+      {
+        "path": "helpers/getlatestfile.m",
+        "sha256_at_planning": "5f3a8ec4637f886f07819c6fcbaa8660ec5fe44420d1e8ea216957df963091d4"
+      },
+      {
+        "path": "helpers/groupSurgeRunsIntoSites.m",
+        "sha256_at_planning": "7a6ef6f0c04a89dc0289dbdc37014af9e3bd6de3efb567bbaf6dd1740ed27093"
+      },
+      {
+        "path": "helpers/handleWrapperFailure.m",
+        "sha256_at_planning": "26e357c640fb523b5e2ad74f5b8fea638aad46b650b1b653fa0c713b8bf5f761"
+      },
+      {
+        "path": "helpers/hasStatsBehaviourInputs.m",
+        "sha256_at_planning": "4695a02d868f722b02c4de6d2d0dad91f4a29327bd55506def80d810e6b0b908"
+      },
+      {
+        "path": "helpers/hex2rgb.m",
+        "sha256_at_planning": "94cd90396243d6d041c7726cd5edc0a9e22470845fcde0608c789f5633de3f44"
+      },
+      {
+        "path": "helpers/inferHypoxiaAmyloidAge.m",
+        "sha256_at_planning": "06bc30b32cbf87dbd0d59c31fcebb18281e8b3103b9ef35129ed3bfd1e20abf2"
+      },
+      {
+        "path": "helpers/initializeEventMetricCells.m",
+        "sha256_at_planning": "223e4ae63bde401a52f4760a47cc06d325003327f96341368ec309cb27f81612"
+      },
+      {
+        "path": "helpers/initializeOxygenSinkEventVectors.m",
+        "sha256_at_planning": "10be9f795ce0ea3bd09ed28f34aa54c527064e98136de58b8d4f9b2459e8866b"
+      },
+      {
+        "path": "helpers/initializeOxygenSurgeEventVectors.m",
+        "sha256_at_planning": "a1a5bfdcc4cc8b19add958368e1aa514550a1438539b62782d0fac2e8d1338b3"
+      },
+      {
+        "path": "helpers/initializeStatsRecordingCells.m",
+        "sha256_at_planning": "cdf48ad2d3eeb77e8bbbb1e2d8937cd3714c511a5fbe940ff42436489502f1f1"
+      },
+      {
+        "path": "helpers/inspectOxygenTiffs.m",
+        "sha256_at_planning": "75c4f01b295d51e65685db3b72d2060f1923f9ca72e01de65eaecb7ccc1ff4cf"
+      },
+      {
+        "path": "helpers/isOptionalMetadataValueConfigured.m",
+        "sha256_at_planning": "8b6d1d7409c8c040102fcf690d5f6728a7eb1535c789c5258b69b6bf09b3a018"
+      },
+      {
+        "path": "helpers/isRemovedRegion.m",
+        "sha256_at_planning": "eb23632c9e5da0f01820c599097b9be07ac94574dd4f21054e1d331f3a1a41b5"
+      },
+      {
+        "path": "helpers/isStatsOptionalInputConfigured.m",
+        "sha256_at_planning": "4e3a2f19c8e13fdbc9e084de60a2a18aa42bf640a73f2ca0e939a4b258da3e71"
+      },
+      {
+        "path": "helpers/labelLogicalRuns.m",
+        "sha256_at_planning": "29ae5184ce51c9678850f7c1fcc433955a5c66aeb79b01b5f064e51d602a639d"
+      },
+      {
+        "path": "helpers/linkBOIWindowEventReview.m",
+        "sha256_at_planning": "006040f4de0837e6e36acf66fbc22c2bb2f2fd9cd2005b364b8b5a8dcd9f9496"
+      },
+      {
+        "path": "helpers/loadBOIBoundaryReview.m",
+        "sha256_at_planning": "2682e7f3ef0398f840ca0c04e7415acaaff3e3603cf4b90618252125c2ad2fd9"
+      },
+      {
+        "path": "helpers/loadBOIEventReview.m",
+        "sha256_at_planning": "12b173a959b6f5608cc025bfbff78528878a465e8d9a8f60c8cb25db89c37bbf"
+      },
+      {
+        "path": "helpers/loadBOIReferenceJudgments.m",
+        "sha256_at_planning": "4eb1c677f7c92f9bdcb11b54742828f7be6642d97d45f18d3f26ccc3da665f58"
+      },
+      {
+        "path": "helpers/loadBOITemporalReview.m",
+        "sha256_at_planning": "31318c9cf1a8d7a11b2e9687949fa2c1ec8f332f6a7cbe1aef904116fe691d29"
+      },
+      {
+        "path": "helpers/loadBOIWindowReview.m",
+        "sha256_at_planning": "2418bc760d956bd93e62d487c4a39485990c8320c304bb852d66362c7156044e"
+      },
+      {
+        "path": "helpers/loadOptionalMatVar.m",
+        "sha256_at_planning": "f4b036cb0468c5d74bd41fde3bd19f8919a1c69d2628728e268d712a060c4bc8"
+      },
+      {
+        "path": "helpers/loadOxygenMasterInputs.m",
+        "sha256_at_planning": "71ccee0f2e5611de27b3af38767a1b8bcf9256be5b9f796558f272683f5a593a"
+      },
+      {
+        "path": "helpers/loadOxygenStacks.m",
+        "sha256_at_planning": "0917a7ba096cc359e5ab01098763d00edb8554de20f6dce3ba76716795b7f119"
+      },
+      {
+        "path": "helpers/loadRawTiffStack.m",
+        "sha256_at_planning": "37952bd229d5065a784271e2b20b2b056d80d6d8ddc6626aef20ed56e6e1f9ba"
+      },
+      {
+        "path": "helpers/loadRequiredMatVar.m",
+        "sha256_at_planning": "a5acce213bf6c5fcd89eeb5a78a4a791ab332e5773e15ff95664b4777fe8b44f"
+      },
+      {
+        "path": "helpers/loadStatsBehaviourMatRow.m",
+        "sha256_at_planning": "ab3a2ff462fe9c0d7972bf8a6a4b0910aaad89138125902e31be69aa47af3848"
+      },
+      {
+        "path": "helpers/loadStatsBehaviourRow.m",
+        "sha256_at_planning": "f36354115559581b4dfd36aa30b67fa97ac6928a4761b114d6eb3876089aafd1"
+      },
+      {
+        "path": "helpers/loadStatsMatVars.m",
+        "sha256_at_planning": "015ace83292d1899e13d517a01036849727e60c16c391c91b4bb9c662772a3b2"
+      },
+      {
+        "path": "helpers/loadStatsROITraceRow.m",
+        "sha256_at_planning": "6b6d3e4e861e4dd61de66a330b86352d9fc0d05270fcfa8a7d570c2498addbc2"
+      },
+      {
+        "path": "helpers/loadStatsRecordingIntoCells.m",
+        "sha256_at_planning": "185abb3bf076bc603a409218dce660b87ad555ef8c5df5767cb1f891fc01cf99"
+      },
+      {
+        "path": "helpers/loadStatsSinkArrayRows.m",
+        "sha256_at_planning": "ee8848a60ed46a7e22117ef39ebaeaa53c6377d39c2f8f926cf20502a4573454"
+      },
+      {
+        "path": "helpers/loadStatsSinkRecordingData.m",
+        "sha256_at_planning": "b7671f85cd06571ecfe33532f83e5eef2ba257ba99a956f1e50d5ad4e913b912"
+      },
+      {
+        "path": "helpers/loadStatsSurgeArrayRows.m",
+        "sha256_at_planning": "63b2676797ca1451169eefeb0f85c01cf99ec09f649133c5a384d40eb0b75b9e"
+      },
+      {
+        "path": "helpers/loadStatsSurgeRecordingData.m",
+        "sha256_at_planning": "3a7d1aaec2e992e241f295c5aebd3879443908727681785a16afe4c1e826d491"
+      },
+      {
+        "path": "helpers/loadStatsWhiskingRow.m",
+        "sha256_at_planning": "68ac4bfe746af83332901962883472d8be03dc9bd70cc525bbc7d2d3a0702728"
+      },
+      {
+        "path": "helpers/loadVascularAnnotationMasks.m",
+        "sha256_at_planning": "0709c0d1256a0457ca91cb29487a47f130bd2cb0b02a482bfc35f947c12c2206"
+      },
+      {
+        "path": "helpers/loadiOSMasterInputs.m",
+        "sha256_at_planning": "7d3b74a716ec496c8668bfe3a9e6eb7dfdc224be7fa6483c78e73d54c6815353"
+      },
+      {
+        "path": "helpers/makeFullRecordingPath.m",
+        "sha256_at_planning": "ea2317e7c930a654df78bfa65aaa91cdac7bcf2f688bfad492850d869a28ed75"
+      },
+      {
+        "path": "helpers/makeValidExcelSheetName.m",
+        "sha256_at_planning": "0451d910132043de49c0637e1661e9ec8f65a008ddff49509a053573a0216f52"
+      },
+      {
+        "path": "helpers/mergeStructs.m",
+        "sha256_at_planning": "50c4b63516202aa113ff371cc9bb33c27842afbe996027036231cf05fdcf603c"
+      },
+      {
+        "path": "helpers/mkdirIfMissing.m",
+        "sha256_at_planning": "960dc2e41be25e996266ea6d184b00c2e894179f50a04b523ea9d7e864b2968e"
+      },
+      {
+        "path": "helpers/movingAverageShrink.m",
+        "sha256_at_planning": "69ff45d0e15c4607fc65262eaf7f3afd754103aa92c86a56f25bb955a3646c26"
+      },
+      {
+        "path": "helpers/normalizeToDfof.m",
+        "sha256_at_planning": "4de662b097b579e96e046bfd21e43cfc0d0cc8099f3298c36a6112a113147dc5"
+      },
+      {
+        "path": "helpers/normalizeToZStat.m",
+        "sha256_at_planning": "c1aff46c9d8019ceb62c8f025512ac9cc895604c98f11de552f2dd77fa733888"
+      },
+      {
+        "path": "helpers/optionalWrapperInputColumn.m",
+        "sha256_at_planning": "1df115ee85590c227e909f1b0f5d283146e4b1f03907bd7a20d0be4794d4c05f"
+      },
+      {
+        "path": "helpers/oxygenEventJoinKeys.m",
+        "sha256_at_planning": "ed4a05b27f8a569ec65fe390bf9b5a6414dbae506c3ee8de5c678bf02cde9840"
+      },
+      {
+        "path": "helpers/oxygenFileSHA256.m",
+        "sha256_at_planning": "de986886495ac40b6366fa520d38f42454320bd1b9430c2f4deca683b07af6ad"
+      },
+      {
+        "path": "helpers/oxygenPipelineContract.m",
+        "sha256_at_planning": "a5c394424dab3b5024f7aae162a489722b4ab35c6a00854ae8d9c36fee3bc299"
+      },
+      {
+        "path": "helpers/parseNumericList.m",
+        "sha256_at_planning": "72188f6447a1f7d31ad39018229460f8ee07dc8c286a6fce4e92a36bc8260d9f"
+      },
+      {
+        "path": "helpers/peakfinder.m",
+        "sha256_at_planning": "057926694660d24a9467ce96aa53e8d510f1de9fab4457db87077ad9e8c64f94"
+      },
+      {
+        "path": "helpers/plotOxygenEventAudit.m",
+        "sha256_at_planning": "f4ddabfdbd998906ed594ab08e5f7d74c16e54b342ad50194acc8ec008093e2f"
+      },
+      {
+        "path": "helpers/plot_areaerrorbar.m",
+        "sha256_at_planning": "a30ff1f359c26ddcd69713aeccdc633fc2fdcc39eede01e1c1c5b92862ff17fc"
+      },
+      {
+        "path": "helpers/prepareStatsBLIExportData.m",
+        "sha256_at_planning": "cf473d7881af42269954b48faff2047a3f13f72bc1c0deb47aea2383b24bc13e"
+      },
+      {
+        "path": "helpers/prepareStatsBehaviourAnalysisData.m",
+        "sha256_at_planning": "4910fea3112659612fe2d6c929178441f539b756a1423051ba47b428b49e865e"
+      },
+      {
+        "path": "helpers/prepareStatsExportBundles.m",
+        "sha256_at_planning": "a898c8b984f99ad06ba3c58b1f8fff685059ca6b13d1627e6faad832cdf5b24e"
+      },
+      {
+        "path": "helpers/prepareStatsPooledTraceExports.m",
+        "sha256_at_planning": "3456546eff44553902f82db38058eb403e2eeee187f8324f64091a3c0224ef34"
+      },
+      {
+        "path": "helpers/prepareStatsROITraceFeatures.m",
+        "sha256_at_planning": "9f26fead3fcaa692bd8aa5a610478169e1ecb60d8fc8882f0a3d42f69e485baa"
+      },
+      {
+        "path": "helpers/prepareStatsSinkTables.m",
+        "sha256_at_planning": "24a2ca427bab88c3859d6d78b6959e21ae14aa6a8f64e7243271e93d02081ea6"
+      },
+      {
+        "path": "helpers/prepareStatsSurgeTables.m",
+        "sha256_at_planning": "566a1fc2446bdb362f934d7024443a22532e4a6dd81039e3f6e1bb6bcc7a2267"
+      },
+      {
+        "path": "helpers/prepareStatsTraceExportData.m",
+        "sha256_at_planning": "39b34209f06ba2c723ebb28d392267e3f8216f09b8e6df234cc5b1fe7ad6c320"
+      },
+      {
+        "path": "helpers/preprocessDetectionStack.m",
+        "sha256_at_planning": "93ee66a659167b055477c2a9962ef7ced263a2e0f0554bea47cc1c72961d301b"
+      },
+      {
+        "path": "helpers/printWrapperConfiguration.m",
+        "sha256_at_planning": "dddf31ae53eee9c64cd714499b987bb338e991aa50194485cbf466ee78b11515"
+      },
+      {
+        "path": "helpers/printWrapperRecordingStatus.m",
+        "sha256_at_planning": "a13570545d28cdfc3a0c6a009b5daa38d4d43674d92506560fdc9bd88e875eea"
+      },
+      {
+        "path": "helpers/prioritizeOxygenStatsPreviewRows.m",
+        "sha256_at_planning": "4c243cb86591aa5e7fb9db5c473011ee5a4013746a627b00715d6faeadb87fca"
+      },
+      {
+        "path": "helpers/quantifyOxygenSinkEvent.m",
+        "sha256_at_planning": "f213d5197d05076b4225dbc39fc0ee4e5c88c51b2c9e4a4b6cdbd41229afe131"
+      },
+      {
+        "path": "helpers/quantifyiOSSinkEvent.m",
+        "sha256_at_planning": "cf3570114a3f49cdae61f1cd6519d8fabfb1cf31775aa68e155eb7b93d5b9034"
+      },
+      {
+        "path": "helpers/quantifyiOSSurgeEvent.m",
+        "sha256_at_planning": "d0fabb030e6e421215512235c306f2c8363f576ce2e9196be90f2beeee5d78d1"
+      },
+      {
+        "path": "helpers/readBOIEventReviewFrame.m",
+        "sha256_at_planning": "fa6d0120fc0a02968748b48265e2fee282a1240a69cb06bbd6c84a6b0417abf2"
+      },
+      {
+        "path": "helpers/readInputTable.m",
+        "sha256_at_planning": "b2a09c5524c3af194c0566f7bcc41990001a89f70396cbddbb55ef95cf4706dd"
+      },
+      {
+        "path": "helpers/reconstructHypoxicEventFootprints.m",
+        "sha256_at_planning": "a762949bd457fca0b5d3d7de9c66217b703eea56cf09ede5facc0a0a9bf80f92"
+      },
+      {
+        "path": "helpers/refineSinkRegionsByTraceCorrelation.m",
+        "sha256_at_planning": "fffde2b9b312271f4f06651d3b2047d15acf40039ad59a8b2fe80664484f5c46"
+      },
+      {
+        "path": "helpers/refineTrackedSinkCandidates.m",
+        "sha256_at_planning": "5fd0939026811633cddf8f445311c30d0ac740b0007b9b8de7b4b5a59006502e"
+      },
+      {
+        "path": "helpers/refineTrackedSurgeCandidates.m",
+        "sha256_at_planning": "1f4a2ed83ba46d07c77c433cea475da3bcdae630a750205460af7a1f43a945da"
+      },
+      {
+        "path": "helpers/refreshStatsEventMetadata.m",
+        "sha256_at_planning": "fe04312ec6cdec9f80dda0fded21b1e6c0916c5fea23963cee8c877a2776b853"
+      },
+      {
+        "path": "helpers/removeShortLogicalEvents.m",
+        "sha256_at_planning": "cabad5a91611288529731cca129726c20d29df674adee85a8f8a70850db68b7b"
+      },
+      {
+        "path": "helpers/requiredWrapperInputColumns.m",
+        "sha256_at_planning": "2fc5bf8849415ef121b7297b522ea1a61eb0a95d0b2b2e67aa5099da5214b31a"
+      },
+      {
+        "path": "helpers/resolveBOIAcquisitionMetadata.m",
+        "sha256_at_planning": "ebaab32ac17a50d2bd1093f60a9d6e8b8927b122fa7b68933dc602d4f1770110"
+      },
+      {
+        "path": "helpers/resolveBOITissueSupport.m",
+        "sha256_at_planning": "05378e2971b2e0df7444dcc6d4ef5d5a2262c0e93bc4538001da17ecb9f48243"
+      },
+      {
+        "path": "helpers/resolveOptionalRecordingFile.m",
+        "sha256_at_planning": "d697e9f56208ba32dcd4cffa232e0b8e3813d811abb8a2ab0f36e1337613eacb"
+      },
+      {
+        "path": "helpers/resolveSinkEventTiming.m",
+        "sha256_at_planning": "692c82f1a9a347f8e6790cdcd71aad770561743f3f6c243ba6b62ca9b2c32bcf"
+      },
+      {
+        "path": "helpers/resolveWrapperRunChoices.m",
+        "sha256_at_planning": "f6c1d6fd0f11a63d6b02ba6982672162df733d1ba9f53af2e9dd1ce790addcd0"
+      },
+      {
+        "path": "helpers/runHypoxiaAmyloidCohortSummary.m",
+        "sha256_at_planning": "0d03ca16ac1f541e973657011188bac57baf9f696ce15bc99b5280da3926fb99"
+      },
+      {
+        "path": "helpers/runHypoxiaAmyloidRecordingAnalysis.m",
+        "sha256_at_planning": "eb0787d7616f6e01cf254abec16c45bb21b0b957a9c4887843f0800a95288411"
+      },
+      {
+        "path": "helpers/runLegacyAnalysisScript.m",
+        "sha256_at_planning": "232b664046c5f4f5d6a0c41864a22fefdcc4157420cd45d8af95d3ec13cd1f24"
+      },
+      {
+        "path": "helpers/runOxygenDynamicsBehaviour.m",
+        "sha256_at_planning": "dc3e4f9eefb923143ecfd057d140d409bd148a578f7771a304e24542b3a4a4d1"
+      },
+      {
+        "path": "helpers/runOxygenDynamicsMaster.m",
+        "sha256_at_planning": "eb41bd832d82c5b7518fd0aac11cf2f6105cd2d7dc85643e1a78f5514d82770e"
+      },
+      {
+        "path": "helpers/runOxygenDynamicsTiffout.m",
+        "sha256_at_planning": "0977843a767e27c3137c3f45fe45a7832486ebaa1b5d2f35936e53947d9e65ab"
+      },
+      {
+        "path": "helpers/runiOSDynamicsMaster.m",
+        "sha256_at_planning": "8efef238cbb25186481b1d5ff621f86d7c65c6087b18254e127568a189e4d2fe"
+      },
+      {
+        "path": "helpers/runiOSTiffout.m",
+        "sha256_at_planning": "d779b820bd0b9f273bbdb21c237898959a71e893d2e96013f37daf76a60d7557"
+      },
+      {
+        "path": "helpers/safeCellMean.m",
+        "sha256_at_planning": "55ffa4c548e7d8e74f90fdbd5c179946711a82b39bed41a40036107d4d2115b3"
+      },
+      {
+        "path": "helpers/safeCoeffVariation.m",
+        "sha256_at_planning": "977875357bfb61a436b9a1327178f7bb1ab1e153fc9c03a484a0d0902b687d28"
+      },
+      {
+        "path": "helpers/safeCorr.m",
+        "sha256_at_planning": "7a2c82d26abe6b2679ccf7f65e9a413d0d656c88f35e4d0c153419de40661466"
+      },
+      {
+        "path": "helpers/safeCorrMatrix.m",
+        "sha256_at_planning": "04b2e14f0894b8021c0dbc41a341e46182579076dc259a96b7fd6d5f3a5ff8aa"
+      },
+      {
+        "path": "helpers/safeMat2Gray.m",
+        "sha256_at_planning": "c3c51a80e38bede0a3c3cb02cb778749c2ef36214c24bcbd0cb0ed0fda1ce619"
+      },
+      {
+        "path": "helpers/safeShannonEntropy.m",
+        "sha256_at_planning": "1eac57a6312ff8b1dc2b720d7b79f7da75055af079e2a58daddf221c2bd0febc"
+      },
+      {
+        "path": "helpers/safeZScore.m",
+        "sha256_at_planning": "848c2285fb388ee6e845694701a7d8315a18f88d37fd6b459a274cb70bb480ab"
+      },
+      {
+        "path": "helpers/saveBOIBoundaryReview.m",
+        "sha256_at_planning": "e32f5bdccd3e993e5b90da49a5a09713f87e7ca7cf2b5e27f3bc14345e6c855f"
+      },
+      {
+        "path": "helpers/saveFailureLog.m",
+        "sha256_at_planning": "3e3a61476f8a16cad7633c6d00ebd5d5c03082feca5cef990fa0404243def920"
+      },
+      {
+        "path": "helpers/saveMasterImageStacks.m",
+        "sha256_at_planning": "cc6a2296a40cde1fe524746eabebf9cd415abfe16bc5b65e4b3acbeaa8f50140"
+      },
+      {
+        "path": "helpers/saveOxygenMasterOutputs.m",
+        "sha256_at_planning": "ce1d34ad2dc5a7afe1b19f3945eaf2214e3e0440c1cd69543d806eab6d845a4b"
+      },
+      {
+        "path": "helpers/saveOxygenTiffoutStacks.m",
+        "sha256_at_planning": "2b03e0177fc197488d2f6277bef3e0d2691a27a9a1b04db9934fb54203162590"
+      },
+      {
+        "path": "helpers/saveStatsCoreTables.m",
+        "sha256_at_planning": "cfde2c71e126c9b6363e18f5381536dcd2e31bbc6dd42c377e492be162103886"
+      },
+      {
+        "path": "helpers/saveStatsDataOutput.m",
+        "sha256_at_planning": "5c7b094ce2ba99af5d04ff259b27689ecfef48fc0947139d838e4860d236e0fd"
+      },
+      {
+        "path": "helpers/saveiOSMasterOutputs.m",
+        "sha256_at_planning": "aa1c8765cfe283db5125a1e40efaae423cf8d9c58f242ca3767be20fffe786d1"
+      },
+      {
+        "path": "helpers/saveiOSTiffoutStacks.m",
+        "sha256_at_planning": "3138b5613904f3b4872c013c949626d41875a765343f7ca6e41a844907d92368"
+      },
+      {
+        "path": "helpers/scaleStackToUint16.m",
+        "sha256_at_planning": "d5ca8473c14962b539f4ef5e1df0c3cd0f14bb8614b956ad49b9dc4b4a32b961"
+      },
+      {
+        "path": "helpers/scaleStackToUint8.m",
+        "sha256_at_planning": "bb5562b6dd9149a3f7ad7bd6672dfcc3d402645b20c41862cf772137cf8c3f45"
+      },
+      {
+        "path": "helpers/selectStatsBehaviourTimeWindows.m",
+        "sha256_at_planning": "a693095ee4f22b07e8a278fb138e54ccf6542724810778eba5286694fcee6166"
+      },
+      {
+        "path": "helpers/selectStatsMatFile.m",
+        "sha256_at_planning": "f781c56611027b703e04f147121e555aa4205075d710cfed05ad93916b140926"
+      },
+      {
+        "path": "helpers/selectStatsOutputFolder.m",
+        "sha256_at_planning": "56a2f9d8e9b4bfdc7ac453caf74dba88c47979138e9ad4ac2a742545f96cb472"
+      },
+      {
+        "path": "helpers/selectStatsSinkSummaryColumns.m",
+        "sha256_at_planning": "f3c4889c76662ed868f19e874da01528aec4178e7f7012406463d3bfcade4fc6"
+      },
+      {
+        "path": "helpers/selectStatsSurgeSummaryColumns.m",
+        "sha256_at_planning": "0966ed2107bc4409d48a7fc44643fff57d28737f7ab3fc1bab20ff9c1b143d6a"
+      },
+      {
+        "path": "helpers/sendolmail.m",
+        "sha256_at_planning": "053697c7cd80a057ab39ce980ba4b12ff1fbe71b08cf14d1b048da539dabaaf8"
+      },
+      {
+        "path": "helpers/setOxygenSinkEventVectorRow.m",
+        "sha256_at_planning": "2ae476d7e9f83d341d6e2cfb074d3040e431c9f6ec383e0fd07774cc9c7e8f47"
+      },
+      {
+        "path": "helpers/setOxygenSurgeEventVectorRow.m",
+        "sha256_at_planning": "785573237294cb19236ffc06461a5a38e8a4dc82326a5dd76f35ad7f7f8cf385"
+      },
+      {
+        "path": "helpers/shouldRunOutputStep.m",
+        "sha256_at_planning": "213b2d8233cd7e48dc9b551deae518f333ba2c60ce8a24c58d373b78e41e16fa"
+      },
+      {
+        "path": "helpers/statsLoadIssuesToTable.m",
+        "sha256_at_planning": "f924ee4f56469991aabbe754d9723afc7358a0121ca9cfeb3017e1c6e6b4b0eb"
+      },
+      {
+        "path": "helpers/statsLoadSummaryToTable.m",
+        "sha256_at_planning": "09544ee22d798fd75f368a2dc5469bd155b13501dd65a747c1f504a3333b9e69"
+      },
+      {
+        "path": "helpers/statsRecordingsToTable.m",
+        "sha256_at_planning": "ba5c33ea14ac215c966787c7bddd002e880ce16feffd962ad5c58e2446d30b07"
+      },
+      {
+        "path": "helpers/storeStatsSinkRecordingData.m",
+        "sha256_at_planning": "80221cb966e233b16d12e88c78a398f48da7a46a20cda1a1e1833c25e84ae025"
+      },
+      {
+        "path": "helpers/storeStatsSurgeRecordingData.m",
+        "sha256_at_planning": "67d122c119afc54197ae710cb44382f0339b88774ebb0043f4072e11fe3cd0d4"
+      },
+      {
+        "path": "helpers/summarizeHypoxiaAmyloidProperties.m",
+        "sha256_at_planning": "fed0b1f7bec1ae4e15a54e811d834cfa6741d81ab23e657046427944f8ddd340"
+      },
+      {
+        "path": "helpers/summarizeOxygenMouseMetrics.m",
+        "sha256_at_planning": "be5e4eaeaf8e0a314ec80abd7bbe791fb7040b9ac7de44381c09cb1f367550e5"
+      },
+      {
+        "path": "helpers/summarizeStatsGroupingLevels.m",
+        "sha256_at_planning": "dd086c789c8851d9074d786b7eb945b4386836bcc4c8da804399125744d47725"
+      },
+      {
+        "path": "helpers/surgeContactMetadataFields.m",
+        "sha256_at_planning": "842488e03928413422546e733e67f1baf6aa07738230e68eb4ba104bf40efff5"
+      },
+      {
+        "path": "helpers/textSha256.m",
+        "sha256_at_planning": "a27790deb214adf26990e08d68c4fd6dd24e7cead3a4695b83920e3fd2470e14"
+      },
+      {
+        "path": "helpers/trackSinkCandidates.m",
+        "sha256_at_planning": "6b832e503847baf5e8397eccbb650573f956bb5915fd231694f377ebb1eabdee"
+      },
+      {
+        "path": "helpers/trackSurgeCandidates.m",
+        "sha256_at_planning": "8c592aded6a75d99c0fe20b7d81c471065c361906abe5e9af0f71d90d8246f42"
+      },
+      {
+        "path": "helpers/trackiOSSurgeCandidates.m",
+        "sha256_at_planning": "b8b83c791bdaadd2891b3083ededa1a437eae03f155ce69f9d8116c3ee7a9a7e"
+      },
+      {
+        "path": "helpers/uniqueStrCell.m",
+        "sha256_at_planning": "3259aa2f9e2b340fd5a6f33f04e5ad25e6b7d547d0e4d09d390e80cdcbefc696"
+      },
+      {
+        "path": "helpers/unpackWrapperInputTable.m",
+        "sha256_at_planning": "44eace6bf5068d4b4e7bb8c623b4781b012b88c719c7dfa028c334331a67d366"
+      },
+      {
+        "path": "helpers/updateWrapperRecordingInfo.m",
+        "sha256_at_planning": "17bb0f24fc8548883fff93e3bcbb4c4a529b0ee0c25de83918c94c74ba67564c"
+      },
+      {
+        "path": "helpers/upgradeStatsAnalysisTables.m",
+        "sha256_at_planning": "ea4ae9f846bdd5ed9d80fff5f41f111405eb2b36673e184795b6ac2a18ac83c9"
+      },
+      {
+        "path": "helpers/validateBOIBoundaryAnnotation.m",
+        "sha256_at_planning": "a79d2513f4cdf698d1a35fa23f0fd56bb23bdcb83d25b9a3718d01878f586bbc"
+      },
+      {
+        "path": "helpers/validateBOIDetectionMask.m",
+        "sha256_at_planning": "fc3d08daabb41fbc148c7a172b54216008a74625817b43d208e027f8f2f5976f"
+      },
+      {
+        "path": "helpers/validateBOINativeMaskSource.m",
+        "sha256_at_planning": "a8486f866bb3efcc4e5bee2d0d31255d73f4ead06bbefc76f8bf1ff625256573"
+      },
+      {
+        "path": "helpers/validateBOINativeSupport.m",
+        "sha256_at_planning": "1efa7fb21dc9aa196800d74a4e689dcb9beddbb2f779306d8b0187b119c9bab0"
+      },
+      {
+        "path": "helpers/validateBOISavedDetectionSupport.m",
+        "sha256_at_planning": "b860a8d051816588ad13c496f3a0c42ed5e52deabf905424e476fea16aef4aea"
+      },
+      {
+        "path": "helpers/validateInputTableColumns.m",
+        "sha256_at_planning": "32a9c1dc75e760f60c8083052f8111b6dc468d2863087c9096249dd678721cac"
+      },
+      {
+        "path": "helpers/validateOxygenAnalysisCalibration.m",
+        "sha256_at_planning": "f07590e2a9359edc3884fa4f88eb91df9ce16eb6159f922b7519ece624a51382"
+      },
+      {
+        "path": "helpers/validateOxygenPipelineContract.m",
+        "sha256_at_planning": "d8deddf2db51e95bf498ba9074bdf1739fa72e5b44799533a5fe73a369ca6417"
+      },
+      {
+        "path": "helpers/validateOxygenRecording.m",
+        "sha256_at_planning": "839ae2edb1089b48340aa5feb1e99fae7db3486bf1e1f386d2a81f193f10d6f0"
+      },
+      {
+        "path": "helpers/validateOxygenSourceFiles.m",
+        "sha256_at_planning": "39c093ce16c814b56821ea4f4b9e8bce21fd9bec877353595d56f8473d81858f"
+      },
+      {
+        "path": "helpers/validateRecordingPaths.m",
+        "sha256_at_planning": "85249032aba8ed71af27e660b55e1ddc595cbbb19e6773cb34433ad5c3b43fe4"
+      },
+      {
+        "path": "helpers/vertcatCellTables.m",
+        "sha256_at_planning": "576466867d8a685c125f856e70274fc07d43733103c5243c739bf7ce12f489a7"
+      },
+      {
+        "path": "helpers/warnStatsLoadedDataIssues.m",
+        "sha256_at_planning": "4879365d80b6b26eaa29a87995c00c47a1695c4fdefc90c0a2a4d07c3b37c2d9"
+      },
+      {
+        "path": "helpers/writeAlignedSinkTraceSheets.m",
+        "sha256_at_planning": "59e8cb057a2e4b8b61794763ced9902f27ddbaf4f82dc6ef893ea50266d5f2d1"
+      },
+      {
+        "path": "helpers/writeBOIEventInspection.m",
+        "sha256_at_planning": "f3828c4909d616be6c5b3e9baa2b36dfda240d0fb16e38fe071bf6417f640d2c"
+      },
+      {
+        "path": "helpers/writeBOIMeasurementDictionary.m",
+        "sha256_at_planning": "03b27fc243764f768b8c720747b6c26ac9555cc0528a66986a052725c6a4deea"
+      },
+      {
+        "path": "helpers/writeBOIRecordingInputAudit.m",
+        "sha256_at_planning": "2983bbc1da544a25135b2447ead2c78a0446e06c919af32d63c2bc743c6d4be7"
+      },
+      {
+        "path": "helpers/writeBOIRunJSON.m",
+        "sha256_at_planning": "952801b8fe77637e6bbcf26d0038ccca4a57420746e78969633bc195e449d961"
+      },
+      {
+        "path": "helpers/writeHypoxicBurdenWorkbookSheets.m",
+        "sha256_at_planning": "b232d166034fdb1b93a60d2e6ba988d4e8166ca26606ba817d372340fa8f6047"
+      },
+      {
+        "path": "helpers/writeOptionalStatsSheets.m",
+        "sha256_at_planning": "b0edf6634588879c2641abfd889885e2ea02b114dbd0f7d7dbd944c7a9cdee8c"
+      },
+      {
+        "path": "helpers/writeStatsAcceptanceSheet.m",
+        "sha256_at_planning": "e753eca21979685fd7a4f3a2edec33673bed9710255c43bf09004cc85cb89a82"
+      },
+      {
+        "path": "helpers/writeStatsAnalysisWorkbookOutputs.m",
+        "sha256_at_planning": "db02c6d3e08c2498ed3af807b923037e868fb4db8826fdd704184d06a686b873"
+      },
+      {
+        "path": "helpers/writeStatsBinnedTraceSheets.m",
+        "sha256_at_planning": "29178510a2ace0b764b1f4e85255ca975971f2affdac702e298aa8587a203163"
+      },
+      {
+        "path": "helpers/writeStatsEventTables.m",
+        "sha256_at_planning": "11b48df90acbfd53b0f6244f3f7556c3341509d711e12f95665db287a68d18d5"
+      },
+      {
+        "path": "helpers/writeStatsGroupedTables.m",
+        "sha256_at_planning": "e6f290e218b1e1adb88bd8d3147bbd35f77aae7e2dc9a5c57ef78d3bbccb3086"
+      },
+      {
+        "path": "helpers/writeStatsMetricBasisSheet.m",
+        "sha256_at_planning": "8c86f33f809f97a70de1e585d0adef3ccfdf08e3c54c77dbbfd200f83dbefa0c"
+      },
+      {
+        "path": "helpers/writeStatsMetricDefinitionsSheet.m",
+        "sha256_at_planning": "9bd2e911a6b5ea3662018871bcf9c9164a4405435a95c21926eccbf933f14cc9"
+      },
+      {
+        "path": "helpers/writeStatsMetricSheets.m",
+        "sha256_at_planning": "d123508041a3cd07a1fae47f4a350d34bb9551331ca55b50a074e4bdf12b39b9"
+      },
+      {
+        "path": "helpers/writeStatsMetricWorkbookSheets.m",
+        "sha256_at_planning": "42924d8cf8827f7b65d21def8779696661ea2b1f0faa267918bc9af76a3acaa5"
+      },
+      {
+        "path": "helpers/writeStatsNormalizationGuideSheet.m",
+        "sha256_at_planning": "f30cb3990ac5e76ceb3da0d2510c7adb5be83654bb79b91004947f20a52cb939"
+      },
+      {
+        "path": "helpers/writeStatsPooledTraceSheets.m",
+        "sha256_at_planning": "4543af1fdd47eb6bcd60e53211fa4670f113d2160eb87460304c6b64a6193b8d"
+      },
+      {
+        "path": "helpers/writeStatsPuffTraceFigures.m",
+        "sha256_at_planning": "b6c6aefc9a86941e3dc51e94a4dc46e27b000da3434332017ad9c5ad08b0ae87"
+      },
+      {
+        "path": "helpers/writeStatsRunSummarySheets.m",
+        "sha256_at_planning": "5f16454f385b7b7fe9f9eec3925a00c7876d3247b67a8a3a79aae858aab58876"
+      },
+      {
+        "path": "helpers/xlscol.m",
+        "sha256_at_planning": "e9874f56d17e8a8c7e2a38f43017af267e0123f56a896c4c4d2edf22cca405d6"
+      }
+    ],
+    "required_external_matlab_files": [
+      {
+        "path": "external/abfload.m",
+        "sha256_at_planning": "91e6bbf7888f5a83e9dfb544ea36a3ac3076ca2cd8b18571c8e4a086a1102ea3"
+      },
+      {
+        "path": "external/loadtiff.m",
+        "sha256_at_planning": "c408d9e133a788b858424b781e66bb0d4d967d969b7e62544aeb1f8ebe38570e"
+      },
+      {
+        "path": "external/saveastiff.m",
+        "sha256_at_planning": "8d120dd1b86a881c105f4a9843f850d6e86a1069c8026c84ae5541b67f33d880"
+      }
+    ]
+  },
+  "existing_non_matlab_root_files_not_cleared_by_this_proposal": [
+    "README.md",
+    "USER_MANUAL.md",
+    "CITATION.cff",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md",
+    "RELEASING.md",
+    "SECURITY.md",
+    "THIRD_PARTY_NOTICES.md",
+    "Pipeline_FlowMap.svg",
+    "Detection_Processing_FlowMap.svg",
+    "Amplitude_Definition_Comparison.pdf",
+    "Science_vs_Current_Analysis_Differences_20260601.pdf",
+    "OxygenDynamics_Sinks_Curation.mlapp"
+  ],
+  "existing_optional_smoke_file": "runOxygenPipelineSmokeTest.m",
+  "exclusions": [
+    "raw recordings including .tif/.tiff/.abf/.nwb",
+    "saved result/data payloads including .mat/.csv/.xlsx",
+    "Data/**",
+    "Stats_Runs/**",
+    "Stats_Output*/**",
+    "QC_Output/**",
+    "Run_Logs/**",
+    "Verification_Reports/**",
+    "Regression_Baselines/**",
+    "Legacy_Archive/**",
+    "Release_Packages/**",
+    "docs/reference-results/**",
+    "../reference-validation/**",
+    "tests/**",
+    "tests/analysis/reviewHPCachedReferenceEvidence.py",
+    "*.local-sources.json",
+    ".git/**",
+    ".codex/**",
+    ".agents/**",
+    "unlisted files, symlinks and paths escaping the repository"
+  ],
+  "notes": [
+    "All source names are exact local filenames; no directory-wide include permission.",
+    "Current legacy non-BOI files are retained as existing package behavior, without reanalysis, validation or new support claims.",
+    "No tests or package built. Hashes describe planning inputs, not a verification pass.",
+    "README/help-link closure, uninspected document/app formats and licensing remain separate release gaps."
+  ]
+}

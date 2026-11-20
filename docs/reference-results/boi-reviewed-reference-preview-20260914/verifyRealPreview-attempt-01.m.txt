@@ -1,0 +1,49 @@
+function verifyRealPreview
+root='/Users/zcm361/Documents/Github/OxygenDynamicsV2';cd(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(root,'reference-validation/boi-reviewed-reference-preview-20260914');
+prior=fullfile(root,'reference-validation/boi-baseline-exclusion-review-20260914');inputs=jsondecode(fileread(fullfile(prior,'inputs.json')));
+src=inputs.Sources;R=loadBOIEventReview(src.Audit.Path);A=R.Audit;T=R.Traces;
+for key={'Audit','Review','SinkMaster','SurgeMaster'},s=src.(key{1});assert(strcmp(oxygenFileSHA256(s.Path),s.SHA256));end
+tic;R.BoundaryReview=loadBOIBoundaryReview(R,src.Review.Path);R=attachBOIReferenceSources(R,src.SinkMaster.Path,src.SurgeMaster.Path);attachSeconds=toc;
+expected=jsondecode(fileread(fullfile(root,'reference-validation/boi-reviewed-baseline-policy-20260914/proposal.json')));
+rows=[309 308 321 186];members=0;contributions=0;previews=cell(4,1);exports=cell(4,1);tic;
+for k=1:numel(rows)
+    row=rows(k);P=buildBOIReviewedReferencePreview(R,row);assert(strcmp(P.Status,'available'));
+    cases=expected.Cases([expected.Cases.AuditRow]==row);
+    for j=1:numel(cases)
+        c=cases(j);w=P.Windows([P.Windows.OnsetFrame]==c.OnsetFrame);
+        assert(isequal(w.CandidateFrames(:),c.CandidateFrames(:))&&w.OptionAEligibleCount==c.RecommendedOptionA.EligibleCount&&w.OptionBEligibleCount==c.AlternativeOptionB.EligibleCount);
+        assert(isequal(w.NativeExcludedFrames(:),c.NativeOverlapExcludedFrames(:)));
+        assert(isequal(w.OptionBAdditionalExcludedFrames(:),c.AlternativeOptionB.AdditionalExcludedFrames(:)));
+        assert(isequal(w.RecoveryFrames(:),c.RecoveryAlternativesFrames(:)));
+    end
+    F=P.Frames;assert(isequal(F.PreservedInputMean,double(R.Traces{row}.Raw(F.Frame))(:)));
+    previews{k}=P;members=members+height(P.Frames);contributions=contributions+height(P.Contributors);
+    folder=fullfile(out,sprintf('export-row-%d',row));receipt=exportBOIEventReview(R,row,folder);
+    assert(isequaln(receipt.SelectedEvent,table2struct(A(row,:))));
+    CSV=readtable(fullfile(folder,'ReviewedReferenceFrames.csv'));assert(isequal(CSV.Frame,F.Frame)&&isequal(CSV.OptionAEligible,F.OptionAEligible));
+    checks=jsondecode(fileread(fullfile(folder,'ArtifactChecksums.json')));
+    for f=1:numel(checks),assert(strcmp(oxygenFileSHA256(fullfile(folder,checks(f).Name)),checks(f).SHA256));end
+    exports{k}=struct('Row',row,'FilesVerified',numel(checks),'Schema',receipt.Schema);
+end
+assert(members==100&&contributions==26&&isequaln(R.Audit,A)&&isequaln(R.Traces,T));
+previewExportSeconds=toc;
+[fig,UI]=openBOIEventReview(src.Audit.Path);cleanup=onCleanup(@()delete(fig));fig.Position=[40 40 1400 1050];
+UI.LoadBoundaries(src.Review.Path);UI.AttachReferenceSources(src.SinkMaster.Path,src.SurgeMaster.Path);UI.Tabs.SelectedTab=UI.ReferenceTab;
+for row=[309 186 321 308]
+    UI.Select(row);assert(~isempty(UI.Reference.Data()));assert(strcmp(UI.Reference.Data().Status,'available'));
+    drawnow;exportapp(fig,fullfile(out,sprintf('preview-row-%d.png',row)));
+end
+UI.Select(186);assert(UI.Reference.Onset.Value==1153);
+UI.Reference.Onset.Value=1149;UI.Reference.Onset.ValueChangedFcn([],[]);assert(contains(UI.Reference.Summary.Text,'19 / 20'));
+UI.Reference.Contributors.CellSelectionCallback([],struct('Indices',[1 1]));UI.Reference.Open.ButtonPushedFcn([],[]);
+assert(UI.List.Selection==312&&UI.Tabs.SelectedTab==UI.TimingTab);
+for key={'Audit','Review','SinkMaster','SurgeMaster'},s=src.(key{1});assert(strcmp(oxygenFileSHA256(s.Path),s.SHA256));end
+result=struct('Status','passed','AllNativeEventsAssociated',R.ReferenceSources.EventCount,'CandidateMemberships',members, ...
+    'ContributorMemberships',contributions,'CurrentAnnotationsPreserved',4,'AuditRowsAndAllSavedTracesUnchanged',true, ...
+    'NativeAttachmentSeconds',attachSeconds,'PreviewAndFourExportsSeconds',previewExportSeconds,'GUIImages',4, ...
+    'PreferredOnset1153Retained',true,'AlternativeOnsetAndContributorNavigationPassed',true,'Exports',{exports}, ...
+    'NoReviewedBaselineMeanOrAmplitude',true,'PolicyAdopted',false);
+save(fullfile(out,'real-preview-evidence.mat'),'previews','result');
+fid=fopen(fullfile(out,'real-verification.json'),'w');c=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(result,'PrettyPrint',true));disp(result);
+end

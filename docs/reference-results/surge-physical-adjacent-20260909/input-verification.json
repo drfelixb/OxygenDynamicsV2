@@ -1,0 +1,9 @@
+{
+  "InputMoviesVerified": 20,
+  "PixelsVerified": 3276774370,
+  "SourceAndRecordedFractionsVerified": true,
+  "RoundingTieToleranceCounts": 1e-09,
+  "SavedMotionLedgerVerified": true,
+  "AnalyticMotionAndNoiseFreePulseVerified": true,
+  "NoiseRNGRegeneratedIndependently": false
+}

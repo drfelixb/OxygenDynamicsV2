@@ -1,0 +1,19 @@
+VERIFIED ADDITIONAL RAW TRACES ID13-20200917
+VERIFIED ADDITIONAL RAW TRACES FB2316-baseline
+VERIFIED UNSEEN M400-01-baseline-awake
+VERIFIED UNSEEN M401-01-baseline-awake
+VERIFIED UNSEEN FB2312-baseline-awake
+VERIFIED UNSEEN FB2411
+VERIFIED UNSEEN ID13-20200917
+VERIFIED UNSEEN FB2316-baseline
+VERIFIED UNSEEN flat
+{
+  "CachedSelectorRowsVerified": 5520,
+  "AdditionalRawSupportMeansVerified": 231600,
+  "AdditionalNativeUnionsVerified": 193,
+  "UnseenRowsVerified": 33372,
+  "ConstructibleCasesIncludingNoiseless": 10476,
+  "ComponentFitsIncludingControls": 21570,
+  "IndependentModelSelection": true,
+  "ProductionChanged": false
+}

@@ -1,3 +1,11 @@
+> **Start here for reviewed pocket measurements:** the [short guide](README.md)
+> explains the current workflow; [Understanding a reviewed pocket measurement](docs/POCKET_MEASUREMENTS.md)
+> explains the calculation, reference choice, units and exported results.
+> This full manual also covers older and optional tools. The saved reviewed
+> calculation uses matching corrected data with a raw reference denominator;
+> original automatic amplitudes retain their separate raw-signal definition.
+> For the scope of the earlier local package, see [package contents](PACKAGE_CONTENTS.md).
+
 # Oxygen Dynamics Pipeline User Manual
 
 This manual describes how to run the oxygen dynamics pipeline from a fresh MATLAB session, how to prepare input data, what outputs to expect, and how to diagnose common problems.
@@ -12,13 +20,21 @@ Main analyses:
 
 - Detect oxygen sinks and oxygen surges in TIFF recordings.
 - Use a denoised TIFF for event detection when available.
-- Always quantify signal amplitudes from the original/raw TIFF.
+- Quantify automatic event amplitudes from the original/raw TIFF.
+- Review a pocket using exact reference and episode frames, with its corrected
+  decrease and raw decrease shown separately.
 - Export recording-level, ROI-level, and event-level tables.
 - Optionally analyse behaviour traces.
 - Optionally compare raw and denoised outputs for QC.
 - Optionally compute vascular-distance metrics from artery/vein annotation masks.
 
-The denoised/raw split is important. Denoised recordings can improve event detection, but denoising or scaling can distort signal amplitudes. Therefore detection may use `denoised.tif`, while `NormOxySinkAmp`, raw sink traces, and related amplitude outputs are calculated from the original recording.
+The denoised/raw split is important. Denoised recordings can improve event
+detection, but denoising or scaling can distort signal amplitudes. Therefore
+detection may use `denoised.tif`, while automatic `NormOxySinkAmp`, raw sink
+traces and related automatic amplitude outputs use the original recording.
+The separate reviewed-pocket measurement compares the saved corrected trace
+with its corrected reference and divides by the raw reference intensity.
+Its raw companion and original automatic result remain separately identified.
 
 ## 2. Project Layout
 
@@ -72,11 +88,39 @@ To build a clean release copy without raw data or generated outputs, run:
 createOxygenReleasePackage
 ```
 
-The current pipeline release is `v1.01`, build
-`2026-06-15 09:50:08 +02:00`. Version metadata is maintained in
+The current development checkout is `v3.1.0-dev.8`, build
+`2026-10-15 12:58:02 +02:00`. The preserved ZIPs remain 3.1.0-dev.2;
+this interface delivery does not build a replacement ZIP. Version metadata is maintained in
 `getOxygenPipelineVersion.m`.
 
 This creates `Release_Packages/OxygenDynamics_Release_<timestamp>/`, a matching ZIP file, and `RELEASE_MANIFEST.txt`. The release contains the user-facing scripts, `helpers/`, `external/`, documentation, flow maps, and smoke test, but excludes `Data/`, stats outputs, QC outputs, run logs, verification reports, regression baselines, legacy archives, and previous release packages.
+
+## Current single-recording interface
+
+Follow [installation](INSTALLATION.md) to resolve the updated checkout rather than
+an older extracted copy. `openBOIRecordingWorkflow` provides **New analysis** and
+**Open saved run**. Detection support starts unselected: choose **Reviewed
+craniotomy ROI** only with matching saved tissue-boundary evidence, or **Legacy
+whole image** for the existing whole-image method. **Review settings** explains a
+missing choice and keeps Run disabled. Valid preflight plus explicit confirmation
+is required; changing the choice invalidates confirmation. Timing/calibration
+must be appropriate to the selected recording, not assumed from another example.
+
+After a completed run is selected, **Inspect event traces** and **Inspect recording
+results** read saved evidence. Their **Export selected evidence** and **Export
+selected window evidence** controls create new children under the chosen parent.
+A persistent full path under **Last completed export folder**, **Open folder** and
+**Copy path** make that destination accessible. Changing rows does not erase it.
+Cancellation/failure keeps the last completed destination, rather than offering
+an incomplete one. Reviewed revisions retain their separate save/reopen/export route.
+
+Felix completed and accepted one FB2311 recording in 293.60 s using 3.1.0-dev.2,
+then inspected/exported/reopened its sink results with matching counts and values.
+The [test record](docs/BOI_FB2311_MANUAL_TEST_RESULT.md) retains one event/three
+summary arithmetic checks and missing peak memory. This does not establish all
+recordings, reference/correction suitability, physiological event identity or
+anatomical tissue validity. Full Linux portable evidence and partial final macOS
+evidence remain distinct; see [support limits](DISTRIBUTION_STATUS.md).
 
 ## 3. Recording Folder Requirements
 
@@ -110,9 +154,20 @@ Vascular annotation rules:
 
 ## 4. Input CSV Format
 
-The wrapper, stats, and verification scripts use a metadata CSV.
+For the BOI batch preparation window, use `openBOIBatchEditor` or **Batch
+recordings** in the launcher. Enter a folder per row and confirm shared sampling
+rate, pixel calibration and detection support, with optional row overrides.
+The portable CSV resolves `Paths`, `SampleF`, `Pixelsize`, `BOISupportProfile`;
+subject/experimental labels and custom columns are optional. Review and confirm
+selected ready rows to run them sequentially with saved status/history. See the
+[batch editor guide](docs/BOI_BATCH_EDITOR.md) and
+[execution guide](docs/BOI_BATCH_EXECUTION.md).
 
-Required columns:
+The existing wrapper, stats and verification routes continue to use their
+legacy metadata CSV. The small editor CSV is consumed by the new preparation
+adapter and must not be passed directly to the legacy scripts.
+
+Legacy wrapper/verification required columns:
 
 ```text
 Paths
@@ -127,6 +182,10 @@ Promoter
 SampleF
 Pixelsize
 ```
+
+Direct legacy statistics additionally requires `WhiskingFile` and `Puff_2use`.
+Leave irrelevant behaviour values empty/NaN as appropriate for that route. The
+new BOI preparation adapter generates the verbose compatibility columns internally.
 
 Optional methoxy-X04 column:
 
@@ -982,3 +1041,27 @@ For first-pass figures after stats:
 ```matlab
 runOxygenSummaryFigures
 ```
+
+
+## Sequential BOI batch execution
+
+Use **Batch recordings** to check a CSV and select ready rows. Choose an output
+parent, review the queue and confirm before running. Held rows remain excluded;
+verified matching completed rows are skipped by default. Progress/history are
+saved, and failure or **Stop after current recording** prevents later dispatch.
+See the [batch execution guide](docs/BOI_BATCH_EXECUTION.md).
+
+After completion, choose **Stats / export…** to collect verified saved recordings
+through the existing multi-recording stats/export service. Review the included
+and excluded rows and fresh destination, confirm, then **Run stats / export**.
+The usual combined Excel/MAT event, metric and trace exports are available through
+**Open workbook** and **Open folder**. The recording/window inspector is optional.
+See [combined export](docs/BOI_BATCH_EXECUTION.md#collect-completed-recordings-for-postprocessing).
+
+
+## Pre-episode references in batch burden exports
+
+Local 3.1.0-dev.9 adds the approved recurrent-pocket reference to **Review combined export** and **Run stats / export** through the existing statistics workflow. It uses saved trace
+and native-mask evidence; no extra mandatory batch CSV fields or event-by-event
+review are required. See [reference and export columns](docs/BOI_PRE_EPISODE_BASELINE.md).
+Original automatic measurements and earlier output folders remain preserved.

@@ -1,0 +1,46 @@
+function preflightTemporalSpec
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;timer=tic;
+s=jsondecode(fileread(fullfile(here,'source-bindings.json')));keys=fieldnames(s);for k=1:numel(keys),x=s.(keys{k});assert(strcmp(oxygenFileSHA256(x.Path),x.SHA256));end
+P=jsondecode(fileread(fullfile(here,'comparison-spec.json')));assert(numel(P.Intervals)==14&&isequal(P.ContextSamplesPerSide(:)',[10 20]));
+R=loadBOIEventReview(s.Audit.Path);R.BoundaryReview=loadBOIBoundaryReview(R,s.Review.Path);R=attachBOIReferenceSources(R,s.SinkMaster.Path,s.SurgeMaster.Path);
+assert(R.AnalysisInfo.AnalysisParams.fs==1&&R.AnalysisInfo.NFrames==1200);
+prior=jsondecode(fileread(s.PriorContextIntervals.Path));Q=readtable(s.Queue.Path);data=cell(28,1);n=0;
+for i=1:numel(P.Intervals)
+ c=P.Intervals(i);a=c.StartFrame;b=c.EndFrame;row=c.AuditRow;z=R.Traces{row};y=z.DetectionDetrended(:);assert(numel(y)==1200&&a==fix(a)&&b==fix(b)&&a>=1&&a<=b&&b<=1200);
+ assert(strcmp(R.Audit.EventType(row),c.SavedSign));assert(Q.AuditRow(c.QueuePosition)==row);
+ if strcmp(c.Role,'saved_automatic_interval'),assert(isequal([a b],[R.Audit.StartFrame(row) R.Audit.EndFrame(row)]));
+ elseif strcmp(c.Role,'reviewed_interval'),B=getBOIBoundaryReview(R,row);assert(strcmp(B.Status,'recognized')&&ismember(a,B.Annotation.OnsetFrames)&&ismember(b,B.Annotation.RecoveryFrames));
+ else,matches=arrayfun(@(v)v.AuditRow==row&&v.Start==a&&v.End==b,prior.ContextIntervals);assert(nnz(matches)==1);end
+ foot=z.Footprint;
+ for W=P.ContextSamplesPerSide(:)'
+  pre=(max(1,a-W):a-1)';post=(b+1:min(1200,b+W))';preContact=contacts(pre,foot,R);postContact=contacts(post,foot,R);
+  n=n+1;data{n}=struct('IntervalID',c.ID,'Role',c.Role,'AuditRow',row,'StartFrame',a,'EndFrame',b,'ContextSamples',W, ...
+   'FootprintPixels',numel(foot),'IntervalFinite',all(isfinite(y(a:b))),'BeforeFrames',pre','AfterFrames',post', ...
+   'BeforeObserved',numel(pre),'AfterObserved',numel(post),'BeforeMissingAcquisition',W-numel(pre),'AfterMissingAcquisition',W-numel(post), ...
+   'BeforeNonfinite',sum(~isfinite(y(pre))),'AfterNonfinite',sum(~isfinite(y(post))), ...
+   'BeforeDescriptorAvailable',numel(pre)==W&&all(isfinite(y(pre))),'AfterDescriptorAvailable',numel(post)==W&&all(isfinite(y(post))), ...
+   'BeforeNativeContactFrames',pre(preContact)','AfterNativeContactFrames',post(postContact)', ...
+   'NativeContactRole','flag only; no reference accepted or samples removed');
+ end
+end
+assert(n==28);D=vertcat(data{:});writeJSON(fullfile(here,'interval-preflight.json'),D);
+for k=1:numel(keys),x=s.(keys{k});assert(strcmp(oxygenFileSHA256(x.Path),x.SHA256));end
+v=struct('Status','specification_source_membership_preflight_passed','IntervalRecords',14,'ContextRows',28,'AllNativeEventsAssociated',height(R.Audit), ...
+ 'RowsWithBothContextsComplete',sum([D.BeforeDescriptorAvailable]&[D.AfterDescriptorAvailable]),'RowsWithIncompleteBefore',sum(~[D.BeforeDescriptorAvailable]), ...
+ 'RowsWithIncompleteAfter',sum(~[D.AfterDescriptorAvailable]),'RowsWithBeforeNativeContact',sum(arrayfun(@(r)~isempty(r.BeforeNativeContactFrames),D)), ...
+ 'RowsWithAfterNativeContact',sum(arrayfun(@(r)~isempty(r.AfterNativeContactFrames),D)), ...
+ 'DescriptorCalculations',0,'DetectorRuns',0,'CorrectionFits',0,'NewBaselines',0,'MatlabSeconds',toc(timer),'SourceHashesUnchanged',true,'ComparisonExecutionPending',true);
+writeJSON(fullfile(here,'verification.json'),v);disp(v);
+end
+function hit=contacts(frames,foot,R)
+hit=false(numel(frames),1);
+for j=1:numel(frames)
+ f=frames(j);
+ for r=1:height(R.Audit)
+  ix=find(R.Traces{r}.DetectedFrames==f);if ~isempty(ix)&&~isempty(intersect(foot,R.ReferenceSources.EventFramePixels{r}{ix})),hit(j)=true;break;end
+ end
+end
+end
+function writeJSON(p,d)
+f=fopen(p,'w');assert(f>=0);fprintf(f,'%s\n',jsonencode(d,'PrettyPrint',true));fclose(f);
+end

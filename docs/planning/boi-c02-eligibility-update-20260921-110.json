@@ -1,0 +1,58 @@
+{
+  "Schema": "boi-c02-eligibility-update-1",
+  "DecisionIDs": [
+    "R1-FB2312-AWAKE-RUN-108",
+    "R1-FB2312-ISO-RUN-109",
+    "R4-FB2312-DESCRIPTIVE-110"
+  ],
+  "PreviousUpdate": "boi-c02-eligibility-update-20260921-106.json",
+  "PreviousUpdateSHA256": "821665f7ab47aa21442123123cdb99aa6f578efd5bbba9ae40f07267e658562d",
+  "Changes": [
+    {
+      "Session": "FB2312-baseline-awake",
+      "AssetID": "1dff98d5-540a-4ff5-a9d1-a610c0de0e1d",
+      "SourceSHA256": "0fbe75e316c82301acb767192acb378a79d78382f40b3a880de9e59fb0df8abd",
+      "WorkingROI": "accepted_source_specific_working_support",
+      "RunStatus": "restricted_profile_run_verified",
+      "MethodProfile": "craniotomy-roi-1",
+      "NativeFrameCount": 1200,
+      "SampleHz": 1,
+      "PixelSizeUm": 2.35,
+      "ModelExtentSec": [
+        0,
+        1200
+      ],
+      "FinalComparisonWindows": [],
+      "Evidence": "reference-results/boi-fb2312-paired-summary-20260921/awake/verification.json"
+    },
+    {
+      "Session": "FB2312-baseline-iso",
+      "AssetID": "799b4406-f755-4d01-ad7f-354d6d700e36",
+      "SourceSHA256": "aa0500cb589b157c92ee73c6d80d69a7638a9326c0f6b8ef1213102493ae46dd",
+      "WorkingROI": "accepted_source_specific_working_support",
+      "RunStatus": "restricted_profile_run_verified",
+      "MethodProfile": "craniotomy-roi-1",
+      "NativeFrameCount": 1200,
+      "SampleHz": 1,
+      "PixelSizeUm": 2.35,
+      "ModelExtentSec": [
+        0,
+        1200
+      ],
+      "FinalComparisonWindows": [],
+      "Evidence": "reference-results/boi-fb2312-paired-summary-20260921/iso/verification.json"
+    }
+  ],
+  "CurrentCounts": {
+    "CandidateMice": 7,
+    "CandidateRecordings": 14,
+    "RecordingsWithRunEvidence": 14,
+    "NoEquivalentRunInBaseInventory": 0,
+    "AcceptedWorkingROIs": 10,
+    "ExistingUnacceptedDrafts": 4,
+    "NoSourceSpecificProposal": 0,
+    "PairsWithBothRestrictedProfileRuns": 5,
+    "CompletedCurrentPairedDescriptiveSummaries": 5
+  },
+  "NewScientificExclusions": 0
+}

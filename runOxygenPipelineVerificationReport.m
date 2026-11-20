@@ -30,9 +30,13 @@ validateInputTableColumns(InputTable,requiredWrapperInputColumns(),InputCsvPath)
 validateRecordingPaths(Paths,Options.masterFolder,InputCsvPath);
 
 Rows = repmat(createEmptyVerificationRow(),numel(Paths),1);
+BOIReviews=cell(numel(Paths),1);BOIIssues=cell(numel(Paths),1);
 for RecordingIdx = 1:numel(Paths)
-    Rows(RecordingIdx) = inspectVerificationRecording(RecordingIdx,Paths,Mice,Genotypes, ...
+    [Rows(RecordingIdx),BOIReviews{RecordingIdx}] = inspectVerificationRecording(RecordingIdx,Paths,Mice,Genotypes, ...
         Conditions,DrugIDs,Promoters,SampleFs,Pixelsizes,Options);
+    BOIIssues{RecordingIdx}=BOIReviews{RecordingIdx}.QC;
+    BOIIssues{RecordingIdx}.RecordingIndex=repmat(RecordingIdx,height(BOIIssues{RecordingIdx}),1);
+    BOIIssues{RecordingIdx}.Mouse=repmat(string(Mice{RecordingIdx}),height(BOIIssues{RecordingIdx}),1);
 end
 
 SummaryTable = orderVerificationSummaryColumns(struct2table(Rows));
@@ -41,6 +45,8 @@ Report.Options = Options;
 Report.InputCsv = InputCsvPath;
 Report.CreatedAt = datetime('now');
 Report.SummaryTable = SummaryTable;
+Report.BOIImportReviews=BOIReviews;
+Report.BOIInputIssues=vertcat(BOIIssues{:});
 Report.OutputFiles = writeVerificationReport(Report);
 
 printVerificationConsoleSummary(Report);
@@ -127,6 +133,10 @@ Row.RawTiff = "";
 Row.DenoisedTiff = "";
 Row.PreflightValid = false;
 Row.PreflightMessages = "";
+Row.BOIInputStatus = "";
+Row.BOIInputCompatible = false;
+Row.ScientificStatus = "not_established";
+Row.BOIReviewIssueCount = 0;
 Row.DetectionSource = "";
 Row.QuantificationSource = "";
 Row.OxygenSinksFolder = "";
@@ -146,7 +156,7 @@ Row.RecommendedAction = "";
 
 end
 
-function Row = inspectVerificationRecording(RecordingIdx,Paths,Mice,Genotypes,Conditions, ...
+function [Row,BOIReview] = inspectVerificationRecording(RecordingIdx,Paths,Mice,Genotypes,Conditions, ...
     DrugIDs,Promoters,SampleFs,Pixelsizes,Options)
 
 Row = createEmptyVerificationRow();
@@ -160,6 +170,11 @@ Metadata = createRecordingMetadata(Mice{RecordingIdx},Conditions{RecordingIdx},D
 Validation = runOneOutputSilently(@() validateOxygenRecording(RecordingFolder,SampleFs{RecordingIdx}, ...
     Pixelsizes{RecordingIdx},Options.overwriteOutputs,Metadata));
 TiffStatus = Validation.TiffStatus;
+BOIReview=createBOIImportReview(Validation,SampleFs{RecordingIdx},Pixelsizes{RecordingIdx});
+Row.BOIInputStatus=string(BOIReview.Status);
+Row.BOIInputCompatible=BOIReview.InputCompatible;
+Row.ScientificStatus=string(BOIReview.ScientificStatus);
+Row.BOIReviewIssueCount=sum(BOIReview.QC.Disposition=="review");
 
 Row.RawTiffCount = numel(TiffStatus.RawFiles);
 Row.DenoisedTiffCount = numel(TiffStatus.DenoisedFiles);
@@ -204,7 +219,9 @@ Row.CanRunVascularEvents = HasVascularAnnotations && Row.CanExportEventMetrics;
 RequiredBehaviourOk = ~Options.requireBehaviour || HasBehaviour;
 RequiredVascularOk = ~Options.requireVascularAnnotations || HasVascularAnnotations;
 
-if Row.PreflightValid && HasSinks && HasSurges && RequiredBehaviourOk && RequiredVascularOk
+if ~Row.BOIInputCompatible
+    Row.Status = "Blocked";
+elseif Row.PreflightValid && HasSinks && HasSurges && RequiredBehaviourOk && RequiredVascularOk
     Row.Status = "Ready";
 elseif Row.PreflightValid
     Row.Status = "Partial";
@@ -213,6 +230,14 @@ else
 end
 
 [Row.IssueSummary,Row.RecommendedAction] = summarizeVerificationIssues(Row,HasSinks,HasSurges,Options);
+if ~Row.BOIInputCompatible
+    held=BOIReview.QC(BOIReview.QC.Disposition~="review",:);
+    Row.IssueSummary=Row.IssueSummary + " | " + strjoin(held.Message," | ");
+    Row.RecommendedAction=Row.RecommendedAction + " | " + strjoin(unique(held.Action,'stable')," | ");
+elseif Row.BOIReviewIssueCount>0
+    Row.IssueSummary=Row.IssueSummary + " | BOI scientific review remains open";
+    Row.RecommendedAction=Row.RecommendedAction + " | inspect BOI Input Review evidence and affected measurements";
+end
 
 end
 
@@ -323,12 +348,16 @@ OutputBase = fullfile(OutputFolder,['PipelineVerification_',Timestamp]);
 OutputFiles = struct();
 OutputFiles.Mat = [OutputBase,'.mat'];
 OutputFiles.Xlsx = [OutputBase,'.xlsx'];
+OutputFiles.BOIJson = [OutputBase,'_BOIInputReview.json'];
 
 VerificationReport = Report;
 save(OutputFiles.Mat,'VerificationReport');
 writetable(Report.SummaryTable,OutputFiles.Xlsx,'Sheet','RecordingSummary');
 writetable(createVerificationRunSummary(Report),OutputFiles.Xlsx,'Sheet','RunSummary');
-NeedsReview = Report.SummaryTable(Report.SummaryTable.Status~="Ready",:);
+writetable(Report.BOIInputIssues,OutputFiles.Xlsx,'Sheet','BOIInputReview');
+fid=fopen(OutputFiles.BOIJson,'w');assert(fid>=0);cleanup=onCleanup(@()fclose(fid));
+fprintf(fid,'%s\n',jsonencode(Report.BOIImportReviews,'PrettyPrint',true));clear cleanup
+NeedsReview = Report.SummaryTable(Report.SummaryTable.Status~="Ready" | Report.SummaryTable.BOIReviewIssueCount>0,:);
 if ~isempty(NeedsReview)
     writetable(NeedsReview,OutputFiles.Xlsx,'Sheet','NeedsReview');
 end

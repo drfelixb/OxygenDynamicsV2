@@ -1,0 +1,92 @@
+{
+  "decision_id": "R1-C02-PROVENANCE-020",
+  "status": "completed_source_equivalence_verified_preparation_unresolved",
+  "question": "Do the eight preserved local TIFF pixel arrays equal their pinned DANDI selected series, and what preparation history is supported by available code/headers?",
+  "cases": [
+    {
+      "session": "FB2314-baseline-awake",
+      "asset_id": "9ce94e52-e1d9-446d-a758-66db41a698e6",
+      "mouse": "FB2314"
+    },
+    {
+      "session": "FB2314-baseline-iso",
+      "asset_id": "5ca61eac-9461-44e5-b222-1599aecc7ca8",
+      "mouse": "FB2314"
+    },
+    {
+      "session": "FB2315-baseline-awake",
+      "asset_id": "237d26a9-8977-4a97-b46b-206aefeb4c3d",
+      "mouse": "FB2315"
+    },
+    {
+      "session": "FB2315-baseline-iso",
+      "asset_id": "353b88f3-b509-4281-8c46-f338094b4907",
+      "mouse": "FB2315"
+    },
+    {
+      "session": "M402-01-baseline-awake",
+      "asset_id": "f6089c10-cb71-4f49-8185-ba07e4073fb1",
+      "mouse": "ID402"
+    },
+    {
+      "session": "M402-03-baseline-iso",
+      "asset_id": "253f0176-34b4-4fae-9500-29bbde6803e2",
+      "mouse": "ID402"
+    },
+    {
+      "session": "M403-01-baseline-awake",
+      "asset_id": "2d68bdb0-58b0-4d36-8227-4526b8905ebf",
+      "mouse": "ID403"
+    },
+    {
+      "session": "M403-03-baseline-iso",
+      "asset_id": "693a568c-b90a-4e0c-b61d-ca77158c384a",
+      "mouse": "ID403"
+    }
+  ],
+  "scope": "BOI source integrity only; no event outcomes, tissue judgement, detector tuning, statistics or scientific contrast.",
+  "method": "Checksum-verified pinned NWB downloads; all-pixel equality per corresponding frame. Compare direct stored row/column indexing as primary and transpose as an explicitly separate orientation diagnostic. No fitting, intensity rescaling, cropping or automatic orientation correction. Inspect first TIFF header and relevant historical/current source code.",
+  "budget": {
+    "archive_bytes": 3115250341,
+    "download_storage_cap_bytes": 4000000000,
+    "download_total_seconds": 600,
+    "per_download_seconds": 90,
+    "comparison_seconds": 600,
+    "maximum_loaded_archive_arrays": 1,
+    "manual_review": "Code/header provenance only; no event annotation"
+  },
+  "clock": "Retain confirmed precise 1 Hz external triggering. Embedded timestamps do not override it; exposure and experiment alignment remain separate.",
+  "criteria": "Exact archive container SHA256 and expected size before reading payload; zero unequal pixels for equality. Report every failure, difference and pending input. Equality does not prove camera-raw preparation or biological eligibility.",
+  "stopping_rule": "One fixed pass. Retain current source rules; restrict equivalence claims to verified cases. Preserve failed/partial downloads and runs. Missing original conversion script remains unknown, not an invitation to infer historical settings.",
+  "approved_windows": [],
+  "scientific_eligibility": "not_assessed",
+  "completion": {
+    "decision_id": "R1-C02-PROVENANCE-020",
+    "status": "passed",
+    "recorded_utc": "2026-09-12T08:38:05.176050+00:00",
+    "recordings": 8,
+    "animals": 4,
+    "compared_frames": 7200,
+    "compared_pixels_per_implementation": 1887436800,
+    "equal_after_explicit_spatial_transpose": 8,
+    "direct_stored_index_equality": 0,
+    "mapped_unequal_pixels": 0,
+    "maximum_mapped_absolute_difference": 0,
+    "independent_matlab_python_agreement": true,
+    "archive_checksums_verified": 8,
+    "local_source_checksums_match_previous_audit": 8,
+    "legacy_checksums_unchanged": 24,
+    "implementation_files_unchanged": 460,
+    "prior_input_audit_local_artifacts_unchanged": 20,
+    "download_bytes": 3115250341,
+    "matlab_comparison_seconds": 71.91263091666667,
+    "python_comparison_seconds": 70.52316279290244,
+    "scientific_eligibility": "not_assessed",
+    "new_detector_runs": 0,
+    "new_statistics_runs": 0,
+    "original_upload_script": "unlocated",
+    "pre_TIFF_intensity_history": "unresolved",
+    "join_note": "The parallel Python worker attempted its final join before MATLAB had produced all eight rows. Its assertion/log is preserved; this sequential join verifies the complete saved results without rerunning pixel comparisons."
+  },
+  "report": "docs/reference-results/boi-c02-provenance-20260912/README.md"
+}

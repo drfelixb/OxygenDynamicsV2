@@ -1,0 +1,5 @@
+Session,Case,SurgeEvents,SurgeSites,SinkEvents,SinkSites,MasterRuntimeSec
+M400-01-baseline-awake,control,50,41,196,56,45.505259125
+M400-01-baseline-awake,challenge,52,43,189,50,52.4792745833333
+FB2316-baseline,control,31,27,311,79,84.4732724583333
+FB2316-baseline,challenge,34,25,239,63,72.873050375

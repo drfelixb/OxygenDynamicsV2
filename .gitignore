@@ -25,6 +25,9 @@ old Versions/
 *.tiff
 *.mat
 *.csv
+!examples/boi-batch-draft.csv
+!examples/boi-batch-minimal.csv
+!examples/boi-batch-metadata.csv
 *.xls
 *.xlsx
 *.prism
@@ -33,6 +36,14 @@ old Versions/
 *.avi
 *.mp4
 *.zip
+
+# Local validation payloads; keep narrative records and archived MATLAB recipes
+docs/reference-results/**/*
+!docs/reference-results/**/
+!docs/reference-results/**/*.md
+!docs/reference-results/**/*.m.txt
+*.bin
+*.npz
 
 # Credentials and local configuration
 .env
@@ -50,3 +61,6 @@ __pycache__/
 *.py[cod]
 .idea/
 .vscode/
+
+# Portable automated check reports
+ci-results/

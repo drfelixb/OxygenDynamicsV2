@@ -1,0 +1,72 @@
+function Info = writeAutomaticAmplitudeExport(Folder,Workbook,D)
+% New companion artifacts; old result columns and sheets are untouched.
+Info=struct('Report',fullfile(Folder,'AutomaticAmplitudeGuide.md'), ...
+    'AverageCountsCSV',fullfile(Folder,'AutomaticAverageCounts.csv'), ...
+    'AvailabilityCSV',fullfile(Folder,'AutomaticAmplitudeAvailability.csv'));
+writetable(D.Definitions,Workbook,'Sheet','AutomaticAmplitudeGuide');
+writetable(D.AverageCounts,Workbook,'Sheet','AutomaticAverageCounts');
+writetable(D.Availability,Workbook,'Sheet','AutomaticAmplitudeAvailability');
+writetable(D.Definitions,fullfile(Folder,'AutomaticAmplitudeDefinitions.csv'));
+writetable(D.AverageCounts,Info.AverageCountsCSV);
+writetable(D.Availability,Info.AvailabilityCSV);
+AutomaticAmplitudeExport=D; %#ok<NASGU>
+save(fullfile(Folder,'AutomaticAmplitudeExport.mat'),'AutomaticAmplitudeExport');
+f=fopen(Info.Report,'w');assert(f>=0,'Cannot write automatic amplitude guide.');cleanup=onCleanup(@()fclose(f)); %#ok<NASGU>
+fprintf(f,'# Automatic optical amplitude and summary guide\n\n');
+if isfield(D,'SelectionPolicy')
+    fprintf(f,'Burden selection: %s. Signed burden composite: negative terms subtract, all required retained contributions are required, and the finite total may be positive, zero or negative. Negative values/counts are descriptive, never an exclusion gate. Original values and reference arithmetic stay unchanged.\n\n',string(D.SelectionPolicy.Version(1)));
+end
+fprintf(f,'Automatic sink amplitude is a positive optical drop; automatic surge amplitude is a positive optical increase. A fraction of 0.05 is 5%%. Negative finite values stay negative in event rows and site means. The reviewed-pocket corrected measurement is separate and uses a negative sign for a downward excursion. These values do not measure oxygen concentration or absolute oxygen pressure.\n\n');
+fprintf(f,'The signal is preserved-input TIFF intensity averaged over the fixed union of native event pixels. The reference is the mean of the configured immediately preceding window (normally 20 seconds), before the saved measurement start. All requested samples must be finite and free of overlapping native detections of either sign, with a positive mean. No earlier search or post-event replacement is used. This screen does not prove the reference is physiologically suitable. Sink measurement bounds are refined; surge bounds are native. No correction is fitted for these exports.\n\n');
+fprintf(f,'The original automatic columns and site means above are preserved. Newly derived BOI burden uses EventAmplitudePercent (boi-event-baseline-flags-1) when present: each event has its own immediately preceding configured mean, including available short/overlapping samples and omitting missing reference samples with flags. Native recording-start events use actual available post-event samples, flagged recovery unverified. No actual/finite reference, nonpositive mean or missing required event signal keeps the new amplitude unavailable. Negative values retain their sign. boi-signed-contributions-1 includes finite signed products and flags negatives; legacy sources retain nonnegative eligibility. Selection policy is separate from the unchanged reference version. Older sources without these fields retain their explicit pre-episode or original selector. HypoxicBurden_EventBased keeps all original and Episode columns beside EventReference fields and the selected BurdenAmplitudePercent. HypoxicBurden_ByRecording reports numerical completeness separately from flagged contributors and IncludesFlaggedReferences. No partial sums. Original-amplitude availability counts below still describe the original columns.\n\n');
+fprintf(f,'RecordingReference fields describe a separate first-20-second mean on each event footprint, or an explicit source-identified recording-wide override. AboveRecordingReference compares the event minimum with this earlier mean; NaN and its status mean not assessable, never false. Its quality/bounds/source remain visible. It never changes the local amplitude denominator or burden inclusion. Reference flags do not establish stability, recovery, normoxia or biological comparability. SignedTraceAUC_sec retains its own original reference and is not recalculated under the new baseline.\n\n');
+fprintf(f,'## Which observations contribute?\n\nSite means use finite event fractions, including negatives. Grouped site sheets list sites under each mouse; they do not average those sites into a mouse result. Recording burden-amplitude means use policy-selected percentages: signed-policy values include negatives and zero; legacy nonnegative-policy means retain their original meaning. Area, duration and composite means each have their own contributing subset. Within-mouse means require every recording value; one missing recording makes the mouse mean unavailable. Group means give each finite mouse mean equal weight, regardless of event or recording counts.\n\n');
+fprintf(f,'AutomaticAverageCounts.csv gives the existing value, contributing count, total count, observation unit and rule for each affected mean or median. Within-mouse counts show non-NaN recording inputs, but a partial count does not authorize a partial mean. Count rules follow the existing finite/omitnan/strict arithmetic exactly.\n\n');
+fprintf(f,'AutomaticAmplitudeAvailability.csv separates unavailable amplitudes, negative finite amplitudes, actual sign-based exclusions under the saved selection policy (zero for signed-policy inputs), and unavailable unnormalized event composites. These categories overlap: an unavailable or excluded amplitude also prevents its composite. An available amplitude may still have an unavailable composite because area or duration is missing. Normalized composite means have their own counts in AutomaticAverageCounts.csv. Blank composite counts mean not assessed (missing identity/support for a site) or not defined (surges), not zero. A missing amplitude never deletes the event from detection counts or coverage.\n\n');
+fprintf(f,'## Example observations from this export\n\n| Level | Mouse / site | Metric | Value | Contributing / total | Observation unit |\n|---|---|---|---:|---:|---|\n');
+A=D.AverageCounts;selected=[];
+for kind=["sink","surge"]
+    q=find(A.SummaryLevel=="site" & A.EventType==kind);selected=[selected;q(1:min(2,numel(q)))]; %#ok<AGROW>
+end
+q=find(A.SummaryLevel=="recording");selected=[selected;q(1:min(7,numel(q)))];
+for level=["within_mouse","equal_mouse_group"]
+    q=find(A.SummaryLevel==level & (contains(A.Metric,'MeanBurdenAmplitudePercent') | contains(A.Metric,'Burden_AmplitudeComposite')));
+    selected=[selected;q(1:min(4,numel(q)))]; %#ok<AGROW>
+end
+for i=reshape(selected,1,[])
+    T=A(i,:);identity=T.Mouse;
+    if strlength(T.SiteID)>0,identity=identity+" / "+T.EventType+" site "+T.SiteID;end
+    fprintf(f,'| %s | %s | %s | %.15g %s | %d / %d | %s |\n',levelLabel(T.SummaryLevel),identity,metricLabel(T.Metric),T.Value,T.Units,T.ContributingCount,T.TotalCount,T.CountUnit);
+end
+fprintf(f,'\n## Recording availability\n\nCounts below overlap; they must not be added together. Negative exclusion is assessed after explicit sign-provenance conversion. Unavailable composite counts concern the unnormalized event product. NaN means not defined/assessed, not zero.\n\n| Recording | Sign | Total events | Unavailable amplitude | Negative amplitude | Negative excluded from burden | Unavailable composite |\n|---|---|---:|---:|---:|---:|---:|\n');
+V=D.Availability(D.Availability.SummaryLevel=="recording",:);
+for i=1:min(6,height(V))
+    fprintf(f,'| %s | %s | %d | %d | %d | %g | %g |\n',V.RecordingID(i),V.EventType(i),V.TotalEvents(i),V.UnavailableAmplitudeEvents(i),V.NegativeAmplitudeEvents(i),V.NegativeAmplitudeExcludedFromBurdenEvents(i),V.UnavailableCompositeEvents(i));
+end
+fprintf(f,'\nThe full CSV tables and workbook companion sheets retain recording, mouse, site and group identity. AutomaticAmplitudeDefinitions.csv gives source, reference, formula, sign, units and interpretation limits. Original automatic measurements and historical files are preserved; the selected reference for newly derived burden is explicit.\n');
+end
+
+function text=levelLabel(level)
+switch level
+    case "site",text="Site";
+    case "recording",text="Recording";
+    case "within_mouse",text="Mouse (recording mean)";
+    otherwise,text="Group (equal mouse weights)";
+end
+end
+function text=metricLabel(metric)
+metric=erase(metric,"_Mean");
+switch metric
+    case "MeanOxySinkEvent_NormAmp",text="Mean automatic optical drop";
+    case "MeanOxySurgeEvent_NormAmp",text="Mean automatic optical increase";
+    case "MeanBurdenAmplitudePercent",text="Mean selected optical amplitude";
+    case "MeanBurdenArea_um2",text="Mean event area";
+    case "MeanBurdenDuration_sec",text="Mean saved event duration";
+    case "MeanEventBurdenContribution",text="Mean amplitude-area-duration product";
+    case "MedianEventBurdenContribution",text="Median amplitude-area-duration product";
+    case "MeanEventBurdenContribution_per_mm2",text="Mean product per mm2";
+    case "MedianEventBurdenContribution_per_mm2",text="Median product per mm2";
+    case "Burden_AmplitudeComposite",text="Total amplitude-area-duration product";
+    otherwise,text=metric;
+end
+end

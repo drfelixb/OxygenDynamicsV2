@@ -6,7 +6,7 @@ fprintf('Loading data... \n');
 fprintf('Loaded original/raw iOS TIFF: %s\n',Tifffiles.name);
 
 [~,DatafileID] = fileparts(Tifffiles(1).folder);
-RecDur = size(IM_Raw,3) * AnalysisParams.fs;
+RecDur = size(IM_Raw,3) / AnalysisParams.fs;
 
 AnalysisInfo = struct();
 AnalysisInfo.AnalysisDate = char(datetime('now','Format','yyyy-MM-dd HH:mm:ss'));

@@ -1,0 +1,26 @@
+root=fileparts(mfilename('fullpath'));out=fullfile(root,'run-01');assert(~isfolder(out));mkdir(out);I=jsondecode(fileread(fullfile(root,'intervals.json')));rows={};timer=tic;
+for k=1:numel(I)
+ q=I(k);T=readtable(q.TraceCSV);a=q.StartFrame;b=q.EndFrame;
+ for column={'CubicCorrectedMean','FilteredMean','SavedSiteTimingTrace'}
+  y=T.(column{1});frames=(a:b)';v=y(frames);finite=frames(isfinite(v));maxima=zeros(0,2);minima=zeros(0,2);i=a;
+  while i<=b
+   if ~isfinite(y(i)),i=i+1;continue;end
+   j=i;while j<b&&isfinite(y(j+1))&&y(j+1)==y(i),j=j+1;end
+   if i>a&&j<b&&isfinite(y(i-1))&&isfinite(y(j+1))
+    if y(i)>y(i-1)&&y(j)>y(j+1),maxima(end+1,:)=[i j];end
+    if y(i)<y(i-1)&&y(j)<y(j+1),minima(end+1,:)=[i j];end
+   end
+   i=j+1;
+  end
+  low=NaN;high=NaN;lowFrames=[];highFrames=[];if ~isempty(finite),low=min(y(finite));high=max(y(finite));lowFrames=finite(y(finite)==low)';highFrames=finite(y(finite)==high)';end
+  rows{end+1}=struct('IntervalID',q.IntervalID,'ReviewOrder',q.ReviewOrder,'RecordingKey',q.RecordingKey,'SavedSign',q.SavedSign,'SiteID',q.SiteID,'EventID',q.EventID,'StartFrame',a,'EndFrame',b,'IntervalRole',q.IntervalRole,'CoordinateSensitivityOnly',q.CoordinateSensitivityOnly,'SignalColumn',column{1},'FiniteSamples',numel(finite),'RequestedSamples',numel(frames),'MaximumPlateaus',maxima,'MinimumPlateaus',minima,'MaximumCount',size(maxima,1),'MinimumCount',size(minima,1),'TotalInteriorTurns',size(maxima,1)+size(minima,1),'MinimumValue',low,'MaximumValue',high,'SignalRange',high-low,'MinimumFrames',lowFrames,'MaximumFrames',highFrames,'OnsetSample',y(a),'OffsetSample',y(b),'OnsetPreviousStep',step(y,a-1,a),'OnsetNextStep',step(y,a,a+1),'OffsetPreviousStep',step(y,b-1,b),'OffsetNextStep',step(y,b,b+1));
+ end
+ assert(toc(timer)<120);
+end
+writeJson(fullfile(out,'support-results.json'),rows);writeJson(fullfile(out,'run-report.json'),struct('Status','calculated_pending_independent_verification','Rows',numel(rows),'ElapsedSeconds',toc(timer),'MATLABVersion',version,'NewFilters',0,'NewCorrections',0,'CandidateRuns',0,'MovieReads',0,'ProductionChanges',false));fprintf('Calculated %d trace-interval rows.\n',numel(rows));
+function v=step(y,a,b)
+v=NaN;if a>=1&&b<=numel(y)&&isfinite(y(a))&&isfinite(y(b)),v=sign(y(b)-y(a));end
+end
+function writeJson(p,x)
+f=fopen(p,'w');c=onCleanup(@()fclose(f));fprintf(f,'%s\n',jsonencode(x,'PrettyPrint',true));
+end

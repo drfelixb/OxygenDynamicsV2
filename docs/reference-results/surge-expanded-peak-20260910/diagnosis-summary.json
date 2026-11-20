@@ -1,0 +1,19 @@
+{
+  "RecordedAvailable": 2498,
+  "NativeNearEnvelopeMaximum": 1520,
+  "ExpandedNearEnvelopeMaximum": 2146,
+  "NearPeakGains": 660,
+  "NearPeakLosses": 34,
+  "LossesWithHigherSourceAndLowerImposed": 34,
+  "PreviousNegativeCases": 18,
+  "PreviouslyNegativeNowPositive": 18,
+  "PreviouslyNegativeNowNearEnvelopeMaximum": 16,
+  "PreviousNegativeExpandedPercentRange": [
+    0.887315662302979,
+    22.6586704094597
+  ],
+  "NativeOutsideImposedSupport": 48,
+  "ExpandedOutsideImposedSupport": 5,
+  "SourceOnlyWindowGainCases": 1256,
+  "BaselineAboveOnePercent": 71
+}

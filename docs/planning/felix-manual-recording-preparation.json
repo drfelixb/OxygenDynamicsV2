@@ -1,0 +1,50 @@
+{
+  "ID": "USER-RECORDING-TEST-01-PREP",
+  "Date": "2026-10-05",
+  "Status": "instructions_prepared_input_selection_and_manual_test_pending",
+  "Owner": "Implementation Codex chat prepares; Felix selects input and performs manual test",
+  "SourceCommit": "029c9897e92986fc2bd5812b568dc8330d031e8a",
+  "CandidateSourceCommit": "44f303161dc1ae52541e7e6d8715d0fcb0ce677f",
+  "SoftwareVersion": "3.1.0-dev.2",
+  "Guide": "docs/BOI_FELIX_MANUAL_RECORDING_TEST.md",
+  "UserBenefit": "A finite manual import/preflight/run/inspect/reopen/export route and interpretable event/window outputs",
+  "AcceptanceChecks": {
+    "ProtectedFilesMatched": 617,
+    "MATLABFilesUnchanged": 542,
+    "OldAndCurrentCandidateZIPsUnchanged": 3,
+    "LocalGuideLinksResolved": 4,
+    "NamedControlsStaticallyVerified": 15,
+    "GitWhitespaceCheckPassed": true,
+    "OriginalUncommittedAgendaHistoryAndHandoffPreserved": true,
+    "ScientificFormulasTakenFromExistingDefinitionsAndExportReaders": true
+  },
+  "RecordingSelected": false,
+  "RecordingMetadataRead": false,
+  "SettingsConfirmed": false,
+  "OutputDirectoryChosenAndChecked": false,
+  "ResourceLimitsAgreed": false,
+  "EventInspection": "One automatic fixed-footprint reference-based sink/surge amplitude; explicit reference/event/native frames, baseline sample contributors, sign and percent units",
+  "SummaryInspection": "One automatic sink whole-recording window when available, otherwise named actual window; union area-time/tissue-time, frame/event contributors and unavailable values",
+  "ResearcherFeedbackReceived": false,
+  "ManualTestOutcome": "not performed/reported",
+  "Actions": {
+    "MATLABLaunches": 0,
+    "RecordingRuns": 0,
+    "NumericalEvaluations": 0,
+    "ApplicationRepairs": 0,
+    "PackageBuilds": 0,
+    "Commits": 0,
+    "Pushes": 0
+  },
+  "StopProcedureReference": "https://www.mathworks.com/help/matlab/matlab_env/stop-execution.html",
+  "Budget": {
+    "MaximumActiveMinutes": 45,
+    "MaximumNewTextBytes": 2097152,
+    "Accounting": "Includes new guide, preparation record, changed planning/status text and temporary preservation snapshot; no research payload",
+    "ConservativeNewTextBytes": 640751,
+    "ConservativelyChargedActiveMinutes": 26.2,
+    "PreSnapshotReadingAllowanceMinutes": 20
+  },
+  "StoppingCondition": "Wait for Felix recording selection and agreed preflight/limits or manual report. No assistant launch or numerical replay is authorised.",
+  "RecordedUTC": "2026-10-05T15:42:25.688252+00:00"
+}

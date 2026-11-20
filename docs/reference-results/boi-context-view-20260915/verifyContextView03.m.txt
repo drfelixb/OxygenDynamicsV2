@@ -1,0 +1,36 @@
+function verifyContextView03
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+prior=fullfile(root,'reference-validation','boi-panel-temporal-comparison-20260915');Q=jsondecode(fileread(fullfile(prior,'run-02','comparison.json')));count=0;output=fullfile(here,'run-03');
+for k=1:numel(Q)
+ q=Q(k);T=readtable(fullfile(prior,'run-02',q.TraceFile));D=computeBOITemporalContext(T.Corrected,q.Interval.StartFrame,q.Interval.EndFrame,q.ContextSamples);
+ assertEquivalent(jsondecode(jsonencode(D)),q.Descriptor);count=count+1;
+end
+s=jsondecode(fileread(fullfile(prior,'source-bindings.json')));sources=jsondecode(fileread(fullfile(root,'reference-validation','boi-reviewed-automatic-comparison-20260915','inputs.json')));
+[fig,UI]=openBOIEventReview(sources.Audit.Path);cleanup=onCleanup(@()delete(fig));UI.LoadBoundaries(s.LatestReview.Path);UI.AttachReferenceSources(sources.SinkMaster.Path,sources.SurgeMaster.Path);
+UI.LoadReferenceJudgments({s.LatestJudgment1.Path,s.LatestJudgment2.Path,s.LatestJudgment3.Path,s.LatestJudgment4.Path});UI.Select(321);UI.Context.Compute();
+P=UI.Context.Preview();assert(isequal(P.AcceptedReferences.Frames,(165:176)'));assert(numel(P.Rows)==4);assert(isequal(P.Rows{4}.Descriptor.Before.Frames,157:176));
+H=P.Rows{4}.BeforeHuman;ix=find(cellfun(@(v)strcmp(v.Role,'contextual_pocket_interval'),H));assert(isscalar(ix)&&isequal(H{ix}.Frames,157:165));
+UI.Context.Choice.Value=2;UI.Context.Scale.Value=20;UI.Context.Scale.ValueChangedFcn([],[]);UI.Tabs.SelectedTab=UI.ContextTab;drawnow;
+limits=UI.Context.Axes.YLim;trace=findall(UI.Context.Axes,'Tag','BOIContextTrace');assert(limits(1)<min(trace.YData)&&limits(2)>max(trace.YData));
+assert(isequal(findall(UI.Context.Axes,'Tag','BOIContextAcceptedReference').XData,165:176));exportapp(fig,fullfile(output,'context-view-fb2314.png'));
+exportBOITemporalContext(UI.CurrentReview(),321,fullfile(output,'context-export'),struct('IntervalChoice',2,'ContextSamples',20));
+UI.Select(186);UI.Context.Compute();P=UI.Context.Preview();assert(P.BoundaryReview.Annotation.PreferredOnsetFrame==1154&&numel(P.Rows)==10);
+UI.Select(1);assert(isempty(UI.Context.Preview()));clear cleanup;
+recs=jsondecode(fileread(fullfile(prior,'recordings.json')));r=recs(strcmp({recs.RecordingKey},'ID400-awake')).Source;
+raw=load(r.AuditMat,'AnalysisInfo');before=oxygenFileSHA256(r.AuditMat);[fig,UI]=openBOITemporalContext(r.AuditMat,r.SinkMaster,r.SurgeMaster);cleanup=onCleanup(@()delete(fig));
+UI.Select(162);UI.Context.Compute();R=UI.CurrentReview();assert(isequaln(R.AnalysisInfo,raw.AnalysisInfo)&&isequal(R.DiagnosticFrameSize,[512 512]));assert(strcmp(R.DiagnosticGeometryEvidence.SHA256,oxygenFileSHA256(r.SinkMaster)));drawnow;
+exportapp(fig,fullfile(output,'context-view-legacy-id400.png'));assert(strcmp(before,oxygenFileSHA256(r.AuditMat)));clear cleanup;
+result=struct('Status','passed','PriorDescriptorRowsReproduced',count,'AcceptedReference165Through176Preserved',true, ...
+ 'PrecedingPocketContact157Through165Preserved',true,'PreferredOnset1154AndHistoryPreserved',true,'LegacyAnalysisInfoUnchanged',true,'MissingOrStaleSelectionClearsView',true, ...
+ 'DetectorRuns',0,'SourceMovieReads',0,'ContextBaselineCalculations',0,'ScientificValidation',false);
+f=fopen(fullfile(output,'verification.json'),'w');fprintf(f,'%s\n',jsonencode(result,'PrettyPrint',true));fclose(f);disp(result);
+end
+function assertEquivalent(a,b)
+if isstruct(a)
+ assert(isequal(sort(fieldnames(a)),sort(fieldnames(b))));for key=fieldnames(a)',assertEquivalent(a.(key{1}),b.(key{1}));end
+elseif iscell(a)
+ assert(numel(a)==numel(b));for k=1:numel(a),assertEquivalent(a{k},b{k});end
+elseif isnumeric(a)
+ assert(isequal(size(a),size(b))&&isequal(isnan(a),isnan(b)));good=isfinite(a)&isfinite(b);assert(all(abs(a(good)-b(good))<=1e-9+1e-12*abs(b(good))));
+else,assert(isequal(a,b));end
+end

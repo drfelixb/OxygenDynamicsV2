@@ -1,0 +1,32 @@
+{
+  "schema": "boi-evidence-decision-1",
+  "decision_id": "R1-HP-REFERENCE-006",
+  "date": "2026-09-11",
+  "origin": "User authorized continuation after reconnecting the external drive",
+  "recording_id": "HP_ECS_CSV2_identity_pending",
+  "scope": "BOI source/reference and legacy support review; no IOSI or additional cohort observations",
+  "status": "expanded_search_and_selected_legacy_review_complete",
+  "findings": {
+    "named_reference_files": 23,
+    "recording_folders_with_named_references": 19,
+    "new_nested_reference_files": 7,
+    "selected_FB2412_matching_acquisition_reference_established": false,
+    "selected_legacy_landmark_images_inspected": 2,
+    "selected_legacy_support_maps": "Both contain exactly None mapped to an empty array",
+    "legacy_image_grid": [502, 502],
+    "preserved_source_image_grid": [512, 512],
+    "registration_transform_established": false
+  },
+  "decision": "Do not adopt either legacy map or another recording's reference as FB2412 tissue support. Preserve conditional automatic-mask calculations and the biological interpretation restriction.",
+  "source_timing": "User-confirmed precise external 1 Hz triggering remains authoritative; embedded timestamps are not used for sampling or reference correspondence",
+  "unchanged": [
+    "Source TIFF and original metadata CSV",
+    "Earlier workflow and event-review evidence",
+    "Event identities, quantitative values, detector settings and production code",
+    "Identity, calibration, biological-label, dynamic-validity and physiological interpretation questions"
+  ],
+  "search_limit": "Documented reference-name/image-extension searches plus selected-folder and whole-volume FB2411/FB2412 filename searches; no claim of absence of differently named files elsewhere",
+  "evidence": "docs/reference-results/boi-hp-reference-search-20260911/README.md",
+  "missing_information_requested": "Location of any separately stored matching anatomical reference or reviewed tissue ROI",
+  "next_independent_owned_work": "Expose source and tissue-review evidence and affected measurements in the MATLAB import workflow"
+}

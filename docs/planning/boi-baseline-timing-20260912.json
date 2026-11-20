@@ -1,0 +1,267 @@
+{
+  "schema": "boi-prespecified-measurement-challenge-1",
+  "decision_id": "R2-BASELINE-TIMING-014",
+  "date": "2026-09-12",
+  "status": "completed_retain_rules_restrict_claims_defer_scientific_policy",
+  "question": "Under fixed supplied detections, when do current baseline and timing rules recover analytic optical measurements, report unavailability, or differ from the explicitly imposed signal component?",
+  "scope": "BOI, both signs separately. Deterministic synthetic development evidence only. No detector, tissue eligibility, cohort read, parameter tuning, baseline replacement or physiological validation.",
+  "standing_requirements": [
+    "Biological variability is not represented by these few deterministic recipes; this is a measurement challenge, not R3 completion.",
+    "Physiological onset/recovery, oxygen calibration and scientific outcome admission remain unresolved.",
+    "Use current MATLAB implementation and reusable source audit; export readable results, recipe IDs, source traces, exact settings and code hashes.",
+    "Preserve earlier changes and evidence, including failed attempts.",
+    "Use 1 Hz frame intervals; exposure and embedded timestamps are not a timing source."
+  ],
+  "settings": {
+    "fs_hz": 1,
+    "pixel_size_um": 1,
+    "frames": 100,
+    "frame_shape": [
+      4,
+      4
+    ],
+    "baseline_seconds": 20,
+    "sink_return_tolerance": 0.015,
+    "sink_max_extension_seconds": 20
+  },
+  "amplitude_reference": "The imposed component is additive relative to the declared 100-unit background reference. ImposedFixedFootprintPeakFraction averages that component over the fixed native union before the signed extremum and division by 100. ImposedActivePixelPeakFraction is the local imposed peak / 100. Neither is absolute oxygen or automatically the estimand of the current pre-event-baseline measurement.",
+  "default_recipe": "100-unit raw background, selected pixel 1, native and measurement frames 41:45, signed 20-unit pulse, no other masks. Each listed recipe changes only named ingredients.",
+  "amplitude_cases": [
+    {
+      "id": "clean",
+      "recipe": "Five-frame signed 20-unit pulse on constant 100 background."
+    },
+    {
+      "id": "flat_zero",
+      "recipe": "Zero imposed signal with supplied native support; quantification only, not a detection claim."
+    },
+    {
+      "id": "weak_brief",
+      "recipe": "One-frame signed 2-unit pulse; supplied support bypasses detector duration admission."
+    },
+    {
+      "id": "strong_sustained",
+      "recipe": "Twenty-frame signed 40-unit pulse."
+    },
+    {
+      "id": "same_sign_prior",
+      "recipe": "Same-site native run at frame 25 overlaps the selected footprint; select EventID 2."
+    },
+    {
+      "id": "opposite_sign_prior",
+      "recipe": "Opposite-sign support at frame 25 overlaps selected footprint."
+    },
+    {
+      "id": "disjoint_prior",
+      "recipe": "Opposite-sign support at frame 25 occupies pixel 2, outside selected pixel 1."
+    },
+    {
+      "id": "early_start",
+      "recipe": "Selected event starts at frame 10: only nine preceding samples exist."
+    },
+    {
+      "id": "missing_baseline",
+      "recipe": "Raw selected footprint is NaN at frame 25."
+    },
+    {
+      "id": "missing_event",
+      "recipe": "Raw selected footprint is NaN at frame 43."
+    },
+    {
+      "id": "nonpositive_baseline",
+      "recipe": "Raw selected footprint is zero at frames 21:40."
+    },
+    {
+      "id": "unmarked_same_tail",
+      "recipe": "Undetected signed 20-unit precursor at frames 37:40 enters baseline; no support mask there."
+    },
+    {
+      "id": "unmarked_opposite_tail",
+      "recipe": "Undetected opposite-sign 20-unit precursor at frames 37:40 enters baseline."
+    },
+    {
+      "id": "linear_drift",
+      "recipe": "Background = 100 + 0.2*(frame-1); additive pulse unchanged."
+    },
+    {
+      "id": "global_step",
+      "recipe": "Unmarked -30-unit background step starts at frame 41 and persists; pulse unchanged."
+    },
+    {
+      "id": "moving_footprint",
+      "recipe": "Native pixel alternates between 1 and 2; only active pixel carries imposed pulse. Fixed two-pixel union dilutes instantaneous peak."
+    },
+    {
+      "id": "refined_interval",
+      "recipe": "Supplied measurement frames 36:50 surround native frames 41:45; signed 5-unit tails at 36:40 and 46:50."
+    }
+  ],
+  "signs": [
+    "sink",
+    "surge"
+  ],
+  "metrics": [
+    "baseline value/status/clean count and cause diagnostics",
+    "peak fraction, signed integral and analytic current-rule expectations",
+    "difference from known imposed fixed-footprint component, distinct from arithmetic error",
+    "native and measurement duration and unchanged event identity",
+    "sink timing boundaries/status/resolution against prespecified expectations"
+  ],
+  "acceptance": [
+    "All 34 selected amplitude events retained, with both signs and missing/negative values intact.",
+    "Existing independent footprint audit agrees with finalizer for every selected event.",
+    "Analytic expected baseline, peak, integral, clean count and status agree; numeric tolerance 1e-10*max(1,abs(expected)); NaN must remain NaN.",
+    "All 10 fixed timing cases match expected bounds and statuses using unchanged default tolerance and extension.",
+    "Supplied measurement bounds and native identity are unchanged by finalizer.",
+    "Existing amplitude audit, timing and counterfactual regression tests pass; prior local evidence hashes remain unchanged."
+  ],
+  "budget": "One execution of these fixed cases and existing relevant tests; correct harness errors only if required, preserving attempts. No sweeps, extra recordings, or parameter changes. Stop and report production disagreement rather than silently change expectations.",
+  "stopping_decision": "Retain current rules if arithmetic passes; restrict claims where reference/support differ; defer scientific baseline/timing policy. No scientific acceptance threshold is adopted.",
+  "comparison_priority": "Researcher preference remains pending; this shared measurement task is independent of comparison choice.",
+  "timing_default": "100 frames, residual +0.1 except frames 36:50 = -0.1; native 41:45; limits 1:100.",
+  "timing_cases": [
+    {
+      "id": "connected",
+      "changes": "none",
+      "bounds": [
+        36,
+        50
+      ],
+      "statuses": [
+        "return_crossing",
+        "return_crossing"
+      ],
+      "resolved": true
+    },
+    {
+      "id": "weak_below_tolerance",
+      "changes": "frames 36:50 residual -0.01",
+      "bounds": [
+        41,
+        45
+      ],
+      "statuses": [
+        "seed_not_below_return_level",
+        "seed_not_below_return_level"
+      ],
+      "resolved": false
+    },
+    {
+      "id": "extension_limit",
+      "changes": "all residuals -0.1",
+      "bounds": [
+        41,
+        45
+      ],
+      "statuses": [
+        "search_limit_unresolved",
+        "search_limit_unresolved"
+      ],
+      "resolved": false
+    },
+    {
+      "id": "recording_boundary",
+      "changes": "native 1:5; negative excursion 1:10",
+      "bounds": [
+        1,
+        10
+      ],
+      "statuses": [
+        "recording_boundary_unresolved",
+        "return_crossing"
+      ],
+      "resolved": false
+    },
+    {
+      "id": "missing_search",
+      "changes": "frame 38 NaN",
+      "bounds": [
+        41,
+        50
+      ],
+      "statuses": [
+        "nonfinite_search",
+        "return_crossing"
+      ],
+      "resolved": false
+    },
+    {
+      "id": "missing_seed",
+      "changes": "frame 41 NaN",
+      "bounds": [
+        41,
+        50
+      ],
+      "statuses": [
+        "nonfinite_seed",
+        "return_crossing"
+      ],
+      "resolved": false
+    },
+    {
+      "id": "native_crossing",
+      "changes": "frame 43 residual +0.1",
+      "bounds": [
+        36,
+        50
+      ],
+      "statuses": [
+        "return_crossing",
+        "return_crossing"
+      ],
+      "resolved": false
+    },
+    {
+      "id": "neighbor_partition",
+      "changes": "limits 39:47",
+      "bounds": [
+        41,
+        45
+      ],
+      "statuses": [
+        "search_limit_unresolved",
+        "search_limit_unresolved"
+      ],
+      "resolved": false
+    },
+    {
+      "id": "crossing_at_limit",
+      "changes": "negative excursion 21:65",
+      "bounds": [
+        21,
+        65
+      ],
+      "statuses": [
+        "return_crossing",
+        "return_crossing"
+      ],
+      "resolved": true
+    },
+    {
+      "id": "opposite_excursion",
+      "changes": "negative excursion 25:70; positive samples 38 and 48",
+      "bounds": [
+        39,
+        47
+      ],
+      "statuses": [
+        "return_crossing",
+        "return_crossing"
+      ],
+      "resolved": true
+    }
+  ],
+  "evidence": "docs/reference-results/boi-baseline-timing-20260912/README.md",
+  "outcome": "Retain current calculations and all selected results; restrict reference/support and physiological timing claims; defer scientific policy.",
+  "verification": {
+    "amplitude_cases": 34,
+    "timing_cases": 10,
+    "existing_tests_passed": 23,
+    "independent_csv_replay": true,
+    "prior_local_artifacts_unchanged": 380
+  },
+  "scientific_changes": [],
+  "corrections_preserved": [
+    "Initial replay selected only the newer local_evidence label; zero-count older manifests were detected during review. Expanded to all local_ labels and required nonempty selections. Second attempt exposed distinct historical artifact roots and failed before claiming completion. Resolved each recorded root and bounded older workflow/review scopes; both scripts/logs and initial report retained. Numerical results unchanged."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "NewFullMovieRuns": 8,
+  "DistinctSourceRecordings": 4,
+  "PriorControlRecordingsRescored": 4,
+  "PriorCasesReconstructed": 3,
+  "FocusedTestsPassed": 85,
+  "EventMeasurementsAudited": 1508,
+  "MeasurementMismatches": 0,
+  "FiniteAmplitudes": 759,
+  "UnavailableAmplitudes": 749,
+  "PixelsVerified": 1310709748,
+  "IndependentSupportScoreRows": 32,
+  "EvidenceWindows": 21,
+  "ProductionFilesUnchanged": true,
+  "RecordedRunSourceHashesStillMatch": true,
+  "PostExperimentContributionAuditSourceVerified": true,
+  "MatchedSurgeContributionsVerified": 12,
+  "MatchedSurgesWithNegativeImposedContribution": 0,
+  "BiologicalAccuracyEstablished": false,
+  "RepositoryFilesInspected": 373,
+  "CodeAnalyzerMessages": 73,
+  "RepositoryChecksPassed": true
+}

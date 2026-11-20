@@ -1,0 +1,52 @@
+function verifyDurations
+root='/Users/zcm361/Documents/Github/OxygenDynamicsV2';cd(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(root,'reference-validation/boi-reviewed-duration-comparison-20260914');C=jsondecode(fileread(fullfile(out,'duration-comparison.json')));I=jsondecode(fileread(fullfile(out,'inputs.json')));
+R=loadBOIEventReview(C.SavedAuditPath);assert(strcmp(R.AuditSHA256,C.SavedAuditSHA256));assert(R.AnalysisInfo.AnalysisParams.fs==1);
+S=loadBOIBoundaryReview(R,I.Sources.ResearcherReview.Path);assert(strcmp(S.SHA256,C.ResearcherReviewSHA256));reviewed=R;reviewed.BoundaryReview=S;
+count=0;totalSelectedSamples=0;
+for k=1:numel(C.Events)
+    E=C.Events(k);row=E.AuditRow;D=buildBOIEventReviewData(R,row);H=buildBOIEventReviewData(reviewed,row);F=D.Frames;
+    assert(isequaln(rmfield(D,'ResearcherBoundaryReview'),rmfield(H,'ResearcherBoundaryReview')));
+    A=H.ResearcherBoundaryReview.Annotation;
+    assert(strcmp(jsonencode(A),jsonencode(E.ResearcherAnnotation)));
+    measurement=F.Frame(F.MeasurementWindow);native=F.Frame(F.NativeDetectedFrame);
+    verifyAgainstFrames(E.SavedMeasurementInterval,measurement,F);
+    verifyAgainstFrames(E.NativeDetectionInterval,native,F);
+    [ons,offs]=ndgrid(A.OnsetFrames,A.RecoveryFrames);actualPairs=zeros(numel(E.ReviewedAlternatives),2);
+    for j=1:numel(E.ReviewedAlternatives)
+        Alt=E.ReviewedAlternatives(j);v=Alt.Interval;
+        human=F.Frame(F.Frame>=v.StartFrame&F.Frame<=v.EndFrame);
+        verifyAgainstFrames(v,human,F);actualPairs(j,:)=[human(1) human(end)];
+        assert(Alt.OnsetIsPreferred==ismember(human(1),A.PreferredOnsetFrame));
+        assert(Alt.RecoveryIsPreferred==ismember(human(end),A.PreferredRecoveryFrame));
+        assert(Alt.RecoveryPreferenceSpecified==~isempty(A.PreferredRecoveryFrame));
+        checkDifference(Alt.VersusSavedMeasurement,human,measurement,F);
+        checkDifference(Alt.VersusNativeDetection,human,native,F);
+        count=count+1;totalSelectedSamples=totalSelectedSamples+numel(human);
+    end
+    assert(isequal(sortrows(actualPairs),sortrows([ons(:) offs(:)])));
+end
+assert(count==7);assert(strcmp(oxygenFileSHA256(R.AuditPath),R.AuditSHA256)&&strcmp(oxygenFileSHA256(S.Path),S.SHA256));
+V=struct('Status','passed','VerificationMethod','Independent MATLAB check using loaded audit frame membership and modeled time vectors, plus saved human choice enumeration', ...
+    'VerifiedEvents',numel(C.Events),'VerifiedHumanIntervals',count,'EnumeratedHumanSampleMemberships',totalSelectedSamples, ...
+    'SavedMeasurementAndNativeIntervalsVerified',8,'AllCurrentAlternativesRetained',true,'PriorMeasurementDataUnchanged',true, ...
+    'OriginalAuditAndReviewUnchanged',true,'AuditSHA256',R.AuditSHA256,'ReviewSHA256',S.SHA256, ...
+    'ComparisonSHA256',oxygenFileSHA256(fullfile(out,'duration-comparison.json')), ...
+    'IndependentPhysiologicalValidation',false,'ProductionChanges',false,'DetectorReruns',0,'NewBaselineFits',0);
+fid=fopen(fullfile(out,'verification.json'),'w');cleanup=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(V,'PrettyPrint',true));disp(V);
+end
+function verifyAgainstFrames(V,frames,F)
+assert(V.StartFrame==frames(1)&&V.EndFrame==frames(end));assert(numel(frames)==V.InclusiveFrameCount);
+assert(V.StartModeledTimeSec==F.ModeledTimeSec(frames(1))&&V.LastSampleModeledTimeSec==F.ModeledTimeSec(frames(end)));
+assert(V.EndpointSpanSec==F.ModeledTimeSec(frames(end))-F.ModeledTimeSec(frames(1)));
+dt=F.ModeledTimeSec(2)-F.ModeledTimeSec(1);
+assert(V.InclusiveFrameDurationSec==numel(frames)*dt);
+assert(V.HalfOpenSupportStartSec==F.ModeledTimeSec(frames(1))&&V.HalfOpenSupportEndSec==F.ModeledTimeSec(frames(end))+dt);
+end
+function checkDifference(V,human,automatic,F)
+assert(V.OnsetShiftFrames==human(1)-automatic(1)&&V.OffsetShiftFrames==human(end)-automatic(end));
+delta=F.ModeledTimeSec(human(end))-F.ModeledTimeSec(human(1))-F.ModeledTimeSec(automatic(end))+F.ModeledTimeSec(automatic(1));
+assert(V.EndpointSpanDifferenceSec==delta);
+extra=numel(setdiff(human,automatic))-numel(setdiff(automatic,human));
+assert(V.AdditionalIncludedFrames==extra&&V.InclusiveDurationDifferenceSec==extra*(F.ModeledTimeSec(2)-F.ModeledTimeSec(1)));
+end

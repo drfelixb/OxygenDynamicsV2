@@ -1,0 +1,20 @@
+{
+  "schema": "boi-evidence-decision-1",
+  "decision_id": "R5-WINDOW-010",
+  "date": "2026-09-11",
+  "origin": "User-authorized continuation; developer implementation and verification",
+  "scope": "BOI saved recording/window evidence; no detector/statistics rerun or animal pooling",
+  "status": "window_denominator_inspection_connected_and_developer_verified",
+  "previous_behavior": "Recording denominator evidence was retained in MAT/CSV/workbook exports but lacked connected MATLAB inspection.",
+  "decision": "Expose three saved sink window quantities with independent arithmetic replay, frame/event ingredients, saved tissue masks, QC and immutable review exports.",
+  "both_signs": "Sink and surge tissue support retained separately; surge window outcomes explicitly unavailable in current saved schema, never inferred or set to zero.",
+  "scientific_changes": [],
+  "timing": "Confirmed external HP 1 Hz remains authoritative; 0.96-second camera integration is separate; source clocks are not analysis times.",
+  "limits": [
+    "No independent native-union reconstruction",
+    "No anatomical/dynamic validity acceptance",
+    "No final outcome, animal or cohort inclusion decision"
+  ],
+  "evidence": "docs/reference-results/boi-window-review-20260911/README.md",
+  "next_owned_work": "Extend saved window evidence to surge outcomes with separate support, preserved missingness and unchanged sink calculations."
+}

@@ -1,0 +1,18 @@
+{
+  "Schema": "boi-reviewed-pocket-definition-1",
+  "ID": "boi-reviewed-pocket-optical-0.2.0-exploratory",
+  "Role": "researcher_reviewed_pocket_exploratory_optical_measure",
+  "Primary": "100*min((corrected(W)-mean(corrected(R)))/mean(raw(R)))",
+  "Companion": "100*min((raw(W)-mean(raw(R)))/mean(raw(R)))",
+  "Units": "percent_of_positive_raw_reference_intensity_not_oxygen_percentage",
+  "ReferenceAuthority": "explicit_researcher_frames_and_suitability; normal_fluctuations_allowed",
+  "ReferenceStates": ["accepted_local_state", "provisional_local_state", "unsuitable", "not_assessed"],
+  "EndpointStates": ["recovery_observed", "recovery_unresolved", "recording_censored"],
+  "Clock": "explicit_external_trigger_1Hz; frame_origin_1; elapsed_seconds=frame-1",
+  "Footprint": "unchanged_saved_fixed_union; origin_and_pixel_identities_retained",
+  "Correction": "source_matched_saved_trend_or_receipted_saved_corrected_stage; no_new_fit",
+  "ProductionAdoption": false,
+  "AutomaticLabelsOrMeasurementsChanged": false,
+  "ConfirmedDuration": "withheld_for_unresolved_recovery_or_censoring; this_slice_adds_no_duration_estimator",
+  "Missingness": "NaN_in_MAT_or_CSV; null_in_JSON; never_zero"
+}

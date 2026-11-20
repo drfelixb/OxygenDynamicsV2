@@ -1,0 +1,14 @@
+packet=fileparts(mfilename('fullpath'));repo=fullfile(fileparts(fileparts(packet)),'existing-analysis');
+addpath(repo);setupOxygenDynamicsPath;
+started=tic;results=runBOISoftwareChecks();
+save(fullfile(packet,'regression-results.mat'),'results');
+writeBOIRunJSON(fullfile(packet,'regression-results.json'),table2struct(table(results)));
+writeBOIRunJSON(fullfile(packet,'regression-summary.json'),struct('Version',version,'Computer',computer, ...
+    'Tests',numel(results),'Passed',sum([results.Passed]),'Failed',sum([results.Failed]), ...
+    'Incomplete',sum([results.Incomplete]),'ElapsedSeconds',toc(started),'FullRecordedMovieRuns',0));
+targets={'prepareBOIRecordingRequest.m','runBOIRecordingWorkflow.m','loadBOIRecordingRun.m', ...
+    'openBOIRecordingWorkflow.m','helpers/captureBOIRunReview.m','helpers/writeBOIRunJSON.m', ...
+    'runBOISoftwareChecks.m','tests/analysis/testBOIRecordingWorkflow.m'};
+checks=struct('Path',{},'Messages',{});
+for k=1:numel(targets),checks(k)=struct('Path',targets{k},'Messages',checkcode(fullfile(repo,targets{k}),'-id'));end
+writeBOIRunJSON(fullfile(packet,'code-analyzer.json'),checks);

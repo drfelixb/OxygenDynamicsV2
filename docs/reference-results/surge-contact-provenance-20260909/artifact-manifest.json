@@ -1,0 +1,177 @@
+[
+  {
+    "Path": "cached-input-hashes.csv",
+    "SHA256": "1d3ef9653461b5dae0099665ba2f06f46ed1b9762e5a5033dc738728ce81d45d",
+    "Bytes": 1503
+  },
+  {
+    "Path": "candidate-replay-summary.csv",
+    "SHA256": "aba948bc1422211905c9da98e9b616933c622ac16144dc2a0097b5088b99a8f3",
+    "Bytes": 658
+  },
+  {
+    "Path": "candidate-replays/FB2312-baseline-awake/growing_clean/SurgeCandidateRunQC.csv.gz",
+    "SHA256": "5acd60d8d1b52cddd2ab428b2a49ff4a81291006ccfb2b3b663dda8f2a432d97",
+    "Bytes": 32989
+  },
+  {
+    "Path": "candidate-replays/FB2312-baseline-awake/growing_clean/SurgeContactFrames.csv.gz",
+    "SHA256": "642ca4236cdc76d369908bcf74badffbd8bf7509f29852a8e25b7853db7a4b24",
+    "Bytes": 8176
+  },
+  {
+    "Path": "candidate-replays/FB2312-baseline-awake/growing_clean/SurgeTrackingEdges.csv.gz",
+    "SHA256": "9422f1abe94d29dfb7e17f35eff2da144d86fcd60e914947a67cee750b38e705",
+    "Bytes": 121507
+  },
+  {
+    "Path": "candidate-replays/FB2312-baseline-awake/growing_clean/provenance.json",
+    "SHA256": "aab809d7bbdc23417b03be1dc143787c1ddbe4b27faf0c79e383e1263f5dfd35",
+    "Bytes": 3039
+  },
+  {
+    "Path": "candidate-replays/FB2312-baseline-awake/shrinking_clean/SurgeCandidateRunQC.csv.gz",
+    "SHA256": "f20b308493de2d84f05a23a1e0974612d1d5048e382cdd214a591d6db66ecdff",
+    "Bytes": 33167
+  },
+  {
+    "Path": "candidate-replays/FB2312-baseline-awake/shrinking_clean/SurgeContactFrames.csv.gz",
+    "SHA256": "0b708fa24782200a79e24ee3bb0186b74fbccc0d09cfd6463218af92eb0fe215",
+    "Bytes": 8536
+  },
+  {
+    "Path": "candidate-replays/FB2312-baseline-awake/shrinking_clean/SurgeTrackingEdges.csv.gz",
+    "SHA256": "b1c966aaf53effe31cccbd31f6d73c4730bdc574b2f49faf32d38de6f2533178",
+    "Bytes": 122334
+  },
+  {
+    "Path": "candidate-replays/FB2312-baseline-awake/shrinking_clean/provenance.json",
+    "SHA256": "fc8ed26533e1547d733397b18ecd68a06c48e44eab10c40b96b694903d73be25",
+    "Bytes": 3041
+  },
+  {
+    "Path": "candidate-replays/FB2411/growing_clean/SurgeCandidateRunQC.csv.gz",
+    "SHA256": "5f903f01bbf2231b835693699693e98a5f0228ab55442905c23615c6bc1ad80c",
+    "Bytes": 22966
+  },
+  {
+    "Path": "candidate-replays/FB2411/growing_clean/SurgeContactFrames.csv.gz",
+    "SHA256": "869f9d135f43fbe5e586cdfdc8babd3e793db34c7b440cd74567b56c979ed606",
+    "Bytes": 8288
+  },
+  {
+    "Path": "candidate-replays/FB2411/growing_clean/SurgeTrackingEdges.csv.gz",
+    "SHA256": "81251dcd15325162f2769c90e6225e43403838c5825e46de0e983fff41a0af23",
+    "Bytes": 67241
+  },
+  {
+    "Path": "candidate-replays/FB2411/growing_clean/provenance.json",
+    "SHA256": "8790e4831cf86f2ea428dd02bf24bbffba89729b23309de67be67e634c232d20",
+    "Bytes": 2981
+  },
+  {
+    "Path": "candidate-replays/FB2411/shrinking_clean/SurgeCandidateRunQC.csv.gz",
+    "SHA256": "2028790c6a09a7112c7803fc03e09b72e5d55be7ee4bbbfcf70e2ba36e6da7d4",
+    "Bytes": 23119
+  },
+  {
+    "Path": "candidate-replays/FB2411/shrinking_clean/SurgeContactFrames.csv.gz",
+    "SHA256": "54812d07d21162be817ee51478c46e446bdeff77ab80bbb251b09f801a0438f4",
+    "Bytes": 8558
+  },
+  {
+    "Path": "candidate-replays/FB2411/shrinking_clean/SurgeTrackingEdges.csv.gz",
+    "SHA256": "10af203190771a6ba055583cee65d70595b17f0aa5a0b5b400fd01b9ed9e4225",
+    "Bytes": 67577
+  },
+  {
+    "Path": "candidate-replays/FB2411/shrinking_clean/provenance.json",
+    "SHA256": "4c2de9914b6ee6df2413a899760e08ec6931a68b1aedf3b9034e3ec97d69dd74",
+    "Bytes": 2983
+  },
+  {
+    "Path": "candidate-replays/M400-01-baseline-awake/moving_clean/SurgeCandidateRunQC.csv.gz",
+    "SHA256": "650c109961d64d52a6f5fc80c7898cdab6954c49cad3783254e7ac94f92f720b",
+    "Bytes": 62235
+  },
+  {
+    "Path": "candidate-replays/M400-01-baseline-awake/moving_clean/SurgeContactFrames.csv.gz",
+    "SHA256": "52d1ddaf36e0a0c5b00ac5a17297faaf41945736f4329289b9056e54bea314a1",
+    "Bytes": 19584
+  },
+  {
+    "Path": "candidate-replays/M400-01-baseline-awake/moving_clean/SurgeTrackingEdges.csv.gz",
+    "SHA256": "6c68610b3d8322398c63fcb04064fb693a4492bbe2371d1cb9c1cea2818e6606",
+    "Bytes": 188064
+  },
+  {
+    "Path": "candidate-replays/M400-01-baseline-awake/moving_clean/provenance.json",
+    "SHA256": "0216a9478690bc79dc891c9880539b48b35c253af9d581111759bce73ad6fdde",
+    "Bytes": 2976
+  },
+  {
+    "Path": "candidate-replays/M401-01-baseline-awake/smooth_pairs/SurgeCandidateRunQC.csv.gz",
+    "SHA256": "fa866e51b64d23621840e4fc9f9446d839d741c9e24aad7fbf5caf9f085994a3",
+    "Bytes": 45543
+  },
+  {
+    "Path": "candidate-replays/M401-01-baseline-awake/smooth_pairs/SurgeContactFrames.csv.gz",
+    "SHA256": "2b3c2654aa4b7fa3183103b9cdb379007eb18722bc423c857f951e2beb9857f1",
+    "Bytes": 9752
+  },
+  {
+    "Path": "candidate-replays/M401-01-baseline-awake/smooth_pairs/SurgeTrackingEdges.csv.gz",
+    "SHA256": "ab248fb6a7466814c704c6d0f6c7d39b250a3eb6f394ff120658973a357f1a38",
+    "Bytes": 118996
+  },
+  {
+    "Path": "candidate-replays/M401-01-baseline-awake/smooth_pairs/provenance.json",
+    "SHA256": "03a1ab6aafa2bd44bd447573fa03744c67373952e471fa6fe76932a5959780f0",
+    "Bytes": 2976
+  },
+  {
+    "Path": "code-manifest.csv",
+    "SHA256": "c4e98b038fe9ab0ab66d935512b22cb2270fe967c33f0fcaf6f31455d64fe048",
+    "Bytes": 46075
+  },
+  {
+    "Path": "completion.json",
+    "SHA256": "a81ead0e14b66217c72ec7a1ecf5902a04228b5d50cfd65a958eeeec1abc4fab",
+    "Bytes": 13616
+  },
+  {
+    "Path": "independent-amplitude-audit.csv",
+    "SHA256": "b1d8a002d4ab860fd3af810b963e040ac1071ab5976db354633a6304a96014e0",
+    "Bytes": 50399
+  },
+  {
+    "Path": "master-ID401/SurgeCandidateRunQC.csv.gz",
+    "SHA256": "0041f4207161163d523101b3196e6359e91569af26d78850b94da68659429712",
+    "Bytes": 45465
+  },
+  {
+    "Path": "master-ID401/SurgeContactFrames.csv.gz",
+    "SHA256": "1fc1993ffd10f31e9dd92d156da349582a96be0e17e52d4b56c148386ffe619b",
+    "Bytes": 9876
+  },
+  {
+    "Path": "master-ID401/SurgeGapReview.csv.gz",
+    "SHA256": "7d6fed4b1c3ac89bef58316c1302c1eba61b936a8f33e6cad69c0465702cfd2b",
+    "Bytes": 1253
+  },
+  {
+    "Path": "master-ID401/SurgeTrackingEdges.csv.gz",
+    "SHA256": "20337fcf3b01bd8ddd1a1100064fe7db831e1ce91c598a7835f6529a3dcdb923",
+    "Bytes": 119755
+  },
+  {
+    "Path": "master-statistics-qc.csv",
+    "SHA256": "31800dd1be3d5c91cf9bbae7dc3ea34f1874a2f8c85f2b285feacc6e68fe75c2",
+    "Bytes": 889
+  },
+  {
+    "Path": "python-regression-verification.json",
+    "SHA256": "90d125ec7ced81e7cdae24f7eb0ebf7507bd809208ae1c0072b089e3bae5f52e",
+    "Bytes": 385
+  }
+]

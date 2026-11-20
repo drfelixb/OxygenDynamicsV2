@@ -1,0 +1,33 @@
+function saveRevision05
+root='/Users/zcm361/Documents/Github/OxygenDynamicsV2';cd(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(root,'reference-validation/boi-researcher-reference-feedback-20260915');
+src=jsondecode(fileread(fullfile(root,'reference-validation/boi-baseline-exclusion-review-20260914/inputs.json')));s=src.Sources;
+R=loadBOIEventReview(s.Audit.Path);old=loadBOIBoundaryReview(R,s.Review.Path);
+assert(strcmp(old.SHA256,'16a99333cf9fed005fce1823fdea76161055776dde428e27c642afef0f1df26f'));
+R.BoundaryReview=old;B=getBOIBoundaryReview(R,186);a=B.Annotation;
+assert(isequal(a.OnsetFrames,[1149 1153])&&a.PreferredOnsetFrame==1153);
+a.OnsetFrames=[1149 1154];a.PreferredOnsetFrame=1154;
+a.Reason=['Researcher statement in conversation on 2026-09-15, transcribed by assistant: "id start more with 1154, instead of 1153 and include 1152 in the baseline." ' ...
+    'Preferred onset revised from 1153 to 1154. Earlier alternative 1149 and recovery alternatives 1166/1167 retained; no preferred recovery inferred. ' ...
+    'Frame 1152 baseline-inclusion judgment is recorded separately in researcher-feedback.json; this boundary revision does not change native-mask exclusions or calculate amplitude.'];
+newPath=fullfile(fileparts(R.AuditPath),'BOI-researcher-review-05.json');
+next=saveBOIBoundaryReview(R,186,a,newPath,old);
+assert(isequal(next.Document.Revisions(1:4),old.Document.Revisions));
+assert(isequal(next.Document.Revisions(5).PreviousAnnotation,B.Annotation));
+R.BoundaryReview=loadBOIBoundaryReview(R,newPath);current=getBOIBoundaryReview(R,186);
+assert(current.Annotation.PreferredOnsetFrame==1154&&isequal(current.Annotation.RecoveryFrames,[1166 1167]));
+copyfile(newPath,fullfile(out,'BOI-researcher-review-05.json'));
+R=attachBOIReferenceSources(R,s.SinkMaster.Path,s.SurgeMaster.Path);
+P=buildBOIReviewedReferencePreview(R,186);w=P.Windows([P.Windows.OnsetFrame]==1154);
+assert(isequal(w.CandidateFrames,(1134:1153)')&&w.OptionAEligibleCount==14&&isequal(w.NativeExcludedFrames,(1148:1153)'));
+receipt=exportBOIEventReview(R,186,fullfile(out,'native-rule-preview-revision-05'));
+assert(receipt.ResearcherBoundaryReview.Annotation.PreferredOnsetFrame==1154);
+assert(strcmp(oxygenFileSHA256(old.Path),old.SHA256)&&strcmp(oxygenFileSHA256(R.AuditPath),R.AuditSHA256));
+V=struct('Status','passed','SavedReviewPath',next.Path,'SavedReviewSHA256',next.SHA256, ...
+    'PriorReviewSHA256',old.SHA256,'PreviousRevisionsPreserved',4,'PreferredOnsetFrame',1154, ...
+    'OtherOnsetAlternativeRetained',1149,'RecoveryAlternativesFrames',[1166 1167],'PreferredRecoveryFrame',[], ...
+    'NativeRuleCandidateFrames',w.CandidateFrames,'NativeRuleEligibleCount',14,'NativeRuleExcludedFrames',w.NativeExcludedFrames, ...
+    'ResearcherBaselineInclusionJudgmentFrames',1152,'BaselineFrame1153Disposition','clarification_pending', ...
+    'ManualBaselineExceptionApplied',false,'ReviewedAmplitudeCalculated',false);
+fid=fopen(fullfile(out,'verification.json'),'w');c=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(V,'PrettyPrint',true));disp(V);
+end

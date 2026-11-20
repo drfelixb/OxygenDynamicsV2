@@ -1,0 +1,66 @@
+{
+  "status": "single_recording_workflow_completed_scientific_eligibility_open",
+  "purpose": "One fresh source-to-measurement MATLAB trace and both-sign availability export under explicit default-support/observability assumptions. No C02 biological comparison.",
+  "recording": {
+    "Session": "FB2314-baseline-awake",
+    "Mouse": "FB2314",
+    "AssetID": "9ce94e52-e1d9-446d-a758-66db41a698e6",
+    "SourceSHA256": "08381f8ef4cb0da80a09645aeffc9416188cf7937eaf207c0536f1f997494cf8",
+    "Frames": 1200,
+    "SampleHz": 1,
+    "PixelSizeUm": 2.35
+  },
+  "selection_reason": "First recording in the existing eight-source audit order; adds a 1200-frame / 2.35-micrometre C02 source to the existing ID400/HP workflow evidence. Not chosen for a desired biological result or claimed typical quality.",
+  "technical_extent_sec": [
+    0,
+    1200
+  ],
+  "extent_status": "whole_file_descriptive_model_not_approved_analysis_window",
+  "static_support": "unchanged automatic default, explicitly unvalidated; draft polygon not adopted",
+  "frame_validity": "leave undeclared; all modeled intervals retained, not asserted valid",
+  "configuration": "Unchanged master defaults and 20-second clean pre-event baseline; normal master and stats entry points, fresh isolated source copy, no curated legacy MATs or AQuA2 results.",
+  "budget": {
+    "master_runs": 1,
+    "stats_runs": 1,
+    "second_source_runs": 0,
+    "registration_runs": 0,
+    "soft_elapsed_seconds_before_next_major_stage": 900,
+    "output_review_target_GiB": 5,
+    "parallel_workers": 2,
+    "memory": "Measure process peak RSS and report its limits; historical 1200-frame HP process RSS was 12.52 GiB, not a total-machine guarantee. Check available resources before starting; do not alter scientific settings to fit memory."
+  },
+  "required_outputs": [
+    "Source checksum and captured acquisition declaration",
+    "Effective default settings and dictionary hash",
+    "Both-sign event registry, baseline reasons and measurement availability",
+    "Native mask union and both-sign area-time ingredients",
+    "Boundary/onset diagnostics and negative/NaN preservation",
+    "First finite event trace per sign in saved row order, or explicit no-finite-event reason",
+    "One numerical replay per sign of source trace/baseline/amplitude/integral and occupancy where available",
+    "Unchanged source/implementation and preserved prior evidence checks"
+  ],
+  "stop": "After one successful descriptive workflow and numerical/source review. Preserve any failure; fix only a demonstrated execution defect. No automatic second mouse/state, mask adoption, exclusion, censoring change or contrast.",
+  "decision_id": "R1-C02-WORKFLOW-028",
+  "approved_masks": [],
+  "approved_windows": [],
+  "excluded_frames": [],
+  "scientific_eligibility": "not_assessed",
+  "arithmetic_tolerance": {
+    "absolute": 1e-12,
+    "relative": 1e-10,
+    "meaning": "Numerical replay only, not biological accuracy"
+  },
+  "completion": {
+    "master_runs": 1,
+    "statistics_runs": 1,
+    "recording": "dandi000891_FB2314_awake_028",
+    "detected_sinks": 219,
+    "detected_surges": 49,
+    "finite_sink_amplitudes": 109,
+    "finite_surge_amplitudes": 13,
+    "negative_surge_amplitudes_retained": 2,
+    "verification": "passed",
+    "source_amplitude_mismatches": 0,
+    "report": "docs/reference-results/boi-c02-workflow-20260912/README.md"
+  }
+}

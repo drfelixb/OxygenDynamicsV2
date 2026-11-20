@@ -45,6 +45,7 @@ setupOxygenDynamicsPath();
 %% Run configuration
 % Set interactive=false for reproducible batch runs without dialog prompts.
 RunConfig = struct();
+RunConfig.BOISupportProfile = 'whole-image'; % Explicitly select craniotomy-roi-1 for reviewed support.
 RunConfig.inputCsv = 'GFAP_GeNL_Ctrl.csv';
 RunConfig.interactive = false;
 RunConfig.reanalyseExisting = true;
@@ -132,7 +133,7 @@ for datai=1:length(Paths)
     Pupil = Pupils{datai};
     Puff = Puffs{datai};
     AmyloidFile = AmyloidFiles{datai};
-    RecordingContext = createLegacyRecordingContext(SFs,Mous,Cond,PiSz,Gen,Promo,Drug,Posture,Pupil,Puff,strOW);
+    RecordingContext = createLegacyRecordingContext(SFs,Mous,Cond,PiSz,Gen,Promo,Drug,Posture,Pupil,Puff,strOW,RunConfig.BOISupportProfile);
     Metadata = createRecordingMetadata(Mous,Cond,Drug,Gen,Promo);
     OverwriteOutputs = strcmpi(strOW,'Y');
     Validation = validateOxygenRecording(RecordingFolder,SFs,PiSz,OverwriteOutputs,Metadata);

@@ -1,0 +1,26 @@
+{
+  "Frames": 1200,
+  "Height": 512,
+  "Width": 512,
+  "SurgeEvents": 34,
+  "SurgeSites": 25,
+  "SinkEvents": 239,
+  "SinkSites": 63,
+  "CandidateMeasurements": 34,
+  "SourceTiff": "../reference-validation/local-timing-rerun-20260909/FB2316-baseline/Recording/archive_original.tif",
+  "SourceSHA256": "23385c57fd4c0fbd8eb031c2058b48166e42a5df01cf8b1fb486cfa6360a2065",
+  "ConstructedTiff": "../reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/challenge/challenge_original.tif",
+  "ConstructedSHA256": "b425c53c7417a4e39a89d6edd0db83f7e199d0dccc8fccf0ccf9e482a34938fe",
+  "SurgeMat": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/challenge/OxygenSurges_Output/OxygenSurgeschallenge.mat",
+  "SurgeMatSHA256": "bd12a3d01be0b53725ed8ac17bdf68b38fd539b0a2f734e002dbd4a73640d96f",
+  "SinkMat": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/surge-full-movie-measurement-20260910/FB2316-baseline/challenge/OxygenSinks_Output/OxygenSinks_Urefinedchallenge.mat",
+  "SinkMatSHA256": "acdbff8207cd4250ba9780ae70417afe113b2f2a11079396cacda68b45d8d74e",
+  "MeasurementCacheSHA256": "b34ce32e0bef31a7a3913071eb73f42adafd39feac49e261a685e1ecc4f0a464",
+  "PipelineContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-surge-shape-continuity-5",
+    "Measurement": "event-footprint-contact-ledger-7",
+    "Statistics": "mouse-strict-contact-qc-8",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  }
+}

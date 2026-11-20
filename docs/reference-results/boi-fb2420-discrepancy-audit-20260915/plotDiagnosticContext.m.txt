@@ -1,0 +1,18 @@
+function plotDiagnosticContext
+here=fileparts(mfilename('fullpath'));out=fullfile(here,'run-01');
+fig=figure('Visible','off','Position',[50 50 1600 950]);t=tiledlayout(fig,3,3,'TileSpacing','compact','Padding','compact');
+cases=[2 2 3];names={'case2-A','case2-B85','case3-A'};bounds={[2 28],[65 84 85],[7 27]};
+for col=1:3
+ D=readtable(fullfile(out,sprintf('case-%02d-full-traces.csv',cases(col))));C=readtable(fullfile(out,[names{col} '-frame-contacts.csv']));b=bounds{col};lo=max(1,min(b)-20);hi=min(1200,max(b)+20);u=D.Frame>=lo&D.Frame<=hi;
+ for row=1:3
+  ax=nexttile(t,(row-1)*3+col);
+  if row==1,plot(ax,D.Frame(u),D.Corrected(u),'Color',[.1 .35 .65]);ylabel(ax,'Corrected intensity');title(ax,sprintf('Case %d footprint | approximate %d to %d',cases(col),b(1),b(end)));
+  elseif row==2,plot(ax,D.Frame(u),[D.Normalized(u) D.Filtered(u)]);ylabel(ax,'Normalized score');legend(ax,{'Before smoothing','Filtered'},'Location','best');
+  else,plot(ax,C.Frame,C.SinkOverlapPixels./C.FootprintPixels,'LineWidth',1.8);ylim(ax,[-.05 1.05]);ylabel(ax,'Native sink coverage');xlabel(ax,'One-based frame; external 1 Hz');
+  end
+  hold(ax,'on');xlim(ax,[lo hi]);grid(ax,'on');for e=b,xline(ax,e,':','Color',[.55 .1 .65],'LineWidth',1.4,'HandleVisibility','off');end
+ end
+end
+title(t,{'Previously identified pocket intervals on their original fixed footprints','Purple bounds are approximate human context, not reassigned native events. Case 2 late recovery alternatives: 84 / 85.'});
+exportgraphics(fig,fullfile(out,'contextual-pockets.png'),'Resolution',120);close(fig);
+end

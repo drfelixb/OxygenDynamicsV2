@@ -1,0 +1,58 @@
+% Plot saved descriptive exports only; no detection, curation or statistical test.
+folder = fileparts(mfilename('fullpath'));
+D = jsondecode(fileread(fullfile(folder,'figure-data.json')));
+C = jsondecode(fileread(fullfile(folder,'descriptive-contrasts.json')));
+F = figure('Visible','off','Color','w','Position',[80 80 1280 1060]);
+cleanup = onCleanup(@() close(F));
+T = tiledlayout(F,2,2,'TileSpacing','compact','Padding','compact');
+colors = [0 .447 .698; .902 .624 0; 0 .62 .451; .835 .369 0; .8 .475 .655; .337 .706 .914; .35 .35 .35];
+pointCount = 0;
+for k=1:4
+    p = D.panels(k);
+    idx = find(strcmp({C.contrasts.sign},p.sign) & strcmp({C.contrasts.metric},p.metric));
+    assert(isscalar(idx));
+    c = C.contrasts(idx);
+    assert(isequal(p.awake(:),[c.paired_values.awake]'));
+    assert(isequal(p.isoflurane(:),[c.paired_values.isoflurane]'));
+    assert(abs(mean(p.awake)-p.mean_awake)<1e-12);
+    assert(abs(mean(p.isoflurane)-p.mean_isoflurane)<1e-12);
+    ax = nexttile(T); hold(ax,'on');
+    h = gobjects(8,1);
+    for j=1:7
+        if j<=3, marker='o'; else, marker='s'; end
+        h(j)=plot(ax,[0 1],[p.awake(j) p.isoflurane(j)],'-','Color',colors(j,:), ...
+            'Marker',marker,'MarkerSize',7,'MarkerFaceColor','w','LineWidth',1.6);
+        assert(isequal(h(j).YData,[p.awake(j) p.isoflurane(j)]));
+        pointCount=pointCount+2;
+    end
+    h(8)=plot(ax,[0 1],[p.mean_awake p.mean_isoflurane],'k--d', ...
+        'LineWidth',2.4,'MarkerSize',9,'MarkerFaceColor','k');
+    ax.XLim=[-.22 1.22]; ax.XTick=[0 1]; ax.XTickLabel={'Awake','Isoflurane'};
+    ax.FontSize=12; ax.LineWidth=.8; ax.Box='off'; ax.YGrid='on'; ax.GridAlpha=.13;
+    ax.YLim=[0 max([p.awake(:);p.isoflurane(:)])*1.13];
+    if strcmp(p.metric,'occupied_tissue_percent')
+        label='Occupied tissue (%)'; unit='pp';
+    else
+        label='Detected onsets (events/mm^2/min)'; unit='events/mm^2/min';
+    end
+    ylabel(ax,label);
+    title(ax,{[upper(p.sign(1)) p.sign(2:end)], ...
+        sprintf('Mean paired change: %+.3f %s',p.mean_difference,unit)},'FontSize',13);
+    if k==1
+        legendLabels=[cellstr(D.mice); {'Equal-mouse mean'}];
+        L=legend(ax,h,legendLabels,'NumColumns',4,'Box','off','FontSize',11);
+        L.Layout.Tile='south';
+    end
+end
+title(T,{'C02 | seven paired mice','Full stored recordings at external 1 Hz; descriptive results'},'FontSize',18);
+xlabel(T,{'Circles: FB mice, 20 min/state, 2.35 mum/pixel   |   Squares: ID mice, 10 min/state, 4.75 mum/pixel', ...
+    'Black diamonds: equally weighted state means. No confidence intervals or significance tests.'},'FontSize',11);
+exportgraphics(F,fullfile(folder,'paired-results.png'),'Resolution',180);
+exportgraphics(F,fullfile(folder,'paired-results.svg'),'ContentType','vector');
+assert(pointCount==56);
+V=struct('Status','passed','MATLABVersion',version,'PlottedIndividualValues',pointCount, ...
+    'Panels',4,'EqualMouseMeanPoints',8,'Checks',{{'JSON points match paired source values', ...
+    'graphics YData equals saved values','equal-mouse means recomputed'}},'InferencePerformed',false);
+fid=fopen(fullfile(folder,'figure-verification.json'),'w');assert(fid>=0);
+fprintf(fid,'%s\n',jsonencode(V,PrettyPrint=true));fclose(fid);
+disp(V);

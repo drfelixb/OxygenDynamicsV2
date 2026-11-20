@@ -1,0 +1,36 @@
+packet=fileparts(mfilename('fullpath'));workspace=fileparts(fileparts(packet));repo=fullfile(workspace,'existing-analysis');
+addpath(repo);setupOxygenDynamicsPath;
+checks=jsondecode(fileread(fullfile(packet,'regression-summary.json')));assert(checks.Failed==0&&checks.Incomplete==0);
+source=fullfile(workspace,'reference-validation','boi-id400-awake-run-20260921','run-01','Recording');
+assert(isfolder(source));
+o=struct('RecordingFolder',source,'OutputFolder',fullfile(packet,'gui-run'), ...
+    'SampleHz',1,'PixelSizeUm',4.75,'SupportProfile','craniotomy-roi-1', ...
+    'Mouse','ID400','Condition','Awake_immobile','DrugID','awake','Genotype','WT','Promoter','GFAP.PHP');
+assert(strcmp(oxygenFileSHA256(fullfile(source,'preserved_original.tif')),'fc980cfc800ddc830a6dd122f64b734458a16b55de738bad2c7896b7064c2aaf'));
+pool=parpool('Threads',2);poolCleanup=onCleanup(@()delete(pool));
+started=tic;[fig,ui]=openBOIRecordingWorkflow(o);cleanup=onCleanup(@()delete(fig));
+request=ui.Prepare();ui.Confirm.Value=true;ui.Confirm.ValueChangedFcn([],[]);
+exportapp(fig,fullfile(packet,'gui-preflight.png'));
+ui.RunButton.ButtonPushedFcn([],[]);state=ui.State();
+assert(strcmp(state.Status,'complete'),'GUI run did not complete: %s',ui.Status.Text);Run=state.SelectedRun;
+assert(toc(started)<600,'Approved soft execution budget exceeded; stop before another run.');
+exportapp(fig,fullfile(packet,'gui-complete.png'));
+[ef,eu]=ui.OpenEvents();ec=onCleanup(@()delete(ef));
+assert(eu.Tabs.SelectedTab==eu.TimingTab);R=eu.CurrentReview();
+D=buildBOIEventReviewData(R,1);assert(strcmp(D.TimingReview.Corrected.Status,'available'));
+assert(strcmp(D.TimingReview.Filtered.Status,'available'));
+exportapp(ef,fullfile(packet,'gui-corrected-event.png'));
+[wf,wu]=ui.OpenWindows();wc=onCleanup(@()delete(wf));
+assert(strcmp(wu.Sign.Value,'sink'));assert(strcmp(wu.OpenEventButton.Enable,'on'));
+wu.SelectSign('surge');assert(strcmp(wu.OpenEventButton.Enable,'on'));
+[linked,linkedUI]=wu.OpenEvent();lc=onCleanup(@()delete(linked));
+assert(linkedUI.Tabs.SelectedTab==linkedUI.TimingTab);
+exportapp(wf,fullfile(packet,'gui-surge-window.png'));
+receipt=struct('Entry','GUI callback','RunManifest',Run.ManifestPath,'ElapsedSeconds',toc(started), ...
+    'Events',Run.EventCount,'CorrectedTrace',D.TimingReview.Corrected.Status, ...
+    'ScoreTrace',D.TimingReview.Filtered.Status,'ConnectedBothSigns',true,'DetectorExecutions',1);
+files=dir(fullfile(o.OutputFolder,'**','*'));receipt.OutputBytes=sum([files(~[files.isdir]).bytes]);
+writeBOIRunJSON(fullfile(packet,'gui-integration.json'),receipt);
+assert(receipt.OutputBytes<3*1024^3,'Reassess the six GiB combined output review budget before the second run.');
+save(fullfile(packet,'gui-request.mat'),'request');
+disp(receipt);

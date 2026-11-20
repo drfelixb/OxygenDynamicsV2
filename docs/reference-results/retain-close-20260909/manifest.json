@@ -1,0 +1,81 @@
+{
+  "SourceTiff": "../reference-validation/phase1-optimized-20260909/M400-01-baseline-awake/Recording/archive_original.tif",
+  "SourceSHA256": "695f8390be5fe18d06685d718b7e99c73d08715f51ef11ec14c694b32b599a05",
+  "SourceSession": "M400-01-baseline-awake",
+  "Scope": "full",
+  "SourceFrames": [
+    1,
+    600
+  ],
+  "SourceRows": [
+    1,
+    512
+  ],
+  "SourceColumns": [
+    1,
+    512
+  ],
+  "SampleHz": 1,
+  "PixelSizeUm": 4.75,
+  "CircleCenterXY": [
+    256,
+    256
+  ],
+  "CircleRadiusPixels": 18,
+  "WindowsInclusive": [
+    [
+      61,
+      80
+    ],
+    [
+      96,
+      115
+    ]
+  ],
+  "Cases": [
+    {
+      "Case": "control",
+      "LocalAdditiveFraction": 0,
+      "GlobalFraction": 0
+    },
+    {
+      "Case": "sink05",
+      "LocalAdditiveFraction": -0.05,
+      "GlobalFraction": 0
+    },
+    {
+      "Case": "sink20",
+      "LocalAdditiveFraction": -0.2,
+      "GlobalFraction": 0
+    },
+    {
+      "Case": "surge05",
+      "LocalAdditiveFraction": 0.05,
+      "GlobalFraction": 0
+    },
+    {
+      "Case": "surge20",
+      "LocalAdditiveFraction": 0.2,
+      "GlobalFraction": 0
+    },
+    {
+      "Case": "global_drop20",
+      "LocalAdditiveFraction": 0,
+      "GlobalFraction": -0.2
+    },
+    {
+      "Case": "global20_local05",
+      "LocalAdditiveFraction": 0.15,
+      "GlobalFraction": -0.2
+    }
+  ],
+  "PipelineContract": {
+    "Schema": "3.0-dev",
+    "Detector": "existing-v2-sd-retain-close-2",
+    "Measurement": "event-footprint-local-timing-recurrence-3",
+    "Statistics": "mouse-strict-recurrence-4",
+    "Normalization": "spatial-sd_then_temporal-sd"
+  },
+  "MatlabVersion": "25.1.0.2943329 (R2025a)",
+  "Interpretation": "Counterfactual injections on an unlabelled recorded background. Cropping and shortening change normalization and trend fitting; not full-recording accuracy. Fractions multiply each original pixel; uint16 rounding is measured. Global20_local05 means -20% outside, -5% inside."
+}

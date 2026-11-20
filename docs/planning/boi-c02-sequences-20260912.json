@@ -1,0 +1,176 @@
+{
+  "decision_id": "R1-C02-SEQUENCES-026",
+  "status": "focused_review_complete_no_exclusion_established",
+  "question": "Do neighbouring source frames show coherent landmark/edge displacement or observation loss at the 025 diagnostic selections?",
+  "scope": "BOI only; three awake sources, six contiguous clips containing 68 original frames plus one first-frame reference per source (71 unique source frames). The clips are review context, not analysis windows.",
+  "selection": "025 flagged indices plus five neighbours on either side; overlapping ID402 503/505 intervals merged. ROIs chosen from already viewed 025 source sheets before loading the new sequences; not blinded.",
+  "coordinates": "ROIs are [first column, first row, width, height] in native one-based pixels; fixed across each recording. Three visible vessel/perimeter locations per recording, used only as visual landmarks, not tissue masks.",
+  "display": "Fixed recording ranges inherited from 021/025; no frame normalization, temporal averaging, registration, source warping or smoothing. Native 96x96 crops displayed at integer enlargement; full frames preserved.",
+  "records": [
+    {
+      "session": "M402-01-baseline-awake",
+      "intervals": [
+        [
+          310,
+          320
+        ],
+        [
+          498,
+          510
+        ]
+      ],
+      "targets": [
+        315,
+        503,
+        505
+      ],
+      "display": [
+        0,
+        255
+      ],
+      "rois": [
+        [
+          212,
+          78,
+          96,
+          96
+        ],
+        [
+          375,
+          228,
+          96,
+          96
+        ],
+        [
+          222,
+          386,
+          96,
+          96
+        ]
+      ],
+      "roi_names": [
+        "Upper transverse vessel",
+        "Right curved vessel",
+        "Lower vessel / perimeter"
+      ]
+    },
+    {
+      "session": "M403-01-baseline-awake",
+      "intervals": [
+        [
+          264,
+          274
+        ],
+        [
+          445,
+          455
+        ],
+        [
+          541,
+          551
+        ]
+      ],
+      "targets": [
+        269,
+        450,
+        546
+      ],
+      "display": [
+        0,
+        255
+      ],
+      "rois": [
+        [
+          272,
+          160,
+          96,
+          96
+        ],
+        [
+          3,
+          252,
+          96,
+          96
+        ],
+        [
+          232,
+          416,
+          96,
+          96
+        ]
+      ],
+      "roi_names": [
+        "Transverse vessel",
+        "Left field edge",
+        "Lower field perimeter"
+      ]
+    },
+    {
+      "session": "FB2315-baseline-awake",
+      "intervals": [
+        [
+          415,
+          425
+        ]
+      ],
+      "targets": [
+        420
+      ],
+      "display": [
+        252,
+        25824
+      ],
+      "rois": [
+        [
+          192,
+          214,
+          96,
+          96
+        ],
+        [
+          122,
+          390,
+          96,
+          96
+        ],
+        [
+          417,
+          182,
+          96,
+          96
+        ]
+      ],
+      "roi_names": [
+        "Middle transverse vessel",
+        "Lower vessel",
+        "Right field edge"
+      ]
+    }
+  ],
+  "interpretation": "Look for coherent landmark/edge displacement across locations and continuity before/after selected frames. Brightness or texture changes alone cannot identify motion. Weak evidence stays unresolved; no numeric acceptance threshold.",
+  "budget": {
+    "source_files": 3,
+    "selected_source_frames": 71,
+    "registration_reruns": 0,
+    "detector_runs": 0,
+    "maximum_seconds_before_next_source": 180,
+    "review_sheets": 18
+  },
+  "stop": "One extraction and fixed-ROI review. No adaptive crop or display tuning to obtain an exclusion. If inconclusive, retain uncertainty and state what additional evidence would resolve it.",
+  "approved_masks": [],
+  "approved_windows": [],
+  "excluded_frames": [],
+  "scientific_eligibility": "not_assessed",
+  "completion": {
+    "verification": "passed",
+    "native_pixels_verified": 18612224,
+    "source_frames_verified": 71,
+    "interval_frames_reviewed_in_fixed_crops": 68,
+    "roi_sheets_reviewed": 18,
+    "full_frame_triptychs_reviewed": 7,
+    "viewer_checks": "passed",
+    "initial_render_failure_preserved": true,
+    "report": "docs/reference-results/boi-c02-sequences-20260912/README.md",
+    "remaining": "Measurement-specific support/exposure decisions, uncertain boundaries and fine-motion limitations; no further registration tuning implied."
+  }
+}

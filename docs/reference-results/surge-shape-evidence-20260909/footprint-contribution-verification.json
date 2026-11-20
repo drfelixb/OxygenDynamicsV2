@@ -1,0 +1,8 @@
+{
+  "MatchedSurgeRowsDecomposed": 12,
+  "PositiveAndNegativeSumToNet": true,
+  "SavedCounterfactualDiagnosticsReproduced": true,
+  "RowsWithNegativeContribution": 0,
+  "AuditSourceSHA256": "394af450901dbfce0a113d019caf9abb8e9de2eefa87bec6a3e9a2c7d59dff71",
+  "Interpretation": "Applied changes on paired constructed/source pixels only; natural fluctuations are preserved in both movies and subtract out. Positive and negative extrema need not occur in the same frame."
+}

@@ -1,0 +1,9 @@
+Session,SinkEvents,EventsWithSameSiteWindowOverlap,OverlappingPairs,EventsWithIdenticalSameSiteWindow
+FB2312-baseline-awake,192,44,29,21
+FB2316-baseline,193,14,7,12
+FB2411,26,0,0,0
+ID13-20200917,235,37,22,25
+M400-01-baseline-awake,137,10,5,2
+M400-03-baseline-iso,84,0,0,0
+M401-01-baseline-awake,92,6,3,0
+M401-03-baseline-iso,43,0,0,0

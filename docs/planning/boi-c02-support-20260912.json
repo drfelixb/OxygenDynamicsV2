@@ -1,0 +1,78 @@
+{
+  "decision_id": "R1-C02-SUPPORT-023",
+  "status": "completed_default_support_audit_scientific_support_unresolved",
+  "question": "What native spatial support and nominal tissue-time denominators does the unchanged default MATLAB path produce in the eight published C02 inputs?",
+  "scope": "BOI both signs; current automatic support audit only. No detector, event outcome, biological contrast, mask adoption, frame exclusion or approved window.",
+  "cases": [
+    {
+      "session": "FB2314-baseline-awake",
+      "mouse": "FB2314",
+      "asset_id": "9ce94e52-e1d9-446d-a758-66db41a698e6"
+    },
+    {
+      "session": "FB2314-baseline-iso",
+      "mouse": "FB2314",
+      "asset_id": "5ca61eac-9461-44e5-b222-1599aecc7ca8"
+    },
+    {
+      "session": "FB2315-baseline-awake",
+      "mouse": "FB2315",
+      "asset_id": "237d26a9-8977-4a97-b46b-206aefeb4c3d"
+    },
+    {
+      "session": "FB2315-baseline-iso",
+      "mouse": "FB2315",
+      "asset_id": "353b88f3-b509-4281-8c46-f338094b4907"
+    },
+    {
+      "session": "M402-01-baseline-awake",
+      "mouse": "ID402",
+      "asset_id": "f6089c10-cb71-4f49-8185-ba07e4073fb1"
+    },
+    {
+      "session": "M402-03-baseline-iso",
+      "mouse": "ID402",
+      "asset_id": "253f0176-34b4-4fae-9500-29bbde6803e2"
+    },
+    {
+      "session": "M403-01-baseline-awake",
+      "mouse": "ID403",
+      "asset_id": "2d68bdb0-58b0-4d36-8227-4526b8905ebf"
+    },
+    {
+      "session": "M403-03-baseline-iso",
+      "mouse": "ID403",
+      "asset_id": "693a568c-b90a-4e0c-b61d-ca77158c384a"
+    }
+  ],
+  "method": {
+    "source": "Unchanged loadOxygenStacks; all source frames, no denoised TIFF expected; exact external 1 Hz.",
+    "detrending": "Unchanged detrend_custom(IM_Raw,3); original single input and double container output. Four MATLAB thread workers, one source at a time.",
+    "support": "Unchanged computeRecordingArea with createOxygenMasterParams defaults: occupancy above each detrended frame mean, strict greater-than 30th percentile. No eligibleMask override.",
+    "signs": "Surge native automatic mask. Sink same native mask with default 20-pixel border removed. Export masks, counts and nominal area-time.",
+    "diagnostics": "Temporal above-mean count map, percentile ties, 8-connected mask components and included border fraction. No anatomical acceptance thresholds.",
+    "preview": "First, ceil(N/2), last unchanged source frames; display limits retained from five-fixed-frame observability pass. Show occupancy map, binary mask and middle-frame excluded-area overlay.",
+    "exposure": "Full [0,N) second nominal extents only. State established before recording, interval unmeasured; no inferred induction or signal-stability window."
+  },
+  "budget": {
+    "source_passes": 1,
+    "recordings": 8,
+    "maximum_job_seconds_before_starting_another_recording": 1200,
+    "workers": 4,
+    "detector_runs": 0
+  },
+  "success": "Source/implementation hashes unchanged; independent count-to-mask, border, area and nominal area-time replay; visual review of eight maps. Current automatic support remains unvalidated anatomically.",
+  "stopping_rule": "One unchanged-default pass; retain any failed attempt; no percentile sweep, outcome-driven mask or automatic follow-on detector.",
+  "mask_adoptions": [],
+  "approved_windows": [],
+  "excluded_frames": [],
+  "scientific_eligibility": "not_assessed",
+  "completion": {
+    "verification": "passed",
+    "reviewed_sheets": 8,
+    "native_positions_replayed": 2097152,
+    "matlab_total_seconds": 76.51,
+    "portable_report": "docs/reference-results/boi-c02-support-20260912/README.md",
+    "failed_attempts": 0
+  }
+}

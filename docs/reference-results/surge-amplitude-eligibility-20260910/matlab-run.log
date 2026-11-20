@@ -1,0 +1,138 @@
+WARNING: package sun.awt.X11 not in java.desktop
+WARNING: package sun.awt.X11 not in java.desktop
+Running testAnalysisCorrections
+.......... ....
+Done testAnalysisCorrections
+__________
+
+Running testDandiConversion
+..
+Done testDandiConversion
+__________
+
+Running testEventAmplitudeAudit
+.....
+Done testEventAmplitudeAudit
+__________
+
+Running testLocalSinkTiming
+.........
+Done testLocalSinkTiming
+__________
+
+Running testMeasurementAvailability
+....
+Done testMeasurementAvailability
+__________
+
+Running testPipelineContract
+....
+Done testPipelineContract
+__________
+
+Running testReviewCorrections
+....Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp6bf6911a_4b4a_49a7_8461_22eeaadd287b/tp2ae6eb9c_4308_46f9_a90d_03ff184ec89e/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp6bf6911a_4b4a_49a7_8461_22eeaadd287b/tp2ae6eb9c_4308_46f9_a90d_03ff184ec89e/Summary_Figures
+.Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp6bf6911a_4b4a_49a7_8461_22eeaadd287b/tp52baa901_a6d0_48e3_893a_1e36f633d07c/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp6bf6911a_4b4a_49a7_8461_22eeaadd287b/tp52baa901_a6d0_48e3_893a_1e36f633d07c/Summary_Figures
+Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp6bf6911a_4b4a_49a7_8461_22eeaadd287b/tp2e5c2b48_7eb3_474a_ad43_4ed2da756e5f/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/tp6bf6911a_4b4a_49a7_8461_22eeaadd287b/tp2e5c2b48_7eb3_474a_ad43_4ed2da756e5f/Summary_Figures
+.
+Done testReviewCorrections
+__________
+
+Running testSinkRecurrence
+......
+Done testSinkRecurrence
+__________
+
+Running testSurgeAmplitudeCounterfactual
+.........
+Done testSurgeAmplitudeCounterfactual
+__________
+
+Running testSurgeAmplitudeEligibility
+........
+Done testSurgeAmplitudeEligibility
+__________
+
+Running testSurgeBranchPolicy
+.........
+Done testSurgeBranchPolicy
+__________
+
+Running testSurgeCandidateEvidence
+[Warning: Name is nonexistent or not a directory:
+/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/tests/analysis/tests/analysis]
+[> In path (line 109)
+In addpath (line 96)
+In testSurgeCandidateEvidence>setupOnce (line 5)]
+.......
+Done testSurgeCandidateEvidence
+__________
+
+Running testSurgeContactReview
+........
+Done testSurgeContactReview
+__________
+
+Running testSurgeContactSeparation
+.......... ..
+Done testSurgeContactSeparation
+__________
+
+Running testSurgeContinuity
+.......... .
+Done testSurgeContinuity
+__________
+
+Running testSurgeCorrections
+.....
+Done testSurgeCorrections
+__________
+
+Running testSurgeLocalOnset
+.......... ..
+Done testSurgeLocalOnset
+__________
+
+Running testSurgeOnsetModelSelection
+.......... ..
+Done testSurgeOnsetModelSelection
+__________
+
+Running testSurgeOnsetTracePanel
+..........
+Done testSurgeOnsetTracePanel
+__________
+
+Running testSurgePulseOnset
+......
+Done testSurgePulseOnset
+__________
+
+Running testSurgeSpatialTracking
+..........
+Done testSurgeSpatialTracking
+__________
+
+Running testSurgeUnseenEnvelope
+....
+Done testSurgeUnseenEnvelope
+__________
+
+Running testiOSSurgeTrackingEquivalence
+..
+Done testiOSSurgeTrackingEquivalence
+__________
+
+The file was saved successfully. Elapsed time : 0.078 s.
+New file was loaded successfully. Elapsed time : 0.028 s.
+Hypoxia-amyloid synthetic tests passed.
+Repository checks passed: 407 MATLAB files inspected, 84 Code Analyzer messages, focused tests run: 1.

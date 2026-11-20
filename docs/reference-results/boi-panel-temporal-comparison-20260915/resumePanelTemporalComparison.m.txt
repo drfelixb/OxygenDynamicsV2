@@ -1,0 +1,86 @@
+function resumePanelTemporalComparison
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;timer=tic;
+s=jsondecode(fileread(fullfile(here,'source-bindings.json')));keys=fieldnames(s);verifySources(s,keys);
+F=jsondecode(fileread(fullfile(here,'implementation-freeze.json')));for k=1:numel(F.Files),x=F.Files(k);assert(strcmp(oxygenFileSHA256(fullfile(here,x.Path)),x.SHA256));end
+C=jsondecode(fileread(fullfile(here,'corrective-freeze.json')));for k=1:numel(C.Files),x=C.Files(k);assert(strcmp(oxygenFileSHA256(fullfile(here,x.Path)),x.SHA256));end
+P=jsondecode(fileread(fullfile(here,'comparison-plan.json')));recordings=jsondecode(fileread(fullfile(here,'recordings.json')));assert(numel(P.Intervals)==85&&isequal(P.ContextSamplesPerSide(:)',[10 20]));
+out=fullfile(here,'run-02');assert(~isfolder(out));mkdir(out);allRows={};reports={};
+for k=1:numel(recordings)
+ rt=tic;r=recordings(k);source=r.Source;folder=fullfile(out,r.RecordingKey);mkdir(folder);
+ if k==1
+  % First source pass completed; use its preserved CSV/JSON outputs only.
+  old=fullfile(here,'run-01',r.RecordingKey);copyfile(fullfile(old,'*'),folder);
+  A=readtable(fullfile(folder,'original-automatic-rows.csv'),'TextType','string');
+  selected=P.Intervals(strcmp({P.Intervals.RecordingKey},r.RecordingKey));
+  H=jsondecode(fileread(fullfile(folder,'human-contact-sources.json')));R=struct();R.Traces=cell(max([r.Events.AuditRow]),1);cache=R.Traces;nativeCount=0;
+  for z=1:numel(r.Events)
+   e=r.Events(z);n=sprintf('event-%03d',e.AuditRow);T=readtable(fullfile(folder,[n '-corrected.csv']));f=jsondecode(fileread(fullfile(folder,[n '-footprint.json'])));
+   R.Traces{e.AuditRow}=struct('DetectionDetrended',T.Corrected,'Footprint',f.Pixels);
+   C=jsondecode(fileread(fullfile(folder,[n '-native-contacts.json'])));C=num2cell(C);
+   for cc=1:numel(C),if isstruct(C{cc}.Contributors),C{cc}.Contributors=num2cell(C{cc}.Contributors);end;end
+   cache{e.AuditRow}=C;nativeCount=nativeCount+numel(C);
+  end
+ else
+ R=loadPanelReview(source.AuditMat,source.SinkMaster);R=attachPanelSources(R,source.SinkMaster,source.SurgeMaster);A=R.Audit;
+ assert(R.AnalysisInfo.NFrames==source.ExpectedFrames&&R.AnalysisInfo.AnalysisParams.fs==1&&strcmp(R.AnalysisInfo.RawSHA256,source.RawSHA256FromAudit));
+ V=load(r.ReplayMat,'Corrected','Footprints','NativeFrames','NativeUnionPixels');assert(size(V.Corrected,2)==12);
+ selected=P.Intervals(strcmp({P.Intervals.RecordingKey},r.RecordingKey));
+ H=selected([selected.ActiveHumanContact]);extra=P.ContextOnlyHumanIntervals(strcmp({P.ContextOnlyHumanIntervals.RecordingKey},r.RecordingKey));H=[H(:);extra(:)];
+ for j=1:numel(H),H(j).Footprint=double(R.Traces{H(j).AuditRow}.Footprint(:)');end
+ writeJSON(fullfile(folder,'human-contact-sources.json'),H);
+ N=repmat(struct('AuditRow',0,'Sign','','SiteID',0,'EventID',0,'Frames',[],'FramePixels',{{}}),height(A),1);
+ for j=1:height(A)
+  N(j)=struct('AuditRow',j,'Sign',char(A.EventType(j)),'SiteID',A.SiteID(j),'EventID',A.EventID(j),'Frames',R.Traces{j}.DetectedFrames(:)','FramePixels',{R.ReferenceSources.EventFramePixels{j}});
+ end
+ cache=cell(height(A),1);nativeCount=0;
+ for j=1:numel(r.Events)
+  e=r.Events(j);row=e.AuditRow;z=R.Traces{row};foot=double(z.Footprint(:));y=double(z.DetectionDetrended(:));col=e.TraceColumn;
+  assert(strcmp(A.EventType(row),e.EventType)&&A.SiteID(row)==e.SiteID&&A.EventID(row)==e.EventID);
+  assert(isequaln(y,V.Corrected(:,col))&&isequal(foot,double(V.Footprints{col}(:)))&&isequal(z.DetectedFrames(:),double(V.NativeFrames{col}(:))));
+  assert(isequal(unique(double(vertcat(N(row).FramePixels{:}))),foot));
+  name=sprintf('event-%03d',row);Frame=(1:numel(y))';Corrected=y;writetable(table(Frame,Corrected),fullfile(folder,[name '-corrected.csv']));
+  writeJSON(fullfile(folder,[name '-footprint.json']),struct('AuditRow',row,'Pixels',foot','IndexConvention','one-based MATLAB column-major 512 by 512','OriginalFootprintCSV_SHA256',e.FootprintSHA256));
+  cs=selected([selected.AuditRow]==row);frames=[];for q=1:numel(cs),c=cs(q);frames=union(frames,max(1,c.StartFrame-20):min(numel(y),c.EndFrame+20));end
+  C=fixedNativeContacts(frames,foot,N);
+  for q=1:numel(C)
+   f=C{q}.Frame;assert(C{q}.AnyPixels==numel(intersect(foot,double(V.NativeUnionPixels{f}))));
+  end
+  writeJSON(fullfile(folder,[name '-native-contacts.json']),C);cache{row}=C;nativeCount=nativeCount+numel(C);
+ end
+ writetable(A([r.Events.AuditRow],:),fullfile(folder,'original-automatic-rows.csv'));
+ end
+ for j=1:numel(selected)
+  c=selected(j);row=c.AuditRow;z=R.Traces{row};y=double(z.DetectionDetrended(:));foot=double(z.Footprint(:));
+  if strcmp(c.Role,'saved_automatic_interval')
+   ar=row;if k==1,ar=find(A.SiteID==c.SiteID&A.EventID==c.EventID&strcmp(A.EventType,c.SavedSign));assert(isscalar(ar));end
+   assert(isequal([c.StartFrame c.EndFrame],[A.StartFrame(ar) A.EndFrame(ar)]));
+  end
+  e=r.Events([r.Events.AuditRow]==row);assert(isscalar(e));
+  for W=[10 20]
+   d=fixedIntervalDiagnostic(y,c.StartFrame,c.EndFrame,W);item=struct('Interval',c,'ContextSamples',W,'Descriptor',d, ...
+    'TraceFile',sprintf('%s/event-%03d-corrected.csv',r.RecordingKey,row),'FootprintFile',sprintf('%s/event-%03d-footprint.json',r.RecordingKey,row), ...
+    'NativeContactFile',sprintf('%s/event-%03d-native-contacts.json',r.RecordingKey,row),'ReplaySHA256',r.ReplaySHA256,'OriginalTraceCSV_SHA256',e.TraceSHA256);
+   C=cache{row};cf=cellfun(@(v)v.Frame,C);
+   for part={'Before','Interval','After'}
+    name=part{1};frames=d.(name).Frames;item.([name 'Native'])=C(ismember(cf,frames));item.([name 'Human'])=fixedHumanContacts(frames,foot,H);
+   end
+   allRows{end+1}=item; %#ok<AGROW>
+  end
+ end
+ eventCount=height(A);if k==1,previous=jsondecode(fileread(fullfile(folder,'execution.json')));eventCount=previous.NativeEventsAssociated;end
+ report=struct('RecordingKey',r.RecordingKey,'Events',12,'IntervalRecords',numel(selected),'Rows',2*numel(selected),'NativeEventsAssociated',eventCount, ...
+  'NativeFrameRecords',nativeCount,'MatlabSeconds',toc(rt),'All48PanelTraceInputsAndFootprintsReplayed',true,'AllNativeContactUnionsMatchPriorReplay',true);
+ assert(toc(rt)<P.Budget.SecondsPerRecording);writeJSON(fullfile(folder,'resume-execution.json'),report);reports{end+1}=report;disp(report); %#ok<AGROW>
+ clear R V N cache
+end
+assert(numel(allRows)==170);writeJSON(fullfile(out,'comparison.json'),allRows);plotPanelTemporalComparison(allRows,out);
+verifySources(s,keys);files=dir(fullfile(out,'**','*'));bytes=sum([files(~[files.isdir]).bytes]);assert(bytes<P.Budget.OutputBytes&&toc(timer)<P.Budget.TotalMatlabSeconds);
+writeJSON(fullfile(out,'execution.json'),struct('Status','completed_independent_verification_pending','DecisionID',P.DecisionID,'Recordings',{reports},'Rows',170,'OriginalEvents',48,'Intervals',85, ...
+ 'MatlabSeconds',toc(timer),'OutputBytes',bytes,'CompletedNativeSourcePassesPerRecording',1,'CorrectiveRound',1,'FB2314DescriptorsRebuiltFromSavedExports',true,'MovieReads',0,'DetectorRuns',0,'CorrectionFits',0,'NewBaselines',0,'ProductionChanges',false));
+end
+function verifySources(s,keys)
+for k=1:numel(keys),x=s.(keys{k});assert(strcmp(oxygenFileSHA256(x.Path),x.SHA256),keys{k});end
+end
+function writeJSON(p,d)
+f=fopen(p,'w');assert(f>=0);fprintf(f,'%s\n',jsonencode(d,'PrettyPrint',true));fclose(f);
+end

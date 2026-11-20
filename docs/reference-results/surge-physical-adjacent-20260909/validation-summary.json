@@ -1,0 +1,19 @@
+{
+  "FullMasterRuns": 20,
+  "DistinctSourceRecordings": 4,
+  "FocusedAnalysisTestsPassed": 67,
+  "PhysicalSweepCases": 720,
+  "MatchedSupportRowsVerified": 136,
+  "EventRecordsAudited": 3773,
+  "MeasurementMismatches": 0,
+  "FiniteAmplitudes": 1896,
+  "UnlabelledReferenceData": true,
+  "BiologicalAccuracyEstablished": false,
+  "CandidateContinuityAndDurationFailuresRemain": true,
+  "SmokePassed": true,
+  "MasterToStatisticsIntegrationPassed": true,
+  "RepositoryFilesInspected": 361,
+  "CodeAnalyzerMessages": 70,
+  "SourceFreezeVerified": true,
+  "StageTraceCasesVerified": 3
+}

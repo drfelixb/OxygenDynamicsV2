@@ -1,0 +1,99 @@
+root=fileparts(mfilename('fullpath'));ws=fileparts(fileparts(root));repo=fullfile(ws,'existing-analysis');cd(repo);setupOxygenDynamicsPath;
+out=fullfile(root,'run-01');assert(~isfolder(out));mkdir(out);timer=tic;
+prior=fullfile(ws,'reference-validation','boi-c02-strict-roi-20260912');
+A=load(fullfile(prior,'audit-01','source-amplitude-audit','event-amplitude-audit.mat'));
+P=load(fullfile(prior,'comparison-01','NativeEventReplay.mat'));
+S=load(fullfile(prior,'run-01','Recording','OxygenSurges_Output','OxygenSurgesRecording.mat'),'Mean_OxySurge_TraceZ','AnalysisInfo','Table_OxygenSurgeEvents_Out');
+assert(strcmp(P.SourceSHA256,A.AnalysisInfo.RawSHA256)&&strcmp(S.AnalysisInfo.RawSHA256,A.AnalysisInfo.RawSHA256));
+assert(A.AnalysisInfo.AnalysisParams.fs==1);N=A.AnalysisInfo.NFrames;frame=(1:N)';
+annotations=jsondecode(fileread(fullfile(root,'researcher-annotations.json')));summaries=cell(2,1);allRows=cell(0,1);
+for k=1:2
+    ann=annotations.Annotations(k);event=ann.EventID;j=find(A.Audit.EventType=="surge"&A.Audit.SiteID==1&A.Audit.EventID==event);assert(isscalar(j));
+    row=A.Audit(j,:);saved=A.Traces{j};px=double(saved.Footprint(:));raw=double(saved.Raw(:));
+    name=sprintf('surge-site1-event%d',event);folder=fullfile(out,name);mkdir(folder);
+    U=readtable(fullfile(ws,'reference-validation','boi-c02-normalization-audit-20260912','run-01',name,'decomposition.csv'));
+    assert(max(abs(U.RawMean-raw))<1e-9&&max(abs(U.DetrendedMean-double(saved.DetectionDetrended(:))))<1e-9);
+    assert(max(abs(U.FilteredScoreMean-double(saved.Filtered(:))))<2e-6);
+    site=S.Mean_OxySurge_TraceZ(1,:)';assert(numel(site)==N);
+    % Recheck overlap against every native event, retaining both signs and all
+    % event identities. Membership is evaluated on this event's fixed footprint.
+    mask=false(prod(A.AnalysisInfo.FrameSize),1);mask(px)=true;overlap=false(N,1);keys=strings(N,1);
+    for q=1:height(A.Audit)
+        ff=double(P.EventNativeFrames{q}(:));cells=P.EventFramePixels{q};
+        assert(numel(ff)==numel(cells));
+        for t=1:numel(ff)
+            if any(mask(double(cells{t})))
+                overlap(ff(t))=true;
+                key=sprintf('%s:%d:%d',A.Audit.EventType(q),A.Audit.SiteID(q),A.Audit.EventID(q));
+                if strlength(keys(ff(t)))>0,keys(ff(t))=keys(ff(t))+";";end
+                keys(ff(t))=keys(ff(t))+string(key);
+            end
+        end
+    end
+    native=double(P.EventNativeFrames{j}(:));union=unique(double(vertcat(P.EventFramePixels{j}{:})));assert(isequal(sort(px),union));
+    baselineRange=(row.StartFrame-20:row.StartFrame-1)';clean=baselineRange(~overlap(baselineRange)&isfinite(raw(baselineRange)));
+    assert(isequal(clean,double(saved.CleanBaselineFrames(:))));
+    % Existing cubic-reference sign crossings are descriptive only: do not apply
+    % the sink detector-domain tolerance to these original-intensity units.
+    corrected=U.DetrendedMean;[~,seed]=min(corrected(native));seed=native(seed);
+    lo=seed;hi=seed;available=isfinite(corrected(seed))&&corrected(seed)<0;
+    if available
+        while lo>1&&isfinite(corrected(lo-1))&&corrected(lo-1)<0,lo=lo-1;end
+        while hi<N&&isfinite(corrected(hi+1))&&corrected(hi+1)<0,hi=hi+1;end
+    else,lo=NaN;hi=NaN;end
+    onsetBracket=[NaN NaN];recoveryBracket=[NaN NaN];
+    if available&&lo>1&&isfinite(corrected(lo-1)),onsetBracket=[lo-1,lo];end
+    if available&&hi<N&&isfinite(corrected(hi+1)),recoveryBracket=[hi,hi+1];end
+    cases=[row.StartFrame,row.EndFrame];roles="saved";
+    for first=ann.PossibleOnsetFramesInclusive(1):ann.PossibleOnsetFramesInclusive(2)
+        for last=ann.PossibleRecoveryFramesInclusive(1):ann.PossibleRecoveryFramesInclusive(2)
+            cases(end+1,:)=[first,last];roles(end+1,1)="researcher_range_diagnostic";
+        end
+    end
+    rows=cell(size(cases,1),1);
+    for c=1:size(cases,1)
+        first=cases(c,1);last=cases(c,2);b=(first-20:first-1)';valid=b(b>=1&b<=N);ok=~overlap(valid)&isfinite(raw(valid));clean=valid(ok);
+        B=NaN;amp=NaN;status="insufficient_clean_prebaseline";
+        if numel(clean)==20
+            B=mean(raw(clean));
+            if isfinite(B)&&B>0&&all(isfinite(raw(first:last)))
+                amp=max((raw(first:last)-B)/B);status="valid";
+            else,status="nonpositive_baseline_or_missing_event_signal";end
+        end
+        if c==1,assert(isequaln(status,row.RecomputedStatus)&&abs(amp-row.StoredAmplitude)<1e-12);end
+        rows{c}=struct('CaseID',string(name),'Role',roles(c),'StartFrame',first,'EndFrame',last, ...
+            'MarkedTimeSeparationSec',last-first,'InclusiveDurationSec',last-first+1,'BaselineStartFrame',first-20,'BaselineEndFrame',first-1, ...
+            'CleanSamples',numel(clean),'OverlapExcludedSamples',nnz(overlap(valid)),'NonfiniteSourceSamples',nnz(~isfinite(raw(valid))), ...
+            'BaselineStatus',status,'BaselineMean',B,'SurgeAmplitudeFraction',amp, ...
+            'CorrectedMinimum',min(corrected(first:last)),'CorrectedMaximum',max(corrected(first:last)), ...
+            'CorrectedMean',mean(corrected(first:last)),'OriginalSavedAmplitudeFraction',row.StoredAmplitude);
+    end
+    T=struct2table(vertcat(rows{:}));writetable(T,fullfile(folder,'window-comparison.csv'));allRows=[allRows;rows];
+    Traces=table(frame,raw,U.RemovedTrendMean,corrected,U.TemporalScoreMean,U.FilteredScoreMean,site,overlap,keys, ...
+        'VariableNames',{'Frame','RawMean','CubicRemovedTrendMean','CubicCorrectedMean','FixedFootprintTemporalScore','FixedFootprintFilteredScore','SavedWholeSiteTemporalScore','AnyNativeOverlap','OverlappingNativeEvents'});
+    writetable(Traces,fullfile(folder,'trace-and-overlap.csv'));
+    summary=struct('CaseID',name,'SavedWindow',[row.StartFrame,row.EndFrame],'ResearcherNominal',ann.ResearcherNominalFrames, ...
+        'ResearcherOnsetRange',ann.PossibleOnsetFramesInclusive,'ResearcherRecoveryRange',ann.PossibleRecoveryFramesInclusive, ...
+        'CubicNegativeRun',[lo,hi],'CubicZeroOnsetBracket',onsetBracket,'CubicZeroRecoveryBracket',recoveryBracket, ...
+        'LandmarkRole','descriptive_same_recording_cubic_reference_not_adopted_timing','FootprintPixels',numel(px), ...
+        'CleanCandidateWindows',nnz(T.BaselineStatus(2:end)=="valid"),'CandidateWindows',9,'SavedAmplitudeReplayed',true);
+    summaries{k}=summary;
+    fig=figure('Visible','off','Color','w','Position',[10 10 1250 1000]);cl=onCleanup(@()delete(fig));layout=tiledlayout(fig,3,1,'TileSpacing','compact','Padding','compact');
+    use=frame>=row.StartFrame-30&frame<=row.EndFrame+30;
+    ax=nexttile(layout);plot(ax,frame(use),raw(use),'o-','MarkerSize',3);hold(ax,'on');plot(ax,frame(use),U.RemovedTrendMean(use),'LineWidth',1.4);ylabel(ax,'Preserved input (a.u.)');legend(ax,{'Fixed-footprint source','Existing full-recording cubic trend'},'Location','southoutside','NumColumns',2);mark(ax,row,ann,summary);title(ax,'Recording-derived correction; no mechanistic interpretation of the trend');
+    ax=nexttile(layout);plot(ax,frame(use),corrected(use),'o-','MarkerSize',3);hold(ax,'on');yline(ax,0,':','HandleVisibility','off');ylabel(ax,'Cubic-corrected source (a.u.)');mark(ax,row,ann,summary);title(ax,sprintf('Descriptive zero crossings: onset %d/%d, recovery %d/%d',onsetBracket,recoveryBracket));
+    ax=nexttile(layout);plot(ax,frame(use),U.TemporalScoreMean(use));hold(ax,'on');plot(ax,frame(use),U.FilteredScoreMean(use),'LineWidth',1.3);plot(ax,frame(use),site(use),':');ylabel(ax,'Detection score');xlabel(ax,'Recording frame (external 1 Hz)');legend(ax,{'Fixed footprint: temporal score','Fixed footprint: filtered score','Saved whole-site temporal score'},'Location','southoutside','NumColumns',3);mark(ax,row,ann,summary);title(ax,'Positive detector contrast and local corrected source remain distinct signals');
+    title(layout,[name ' | black: saved; purple: researcher range; green: cubic zero brackets'],'Interpreter','none');
+    exportgraphics(fig,fullfile(folder,'timing-comparison.png'),'Resolution',135);clear cl
+end
+writetable(struct2table(vertcat(allRows{:})),fullfile(out,'all-window-comparisons.csv'));
+R=struct('Status','comparison_complete_pending_independent_verification','DecisionID','R2-C02-TIMING-COMPARISON-041', ...
+    'Cases',{vertcat(summaries{:})},'ElapsedSeconds',toc(timer),'MatlabVersion',version,'DetectorRuns',0,'StatisticsRuns',0,'NewMovieReads',0,'ProductionChanges',false, ...
+    'OriginalTimingRule','Historical and current surge bounds are native; sink return rule is not applied to these surge/fixed-footprint traces.');
+fid=fopen(fullfile(out,'report.json'),'w');fprintf(fid,'%s\n',jsonencode(R,'PrettyPrint',true));fclose(fid);disp(R);
+function mark(ax,row,ann,summary)
+for value=[row.StartFrame,row.EndFrame],xline(ax,value,'k--','HandleVisibility','off');end
+for value=[ann.PossibleOnsetFramesInclusive(:);ann.PossibleRecoveryFramesInclusive(:)]',xline(ax,value,':','Color',[.65 .25 .7],'HandleVisibility','off');end
+for value=[summary.CubicZeroOnsetBracket,summary.CubicZeroRecoveryBracket],if isfinite(value),xline(ax,value,'-.','Color',[.2 .6 .35],'HandleVisibility','off');end,end
+grid(ax,'on');ax.GridAlpha=.13;
+end

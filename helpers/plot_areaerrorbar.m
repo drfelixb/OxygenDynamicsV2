@@ -1,5 +1,8 @@
 function plot_areaerrorbar(data, options)
 % plot_areaerrorbar plots the mean trace with a shaded error area.
+% Copyright (c) 2018, Victor Martinez-Cagigal.
+% Distributed under upstream BSD-3-Clause terms; see
+% ../THIRD_PARTY_NOTICES.md.
 
 if nargin<2
     options.handle     = figure(1);

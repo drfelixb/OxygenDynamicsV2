@@ -1,0 +1,38 @@
+function verifyResearcherReferences(runName)
+here=fileparts(mfilename('fullpath'));root=fileparts(fileparts(here));addpath(fullfile(root,'existing-analysis'));setupOxygenDynamicsPath;
+out=fullfile(here,runName);assert(~isfolder(out));mkdir(out);
+s=jsondecode(fileread(fullfile(here,'inputs.json')));keys=fieldnames(s);
+for k=1:numel(keys),v=s.(keys{k});assert(strcmp(oxygenFileSHA256(v.Path),v.SHA256));end
+R=loadBOIEventReview(s.Audit.Path);R.BoundaryReview=loadBOIBoundaryReview(R,s.Review.Path);
+R=attachBOIReferenceSources(R,s.SinkMaster.Path,s.SurgeMaster.Path);original=R;
+R=loadBOIReferenceJudgments(R,{s.Judgment1.Path,s.Judgment2.Path,s.Judgment3.Path,s.Judgment4.Path});
+rows=[186 309 308 321];starts=[1134 516 476 165];ends=[1153 535 495 176];onsets=[1154 536 496 177];native=[14 20 20 0];previews=cell(4,1);files=0;
+for k=1:4
+    row=rows(k);P=buildBOIReviewedReferencePreview(R,row);before=buildBOIReviewedReferencePreview(original,row);
+    for j=1:numel(P.Windows)
+        assert(P.Windows(j).OptionAEligibleCount==before.Windows(j).OptionAEligibleCount);
+        assert(isequal(P.Windows(j).NativeExcludedFrames,before.Windows(j).NativeExcludedFrames));
+    end
+    w=P.Windows([P.Windows.OnsetFrame]==onsets(k));expected=(starts(k):ends(k))';
+    assert(isequal(w.ResearcherReferenceFrames,expected)&&w.ResearcherSampleCount==numel(expected));
+    assert(w.ResearcherNativeEligibleCount==native(k));
+    assert(isequaln(buildBOIEventReviewData(R,row),buildBOIEventReviewData(original,row)));
+    folder=fullfile(out,sprintf('export-row-%d',row));exportBOIEventReview(R,row,folder);
+    X=load(fullfile(folder,'SelectedEventReview.mat'));assert(isequaln(X.Data,buildBOIEventReviewData(original,row)));assert(isequaln(X.ReviewedReferencePreview,P));
+    checks=jsondecode(fileread(fullfile(folder,'ArtifactChecksums.json')));
+    for f=1:numel(checks),assert(strcmp(oxygenFileSHA256(fullfile(folder,checks(f).Name)),checks(f).SHA256));end
+    files=files+numel(checks);previews{k}=P;
+end
+[fig,UI]=openResearcherReferenceExample;cleanup=onCleanup(@()delete(fig));fig.Position=[40 40 1400 1050];
+for k=1:4
+    UI.Select(rows(k));w=UI.Reference.Data().Windows;w=w([w.OnsetFrame]==onsets(k));assert(w.ResearcherSampleCount==ends(k)-starts(k)+1);
+    assert(sum(UI.Reference.Frames.Data.ResearcherSelectedReference==1)==numel(starts(k):ends(k)));
+    assert(contains(UI.Reference.Judgment.Text,sprintf('%d samples',w.ResearcherSampleCount)));
+    drawnow;exportapp(fig,fullfile(out,sprintf('preview-row-%d.png',rows(k))));
+end
+UI.Select(186);UI.Reference.Onset.Value=1149;UI.Reference.Onset.ValueChangedFcn([],[]);
+assert(contains(UI.Reference.Judgment.Text,'No reference judgment'));assert(all(isnan(UI.Reference.Frames.Data.ResearcherSelectedReference)));
+UI.Select(321);UI.Reference.Contributors.CellSelectionCallback([],struct('Indices',[1 1]));UI.Reference.Open.ButtonPushedFcn([],[]);assert(UI.List.Selection==320);
+result=struct('Status','passed','ReviewedEvents',4,'SelectedSampleCounts',[20 20 20 12],'NativeEligibleWithinSelection',native,'UnjudgedAlternative1149Preserved',true,'AllNativeEventsAssociated',R.ReferenceSources.EventCount,'ExportFilesVerified',files,'OriginalDataUnchanged',true,'NoNewReferenceMeanOrAmplitude',true,'PolicyAdopted',false);
+save(fullfile(out,'verification.mat'),'result','previews');fid=fopen(fullfile(out,'verification.json'),'w');c=onCleanup(@()fclose(fid));fprintf(fid,'%s\n',jsonencode(result,'PrettyPrint',true));disp(result);
+end

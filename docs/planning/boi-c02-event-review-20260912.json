@@ -1,0 +1,116 @@
+{
+  "decision_id": "R1-C02-EVENT-029",
+  "recorded_utc": "2026-09-12T12:11:45.055146+00:00",
+  "status": "targeted_review_complete_retain_calculations_restrict_claims_defer_anatomical_acceptance",
+  "recording_id": "dandi000891_FB2314_awake_028",
+  "prior_decision": "R1-C02-WORKFLOW-028",
+  "report": "docs/reference-results/boi-c02-event-review-20260912/README.md",
+  "source_sha256": "08381f8ef4cb0da80a09645aeffc9416188cf7937eaf207c0536f1f997494cf8",
+  "scope": "Read-only targeted event admission and baseline review of the completed 028 FB2314 awake output; both BOI signs, no new detector/statistics run.",
+  "selection": [
+    "Previously inspected first finite surge (saved surge row 1).",
+    "Every finite negative surge (saved rows 27 and 33; site 16 events 1 and 7).",
+    "Largest unavailable-amplitude native event area-time after intersection with its existing sign-specific automatic support, separately by sign; earliest saved row breaks ties. Rank from saved masks, without changing support.",
+    "First saved sink row with native start at recording frame 1.",
+    "Deduplicate identities while retaining all selection reasons; maximum six distinct cases."
+  ],
+  "cases": [
+    {
+      "case_id": "sink-site01-event01",
+      "audit_row": 1,
+      "native_frames": [
+        1,
+        18
+      ],
+      "clean_baseline_samples": 0,
+      "amplitude_fraction": null
+    },
+    {
+      "case_id": "sink-site05-event04",
+      "audit_row": 17,
+      "native_frames": [
+        496,
+        643
+      ],
+      "clean_baseline_samples": 1,
+      "amplitude_fraction": null
+    },
+    {
+      "case_id": "surge-site01-event01",
+      "audit_row": 220,
+      "native_frames": [
+        108,
+        118
+      ],
+      "clean_baseline_samples": 20,
+      "amplitude_fraction": 0.09003833190671018
+    },
+    {
+      "case_id": "surge-site04-event01",
+      "audit_row": 225,
+      "native_frames": [
+        136,
+        249
+      ],
+      "clean_baseline_samples": 4,
+      "amplitude_fraction": null
+    },
+    {
+      "case_id": "surge-site16-event01",
+      "audit_row": 246,
+      "native_frames": [
+        501,
+        514
+      ],
+      "clean_baseline_samples": 20,
+      "amplitude_fraction": -0.014503683293151614
+    },
+    {
+      "case_id": "surge-site16-event07",
+      "audit_row": 252,
+      "native_frames": [
+        650,
+        665
+      ],
+      "clean_baseline_samples": 20,
+      "amplitude_fraction": -0.01756740808974261
+    }
+  ],
+  "findings": [
+    "Both negative surges belong to marginal site 16 and all event samples are below their 20-sample baseline means. Numerical values and disagreement with detector labels are retained.",
+    "The finite peripheral positive example has nonstationary optical context without detected baseline overlap; no flatness threshold or physiological identity is inferred.",
+    "Largest unavailable sink/surge contribute 21.34/22.88 percent of all respective covered area-time. Explicit same-site/other-site detection overlap causes their baseline unavailability.",
+    "Acquisition-start event has no observed pre-event baseline. Experimental pre-recording state establishment remains separately unmeasured as the user clarified."
+  ],
+  "disposition": {
+    "numerical_rules": "retain",
+    "descriptive_values": "retain_with_signed_and_unavailable_statuses",
+    "physiological_claims": "restrict_to_evidence",
+    "anatomical_acceptance": "defer",
+    "new_method_experiment": "not_started"
+  },
+  "verification": {
+    "decision_id": "R1-C02-EVENT-029",
+    "status": "passed",
+    "events_ranked_from_native_masks": 268,
+    "selected_cases": 6,
+    "selection_replayed": true,
+    "native_union_frames_compared_with_028": 2400,
+    "source_trace_samples_replayed": 7200,
+    "source_native_image_mask_pairs_checked": 18,
+    "baseline_overlap_event_rows_replayed": 52,
+    "source_original_and_stage_unchanged": true,
+    "saved_stats_and_audit_unchanged": true,
+    "implementation_files_unchanged": 461,
+    "dictionary_unchanged": true,
+    "elapsed_seconds": 169.57615795801394,
+    "limit": "Numerical checks establish saved-source/mask/measurement relationships. They do not certify anatomical support, physiological event identity, motion, censoring or scientific acceptance."
+  },
+  "mask_adoptions": 0,
+  "frame_exclusions": 0,
+  "new_analysis_windows": 0,
+  "detector_runs": 0,
+  "statistics_runs": 0,
+  "scientific_eligibility": "not_assessed",
+  "next_existing_decision": "Source-supported anatomical tissue and measurement-specific event admission using actual cases and 024 unadopted outer-field proposals; any adopted support change requires a fresh versioned workflow."
+}

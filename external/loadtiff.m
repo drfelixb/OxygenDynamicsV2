@@ -2,6 +2,8 @@ function [oimg,Miu,SD]= loadtiff(path)
 %LOADTIFF Load a TIFF stack and return frame-wise mean and SD.
 % Copyright (c) 2012, YoonOh Tak
 % All rights reserved.
+% Distributed under upstream BSD-3-Clause-style terms; see
+% ../THIRD_PARTY_NOTICES.md.
 
 tStart = tic;
 warn_old = warning('off', 'all'); % To ignore unknown TIFF tag.

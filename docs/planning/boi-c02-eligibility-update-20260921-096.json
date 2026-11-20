@@ -1,0 +1,37 @@
+{
+  "Schema": "boi-c02-eligibility-update-1",
+  "DecisionID": "R1-FB2315-ISO-RUN-096",
+  "Date": "2026-09-21",
+  "PreviousUpdate": "boi-c02-eligibility-update-20260921-095.json",
+  "PreviousUpdateSHA256": "2b64c640c3e9f24824d865fd62513c44f5242c6d610cb530fb4d19d77f186dd6",
+  "Changes": [
+    {
+      "Session": "FB2315-baseline-iso",
+      "AssetID": "353b88f3-b509-4281-8c46-f338094b4907",
+      "SourceSHA256": "47f05ee5e883e8ff0e52bc7d3ecf3a8477c34f42cfd170bf2197d30e9b77afe2",
+      "WorkingROI": "accepted_source_specific_working_support",
+      "RunStatus": "restricted_profile_run_verified",
+      "MethodProfile": "craniotomy-roi-1",
+      "NativeFrameCount": 1200,
+      "SampleHz": 1,
+      "ModelExtentSec": [
+        0,
+        1200
+      ],
+      "FinalComparisonWindows": [],
+      "Evidence": "reference-results/boi-fb2315-iso-run-20260921/README.md"
+    }
+  ],
+  "CurrentCounts": {
+    "CandidateMice": 7,
+    "CandidateRecordings": 14,
+    "RecordingsWithRunEvidence": 9,
+    "NoEquivalentRunInBaseInventory": 5,
+    "AcceptedWorkingROIs": 4,
+    "ExistingUnacceptedDrafts": 4,
+    "NoReviewedROIInBaseInventory": 6,
+    "PairsWithBothRestrictedProfileRuns": 2,
+    "CompletedCurrentPairedDescriptiveSummaries": 2
+  },
+  "NewScientificExclusions": 0
+}

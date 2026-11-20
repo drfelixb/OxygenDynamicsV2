@@ -1,0 +1,2212 @@
+{
+  "FrozenUTC": "2026-10-04T19:40:38.605272+00:00",
+  "Cases": [
+    {
+      "ID": "F01",
+      "Name": "signed cancellation",
+      "Registry": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "RecordingAreaUm2": 2000000.0,
+          "RecordingDurationSec": 4,
+          "SampleHz": 2,
+          "NFrames": 8
+        }
+      ],
+      "Events": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 1,
+          "AmplitudePercent": 20,
+          "AreaUm2": 4,
+          "DurationSec": 2,
+          "StartFrame": 2,
+          "EndFrame": 5,
+          "RecordingAreaUm2": 2000000.0,
+          "RecordingDurationSec": 4,
+          "SampleHz": 2
+        }
+      ],
+      "Expected": {
+        "Events": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 1,
+            "AmplitudePercent": 20,
+            "AreaUm2": 4,
+            "DurationSec": 2,
+            "StartFrame": 2,
+            "EndFrame": 5,
+            "RecordingAreaUm2": 2000000.0,
+            "RecordingDurationSec": 4,
+            "SampleHz": 2,
+            "Amplitude": 20,
+            "Area": 4,
+            "Duration": 2,
+            "Contribution": 160,
+            "PerMm2": 80.0,
+            "PerSec": 40.0,
+            "PerMin": 2400.0,
+            "PerMm2Sec": 20.0,
+            "PerMm2Min": 1200.0
+          }
+        ],
+        "Recordings": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "RecordingAreaUm2": 2000000.0,
+            "RecordingDurationSec": 4,
+            "SampleHz": 2,
+            "NFrames": 8,
+            "NumEvents": 1,
+            "NumSites": 1,
+            "ValidContributions": 1,
+            "Total": 160,
+            "PerMm2": 80.0,
+            "PerSec": 40.0,
+            "PerMin": 2400.0,
+            "PerMm2Sec": 20.0,
+            "PerMm2Min": 1200.0,
+            "MeanContribution": 160.0,
+            "MedianContribution": 160,
+            "MeanPerMm2Contribution": 80.0,
+            "MeanAmplitude": 20.0,
+            "MeanArea": 4.0,
+            "MeanDuration": 2.0,
+            "Contributors": {
+              "Contribution": 1,
+              "Amplitude": 1,
+              "Area": 1,
+              "Duration": 1
+            }
+          }
+        ],
+        "Group": {
+          "Total": {
+            "Mean": 160.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 160.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2": {
+            "Mean": 80.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 80.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerSec": {
+            "Mean": 40.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 40.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMin": {
+            "Mean": 2400.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 2400.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Sec": {
+            "Mean": 20.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 20.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Min": {
+            "Mean": 1200.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 1200.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanAmplitude": {
+            "Mean": 20.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 20.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanArea": {
+            "Mean": 4.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 4.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanDuration": {
+            "Mean": 2.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 2.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          }
+        }
+      },
+      "Trace": {
+        "Raw": [
+          100,
+          100,
+          80,
+          90,
+          110,
+          120
+        ],
+        "ReferenceFrames": [
+          1,
+          2
+        ],
+        "MeasurementStartFrame": 3,
+        "MeasurementEndFrame": 6,
+        "SampleHz": 2,
+        "ExpectedFractionSec": -1.3877787807814457e-17,
+        "ExpectedPercentSec": -1.3877787807814457e-15
+      },
+      "ExpectedOriginalSoftware": "unknown"
+    },
+    {
+      "ID": "F02",
+      "Name": "negative integral and explicit conversion",
+      "Registry": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "RecordingAreaUm2": 2000000.0,
+          "RecordingDurationSec": 4,
+          "SampleHz": 2,
+          "NFrames": 8
+        }
+      ],
+      "Events": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 1,
+          "AmplitudePercent": 20,
+          "AreaUm2": 4,
+          "DurationSec": 2,
+          "StartFrame": 2,
+          "EndFrame": 5,
+          "RecordingAreaUm2": 2000000.0,
+          "RecordingDurationSec": 4,
+          "SampleHz": 2
+        }
+      ],
+      "Expected": {
+        "Events": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 1,
+            "AmplitudePercent": 20,
+            "AreaUm2": 4,
+            "DurationSec": 2,
+            "StartFrame": 2,
+            "EndFrame": 5,
+            "RecordingAreaUm2": 2000000.0,
+            "RecordingDurationSec": 4,
+            "SampleHz": 2,
+            "Amplitude": 20,
+            "Area": 4,
+            "Duration": 2,
+            "Contribution": 160,
+            "PerMm2": 80.0,
+            "PerSec": 40.0,
+            "PerMin": 2400.0,
+            "PerMm2Sec": 20.0,
+            "PerMm2Min": 1200.0
+          }
+        ],
+        "Recordings": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "RecordingAreaUm2": 2000000.0,
+            "RecordingDurationSec": 4,
+            "SampleHz": 2,
+            "NFrames": 8,
+            "NumEvents": 1,
+            "NumSites": 1,
+            "ValidContributions": 1,
+            "Total": 160,
+            "PerMm2": 80.0,
+            "PerSec": 40.0,
+            "PerMin": 2400.0,
+            "PerMm2Sec": 20.0,
+            "PerMm2Min": 1200.0,
+            "MeanContribution": 160.0,
+            "MedianContribution": 160,
+            "MeanPerMm2Contribution": 80.0,
+            "MeanAmplitude": 20.0,
+            "MeanArea": 4.0,
+            "MeanDuration": 2.0,
+            "Contributors": {
+              "Contribution": 1,
+              "Amplitude": 1,
+              "Area": 1,
+              "Duration": 1
+            }
+          }
+        ],
+        "Group": {
+          "Total": {
+            "Mean": 160.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 160.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2": {
+            "Mean": 80.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 80.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerSec": {
+            "Mean": 40.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 40.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMin": {
+            "Mean": 2400.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 2400.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Sec": {
+            "Mean": 20.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 20.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Min": {
+            "Mean": 1200.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 1200.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanAmplitude": {
+            "Mean": 20.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 20.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanArea": {
+            "Mean": 4.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 4.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanDuration": {
+            "Mean": 2.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 2.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          }
+        }
+      },
+      "Trace": {
+        "Raw": [
+          100,
+          100,
+          80,
+          90,
+          100,
+          90
+        ],
+        "ReferenceFrames": [
+          1,
+          2
+        ],
+        "MeasurementStartFrame": 3,
+        "MeasurementEndFrame": 6,
+        "SampleHz": 2,
+        "ExpectedFractionSec": -0.2,
+        "ExpectedPercentSec": -20.0
+      },
+      "ExpectedOriginalSoftware": "1.01"
+    },
+    {
+      "ID": "F03",
+      "Name": "unequal events and recordings per mouse",
+      "Registry": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1,
+          "NFrames": 10
+        },
+        {
+          "RecordingID": "r2",
+          "Mouse": "m1",
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1,
+          "NFrames": 10
+        },
+        {
+          "RecordingID": "r3",
+          "Mouse": "m2",
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1,
+          "NFrames": 10
+        }
+      ],
+      "Events": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 1,
+          "AmplitudePercent": 10,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 2,
+          "EndFrame": 2,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r2",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 1,
+          "AmplitudePercent": 20,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 2,
+          "EndFrame": 2,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r2",
+          "Mouse": "m1",
+          "SiteID": 2,
+          "EventID": 1,
+          "AmplitudePercent": 20,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 2,
+          "EndFrame": 2,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r3",
+          "Mouse": "m2",
+          "SiteID": 1,
+          "EventID": 1,
+          "AmplitudePercent": 100,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 2,
+          "EndFrame": 2,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r3",
+          "Mouse": "m2",
+          "SiteID": 1,
+          "EventID": 2,
+          "AmplitudePercent": 100,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 3,
+          "EndFrame": 3,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r3",
+          "Mouse": "m2",
+          "SiteID": 1,
+          "EventID": 3,
+          "AmplitudePercent": 100,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 4,
+          "EndFrame": 4,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r3",
+          "Mouse": "m2",
+          "SiteID": 1,
+          "EventID": 4,
+          "AmplitudePercent": 100,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 5,
+          "EndFrame": 5,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r3",
+          "Mouse": "m2",
+          "SiteID": 2,
+          "EventID": 1,
+          "AmplitudePercent": 100,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 2,
+          "EndFrame": 2,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        }
+      ],
+      "Expected": {
+        "Events": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 1,
+            "AmplitudePercent": 10,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 2,
+            "EndFrame": 2,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 10,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 10,
+            "PerMm2": 10.0,
+            "PerSec": 1.0,
+            "PerMin": 60.0,
+            "PerMm2Sec": 1.0,
+            "PerMm2Min": 60.0
+          },
+          {
+            "RecordingID": "r2",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 1,
+            "AmplitudePercent": 20,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 2,
+            "EndFrame": 2,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 20,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 20,
+            "PerMm2": 20.0,
+            "PerSec": 2.0,
+            "PerMin": 120.0,
+            "PerMm2Sec": 2.0,
+            "PerMm2Min": 120.0
+          },
+          {
+            "RecordingID": "r2",
+            "Mouse": "m1",
+            "SiteID": 2,
+            "EventID": 1,
+            "AmplitudePercent": 20,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 2,
+            "EndFrame": 2,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 20,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 20,
+            "PerMm2": 20.0,
+            "PerSec": 2.0,
+            "PerMin": 120.0,
+            "PerMm2Sec": 2.0,
+            "PerMm2Min": 120.0
+          },
+          {
+            "RecordingID": "r3",
+            "Mouse": "m2",
+            "SiteID": 1,
+            "EventID": 1,
+            "AmplitudePercent": 100,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 2,
+            "EndFrame": 2,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 100,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 100,
+            "PerMm2": 100.0,
+            "PerSec": 10.0,
+            "PerMin": 600.0,
+            "PerMm2Sec": 10.0,
+            "PerMm2Min": 600.0
+          },
+          {
+            "RecordingID": "r3",
+            "Mouse": "m2",
+            "SiteID": 1,
+            "EventID": 2,
+            "AmplitudePercent": 100,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 3,
+            "EndFrame": 3,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 100,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 100,
+            "PerMm2": 100.0,
+            "PerSec": 10.0,
+            "PerMin": 600.0,
+            "PerMm2Sec": 10.0,
+            "PerMm2Min": 600.0
+          },
+          {
+            "RecordingID": "r3",
+            "Mouse": "m2",
+            "SiteID": 1,
+            "EventID": 3,
+            "AmplitudePercent": 100,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 4,
+            "EndFrame": 4,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 100,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 100,
+            "PerMm2": 100.0,
+            "PerSec": 10.0,
+            "PerMin": 600.0,
+            "PerMm2Sec": 10.0,
+            "PerMm2Min": 600.0
+          },
+          {
+            "RecordingID": "r3",
+            "Mouse": "m2",
+            "SiteID": 1,
+            "EventID": 4,
+            "AmplitudePercent": 100,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 5,
+            "EndFrame": 5,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 100,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 100,
+            "PerMm2": 100.0,
+            "PerSec": 10.0,
+            "PerMin": 600.0,
+            "PerMm2Sec": 10.0,
+            "PerMm2Min": 600.0
+          },
+          {
+            "RecordingID": "r3",
+            "Mouse": "m2",
+            "SiteID": 2,
+            "EventID": 1,
+            "AmplitudePercent": 100,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 2,
+            "EndFrame": 2,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 100,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 100,
+            "PerMm2": 100.0,
+            "PerSec": 10.0,
+            "PerMin": 600.0,
+            "PerMm2Sec": 10.0,
+            "PerMm2Min": 600.0
+          }
+        ],
+        "Recordings": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "NFrames": 10,
+            "NumEvents": 1,
+            "NumSites": 1,
+            "ValidContributions": 1,
+            "Total": 10,
+            "PerMm2": 10.0,
+            "PerSec": 1.0,
+            "PerMin": 60.0,
+            "PerMm2Sec": 1.0,
+            "PerMm2Min": 60.0,
+            "MeanContribution": 10.0,
+            "MedianContribution": 10,
+            "MeanPerMm2Contribution": 10.0,
+            "MeanAmplitude": 10.0,
+            "MeanArea": 1.0,
+            "MeanDuration": 1.0,
+            "Contributors": {
+              "Contribution": 1,
+              "Amplitude": 1,
+              "Area": 1,
+              "Duration": 1
+            }
+          },
+          {
+            "RecordingID": "r2",
+            "Mouse": "m1",
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "NFrames": 10,
+            "NumEvents": 2,
+            "NumSites": 2,
+            "ValidContributions": 2,
+            "Total": 40,
+            "PerMm2": 40.0,
+            "PerSec": 4.0,
+            "PerMin": 240.0,
+            "PerMm2Sec": 4.0,
+            "PerMm2Min": 240.0,
+            "MeanContribution": 20.0,
+            "MedianContribution": 20.0,
+            "MeanPerMm2Contribution": 20.0,
+            "MeanAmplitude": 20.0,
+            "MeanArea": 1.0,
+            "MeanDuration": 1.0,
+            "Contributors": {
+              "Contribution": 2,
+              "Amplitude": 2,
+              "Area": 2,
+              "Duration": 2
+            }
+          },
+          {
+            "RecordingID": "r3",
+            "Mouse": "m2",
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "NFrames": 10,
+            "NumEvents": 5,
+            "NumSites": 2,
+            "ValidContributions": 5,
+            "Total": 500,
+            "PerMm2": 500.0,
+            "PerSec": 50.0,
+            "PerMin": 3000.0,
+            "PerMm2Sec": 50.0,
+            "PerMm2Min": 3000.0,
+            "MeanContribution": 100.0,
+            "MedianContribution": 100,
+            "MeanPerMm2Contribution": 100.0,
+            "MeanAmplitude": 100.0,
+            "MeanArea": 1.0,
+            "MeanDuration": 1.0,
+            "Contributors": {
+              "Contribution": 5,
+              "Amplitude": 5,
+              "Area": 5,
+              "Duration": 5
+            }
+          }
+        ],
+        "Group": {
+          "Total": {
+            "Mean": 262.5,
+            "SEM": 237.49999999999997,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 25.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 500.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2": {
+            "Mean": 262.5,
+            "SEM": 237.49999999999997,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 25.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 500.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerSec": {
+            "Mean": 26.25,
+            "SEM": 23.75,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 2.5,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 50.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMin": {
+            "Mean": 1575.0,
+            "SEM": 1424.9999999999998,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 150.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 3000.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Sec": {
+            "Mean": 26.25,
+            "SEM": 23.75,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 2.5,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 50.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Min": {
+            "Mean": 1575.0,
+            "SEM": 1424.9999999999998,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 150.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 3000.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanAmplitude": {
+            "Mean": 57.5,
+            "SEM": 42.5,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 15.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 100.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanArea": {
+            "Mean": 1.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 1.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 1.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanDuration": {
+            "Mean": 1.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 1.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 1.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          }
+        }
+      },
+      "ExpectedOriginalSoftware": "unknown"
+    },
+    {
+      "ID": "F04",
+      "Name": "missing contributions and strict mouse completeness",
+      "Registry": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1,
+          "NFrames": 10
+        },
+        {
+          "RecordingID": "r2",
+          "Mouse": "m1",
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1,
+          "NFrames": 10
+        },
+        {
+          "RecordingID": "r3",
+          "Mouse": "m2",
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1,
+          "NFrames": 10
+        }
+      ],
+      "Events": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 1,
+          "AmplitudePercent": 10,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 2,
+          "EndFrame": 2,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 2,
+          "AmplitudePercent": null,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 3,
+          "EndFrame": 3,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 3,
+          "AmplitudePercent": 20,
+          "AreaUm2": null,
+          "DurationSec": 1,
+          "StartFrame": 4,
+          "EndFrame": 4,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 4,
+          "AmplitudePercent": 30,
+          "AreaUm2": 1,
+          "DurationSec": null,
+          "StartFrame": 5,
+          "EndFrame": 5,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 5,
+          "AmplitudePercent": -5,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 6,
+          "EndFrame": 6,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r2",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 1,
+          "AmplitudePercent": 40,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 2,
+          "EndFrame": 2,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        },
+        {
+          "RecordingID": "r3",
+          "Mouse": "m2",
+          "SiteID": 1,
+          "EventID": 1,
+          "AmplitudePercent": 50,
+          "AreaUm2": 1,
+          "DurationSec": 1,
+          "StartFrame": 2,
+          "EndFrame": 2,
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1
+        }
+      ],
+      "Expected": {
+        "Events": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 1,
+            "AmplitudePercent": 10,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 2,
+            "EndFrame": 2,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 10,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 10,
+            "PerMm2": 10.0,
+            "PerSec": 1.0,
+            "PerMin": 60.0,
+            "PerMm2Sec": 1.0,
+            "PerMm2Min": 60.0
+          },
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 2,
+            "AmplitudePercent": null,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 3,
+            "EndFrame": 3,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": null,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": null,
+            "PerMm2": null,
+            "PerSec": null,
+            "PerMin": null,
+            "PerMm2Sec": null,
+            "PerMm2Min": null
+          },
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 3,
+            "AmplitudePercent": 20,
+            "AreaUm2": null,
+            "DurationSec": 1,
+            "StartFrame": 4,
+            "EndFrame": 4,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 20,
+            "Area": null,
+            "Duration": 1,
+            "Contribution": null,
+            "PerMm2": null,
+            "PerSec": null,
+            "PerMin": null,
+            "PerMm2Sec": null,
+            "PerMm2Min": null
+          },
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 4,
+            "AmplitudePercent": 30,
+            "AreaUm2": 1,
+            "DurationSec": null,
+            "StartFrame": 5,
+            "EndFrame": 5,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 30,
+            "Area": 1,
+            "Duration": null,
+            "Contribution": null,
+            "PerMm2": null,
+            "PerSec": null,
+            "PerMin": null,
+            "PerMm2Sec": null,
+            "PerMm2Min": null
+          },
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 5,
+            "AmplitudePercent": -5,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 6,
+            "EndFrame": 6,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": null,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": null,
+            "PerMm2": null,
+            "PerSec": null,
+            "PerMin": null,
+            "PerMm2Sec": null,
+            "PerMm2Min": null
+          },
+          {
+            "RecordingID": "r2",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 1,
+            "AmplitudePercent": 40,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 2,
+            "EndFrame": 2,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 40,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 40,
+            "PerMm2": 40.0,
+            "PerSec": 4.0,
+            "PerMin": 240.0,
+            "PerMm2Sec": 4.0,
+            "PerMm2Min": 240.0
+          },
+          {
+            "RecordingID": "r3",
+            "Mouse": "m2",
+            "SiteID": 1,
+            "EventID": 1,
+            "AmplitudePercent": 50,
+            "AreaUm2": 1,
+            "DurationSec": 1,
+            "StartFrame": 2,
+            "EndFrame": 2,
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "Amplitude": 50,
+            "Area": 1,
+            "Duration": 1,
+            "Contribution": 50,
+            "PerMm2": 50.0,
+            "PerSec": 5.0,
+            "PerMin": 300.0,
+            "PerMm2Sec": 5.0,
+            "PerMm2Min": 300.0
+          }
+        ],
+        "Recordings": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "NFrames": 10,
+            "NumEvents": 5,
+            "NumSites": 1,
+            "ValidContributions": 1,
+            "Total": null,
+            "PerMm2": null,
+            "PerSec": null,
+            "PerMin": null,
+            "PerMm2Sec": null,
+            "PerMm2Min": null,
+            "MeanContribution": 10.0,
+            "MedianContribution": 10,
+            "MeanPerMm2Contribution": 10.0,
+            "MeanAmplitude": 20.0,
+            "MeanArea": 1.0,
+            "MeanDuration": 1.0,
+            "Contributors": {
+              "Contribution": 1,
+              "Amplitude": 3,
+              "Area": 4,
+              "Duration": 4
+            }
+          },
+          {
+            "RecordingID": "r2",
+            "Mouse": "m1",
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "NFrames": 10,
+            "NumEvents": 1,
+            "NumSites": 1,
+            "ValidContributions": 1,
+            "Total": 40,
+            "PerMm2": 40.0,
+            "PerSec": 4.0,
+            "PerMin": 240.0,
+            "PerMm2Sec": 4.0,
+            "PerMm2Min": 240.0,
+            "MeanContribution": 40.0,
+            "MedianContribution": 40,
+            "MeanPerMm2Contribution": 40.0,
+            "MeanAmplitude": 40.0,
+            "MeanArea": 1.0,
+            "MeanDuration": 1.0,
+            "Contributors": {
+              "Contribution": 1,
+              "Amplitude": 1,
+              "Area": 1,
+              "Duration": 1
+            }
+          },
+          {
+            "RecordingID": "r3",
+            "Mouse": "m2",
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "NFrames": 10,
+            "NumEvents": 1,
+            "NumSites": 1,
+            "ValidContributions": 1,
+            "Total": 50,
+            "PerMm2": 50.0,
+            "PerSec": 5.0,
+            "PerMin": 300.0,
+            "PerMm2Sec": 5.0,
+            "PerMm2Min": 300.0,
+            "MeanContribution": 50.0,
+            "MedianContribution": 50,
+            "MeanPerMm2Contribution": 50.0,
+            "MeanAmplitude": 50.0,
+            "MeanArea": 1.0,
+            "MeanDuration": 1.0,
+            "Contributors": {
+              "Contribution": 1,
+              "Amplitude": 1,
+              "Area": 1,
+              "Duration": 1
+            }
+          }
+        ],
+        "Group": {
+          "Total": {
+            "Mean": 50.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": null,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 50.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2": {
+            "Mean": 50.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": null,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 50.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerSec": {
+            "Mean": 5.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": null,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 5.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMin": {
+            "Mean": 300.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": null,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 300.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Sec": {
+            "Mean": 5.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": null,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 5.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Min": {
+            "Mean": 300.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": null,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 300.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanAmplitude": {
+            "Mean": 40.0,
+            "SEM": 10.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 30.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 50.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanArea": {
+            "Mean": 1.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 1.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 1.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanDuration": {
+            "Mean": 1.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 1.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 1.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          }
+        }
+      },
+      "ExpectedOriginalSoftware": "unknown"
+    },
+    {
+      "ID": "F05",
+      "Name": "zero-event recordings retained",
+      "Registry": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1,
+          "NFrames": 10
+        },
+        {
+          "RecordingID": "r2",
+          "Mouse": "m1",
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1,
+          "NFrames": 10
+        },
+        {
+          "RecordingID": "r3",
+          "Mouse": "m2",
+          "RecordingAreaUm2": 1000000.0,
+          "RecordingDurationSec": 10,
+          "SampleHz": 1,
+          "NFrames": 10
+        }
+      ],
+      "Events": [],
+      "Expected": {
+        "Events": [],
+        "Recordings": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "NFrames": 10,
+            "NumEvents": 0,
+            "NumSites": 0,
+            "ValidContributions": 0,
+            "Total": 0,
+            "PerMm2": 0.0,
+            "PerSec": 0.0,
+            "PerMin": 0.0,
+            "PerMm2Sec": 0.0,
+            "PerMm2Min": 0.0,
+            "MeanContribution": null,
+            "MedianContribution": null,
+            "MeanPerMm2Contribution": null,
+            "MeanAmplitude": null,
+            "MeanArea": null,
+            "MeanDuration": null,
+            "Contributors": {
+              "Contribution": 0,
+              "Amplitude": 0,
+              "Area": 0,
+              "Duration": 0
+            }
+          },
+          {
+            "RecordingID": "r2",
+            "Mouse": "m1",
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "NFrames": 10,
+            "NumEvents": 0,
+            "NumSites": 0,
+            "ValidContributions": 0,
+            "Total": 0,
+            "PerMm2": 0.0,
+            "PerSec": 0.0,
+            "PerMin": 0.0,
+            "PerMm2Sec": 0.0,
+            "PerMm2Min": 0.0,
+            "MeanContribution": null,
+            "MedianContribution": null,
+            "MeanPerMm2Contribution": null,
+            "MeanAmplitude": null,
+            "MeanArea": null,
+            "MeanDuration": null,
+            "Contributors": {
+              "Contribution": 0,
+              "Amplitude": 0,
+              "Area": 0,
+              "Duration": 0
+            }
+          },
+          {
+            "RecordingID": "r3",
+            "Mouse": "m2",
+            "RecordingAreaUm2": 1000000.0,
+            "RecordingDurationSec": 10,
+            "SampleHz": 1,
+            "NFrames": 10,
+            "NumEvents": 0,
+            "NumSites": 0,
+            "ValidContributions": 0,
+            "Total": 0,
+            "PerMm2": 0.0,
+            "PerSec": 0.0,
+            "PerMin": 0.0,
+            "PerMm2Sec": 0.0,
+            "PerMm2Min": 0.0,
+            "MeanContribution": null,
+            "MedianContribution": null,
+            "MeanPerMm2Contribution": null,
+            "MeanAmplitude": null,
+            "MeanArea": null,
+            "MeanDuration": null,
+            "Contributors": {
+              "Contribution": 0,
+              "Amplitude": 0,
+              "Area": 0,
+              "Duration": 0
+            }
+          }
+        ],
+        "Group": {
+          "Total": {
+            "Mean": 0.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 0.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 0.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2": {
+            "Mean": 0.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 0.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 0.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerSec": {
+            "Mean": 0.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 0.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 0.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMin": {
+            "Mean": 0.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 0.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 0.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Sec": {
+            "Mean": 0.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 0.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 0.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Min": {
+            "Mean": 0.0,
+            "SEM": 0.0,
+            "ValidMice": 2,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 0.0,
+                "ContributingRecordings": 2,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": 0.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanAmplitude": {
+            "Mean": null,
+            "SEM": null,
+            "ValidMice": 0,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": null,
+                "ContributingRecordings": 0,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": null,
+                "ContributingRecordings": 0,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanArea": {
+            "Mean": null,
+            "SEM": null,
+            "ValidMice": 0,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": null,
+                "ContributingRecordings": 0,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": null,
+                "ContributingRecordings": 0,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanDuration": {
+            "Mean": null,
+            "SEM": null,
+            "ValidMice": 0,
+            "TotalMice": 2,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": null,
+                "ContributingRecordings": 0,
+                "TotalRecordings": 2
+              },
+              {
+                "Mouse": "m2",
+                "Value": null,
+                "ContributingRecordings": 0,
+                "TotalRecordings": 1
+              }
+            ]
+          }
+        }
+      },
+      "ExpectedOriginalSoftware": "unknown"
+    },
+    {
+      "ID": "F06",
+      "Name": "explicit older sign provenance and original version unknown",
+      "Registry": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "RecordingAreaUm2": 250000,
+          "RecordingDurationSec": 30,
+          "SampleHz": 2,
+          "NFrames": 60
+        }
+      ],
+      "Events": [
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 1,
+          "AmplitudePercent": -10,
+          "AreaUm2": 2,
+          "DurationSec": 2,
+          "StartFrame": 2,
+          "EndFrame": 5,
+          "RecordingAreaUm2": 250000,
+          "RecordingDurationSec": 30,
+          "SampleHz": 2,
+          "SignConvention": "negative_drop_percent"
+        },
+        {
+          "RecordingID": "r1",
+          "Mouse": "m1",
+          "SiteID": 1,
+          "EventID": 2,
+          "AmplitudePercent": 0,
+          "AreaUm2": 2,
+          "DurationSec": 1,
+          "StartFrame": 3,
+          "EndFrame": 4,
+          "RecordingAreaUm2": 250000,
+          "RecordingDurationSec": 30,
+          "SampleHz": 2,
+          "SignConvention": "negative_drop_percent"
+        }
+      ],
+      "Expected": {
+        "Events": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 1,
+            "AmplitudePercent": -10,
+            "AreaUm2": 2,
+            "DurationSec": 2,
+            "StartFrame": 2,
+            "EndFrame": 5,
+            "RecordingAreaUm2": 250000,
+            "RecordingDurationSec": 30,
+            "SampleHz": 2,
+            "SignConvention": "negative_drop_percent",
+            "Amplitude": 10,
+            "Area": 2,
+            "Duration": 2,
+            "Contribution": 40,
+            "PerMm2": 160.0,
+            "PerSec": 1.3333333333333333,
+            "PerMin": 80.0,
+            "PerMm2Sec": 5.333333333333333,
+            "PerMm2Min": 320.0
+          },
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "SiteID": 1,
+            "EventID": 2,
+            "AmplitudePercent": 0,
+            "AreaUm2": 2,
+            "DurationSec": 1,
+            "StartFrame": 3,
+            "EndFrame": 4,
+            "RecordingAreaUm2": 250000,
+            "RecordingDurationSec": 30,
+            "SampleHz": 2,
+            "SignConvention": "negative_drop_percent",
+            "Amplitude": 0,
+            "Area": 2,
+            "Duration": 1,
+            "Contribution": 0,
+            "PerMm2": 0.0,
+            "PerSec": 0.0,
+            "PerMin": 0.0,
+            "PerMm2Sec": 0.0,
+            "PerMm2Min": 0.0
+          }
+        ],
+        "Recordings": [
+          {
+            "RecordingID": "r1",
+            "Mouse": "m1",
+            "RecordingAreaUm2": 250000,
+            "RecordingDurationSec": 30,
+            "SampleHz": 2,
+            "NFrames": 60,
+            "NumEvents": 2,
+            "NumSites": 1,
+            "ValidContributions": 2,
+            "Total": 40,
+            "PerMm2": 160.0,
+            "PerSec": 1.3333333333333333,
+            "PerMin": 80.0,
+            "PerMm2Sec": 5.333333333333333,
+            "PerMm2Min": 320.0,
+            "MeanContribution": 20.0,
+            "MedianContribution": 20.0,
+            "MeanPerMm2Contribution": 80.0,
+            "MeanAmplitude": 5.0,
+            "MeanArea": 2.0,
+            "MeanDuration": 1.5,
+            "Contributors": {
+              "Contribution": 2,
+              "Amplitude": 2,
+              "Area": 2,
+              "Duration": 2
+            }
+          }
+        ],
+        "Group": {
+          "Total": {
+            "Mean": 40.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 40.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2": {
+            "Mean": 160.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 160.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerSec": {
+            "Mean": 1.3333333333333333,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 1.3333333333333333,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMin": {
+            "Mean": 80.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 80.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Sec": {
+            "Mean": 5.333333333333333,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 5.333333333333333,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "PerMm2Min": {
+            "Mean": 320.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 320.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanAmplitude": {
+            "Mean": 5.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 5.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanArea": {
+            "Mean": 2.0,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 2.0,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          },
+          "MeanDuration": {
+            "Mean": 1.5,
+            "SEM": null,
+            "ValidMice": 1,
+            "TotalMice": 1,
+            "WithinMouse": [
+              {
+                "Mouse": "m1",
+                "Value": 1.5,
+                "ContributingRecordings": 1,
+                "TotalRecordings": 1
+              }
+            ]
+          }
+        }
+      },
+      "ExpectedOriginalSoftware": "unknown"
+    }
+  ]
+}

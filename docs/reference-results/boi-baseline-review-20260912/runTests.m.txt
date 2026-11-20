@@ -1,0 +1,3 @@
+root=fileparts(mfilename('fullpath'));repo=fullfile(fileparts(fileparts(root)),'existing-analysis');cd(repo);setupOxygenDynamicsPath;
+files={'testBOIEventReview','testBOIConnectedReview','testBOIWindowReview'};files=cellfun(@(s)fullfile(repo,'tests','analysis',[s '.m']),files,'UniformOutput',false);R=runtests(files);disp(table(R));save(fullfile(root,'test-results-04.mat'),'R');
+fid=fopen(fullfile(root,'test-summary-04.json'),'w');fprintf(fid,'%s\n',jsonencode(struct('Tests',numel(R),'Passed',nnz([R.Passed]),'Failed',nnz([R.Failed]),'Incomplete',nnz([R.Incomplete]),'Names',{cellstr(string({R.Name}))}),'PrettyPrint',true));fclose(fid);assert(all([R.Passed]));

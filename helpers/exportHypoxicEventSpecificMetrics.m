@@ -22,7 +22,7 @@ function Filters = createHypoxicEventSpecificFilters(EventSpecificMetrics)
 
 Mouse = ensureTextCell(EventSpecificMetrics.Mouse);
 DrugID = ensureTextCell(EventSpecificMetrics.DrugID);
-Condition = ensureTextCell(EventSpecificMetrics.Condition);
+Condition = cellstr(string(EventSpecificMetrics.Condition)+" ["+string(EventSpecificMetrics.Genotype)+"; "+string(EventSpecificMetrics.Promoter)+"]");
 PuffStim = EventSpecificMetrics.PuffStim;
 if iscell(PuffStim)
     PuffStim = cell2mat(PuffStim);
