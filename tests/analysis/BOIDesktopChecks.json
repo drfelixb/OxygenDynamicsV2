@@ -1,6 +1,7 @@
 {
   "Scope": "Programmatic desktop checks; not native-chooser or human usability evidence",
   "Tests": [
+    "testAutomaticPocketTraces/testEditorOpensAutomaticPreview",
     "testBOIImportReview/testVerificationExportAndGuiSelection",
     "testBOIEventReview/testGuiSelectionAndDefinitions",
     "testBOIEventReview/testEmptyAudit",

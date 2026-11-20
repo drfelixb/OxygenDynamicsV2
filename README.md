@@ -6,6 +6,7 @@ MATLAB software for analysing sink and surge events in cerebral bioluminescence 
 
 Open this folder in MATLAB and run `openBOIBatchEditor`. Open a recording CSV, check the inputs and save a separate working CSV before running a queue. Reopen that working CSV to check and reuse completed recordings. In **Automatic export**, **Open existing export…** loads a completed combined export folder for further work, including **Compact workbook**.
 
+- [Automatic pocket and nearby-tissue traces](docs/POCKET_TRACES.md)
 - [One-page Batch Editor guide](docs/BOI_BATCH_QUICK_START.pdf)
 - [Installation](INSTALLATION.md) and [full Batch Editor guide](docs/BOI_BATCH_EDITOR.md)
 - [Release notes comparing v3.0 and Science_2024](docs/RELEASE_NOTES_3.1.0_RC1.md)

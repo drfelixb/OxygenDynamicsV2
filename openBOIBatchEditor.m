@@ -130,7 +130,9 @@ reopenStatsButton=uibutton(eg,'Text','Open existing export…','ButtonPushedFcn'
 reopenStatsButton.Tooltip='Choose a completed combined-export folder. Reads its receipts and tables without rerunning statistics or reading original movies.';
 statsOutcome=uilabel(eg,'Text','','WordWrap','on','Interpreter','none');place(statsOutcome,5,[1 4]);
 openStatsButton=uibutton(eg,'Text','Open workbook','Enable','off','ButtonPushedFcn',@openStatsCallback);place(openStatsButton,6,1);
-statsSummary=uilabel(eg,'Text','No completed workbook loaded.','WordWrap','on');place(statsSummary,6,[2 4]);
+pocketButton=uibutton(eg,'Text','Pocket traces','Enable','off','ButtonPushedFcn',@pocketTracesCallback);place(pocketButton,6,2);
+pocketButton.Tooltip='Preview original TIFFs and export automatic pocket and nearby-tissue traces for each condition.';
+statsSummary=uilabel(eg,'Text','No completed workbook loaded.','WordWrap','on');place(statsSummary,6,[3 4]);
 statsFolder=createBOIExportFolderPanel(eg);place(statsFolder.Grid,7,[1 4]);
 statsDestination=statsFolder.Path;statsDestination.Value={'The completed combined export folder will be shown here.'};
 openStatsFolderButton=statsFolder.OpenButton;copyStatsPathButton=statsFolder.CopyButton;
@@ -178,7 +180,7 @@ lockedControls={newButton,openButton,saveButton,saveAsButton,checkButton,queueBu
     applyButton,showFieldButton,customName,customButton,hideButton,outputButton,outputParent, ...
     runAgain,reviewQueueButton,historyButton,openAttemptButton,historyTable, ...
     statsButton,statsParentButton,statsParent,statsScope,reviewStatsButton,statsDetailsButton,exportStatsButton, ...
-    openStatsButton,reopenStatsButton,openStatsFolderButton,copyStatsPathButton,reviewedExport.Controls{:},compactExport.Controls{:}, ...
+    openStatsButton,pocketButton,reopenStatsButton,openStatsFolderButton,copyStatsPathButton,reviewedExport.Controls{:},compactExport.Controls{:}, ...
     importFields{:},applyImportButton,importPrefix,mapImportButton};
 UI=struct('State',@getState,'GetBatch',@getBatch,'SetBatch',@setBatch, ...
     'Check',@checkRows,'Save',@saveBatch,'Open',@openBatch,'AddPaths',@addPaths, ...
@@ -206,7 +208,7 @@ UI=struct('State',@getState,'GetBatch',@getBatch,'SetBatch',@setBatch, ...
     'ReviewStats',@reviewStats,'ConfirmStats',@confirmStats,'RunStats',@runStatsExport,'StartReviewedStats',@startReviewedStats,'ReopenStats',@reopenStats, ...
     'ReviewStatsButton',reviewStatsButton,'ExportStatsButton',exportStatsButton,'StatsPreview',statsPreview, ...
     'StatsDetails',statsDetails,'StatsDetailsButton',statsDetailsButton,'StatsSummary',statsSummary,'StatsOutcome',statsOutcome,'StatsDestination',statsDestination, ...
-    'OpenStatsButton',openStatsButton,'ReopenStatsButton',reopenStatsButton,'OpenStatsFolderButton',openStatsFolderButton,'CopyStatsPathButton',copyStatsPathButton, ...
+    'OpenStatsButton',openStatsButton,'PocketTracesButton',pocketButton,'ReopenStatsButton',reopenStatsButton,'OpenStatsFolderButton',openStatsFolderButton,'CopyStatsPathButton',copyStatsPathButton, ...
     'StatsExportFolder',statsFolder,'ReviewedExport',reviewedExport,'ReviewedExportTab',reviewedTab,'CompactExport',compactExport,'CompactExportTab',compactTab);
 UI.ImportTab=importTab;UI.ImportSummary=importSummary;UI.ImportFeedback=importFeedback;
 UI.ImportRate=importFields{1};UI.ImportPixelSize=importFields{2};
@@ -656,7 +658,7 @@ if isfield(Batch,'PathImport'),startImport();end
         exportStatsButton.Enable=onoff(ready);
         hasStats=~isempty(State.StatsResult)&&isfile(State.StatsResult.Workbook);
         openResult=~State.Busy&&hasStats;
-        openStatsButton.Enable=onoff(openResult);openStatsFolderButton.Enable=onoff(openResult);copyStatsPathButton.Enable=onoff(openResult);
+        pocketButton.Enable=onoff(openResult);openStatsButton.Enable=onoff(openResult);openStatsFolderButton.Enable=onoff(openResult);copyStatsPathButton.Enable=onoff(openResult);
         statsDetailsButton.Enable=onoff(~State.Busy&&(~isempty(State.StatsPlan)||hasStats));
     end
     function toggleStatsDetails(~,~)
@@ -862,6 +864,12 @@ if isfield(Batch,'PathImport'),startImport();end
         assertIdle();initial=statsFolder.Folder();if isempty(initial),initial=pwd;end
         folder=uigetdir(initial,'Choose a COMPLETED combined-export folder (contains BatchStatsResult.mat)');
         if ~isequal(folder,0),guarded(@()reopenStats(folder));end
+    end
+    function pocketTracesCallback(~,~)
+        assertIdle();
+        if ~isempty(State.StatsResult)
+            guarded(@()openPocketTracePreview(State.StatsResult.Directory));
+        end
     end
     function openStatsCallback(~,~)
         assertIdle();

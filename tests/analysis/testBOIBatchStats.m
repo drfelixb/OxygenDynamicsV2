@@ -174,6 +174,7 @@ function test10GUIBusySuccessAndFailureRecovery(t)
 ui.ReviewStats(parent);verifyFalse(t,ui.State().StatsConfirmed);r=ui.StartReviewedStats(@execute);
 verifyFalse(t,ui.State().Busy);verifyEmpty(t,ui.CheckDialog());
 verifyEqual(t,string(ui.OpenStatsButton.Enable),"on");verifyEqual(t,ui.StatsExportFolder.Folder(),r.Directory);
+verifyEqual(t,string(ui.PocketTracesButton.Enable),"on");
 verifyEqual(t,string(ui.OpenStatsFolderButton.Enable),"on");verifyEmpty(t,ui.State().StatsPlan);
 verifyEqual(t,string(ui.ExportStatsButton.Enable),"off");
 verifyEqual(t,string(ui.StatsDetailsButton.Text),"Show export guide");
