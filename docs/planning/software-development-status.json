@@ -1,4 +1,13 @@
 {
+  "automatic_pocket_traces": {
+    "id": "POCKET-TRACES-01",
+    "owner": "root",
+    "state": "verified_for_review",
+    "verification": "Five focused MATLAB R2025a checks passed, including the reopened editor through the visible export control. The previous standalone raw values, aligned curves, complete-window statistics and intervals matched on the fixed reference export. The release source list includes all feature files.",
+    "scope": "On-demand automatic pocket and nearby-tissue traces from a completed RC1 export",
+    "acceptance": "Verify paired raw and normalized traces, distinct-source counts, condition summaries, mouse weighting, GUI handoff and explicit missing-TIFF decisions",
+    "stop": "Feature pull request for researcher review"
+  },
   "schema": "oxygen-software-development-status-1",
   "plan_id": "SW-PLAN-001",
   "plan_version": "0.2",

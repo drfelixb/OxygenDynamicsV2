@@ -30,6 +30,8 @@ exclusion reasons. Click **Export workbook** to confirm the reviewed preview
 and write the combined workbook, event tables and traces for postprocessing.
 See [combined export](BOI_BATCH_EXECUTION.md#collect-completed-recordings-for-postprocessing).
 
+After a completed or reopened export, choose **Pocket traces** to preview source TIFFs and produce condition-specific automatic pocket and nearby-tissue traces, raw CSVs and figures. [Pocket trace guide](POCKET_TRACES.md)
+
 ## Reopen a completed combined export
 
 In **Automatic export**, choose **Open existing export…**. Choose the completed
