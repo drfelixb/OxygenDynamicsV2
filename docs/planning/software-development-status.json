@@ -1,4 +1,5 @@
 {
+  "coordination_checkpoint_20261123": {"id": "COORD-20261123", "owner": "coordinator", "state": "complete", "scope": "Repository audit, CI repair, check-set extension, multichannel integration, archive of unpublished work, record tidying", "pull_requests": [11, 14, 15], "open_decisions": ["issue 16: multichannel depth reference rule", "cutoff for linking pockets between channels", "next version number"], "shelved": ["whole-event and whole-episode previews", "Python detector prototypes", "event-first detector"], "archive_branches": ["archive/dev-checkout-20261123", "archive/event-first-20261123"], "calculations_changed": false, "active_implementation_milestone": null},
   "multichannel_integration_20261123": {
     "id": "PAIR-INTEGRATION-01",
     "owner": "root",
@@ -133,7 +134,7 @@
   "scope_direction": "researcher_confirmed_calculations_and_ordinary_matlab_use_custom_supervision_deferred",
   "roadmap_status": "checkpoint_delivered_next_milestone_proposed",
   "active_implementation_milestone": null,
-  "proposed_next_milestone": "WORKFLOW-CLOSE-01: finish the existing routine minimal-CSV-to-combined-export workflow; planning only, awaiting approval.",
+  "proposed_next_milestone": "None. WORKFLOW-CLOSE-01 was overtaken by the 3.1.0-rc.1 batch editor and compact workbook delivery; the next milestone is to be agreed with the researcher.",
   "approved_implementation_items": [
     "SW-G3-01_saved_run_entry",
     "SW-G3-02_neutral_event_selection",
