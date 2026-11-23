@@ -57,6 +57,10 @@
     "testBOIReviewedExport/testGUIFailureRetainsPreviousAndRestoresControls",
     "testBOIReviewedExport/testGUIAcceptedEventPreviewAndFreshEditor",
     "testBOICompactBatchUsability/testCompactLayoutAndOpenedSource",
-    "testBOICompactBatchUsability/testBulkFormattingAndReadback"
+    "testBOICompactBatchUsability/testBulkFormattingAndReadback",
+    "testBOIMultichannel/testFollowLiveLegacyProgress",
+    "testBOIMultichannel/testFollowFailedPair",
+    "testBOIMultichannel/testBatchModeEditClearsPreviousB",
+    "testBOIMultichannel/testCheckRescansIncludedBlankMovies"
   ]
 }

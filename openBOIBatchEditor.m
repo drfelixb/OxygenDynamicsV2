@@ -29,6 +29,8 @@ reserved={'BatchRowID','InputStatus','AnalysisStatus','ResultCheck','ReviewStatu
     'ElapsedSeconds','Message','AttemptHistory'};
 Fig=uifigure('Name','Batch recordings','Position',[70 70 1120 800]);
 Fig.CloseRequestFcn=@closeWindow;
+imaging=uimenu(Fig,'Text','Imaging mode');
+uimenu(imaging,'Text','Multichannel batch from CSV…','MenuSelectedFcn',@(~,~)openBOIMultichannelBatch());
 g=uigridlayout(Fig,[7 1]);g.Padding=[10 10 10 10];g.RowSpacing=7;
 g.RowHeight={34,24,76,32,'1x','2x',28};
 top=uigridlayout(g,[1 8]);top.Padding=[0 0 0 0];
