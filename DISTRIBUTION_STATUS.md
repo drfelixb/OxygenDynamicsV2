@@ -1,5 +1,8 @@
 # Distribution and validation status
 
+**Local multichannel build 3.1.0-rc.1+multichannel.4** adds an opt-in paired workflow on top of the published RC1 archive. The multichannel.4 TIFF rescan was checked statically; a MATLAB runtime test is pending. The earlier multichannel evidence scope is MATLAB R2025a on macOS with generated inputs. The following historical entries describe the original RC1.
+
+
 OxygenDynamicsV2 **3.1.0-rc.1** is a research software release candidate for the BOI Batch Editor. Its scope is recording setup, sequential analysis using the accepted BOI detector, saved results, and postprocessing exports. The [release notes](docs/RELEASE_NOTES_3.1.0_RC1.md) distinguish the workflow and measurement changes from both earlier releases and the original publication.
 
 The source passed 310 synthetic regression checks in MATLAB R2025a on macOS across the full run and a focused rerun after restoring a test fixture helper. The packaged Batch Editor also opened in that environment. Recorded user testing of the CSV-to-automatic-to-compact workflow is separate from candidate verification. Performance and scientific interpretation across research cohorts, Windows desktop behavior, and compatibility with other MATLAB versions are outside the demonstrated scope.

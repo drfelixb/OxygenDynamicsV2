@@ -1,5 +1,8 @@
 # OxygenDynamicsV2
 
+Local multichannel build **3.1.0-rc.1+multichannel.4**. For CSV batch analysis, run `openBOIMultichannelBatch` or choose **Imaging mode** in the RC1 Batch recordings window. For one pair, run `openBOIMultichannel` or choose **Multichannel recordings** in `OxygenDynamics_GUI`. The [multichannel guide](docs/BOI_MULTICHANNEL.md) covers selecting a pair, oxygen plus fluorescence, the paired workbook and reopening event traces. The following material describes the public RC1 base.
+
+
 MATLAB software for analysing sink and surge events in cerebral bioluminescence oxygen imaging. Version **3.1.0-rc.1** focuses on the BOI recording-to-workbook workflow.
 
 ## Start or resume a batch
