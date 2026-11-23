@@ -26,6 +26,19 @@ boundaries still apply. Preserve older records; do not execute their stale
   missingness, uncertainty, source-specific tissue support and automatic versus
   reviewed results. External 1 Hz authority applies to these supplied recordings;
   do not silently assume it for every future acquisition.
+- The opt-in multichannel workflow is in scope by the researcher's 18 November
+  2026 request and 23 November 2026 confirmation: two oxygen channels, or one
+  oxygen channel with a second fluorescence channel measured on oxygen
+  footprints. It runs the accepted BOI detector independently per oxygen
+  channel and must not change single-channel results. The cutoff for linking
+  pockets between channels and the depth reference rule (issue #16) are open
+  researcher decisions.
+- Shelved by the researcher on 23 November 2026: the whole-event and
+  whole-episode previews, the Python video/episode detector prototypes and the
+  event-first detector. They are preserved unmerged on
+  `archive/dev-checkout-20261123` and `archive/event-first-20261123` as inactive
+  evidence. Do not resume, merge or extend them without a new explicit approval,
+  and never merge an archive branch as a whole.
 - Preserve existing uncommitted work, raw data, earlier outputs and unresolved
   scientific questions. Do not reset, clean, overwrite original outputs or
   perform a broad rewrite/reorganization as housekeeping.
@@ -86,6 +99,9 @@ from historical test claims. Never make unresolved scientific questions silently
 mandatory for unrelated software improvements.
 
 Keep the plan, small current-status file and short work-item records current.
+Development starts from a fresh clone of `main`. Each work item is delivered as
+a pull request against `main` that passes the automated checks; work that exists
+only in a local checkout is not delivered.
 Use detailed evidence only when it supports a specific acceptance check.
 MATLAB recipes archived under `docs/reference-results/` must use `.m.txt` so
 documentation does not change the recursive scientific-code inventory.
