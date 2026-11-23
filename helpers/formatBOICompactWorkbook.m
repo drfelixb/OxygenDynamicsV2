@@ -19,7 +19,7 @@ while entries.hasMoreElements()
             writeUTF8(output,s);
         elseif ~entry.isDirectory()
             stream=input.getInputStream(entry);streamCleanup=onCleanup(@()stream.close());
-            stream.transferTo(output);clear streamCleanup;
+            copyStream(stream,output);clear streamCleanup;
         end
     end
     output.closeEntry();
@@ -91,7 +91,19 @@ parts{end}=s(previous:end);s=[parts{:}];
 end
 function s=readEntry(zip,name)
 stream=zip.getInputStream(zip.getEntry(name));c=onCleanup(@()stream.close());
-bytes=stream.readAllBytes();s=native2unicode(typecast(bytes(:)','uint8'),'UTF-8');
+buffer=java.io.ByteArrayOutputStream();copyStream(stream,buffer);
+bytes=buffer.toByteArray();s=native2unicode(typecast(bytes(:)','uint8'),'UTF-8');
+end
+function copyStream(source,target)
+% Java 8 compatible: InputStream.readAllBytes/transferTo need Java 9 or later.
+% The channels are not closed here; the callers own both streams.
+in=java.nio.channels.Channels.newChannel(source);out=java.nio.channels.Channels.newChannel(target);
+block=java.nio.ByteBuffer.allocate(1048576);
+while in.read(block)~=-1
+    block.flip();
+    while block.hasRemaining(),out.write(block);end
+    block.clear();
+end
 end
 function writeUTF8(stream,s)
 bytes=unicode2native(s,'UTF-8');stream.write(typecast(uint8(bytes),'int8'),0,numel(bytes));

@@ -4,6 +4,10 @@ This file records user-visible changes from the point at which structured
 release notes were introduced. Earlier repository history has not been
 reconstructed into releases.
 
+## Unreleased
+
+- Fix the compact workbook export on MATLAB installations that run Java 8: workbook formatting no longer needs Java 9 stream methods. Workbook values and calculations are unchanged.
+
 ## 3.1.0-rc.1
 
 - Add resumable BOI Batch Editor queues with protected CSV imports, portable path mapping and working-copy save.

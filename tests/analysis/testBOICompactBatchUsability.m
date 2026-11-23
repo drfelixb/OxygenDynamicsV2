@@ -173,7 +173,15 @@ end
 end
 function s=zipText(path,name)
 z=java.util.zip.ZipFile(path);c=onCleanup(@()z.close());stream=z.getInputStream(z.getEntry(name));cs=onCleanup(@()stream.close()); %#ok<NASGU>
-b=stream.readAllBytes();s=native2unicode(typecast(b(:)','uint8'),'UTF-8');
+% Java 8 compatible read; InputStream.readAllBytes needs Java 9 or later.
+in=java.nio.channels.Channels.newChannel(stream);buffer=java.io.ByteArrayOutputStream();
+out=java.nio.channels.Channels.newChannel(buffer);block=java.nio.ByteBuffer.allocate(1048576);
+while in.read(block)~=-1
+    block.flip();
+    while block.hasRemaining(),out.write(block);end
+    block.clear();
+end
+b=buffer.toByteArray();s=native2unicode(typecast(b(:)','uint8'),'UTF-8');
 end
 function [S,O]=fixture()
 ids=["001";"002";"003";"004"];mouse=["M01";"M01";"M02";"M03"];
