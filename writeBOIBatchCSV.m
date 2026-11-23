@@ -1,9 +1,11 @@
 function [SavedBatch,BackupPath]=writeBOIBatchCSV(Batch,Path)
 %WRITEBOIBATCHCSV Save a portable text CSV without overwriting external edits.
 % The saved acquisition cells are resolved and source/result paths absolute.
-% Extra software columns preserve shared-setting inheritance on reopening.
-% Existing opened files require their original SHA-256; other existing
-% destinations are refused. Replacement is atomic and retains a prior copy.
+% Implicit detection support is stored blank to preserve the default on
+% reopening. Extra software columns preserve shared-setting inheritance.
+% The working-file marker permits reopening for writeback. Imported sources
+% require a new destination. Working-file updates require their original
+% SHA-256. Replacement is atomic and retains a prior copy.
 if nargin<2||isempty(Path)
     assert(isfield(Batch,'FilePath')&&~isempty(Batch.FilePath), ...
         'OxygenDynamics:BatchCSVWrite','Choose a CSV filename for this batch.');
@@ -35,13 +37,19 @@ for k=1:numel(fields)
     Resolved.(originNames{k})=Origins.(fields{k});
     Resolved.(sharedNames{k})=repmat(string(Batch.Shared.(fields{k})),height(Resolved),1);
 end
+defaultSupport=Origins.BOISupportProfile=="default";
+Resolved.BOISupportProfile(defaultSupport)="";
+Resolved.BOIBatchBOISupportProfileOrigin(defaultSupport)="missing";
 confirmed="false";if Batch.SharedConfirmed,confirmed="true";end
 Resolved.BOIBatchSharedConfirmed=repmat(confirmed,height(Resolved),1);
+Resolved.BOIBatchWorkingCSV=repmat("boi-working-1",height(Resolved),1);
 sameOpened=false;
 if isfield(Batch,'FilePath')&&~isempty(Batch.FilePath)
     previous=char(java.io.File(char(Batch.FilePath)).getCanonicalPath());
     if ispc,sameOpened=strcmpi(previous,Path);else,sameOpened=strcmp(previous,Path);end
 end
+assert(~sameOpened||~isfield(Batch,'WorkingCSV')||isequal(Batch.WorkingCSV,true), ...
+    'OxygenDynamics:BatchImportedCSV','This is the imported CSV. Use Save as… and choose a new filename for the working CSV.');
 expected='';
 if sameOpened&&isfield(Batch,'FileSHA256'),expected=char(Batch.FileSHA256);end
 checkDestination(Path,sameOpened,expected);
@@ -100,6 +108,7 @@ SavedBatch.Rows.Paths=Resolved.Paths;
 SavedBatch.Rows.RunFolder=Resolved.RunFolder;
 SavedBatch.BaseFolder=parent;
 SavedBatch.FilePath=Path;SavedBatch.FileSHA256=newHash;
+SavedBatch.WorkingCSV=true;
 end
 
 function writeRecord(fid,values)

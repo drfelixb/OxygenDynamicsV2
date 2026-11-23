@@ -58,17 +58,49 @@ end
 function test05SuccessfulDispatchAndExistingFormats(t)
 [b,parent,root]=fixture();cleanup=onCleanup(@()rmdir(root,'s'));
 [p,b]=prepareBOIBatchStats(b,parent);hash=oxygenFileSHA256(b.FilePath);calls=0;
-r=runBOIBatchStats(b,p,[],@execute);
+events={};statusPath=fullfile(p.OutputFolder,'BatchStatsStatus.json');
+receiptPath=fullfile(p.OutputFolder,'BatchStatsResult.mat');
+r=runBOIBatchStats(b,p,@observe,@execute);
 verifyEqual(t,calls,1);verifyEqual(t,r.Status,'complete');verifyTrue(t,isfile(r.Workbook));
 verifyEqual(t,oxygenFileSHA256(b.FilePath),hash);
 verifyTrue(t,endsWith(r.Workbook,'FilteredData_batch.xlsx'));
 saved=load(fullfile(r.Directory,'BatchStatsSelection.mat'),'Plan');verifyEqual(t,saved.Plan,p);
-status=jsondecode(fileread(fullfile(r.Directory,'BatchStatsStatus.json')));verifyEqual(t,status.Status,'complete');
+status=jsondecode(fileread(statusPath));verifyEqual(t,status.Status,'complete');
+stages=string(cellfun(@(event)event.Stage,events,'UniformOutput',false));
+verifyEqual(t,unique(stages,'stable'),["verifying";"verifying-sources";"preparing";"loading"; ...
+    "verifying-output";"reverifying-runs";"saving-receipt";"complete"]);
+sources=[events{stages=="verifying-sources"}];
+verifyEqual(t,[sources.Index],1:2);verifyEqual(t,[sources.Count],[2 2]);
+verifyEqual(t,{sources.Mouse},{'0001','0002'});
+output=[events{stages=="verifying-output"}];
+verifyEqual(t,[output.Index],1:8);verifyEqual(t,[output.Count],repmat(8,1,8));
+verifyEqual(t,output(3).Item,'SinkTable4LME.mat');
+rechecks=events(stages=="reverifying-runs");
+verifyEqual(t,cellfun(@(event)event.Index,rechecks),[1;2;3]);
+verifyEqual(t,cellfun(@(event)event.Count,rechecks),[3;3;3]);
+verifyEqual(t,rechecks{2}.Mouse,'0002');verifyEqual(t,rechecks{3}.Item,'Batch CSV');
+verifyEqual(t,nnz(stages=="complete"),1);
 clear cleanup
     function out=execute(config)
         calls=calls+1;verifyFalse(t,config.useCuratedSinks);verifyEmpty(t,config.analysisWindowsCsv);
         verifyEmpty(t,config.baselinePairsCsv);verifyEqual(t,config.savedRecordingSources,p.SavedSources);
         out=fakeStats(config);
+        config.progressFcn(struct('Stage','complete','Index',2,'Count',2,'Mouse',''));
+        running=jsondecode(fileread(statusPath));
+        verifyEqual(t,running.Status,'running');verifyEqual(t,running.Stage,'loading');
+        verifyFalse(t,isfile(receiptPath));
+    end
+    function observe(event)
+        events{end+1,1}=event;
+        if strcmp(event.Stage,'saving-receipt')
+            writing=jsondecode(fileread(statusPath));
+            verifyEqual(t,writing.Status,'running');verifyEqual(t,writing.Stage,'saving-receipt');
+            verifyFalse(t,isfile(receiptPath));
+        elseif strcmp(event.Stage,'complete')
+            finished=jsondecode(fileread(statusPath));
+            verifyEqual(t,finished.Status,'complete');verifyEqual(t,finished.Stage,'complete');
+            verifyTrue(t,isfile(receiptPath));
+        end
     end
 end
 
@@ -113,11 +145,25 @@ function test09GUIReviewConfirmationAndInvalidation(t)
 [b,parent,root]=fixture();cleanup=onCleanup(@()rmdir(root,'s'));
 [fig,ui]=openBOIBatchEditor(b);closeFig=onCleanup(@()delete(fig));
 verifyError(t,@()ui.RunStats(@neverDispatch),'OxygenDynamics:BatchStatsNotConfirmed');
+verifyEqual(t,string(ui.ExportStatsButton.Text),"Export workbook");
+verifyEqual(t,string(ui.ExportStatsButton.Enable),"off");
 ui.SelectRows(1);p=ui.ReviewStats(parent);verifyEqual(t,p.Counts.Included,2);
 verifyEqual(t,ui.Tabs.SelectedTab,ui.StatsTab);verifyFalse(t,ui.State().Busy);
-verifyEmpty(t,ui.CheckDialog());verifyEqual(t,string(ui.ExportStatsButton.Enable),"off");
-ui.ConfirmStats(true);verifyEqual(t,string(ui.ExportStatsButton.Enable),"on");
+verifyEmpty(t,ui.CheckDialog());verifyEqual(t,string(ui.ExportStatsButton.Enable),"on");
+verifyEqual(t,string(ui.ExportStatsButton.Text),"Export workbook");
+verifyFalse(t,ui.State().StatsConfirmed);verifyFalse(t,isfolder(p.OutputFolder));
+verifyTrue(t,contains(ui.StatsPreview.Text,'2 included · 1 excluded'));
+verifyEqual(t,string(ui.StatsDetails.Visible),"off");
+showDetails=ui.StatsDetailsButton.ButtonPushedFcn;
+showDetails(ui.StatsDetailsButton,[]);verifyEqual(t,string(ui.StatsDetails.Visible),"on");
+verifyTrue(t,any(contains(string(ui.StatsDetails.Value),string(p.OutputFolder))));
+ui.StatsScope.Value='Selected recording rows';
+scopeChanged=ui.StatsScope.ValueChangedFcn;scopeChanged(ui.StatsScope,[]);
+verifyEmpty(t,ui.State().StatsPlan);verifyEqual(t,string(ui.ExportStatsButton.Enable),"off");
+verifyEqual(t,string(ui.StatsDetails.Visible),"off");
+ui.ReviewStats(parent);
 ui.Edit(1,'Notes','later edit');verifyEmpty(t,ui.State().StatsPlan);
+verifyEqual(t,string(ui.ExportStatsButton.Enable),"off");
 verifyError(t,@()ui.RunStats(@neverDispatch),'OxygenDynamics:BatchStatsNotConfirmed');
 delete(fig);clear closeFig
 end
@@ -125,22 +171,67 @@ end
 function test10GUIBusySuccessAndFailureRecovery(t)
 [b,parent,root]=fixture();cleanup=onCleanup(@()rmdir(root,'s'));
 [fig,ui]=openBOIBatchEditor(b);closeFig=onCleanup(@()delete(fig));
-ui.ReviewStats(parent);ui.ConfirmStats(true);r=ui.RunStats(@execute);
+ui.ReviewStats(parent);verifyFalse(t,ui.State().StatsConfirmed);r=ui.StartReviewedStats(@execute);
 verifyFalse(t,ui.State().Busy);verifyEmpty(t,ui.CheckDialog());
 verifyEqual(t,string(ui.OpenStatsButton.Enable),"on");verifyEqual(t,ui.StatsExportFolder.Folder(),r.Directory);
 verifyEqual(t,string(ui.OpenStatsFolderButton.Enable),"on");verifyEmpty(t,ui.State().StatsPlan);
-ui.ReviewStats(parent);ui.ConfirmStats(true);
-verifyError(t,@()ui.RunStats(@plannedFailure),'BatchStatsTest:Failure');
+verifyEqual(t,string(ui.ExportStatsButton.Enable),"off");
+verifyEqual(t,string(ui.StatsDetailsButton.Text),"Show export guide");
+verifyTrue(t,ui.State().StatsHandoff.ReadOnly);verifyTrue(t,any(contains(string(ui.StatsDetails.Value),'START HERE FOR POSTPROCESSING')));
+availability=ui.State().StatsHandoff.Burden;
+if availability.Known
+    verifyEqual(t,ui.StatsSummary.Text,sprintf('%d / %d normalized burdens available', ...
+        availability.AvailableNormalizedRecordings,availability.Recordings));
+else
+    verifyEqual(t,ui.StatsSummary.Text,'Burden availability not recorded');
+end
+priorSummary=ui.StatsSummary.Text;
+ui.ReviewStats(parent);
+verifyEqual(t,ui.StatsSummary.Text,priorSummary);verifyEqual(t,string(ui.OpenStatsButton.Enable),"on");
+verifyError(t,@()ui.StartReviewedStats(@plannedFailure),'BatchStatsTest:Failure');
 verifyFalse(t,ui.State().Busy);verifyEmpty(t,ui.CheckDialog());verifyFalse(t,ui.State().StatsConfirmed);
 verifyEqual(t,ui.StatsExportFolder.Folder(),r.Directory);verifyTrue(t,isfile(r.Workbook));
+verifyEqual(t,ui.StatsOutcome.Text,'Export failed; previous export retained.');
+verifyEqual(t,ui.StatsSummary.Text,priorSummary);
 delete(fig);clear closeFig cleanup
     function out=execute(config)
         verifyTrue(t,ui.State().Busy);verifyFalse(t,ui.State().Running);
         verifyError(t,@()ui.Edit(1,'Mouse','lost'),'OxygenDynamics:BatchBusy');
         verifyError(t,@()ui.Save(),'OxygenDynamics:BatchBusy');
+        verifyError(t,@()ui.ReopenStats(root),'OxygenDynamics:BatchBusy');
+        verifyEqual(t,string(ui.ReopenStatsButton.Enable),"off");
+        verifyTrue(t,ui.ReviewedExport.State().Busy);verifyEqual(t,string(ui.ReviewedExport.PreviewButton.Enable),"off");
+        verifyError(t,@()ui.ReviewedExport.Preview(),'OxygenDynamics:BatchBusy');
         verifyEqual(t,string(ui.StopButton.Enable),"off");
+        notify=config.progressFcn;
+        notify(struct('Stage','loading','Index',1,'Count',2,'Mouse','0001'));
+        dialog=ui.CheckDialog();verifyEqual(t,string(dialog.Indeterminate),"on");
+        verifyTrue(t,contains(dialog.Message,'Loading saved recording 1 of 2'));
         out=fakeStats(config);
     end
+end
+
+function test13GUIReopensInFreshEditorAndRetainsPreviousOnFailure(t)
+[b,parent,root]=fixture();cleanup=onCleanup(@()rmdir(root,'s'));
+[p,b]=prepareBOIBatchStats(b,parent);r=runBOIBatchStats(b,p,[],@fakeStats);
+minimal=createBOIBatch(table("REPLACE_WITH_RECORDING_FOLDER",'VariableNames',{'Paths'}));
+for input={r.Directory,fullfile(r.Directory,'BatchStatsResult.mat')}
+    [fig,ui]=openBOIBatchEditor(minimal);closeFig=onCleanup(@()delete(fig));before=ui.GetBatch();
+    loaded=ui.ReopenStats(input{1});verifyEqual(t,loaded,r);verifyEqual(t,ui.GetBatch(),before);
+    verifyFalse(t,ui.State().Busy);verifyEmpty(t,ui.CheckDialog());verifyEqual(t,ui.Tabs.SelectedTab,ui.StatsTab);
+    verifyEqual(t,ui.StatsExportFolder.Folder(),r.Directory);verifyEqual(t,string(ui.OpenStatsButton.Enable),"on");
+    verifyEqual(t,string(ui.OpenStatsFolderButton.Enable),"on");verifyEqual(t,string(ui.ExportStatsButton.Enable),"off");
+    verifyEqual(t,ui.CompactExport.State().Source.Workbook,r.Workbook);
+    verifyTrue(t,ui.CompactExport.State().Source.UseWorkbookBurdenTables);
+    verifyEqual(t,fileparts(ui.CompactExport.Destination.Value),fileparts(r.Workbook));
+    verifyEqual(t,string(ui.CompactExport.ActionButton.Enable),"on");
+    verifyFalse(t,ui.CompactExport.OptionalButton.Value);
+    verifyFalse(t,ui.State().StatsHandoff.OriginalRecordingsRechecked);
+    verifyError(t,@()ui.ReopenStats(parent),'OxygenDynamics:BatchStatsSavedExport');
+    verifyEqual(t,ui.State().StatsResult,r);verifyEqual(t,ui.StatsExportFolder.Folder(),r.Directory);
+    verifyFalse(t,ui.State().Busy);verifyEmpty(t,ui.CheckDialog());
+    delete(fig);clear closeFig
+end
 end
 
 function test11MissingSavedTablesCannotReportSuccess(t)
@@ -150,6 +241,8 @@ for missing=["main","core"]
     verifyError(t,@()runBOIBatchStats(b,p,[],@incomplete),'OxygenDynamics:BatchStatsIncomplete');
     status=jsondecode(fileread(fullfile(p.OutputFolder,'BatchStatsStatus.json')));
     verifyEqual(t,status.Status,'failed');verifyFalse(t,isfile(fullfile(p.OutputFolder,'BatchStatsResult.mat')));
+    verifyEqual(t,status.Stage,'verifying-output');
+    if missing=="main",verifyEqual(t,status.Index,2);else,verifyEqual(t,status.Index,3);end
 end
     function out=incomplete(config)
         out=fakeStats(config);
@@ -189,7 +282,8 @@ data=fullfile(folder,'DataOutput.mat');
 D=struct('RecordingRegistry',RecordingRegistry,'Table_OxygenSinks_OutCombo',table(), ...
     'Table_OxygenSinkEvents_OutCombo',table(),'Table_OxygenSurges_OutCombo',table(),'Table_OxygenSurgeEvents_OutCombo',table());
 saveStatsMATFile(data,D);saveStatsCoreTables(folder,table(),table(),table(),table());
-book=createStatsExcelOutputPath(folder,config.inputCsv);writeBOIRunJSON(book,struct('DispatchFixture',true));
+book=createStatsExcelOutputPath(folder,config.inputCsv);
+writetable(RecordingRegistry,book,'Sheet','RecordingRegistry');
 manifest=fullfile(folder,'AnalysisManifest.md');writeBOIRunJSON(manifest,struct('DispatchFixture',true));
 recordings=struct('SinksMatFile',{config.savedRecordingSources.SinkMaster},'SurgesMatFile',{config.savedRecordingSources.SurgeMaster});
 out=struct('OutputXlsx',book,'DataOutputMat',data,'AnalysisManifest',manifest,'StatsInfo',struct('Recordings',recordings));

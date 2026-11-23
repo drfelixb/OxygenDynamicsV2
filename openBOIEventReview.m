@@ -22,6 +22,10 @@ Fig.SizeChangedFcn=@(~,~)set(Tabs,'Position',[10 10 Fig.Position(3)-20 Fig.Posit
 EventTab=uitab(Tabs,'Title','Saved event evidence');
 TimingTab=uitab(Tabs,'Title','Timing review');
 TimingPanel=createBOITimingPanel(TimingTab,@()set(Tabs,'SelectedTab',EventTab),@selectTimingFrame);
+WholeEventTab=uitab(Tabs,'Title','Whole-event preview');
+WholeEventPanel=createBOIWholeEventPanel(WholeEventTab,@()set(Tabs,'SelectedTab',TimingTab),@chooseReferenceSources);
+EpisodeTab=uitab(Tabs,'Title','Episode prototype');
+EpisodePanel=createBOIWholeEpisodePanel(EpisodeTab);
 ContextTab=uitab(Tabs,'Title','Optional context');
 ContextPanel=createBOITemporalContextPanel(ContextTab,@chooseReferenceSources,@chooseReferenceJudgments);
 BoundaryTab=uitab(Tabs,'Title','Researcher boundaries');
@@ -87,6 +91,8 @@ UI=struct('Review',Review,'Select',@selectEvent,'List',List,'Frame',Frame,'Image
     'ImageStatus',ImageStatus,'Definitions',Definitions,'ExportButton',ExportButton,'ExportFolder',ExportFolder,'Header',Header, ...
     'AttachNative',@attachNative,'CurrentReview',@currentReview,'Overlay',Overlay,'NativeStatus',NativeStatus,'ReturnToWindow',back, ...
     'Context',ContextPanel,'ContextTab',ContextTab,'Baseline',BaselinePanel,'BaselineTab',BaselineTab,'Timing',TimingPanel,'TimingTab',TimingTab,'EventTab',EventTab,'Tabs',Tabs,'CurrentIndex',@currentIndex, ...
+    'WholeEvent',WholeEventPanel,'WholeEventTab',WholeEventTab, ...
+    'Episode',EpisodePanel,'EpisodeTab',EpisodeTab, ...
     'Boundaries',BoundaryPanel,'BoundaryTab',BoundaryTab,'SaveBoundaries',@saveBoundaries,'LoadBoundaries',@loadBoundaries, ...
     'Pocket',PocketPanel,'PocketTab',PocketTab,'OpticalModes',OpticalModes,'PreviewPocket',@previewPocket, ...
     'SavePocket',@savePocket,'LoadPocket',@loadPocket,'ExportPocket',@exportPocket,'ExportSelected',@exportSelectedTo, ...
@@ -105,6 +111,8 @@ if height(A)>0&&~StartOnEventList,selectEvent(initialIndex);end
         Data=buildBOIEventReviewData(Review,index);Index=index;
         BaselinePanel.Update(Data);
         TimingPanel.Update(Data);
+        WholeEventPanel.Update(Review,index);
+        EpisodePanel.Update(Review,index);
         ContextPanel.SetReview(Review,index);
         BoundaryPanel.Update(Review,index);
         ReferencePanel.Update(Review,index);OpticalPanel.Update(Review,index);PocketPanel.Update(Review,index);
@@ -191,8 +199,10 @@ if height(A)>0&&~StartOnEventList,selectEvent(initialIndex);end
     end
     function attachReferenceSources(sinkPath,surgePath)
         if isfield(Review,'ReferenceSources'),Review=rmfield(Review,'ReferenceSources');end
+        if ~isempty(Index),WholeEventPanel.Update(Review,Index);EpisodePanel.Update(Review,Index);end
         if ~isempty(Index),ReferencePanel.Update(Review,Index);OpticalPanel.Update(Review,Index);ContextPanel.SetReview(Review,Index);end
         Review=attachBOIReferenceSources(Review,sinkPath,surgePath);
+        if ~isempty(Index),WholeEventPanel.Update(Review,Index);EpisodePanel.Update(Review,Index);end
         if ~isempty(Index),ReferencePanel.Update(Review,Index);OpticalPanel.Update(Review,Index);ContextPanel.SetReview(Review,Index);end
     end
     function chooseReferenceSources()

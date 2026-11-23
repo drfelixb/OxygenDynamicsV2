@@ -527,3 +527,16 @@ For the approved FB2412 site 1 extended pocket, the bounded
 geometry and missingness. Its saved event artifact uses the same fourth
 exporter argument. Incomplete area withholds that event's contribution and the
 strict recording sum; the old automatic contribution cannot substitute.
+
+## Experimental whole-event preview
+
+Local dev.13 adds **Whole-event preview** for a selected sink. Click **Preview
+whole event** to assess the same saved raw/corrected footprint traces with
+individual 10- and 20-second references. **Attach both-sign masks** uses the
+existing verified reference-source chooser to screen overlap. Without that
+evidence, screening stays unavailable. Experimental numeric settings are
+editable; changing an event or setting clears the old preview. Green/purple
+lines show the two reference alternatives and candidate bounds; red lines
+retain saved bounds. Recovery is the first sample of a sustained return, not
+a single crossing. No result is saved or applied to burden. See the
+[whole-event preview guide](BOI_WHOLE_EVENT_PREVIEW.md) for definitions and limits.

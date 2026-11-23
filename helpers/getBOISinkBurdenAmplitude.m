@@ -1,6 +1,20 @@
-function [amplitude,source,signConvention]=getBOISinkBurdenAmplitude(E)
+function [amplitude,source,signConvention]=getBOISinkBurdenAmplitude(E,SelectionPolicy)
 % One selector shared by event/recording burden and window composites.
+if nargin<2,SelectionPolicy=[];end
+selection=boiBurdenSelectionPolicy(E,SelectionPolicy);
 amplitude=[];source=strings(height(E),1);signConvention='positive_drop_percent';
+if ismember('EventReferenceVersion',E.Properties.VariableNames)
+    P=boiEventReferencePolicy;
+    assert(all(string(E.EventReferenceVersion)==string(P.Version))&& ...
+        all(ismember({'EventAmplitudePercent','EventAmplitudeAvailable'},E.Properties.VariableNames)), ...
+        'OxygenDynamics:EventReferenceVersion','Unsupported or incomplete event-reference result.');
+    amplitude=double(E.EventAmplitudePercent);
+    amplitude(~E.EventAmplitudeAvailable)=NaN;
+    source(:)="EventAmplitudePercent ("+string(P.Version)+")";
+    if ~selection.IncludeFiniteNegative,amplitude(amplitude<0)=NaN;end
+    if selection.IncludeFiniteNegative,amplitude(~isfinite(amplitude))=NaN;end
+    return
+end
 if ismember('NormOxySinkAmpPercent',E.Properties.VariableNames)
     amplitude=numericColumn(E.NormOxySinkAmpPercent);source(:)="NormOxySinkAmpPercent";
 elseif ismember('NormOxySinkAmp',E.Properties.VariableNames)
@@ -19,7 +33,8 @@ if ismember('EpisodeReferenceVersion',E.Properties.VariableNames)
     amplitude(~valid)=NaN;
     source(:)="EpisodeAmplitudePercent ("+string(P.Version)+")";
 end
-amplitude(amplitude<0)=NaN;
+if ~selection.IncludeFiniteNegative,amplitude(amplitude<0)=NaN;end
+if selection.IncludeFiniteNegative,amplitude(~isfinite(amplitude))=NaN;end
 end
 function v=numericColumn(v)
 % Retain the existing legacy table-column conversion behavior.

@@ -12,8 +12,8 @@ CopyButton=uibutton(Grid,'Text','Copy path','Enable','off','ButtonPushedFcn',@co
 CopyButton.Layout.Row=2;CopyButton.Layout.Column=3;
 LastFolder='';
 Panel=struct('Grid',Grid,'Path',Path,'Message',Message,'OpenButton',OpenButton, ...
-    'CopyButton',CopyButton,'ExportTo',@exportTo,'ChooseAndExport',@chooseAndExport, ...
-    'Folder',@getFolder,'Open',@openFolder,'Copy',@copyPath);
+    'CopyButton',CopyButton,'ExportTo',@exportTo,'ChooseAndExport',@chooseAndExport,'LoadExisting',@loadExisting, ...
+    'Folder',@getFolder,'Open',@openFolder,'OpenFile',@openFile,'Copy',@copyPath);
     function Folder=getFolder()
         Folder=LastFolder;
     end
@@ -25,6 +25,19 @@ Panel=struct('Grid',Grid,'Path',Path,'Message',Message,'OpenButton',OpenButton, 
             Message.Text='Export failed. The last completed export folder is unchanged.';
             rethrow(err);
         end
+        showCompleted(Folder);
+    end
+    function Receipt=loadExisting(Reader,Folder)
+        try
+            Receipt=Reader(Folder);
+            assert(isfolder(Folder),'OxygenDynamics:ExportFolderMissing','The saved export folder is unavailable.');
+        catch err
+            Message.Text='Saved export could not be opened. The last completed export folder is unchanged.';
+            rethrow(err);
+        end
+        showCompleted(Folder);
+    end
+    function showCompleted(Folder)
         LastFolder=char(Folder);Path.Value={LastFolder};Path.Tooltip=LastFolder;
         OpenButton.Enable='on';CopyButton.Enable='on';
         Message.Text='Last completed export folder — select the text, Open folder or Copy path.';
@@ -46,19 +59,29 @@ Panel=struct('Grid',Grid,'Path',Path,'Message',Message,'OpenButton',OpenButton, 
     end
     function Folder=openFolder()
         Folder=completedFolder();
+        assert(openInDefaultApp(Folder),'OxygenDynamics:OpenExportFolderFailed', ...
+            'The file manager could not open the folder. Select or copy the displayed path instead.');
+        Message.Text='Opened the last completed export folder in your file manager.';
+    end
+    function openFile(File)
+        assert(isfile(File),'OxygenDynamics:ExportWorkbookMissing', ...
+            'The saved workbook is missing. Use Open folder to check the export.');
+        assert(openInDefaultApp(File),'OxygenDynamics:OpenExportWorkbookFailed', ...
+            'Your system could not open the workbook. Use Open folder to open it manually.');
+    end
+    function Opened=openInDefaultApp(Location)
+        Location=char(Location);
         if ispc
-            winopen(Folder);
+            winopen(Location);
+            Opened=true;
         else
             executable='xdg-open';if ismac,executable='/usr/bin/open';end
             % Separate arguments preserve spaces/quotes without a shell.
             args=javaArray('java.lang.String',2);
-            args(1)=java.lang.String(executable);args(2)=java.lang.String(Folder);
+            args(1)=java.lang.String(executable);args(2)=java.lang.String(Location);
             builder=java.lang.ProcessBuilder(args);process=builder.start();
-            code=process.waitFor();
-            assert(code==0,'OxygenDynamics:OpenExportFolderFailed', ...
-                'The file manager could not open the folder. Select or copy the displayed path instead.');
+            Opened=process.waitFor()==0;
         end
-        Message.Text='Opened the last completed export folder in your file manager.';
     end
     function Folder=copyPath()
         Folder=completedFolder();clipboard('copy',Folder);

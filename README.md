@@ -1,4 +1,4 @@
-> Development snapshot: **3.1.0-dev.10**, build `2026-10-30 11:14:26 +01:00`.
+> Development snapshot: **3.1.0-dev.14**, build `2026-11-05 15:59:47 +01:00`.
 > This is not a release; prior saved-run metadata remains unchanged.
 
 > Approved pre-episode sink references are available in the existing batch stats/export workflow; [reference rules and output columns](docs/BOI_PRE_EPISODE_BASELINE.md). Original measurements and historical outputs are preserved.
@@ -12,7 +12,14 @@ reviewing local decreases in signal, often called oxygen pockets.
 Detection identifies candidate events. You can inspect those candidates and
 make your own measurement choices before interpreting the results.
 
+## Multichannel recordings
+
+Run `openBOIMultichannelBatch` to review and run paired recordings from CSV, or `openBOIMultichannel` for one pair. The [multichannel guide](docs/BOI_MULTICHANNEL.md) describes selecting paired inputs, independent event measurements, same-footprint traces and the paired workbook.
+
 ## What you can do now
+
+- Inspect full-trace experimental episode proposals in **Episode prototype**. Both traces, competing background models and search limits remain visible; this model is not scientifically adopted. [Prototype guide](docs/BOI_WHOLE_EPISODE_PROTOTYPE.md).
+- Compare baseline, dip and sustained recovery in the optional **Whole-event preview** tab of the saved event reviewer. Experimental settings and raw/corrected differences remain explicit; this preview cannot change detection or burden exports. [Preview guide](docs/BOI_WHOLE_EVENT_PREVIEW.md).
 
 - Prepare a batch CSV in **Batch recordings**: add folders, confirm shared acquisition/support settings, edit optional metadata, and check each row. [Batch editor guide](docs/BOI_BATCH_EDITOR.md).
 - Reopen an existing analysis and inspect its event traces and saved image regions.
@@ -33,6 +40,14 @@ Checks show the current recording and verification stage. **Open saved run**
 checks only the selected recording before opening its linked results.
 After a batch, **Stats / export…** collects completed saved recordings into the
 existing combined stats workbook, event tables and trace exports for postprocessing.
+Use **Open existing export…** in **Automatic export** to reopen a
+completed combined-export folder without running statistics again. The handoff
+identifies the event/recording sheets and distinguishes export completion from
+burden availability. Saved manual decisions are applied by the separate
+burden-only reviewed exporter, not this automatic workbook. Local dev.12 adds
+the optional **Reviewed export** tab, with explicit saved revisions,
+preview and confirmed separate export. Portable, focused desktop and native
+synthetic workflow checks pass; formulas and normalization are unchanged.
 Start it with `openBOIBatchEditor`, or choose **Batch recordings** in
 `OxygenDynamics_GUI`.
 

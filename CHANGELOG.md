@@ -6,6 +6,43 @@ reconstructed into releases.
 
 ## Unreleased
 
+### Whole-episode recognition prototype — 3.1.0-dev.14 (5 November 2026)
+
+- Add an optional full saved-trace scan comparing variable episode shapes with
+  changing background and persistent transitions, separately on raw/corrected data.
+- Show experimental proposals, competing evidence, timing alternatives,
+  recording-edge cautions and screening limits in the existing reviewer.
+- Preserve the production detector, correction, scientific decisions and all
+  amplitude, area and burden calculations; no prototype save/export connection.
+
+### Whole-event saved-trace preview — 3.1.0-dev.13 (5 November 2026)
+
+- Compare individual 10- and 20-second references, sustained dip and recovery in
+  raw and corrected traces, using explicit experimental settings.
+- Show recurrence, missing context, drift, censoring and stage disagreement in
+  an opt-in tab of the existing event reviewer; clear stale previews on changes.
+- Preserve production detection, scientific judgments, burden formula and
+  normalization. No preview result enters automatic or reviewed exports.
+
+### Optional reviewed-burden export from the batch GUI — 3.1.0-dev.12 (31 October 2026)
+
+- Select explicit automatic results, saved review revisions and optional accepted
+  single-event artifacts; preview decisions, measurements, missingness and a new destination.
+- Require confirmation bound to the selected source/artifact bytes, and clear it
+  after selection changes, failure or export. Keep prior completed-export controls.
+- Reuse the existing burden-only workbook/CSV/MAT writer and calculations; preserve
+  automatic outputs, strict missingness and unsaved/experimental previews.
+
+
+### Automatic export handoff and reopening — 3.1.0-dev.11 (30 October 2026)
+
+- Reopen a completed combined export from its folder or receipt without rerunning
+  statistics or reading source movies; validate contained files and saved identities.
+- Show the existing recording/event/reference/normalization sheets, burden
+  availability and automatic versus reviewed-burden distinction in the export tab.
+- Reuse workbook/folder/copy controls; failed loading retains the last valid
+  export. Preserve calculations, receipt formats, CSV requirements and Run guards.
+
 ### Development checkpoint — 3.1.0-dev.10 (30 October 2026)
 
 - Save the accumulated batch preparation/execution/export and source-bound

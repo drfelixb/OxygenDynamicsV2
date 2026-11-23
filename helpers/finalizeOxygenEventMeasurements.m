@@ -1,4 +1,4 @@
-function [Sites,Events] = finalizeOxygenEventMeasurements(Sites,Events,Pixels,Raw,fs,pixelSize,border,recordingID,kind,baselineSec,OtherPixels,otherBorder,contract)
+function [Sites,Events] = finalizeOxygenEventMeasurements(Sites,Events,Pixels,Raw,fs,pixelSize,border,recordingID,kind,baselineSec,OtherPixels,otherBorder,contract,recordingReferenceOverride)
 % Quantify existing detections from fixed per-event raw footprints.
 % Detection and trace-refined timing are preserved; no re-detection occurs.
 assert(isfinite(fs)&&fs>0&&isfinite(pixelSize)&&pixelSize>0&&round(baselineSec*fs)>=1, ...
@@ -12,6 +12,7 @@ Sites.FrameSize = repmat({frameSize},height(Sites),1);
 Sites.NFrames = repmat(N,height(Sites),1);
 Sites.SampleF = repmat(fs,height(Sites),1);
 if nargin<13,contract=oxygenPipelineContract();end
+if nargin<14,recordingReferenceOverride=[];end
 Sites.AnalysisSchemaVersion = repmat(string(contract.Schema),height(Sites),1);
 for s=1:height(Sites)
     cells=Pixels(s,:);
@@ -134,5 +135,7 @@ for e=1:height(Events)
 end
 if strcmp(kind,'sink')
     Events=deriveBOIPreEpisodeReferences(Events,episodeEvidence,allPixels,fs,baselineSec);
+    Events=deriveBOIEventReferences(Events,episodeEvidence,allPixels,fs,baselineSec, ...
+        "preserved_input_event_footprint",recordingReferenceOverride);
 end
 end

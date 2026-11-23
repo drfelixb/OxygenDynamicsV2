@@ -1,0 +1,16 @@
+{
+  "Schema": "boi-updated-original-program-preflight-1",
+  "State": "Source-code preparation only; recording payload and numerical execution await approval",
+  "Plan": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/docs/BOI_UPDATED_ORIGINAL_COMPARISON_PLAN.md",
+  "ProgramSHA256": {
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/helpers/deriveBOIEventReferences.m": "ea03144a7cdfd2f5fc38fca27082d54140afc7434f17a96363142524687b1d9f",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/helpers/getBOISinkBurdenAmplitude.m": "d989393be46130f21f2b881370d461f06abac3dd149cd5203ea3dfc4f84848c8",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/helpers/createHypoxicBurdenMetrics.m": "b584252683bdec4fab682d515abbe26884b766423cbc55430de794f428826c02",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/helpers/aggregateOxygenRecordingBurden.m": "219bcd0887d465fc6927e288a04eb6c2d7428b53e93ea1c5495993bf8807e2ee",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/existing-analysis/helpers/createOxygenAnalysisWindows.m": "a9a192dd20ddb3f2463d002fb8d875795c0baac44a90b9ca1b3e58c94c78f66b",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-event-baseline-flags-20261113/before/helpers/getBOISinkBurdenAmplitude.m": "e4c1477fb267d27e4b6f71220153581f4cd6aeb22e2972f2b9a7daf5c5f6da89",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-event-baseline-flags-20261113/before/helpers/createHypoxicBurdenMetrics.m": "d1b575ee66042cf8138f70c65666897d6f93c4d0ec8aa4134eaa39a1d7a5c1ea",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-amplitude-baseline-comparison-20261015/supplied_quantifyOxygenSinkEvent.m.txt": "c8c5bf71a289989db6702a512c34301bfa3a8611cd9867c723dfb0e632d4c867"
+  },
+  "NamedRecordingPayloadRead": false
+}

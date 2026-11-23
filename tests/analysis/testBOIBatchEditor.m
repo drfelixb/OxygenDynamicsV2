@@ -97,7 +97,7 @@ verifyEqual(t,b.Rows.('Lab notes')(2),"comma, quote "" and ÆØÅ"+newline+"seco
 verifyEqual(t,b.Rows.Session(1),"0007");verifyEmpty(t,ui.State().Requests);
 ui.SetShared(struct('SampleF','2','Pixelsize','4.75','BOISupportProfile','whole-image'),true);
 ui.ResetToShared(2);ui.Check();verifyEqual(t,ui.State().Report.InputStatus(2),"Ready");
-verifyTrue(t,any(string(ui.SupportProfile.Items)=="Automatic tissue estimate (legacy)"));
+verifyTrue(t,any(string(ui.SupportProfile.Items)=="Automatic tissue estimate"));
 ui.SelectRows(2);detailText=strjoin(string(ui.Details.Value),newline);
 verifyTrue(t,contains(detailText,'Mouse: 0012'));
 state=ui.State();qc=state.Requests{2}.InputReview.QC;
@@ -294,7 +294,12 @@ ui.Save(fullfile(root,'batch.csv'));parent=fullfile(root,'results');mkdir(parent
 ui.SelectRows(1);plan=ui.ReviewQueue(parent);
 verifyEqual(t,plan.Counts.Run,1);verifyEqual(t,plan.Counts.NotSelected,1);
 verifyEqual(t,ui.State().CheckProgress.CheckCount,2);verifyEmpty(t,ui.CheckDialog());
-verifyFalse(t,ui.State().Busy);verifyFalse(t,ui.QueueConfirm.Value);verifyEqual(t,string(ui.RunQueueButton.Enable),"off");
+verifyFalse(t,ui.State().Busy);verifyFalse(t,ui.State().QueueConfirmed);
+verifyEqual(t,string(ui.RunQueueButton.Enable),"on");verifyEqual(t,string(ui.RunQueueButton.Text),"Start 1 recording");
+ui.SelectRows(2);excludedPlan=ui.ReviewQueue(parent);
+verifyEqual(t,excludedPlan.Counts.Excluded,1);
+verifyEqual(t,string(ui.QueuePreview.Text),"0 to start · 0 skipped · 1 excluded");
+verifyEqual(t,string(ui.RunQueueButton.Enable),"off");
 verifyError(t,@()ui.ReviewQueue(fullfile(root,'missing-output')),'OxygenDynamics:InvalidBatchQueue');
 verifyFalse(t,ui.State().Busy);verifyEmpty(t,ui.CheckDialog());
 clear closeFig cleanup
@@ -308,6 +313,178 @@ clear closeFig cleanup
         catch err,busyError=string(err.identifier);
         end
     end
+end
+function test17ImportSetupFillsOnlyMissingSettings(t)
+root=tempname;
+mkdir(root);
+cleanup=onCleanup(@()rmdir(root,'s'));
+paths=fullfile(string(root),["recording-a";"recording-b";"recording-c"]);
+for k=1:numel(paths),mkdir(paths(k));end
+rows=table(paths,["";"3";""],["2.35";"";""],["whole-image";"craniotomy-roi-1";""], ...
+    ["0010";"0011";"0012"],'VariableNames',{'Paths','SampleF','Pixelsize','BOISupportProfile','Mouse'});
+batch=createBOIBatch(rows,root);
+batch.Shared.SampleF='1.5';
+batch.SharedConfirmed=true;
+source=fullfile(root,'import.csv');
+writeBOIBatchCSV(batch,source);
+original=fileread(source);
+[fig,ui]=openBOIBatchEditor(source);
+closeFig=onCleanup(@()delete(fig));
+verifyEqual(t,ui.Tabs.SelectedTab,ui.ImportTab);
+verifyEqual(t,string(ui.ImportRate.Enable),"off");
+verifyEqual(t,string(ui.ImportPixelSize.Enable),"on");
+verifyEqual(t,string(ui.SupportProfile.Value),"whole-image");
+
+before=ui.GetBatch();
+[~,report]=checkBOIBatch(before,before.Rows.BatchRowID(2));
+verifyTrue(t,contains(report.Message(2),"Missing pixel size."));
+verifyFalse(t,contains(report.Message(2),"detection support"));
+ui.ImportPixelSize.Value='-2';
+ui.ApplyImportSettingsButton.ButtonPushedFcn(ui.ApplyImportSettingsButton,[]);
+verifyEqual(t,ui.GetBatch().Rows,before.Rows);
+verifyTrue(t,contains(string(ui.ImportFeedback.Text),"pixel",'IgnoreCase',true));
+verifyEqual(t,fileread(source),original);
+
+ui.ImportPixelSize.Value='';
+ui.ApplyImportSettingsButton.ButtonPushedFcn(ui.ApplyImportSettingsButton,[]);
+verifyEqual(t,ui.GetBatch().Rows,before.Rows);
+verifyFalse(t,ui.State().Dirty);
+verifyEqual(t,fileread(source),original);
+
+ui.Open(source);
+verifyEqual(t,ui.Tabs.SelectedTab,ui.ImportTab);
+verifyEqual(t,ui.GetBatch().Rows.BOISupportProfile,rows.BOISupportProfile);
+ui.ImportPixelSize.Value='4.75';
+ui.ApplyImportSettingsButton.ButtonPushedFcn(ui.ApplyImportSettingsButton,[]);
+draft=ui.GetBatch();
+[resolved,origins]=resolveBOIBatch(draft);
+verifyEqual(t,resolved.SampleF,["1.5";"3";"1.5"]);
+verifyEqual(t,origins.SampleF,["shared";"row";"shared"]);
+verifyEqual(t,resolved.Pixelsize,["2.35";"4.75";"4.75"]);
+verifyEqual(t,resolved.BOISupportProfile,["whole-image";"craniotomy-roi-1";"whole-image"]);
+verifyEqual(t,origins.BOISupportProfile,["row";"row";"default"]);
+verifyEqual(t,draft.Rows.Mouse,rows.Mouse);
+verifyEqual(t,draft.Rows.BatchRowID,batch.Rows.BatchRowID);
+verifyEqual(t,draft.Rows.AnalysisStatus,repmat("Not analyzed",3,1));
+verifyEqual(t,draft.Rows.RunFolder,repmat("",3,1));
+verifyEmpty(t,ui.State().Report);
+verifyEmpty(t,ui.State().Requests);
+verifyEmpty(t,ui.State().QueuePlan);
+verifyEqual(t,string(ui.RunQueueButton.Enable),"off");
+verifyTrue(t,ui.State().Dirty);
+verifyEqual(t,fileread(source),original);
+
+copy=fullfile(root,'configured.csv');
+ui.Save(copy);
+ui.Open(copy);
+[reopened,reopenedOrigins]=resolveBOIBatch(ui.GetBatch());
+verifyEqual(t,reopened(:,{'BatchRowID','SampleF','Pixelsize','BOISupportProfile'}), ...
+    resolved(:,{'BatchRowID','SampleF','Pixelsize','BOISupportProfile'}));
+verifyEqual(t,reopenedOrigins,origins);
+verifyEqual(t,fileread(source),original);
+end
+function test18ImportSetupMapsForeignRoot(t)
+root=tempname;mkdir(root);cleanup=onCleanup(@()rmdir(root,'s'));
+local=fullfile(root,'local recordings');mkdir(local);
+recording=fullfile(local,'mouse-a');mkdir(recording);
+if ispc,foreign='/Volumes/research/recordings';
+else,foreign='D:\recordings';end
+if ispc,filePath=[foreign '/mouse-a'];else,filePath=[foreign '\mouse-a'];end
+source=fullfile(root,'foreign.csv');
+writelines(["Paths,SampleF,Pixelsize,BOISupportProfile";string(filePath)+",1,2.35,whole-image"],source);
+original=fileread(source);
+[fig,ui]=openBOIBatchEditor(source);closeFig=onCleanup(@()delete(fig));
+verifyEqual(t,ui.Tabs.SelectedTab,ui.ImportTab);
+verifyEqual(t,ui.GetBatch().Rows.Paths,string(filePath));
+verifyEqual(t,string(ui.ApplyImportSettingsButton.Enable),"off");
+verifyNotEmpty(t,ui.ImportPrefix.Value);
+ui.MapImportPaths(foreign,local);
+verifyEqual(t,ui.GetBatch().Rows.Paths,string(char(java.io.File(recording).getCanonicalPath())));
+verifyEqual(t,ui.GetBatch().Rows.BOISupportProfile,"whole-image");
+verifyTrue(t,ui.State().Dirty);
+verifyEmpty(t,ui.State().QueuePlan);
+verifyEqual(t,fileread(source),original);
+end
+function test19StableRecordingListAcrossTabs(t)
+root=tempname;mkdir(root);cleanup=onCleanup(@()rmdir(root,'s'));
+source=fullfile(root,'recordings.csv');
+writelines(["Paths,SampleF,Pixelsize,Mouse";"Data/one,1,2.35,FB01";"Data/two,1,2.35,FB02"],source);
+[fig,ui]=openBOIBatchEditor(source);closeFig=onCleanup(@()delete(fig));
+verifyEqual(t,string(ui.Tabs.SelectedTab.Title),"Recording details");
+verifyEqual(t,string(ui.SupportProfile.Value),"whole-image");
+verifyFalse(t,ui.SharedConfirmed.Value);
+verifyTrue(t,any(strcmp(ui.Table.Data(:),'Automatic (default)')));
+ui.SelectRows(2);
+% UI figure layout is reported asynchronously by the desktop renderer.
+for attempt=1:40
+    drawnow;
+    if ui.Table.Position(3)>fig.Position(3)-50&&ui.Tabs.Position(3)>fig.Position(3)-50,break;end
+    pause(0.05);
+end
+rowBounds=ui.Table.Position;
+tabBounds=ui.Tabs.Position;
+assertGreaterThan(t,rowBounds(3),fig.Position(3)-50);
+assertGreaterThan(t,tabBounds(3),fig.Position(3)-50);
+verifyGreaterThan(t,rowBounds(4),100);
+verifyGreaterThan(t,tabBounds(4),250);
+for tab=reshape(ui.Tabs.Children,1,[])
+    previous=ui.Tabs.SelectedTab;
+    ui.Tabs.SelectedTab=tab;
+    action=ui.Tabs.SelectionChangedFcn;
+    if isa(action,'function_handle'),action(ui.Tabs,struct('OldValue',previous,'NewValue',tab));end
+    drawnow;
+    verifyEqual(t,string(ui.Table.Visible),"on");
+    verifyEqual(t,ui.Table.Position,rowBounds,'AbsTol',1);
+    verifyEqual(t,ui.Tabs.Position,tabBounds,'AbsTol',1);
+    verifyEqual(t,ui.State().SelectedRows,2);
+end
+end
+function test20ImportedCSVProtectedUntilSeparateWorkingSave(t)
+[o,root]=inputFixture();cleanup=onCleanup(@()rmdir(root,'s'));
+source=fullfile(root,'recordings.csv');
+prior=fullfile(root,'prior');mkdir(prior);
+file=fopen(source,'wb');
+fprintf(file,['Paths,BatchRowID,SampleF,Pixelsize,BOISupportProfile,Mouse,RunFolder\n' ...
+    '"%s",row-20,%g,%g,%s,0012,prior\n'],o.RecordingFolder,o.SampleHz,o.PixelSizeUm,o.SupportProfile);
+fclose(file);
+sourceHash=oxygenFileSHA256(source);
+parent=fullfile(root,'results');mkdir(parent);
+[fig,ui]=openBOIBatchEditor(source);closeFig=onCleanup(@()delete(fig));
+verifyTrue(t,contains(ui.FileLabel.Text,'Imported CSV'));
+verifyFalse(t,ui.GetBatch().WorkingCSV);
+verifyEqual(t,ui.Check().InputStatus,"Ready");
+ui.SelectRows(1);
+verifyError(t,@()ui.ReviewQueue(fullfile(root,'absent')),'OxygenDynamics:InvalidBatchQueue');
+verifyEqual(t,oxygenFileSHA256(source),sourceHash);
+plan=ui.ReviewQueue(parent);
+verifyEqual(t,plan.Counts.Run,1);
+verifyEqual(t,string(ui.RunQueueButton.Enable),"off");
+verifyTrue(t,contains(ui.QueueStatus.Text,'Save as'));
+verifyError(t,@()ui.ConfirmQueue(true),'OxygenDynamics:BatchWorkingCSVRequired');
+verifyError(t,@()ui.StartReviewedQueue(),'OxygenDynamics:BatchWorkingCSVRequired');
+verifyError(t,@()runBOIBatchQueue(ui.GetBatch(),plan),'OxygenDynamics:BatchWorkingCSVRequired');
+verifyFalse(t,isfolder(plan.QueueFolder));
+verifyError(t,@()ui.Save(),'OxygenDynamics:BatchImportedCSV');
+verifyError(t,@()ui.Save(fullfile(root,'.','recordings.csv')),'OxygenDynamics:BatchImportedCSV');
+verifyEqual(t,oxygenFileSHA256(source),sourceHash);
+
+working=fullfile(root,'working.csv');
+ui.Save(working);ui.Open(working);
+verifyTrue(t,contains(ui.FileLabel.Text,'Working CSV'));
+verifyTrue(t,ui.GetBatch().WorkingCSV);
+verifyFalse(t,ismember('BOIBatchWorkingCSV',ui.GetBatch().Rows.Properties.VariableNames));
+verifyEqual(t,ui.GetBatch().Rows.BatchRowID,"row-20");
+verifyEqual(t,ui.GetBatch().Rows.RunFolder,string(char(java.io.File(prior).getCanonicalPath())));
+workHash=oxygenFileSHA256(working);
+ui.Edit(1,'Mouse','0050');ui.SelectRows(1);
+verifyError(t,@()ui.ReviewQueue(fullfile(root,'absent')),'OxygenDynamics:InvalidBatchQueue');
+plan=ui.ReviewQueue(parent);
+verifyEqual(t,plan.Counts.Run,1);
+verifyEqual(t,string(ui.RunQueueButton.Enable),"on");
+verifyEqual(t,oxygenFileSHA256(working),workHash);
+ui.Save();
+verifyEqual(t,readBOIBatchCSV(working).Rows.Mouse,"0050");
+verifyEqual(t,oxygenFileSHA256(source),sourceHash);
 end
 function [o,root]=inputFixture()
 % Same finite 48 x 48 x 30 preparation recipe as testBOIRecordingWorkflow.

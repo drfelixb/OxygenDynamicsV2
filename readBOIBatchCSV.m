@@ -1,7 +1,9 @@
 function Batch=readBOIBatchCSV(Path,DuplicateMode)
 %READBOIBATCHCSV Open a UTF-8 CSV as text; no type inference or execution.
 % Quoted commas, quotes, line breaks, arbitrary descriptive headers, blanks
-% and leading-zero IDs survive import. Relative paths use the CSV directory.
+% and leading-zero IDs survive import. Relative paths use the CSV directory
+% and adapt to the local separator. Foreign absolute paths need a mapping.
+% A saved working-file marker is kept in Batch.WorkingCSV, outside Rows.
 % Duplicate IDs are rejected by default. With explicit 'new-copies', keep
 % each first identity, give its later copies new IDs, and clear copied links
 % and outcome states. The source CSV is never changed during import.
@@ -43,6 +45,11 @@ if strcmp(DuplicateMode,'new-copies')
 end
 Batch=createBOIBatch(rows,fileparts(Path));
 Batch=restoreInheritance(Batch);
+marker='BOIBatchWorkingCSV';
+marked=ismember(marker,Batch.Rows.Properties.VariableNames);
+Batch.WorkingCSV=marked&&all(Batch.Rows.(marker)=="boi-working-1");
+if marked,Batch.Rows(:,{marker})=[];end
+[Batch.Rows.Paths,Batch.PathImport]=prepareBOIBatchImportPaths(Batch.Rows.Paths,Batch.BaseFolder);
 Batch.ImportNotice='';
 if copyCount>0
     Batch.ImportNotice=sprintf(['Created new identities for %d copied row(s). ' ...

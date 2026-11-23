@@ -45,7 +45,19 @@
     "testBOIBatchEditor/test14GUIOpensOnlySelectedSavedRecording",
     "testBOIBatchEditor/test15GUISelectedOpeningRejectsChangedInputsAndArtifacts",
     "testBOIBatchEditor/test16GUIProgressBusyProtectionAndRecovery",
+    "testBOIBatchEditor/test17ImportSetupFillsOnlyMissingSettings",
+    "testBOIBatchEditor/test18ImportSetupMapsForeignRoot",
+    "testBOIBatchEditor/test19StableRecordingListAcrossTabs",
+    "testBOIBatchEditor/test20ImportedCSVProtectedUntilSeparateWorkingSave",
     "testBOIBatchStats/test09GUIReviewConfirmationAndInvalidation",
-    "testBOIBatchStats/test10GUIBusySuccessAndFailureRecovery"
+    "testBOIBatchStats/test10GUIBusySuccessAndFailureRecovery",
+    "testBOIBatchStats/test13GUIReopensInFreshEditorAndRetainsPreviousOnFailure",
+    "testBOIReviewedExport/testGUIConfirmationInvalidationAndStrictExport",
+    "testBOIReviewedExport/testGUIFailureRetainsPreviousAndRestoresControls",
+    "testBOIReviewedExport/testGUIAcceptedEventPreviewAndFreshEditor",
+    "testBOIWholeEventPreview/testPanelClearsForSelectionAndSettings",
+    "testBOIWholeEventPreview/testExistingReviewerHasOptInTab",
+    "testBOIWholeEpisode/testPanelReadOnlyReset",
+    "testBOIWholeEpisode/testReviewerOptInAndPreservation"
   ]
 }

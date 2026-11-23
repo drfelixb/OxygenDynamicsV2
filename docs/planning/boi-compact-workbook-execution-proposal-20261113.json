@@ -1,0 +1,257 @@
+{
+  "Schema": "boi-compact-workbook-execution-proposal-1",
+  "PreparedUTC": "2026-11-13T12:52:52.103271+00:00",
+  "Milestone": "COMPACT-EXPORT-01",
+  "Owner": "root",
+  "Delegation": false,
+  "Plan": "docs/BOI_COMPACT_WORKBOOK_IMPLEMENTATION_PLAN.md",
+  "SpecificationRevision": 31,
+  "State": "Completed locally after explicitly approved verification extensions",
+  "ExecutionApproved": true,
+  "ExecutionStarted": true,
+  "BudgetAllocated": true,
+  "ActiveImplementationMilestone": null,
+  "ProposedLimits": {
+    "ActiveHours": 6,
+    "SequentialBatches": 4,
+    "RoutineRepairs": 2,
+    "ConstructedScenarioFamilies": 8,
+    "ConstructedExecutionsTotalIncludingRetries": 24,
+    "MATLABStarts": 2,
+    "NamedWorkbookExportAttempts": 4,
+    "WorkerRSSBytes": 4294967296,
+    "NewEvidenceBytes": 104857600,
+    "TotalNewCompactWorkbookBytes": 26214400
+  },
+  "OriginalCompactCapsUnchanged": true,
+  "AdditionalSourceLimits": {
+    "RealRecordingInputs": 0,
+    "IndividualBiologicalReviews": 0,
+    "RecordingsPerConstructedFixture": 4,
+    "EventsPerConstructedFixture": 32,
+    "FramesPerRecording": 300
+  },
+  "Sheets": [
+    "Events",
+    "Recordings",
+    "Sites",
+    "TimeSeries",
+    "Availability",
+    "Definitions"
+  ],
+  "OptionalSheet": "Phases, only for explicitly supplied annotations",
+  "Items": [
+    {
+      "ID": "CEX-01",
+      "Scope": "Freeze source/identity/column map, signed-value and negative-flag fields, metadata associations, read whitelist and missing states before any authorized data-reading code change"
+    },
+    {
+      "ID": "CEX-02",
+      "Scope": "Project saved values with source precision and explicit automatic/reviewed roles; include signed AUC, matching burden series and automatic-gap QC without calculators"
+    },
+    {
+      "ID": "CEX-03",
+      "Scope": "Use existing CSV/custom metadata and batch/stats GUI route; remember review selection; provide one compact-export action, optional phase-metadata input and existing cancellation/error recovery"
+    },
+    {
+      "ID": "CEX-04",
+      "Scope": "Finite constructed/table-level identity, units, signed-value/flag, completeness, source/reference and GUI-preservation checks within unchanged limits; no individual biological investigations; then stop"
+    }
+  ],
+  "NamedExistingSyntheticFixtures": [
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/synthetic-automatic-source.mat",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewedHypoxicBurden.xlsx",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewedHypoxicBurden.mat",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewedBurdenStatus.json",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/HypoxicBurden_EventBased.csv",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/HypoxicBurden_ByRecording.csv",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/HypoxicBurden_TimeSeries.csv",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewSummary.csv",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewDecisions.csv",
+    "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ExcludedDetections.csv"
+  ],
+  "FixturePayloadsReadDuringPlanning": false,
+  "ConstructedFixturePolicy": "Build declared scalar/table source bundles and metadata/review receipts; no scientific calculators or real recording files. Reuse named prior synthetic exports read-only. Any newly written XLSX source fixture counts in the same four-attempt cap.",
+  "XLSXAttemptTargets": [
+    {
+      "Name": "SyntheticDetailedSource.xlsx",
+      "Role": "Optional one constructed native-format input fixture; at most one writer attempt"
+    },
+    {
+      "Name": "Compact_AutomaticOnly.xlsx",
+      "Role": "Initial six-sheet compact output"
+    },
+    {
+      "Name": "Compact_SelectedReviews_Phases.xlsx",
+      "Role": "Initial paired reviewed/optional-Phases output through the GUI service"
+    },
+    {
+      "Name": "Compact_WriterRetry.xlsx",
+      "Role": "Fourth and final attempted workbook write, only for failed/affected acceptance"
+    }
+  ],
+  "WriterAttemptAccounting": "Count every actual XLSX writer dispatch, including source-fixture creation, failures and retries. Preview, pre-writer validation and cancellation do not dispatch a writer. Source fixture plus two initial compact outputs leaves at most one writer retry. No other new XLSX creation.",
+  "TestSuitePlanned": "tests/analysis/testBOICompactWorkbook.m",
+  "TestDriverPlanned": "tests/analysis/runBOICompactWorkbookChecks.m",
+  "FrozenScenarioFunctions": [
+    {
+      "Family": "CEX-S1",
+      "Name": "testIdentityAndOptionalMetadata"
+    },
+    {
+      "Family": "CEX-S2",
+      "Name": "testZeroMissingAndReviewStates"
+    },
+    {
+      "Family": "CEX-S3",
+      "Name": "testSignedCompletenessAndReviewMembership"
+    },
+    {
+      "Family": "CEX-S4",
+      "Name": "testReferenceAUCAndNativeGapProvenance"
+    },
+    {
+      "Family": "CEX-S5",
+      "Name": "testSourceConflictsAndPreservation"
+    },
+    {
+      "Family": "CEX-S6",
+      "Name": "testNumericUnitsPrecisionAndDefinitions"
+    },
+    {
+      "Family": "CEX-S7",
+      "Name": "testSourcesClocksAndWorkbookContract"
+    },
+    {
+      "Family": "CEX-S8",
+      "Name": "testGUISelectionAndFailureRecovery"
+    }
+  ],
+  "EvaluationAccounting": "Eight unique frozen functions; at most 24 total evaluations including retries. No additional existing suites, R31 reruns or historical saved-example drivers. Freeze fixture/dependency execution order before the initial run.",
+  "NativeInputAndReadback": "Read only supplied small source tables/receipts. Native MAT/CSV/XLSX compatibility checked with constructed or already generated synthetic sources; no historical real workbooks opened.",
+  "ProductionMATVariableWhitelist": [
+    "RecordingRegistry",
+    "HypoxicBurden",
+    "Receipt",
+    "StatsInfo",
+    "RecordingWindowMetrics",
+    "SurgeRecordingWindowMetrics",
+    "WindowFrameIngredients",
+    "SurgeWindowFrameIngredients",
+    "EventMeasurementQC",
+    "EventBaselineStatusCounts",
+    "NumOngoingOxysinks",
+    "NumOngoingOxysinksPerMm2",
+    "NumOngoingOxysurges"
+  ],
+  "ProductionWorkbookTableWhitelist": [
+    "RecordingRegistry",
+    "OxySinkEvents",
+    "OxySurgeEvents",
+    "HypoxicBurden_EventBased",
+    "HypoxicBurden_ByRecording",
+    "HypoxicBurden_TimeSeries",
+    "HypoxicBurden_Basis",
+    "HypoxicBurden_ReferencePolicy",
+    "Burden_PreEpisodePolicy",
+    "Burden_SelectionPolicy",
+    "RecordingWindowMetrics",
+    "SurgeRecordingWindowMetrics",
+    "WindowFrameIngredients",
+    "SurgeWindowFrameIngredients",
+    "EventMeasurementQC",
+    "EventBaselineStatusCounts",
+    "MetricDefinitions",
+    "NormalizationGuide",
+    "ReviewSummary",
+    "ReviewDecisions",
+    "ExcludedDetections",
+    "EventRevisions"
+  ],
+  "ReadRules": "Explicit selected-variable loads only, source-specific schema/association checks and size inspection before MAT loads. No whole-MAT/site/raw/ROI/pixel/mask loads. Aggregate vectors need an explicit recording crosswalk; otherwise unavailable. Freeze the exact compatible source map in CEX-01; do not guess a new variable.",
+  "ExistingProductionEditBoundary": [
+    "openBOIBatchEditor.m",
+    "helpers/createBOIReviewedExportPanel.m"
+  ],
+  "ExpectedNewProductionFiles": [
+    "prepareBOICompactWorkbook.m",
+    "exportBOICompactWorkbook.m",
+    "helpers/loadBOICompactWorkbookSources.m",
+    "helpers/createBOICompactWorkbookData.m",
+    "helpers/writeBOICompactWorkbook.m",
+    "helpers/formatBOICompactWorkbook.m",
+    "helpers/createBOICompactExportPanel.m",
+    "helpers/boiCompactExportSelection.m"
+  ],
+  "ProtectedScientificEntryPoints": [
+    "OxygenDynamics_Master.m",
+    "runOxygenDynamicsStats.m",
+    "helpers/deriveBOIEventReferences.m",
+    "helpers/finalizeOxygenEventMeasurements.m",
+    "helpers/boiEventReferencePolicy.m",
+    "helpers/boiBurdenSelectionPolicy.m",
+    "helpers/getBOISinkBurdenAmplitude.m",
+    "helpers/createHypoxicBurdenMetrics.m",
+    "helpers/aggregateOxygenRecordingBurden.m",
+    "helpers/createOxygenAnalysisWindows.m",
+    "helpers/createBOIReviewedBurdenMetrics.m",
+    "helpers/applyBOIReviewedBurdenEvents.m",
+    "helpers/summarizeOxygenMouseMetrics.m"
+  ],
+  "NoCalculatorTestGuards": [
+    "createHypoxicBurdenMetrics",
+    "deriveBOIEventReferences",
+    "createBOIReviewedBurdenMetrics",
+    "applyBOIReviewedBurdenEvents",
+    "finalizeOxygenEventMeasurements",
+    "loadOxygenStacks",
+    "runOxygenDynamicsStats"
+  ],
+  "ReviewSelectionPersistence": "Existing batch UI state, or a separate compact-selection sidecar beside the batch CSV. Bind exact batch/automatic source/review snapshot identities and hashes; no scientific CSV/result/review edits. Explicit source change invalidates incompatible remembered selection.",
+  "UnavailableReviewedRule": "No compatible reviewed snapshot means unavailable reviewed cells. Compatible unchanged saved reviewed values are copied with No manual review. No automatic fallback or review application in this exporter.",
+  "NoFormulaOrNormalizationChange": true,
+  "NoIndividualExamples": true,
+  "NoOriginalResultOverwrite": true,
+  "NoNewMandatoryCSVFields": true,
+  "LegacyAndR31PolicyRule": "Copy actual saved values/version, including signed negatives and genuine missingness. Do not adopt R31 by relabelling an older source. Any real source regeneration is a separate upstream step.",
+  "Tolerance": "1e-10 * max(1,abs(source)); IDs/counts/statuses/versions/hashes exact",
+  "SourceContractMappingFreeze": "CEX-01 freezes exact fields/aliases, definitions, read whitelist and selected identities before numerical runs; no data inspection or calculator call during this planning task.",
+  "KnownLauncherRequirement": "Use short isolated scratch path from the outset, guard memory/time/aggregate output; at most two MATLAB process starts total. No separate desktop session.",
+  "StoppingCondition": "Eight-family acceptance complete, or any source/effort/repair/attempt/resource boundary. No automatic next campaign, real batch export, extra run, package, Git transport or release.",
+  "PlanningCounters": {
+    "ScientificCodeWrites": 0,
+    "TestCodeWrites": 0,
+    "MATLABStarts": 0,
+    "NumericalTestExecutions": 0,
+    "RecordingPayloadReads": 0,
+    "WorkbookWrites": 0
+  },
+  "AllowedElementaryProjections": [
+    "Exact saved-event count grouping with explicit inventory/source basis",
+    "Existing count/time and area/time unit conversions only where the contract permits",
+    "Vector-to-row projection with exact saved recording/frame association"
+  ],
+  "ForbiddenDerivedOutputs": [
+    "New burden totals or baselines",
+    "New amplitudes, geometry or AUC",
+    "New mouse/session averages or statistical weights",
+    "New phase metrics or inferred event assignment"
+  ],
+  "ImplementationHeldAtBoundary": false,
+  "PendingExtension": null,
+  "VerificationExtensionDelivered": {
+    "MATLABStarts": 3,
+    "RepairCycles": 2,
+    "TestEvaluations": 24,
+    "XLSXAttempts": 4,
+    "PassingFinalFamilies": 7
+  },
+  "AcceptanceReceipt": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-compact-workbook-implementation-20261113/acceptance-receipt.json",
+  "Delivery": "docs/BOI_COMPACT_WORKBOOK_DELIVERY.md",
+  "FinalCounters": {
+    "MATLABStarts": 4,
+    "RepairCycles": 3,
+    "TestEvaluations": 26,
+    "XLSXAttempts": 5
+  }
+}

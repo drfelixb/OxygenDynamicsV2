@@ -11,6 +11,12 @@ end
 if isfield(HypoxicBurden,'ReferencePolicy') && ~isempty(HypoxicBurden.ReferencePolicy)
     writetable(HypoxicBurden.ReferencePolicy,OutputXlsx,'Sheet','HypoxicBurden_ReferencePolicy');
 end
+if isfield(HypoxicBurden,'PreEpisodeReferencePolicy') && ~isempty(HypoxicBurden.PreEpisodeReferencePolicy)
+    writetable(HypoxicBurden.PreEpisodeReferencePolicy,OutputXlsx,'Sheet','Burden_PreEpisodePolicy');
+end
+if isfield(HypoxicBurden,'SelectionPolicy') && ~isempty(HypoxicBurden.SelectionPolicy)
+    writetable(HypoxicBurden.SelectionPolicy,OutputXlsx,'Sheet','Burden_SelectionPolicy');
+end
 
 if isfield(HypoxicBurden,'EventTable') && ~isempty(HypoxicBurden.EventTable)
     writetable(HypoxicBurden.EventTable,OutputXlsx,'Sheet','HypoxicBurden_EventBased');

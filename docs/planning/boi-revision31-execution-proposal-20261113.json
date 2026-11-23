@@ -1,0 +1,202 @@
+{
+  "Schema": "boi-revision31-execution-proposal-1",
+  "PreparedUTC": "2026-11-13T11:30:56.304009+00:00",
+  "Milestone": "SIGNED-CONTRIBUTIONS-31",
+  "Owner": "root",
+  "Delegation": false,
+  "SpecificationRevision": 31,
+  "Plan": "docs/BOI_REVISION31_IMPLEMENTATION_PLAN.md",
+  "State": "Explicitly approved, implemented and verified locally; complete",
+  "ExecutionApproved": true,
+  "ExecutionStarted": true,
+  "BudgetAllocated": true,
+  "ActiveImplementationMilestone": null,
+  "PolicyVersionProposed": "boi-signed-contributions-1",
+  "Formula": "amplitude_percent * event_mean_area_um2 * duration_s",
+  "Normalization": "strict_sum(contributions) * 1e6/recording_area_um2 * 60/recording_duration_s",
+  "Protected": [
+    "Original detector/correction/masks/timing",
+    "Original twenty-second event-reference calculation and version",
+    "Mean event area and saved duration",
+    "Recording area/time and physical calibration",
+    "Original results and signed AUC",
+    "Explicit reviewed exclusions/authority",
+    "Surge behavior and existing aggregation/weighting"
+  ],
+  "Items": [
+    {
+      "ID": "R31-01",
+      "Batch": 1,
+      "Scope": "Version-aware signed selection in existing event/recording/window/time-series calculations; no reference/product/scaling changes"
+    },
+    {
+      "ID": "R31-02",
+      "Batch": 2,
+      "Scope": "Selected-value sign states/counts, reviewed import compatibility and existing export definitions/receipts"
+    },
+    {
+      "ID": "R31-03",
+      "Batch": 3,
+      "Scope": "Frozen synthetic tests and existing-format round trips; preservation report; then stop"
+    }
+  ],
+  "ProposedLimits": {
+    "ActiveHours": 4,
+    "SequentialBatches": 3,
+    "RoutineRepairCycles": 1,
+    "NewConstructedFunctions": 12,
+    "NewConstructedExecutionsIncludingRetries": 24,
+    "ExistingSyntheticFunctions": 24,
+    "ExistingSyntheticExecutionsIncludingRetries": 48,
+    "MATLABStarts": 2,
+    "SyntheticXLSXWriterAttemptsIncludingRetries": 8,
+    "ProcessTreeRSSBytes": 2147483648,
+    "AllNewEvidenceScratchOutputBytes": 104857600,
+    "RealRecordingInputs": 0,
+    "IndividualBiologicalReviews": 0
+  },
+  "LimitAccounting": "All attempts and selected function executions count. New proposed narrow-milestone allowance only; no reset/transfer of completed baseline/comparison or held compact limits. Nothing allocated before explicit applicable execution authorization.",
+  "ProductionEditAllowlist": [
+    "helpers/getBOISinkBurdenAmplitude.m",
+    "helpers/createHypoxicBurdenMetrics.m",
+    "helpers/aggregateOxygenRecordingBurden.m",
+    "helpers/createOxygenAnalysisWindows.m",
+    "helpers/appendBOIEventReferenceSummary.m",
+    "helpers/createBOIReviewedBurdenMetrics.m",
+    "helpers/applyBOIReviewedBurdenEvents.m",
+    "helpers/loadBOIReviewedBurdenEvent.m",
+    "helpers/createAutomaticAmplitudeExportData.m",
+    "helpers/writeAutomaticAmplitudeExport.m",
+    "helpers/writeHypoxicBurdenWorkbookSheets.m",
+    "helpers/writeStatsMetricDefinitionsSheet.m",
+    "helpers/writeStatsNormalizationGuideSheet.m",
+    "prepareBOIReviewedBurdenExport.m",
+    "exportBOIReviewedBurden.m",
+    "runOxygenDynamicsStats.m",
+    "OxygenDynamics_Master.m"
+  ],
+  "AllowedNewProductionHelpers": [
+    "helpers/boiBurdenSelectionPolicy.m",
+    "helpers/appendBOISignedBurdenSummary.m"
+  ],
+  "NewTestSuitePlanned": "tests/analysis/testBOISignedBurdenPolicy.m",
+  "NewDriverPlanned": "tests/analysis/runBOISignedBurdenChecks.m",
+  "ConstructedFunctions": [
+    {
+      "ID": "S01",
+      "Name": "testFiniteSignedProductsAndFlags"
+    },
+    {
+      "ID": "S02",
+      "Name": "testNegativeAndZeroCompleteRecordingTotals"
+    },
+    {
+      "ID": "S03",
+      "Name": "testMissingIngredientsKeepStrictTotalsUnavailable"
+    },
+    {
+      "ID": "S04",
+      "Name": "testAnalyzedZeroAndUnknownInventoryStayDistinct"
+    },
+    {
+      "ID": "S05",
+      "Name": "testNormalizationAppliedExactlyOnce"
+    },
+    {
+      "ID": "S06",
+      "Name": "testQualityAndRecordingReferenceFlagsDoNotExclude"
+    },
+    {
+      "ID": "S07",
+      "Name": "testReviewedSignedValuesHaveExplicitAuthority"
+    },
+    {
+      "ID": "S08",
+      "Name": "testNotPocketExclusionsAndIdentity"
+    },
+    {
+      "ID": "S09",
+      "Name": "testHistoricalPoliciesRemainReadableWithoutRelabelling"
+    },
+    {
+      "ID": "S10",
+      "Name": "testPolicyVersionAndSourceConflictGuards"
+    },
+    {
+      "ID": "S11",
+      "Name": "testWindowsAndSavedCurvesPreserveSignedSemantics"
+    },
+    {
+      "ID": "S12",
+      "Name": "testExistingFormatsPersistSignedValuesAndFlags"
+    }
+  ],
+  "FrozenExistingSyntheticFunctions": {
+    "testBOIBurdenCompleteness": [
+      "testMissingIngredientWithholdsEveryTotal",
+      "testCompleteFormulaNormalizationAndKnownZero",
+      "testIncompleteMouseNotHiddenByAvailableGroupMean",
+      "testWorkbookAndCsvKeepTotalsUnavailable"
+    ],
+    "testBOIReviewedBurden": [
+      "testRejectedDetectionLeavesExactRetainedIngredients",
+      "testRetainedMissingContributionKeepsStrictTotalMissing",
+      "testUncertainAndUnreviewedRemainIncluded",
+      "testRecordingIdentityPreventsCrossRecordingExclusion",
+      "testReviewedEventUpdatesOnlyBurdenFieldsAndTiming",
+      "testApprovedValueDoesNotHideOtherMissingContributions",
+      "testReviewedEventRejectsConflictsDuplicatesAndAreaChanges",
+      "testReviewedValueDoesNotChangeOtherRecording"
+    ],
+    "testBOIPortableAmplitude": [
+      "testFiniteNegativeMissingAndZero",
+      "testUnequalMouseContributors",
+      "testAllUnavailable",
+      "testAllNegative",
+      "testNoEvents",
+      "testExplicitLegacySign"
+    ],
+    "testBOISurgeWindows": [
+      "testSupportIdentityAndClockGuards",
+      "testMissingZeroAndFailedAreDistinct"
+    ],
+    "testBOIEventBaselineFlags": [
+      "testOrdinaryOwnReferenceAndPreservation",
+      "testSignedAmplitudeAndReviewedAuthority"
+    ],
+    "testBOIReviewedExport": [
+      "testConfirmedExportKeepsFormatsValuesAndOriginals",
+      "testChangedSourceAndTamperedPlanNeverWrite"
+    ]
+  },
+  "SyntheticFixtureLimitsPerNewScenario": {
+    "Recordings": 4,
+    "EventRows": 32,
+    "FramesPerRecording": 300
+  },
+  "ExistingSyntheticFixtureHelper": "tests/analysis/makeBOIReviewedExportFixture.m",
+  "ReadPolicy": "Repository sources/docs and newly constructed disposable saved tables/receipts only. No real recording workbook, archived trace/MAT/audit/mask/review/image/video, Labguru or note payload.",
+  "ForbiddenDrivers": [
+    "tests/analysis/runBOIEventBaselineFlagsChecks.m",
+    "Any historical driver that reads saved/real examples or executes an unselected broad suite"
+  ],
+  "NoIndividualExamples": true,
+  "NumericTolerance": "1e-10 * max(1,abs(expected)); identities/counts/statuses/versions exact; existing imported-review scalar tolerance unchanged",
+  "Oracle": "Independent declared scalar/table arithmetic; never use the production calculator as its own expected-value oracle",
+  "RoundTripPolicy": "Existing native MATLAB writer/reader only with constructed sources; negative/zero/missing, flags, identity, provenance and original source bytes preserved",
+  "OriginalAndLegacyPolicy": "Never relabel saved old outputs. Explicit new policy adoption only in a new calculation/artifact. Unversioned legacy compatibility stays distinct. Unsupported/mixed policies or wrong parents fail before output.",
+  "CompactExport": "Separate held milestone with unchanged limits; no six-sheet implementation or real-data regeneration here",
+  "StoppedUntilExplicitResume": false,
+  "StoppingCondition": "Acceptance passes or any effort/source/resource/attempt/repair boundary; preserve checkpoint; no automatic further campaign",
+  "PlanningCounters": {
+    "ScientificCodeWrites": 0,
+    "TestCodeWrites": 0,
+    "MATLABStarts": 0,
+    "NumericalTestExecutions": 0,
+    "RecordingPayloadReads": 0,
+    "WorkbookWrites": 0
+  },
+  "TestNameExistenceCheckedFromSourceOnly": true,
+  "ExecutionRecord": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/scope.json",
+  "Delivery": "docs/BOI_REVISION31_DELIVERY.md"
+}

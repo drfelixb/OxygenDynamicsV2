@@ -15,10 +15,16 @@ provenance helpers, required definitions and reader guides. It also includes
 [original-licence source record](docs/planning/original-software-licence.json) and
 [dependency provenance](docs/planning/third-party-licence-provenance.json).
 
+The source policy also includes the experimental whole-episode proposal service, settings, optional reviewer panel and guide. No package is built by this addition.
+
+The source policy also includes the whole-event preview service, experimental
+settings, saved-review adapter, optional panel and its reader guide. These are
+preview-only; no package was built.
+
 No folder is copied recursively. `RELEASE_MANIFEST.txt` lists the exact paths,
 policy hash and per-file SHA-256 values. It identifies the committed package
 source separately from software version/build and package creation time.
-Current development checkout 3.1.0-dev.10 is not a new package: preserved candidate03 remains
+Current local development checkout 3.1.0-dev.14 is not a new package: preserved candidate03 remains
 3.1.0-dev.2/source 44f3031 and does not contain the new interface controls.
 The reviewed-optical contract retains all scientific fields and judgment hashes;
 historical paths use portable labels, with the matching loader checksum updated.
@@ -50,3 +56,17 @@ The existing ZIP is not rebuilt by this local implementation.
 reviewed burden adapter/exporter, source-bound reviewed frame-area services and
 cached comparison view. These are development-checkout features; no new ZIP,
 area-rule adoption or cohort export follows from the checkpoint.
+
+Local dev.11 adds `loadBOIBatchStatsResult` to the explicit future-package source
+policy. It reopens a completed automatic combined export without source movies
+or a new statistics run. Verification on 31 October 2026 passes 214 portable,
+3 focused desktop and native saved-folder selection/cancel checks on macOS/R2025a;
+the source policy validates 494 files including optional smoke. Preserved ZIPs
+are not rebuilt.
+
+Local dev.12 adds `prepareBOIReviewedBurdenExport` and
+`helpers/createBOIReviewedExportPanel` to the existing source policy. The optional
+batch-GUI path reuses the reviewed-burden exporter and formats. Verification on
+1 November passes 222 portable, six focused desktop and one native synthetic
+walkthrough on macOS/R2025a; the 496-file source policy includes optional smoke.
+No ZIP is rebuilt.

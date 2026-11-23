@@ -4,6 +4,8 @@ function Reviewed=createBOIReviewedBurdenMetrics(Automatic,Registry,Reviews,Even
 id='OxygenDynamics:ReviewedBurdenIdentity';
 assert(isstruct(Automatic)&&isfield(Automatic,'EventTable')&&istable(Automatic.EventTable),id,'Supply the saved automatic burden.');
 E=Automatic.EventTable;
+selection=[];if isfield(Automatic,'SelectionPolicy'),selection=Automatic.SelectionPolicy;end
+selection=boiBurdenSelectionPolicy(E,selection);
 assert(all(ismember({'RecordingID','SinkID','StartFrame','EndFrame','SampleF','RecDuration', ...
     'BurdenArea_um2','PerEventBurdenContribution'},E.Properties.VariableNames)),id,'Saved burden ingredients are incomplete.');
 [keys,~]=oxygenEventJoinKeys(E,E);assert(numel(unique(keys))==height(E),id,'Duplicate automatic event identities.');
@@ -37,6 +39,9 @@ for k=1:numel(Reviews)
         if ismember('EpisodeReferenceAuditSHA256',E.Properties.VariableNames)
             assert(string(E.EpisodeReferenceAuditSHA256(j))==string(R.AuditSHA256),id,'The saved burden used a different event audit.');
         end
+        if ismember('EventReferenceAuditSHA256',E.Properties.VariableNames)
+            assert(string(E.EventReferenceAuditSHA256(j))==string(R.AuditSHA256),id,'The event reference used a different event audit.');
+        end
         status(j)=string(b.Status);reviewer(j)=string(b.Annotation.Reviewer);reason(j)=string(b.Annotation.Reason);
         artifact(j)=string(saved.Path);hash(j)=string(saved.SHA256);
     end
@@ -50,7 +55,7 @@ Decisions=table((1:n)',string(E.RecordingID),E.SinkID,eventIndex,status,excluded
 % infer a new footprint or substitute a new baseline for retained events.
 kept=E(~excluded,:);specific=kept(:,intersect({'RecordingID','SinkID','EventIndex','EventID'},kept.Properties.VariableNames,'stable'));
 specific.Area_um=kept.BurdenArea_um2;
-Reviewed=createHypoxicBurdenMetrics(kept,specific,table(),Registry);
+Reviewed=createHypoxicBurdenMetrics(kept,specific,table(),Registry,selection);
 if ~isempty(kept)
     for f={'BurdenAmplitudePercent','BurdenArea_um2','BurdenDuration_sec','BurdenRecordingArea_um2', ...
             'BurdenRecordingDuration_sec','PerEventBurdenContribution','PerEventBurdenContribution_per_mm2_per_min'}
@@ -83,6 +88,7 @@ Reviewed.ReviewPolicy=struct('Schema','boi-saved-recognition-burden-1', ...
     'UncertainPolicy','retain automatic ingredients and missingness','ReferencePolicy','unchanged', ...
     'TotalsPolicy','strict sum over retained detections; unavailable required contribution withholds complete total', ...
     'AutomaticResultsChanged',false,'PartialSums',false);
+Reviewed=appendBOISignedBurdenSummary(Reviewed,selection);
 if nargin>=4&&~isempty(EventRevisions)
     if ~iscell(EventRevisions),EventRevisions={EventRevisions};end
     Reviewed=applyBOIReviewedBurdenEvents(Reviewed,Registry,EventRevisions);

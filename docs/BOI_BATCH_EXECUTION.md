@@ -1,28 +1,31 @@
 # Run selected BOI recordings from the batch window
 
 Use **Batch recordings** in `OxygenDynamics_GUI`, or run
-`openBOIBatchEditor` in MATLAB. Open the working batch CSV and check the rows.
-Opening a file never starts a recording.
+`openBOIBatchEditor` in MATLAB. Open the batch CSV and check the rows. You can
+review a queue from an imported source CSV. Use **Save as…** to create a
+separate working CSV before starting recordings. You can reopen that working
+CSV and use it for later queues.
 
 1. Choose **Select ready** to select technically prepared rows. Rows needing
    attention remain excluded; the queue review identifies them. You can also
    select a smaller set of table rows.
-2. Choose the output parent once. It may be on an external SSD. Queue records require a filesystem supporting
-   atomic updates and hard links. The parent must
-   already exist and must be outside every source recording folder. Each queue
-   and recording receives a new directory, preserving earlier outputs.
-3. Review the selected queue. A progress window shows the recording count/name
-   and source or saved-result verification stage. Editing is disabled while
-   checks run; large movie files take time to read. No analysis is running at
-   this step. Check the resulting included, excluded and skipped rows,
-   effective sampling, pixel size, tissue-support method, new destinations and
-   expected input-copy storage. The storage estimate covers copied inputs;
-   analysis outputs require additional space. No universal output-size or
-   large-batch runtime estimate is claimed.
-4. Confirm this reviewed queue, then start it. Only one recording is dispatched
-   at a time, through the existing single-recording BOI workflow. It copies the
-   original and optional denoised movie into the new run, performs analysis and
-   statistics, and verifies the saved result before reporting Complete.
+2. Open **Run** and choose the output parent once. The list and current
+   selection stay visible above the tab. The parent may be on an external SSD.
+   Queue records require a filesystem supporting atomic updates and hard links.
+   The parent must already exist outside every source recording folder. Each
+   queue and recording receives a new directory, preserving earlier outputs.
+3. Click **Review selected queue**. During the checks, the progress window shows
+   the recording and verification stage. Large movie files take time to read.
+   Review the counts to start, skip and exclude, the output parent and the
+   estimated space for the input copies. Results and temporary files take
+   additional space. Use **Show details** for each recording's ID, settings and
+   paths, and for reasons for exclusions or skips.
+4. Click the start button, for example **Start 20 recordings**, to confirm and
+   start the reviewed queue. Changes to the selection, inputs or destination
+   require another review. The queue runs one
+   recording at a time. It copies the original and optional denoised movie into
+   the new run, performs analysis and statistics, and verifies the saved result
+   before reporting Complete.
 5. Watch the current row and stage. **Stop after current recording** lets the
    active recording finish and prevents the next recording from starting. An
    execution or status-saving failure also stops later dispatch. Pending rows
@@ -40,7 +43,7 @@ The working CSV is updated at stage changes and recording outcomes. Stable
 resolved request and full descriptive metadata, including optional stimulation
 text. `PuffsFile` and `Puff_2use` remain metadata and are excluded from BOI
 calculation inputs. Technical completion never sets scientist review to Reviewed.
-Use the selected row's history to find earlier attempts and reopen an exact
+Use **History** to find the selected row's earlier attempts and reopen an exact
 verified completed result.
 
 Another writer changing the CSV stops automatic updates and later dispatch. The
@@ -66,24 +69,27 @@ of the resulting measurements.
 
 ## Collect completed recordings for postprocessing
 
-Choose **Stats / export…** in the batch window. This connects saved completed
-recordings to the existing multi-recording stats/export workflow.
+Open **Automatic export** from the tab bar or with **Stats / export…**. This
+connects saved completed recordings to the multi-recording stats/export workflow.
 
 1. Choose an existing **export parent**. A new combined export folder is created
    inside it; keep it outside source and saved-run folders.
 2. Leave **All completed recordings** selected to collect the batch, or choose
    **Selected recording rows** for a smaller set.
-3. Choose **Review combined export**. Check the included/excluded list and the
-   destination. Linked runs must pass the current source/settings/artifact
-   checks. Held, incomplete and unverified rows are excluded with reasons.
-4. Confirm the reviewed list, then choose **Run stats / export**. It reads the
-   exact saved sink/surge master files and runs the existing stats/export service.
-   Progress shows verification, recording loading, combining and file writing.
-   No detector or new recording analysis is run.
+3. Choose **Review combined export**. The preview shows how many recordings are
+   included or excluded and where the new export will be saved. Expand **Show
+   details** for the recording list and exclusion reasons. Linked runs must pass
+   the current source/settings/artifact checks.
+4. Click **Export workbook** to confirm and start the reviewed export. The
+   button is available after a successful review of the current selection and
+   destination. Progress counts the saved runs during verification, then shows
+   loading, combining and file writing. This step reads saved sink/surge master
+   files.
 5. Choose **Open workbook** for the usual `FilteredData_<batch-name>.xlsx`,
    or **Open folder** / **Copy path** for all exported files. The completed
-   destination stays visible. Excel/MAT event tables, grouped measurements,
-   traces and existing companion CSVs retain their current formats/calculations.
+   destination stays visible separately from the current preview. **Open
+   existing export…** lets you select an already completed export without
+   reviewing a new one.
 
 The combined statistics use each run's saved labels and calibration. Editing
 metadata later does not silently relabel the saved analysis; the review lists

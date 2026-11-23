@@ -1,14 +1,27 @@
-function E=attachSavedBOIEpisodeReferences(E,SinkFile,SurgeFile,RecordingFolder,fs)
+function E=attachSavedBOIEpisodeReferences(E,SinkFile,SurgeFile,RecordingFolder,fs,recordingReferenceOverride)
 % Read-only adapter: derive from receipt-bound audits without reopening movies.
 P=boiEpisodeReferencePolicy;
+if nargin<6,recordingReferenceOverride=[];end
 if ~istable(E)
     assert(isempty(E),'OxygenDynamics:EpisodeEvidence','Expected a saved event table.');E=table();
 end
-if ismember('EpisodeReferenceVersion',E.Properties.VariableNames)
+if ismember('EventReferenceVersion',E.Properties.VariableNames)
     getBOISinkBurdenAmplitude(E); % validates supported version; preserve live derivation
+    if ~isempty(recordingReferenceOverride)
+        assert(isstruct(recordingReferenceOverride)&&isscalar(recordingReferenceOverride)&& ...
+            all(isfield(recordingReferenceOverride,{'StartFrame','EndFrame','Source'}))&& ...
+            all(E.RecordingReferenceOverride)& ...
+            all(E.RecordingReferenceRequestedStartFrame==recordingReferenceOverride.StartFrame)&& ...
+            all(E.RecordingReferenceRequestedEndFrame==recordingReferenceOverride.EndFrame)&& ...
+            all(E.RecordingReferenceSource==string(recordingReferenceOverride.Source)), ...
+            'OxygenDynamics:EventReferenceExists','An existing result has a different recording reference; derive a new artifact from original evidence.');
+    end
     return
 end
-E=initializeBOIEpisodeReferences(E);
+originalNames=E.Properties.VariableNames;
+if ~ismember('EpisodeReferenceVersion',originalNames),E=initializeBOIEpisodeReferences(E);end
+E=initializeBOIEventReferences(E);
+fields=setdiff(E.Properties.VariableNames,originalNames,'stable');
 if isempty(E),return;end
 auditFile=fullfile(RecordingFolder,'BOIReview','event-amplitude-audit.mat');
 receiptFile=fullfile(RecordingFolder,'BOIReview','AuditCreationReceipt.json');
@@ -49,10 +62,17 @@ N=A.AnalysisInfo.NFrames;
 assert(S.AnalysisInfo.NFrames==N&&U.AnalysisInfo.NFrames==N, ...
     'OxygenDynamics:EpisodeSourceMismatch','Saved recording lengths differ.');
 native=collectBOINativePixels(S.Table_OxygenSinks_Out,U.Table_OxygenSurges_Out,N);
-F=deriveBOIPreEpisodeReferences(F,evidence,native,fs, ...
-    S.AnalysisInfo.AnalysisParams.quantBaselineWindowSec,"saved_audit_verified");
-F.EpisodeReferenceAuditSHA256(:)=string(auditSHA);
-fields=F.Properties.VariableNames(startsWith(F.Properties.VariableNames,'Episode'));
+if ~ismember('EpisodeReferenceVersion',F.Properties.VariableNames)
+    F=deriveBOIPreEpisodeReferences(F,evidence,native,fs, ...
+        S.AnalysisInfo.AnalysisParams.quantBaselineWindowSec,"saved_audit_verified");
+    F.EpisodeReferenceAuditSHA256(:)=string(auditSHA);
+end
+if isempty(recordingReferenceOverride)&&isfield(S.AnalysisInfo.AnalysisParams,'recordingReferenceOverride')
+    recordingReferenceOverride=S.AnalysisInfo.AnalysisParams.recordingReferenceOverride;
+end
+F=deriveBOIEventReferences(F,evidence,native,fs, ...
+    S.AnalysisInfo.AnalysisParams.quantBaselineWindowSec,"saved_audit_verified",recordingReferenceOverride);
+F.EventReferenceAuditSHA256(:)=string(auditSHA);
 for e=1:height(E)
     j=find(F.SinkID==E.SinkID(e)&F.EventID==E.EventID(e));
     assert(isscalar(j)&&F.StartFrame(j)==E.StartFrame(e)&&F.EndFrame(j)==E.EndFrame(e)&& ...

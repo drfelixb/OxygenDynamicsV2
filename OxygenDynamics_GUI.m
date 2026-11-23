@@ -39,6 +39,8 @@ Grid.ColumnSpacing = 8;
 BOIMenu=uimenu(Fig,'Text','BOI recording');
 uimenu(BOIMenu,'Text','New analysis / reopen saved run','MenuSelectedFcn',@(~,~)openBOIRecordingWorkflow());
 uimenu(BOIMenu,'Text','Batch recordings — prepare and check','MenuSelectedFcn',@(~,~)openBOIBatchEditor());
+uimenu(BOIMenu,'Text','Multichannel batch from CSV…','MenuSelectedFcn',@(~,~)openBOIMultichannelBatch());
+uimenu(BOIMenu,'Text','Multichannel recordings','MenuSelectedFcn',@(~,~)openBOIMultichannel());
 uimenu(BOIMenu,'Text','Open saved review evidence','MenuSelectedFcn',@(~,~)openBOIG4EvidenceBundle());
 
 Title = uilabel(Grid,'Text',sprintf('Oxygen Dynamics Pipeline v%s',PipelineVersion), ...
@@ -68,7 +70,10 @@ OpenFolderButton.Layout.Column = 5;
 
 CsvLabel = uilabel(Grid,'Text','No CSV selected','Interpreter','none');
 CsvLabel.Layout.Row = 2;
-CsvLabel.Layout.Column = [1 4];
+CsvLabel.Layout.Column = [1 3];
+PairButton = uibutton(Grid,'Text','Multichannel recordings','ButtonPushedFcn',@(~,~)openBOIMultichannel());
+PairButton.Layout.Row = 2;
+PairButton.Layout.Column = 4;
 
 ModeLabel = uilabel(Grid,'Text','Analysis mode');
 ModeLabel.Layout.Row = 3;

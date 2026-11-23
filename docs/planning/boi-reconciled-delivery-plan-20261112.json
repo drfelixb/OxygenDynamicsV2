@@ -1,0 +1,419 @@
+{
+  "Schema": "boi-held-delivery-reconciliation-1",
+  "PreparedUTC": "2026-11-12T18:33:38.486799+00:00",
+  "Owner": "root",
+  "State": "Baseline/reference, signed adoption and compact workbook delivered locally; no active implementation",
+  "Specification": "docs/BOI_COMPACT_EXPORT_PLAN.md",
+  "SpecificationRevision": 31,
+  "UserContinueMeaning": "Continue contract planning only; signed-inclusion agreement does not lift the explicit implementation/verification hold",
+  "ExecutionStarted": true,
+  "ActiveImplementationMilestone": null,
+  "SequentialOnly": true,
+  "UnchangedScientificContract": [
+    "Accepted original detector/correction, existing event timing and spatial masks remain unchanged",
+    "Versioned original 20-second event-specific mean with agreed short/overlap/post-event/missing-reference flags",
+    "Amplitude percent * event mean area um2 * saved duration seconds",
+    "Strict complete recording sum * 1e6/analyzed area um2 * 60/recording duration seconds",
+    "No partial sums, zero imputation, coverage rescaling, new severity weights or automatic review decisions",
+    "Preserve original input/output files and calculator/reference versions; publish new derived artifacts only",
+    "Original automatic/reviewed evidence and surge sign-specific outputs remain separate"
+  ],
+  "ApprovalAndHold": {
+    "BaselineCore": "BREF-01..04 explicitly resumed and completed locally on 13 November under former sign eligibility; historical cap and spent allowances are not reset",
+    "RecordingReferenceFlagSupplement": "BREF-05 explicitly approved and completed with the baseline core in its shared cap",
+    "CompactExport": "Reporting requirements agreed; COMPACT-EXPORT-01 implementation still proposed",
+    "ReleaseCondition": "Explicit applicable instruction to resume held implementation/verification within a finite approved execution scope; no repeat approval of the settled sign policy",
+    "NoApprovalQuestionIssuedDuringThisPlanning": true,
+    "SignedContributionRevision": "Explicitly approved, implemented and verified locally; all 36 frozen synthetic evaluations pass; milestone complete"
+  },
+  "Stage1": {
+    "Milestone": "BASELINE-FLAGS-01",
+    "Benefit": "Compute event-local amplitudes using the original temporal rule, retain independent flags and produce source-bound inputs for existing burden/stats",
+    "ImplementationApproval": "BREF-01..05 completed locally under former sign eligibility; later signed-contribution adoption explicitly held",
+    "Items": [
+      {
+        "ID": "BREF-01",
+        "Scope": "Versioned local event reference/amplitude calculator with independent sample/quality flags; preserve strict/pre-episode columns"
+      },
+      {
+        "ID": "BREF-02",
+        "Scope": "Same calculator for live raw-footprint measurements and receipt-bound saved trace evidence; no raw movie reopen"
+      },
+      {
+        "ID": "BREF-03",
+        "Scope": "Select new amplitude consistently in existing event/recording/window burden and exports; keep product, scaling, strict completeness and reviewed authority"
+      },
+      {
+        "ID": "BREF-04",
+        "Scope": "Historical completed finite branch/compatibility/preservation and predefined saved-fixture check; no further individual-example investigation"
+      },
+      {
+        "ID": "BREF-05",
+        "Status": "Explicitly approved and completed with the baseline core on 13 November",
+        "Scope": "Separate first-20-second recording-reference flag on each fixed event footprint, with explicit optional override, quality/source fields and not-assessable state; never a burden/amplitude denominator or exclusion gate"
+      }
+    ],
+    "ReferenceSupplementOwner": "Upstream measurement/saved-evidence layer; compact exporter must not calculate it",
+    "Deliverables": [
+      "Versioned local amplitude/reference fields and flags in new source artifacts",
+      "Separate earlier-recording-reference flag only where evidence is sufficient",
+      "Existing downstream selector/export routes use the identified amplitude consistently",
+      "Finite evidence report separating numerical behavior from physiological reference suitability"
+    ],
+    "Limits": {
+      "ActiveHours": 4,
+      "SequentialBatches": 3,
+      "RoutineRepairs": 1,
+      "NewConstructedScenarios": 12,
+      "NewConstructedExecutionsTotalIncludingRetries": 24,
+      "ExistingSyntheticRegressionEvaluations": 48,
+      "MATLABStarts": 2,
+      "SavedTraceComparisons": 1,
+      "SavedTraceComparisonRetry": 1,
+      "WorkerRSSBytes": 2147483648,
+      "NewEvidenceBytes": 104857600
+    },
+    "LimitInterpretation": "Original combined baseline cap retained as historical limits; launch and repair allowances were spent. No reset, transfer, extra source, new case review or execution budget is created by revision 31.",
+    "ConstructedScenarioFamilies": [
+      "Full ordinary pre-event reference with earlier-recording comparison context",
+      "Non-1-Hz reference conversion and frame/time scaling",
+      "Short prehistory and comparison window not temporally preceding",
+      "Native sink/surge overlap retained and counted",
+      "Finite subset of missing reference samples with independent quality counts",
+      "Recording-start available post-event reference, clipped if necessary",
+      "Recording-start event with no real post-event reference samples",
+      "No finite reference samples",
+      "Nonpositive reference mean",
+      "Missing required event signal",
+      "Finite signed/negative local amplitude under the former nonnegative gate (historical completed check only; does not verify revision-31 signed inclusion)",
+      "Explicit earlier-recording reference override and its source/quality identity"
+    ],
+    "Fixture": {
+      "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-amplitude-baseline-comparison-20261015/selected-saved-examples.mat",
+      "Examples": "FB2412 site 1 events 1, 3 and 4 from the existing controlled comparison",
+      "PayloadReadDuringThisPlanning": false,
+      "UseState": "Historical completed fixture; no reopen, individual review or new payload read authorized by this revision"
+    },
+    "MissingEvidenceRule": "If named saved evidence lacks a required comparator/overlap field, retain not-assessable/unavailable and report the source boundary; do not reopen movies or choose another recording.",
+    "NoAUCMethodExpansion": "Preserve saved SignedTraceAUC_sec and its own reference. Do not silently derive a new-reference or reviewed integral to populate the compact report.",
+    "StoppingCondition": "Historical milestone closed. No further baseline fixture, test or implementation runs start from this revision; signed adoption remains explicitly held.",
+    "ScopeState": "Historical completed baseline/reference milestone, not an active instruction to reopen saved examples",
+    "HistoricalDelivery": {
+      "Completed": "2026-11-13",
+      "PolicyScope": "Baseline/reference delivery before revision-31 signed-inclusion adoption",
+      "ConstructedExecutionsUsed": 12,
+      "ExistingSyntheticEvaluationsUsed": 45,
+      "SavedComparisonAttemptsUsed": 1,
+      "MATLABLaunchAllowancesUsed": 2,
+      "RepairsUsed": 1,
+      "LimitsReset": false,
+      "VerifiesRevision31": false
+    }
+  },
+  "Stage2": {
+    "Milestone": "COMPACT-EXPORT-01",
+    "Benefit": "One identifiable compact workbook from completed saved stats and selected compatible reviews, with clear units, comparison qualifications and missingness",
+    "ImplementationApproval": "Explicitly approved, implemented and verified; complete 13 November 2026",
+    "Dependency": "Signed-selection code is delivered. Copy source values under their actual policy/version; no real source regeneration, recalculation or old-source relabelling in the compact exporter.",
+    "Sheets": [
+      "Events",
+      "Recordings",
+      "Sites",
+      "TimeSeries",
+      "Availability",
+      "Definitions"
+    ],
+    "OptionalMetadataSheet": "Phases, only for explicitly supplied annotations",
+    "Items": [
+      {
+        "ID": "CEX-01",
+        "Scope": "Freeze source/identity/column map, signed-value and negative-flag fields, metadata associations, read whitelist and missing states before any authorized data-reading code change"
+      },
+      {
+        "ID": "CEX-02",
+        "Scope": "Project saved values with source precision and explicit automatic/reviewed roles; include signed AUC, matching burden series and automatic-gap QC without calculators"
+      },
+      {
+        "ID": "CEX-03",
+        "Scope": "Use existing CSV/custom metadata and batch/stats GUI route; remember review selection; provide one compact-export action, optional phase-metadata input and existing cancellation/error recovery"
+      },
+      {
+        "ID": "CEX-04",
+        "Scope": "Finite constructed/table-level identity, units, signed-value/flag, completeness, source/reference and GUI-preservation checks within unchanged limits; no individual biological investigations; then stop"
+      }
+    ],
+    "MetadataEntryContract": {
+      "Default": "Reuse current manually prepared CSV/editor with confirmed shared frame rate/pixel calibration and row overrides",
+      "NoNewMandatoryBatchCSVFields": true,
+      "OptionalDirectColumns": [
+        "SessionID",
+        "FieldOfViewID",
+        "FieldOfViewNotes",
+        "Camera",
+        "Exposure",
+        "Gain",
+        "Binning",
+        "Drug concentration with unit",
+        "Administered dose with unit",
+        "Administration route",
+        "Time since treatment at recording start (minutes)",
+        "Stimulation description",
+        "Labguru reference",
+        "Notes"
+      ],
+      "SourceAttribution": "Original saved labels/calibration stay attached to measurements; later annotations retain their own source and do not overwrite originals",
+      "ControlEntry": "Explicit existing BatchRowID before analysis or saved RecordingID afterwards; GUI may show friendly labels while storing the exact identity",
+      "ControlExport": "Use existing BaselineRecordingID/ComparisonRecordingID roles through saved Included BatchRowID-to-RecordingID crosswalk; no new contrasts",
+      "ControlScope": "Same mouse; allow explicit different visits/fields with flags. Outside-export or unresolved controls keep explicit status; no extra payload is opened to resolve them.",
+      "OptionalPhaseEntry": "Proposed optional PhaseAnnotationsFile column points to a simple companion CSV bound to that batch row; PhaseName, StartSec and EndSec with optional interval ID/source/notes. Already source-identified interval tables may reuse RecordingID/WindowID/StartSec/EndSec.",
+      "PhaseExport": "Bind through stable row-to-recording crosswalk; copy names and recording-relative second bounds as metadata. Missing/invalid/ambiguous metadata get status; no automatic event assignment, clipping, timing reconstruction or window calculation.",
+      "NoFilenameParserOrLabguruIntegration": true,
+      "NoPhaseEditorOrProtocolBuilder": "Reuse simple optional file/table entry; no separate analysis UI redesign"
+    },
+    "Limits": {
+      "ActiveHours": 6,
+      "SequentialBatches": 4,
+      "RoutineRepairs": 2,
+      "ConstructedScenarioFamilies": 8,
+      "ConstructedExecutionsTotalIncludingRetries": 24,
+      "MATLABStarts": 2,
+      "NamedWorkbookExportAttempts": 4,
+      "WorkerRSSBytes": 4294967296,
+      "NewEvidenceBytes": 104857600,
+      "TotalNewCompactWorkbookBytes": 26214400
+    },
+    "ScenarioFamilies": [
+      {
+        "ID": "CEX-S1",
+        "Scope": "Multi-recording/mouse/session/condition identity, repeated local IDs, optional metadata/control/phase annotations and leading-zero IDs"
+      },
+      {
+        "ID": "CEX-S2",
+        "Scope": "Analyzed zero versus missing/unprocessed/absent-source/not-applicable states"
+      },
+      {
+        "ID": "CEX-S3",
+        "Scope": "Finite signed contributions remain included with negative flags; genuine missing contributions make recording totals unavailable despite finite curve points; no finite-only or positive-only sum"
+      },
+      {
+        "ID": "CEX-S4",
+        "Scope": "Original/derived/reviewed reference versions, signed AUC origin, absent reviewed AUC and unchanged automatic native gaps"
+      },
+      {
+        "ID": "CEX-S5",
+        "Scope": "Duplicate/conflicting keys, exact parent source compatibility, invalid or unresolved optional links"
+      },
+      {
+        "ID": "CEX-S6",
+        "Scope": "Typed numeric units/sign/precision and ordinary-cell formatting, negative flags/counts and not-assessable states; no extra factor 100, sign conversion or A/T normalization"
+      },
+      {
+        "ID": "CEX-S7",
+        "Scope": "Six core sheets plus optional phase metadata, read whitelist, matching saved curve/total and frame clocks; no phase metrics or giant MAT loads"
+      },
+      {
+        "ID": "CEX-S8",
+        "Scope": "Existing GUI source/review selection persistence, optional annotation entry, destination/cancel/failure behavior and immutability"
+      }
+    ],
+    "ScenarioAccounting": "Eight unique frozen functions; at most 24 total evaluations including retries. No additional existing suites, R31 reruns or historical saved-example drivers. Freeze fixture/dependency execution order before the initial run.",
+    "NamedWorkbookFixtures": [],
+    "ReviewAndMetadataFixtures": "Constructed scalar/table bundles and metadata/review receipts only, plus named already generated R31 synthetic exports. Zero real recording inputs.",
+    "ReadPolicy": "Explicit selected-variable loads only, source-specific schema/association checks and size inspection before MAT loads. No whole-MAT/site/raw/ROI/pixel/mask loads. Aggregate vectors need an explicit recording crosswalk; otherwise unavailable. Freeze the exact compatible source map in CEX-01; do not guess a new variable.",
+    "AbsentFields": "Report absent optional secondary fields or unresolved metadata with reasons. Missing positive-event core inventory prevents the source join; never fabricate zero or infer recording identity.",
+    "ValueTolerance": "Source round trips use existing 1e-10 * max(1,abs(source)); identities/counts/statuses exact",
+    "FutureAcceptanceForSecondaryOutputs": [
+      "Complete saved area-normalized curve reconciles to its exact recording source with saved frame intervals and 60/T; no check run now",
+      "AUC source/reference/window/version retained; automatic values never promoted to reviewed",
+      "Original native-gap seconds/threshold and no-neighbor status retained after reviews",
+      "No automatic curve substituted for an absent reviewed curve"
+    ],
+    "StoppingCondition": "Eight-family acceptance complete, or any source/effort/repair/attempt/resource boundary. No automatic next campaign, real batch export, extra run, package, Git transport or release.",
+    "HistoricalNamedWorkbookFixtures": [
+      {
+        "Recording": "FB2412",
+        "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-batch-execution-20261014/BOIBatch_50c02732-cf69-4817-a7df-043fe1f17a42/runs/BOIRun_74bbc0f0-26b3-4cf3-985c-114d6ff80a9c/statistics/Stats_Output_20261014T165832/FilteredData_input.xlsx",
+        "ManifestPaths": [
+          "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-batch-execution-20261014/BOIBatch_50c02732-cf69-4817-a7df-043fe1f17a42/runs/BOIRun_74bbc0f0-26b3-4cf3-985c-114d6ff80a9c/statistics/Stats_Output_20261014T165832/AnalysisManifest.md"
+        ],
+        "PayloadReadDuringThisPlanning": false
+      },
+      {
+        "Recording": "FB2413",
+        "Path": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-batch-execution-20261014/BOIBatch_50c02732-cf69-4817-a7df-043fe1f17a42/runs/BOIRun_c1b9610e-1d2f-4222-b7ee-fed7989350c9/statistics/Stats_Output_20261014T170353/FilteredData_input.xlsx",
+        "ManifestPaths": [
+          "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-batch-execution-20261014/BOIBatch_50c02732-cf69-4817-a7df-043fe1f17a42/runs/BOIRun_c1b9610e-1d2f-4222-b7ee-fed7989350c9/statistics/Stats_Output_20261014T170353/AnalysisManifest.md"
+        ],
+        "PayloadReadDuringThisPlanning": false
+      }
+    ],
+    "NamedSyntheticFixtures": [
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/synthetic-automatic-source.mat",
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewedHypoxicBurden.xlsx",
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewedHypoxicBurden.mat",
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewedBurdenStatus.json",
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/HypoxicBurden_EventBased.csv",
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/HypoxicBurden_ByRecording.csv",
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/HypoxicBurden_TimeSeries.csv",
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewSummary.csv",
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ReviewDecisions.csv",
+      "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-revision31-implementation-20261113/signed-export/ExcludedDetections.csv"
+    ],
+    "ImplementationPlan": "docs/BOI_COMPACT_WORKBOOK_IMPLEMENTATION_PLAN.md",
+    "ExecutionProposal": "docs/planning/boi-compact-workbook-execution-proposal-20261113.json",
+    "DevelopmentFixtureScope": "Constructed-only scope; prior real workbook fixtures are historical and unused",
+    "ScenarioFunctions": [
+      {
+        "Family": "CEX-S1",
+        "Name": "testIdentityAndOptionalMetadata"
+      },
+      {
+        "Family": "CEX-S2",
+        "Name": "testZeroMissingAndReviewStates"
+      },
+      {
+        "Family": "CEX-S3",
+        "Name": "testSignedCompletenessAndReviewMembership"
+      },
+      {
+        "Family": "CEX-S4",
+        "Name": "testReferenceAUCAndNativeGapProvenance"
+      },
+      {
+        "Family": "CEX-S5",
+        "Name": "testSourceConflictsAndPreservation"
+      },
+      {
+        "Family": "CEX-S6",
+        "Name": "testNumericUnitsPrecisionAndDefinitions"
+      },
+      {
+        "Family": "CEX-S7",
+        "Name": "testSourcesClocksAndWorkbookContract"
+      },
+      {
+        "Family": "CEX-S8",
+        "Name": "testGUISelectionAndFailureRecovery"
+      }
+    ],
+    "Delivery": "docs/BOI_COMPACT_WORKBOOK_DELIVERY.md"
+  },
+  "OutsideTheseMilestones": [
+    "Full 17-recording source regeneration/re-export",
+    "Raw movie decoding or image-stack reprocessing",
+    "Detector tuning, episode assembly, boundary or mask changes",
+    "Phase-specific burden, stimulation-window reconstruction, protocol inference or KX whisker analysis",
+    "New-reference AUC generation or retrospective calibration correction",
+    "Fresh comprehensive audit of every morphology/trace descriptor",
+    "New aggregation/weighting/statistics model",
+    "Reserved recording payload use",
+    "Package/platform migration, Git transport, publication or release"
+  ],
+  "ReservedRecordings": [
+    "FB2420",
+    "FB2316",
+    "FB2320",
+    "FB2404",
+    "FB2406"
+  ],
+  "OutstandingTechnicalQualifications": [
+    "Native event area versus eligible-tissue denominator/occupancy support",
+    "Native area versus extended/reviewed duration coverage",
+    "Recording/window composite ingredient-source identity",
+    "Current-version versus historical arithmetic coverage",
+    "Acquisition/calibration/reference/review compatibility and unknown evidence"
+  ],
+  "PlanningCounters": {
+    "ScientificSourceWrites": 0,
+    "WorkbookPayloadReads": 0,
+    "MATPayloadReads": 0,
+    "OriginalImageReads": 0,
+    "ReservedPayloadReads": 0,
+    "MATLABStarts": 0,
+    "ScientificNumericalExecutions": 0,
+    "VerificationRuns": 0,
+    "WorkbookWrites": 0,
+    "ReviewApplications": 0
+  },
+  "NextStep": "Review the bounded compact-workbook proposal; no implementation/tests/data reads/writes until explicit applicable authorization; no individual examples or budget transfer.",
+  "RevisedUTC": "2026-11-13T11:12:16.929763+00:00",
+  "ExecutionScope": "COMPACT-EXPORT-01; approved six-hour synthetic-only implementation and verification",
+  "SignedContributionContract": {
+    "AgreedDate": "2026-11-13",
+    "State": "Implemented and verified locally within approved synthetic-only scope; complete",
+    "Include": "For each retained sink event, use its finite signed local amplitude and unchanged product when the other required ingredients are available.",
+    "NegativeValues": "Negative amplitudes/contributions are descriptive flags, not NaN or exclusion gates. Negative contributions subtract; the complete normalized total can be positive, zero or negative.",
+    "Flags": "Separate automatic/review-applied negative amplitude and contribution states; recording negative-contributor counts and finite-total sign. Unavailable values are not assessable, not falsely nonnegative.",
+    "Completeness": "All required retained contributions must be available; no finite-only/positive-only sum, absolute value, clipping, zero fill, coverage scaling or alternative normalization.",
+    "Preservation": "Original local 20-second mean, detector, masks, timing, area, duration, burden formula, normalization, original results and explicit saved review exclusions stay unchanged.",
+    "SourceVersion": "Future signed-selection artifacts require distinct policy/provenance; old nonnegative-policy sources keep their values and actual version. The compact copier does not repair or relabel them.",
+    "Label": "Signed burden composite, not guaranteed nonnegative hypoxic deficit or calibrated oxygen.",
+    "NoIndividualExamples": "No further individual pocket/trace/ROI/image/video investigation or event-by-event biological judgments. Future checks are finite constructed/table-level contract checks only after explicit execution authorization.",
+    "ExecutionStarted": true,
+    "NewExecutionBudgetAllocated": true,
+    "SettledPreferenceQuestionPending": false,
+    "ImplementationPlan": "docs/BOI_REVISION31_IMPLEMENTATION_PLAN.md",
+    "ImplementationProposal": "docs/planning/boi-revision31-execution-proposal-20261113.json",
+    "Delivery": "docs/BOI_REVISION31_DELIVERY.md"
+  },
+  "NoFurtherIndividualExampleInvestigation": true,
+  "NoExecutionBudgetResetOrTransfer": true,
+  "PlanningCountersScope": "Document planning/revision only; not a statement that the separately recorded historical baseline and comparison did not run",
+  "SignedImplementationProposal": {
+    "State": "Explicitly approved and completed locally",
+    "Plan": "docs/BOI_REVISION31_IMPLEMENTATION_PLAN.md",
+    "Manifest": "docs/planning/boi-revision31-execution-proposal-20261113.json",
+    "Limits": {
+      "ActiveHours": 4,
+      "SequentialBatches": 3,
+      "RoutineRepairCycles": 1,
+      "NewConstructedFunctions": 12,
+      "NewConstructedExecutionsIncludingRetries": 24,
+      "ExistingSyntheticFunctions": 24,
+      "ExistingSyntheticExecutionsIncludingRetries": 48,
+      "MATLABStarts": 2,
+      "SyntheticXLSXWriterAttemptsIncludingRetries": 8,
+      "ProcessTreeRSSBytes": 2147483648,
+      "AllNewEvidenceScratchOutputBytes": 104857600,
+      "RealRecordingInputs": 0,
+      "IndividualBiologicalReviews": 0
+    },
+    "ApprovalPendingForExecution": false,
+    "ScientificPolicyAlreadyAgreed": true,
+    "ImplementationHeld": false,
+    "NumericalVerificationHeld": false,
+    "RealRecordingInputs": 0,
+    "NoIndividualExamples": true,
+    "PreviousBudgetsUnchangedAndNotReset": true,
+    "Delivery": "docs/BOI_REVISION31_DELIVERY.md",
+    "Counters": {
+      "MATLABStarts": 2,
+      "RepairCycles": 1,
+      "ConstructedExecutions": 12,
+      "ExistingExecutions": 24,
+      "XLSXAttempts": 8
+    }
+  },
+  "CompactImplementationProposal": {
+    "State": "Prepared for review only; execution held",
+    "Plan": "docs/BOI_COMPACT_WORKBOOK_IMPLEMENTATION_PLAN.md",
+    "Manifest": "docs/planning/boi-compact-workbook-execution-proposal-20261113.json",
+    "LimitsUnchanged": true,
+    "RealRecordingInputs": 0,
+    "IndividualExamples": 0,
+    "ExecutionApproved": false,
+    "BudgetAllocated": false
+  },
+  "CompactWorkbookExecution20261113": {
+    "State": "Complete; all eight frozen families have passing latest results",
+    "Approval": "Explicit user approval",
+    "Evidence": "../../reference-validation/boi-compact-workbook-implementation-20261113/scope.json",
+    "AcceptanceReceipt": "/Users/zcm361/Documents/Github/OxygenDynamicsV2/reference-validation/boi-compact-workbook-implementation-20261113/acceptance-receipt.json",
+    "Counters": {
+      "MATLABStarts": 4,
+      "RepairCycles": 3,
+      "TestEvaluations": 26,
+      "XLSXAttempts": 5
+    }
+  }
+}

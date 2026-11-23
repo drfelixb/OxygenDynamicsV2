@@ -275,6 +275,8 @@ if IsBLI
         buildBOIRecordingInputContracts(RecordingRegistry,StatsInfo.Recordings);
     if ~isempty(BOIInputContracts),StatsInfo.PipelineContract=BOIInputContracts{1}.PipelineContract;end
     StatsInfo.EpisodeReferencePolicy=boiEpisodeReferencePolicy();
+    StatsInfo.EventReferencePolicy=boiEventReferencePolicy();
+    StatsInfo.BurdenSelectionPolicy=boiBurdenSelectionPolicy();
     StatsInfo.BOIInputContractVersion = 'boi-recording-input-1';
     StatsInfo.BOIWindowAuditVersion = 'boi-window-exposure-1';
 end
@@ -531,8 +533,9 @@ StatsBLIWorkbookInputs.FiguresOutputFolder = FiguresoutputfolderPath;
     IsBLI,StatsCoreInputs,StatsBLIInputs,StatsBLIWorkbookInputs);
 StatsCoreData.HypoxicEventSpecificMetrics = HypoxicEventSpecificMetrics;
 fprintf('[Stats %s] Calculating hypoxic burden metrics...\n',char(datetime('now','Format','HH:mm:ss')));
+BurdenSelection=[];if IsBLI,BurdenSelection=boiBurdenSelectionPolicy();end
 StatsCoreData.HypoxicBurden = createHypoxicBurdenMetrics( ...
-    Table_OxygenSinkEvents_OutCombo,HypoxicEventSpecificMetrics,Table_OxygenSinks_OutCombo,RecordingRegistry);
+    Table_OxygenSinkEvents_OutCombo,HypoxicEventSpecificMetrics,Table_OxygenSinks_OutCombo,RecordingRegistry,BurdenSelection);
 Windows=table(); WindowPairs=table();
 if isfield(StatsConfig,'analysisWindowsCsv') && strlength(string(StatsConfig.analysisWindowsCsv))>0
     Windows=readtable(StatsConfig.analysisWindowsCsv,'TextType','string');
@@ -540,7 +543,7 @@ end
 if isfield(StatsConfig,'windowPairsCsv') && strlength(string(StatsConfig.windowPairsCsv))>0
     WindowPairs=readtable(StatsConfig.windowPairsCsv,'TextType','string');
 end
-[StatsCoreData.RecordingWindowMetrics,WindowFrameIngredients]=createOxygenAnalysisWindows(RecordingRegistry,Table_OxygenSinks_OutCombo,Table_OxygenSinkEvents_OutCombo,Windows);
+[StatsCoreData.RecordingWindowMetrics,WindowFrameIngredients]=createOxygenAnalysisWindows(RecordingRegistry,Table_OxygenSinks_OutCombo,Table_OxygenSinkEvents_OutCombo,Windows,'sink',BurdenSelection);
 if IsBLI
     StatsCoreData.BOIInputContracts=BOIInputContracts;
     StatsCoreData.RecordingInputQC=RecordingInputQC;

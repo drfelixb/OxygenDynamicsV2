@@ -1,13 +1,16 @@
 # Open the current development checkout
 
-30 October 2026 · **3.1.0-dev.10**, build **2026-10-30 11:14:26 +01:00**.
+5 November 2026 · **3.1.0-dev.14**, build **2026-11-05 15:59:47 +01:00**.
 
 The local development checkout adds **Batch recordings** for CSV preparation,
 shared settings, optional metadata, row checks and sequential execution with
 saved status/history. Choose the output parent and review/confirm selected ready
 rows before starting; see [batch execution](docs/BOI_BATCH_EXECUTION.md). The preserved development ZIPs
-remain **3.1.0-dev.2**. This development checkpoint is saved to the
-existing development branch; it builds no replacement ZIP. Keep older installations
+remain **3.1.0-dev.2**. The preceding dev.10 checkpoint is saved to the development
+branch. Local dev.11 adds export handoff/reopening; dev.12 adds the optional reviewed-burden
+GUI, verified on macOS/R2025a with 222 portable, six focused desktop and one
+native synthetic walkthrough. No
+replacement ZIP is built. Local dev.14 adds a separate opt-in full-trace Episode prototype; dev.13 retains its whole-event saved-trace preview; production detection and burden calculations are unchanged. Keep older installations
 and results. Repository-only checkpoint details: `docs/BOI_DEVELOPMENT_CHECKPOINT_20261030.md`.
 
 In a fresh ordinary MATLAB desktop, make the updated `existing-analysis` checkout

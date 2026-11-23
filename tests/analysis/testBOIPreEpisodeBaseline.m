@@ -142,7 +142,12 @@ verifyEqual(t,D.NormOxySinkAmpPercent,E.NormOxySinkAmpPercent);
 verifyEqual(t,info.Recordings.SinksMatFile,sf);
 B=createHypoxicBurdenMetrics(D,cells.HypoxicEventSpecificMetrics{1}, ...
     cells.TableOxygenSinks{1},cells.RecordingRegistry{1});
-verifyEqual(t,B.EventTable.BurdenAmplitudePercent,[20;20;25],'AbsTol',1e-12);
+% The approved local policy takes priority; preserved pre-episode fields above
+% still describe the older alternative, not the selected new burden input.
+localMean=(16*200+4*150)/20;
+verifyEqual(t,B.EventTable.BurdenAmplitudePercent,[20;100*(localMean-160)/localMean;25],'AbsTol',1e-12);
+verifyEqual(t,D.EventReferenceStartFrame,[11;16;80]);
+verifyEqual(t,D.EventReferenceOverlapFrames,[0;4;0]);
 end
 function testWorkbookPreservesAutomaticAndDerived(t)
 [E,V,P]=fixture;D=deriveBOIPreEpisodeReferences(E,V,P,1,20);

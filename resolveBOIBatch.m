@@ -1,8 +1,10 @@
-function [Resolved,Origins]=resolveBOIBatch(Batch)
-%RESOLVEBOIBATCH Resolve explicit row/shared values without running analysis.
-% Shared values apply only after explicit confirmation. Returned paths are
-% canonical absolute paths, relative to the document's BaseFolder. Rows in
-% Batch retain the user's overrides and blanks for continued editing.
+function [Resolved,Origins,PathImport]=resolveBOIBatch(Batch)
+%RESOLVEBOIBATCH Resolve row/shared values and batch detection support.
+% Shared values apply only after explicit confirmation. Detection support
+% defaults to the existing automatic tissue estimate. Returned paths are
+% canonical absolute paths, relative to the document's BaseFolder. Foreign
+% recording paths are retained until explicitly mapped to local folders.
+% Rows in Batch retain the user's overrides and blanks for continued editing.
 assert(isstruct(Batch)&&isscalar(Batch)&&isfield(Batch,'Schema')&&strcmp(Batch.Schema,'boi-batch-1')&& ...
     all(isfield(Batch,{'Rows','BaseFolder','Shared','SharedConfirmed'})), ...
     'OxygenDynamics:InvalidBatch','Supply a boi-batch-1 document.');
@@ -27,8 +29,15 @@ for k=1:numel(fields)
         Origins.(name)(missing)="shared";
     end
 end
+defaultSupport=Origins.BOISupportProfile=="missing";
+Resolved.BOISupportProfile(defaultSupport)="whole-image";
+Origins.BOISupportProfile(defaultSupport)="default";
+[Resolved.Paths,PathImport]=prepareBOIBatchImportPaths(Resolved.Paths,checked.BaseFolder);
+foreign=false(height(Resolved),1);
+foreign(PathImport.NeedsMapping.RowIndex)=true;
 for name={'Paths','RunFolder'}
     for row=1:height(Resolved)
+        if strcmp(name{1},'Paths')&&foreign(row),continue;end
         value=Resolved.(name{1})(row);
         if strlength(strtrim(value))==0,continue;end
         file=java.io.File(char(value));

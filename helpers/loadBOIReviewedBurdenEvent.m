@@ -10,6 +10,11 @@ for k=1:numel(manifest)
 end
 assert(any(strcmp({manifest.Path},'ReviewedEventBurden.json')),id,'Event JSON is not in the manifest.');
 S=jsondecode(fileread(fullfile(Folder,'ReviewedEventBurden.json')));
+policyTable=table();
+if isfield(S,'BurdenSelectionPolicyVersion')
+    policyTable=table(string(S.BurdenSelectionPolicyVersion),'VariableNames',{'BurdenSelectionPolicyVersion'});
+end
+selection=boiBurdenSelectionPolicy(policyTable);
 areaRevision=strcmp(S.Schema,'boi-reviewed-single-event-burden-2');
 assert((strcmp(S.Schema,'boi-reviewed-single-event-burden-1')||areaRevision)&&strcmp(S.EventType,'sink')&& ...
     ~S.OriginalResultsChanged&&~S.GlobalDefaultsChanged&&~S.RecordingTotalCalculated&&~S.PartialSumCalculated,id,'Unsupported single-event result.');
@@ -46,7 +51,7 @@ else
     assert(isfinite(S.BurdenArea_um2)&&S.BurdenArea_um2>0,id,'Invalid legacy event area.');
 end
 area=S.BurdenArea_um2;
-assert(all(isfinite([amp A D]))&&amp>=0&&all([A D]>0)&& ...
+assert(all(isfinite([amp A D]))&&(selection.IncludeFiniteNegative||amp>=0)&&all([A D]>0)&& ...
     (isnan(area)||(isfinite(area)&&area>=0)),id,'Invalid event amplitude, area or exposure.');
 product=amp*area*M.DurationSec;
 expected=[M.ReferenceMean,min(M.EventValues),amp,M.DurationSec,product,product*(1e6/A)*(60/D)];

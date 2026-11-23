@@ -2,6 +2,14 @@ function D = createAutomaticAmplitudeExportData(Core,Burden)
 % Additive reporting only. Never replace existing measurements or summaries.
 D.Schema="boi-automatic-amplitude-export-1";
 D.Definitions=definitions();
+selection=[];if isfield(Burden,'SelectionPolicy'),selection=Burden.SelectionPolicy;end
+selection=boiBurdenSelectionPolicy(Burden.EventTable,selection);
+if selection.IncludeFiniteNegative
+    D.SelectionPolicy=struct2table(selection);
+    D.Definitions.Formula(7)="mean(non-NaN selected signed BurdenAmplitudePercent)";
+    D.Definitions.SignAndAvailability(7)="Finite signed amplitudes and zero contribute; negative values are flagged, not excluded. Missing remains unavailable.";
+    D.Definitions.SignAndAvailability(9)="Signed products retain their sign; missing amplitude/area/duration or normalization stays unavailable. Strict recording totals require every retained contribution.";
+end
 D.AverageCounts=table('Size',[0 13],'VariableTypes', ...
     [repmat({'string'},1,7),{'double','double','double'},repmat({'string'},1,3)], ...
     'VariableNames',{'SummaryLevel','EventType','RecordingID','Mouse','SiteID','GroupKey','Metric', ...
@@ -80,6 +88,30 @@ for i=1:height(R)
             n,height(Q),"events",units(metric),"Non-NaN event inputs for this metric (existing omitnan rule); each metric has its own subset."};
     end
 end
+if selection.IncludeFiniteNegative
+    V=D.Availability;V.BurdenSelectionPolicyVersion=repmat("not_applicable",height(V),1);
+    V.SelectedNegativeAmplitudeEvents=nan(height(V),1);V.SelectedNegativeContributionEvents=nan(height(V),1);
+    V.SelectedAvailableContributionEvents=nan(height(V),1);
+    for i=1:height(V)
+        if V.EventType(i)~="sink",continue;end
+        V.BurdenSelectionPolicyVersion(i)=string(selection.Version);
+        mask=false(height(B),1);
+        if ismember('RecordingID',B.Properties.VariableNames),mask=string(B.RecordingID)==V.RecordingID(i);end
+        if V.SummaryLevel(i)=="site"
+            if ~ismember('SinkID',B.Properties.VariableNames),continue;end
+            mask=mask & string(B.SinkID)==V.SiteID(i);
+        end
+        if sum(mask)~=V.TotalEvents(i),continue;end
+        a=[];c=[];
+        if ismember('BurdenAmplitudePercent',B.Properties.VariableNames),a=B.BurdenAmplitudePercent(mask);end
+        if ismember('PerEventBurdenContribution',B.Properties.VariableNames),c=B.PerEventBurdenContribution(mask);end
+        V.NegativeAmplitudeExcludedFromBurdenEvents(i)=0;
+        V.SelectedNegativeAmplitudeEvents(i)=sum(isfinite(a)&a<0);
+        V.SelectedNegativeContributionEvents(i)=sum(isfinite(c)&c<0);
+        V.SelectedAvailableContributionEvents(i)=sum(isfinite(c));
+    end
+    D.Availability=V;
+end
 G=Burden.GroupSummaryTable;
 if isempty(G),return;end
 cols=intersect({'DrugID','Condition','PuffStim','Genotype','Promoter'},R.Properties.VariableNames,'stable');
@@ -144,13 +176,13 @@ Metric=["NormOxySinkAmp";"NormOxySinkAmpPercent";"NormOxySurgeAmp";"NormOxySurge
     "Within-mouse recording means / *_Mean / *_SEM"];
 SignalSource=[repmat("Preserved-input TIFF mean over fixed union of native event pixels",4,1); ...
     "Processed site detection trace and its seventh-order trend"; ...
-    "Saved automatic event fractions at one site";"BurdenAmplitudeSource: versioned EpisodeAmplitudePercent when present, else saved automatic percentages after sign-provenance conversion"; ...
+    "Saved automatic event fractions at one site";"BurdenAmplitudeSource: versioned EventAmplitudePercent, otherwise saved EpisodeAmplitudePercent or original percentages according to source version"; ...
     "Saved event area and duration used by the composite";"Saved event amplitude*area*duration contributions"; ...
     "Saved recording metrics; then within-mouse recording means"];
 Reference=[repmat("Mean of all requested immediately preceding clean finite samples; saved measurement start, configured window (default 20 seconds); both native signs screen overlap; positive mean required",4,1); ...
     "Seventh-order full-site fitted trend; detection-domain diagnostic"; ...
     "Each event's own saved reference; no shared site reference fitted"; ...
-    "Versioned per-event reference: immediate or shared pre-episode period on each own footprint; shift >20 seconds or unclear recording-start recovery is withheld; original automatic reference retained in original columns"; ...
+    "New event-specific available 20-second mean with short/overlap/missing/post-event flags; older pre-episode/strict sources retain their policy. Separate earlier-recording reference is descriptive only."; ...
     "Native event geometry / saved measurement duration, not an intensity reference"; ...
     "Each event's own reference; saved recording area for per_mm2 variant"; ...
     "Each underlying event's reference; no mouse reference or correction fitted"];
