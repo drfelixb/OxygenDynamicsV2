@@ -8,6 +8,10 @@ function Config = OxygenDynamics_Config()
 Config = struct();
 
 Config.OxygenWrapper = struct();
+Config.OxygenWrapper.DetectorMode = 'legacy'; % 'legacy', 'eventFirst', 'compare'
+Config.OxygenWrapper.EventFirstConfig = oxygenEventFirstConfig();
+Config.OxygenWrapper.EventFirstMetadata = struct(); % Optional explicit mask/provenance overrides; recording-specific inputs via standalone batch
+
 Config.OxygenWrapper.inputCsv = 'GFAP_GeNL_Ctrl.csv';
 Config.OxygenWrapper.interactive = false;
 Config.OxygenWrapper.reanalyseExisting = true;
@@ -41,6 +45,7 @@ Config.iOSWrapper.sendEmailAlerts = false;
 Config.iOSWrapper.emailRecipient = 'felix.beinlich@sund.ku.dk';
 
 Config.Stats = struct();
+Config.Stats.DetectorMode = 'legacy'; % New-schema statistics are exported by eventFirst directly.
 Config.Stats.inputCsv = 'GFAP_GeNL_Ctrl.csv';
 Config.Stats.interactive = false;
 Config.Stats.useCuratedSinks = false;

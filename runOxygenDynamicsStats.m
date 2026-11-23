@@ -73,6 +73,7 @@ setupOxygenDynamicsPath();
 % metadata to the datatables produced by the master analysis script
 
 StatsConfig = struct();
+StatsConfig.DetectorMode = 'legacy';
 StatsConfig.inputCsv = 'GFAP_GeNL_Ctrl.csv';
 StatsConfig.interactive = false;
 StatsConfig.useCuratedSinks = false;
@@ -92,6 +93,8 @@ if nargin > 0
     StatsConfig = mergeStructs(StatsConfig,varargin{1});
 end
 
+assert(strcmp(StatsConfig.DetectorMode,'legacy'),'eventFirst:StatsSchema', ...
+    'Legacy statistics cannot ingest eventFirst outputs. Use EventFirstResult.RecordingWindowMetrics and BaselineContrasts; do not rename new MAT tables.');
 Masterfolder=StatsConfig.masterFolder;
 InputD=readInputTable(StatsConfig.inputCsv);
 RequiredInputColumns = {'Paths','PostureFile','PupilFile','PuffsFile','WhiskingFile','Mouse','Genotype','Condition','DrugID','Promoter','SampleF','Pixelsize','Puff_2use'};

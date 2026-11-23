@@ -50,3 +50,10 @@ __pycache__/
 *.py[cod]
 .idea/
 .vscode/
+
+# Large reproducible eventFirst review outputs remain local; see docs/EVENT_FIRST.md.
+examples/eventFirst/results/eventFirst/
+examples/eventFirst/comparison-results/Images_Processed/
+examples/eventFirst/comparison-results/*Output*/
+examples/eventFirst/comparison-results/ManualCurOxySinksData*/
+examples/eventFirst/comparison-results/synthetic_raw.tif

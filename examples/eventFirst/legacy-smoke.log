@@ -1,0 +1,376 @@
+WARNING: package sun.awt.X11 not in java.desktop
+WARNING: package sun.awt.X11 not in java.desktop
+zeroCases: 1
+inputValidation: 1
+signedNoisyEvents: 1
+exactQuantification: 1
+laterEventInvariant: 1
+topologyAndRecovery: 1
+boundaryAndMissing: 1
+windowConservation: 1
+physicalSampling: 1
+globalStep: 1
+denoisedQuantitativeSource: 1
+roundTrip: 1
+siteChaining: 1
+matchingAndLeakage: 1
+batchFailures: 1
+defaultLegacy: 1
+                Test                Passed
+    ____________________________    ______
+
+    "zeroCases"                     true  
+    "inputValidation"               true  
+    "signedNoisyEvents"             true  
+    "exactQuantification"           true  
+    "laterEventInvariant"           true  
+    "topologyAndRecovery"           true  
+    "boundaryAndMissing"            true  
+    "windowConservation"            true  
+    "physicalSampling"              true  
+    "globalStep"                    true  
+    "denoisedQuantitativeSource"    true  
+    "roundTrip"                     true  
+    "siteChaining"                  true  
+    "matchingAndLeakage"            true  
+    "batchFailures"                 true  
+    "defaultLegacy"                 true  
+
+The file was saved successfully. Elapsed time : 0.045 s.
+New file was loaded successfully. Elapsed time : 0.014 s.
+Hypoxia-amyloid synthetic tests passed.
+Repository checks passed: 320 MATLAB files inspected, 40 Code Analyzer messages, focused tests run: 1.
+New file was loaded successfully. Elapsed time : 0.014 s.
+New file was loaded successfully. Elapsed time : 0.013 s.
+New file was loaded successfully. Elapsed time : 0.012 s.
+Loading data... 
+New file was loaded successfully. Elapsed time : 0.012 s.
+New file was loaded successfully. Elapsed time : 0.015 s.
+Loaded original/raw TIFF: Smoke_original.tif
+Loaded denoised TIFF for detection: Smoke_denoised.tif
+Loading data... 
+New file was loaded successfully. Elapsed time : 0.017 s.
+Loaded original/raw iOS TIFF: Smoke_original.tif
+Z-scoring data... 
+Elapsed time is 0.006275 seconds.
+Convolving data... 
+Elapsed time is 0.000195 seconds.
+Smoothing data...
+Z-scoring data... 
+Elapsed time is 0.002280 seconds.
+Convolving data... 
+Elapsed time is 0.000112 seconds.
+Smoothing data...
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 14 workers.
+The file was saved successfully. Elapsed time : 0.025 s.
+New file was loaded successfully. Elapsed time : 0.013 s.
+Hypoxia-amyloid synthetic tests passed.
+Output folders:
+  Oxygen sinks: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/RecordingSmoke/OxygenSinks_Output
+  Manual curation: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/RecordingSmoke/ManualCurOxySinksData
+  Oxygen surges: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/RecordingSmoke/OxygenSurges_Output
+  Processed images: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/RecordingSmoke/Images_Processed
+Saving manipulated data matrices
+Output folders:
+  Oxygen sinks: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SaveHelperOxygen/OxygenSinks_Output
+  Manual curation: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SaveHelperOxygen/ManualCurOxySinksData
+  Oxygen surges: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SaveHelperOxygen/OxygenSurges_Output
+  Processed images: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SaveHelperOxygen/Images_Processed
+The file was saved successfully. Elapsed time : 0.003 s.
+The file was saved successfully. Elapsed time : 0.004 s.
+The file was saved successfully. Elapsed time : 0.002 s.
+The file was saved successfully. Elapsed time : 0.002 s.
+Saving manipulated data matrices
+Output folders:
+  Oxygen sinks: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SaveHelperIOS/OxygenSinks_Output
+  Manual curation: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SaveHelperIOS/ManualCurOxySinksData
+  Oxygen surges: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SaveHelperIOS/OxygenSurges_Output
+  Processed images: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SaveHelperIOS/Images_Processed
+The file was saved successfully. Elapsed time : 0.007 s.
+The file was saved successfully. Elapsed time : 0.006 s.
+The file was saved successfully. Elapsed time : 0.010 s.
+The file was saved successfully. Elapsed time : 0.004 s.
+Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SummaryFigureSmoke/AnalysisManifest.md
+Summary figures saved to:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/SummaryFigureSmoke/Summary_Figures
+
+Pipeline verification summary
+Recordings: 1
+Ready: 1
+Partial: 0
+Blocked: 0
+Require behaviour: false
+Require vascular annotations: false
+
+Pipeline verification report saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/VerificationSmokeReports/PipelineVerification_20260907T133913.mat
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/VerificationSmokeReports/PipelineVerification_20260907T133913.xlsx
+
+Pipeline verification summary
+Recordings: 1
+Ready: 0
+Partial: 1
+Blocked: 0
+Require behaviour: true
+Require vascular annotations: true
+
+Pipeline verification report saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/VerificationStrictReports/PipelineVerification_20260907T133914.mat
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/VerificationStrictReports/PipelineVerification_20260907T133914.xlsx
+
+Pipeline verification summary
+Recordings: 1
+Ready: 0
+Partial: 0
+Blocked: 1
+Require behaviour: false
+Require vascular annotations: false
+
+Pipeline verification report saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/VerificationBlockedReports/PipelineVerification_20260907T133914.mat
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/MouseSmoke/VerificationBlockedReports/PipelineVerification_20260907T133914.xlsx
+Running ROI vascular analysis for /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/VascularSmoke/Recording1
+The file was saved successfully. Elapsed time : 0.012 s.
+Running event-level vascular analysis for /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/VascularSmoke/Recording1
+New file was loaded successfully. Elapsed time : 0.023 s.
+[Stats 13:39:17] Saving DataOutput.mat...
+[Stats 13:39:17] Saving core stats MAT tables...
+[Stats 13:39:17] Writing acceptance and run summary sheets...
+[Stats 13:39:17] Writing event and hypoxic burden sheets...
+[Stats 13:39:17] Writing grouped metric sheets...
+[Stats 13:39:18] Exporting event-specific hypoxic metrics...
+[Stats 13:39:18] Writing trace/event-snippet workbook sheets...
+[Stats 13:39:18] Finished workbook export: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/StatsExportSmoke/FilteredData_smoke_metadata.xlsx
+Analysis manifest written:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/StatsExportSmoke/AnalysisManifest.md
+The dataset contains 2 recording sessions... 
+From 2 mice... 
+231
+M2
+The between subjects grouping variable DrugID has 1 levels... 
+D1
+The within subjects grouping variable Condition has 2 levels... 
+C1
+C2
+The within subjects grouping variable Stimulation has 2 levels... 
+Without stimulation 
+With stimulation 
+The file was saved successfully. Elapsed time : 0.011 s.
+New file was loaded successfully. Elapsed time : 0.024 s.
+New file was loaded successfully. Elapsed time : 0.005 s.
+New file was loaded successfully. Elapsed time : 0.008 s.
+
+SmokeWrapper configuration
+Input CSV: smoke_metadata.csv
+Analysis mode: All analysis
+Reanalyse existing outputs: true
+Overwrite previous analysis: false
+Email alerts enabled: false
+
+Raw/denoised QC summary saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/Smoke_QC_Output/RawDenoisedQC_20260907T133923.mat
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/Smoke_QC_Output/RawDenoisedQC_20260907T133923.xlsx
+
+Stats acceptance review
+Stats output: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Stats_Output_00000000T000000
+DataOutput.mat: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Stats_Output_00000000T000000/DataOutput.mat
+Overall status: PASS
+Message: 6 QC checks passed or were informational.
+Review rows: 0
+
+                     Item                      Status                                   Message                                                         WhereToLook                       
+    _______________________________________    ______    _____________________________________________________________________    ________________________________________________________
+
+    "Overall stats acceptance"                 "PASS"    "6 QC checks passed or were informational."                              "FilteredData_<inputcsv>.xlsx: StatsAcceptance"         
+    "QC: Hypoxic burden area basis"            "PASS"    "2 of 2 events use event-specific area."                                 "FilteredData_<inputcsv>.xlsx: HypoxicBurden_EventBased"
+    "QC: Hypoxic burden contribution"          "PASS"    "All event burden contributions are finite."                             "FilteredData_<inputcsv>.xlsx: HypoxicBurden_EventBased"
+    "QC: Hypoxic burden time series"           "PASS"    "4 frame rows from 1 recordings have finite burden-over-time values."    "FilteredData_<inputcsv>.xlsx: HypoxicBurden_TimeSeries"
+    "QC: Hypoxic burden time-series signal"    "PASS"    "At least one burden-over-time frame is nonzero."                        "FilteredData_<inputcsv>.xlsx: HypoxicBurden_TimeSeries"
+    "QC: Hypoxic burden time axis"             "INFO"    "No SampleFs column found; frame alignment is still available."          "FilteredData_<inputcsv>.xlsx: HypoxicBurden_TimeSeries"
+    "QC: Area normalization"                   "PASS"    "1 recording normalization rows are finite."                             "FilteredData_<inputcsv>.xlsx: SinkCountNormFactors"    
+
+Regression baseline saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Baseline.mat
+Regression baseline workbook saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Baseline.xlsx
+Source stats output:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Stats_Output_00000000T000000/DataOutput.mat
+Regression baseline saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Baseline.mat
+Regression baseline workbook saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Baseline.xlsx
+Previous regression baseline files archived in:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Archive/20260907T133926
+Source stats output:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Stats_Output_00000000T000000/DataOutput.mat
+Regression baseline saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Baseline.mat
+Regression baseline workbook saved:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Baseline.xlsx
+Previous regression baseline files archived in:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Archive/20260907T133927
+Source stats output:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Stats_Output_00000000T000000/DataOutput.mat
+Accepted stats baseline refreshed from:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Stats_Output_00000000T000000/DataOutput.mat
+Regression baseline restored from archive:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Archive/20260907T133927/Baseline.mat
+Current regression baseline:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Baseline.mat
+Oxygen regression test passed.
+              Item                                                                                                                   Value                                                                                                      
+    ________________________    ________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+    "MasterFolder"              "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479"                                                                                                            
+    "StatsOutputFolder"         "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Stats_Output_00000000T000000"                                                               
+    "BaselinePath"              "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Baseline.mat"                                                                               
+    "BaselineWorkbook"          "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Baseline.xlsx"                                                                              
+    "BaselineExists"            "true"                                                                                                                                                                                                          
+    "BaselineWorkbookExists"    "true"                                                                                                                                                                                                          
+    "LatestRegressionReport"    "/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Stats_Output_00000000T000000/Regression_Reports/OxygenRegressionReport_20260907T133929.xlsx"
+    "HasRegressionReport"       "true"                                                                                                                                                                                                          
+    "ArchivedBaselineCount"     "3"                                                                                                                                                                                                             
+    "ReadyToRun"                "true"                                                                                                                                                                                                          
+
+Oxygen regression test passed.
+
+Oxygen pipeline health check
+Code root: /Users/zcm361/Documents/Github/OxygenDynamicsV2/event-first
+Search root: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479
+Latest stats output: /private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479/RegressionSmoke/Stats_Output_00000000T000000
+Failures: 0
+Review items: 0
+
+                          Component                          Status                         Message                                                 RecommendedAction                         
+    _____________________________________________________    ______    _________________________________________________    __________________________________________________________________
+
+    "Required file: Start_OxygenPipeline.m"                  "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: OxygenDynamics_GUI.m"                    "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: OxygenDynamics_Wrapper.m"                "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: runOxygenDynamicsStats.m"                "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: OxygenDynamics_Config.m"                 "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: setupOxygenDynamicsPath.m"               "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: getOxygenPipelineVersion.m"              "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: runOxygenPipelineSmokeTest.m"            "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: helpers/runOxygenDynamicsMaster.m"       "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: helpers/runOxygenDynamicsTiffout.m"      "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: helpers/runOxygenDynamicsBehaviour.m"    "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: helpers/runiOSDynamicsMaster.m"          "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: helpers/runiOSTiffout.m"                 "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: external/loadtiff.m"                     "PASS"    "Found."                                             "No action needed."                                               
+    "Required file: external/saveastiff.m"                   "PASS"    "Found."                                             "No action needed."                                               
+    "Pipeline version"                                       "INFO"    "v1.01, build 2026-06-15 15:00:55 +02:00"            "No action needed."                                               
+    "Latest stats acceptance"                                "PASS"    "PASS: 6 QC checks passed or were informational."    "Inspect StatsAcceptance before refreshing a regression baseline."
+    "Regression readiness"                                   "INFO"    "No regression baseline found yet."                  "Create a baseline after accepting a known-good stats run."       
+
+Oxygen regression test failed: 2 numeric, 0 text, and 2 guardrail checks failed.
+                    Metric                     Expected    Actual    AbsDiff    AllowedTolerance
+    _______________________________________    ________    ______    _______    ________________
+
+    "HypoxicBurden_EventAreaFallback_Count"       0          1          1              1e-09    
+    "HypoxicBurden_EventAreaMatched_Count"        2          1          1          2.001e-06    
+
+                   Metric                    ActualValue                ExpectedRule                 Passed                                    Notes                                 
+    _____________________________________    ___________    _____________________________________    ______    ______________________________________________________________________
+
+    "HypoxicBurden_EventAreaFallbackRows"         1         "equals 0"                               false     "No event should use ROI-level area as a fallback for hypoxic burden."
+    "HypoxicBurden_EventAreaMatchedRows"          1         "equals HypoxicBurden_EventRow_Count"    false     "All hypoxic burden rows should have event-specific area matches."    
+
+Regression summary:
+          CheckType                 Category                              Metric                       Status                                                                              Message                                                                          
+    _____________________    _______________________    ___________________________________________    ______    ___________________________________________________________________________________________________________________________________________________________
+
+    "Overall"                "Overall"                  "Regression"                                   "FAIL"    "2 numeric, 0 text, and 2 scientific guardrail checks failed."                                                                                             
+    "Numeric"                "ScientificGuardrail"      "HypoxicBurden_EventAreaMatched_Count"         "FAIL"    "HypoxicBurden_EventAreaMatched_Count expected 2, actual 1, delta -1 (-50%)."                                                                              
+    "Numeric"                "ScientificGuardrail"      "HypoxicBurden_EventAreaFallback_Count"        "FAIL"    "HypoxicBurden_EventAreaFallback_Count expected 0, actual 1, delta 1 (NaN%)."                                                                              
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_RecordingArea_Mean"             "PASS"    "HypoxicBurden_RecordingArea_Mean expected NaN, actual NaN, delta NaN (NaN%)."                                                                             
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_RecordingDuration_Mean"         "PASS"    "HypoxicBurden_RecordingDuration_Mean expected NaN, actual NaN, delta NaN (NaN%)."                                                                         
+    "Numeric"                "NumericMetricDrift"       "Burden_AmplitudeComposite_Sum"                "PASS"    "Burden_AmplitudeComposite_Sum expected 0, actual 0, delta 0 (NaN%)."                                                                                      
+    "Numeric"                "NumericMetricDrift"       "Burden_Occupancy_Sum"                         "PASS"    "Burden_Occupancy_Sum expected 0, actual 0, delta 0 (NaN%)."                                                                                               
+    "Numeric"                "NumericMetricDrift"       "Burden_RankAmplitude_Sum"                     "PASS"    "Burden_RankAmplitude_Sum expected 0, actual 0, delta 0 (NaN%)."                                                                                           
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_ByRecordingPerMin_Sum"          "PASS"    "HypoxicBurden_ByRecordingPerMin_Sum expected 0, actual 0, delta 0 (NaN%)."                                                                                
+    "Numeric"                "AreaNormalization"        "HypoxicBurden_ByRecordingPerMm2PerMin_Sum"    "PASS"    "HypoxicBurden_ByRecordingPerMm2PerMin_Sum expected 0, actual 0, delta 0 (NaN%)."                                                                          
+    "Numeric"                "AreaNormalization"        "HypoxicBurden_ByRecordingPerMm2PerSec_Sum"    "PASS"    "HypoxicBurden_ByRecordingPerMm2PerSec_Sum expected 0, actual 0, delta 0 (NaN%)."                                                                          
+    "Numeric"                "AreaNormalization"        "HypoxicBurden_ByRecordingPerMm2_Sum"          "PASS"    "HypoxicBurden_ByRecordingPerMm2_Sum expected 0, actual 0, delta 0 (NaN%)."                                                                                
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_ByRecordingPerSec_Sum"          "PASS"    "HypoxicBurden_ByRecordingPerSec_Sum expected 0, actual 0, delta 0 (NaN%)."                                                                                
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_ByRecording_Sum"                "PASS"    "HypoxicBurden_ByRecording_Sum expected 1800, actual 1800, delta 0 (0%)."                                                                                  
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_EventAmplitude_Mean"            "PASS"    "HypoxicBurden_EventAmplitude_Mean expected 15, actual 15, delta 0 (0%)."                                                                                  
+    "Numeric"                "ScientificGuardrail"      "HypoxicBurden_EventArea_Mean"                 "PASS"    "HypoxicBurden_EventArea_Mean expected 150, actual 150, delta 0 (0%)."                                                                                     
+    "Numeric"                "AreaNormalization"        "HypoxicBurden_EventContributionPerMm2_Sum"    "PASS"    "HypoxicBurden_EventContributionPerMm2_Sum expected 0, actual 0, delta 0 (NaN%)."                                                                          
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_EventContribution_Sum"          "PASS"    "HypoxicBurden_EventContribution_Sum expected 1800, actual 1800, delta 0 (0%)."                                                                            
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_EventDuration_Mean"             "PASS"    "HypoxicBurden_EventDuration_Mean expected 1.5, actual 1.5, delta 0 (0%)."                                                                                 
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_EventRow_Count"                 "PASS"    "HypoxicBurden_EventRow_Count expected 2, actual 2, delta 0 (0%)."                                                                                         
+    "Numeric"                "NumericMetricDrift"       "HypoxicBurden_RecordingRow_Count"             "PASS"    "HypoxicBurden_RecordingRow_Count expected 1, actual 1, delta 0 (0%)."                                                                                     
+    "ScientificGuardrail"    "ScientificGuardrail"      "HypoxicBurden_EventAreaFallbackRows"          "FAIL"    "HypoxicBurden_EventAreaFallbackRows failed: expected equals 0. No event should use ROI-level area as a fallback for hypoxic burden."                      
+    "ScientificGuardrail"    "ScientificGuardrail"      "HypoxicBurden_EventAreaMatchedRows"           "FAIL"    "HypoxicBurden_EventAreaMatchedRows failed: expected equals HypoxicBurden_EventRow_Count. All hypoxic burden rows should have event-specific area matches."
+    "FileManifest"           "InputOutputFileChange"    "ChangedFiles"                                 "INFO"    "1 input/output files changed since the baseline."                                                                                                         
+
+Oxygen pipeline smoke test passed in temporary folder:
+/private/var/folders/2f/mmmkyx112dl5dlknxz3djz700000gn/T/OxygenPipelineSmokeTest_20260907133813479
+The file was saved successfully. Elapsed time : 0.061 s.
+New file was loaded successfully. Elapsed time : 0.040 s.
+Loading data... 
+New file was loaded successfully. Elapsed time : 0.016 s.
+Loaded original/raw TIFF: synthetic_raw.tif
+No denoised TIFF found. Detection will use the original/raw TIFF.
+Detrending... This might take some time! 
+Cannot find denoised data... Analysis will continue with motion-corrected-only data! 
+Elapsed time is 6.570174 seconds.
+Z-scoring data... 
+Elapsed time is 0.034103 seconds.
+Convolving data... 
+Elapsed time is 0.023034 seconds.
+Smoothing data...
+Detecting putative oxygen sinks in every frame... 
+Elapsed time is 0.268021 seconds.
+Tracking putative oxygen sinks across imaging session... 
+Elapsed time is 0.002262 seconds.
+Refining putative oxygen sinks based on event duration thresholds... 
+Elapsed time is 0.006487 seconds.
+Extracting mean traces from Oxygen Sinks... 
+Refining putative oxygen sinks based on the correlation of traces with other sinks... 
+Elapsed time is 0.003391 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a second time... 
+Elapsed time is 0.000732 seconds.
+Refining putative oxygen sinks based on the correlation of traces with other sinks for a third time... 
+0 putative hypoxic pockets identified! 
+Elapsed time is 0.001816 seconds.
+Collating properties of oxygen sinks and events... 
+Elapsed time is 0.011501 seconds.
+Identifying oxygen surges now... 
+Elapsed time is 0.140975 seconds.
+Tracking putative oxygen surges across the imaging session... 
+Elapsed time is 0.041905 seconds.
+Refining putative oxygen surges based on event duration threshold... 
+1 putative oxygen surge loci identified! 
+Elapsed time is 0.007408 seconds.
+Extracting mean traces from Oxygen Surges... 
+Saving manipulated data matrices
+Output folders:
+  Oxygen sinks: /Users/zcm361/Documents/Github/OxygenDynamicsV2/event-first/examples/eventFirst/comparison-results/OxygenSinks_Output
+  Manual curation: /Users/zcm361/Documents/Github/OxygenDynamicsV2/event-first/examples/eventFirst/comparison-results/ManualCurOxySinksData
+  Oxygen surges: /Users/zcm361/Documents/Github/OxygenDynamicsV2/event-first/examples/eventFirst/comparison-results/OxygenSurges_Output
+  Processed images: /Users/zcm361/Documents/Github/OxygenDynamicsV2/event-first/examples/eventFirst/comparison-results/Images_Processed
+The file was saved successfully. Elapsed time : 0.016 s.
+The file was saved successfully. Elapsed time : 0.014 s.
+The file was saved successfully. Elapsed time : 0.013 s.
+The file was saved successfully. Elapsed time : 0.013 s.
+COMPARISON 0.38 sec
+            Matches: [0×8 table]
+      TruePositives: 0
+     FalsePositives: 186
+     FalseNegatives: 1
+    SplitCandidates: 0
+    MergeCandidates: 0
+             MinIoU: 0.1000
+       MatchingRule: "descending 3D voxel IoU greedy; signs match; deterministic row-order tie break"
+          Precision: 0
+             Recall: 0
+        RecordingID: "/Users/zcm361/Documents/Github/OxygenDynamicsV2/event-first/examples/eventFirst/comparison-results"
+       LeftDetector: "legacy"
+      RightDetector: "eventFirst"
+     Interpretation: "correspondence only; neither detector is annotation ground truth"
+
+New file was loaded successfully. Elapsed time : 0.017 s.

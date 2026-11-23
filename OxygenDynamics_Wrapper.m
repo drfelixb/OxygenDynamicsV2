@@ -45,6 +45,9 @@ setupOxygenDynamicsPath();
 %% Run configuration
 % Set interactive=false for reproducible batch runs without dialog prompts.
 RunConfig = struct();
+RunConfig.DetectorMode = 'legacy';
+RunConfig.EventFirstConfig = oxygenEventFirstConfig();
+RunConfig.EventFirstMetadata = struct();
 RunConfig.inputCsv = 'GFAP_GeNL_Ctrl.csv';
 RunConfig.interactive = false;
 RunConfig.reanalyseExisting = true;
@@ -133,6 +136,11 @@ for datai=1:length(Paths)
     Puff = Puffs{datai};
     AmyloidFile = AmyloidFiles{datai};
     RecordingContext = createLegacyRecordingContext(SFs,Mous,Cond,PiSz,Gen,Promo,Drug,Posture,Pupil,Puff,strOW);
+    RecordingContext.DetectorMode = RunConfig.DetectorMode;
+    RecordingContext.EventFirstConfig = RunConfig.EventFirstConfig;
+    RecordingContext.EventFirstMetadata = RunConfig.EventFirstMetadata;
+    DetectionOutputName='OxygenSinks_Output';
+    if ~strcmp(RunConfig.DetectorMode,'legacy'), DetectionOutputName='OxygenDetectors_Output'; end
     Metadata = createRecordingMetadata(Mous,Cond,Drug,Gen,Promo);
     OverwriteOutputs = strcmpi(strOW,'Y');
     Validation = validateOxygenRecording(RecordingFolder,SFs,PiSz,OverwriteOutputs,Metadata);
@@ -164,7 +172,7 @@ for datai=1:length(Paths)
                 OxyDynamicsfailures = appendFailure(OxyDynamicsfailures,Paths{datai}, ...
                     strjoin(Validation.Errors,newline),'Preflight validation failed before runOxygenDynamicsTiffout.m.');
                 WrapperRunInfo.Recordings(datai).ImagingStatus = 'Skipped: preflight validation failed';
-            elseif shouldRunOutputStep(fullfile(RecordingFolder,'OxygenSinks_Output'),strAgain,strOW)
+            elseif shouldRunOutputStep(fullfile(RecordingFolder,DetectionOutputName),strAgain,strOW)
             
                 try
 
@@ -191,7 +199,7 @@ for datai=1:length(Paths)
             WrapperRunInfo.Recordings(datai).BehaviourStatus = ...
                 'Skipped: hypoxia-amyloid only mode';
 
-            if ~RunConfig.runHypoxiaAmyloidAnalysis
+            if strcmp(RunConfig.DetectorMode,'eventFirst') || ~RunConfig.runHypoxiaAmyloidAnalysis
                 WrapperRunInfo.Recordings(datai).AmyloidStatus = ...
                     'Skipped: disabled in configuration';
             elseif ~isOptionalMetadataValueConfigured(AmyloidFile)
@@ -226,7 +234,7 @@ for datai=1:length(Paths)
                 OxyDynamicsfailures = appendFailure(OxyDynamicsfailures,Paths{datai}, ...
                     strjoin(Validation.Errors,newline),'Preflight validation failed before runOxygenDynamicsMaster.m.');
                 WrapperRunInfo.Recordings(datai).ImagingStatus = 'Skipped: preflight validation failed';
-            elseif shouldRunOutputStep(fullfile(RecordingFolder,'OxygenSinks_Output'),strAgain,strOW)
+            elseif shouldRunOutputStep(fullfile(RecordingFolder,DetectionOutputName),strAgain,strOW)
             
                 try
             
@@ -247,7 +255,7 @@ for datai=1:length(Paths)
   
             end
 
-            if ~RunConfig.runHypoxiaAmyloidAnalysis
+            if strcmp(RunConfig.DetectorMode,'eventFirst') || ~RunConfig.runHypoxiaAmyloidAnalysis
                 WrapperRunInfo.Recordings(datai).AmyloidStatus = 'Skipped: disabled in configuration';
             elseif ~isOptionalMetadataValueConfigured(AmyloidFile)
                 WrapperRunInfo.Recordings(datai).AmyloidStatus = 'Skipped: no AmyloidFile configured';
@@ -275,7 +283,7 @@ for datai=1:length(Paths)
             end
 
     
-            if shouldRunOutputStep(fullfile(RecordingFolder,'Behaviour_Output'),strAgain,false)
+            if ~strcmp(RunConfig.DetectorMode,'eventFirst') && shouldRunOutputStep(fullfile(RecordingFolder,'Behaviour_Output'),strAgain,false)
        
                 try
                    

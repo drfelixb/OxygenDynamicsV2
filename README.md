@@ -1,5 +1,7 @@
 # OxygenDynamicsV2
 
+An opt-in [event-first BLI prototype](docs/EVENT_FIRST.md) is available for independent detection, native event masks, preserved-intensity measurements, and benchmarking. Legacy remains the default; biological superiority is unvalidated.
+
 [![MATLAB CI](https://github.com/drfelixb/OxygenDynamicsV2/actions/workflows/matlab-ci.yml/badge.svg)](https://github.com/drfelixb/OxygenDynamicsV2/actions/workflows/matlab-ci.yml)
 
 OxygenDynamicsV2 is a MATLAB pipeline for detecting, curating, quantifying, and

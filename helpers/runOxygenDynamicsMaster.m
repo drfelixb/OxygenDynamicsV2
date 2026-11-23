@@ -13,6 +13,31 @@ if nargin < 2 || isempty(Context)
     Context = struct();
 end
 
-MasterOutput = runLegacyAnalysisScript(recordingFolder,'OxygenDynamics_Master.m',Context);
+mode="legacy";
+if isfield(Context,'DetectorMode'), mode=string(Context.DetectorMode); end
+assert(ismember(mode,["legacy","eventFirst","compare"]),'eventFirst:Mode','Unknown DetectorMode.');
+if mode=="legacy"
+    MasterOutput = runLegacyAnalysisScript(recordingFolder,'OxygenDynamics_Master.m',Context);
+    return
+end
+C=struct(); if isfield(Context,'EventFirstConfig'), C=Context.EventFirstConfig; end
+R=loadOxygenEventFirstRecording(recordingFolder,Context);
+NewResult=runOxygenEventFirst(R,C);
+folder=saveOxygenEventFirst(NewResult,fullfile(recordingFolder,'OxygenDetectors_Output'));
+MasterOutput=struct('EventFirstOutputFolder',folder,'EventFirstResult',NewResult);
+if mode=="compare"
+    % Legacy retains its established output namespace and calculations.
+    Context.CaptureNativeComparison=true;
+    LegacyOutput=runLegacyAnalysisScript(recordingFolder,'OxygenDynamics_Master.m',Context);
+    L=createLegacyOxygenComparisonEnvelope(R,LegacyOutput);
+    Comparison=compareOxygenDetectors(R,L,NewResult,struct('MinIoU',0.1));
+    save(fullfile(folder,'DetectorComparison.mat'),'Comparison','L','-v7.3');
+    writetable(Comparison.Matches,fullfile(folder,'DetectorCorrespondences.csv'));
+    MasterOutput=mergeStructs(LegacyOutput,MasterOutput);
+    MasterOutput.Comparison=Comparison;
+    LegacyManifest=struct('Detector',"legacy",'PinnedReference',"8cf3f036b41e16b2c472bcee7e5cfaeab41433eb", ...
+        'Context',Context,'Output',LegacyOutput,'Comparability',"Independent legacy support and units; no matched biological accuracy claim");
+    save(fullfile(folder,'LegacyComparisonManifest.mat'),'LegacyManifest','-v7.3');
+end
 
 end

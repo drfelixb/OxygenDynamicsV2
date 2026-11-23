@@ -1,0 +1,18 @@
+PUBLIC loading verified prefix
+WARNING: package sun.awt.X11 not in java.desktop
+WARNING: package sun.awt.X11 not in java.desktop
+PUBLIC import complete
+eventFirst: validated 512 x 512 x 120; scoring
+eventFirst: spatial scale 0 um
+eventFirst: spatial scale 5 um
+eventFirst: scores ready at 3.88 s; components
+eventFirst: 22407 components at 21.16 s; quantifying
+eventFirst: quantified at 23.65 s; sites
+eventFirst: sites ready at 26.65 s; windows
+PUBLIC detection 28.62 sec, 22407 events
+     name      size       bytes         class       global    sparse    complex     nesting      persistent
+    ______    ______    __________    __________    ______    ______    _______    __________    __________
+
+    {'P' }    1    1    6.3191e+07    {'struct'}    false     false      false     1×1 struct      false   
+    {'PX'}    1    1     1.635e+08    {'struct'}    false     false      false     1×1 struct      false   
+

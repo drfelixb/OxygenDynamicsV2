@@ -46,6 +46,11 @@ end
 function ScriptOutput = collectScriptOutput()
 
 OutputFields = {'Tifffiles','RecDur','OutputFolders','AnalysisInfo','DatafileID'};
+% Opt-in comparison capture only; default legacy return and scientific code are unchanged.
+if evalin('caller',"exist('CaptureNativeComparison','var') && CaptureNativeComparison")
+    OutputFields=[OutputFields, {'Overall_OxygenSinks_Pxllist','Overall_OxygenSurges_Pxllist', ...
+        'Table_OxygenSinkEvents_Out','Table_OxygenSurgeEvents_Out','Pixel_frame'}];
+end
 ScriptOutput = struct();
 
 for fieldi = 1:numel(OutputFields)

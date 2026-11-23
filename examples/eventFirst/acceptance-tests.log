@@ -1,0 +1,42 @@
+WARNING: package sun.awt.X11 not in java.desktop
+WARNING: package sun.awt.X11 not in java.desktop
+zeroCases: 1
+inputValidation: 1
+signedNoisyEvents: 1
+exactQuantification: 1
+laterEventInvariant: 1
+topologyAndRecovery: 1
+boundaryAndMissing: 1
+windowConservation: 1
+physicalSampling: 1
+globalStep: 1
+denoisedQuantitativeSource: 1
+roundTrip: 1
+siteChaining: 1
+matchingAndLeakage: 1
+batchFailures: 1
+nwbAxes: 1
+singlePixelAndSingleton: 1
+defaultLegacy: 1
+                Test                Passed
+    ____________________________    ______
+
+    "zeroCases"                     true  
+    "inputValidation"               true  
+    "signedNoisyEvents"             true  
+    "exactQuantification"           true  
+    "laterEventInvariant"           true  
+    "topologyAndRecovery"           true  
+    "boundaryAndMissing"            true  
+    "windowConservation"            true  
+    "physicalSampling"              true  
+    "globalStep"                    true  
+    "denoisedQuantitativeSource"    true  
+    "roundTrip"                     true  
+    "siteChaining"                  true  
+    "matchingAndLeakage"            true  
+    "batchFailures"                 true  
+    "nwbAxes"                       true  
+    "singlePixelAndSingleton"       true  
+    "defaultLegacy"                 true  
+
