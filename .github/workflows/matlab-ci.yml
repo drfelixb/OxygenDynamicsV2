@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-      - development
-      - development-existing-analysis-v3
-      - "migration/**"
   pull_request:
   workflow_dispatch:
 

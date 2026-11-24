@@ -1,6 +1,0 @@
-{
-  "SameInputCases": 13,
-  "SinkNativeMasksUnchanged": true,
-  "SinkTimingAndIdentitiesUnchanged": true,
-  "SinkAmplitudeMayChangeThroughCrossSignBaselineExclusion": true
-}

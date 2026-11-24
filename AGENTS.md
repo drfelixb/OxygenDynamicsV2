@@ -103,7 +103,7 @@ Development starts from a fresh clone of `main`. Each work item is delivered as
 a pull request against `main` that passes the automated checks; work that exists
 only in a local checkout is not delivered.
 Use detailed evidence only when it supports a specific acceptance check.
-MATLAB recipes archived under `docs/reference-results/` must use `.m.txt` so
-documentation does not change the recursive scientific-code inventory.
+The researcher approved the development-record cleanup on 24 November 2026.
+Earlier development records are preserved in the `pre-cleanup-20261124` tag.
 
 End user-facing replies with a separate `What’s next: …` line.
