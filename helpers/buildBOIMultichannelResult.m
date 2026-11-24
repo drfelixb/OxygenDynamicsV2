@@ -2,7 +2,7 @@ function P = buildBOIMultichannelResult(O,D,files)
 % Compare independently saved RC1 events on a confirmed common grid and clock.
 oxygen = find(~cellfun(@isempty,D));
 n = O.NFrames; fs = O.SampleHz; pixelArea = O.PixelSizeUm^2;
-P = struct('Schema','boi-multichannel-1','Options',O,'TimeSec',(0:n-1)/fs);
+P = struct('Schema','boi-multichannel-2','Options',O,'TimeSec',(0:n-1)/fs);
 modality = ["BLI";"BLI"];
 if O.Mode=="bli-fluorescence", modality(2)="Fluorescence"; end
 P.Channels = table(repmat(O.RecordingID,2,1),(1:2)',modality,O.Sensors(:),O.Promoters(:), ...
@@ -16,13 +16,24 @@ for c = oxygen
     e = table(repmat(O.RecordingID,count,1),repmat(c,count,1),repmat(O.Sensors(c),count,1), ...
         repmat(O.Promoters(c),count,1),string(a.EventType),a.SiteID,a.EventID,a.StartFrame,a.EndFrame, ...
         a.DetectedStartFrame,a.DetectedEndFrame,(a.EndFrame-a.StartFrame+1)/fs,data.MeanArea, ...
-        100*a.StoredAmplitude,string(a.StoredStatus),a.FootprintPixels, ...
+        nan(count,1),strings(count,1),a.FootprintPixels, ...
         'VariableNames',{'RecordingID','Channel','Sensor','Promoter','Sign','SiteID','EventID','StartFrame','EndFrame', ...
         'NativeStartFrame','NativeEndFrame','DurationSec','MeanNativeAreaUm2','OpticalDepthOrRisePct', ...
         'RC1ReferenceStatus','FootprintPixels'});
     e.SharedTissuePixels = nan(count,1); e.ExtremeFrame = nan(count,1); e.TiedExtreme = false(count,1);
     e.ReferenceMeanA = nan(count,1); e.ReferenceMeanB = nan(count,1);
-    e.ReferenceSamples = zeros(count,1);
+    sink = e.Sign=="sink"; surge = e.Sign=="surge";
+    e.OpticalDepthOrRisePct(sink)=data.Sinks.Depth;
+    e.RC1ReferenceStatus(sink)=data.Sinks.EventReferenceStatus;
+    e.OpticalDepthOrRisePct(surge)=100*a.StoredAmplitude(surge);
+    e.RC1ReferenceStatus(surge)=a.StoredStatus(surge);
+    e.ReferenceKind=repmat("strict_clean_pre_event",count,1);
+    e.ReferenceKind(sink)=data.Sinks.EventReferenceKind;
+    e.SinkReferenceNeedsReview=false(count,1); e.SinkReferenceNeedsReview(sink)=data.Sinks.EventReferenceNeedsReview;
+    e.NegativeSinkDepth=false(count,1); e.NegativeSinkDepth(sink)=data.Sinks.EventAmplitudeNegative;
+    e.ReferenceStartFrame=nan(count,1); e.ReferenceStartFrame(sink)=data.Sinks.EventReferenceStartFrame;
+    e.ReferenceEndFrame=nan(count,1); e.ReferenceEndFrame(sink)=data.Sinks.EventReferenceEndFrame;
+    e.ReferenceSamples=zeros(count,1); e.ReferenceSamples(sink)=data.Sinks.EventReferenceFiniteSamples;
     e.MeanChangePctA=nan(count,1); e.MeanChangePctB=nan(count,1);
     e.ChangeAtAnchorExtremePctA=nan(count,1); e.ChangeAtAnchorExtremePctB=nan(count,1);
     footprints = cellfun(@(t)t.Footprint(:),data.Traces,'UniformOutput',false);
@@ -36,11 +47,24 @@ for c = oxygen
             if e.Sign(j)=="sink", v=min(values); else, v=max(values); end
             positions = find(values==v); e.ExtremeFrame(j)=frames(positions(1)); e.TiedExtreme(j)=numel(positions)>1;
         end
-        ref = data.Traces{j}.CleanBaselineFrames(:)';
+        if sink(j)
+            ref = [];
+            if isfinite(e.ReferenceStartFrame(j)) && isfinite(e.ReferenceEndFrame(j))
+                ref = e.ReferenceStartFrame(j):e.ReferenceEndFrame(j);
+            end
+            available = isfinite(e.OpticalDepthOrRisePct(j));
+        else
+            ref = data.Traces{j}.CleanBaselineFrames(:)';
+            e.ReferenceSamples(j)=numel(ref);
+            if ~isempty(ref)
+                e.ReferenceStartFrame(j)=ref(1); e.ReferenceEndFrame(j)=ref(end);
+            end
+            available = numel(ref)==a.BaselineWindowFrames(j);
+        end
         P.ReferenceFrames{end+1,1} = ref;
-        e.ReferenceSamples(j)=numel(ref);
-        if numel(ref)==a.BaselineWindowFrames(j)
-            e.ReferenceMeanA(j)=positiveMean(raw{1}(j,ref)); e.ReferenceMeanB(j)=positiveMean(raw{2}(j,ref));
+        if available
+            e.ReferenceMeanA(j)=positiveMean(raw{1}(j,ref),sink(j));
+            e.ReferenceMeanB(j)=positiveMean(raw{2}(j,ref),sink(j));
             e.MeanChangePctA(j)=100*(mean(raw{1}(j,frames))/e.ReferenceMeanA(j)-1);
             e.MeanChangePctB(j)=100*(mean(raw{2}(j,frames))/e.ReferenceMeanB(j)-1);
             extreme=e.ExtremeFrame(j);
@@ -70,11 +94,12 @@ for c = oxygen
         summaries{end+1,1}=table(O.RecordingID,c,O.Sensors(c),O.Promoters(c),sign,num,n/fs,area,rate, ...
             jointArea,inside,edge,fullRate,intersectRate,median(e.DurationSec(selected),'omitnan'), ...
             median(e.MeanNativeAreaUm2(selected),'omitnan'),median(e.OpticalDepthOrRisePct(selected),'omitnan'), ...
-            nnz(isfinite(e.OpticalDepthOrRisePct(selected))), ...
+            nnz(isfinite(e.OpticalDepthOrRisePct(selected))),nnz(e.SinkReferenceNeedsReview(selected)), ...
+            nnz(e.NegativeSinkDepth(selected)), ...
             'VariableNames',{'RecordingID','Channel','Sensor','Promoter','Sign','IndependentCount','RecordingSeconds', ...
             'RC1TissueAreaUm2','IndependentRatePerMm2Min','CommonTissueAreaUm2','FullyInsideCount','CrossesBoundaryCount', ...
             'FullyInsideRatePerMm2Min','AnyIntersectionRatePerMm2Min','MedianDurationSec','MedianAreaUm2', ...
-            'MedianDepthOrRisePct','AvailableDepthCount'}); %#ok<AGROW>
+            'MedianDepthOrRisePct','AvailableDepthCount','FlaggedSinkReferenceCount','NegativeSinkDepthCount'}); %#ok<AGROW>
     end
     eventTables{c}=e;
     P.Footprints=[P.Footprints;footprints]; native=[native;data.Native(:)]; %#ok<AGROW>
@@ -93,7 +118,8 @@ end
 P.Comparisons=compareChannels(P.Summary,O);
 end
 
-function v=positiveMean(x)
+function v=positiveMean(x,finiteReference)
+if finiteReference, x=x(isfinite(x)); end
 v=mean(x); if ~isfinite(v) || v<=0, v=NaN; end
 end
 
@@ -144,8 +170,8 @@ end
 
 function T=compareChannels(s,O)
 names={'Comparison','RecordingID','Sign','FirstSensor','SecondSensor','FirstPromoter','SecondPromoter', ...
-    'DeltaFullyInsideRatePerMm2Min','DeltaAnyIntersectionRatePerMm2Min','DeltaMedianDurationSec','DeltaMedianAreaUm2','DeltaMedianDepthOrRisePct'};
-T=table('Size',[0 numel(names)],'VariableTypes',[repmat({'string'},1,7) repmat({'double'},1,5)],'VariableNames',names);
+    'DeltaFullyInsideRatePerMm2Min','DeltaAnyIntersectionRatePerMm2Min','DeltaMedianDurationSec','DeltaMedianAreaUm2','DeltaMedianDepthOrRisePct','DeltaMeanDepthOrRisePct'};
+T=table('Size',[0 numel(names)],'VariableTypes',[repmat({'string'},1,7) repmat({'double'},1,6)],'VariableNames',names);
 if O.Mode~="dual-bli", return; end
 order=[1 2];
 if any(ismember(lower(O.Promoters),["unknown","unspecified"]))
@@ -157,7 +183,7 @@ else
     label="2. Promoters across channels";
     if strcmpi(O.Promoters(2),'hSyn'), order=[2 1]; end
 end
-metrics={'FullyInsideRatePerMm2Min','AnyIntersectionRatePerMm2Min','MedianDurationSec','MedianAreaUm2','MedianDepthOrRisePct'};
+metrics={'FullyInsideRatePerMm2Min','AnyIntersectionRatePerMm2Min','MedianDurationSec','MedianAreaUm2','MedianDepthOrRisePct','MeanDepthOrRisePct'};
 for sign=["sink","surge"]
     x=s(s.Sign==sign & s.Channel==order(1),:); y=s(s.Sign==sign & s.Channel==order(2),:);
     delta=num2cell(y{1,metrics}-x{1,metrics});

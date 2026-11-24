@@ -6,6 +6,7 @@ reconstructed into releases.
 
 ## Unreleased
 
+- Paired sink depths now match single-channel automatic amplitudes, including flagged references and negative values. Both channel traces use the anchor sink’s saved reference frames. Paired summaries report the flagged and negative counts. Rerun earlier pairs to view or combine them.
 - Fix the compact workbook export on MATLAB installations that run Java 8: workbook formatting no longer needs Java 9 stream methods. Workbook values and calculations are unchanged.
 - Run 24 existing test files that the automated check set previously skipped. No analysis code changes.
 

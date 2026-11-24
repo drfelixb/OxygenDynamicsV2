@@ -34,6 +34,11 @@ n=numel(start); sign=repmat("sink",n,1); id=(1:n)'; baseline=repmat(2,n,1);
 d.Audit=table(sign,id,ones(n,1),start,last,start,last,amplitude,repmat("valid",n,1),cellfun(@numel,px),baseline, ...
     'VariableNames',{'EventType','SiteID','EventID','StartFrame','EndFrame','DetectedStartFrame', ...
     'DetectedEndFrame','StoredAmplitude','StoredStatus','FootprintPixels','BaselineWindowFrames'});
+d.Sinks=table(repmat("immediate_pre_event",n,1),repmat("available",n,1),false(n,1), ...
+    start-2,start-1,baseline,amplitude<0,100*amplitude,'VariableNames', ...
+    {'EventReferenceKind','EventReferenceStatus','EventReferenceNeedsReview','EventReferenceStartFrame', ...
+    'EventReferenceEndFrame','EventReferenceFiniteSamples','EventAmplitudeNegative','Depth'});
+d.Audit.StoredAmplitude(:)=NaN; % The strict sink amplitude is never the paired source.
 flat=reshape(double(movie),[],size(movie,3)); d.Traces=cell(n,1); d.Native=cell(n,1);
 for j=1:n
     d.Traces{j}=struct('Footprint',px{j},'Raw',mean(flat(px{j},:),1),'CleanBaselineFrames',start(j)-2:start(j)-1);
@@ -54,19 +59,25 @@ verifyEqual(t,p.Links.FootprintJaccard,[1;0.5]); verifyEqual(t,p.Events.Duration
 verifyEqual(t,p.Events.MeanNativeAreaUm2(1),8); verifyEqual(t,p.Events.OpticalDepthOrRisePct(1),40);
 verifyEqual(t,p.Summary.FullyInsideRatePerMm2Min(1),2*60e6/(64*12));
 verifyEqual(t,p.RawB(2,8),195); verifyFalse(t,any(p.Links.EventRowA==2));
+verifyEqual(t,p.Events.ChangeAtAnchorExtremePctB(3:4),-p.Events.OpticalDepthOrRisePct(3:4),'AbsTol',1e-12);
+verifyEqual(t,p.Comparisons.DeltaMeanDepthOrRisePct(1),-2.5,'AbsTol',1e-12);
 verifyEqual(t,p.RawA(3,5),60); verifyEqual(t,p.RawB(3,5),180);
 end
 
 function testFluorescenceOnOxygenFootprintAndMissingReference(t)
 [o,d,f,r]=fixture(); clean=onCleanup(@()rmdir(r,'s'));
 o.Mode="bli-fluorescence"; o.Sensors(2)="Calcium"; d{2}=[];
-d{1}.Traces{2}.CleanBaselineFrames=[];
+d{1}.Sinks.Depth(2)=NaN;
+d{1}.Sinks.EventReferenceNeedsReview(2)=true;
+d{1}.Sinks.EventReferenceStatus(2)="missing_required_event_signal";
 p=buildBOIMultichannelResult(o,d,f);
 verifyEmpty(t,p.Links); verifyEmpty(t,p.Comparisons); verifyTrue(t,all(p.Events.Channel==1));
 verifyEqual(t,p.Events.ReferenceMeanB(1),200);
 verifyEqual(t,p.Events.ChangeAtAnchorExtremePctB(1),-10,'AbsTol',1e-10);
 verifyEqual(t,p.Events.MeanChangePctB(1),-100/6,'AbsTol',1e-10);
 verifyEqual(t,100*(p.RawB(1,6)/p.Events.ReferenceMeanB(1)-1),-40,'AbsTol',1e-10);
+changes={'MeanChangePctA','MeanChangePctB','ChangeAtAnchorExtremePctA','ChangeAtAnchorExtremePctB'};
+verifyTrue(t,all(isnan(p.Events{2,changes}))); verifyEqual(t,p.Summary.FlaggedSinkReferenceCount(1),1);
 verifyTrue(t,isnan(p.Events.ReferenceMeanB(2))); verifyEqual(t,p.RawB(2,8),195);
 end
 
@@ -82,7 +93,7 @@ end
 function testNoDetections(t)
 [o,d,f,r]=fixture(); clean=onCleanup(@()rmdir(r,'s'));
 for c=1:2
-    d{c}.Audit=d{c}.Audit([],:); d{c}.Traces=cell(0,1); d{c}.Native=cell(0,1); d{c}.MeanArea=zeros(0,1);
+    d{c}.Sinks=d{c}.Sinks([],:); d{c}.Audit=d{c}.Audit([],:); d{c}.Traces=cell(0,1); d{c}.Native=cell(0,1); d{c}.MeanArea=zeros(0,1);
 end
 p=buildBOIMultichannelResult(o,d,f);
 verifyEmpty(t,p.Events); verifyEmpty(t,p.Links);
@@ -202,7 +213,7 @@ end
 
 function testSummaryMeansAndMissingness(t)
 [o,d,f,r]=fixture(); clean=onCleanup(@()rmdir(r,'s'));
-d{1}.Audit.StoredAmplitude(1)=NaN;
+d{1}.Sinks.Depth(1)=NaN;
 p=buildBOIMultichannelResult(o,d,f); s=p.Summary(1,:);
 verifyEqual(t,[s.MeanDurationSec s.MeanAreaUm2 s.MeanDepthOrRisePct],[2 6 35]);
 verifyEqual(t,s.AvailableDepthCount,1); verifyTrue(t,isnan(p.Summary.MeanAreaUm2(2)));
@@ -256,4 +267,115 @@ check.ButtonPushedFcn([],[]); verifyEqual(t,[sheet.Data.RawA sheet.Data.RawB],["
         d=sheet.Data; col=find(strcmp(key,d.Properties.VariableNames)); d.(key)(1)=v; sheet.Data=d;
         sheet.CellEditCallback(sheet,struct('Indices',[1 col],'Error',''));
     end
+end
+
+function testSurgeKeepsStrictReference(t)
+[o,d,f,r]=fixture(); clean=onCleanup(@()rmdir(r,'s'));
+d{1}.Audit.EventType(:)="surge"; d{1}.Sinks=d{1}.Sinks([],:);
+d{1}.Audit.StoredAmplitude=[-0.3;NaN]; d{1}.Audit.StoredStatus(2)="insufficient_clean_prebaseline";
+d{1}.Traces{2}.CleanBaselineFrames=7;
+p=buildBOIMultichannelResult(o,d,f); g=p.Events(1:2,:);
+verifyEqual(t,g.OpticalDepthOrRisePct,[-30;NaN]);
+verifyEqual(t,g.RC1ReferenceStatus,d{1}.Audit.StoredStatus);
+verifyEqual(t,g.ChangeAtAnchorExtremePctA,[-30;NaN],'AbsTol',1e-12);
+verifyEqual(t,p.ReferenceFrames(1:2),{2:3;7});
+end
+
+function testEarlierPairRequiresRerun(t)
+root=tempname; mkdir(root); clean=onCleanup(@()rmdir(root,'s'));
+Pair=struct('Schema','boi-multichannel-1'); file=fullfile(root,'Multichannel.mat'); save(file,'Pair');
+writeBOIRunJSON(fullfile(root,'PairStatus.json'),struct('Status','complete','ResultSHA256',oxygenFileSHA256(file)));
+try
+    loadBOIMultichannel(file);
+    verifyFail(t,'Earlier paired schema was accepted.');
+catch err
+    verifyEqual(t,err.identifier,'BOIPair:Schema'); verifySubstring(t,err.message,'Rerun the pair');
+end
+end
+
+function testSingleAndPairedSinkDepth(t)
+root=tempname; mkdir(root); clean=onCleanup(@()rmdir(root,'s'));
+[raw,detection,peer]=pairDepthMovies(root);
+single=struct('RecordingFolder',fileparts(raw),'OutputFolder',fullfile(root,'alone'), ...
+    'SampleHz',1,'PixelSizeUm',2,'SupportProfile','whole-image','Mouse','fixture','Promoter','hSyn');
+run=runBOIRecordingWorkflow(prepareBOIRecordingRequest(single));
+master=load(run.Paths.SinkMaster,'Table_OxygenSinkEvents_Out');
+saved=sortrows(master.Table_OxygenSinkEvents_Out,{'SinkID','EventID'});
+[~,compact]=prepareBOICompactWorkbook(run.Paths.DataOutput,{},fullfile(root,'compact.xlsx'));
+automatic=compact.Data.Events(compact.Data.Events.EventType=="sink",:);
+automatic.SiteID=str2double(automatic.SiteID); automatic.EventIndex=str2double(automatic.EventIndex);
+automatic=sortrows(automatic,{'SiteID','EventIndex'});
+record=compact.Data.Recordings(compact.Data.Recordings.EventType=="sink",:);
+stats=load(run.Paths.DataOutput,'HypoxicBurden');
+
+pairFolder=fullfile(root,'pair');
+o=struct('RecordingID',"fixture",'Mode',"bli-fluorescence",'Sensors',["GeNL","Calcium"], ...
+    'Promoters',["hSyn","hSyn"],'RawFiles',string({raw,peer}),'DenoisedFiles',[string(detection),""], ...
+    'SampleHz',1,'PixelSizeUm',2,'AlignedAndSynchronized',true,'OutputFolder',pairFolder);
+runBOIMultichannel(o); p=loadBOIMultichannel(pairFolder);
+verifyEqual(t,p.Schema,'boi-multichannel-2');
+e=sortrows(p.Events(p.Events.Sign=="sink" & p.Events.Channel==1,:),{'SiteID','EventID'});
+assertEqual(t,[e.SiteID e.EventID],[saved.SinkID saved.EventID]);
+assertEqual(t,[e.SiteID e.EventID],[automatic.SiteID automatic.EventIndex]);
+verifyEqual(t,[e.StartFrame e.EndFrame e.DurationSec e.MeanNativeAreaUm2 e.OpticalDepthOrRisePct], ...
+    [automatic.AutomaticStartFrame automatic.AutomaticEndFrame automatic.AutomaticDuration_sec ...
+    automatic.AutomaticMeanArea_um2 automatic.AutomaticAmplitudePercent]);
+verifyEqual(t,e.ReferenceKind,saved.EventReferenceKind);
+verifyEqual(t,e.RC1ReferenceStatus,saved.EventReferenceStatus);
+verifyEqual(t,e.SinkReferenceNeedsReview,saved.EventReferenceNeedsReview);
+verifyEqual(t,e.ReferenceStartFrame,saved.EventReferenceStartFrame);
+verifyEqual(t,e.ReferenceEndFrame,saved.EventReferenceEndFrame);
+verifyEqual(t,e.ReferenceSamples,saved.EventReferenceFiniteSamples);
+verifyEqual(t,e.NegativeSinkDepth,saved.EventAmplitudeNegative);
+verifyTrue(t,any(saved.EventReferenceStatus=="available" & ~saved.EventAmplitudeNegative));
+verifyTrue(t,any(saved.EventReferenceOverlapping & saved.EventAmplitudeAvailable));
+verifyTrue(t,any(saved.NativeStartFrame==1 & saved.EventReferencePostEvent & saved.EventAmplitudeAvailable));
+verifyTrue(t,any(saved.EventAmplitudeNegative));
+for k=1:height(e)
+    ref=saved.EventReferenceStartFrame(k):saved.EventReferenceEndFrame(k);
+    verifyEqual(t,p.ReferenceFrames{e.EventRow(k)},ref);
+    % The peer movie is spatially uniform with a known intensity at every frame.
+    reference=mean(800+ref);
+    verifyEqual(t,e.ReferenceMeanB(k),reference);
+    verifyEqual(t,e.MeanChangePctB(k),100*(mean(800+(e.StartFrame(k):e.EndFrame(k)))/reference-1),'AbsTol',1e-12);
+    verifyEqual(t,e.ChangeAtAnchorExtremePctB(k),100*((800+e.ExtremeFrame(k))/reference-1),'AbsTol',1e-12);
+end
+verifyEqual(t,e.ChangeAtAnchorExtremePctA,-e.OpticalDepthOrRisePct,'AbsTol',1e-12);
+s=p.Summary(p.Summary.Sign=="sink",:);
+verifyEqual(t,s.IndependentRatePerMm2Min,record.AutomaticEventRate_per_mm2_per_min,'RelTol',1e-12);
+verifyEqual(t,s.MeanDepthOrRisePct,stats.HypoxicBurden.RecordingTable.MeanBurdenAmplitudePercent,'AbsTol',1e-12);
+verifyEqual(t,s.MedianDepthOrRisePct,median(automatic.AutomaticAmplitudePercent,'omitnan'),'AbsTol',1e-12);
+verifyEqual(t,[s.AvailableDepthCount s.FlaggedSinkReferenceCount s.NegativeSinkDepthCount], ...
+    [nnz(saved.EventAmplitudeAvailable) nnz(saved.EventReferenceNeedsReview) nnz(saved.EventAmplitudeNegative)]);
+
+combined=fullfile(root,'combined.xlsx');
+exportBOIMultichannelComparison(pairFolder,combined);
+for book=[string(fullfile(pairFolder,'Multichannel.xlsx')),string(combined)]
+    sheet=sortrows(readtable(book,'Sheet','Sinks','TextType','string'),{'SiteID','EventID'});
+    verifyEqual(t,sheet.OpticalDepthOrRisePct,e.OpticalDepthOrRisePct,'AbsTol',1e-12);
+    verifyEqual(t,sheet.ReferenceKind,e.ReferenceKind);
+    verifyEqual(t,logical(sheet.SinkReferenceNeedsReview),e.SinkReferenceNeedsReview);
+    verifyEqual(t,logical(sheet.NegativeSinkDepth),e.NegativeSinkDepth);
+end
+end
+
+function [raw,detection,peer]=pairDepthMovies(root)
+source=fullfile(root,'oxygen'); mkdir(source);
+raw=fullfile(source,'preserved.tif'); detection=fullfile(source,'denoised.tif');
+peerFolder=fullfile(root,'fluorescence'); mkdir(peerFolder);
+peer=fullfile(peerFolder,'peer.tif');
+[x,y]=meshgrid(1:160);
+spot=(x-80).^2+(y-80).^2<=14^2;
+noise=RandStream('mt19937ar','Seed',16);
+for frame=1:112
+    active=frame<=9 || (frame>=39 && frame<=47) || (frame>=57 && frame<=66) || (frame>=93 && frame<=101);
+    detectFrame=uint16(2000+randi(noise,41,160,160)-21-800*spot*active);
+    % A rising raw background makes the last detection a negative signed depth.
+    rawFrame=uint16(2000+2*frame-400*spot*(active && frame<90));
+    peerFrame=repmat(uint16(800+frame),160,160);
+    mode='append'; if frame==1, mode='overwrite'; end
+    imwrite(rawFrame,raw,'WriteMode',mode);
+    imwrite(detectFrame,detection,'WriteMode',mode);
+    imwrite(peerFrame,peer,'WriteMode',mode);
+end
 end

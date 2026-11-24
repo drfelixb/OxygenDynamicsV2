@@ -8,8 +8,6 @@ status=jsondecode(fileread(statusFile));
 assert(strcmp(status.Status,'complete') && isfield(status,'ResultSHA256'),'BOIPair:Incomplete','Paired output is incomplete.');
 assert(strcmp(oxygenFileSHA256(file),status.ResultSHA256),'BOIPair:Changed','Paired result differs from its completion record.');
 s=load(file,'Pair'); P=s.Pair;
-assert(strcmp(P.Schema,'boi-multichannel-1'),'BOIPair:Schema','Unsupported paired result.');
-if ~ismember('MeanDurationSec',P.Summary.Properties.VariableNames)
-    P.Summary=boiPairSummaryMeans(P.Summary,P.Events);
-end
+assert(isfield(P,'Schema') && strcmp(P.Schema,'boi-multichannel-2'),'BOIPair:Schema', ...
+    'This paired result uses an unsupported schema. Rerun the pair to save the current sink depths and references.');
 end

@@ -109,7 +109,14 @@ for kind = ["Sink","Surge"]
     siteName = "Table_Oxygen"+kind+"s_Out"; eventName = "Table_Oxygen"+kind+"Events_Out";
     master = load(run.Paths.(kind+"Master"),siteName,eventName);
     sites = master.(siteName); events = master.(eventName);
-    for e = find(D.Audit.EventType==lower(kind))'
+    indices = find(D.Audit.EventType==lower(kind));
+    if kind=="Sink"
+        saved = events(D.Audit.EventRow(indices),:);
+        D.Sinks = saved(:,{'EventReferenceKind','EventReferenceStatus','EventReferenceNeedsReview', ...
+            'EventReferenceStartFrame','EventReferenceEndFrame','EventReferenceFiniteSamples','EventAmplitudeNegative'});
+        D.Sinks.Depth = getBOISinkBurdenAmplitude(saved,D.AnalysisInfo.BurdenSelectionPolicy);
+    end
+    for e = indices'
         a = D.Audit(e,:); row = a.EventRow;
         assert(events.(kind+"ID")(row)==a.SiteID && events.EventID(row)==a.EventID ...
             && string(events.RecordingID(row))==a.RecordingID,'BOIPair:Identity','Event provenance mismatch.');
