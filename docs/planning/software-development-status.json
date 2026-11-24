@@ -12,7 +12,18 @@
   },
   "open_decisions": [
     "Cutoff for linking candidate pockets between channels",
-    "Next version number"
+    "Next version number",
+    "Define the hypoxia-amyloid analysis as a separate task.",
+    "Decide whether to design a new vascular analysis feature.",
+    "Decide whether flagged sink references belong in between-channel comparisons."
   ],
-  "archive_tag": "pre-cleanup-20261124"
+  "archive_tag": "pre-cleanup-20261124",
+  "pathway_cleanup": {
+    "id": "CLEANUP-02",
+    "owner": "root",
+    "approved": "2026-11-24",
+    "scope": "Retire the original launcher, wrapper, curation app, iOS, vascular and legacy checking pathways so users start in the BOI Batch Editor.",
+    "acceptance": "Portable and desktop checks, repository inspection, release source validation and startup of both batch editors.",
+    "stop": "Pull request for researcher review."
+  }
 }

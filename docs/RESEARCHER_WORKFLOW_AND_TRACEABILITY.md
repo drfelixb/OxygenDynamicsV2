@@ -11,9 +11,9 @@ which data, how, and why?** The normal workflow must support those answers
 without requiring the user to read MATLAB source code. Source code and detailed
 technical evidence remain available for deeper inspection.
 
-The product runs in MATLAB. The current `OxygenDynamics_GUI.m` already provides
-a stepwise launcher, input selection, verification, results preview, and links
-to run outputs. Extend that workflow and reuse its analysis functions. A
+The product runs in MATLAB. Run `openBOIBatchEditor` to select and check
+recording inputs, run a queue, review results and open saved outputs. Extend
+that workflow and reuse its analysis functions. A
 standalone application or a MATLAB-free deployment is not promised by this plan.
 
 ## Normal workflow

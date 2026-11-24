@@ -1,5 +1,5 @@
 function Summary = runRepositoryChecks()
-%RUNREPOSITORYCHECKS Perform portable checks used locally and by GitHub Actions.
+%RUNREPOSITORYCHECKS Inspect the MATLAB source tree and run the hypoxia-amyloid check.
 
 RepositoryRoot = fileparts(mfilename('fullpath'));
 OriginalFolder = pwd;
@@ -8,10 +8,16 @@ cd(RepositoryRoot);
 setupOxygenDynamicsPath();
 
 RequiredFiles = {
-    'Start_OxygenPipeline.m'
-    'OxygenDynamics_Wrapper.m'
+    'openBOIBatchEditor.m'
+    'openBOIMultichannelBatch.m'
+    'runBOIRecordingWorkflow.m'
+    'runBOIMultichannel.m'
+    'OxygenDynamics_Config.m'
     'OxygenDynamics_Master.m'
     'runOxygenDynamicsStats.m'
+    'runOxygenSummaryFigures.m'
+    'runBOISoftwareChecks.m'
+    'testHypoxiaAmyloidAnalysis.m'
     fullfile('external','loadtiff.m')
     fullfile('external','saveastiff.m')
     };
@@ -35,21 +41,16 @@ for FileIdx = 1:numel(SourceFiles)
     end
 end
 
-FocusedTestsRun = false;
-if isfile('testHypoxiaAmyloidAnalysis.m')
-    TestResult = testHypoxiaAmyloidAnalysis();
-    assert(isstruct(TestResult) && isfield(TestResult,'Passed') && ...
-        TestResult.Passed, ...
-        'OxygenDynamics:RepositoryCheck:FocusedTestFailed', ...
-        'The hypoxia-amyloid focused test did not report success.');
-    FocusedTestsRun = true;
-end
+TestResult = testHypoxiaAmyloidAnalysis();
+assert(isstruct(TestResult) && isfield(TestResult,'Passed') && TestResult.Passed, ...
+    'OxygenDynamics:RepositoryCheck:FocusedTestFailed', ...
+    'The hypoxia-amyloid focused test did not report success.');
 
 Summary = struct( ...
     'Passed',true, ...
     'SourceFilesInspected',numel(SourceFiles), ...
     'CodeAnalyzerMessages',CheckMessages, ...
-    'FocusedTestsRun',FocusedTestsRun, ...
+    'FocusedTestsRun',true, ...
     'Timestamp',char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')));
 
 fprintf(['Repository checks passed: %d MATLAB files inspected, ', ...

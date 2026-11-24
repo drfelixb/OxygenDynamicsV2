@@ -27,7 +27,7 @@ body:
     id: entrypoint
     attributes:
       label: Entry point or command used
-      placeholder: "Start_OxygenPipeline or runOxygenDynamicsStats"
+      placeholder: "openBOIBatchEditor or openBOIMultichannelBatch"
     validations:
       required: true
   - type: dropdown
@@ -35,14 +35,15 @@ body:
     attributes:
       label: Affected workflow
       options:
-        - Setup or health check
+        - Setup or input checks
         - Verification or preflight
-        - Wrapper analysis
-        - Manual curation
+        - Batch recording analysis
+        - Event review
         - Statistics or burden analysis
-        - Regression
+        - Multichannel recordings
+        - Software checks
         - Summary figures
-        - Optional vascular, behaviour, or amyloid analysis
+        - Hypoxia-amyloid analysis
         - Other
     validations:
       required: true
@@ -71,9 +72,9 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: smoke
+    id: boi_checks
     attributes:
-      label: Synthetic smoke test
+      label: Portable BOI software checks
       options:
         - Passes
         - Fails
@@ -104,7 +105,7 @@ body:
     id: checks
     attributes:
       label: Validation results
-      description: Summarise checkOxygenPipelineHealth and runRepositoryChecks results.
+      description: Summarise runBOISoftwareChecks and runRepositoryChecks results.
   - type: checkboxes
     id: privacy
     attributes:

@@ -1,10 +1,10 @@
 # Multichannel recordings in MATLAB
 
-Open the extracted software folder in MATLAB and run `openBOIMultichannel`, or choose **Multichannel recordings** in `OxygenDynamics_GUI`. Use **Two bioluminescent channels** for independent GeNL and Antares detection. Use **Oxygen plus fluorescence** with oxygen in A and the fluorescence reporter in B.
+Open the extracted software folder in MATLAB and run `openBOIMultichannel`. Use **Two bioluminescent channels** for independent GeNL and Antares detection. Use **Oxygen plus fluorescence** with oxygen in A and the fluorescence reporter in B.
 
 ## Run a batch from CSV
 
-Open **Imaging mode → Multichannel batch from CSV…** in the RC1 Batch recordings window, or run `openBOIMultichannelBatch`. The BOI recording menu in the main launcher and the single-pair setup also open this window.
+Run `openBOIBatchEditor` and choose **Imaging mode → Multichannel batch from CSV…**, or run `openBOIMultichannelBatch` directly. The single-pair setup also opens this window.
 
 1. Choose the CSV imaging mode and **Add CSV files…**. Each recording has an **Include** checkbox. Review the two sensor labels, promoters, calibration, TIFF paths and mode before starting. Changing the mode in an existing row clears the previous channel B assignment so you can select its new sensor and movie. You can edit a path or select its cell and choose **Choose TIFF for cell…**.
 2. In **dual-bli**, A and B run independent RC1 analyses and the paired result compares sinks. In **bli-fluorescence**, A runs RC1 and B supplies preserved fluorescence intensities on the oxygen footprints. Channel B must have a preserved movie and an empty denoised field in fluorescence mode.
