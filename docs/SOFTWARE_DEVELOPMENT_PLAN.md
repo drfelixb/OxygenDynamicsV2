@@ -10,10 +10,11 @@ On `main`, the Batch Editor prepares and resumes recording queues, opens saved r
 
 The optional multichannel workflow analyzes two oxygen channels independently or measures fluorescence on an oxygen event’s footprint. Paired sink depth uses the same saved amplitude, reference frames and review flags as single-channel analysis. Surges use the strict pre-event reference. [Multichannel guide](BOI_MULTICHANNEL.md)
 
+24 November 2026 (VERSION-01). The researcher approved 4.0.0 as the next release, with a candidate first. Saved calculations and exports record the development version, source commit and checkout state.
+
 ## Open researcher decisions
 
 - Choose the cutoff for linking candidate pockets between channels.
-- Choose the next version number.
 - Define the hypoxia-amyloid analysis as a separate task.
 - Decide whether to design a new vascular analysis feature.
 - Decide whether flagged sink references belong in between-channel comparisons.

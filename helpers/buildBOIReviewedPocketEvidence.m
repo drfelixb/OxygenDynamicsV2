@@ -59,6 +59,7 @@ if isfield(Review,'HistoricalMetadata'),E.HistoricalMetadata=Review.HistoricalMe
 E.Ingredients=struct('Raw',raw,'Corrected',corrected,'CorrectionSHA256',boiPocketDigest(corrected),'FootprintSHA256',J.FixedFootprintSHA256);
 E.IngredientsSHA256=boiPocketDigest(E.Ingredients);
 % Portable reviewed evidence names the implementation that produced its values.
+E.CalculationSoftware=getOxygenPipelineVersion();
 E.Software=struct('Function',{},'SHA256',{});
 for name={'createBOIPocketJudgment','computeBOIReviewedPocketMeasures','buildBOIReviewedPocketEvidence', ...
         'getBOIReviewedPocketDefinition','validateBOIPocketEvidence','saveBOIReviewedPocketEvidence', ...

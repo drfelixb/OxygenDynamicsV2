@@ -84,6 +84,12 @@ background correction or biological interpretation. Keep ordinary implementation
 repairs inside an already approved complete workflow rather than requesting
 permission for each error.
 
+### Versioning and changelog
+
+Use three-part versions. Increment the first number when a workflow is removed or an existing output changes meaning, the second for a new feature that preserves existing outputs, and the third for fixes without output changes. Between releases, `main` carries `X.Y.Z-dev`. Prepare `X.Y.Z-rc.N` candidates and the final `X.Y.Z` on a release branch. Keep released numbers off `main`.
+
+Every pull request adds a line under Unreleased in `CHANGELOG.md` labelled **Added**, **Changed output**, **Fixed** or **Removed**. The highest-impact change determines the proposed increment. The researcher approves the number before it is set.
+
 ### Implementation records
 
 Every implementation item needs an ID, user benefit, bounded scope, owner,

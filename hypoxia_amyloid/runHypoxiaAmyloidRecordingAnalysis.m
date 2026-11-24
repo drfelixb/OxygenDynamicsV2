@@ -74,6 +74,7 @@ Result.Pair = PairResult;
 Result.Properties = PropertyAnalysis;
 Result.OutputFolder = OutputFolder;
 Result.Options = Options;
+Result.CalculationSoftware = getOxygenPipelineVersion();
 Result.RecordingSummary = createRecordingSummary(Result);
 
 writeRecordingOutputs(Result);

@@ -12,7 +12,6 @@
   },
   "open_decisions": [
     "Cutoff for linking candidate pockets between channels",
-    "Next version number",
     "Define the hypoxia-amyloid analysis as a separate task.",
     "Decide whether to design a new vascular analysis feature.",
     "Decide whether flagged sink references belong in between-channel comparisons."
@@ -32,6 +31,14 @@
     "owner": "root",
     "scope": "Keep researcher entry points at the top level and group other files by purpose.",
     "acceptance": "Fresh-session startup, portable and desktop checks, repository inspection, the same release file count and a project-wide manifest from a synthetic run.",
+    "stop": "Pull request for researcher review."
+  },
+  "version_scheme": {
+    "id": "VERSION-01",
+    "approved": "2026-11-24",
+    "owner": "root",
+    "scope": "Identify the code used for calculations and exports. The approved next release is 4.0.0, with a candidate first.",
+    "acceptance": "Portable and desktop checks, source inventory and software identity from a synthetic recording.",
     "stop": "Pull request for researcher review."
   }
 }

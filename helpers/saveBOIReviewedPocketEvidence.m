@@ -30,6 +30,7 @@ try
         if ~files(k).isdir,entries(end+1)=struct('Name',files(k).name,'SHA256',oxygenFileSHA256(fullfile(OutputFolder,files(k).name)));end %#ok<AGROW>
     end
     M=struct('Schema','boi-reviewed-pocket-artifact-1','EvidenceFile','ReviewedPocket.mat','EvidenceSHA256',boiPocketDigest(E),'Files',entries);
+    M.SoftwareProvenance=table2struct(oxygenSoftwareProvenanceTable(E));
     write(fullfile(OutputFolder,'Manifest.json'),jsonencode(M,'PrettyPrint',true));
     Store=loadBOIReviewedPocketEvidence(OutputFolder);
 catch err

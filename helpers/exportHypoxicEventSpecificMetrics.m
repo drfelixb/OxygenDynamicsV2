@@ -1,4 +1,4 @@
-function ExportInfo = exportHypoxicEventSpecificMetrics(StatsOutputFolderPath,EventSpecificMetrics)
+function ExportInfo = exportHypoxicEventSpecificMetrics(StatsOutputFolderPath,EventSpecificMetrics,StatsInfo)
 %EXPORTHYPOXICEVENTSPECIFICMETRICS Save grouped event-based sink metrics.
 
 ExportInfo = struct('OutputXlsx','','DataMat','');
@@ -12,10 +12,13 @@ FiltersOxySinksMetrics = createHypoxicEventSpecificFilters(EventSpecificMetrics)
 
 ExportInfo.DataMat = fullfile(StatsOutputFolderPath,'HypoxicEventSpecificMetrics4LME.mat');
 Eventspecificmetrics = EventSpecificMetrics;
-save(ExportInfo.DataMat,'FiltersOxySinksMetrics','Eventspecificmetrics');
+if nargin<3, StatsInfo=struct(); end
+SoftwareProvenance = oxygenSoftwareProvenanceTable(StatsInfo);
+save(ExportInfo.DataMat,'FiltersOxySinksMetrics','Eventspecificmetrics','SoftwareProvenance');
 
 ExportInfo.OutputXlsx = fullfile(StatsOutputFolderPath,'SortedSinkEventMetrics.xlsx');
 writeHypoxicEventSpecificWorkbook(ExportInfo.OutputXlsx,EventSpecificMetrics,ExportReady,SheetNames);
+writetable(SoftwareProvenance,ExportInfo.OutputXlsx,'Sheet','SoftwareProvenance');
 end
 
 function Filters = createHypoxicEventSpecificFilters(EventSpecificMetrics)

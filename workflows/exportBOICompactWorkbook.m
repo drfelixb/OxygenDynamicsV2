@@ -39,6 +39,7 @@ for i=1:numel(Plan.Sheets)
 end
 Receipt=Plan;Receipt.Status='complete';Receipt.Workbook=out;Receipt.WorkbookSHA256=oxygenFileSHA256(target);
 Receipt.CreatedUTC=char(datetime('now','TimeZone','UTC','Format',"yyyy-MM-dd'T'HH:mm:ss'Z'"));
+Receipt.SoftwareProvenance=table2struct(Prepared.Source.SoftwareProvenance);
 Receipt.ImplementationSHA256=oxygenFileSHA256(which('createBOICompactWorkbookData'));
 localReceipt=fullfile(stage,'receipt.json');writeBOIRunJSON(localReceipt,Receipt);
 publishWorkbook(target,localReceipt,Receipt);

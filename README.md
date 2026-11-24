@@ -1,6 +1,8 @@
 # OxygenDynamicsV2
 
-MATLAB software for analysing sink and surge events in cerebral bioluminescence oxygen imaging. Version **3.1.0-rc.1** focuses on the BOI recording-to-workbook workflow.
+MATLAB software for analysing sink and surge events in cerebral bioluminescence oxygen imaging.
+
+Checkout version: **4.0.0-dev**.
 
 From the project folder, run `openBOIBatchEditor`, `openBOIMultichannelBatch` or `runPocketNearbyTissue` directly. For other commands in a fresh MATLAB session, run `setupOxygenDynamicsPath` first.
 

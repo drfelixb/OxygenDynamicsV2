@@ -7,6 +7,7 @@ out = O.OutputFolder;
 assert(ok && isempty(id),'BOIPair:Destination','Cannot claim a new folder: %s',message);
 statusFile = fullfile(out,'PairStatus.json');
 status = struct('Schema','boi-pair-status-1','Status','running','Stage','staging','RecordingID',char(O.RecordingID));
+status.CalculationSoftware=getOxygenPipelineVersion();
 writeBOIRunJSON(statusFile,status);
 try
     sources = strings(1,2); rawHash = strings(1,2); denoisedHash = strings(1,2);
@@ -57,6 +58,7 @@ try
     end
     announce('paired measurements','Comparing the channels and extracting same-footprint traces');
     Pair = buildBOIMultichannelResult(O,evidence,sources);
+    Pair.CalculationSoftware=status.CalculationSoftware;
     Pair.RawSHA256 = rawHash; Pair.DenoisedSHA256 = denoisedHash; Pair.ChannelRuns = channelRuns;
     Pair.Channels.PreservedSHA256=rawHash(:); Pair.Channels.DenoisedSHA256=denoisedHash(:);
     Pair.Channels.SampleHz=repmat(O.SampleHz,2,1); Pair.Channels.PixelSizeUm=repmat(O.PixelSizeUm,2,1);
@@ -73,6 +75,7 @@ try
     writeBOIPairedSheet(Pair.Events(Pair.Events.Sign=="surge",:),workbook,'Surges');
     writeBOIPairedSheet(Pair.Links,workbook,'Candidate sink links');
     writeBOIPairedSheet(Pair.Comparisons,workbook,'Paired differences');
+    writeBOIPairedSheet(oxygenSoftwareProvenanceTable(Pair),workbook,'SoftwareProvenance');
     announce('saving result','Saving and verifying the paired MATLAB result');
     save(fullfile(out,'Multichannel.mat'),'Pair','-v7.3');
     status.ResultSHA256 = oxygenFileSHA256(fullfile(out,'Multichannel.mat'));

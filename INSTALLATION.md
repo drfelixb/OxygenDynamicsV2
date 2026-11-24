@@ -1,6 +1,6 @@
 # Install and open OxygenDynamicsV2
 
-Extract the source package to a new folder and set it as the MATLAB Current Folder. This candidate was checked in MATLAB R2025a on macOS. The imaging workflow uses Image Processing Toolbox. Some optional analyses use Statistics and Machine Learning Toolbox.
+Set the checkout folder as the MATLAB Current Folder. For a downloaded release, use its extracted folder and its own installation guide. The imaging workflow uses Image Processing Toolbox. Some optional analyses use Statistics and Machine Learning Toolbox.
 
 ```matlab
 setupOxygenDynamicsPath
@@ -8,7 +8,7 @@ getOxygenPipelineVersion
 openBOIBatchEditor
 ```
 
-The version should be `3.1.0-rc.1`. If MATLAB resolves an older installation, use `which openBOIBatchEditor -all` to find overlapping path entries. Close older BOI editor and viewer windows before switching versions.
+The version should be `4.0.0-dev`. If MATLAB resolves an older installation, use `which openBOIBatchEditor -all` to find overlapping path entries. Close older BOI editor and viewer windows before switching versions.
 
 In a new session, run one of the three entry points (`openBOIBatchEditor`, `openBOIMultichannelBatch`, `runPocketNearbyTissue`) or `setupOxygenDynamicsPath` before using commands in the code folders.
 

@@ -299,6 +299,7 @@
     "helpers/optionalWrapperInputColumn.m",
     "helpers/oxygenEventJoinKeys.m",
     "helpers/oxygenFileSHA256.m",
+    "helpers/oxygenSoftwareProvenanceTable.m",
     "helpers/oxygenPipelineContract.m",
     "helpers/parseNumericList.m",
     "helpers/peakfinder.m",

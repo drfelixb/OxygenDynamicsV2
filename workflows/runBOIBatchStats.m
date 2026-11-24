@@ -98,6 +98,7 @@ try
     Result=struct('Schema','boi-batch-stats-result-1','Status','complete','Directory',Plan.OutputFolder, ...
         'Workbook',stats.OutputXlsx,'DataOutput',stats.DataOutputMat,'AnalysisManifest',stats.AnalysisManifest, ...
         'Included',Plan.Included,'Excluded',Plan.Excluded,'StatsResult',stats,'PlanDigest',Plan.Digest);
+    Result.ExporterSoftware=getOxygenPipelineVersion();
     save(fullfile(Plan.OutputFolder,'BatchStatsResult.mat'),'Result');
     completed=status;
     completed.Status='complete';completed.Stage='complete';completed.Index=recordingCount;

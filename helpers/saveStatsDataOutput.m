@@ -11,6 +11,11 @@ BLIFields = {'Behaviour_data_combo','Behaviouraldatalogical','ROIs_Traces','Expo
     'TraceCorrs'};
 
 FieldsToSave = CommonFields;
+% Keep the small software identity accessible without loading large stats records.
+if isfield(StatsDataOutput,'StatsInfo') && isfield(StatsDataOutput.StatsInfo,'CalculationSoftware')
+    StatsDataOutput.CalculationSoftware = StatsDataOutput.StatsInfo.CalculationSoftware;
+    FieldsToSave{end+1} = 'CalculationSoftware';
+end
 if IsBLI
     FieldsToSave = [FieldsToSave,BLIFields];
 end

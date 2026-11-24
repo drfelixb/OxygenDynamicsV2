@@ -4,6 +4,7 @@ if nargin<4,Selection=[];end
 assert(~isfolder(OutputFolder)&&~isfile(OutputFolder),'OxygenDynamics:ContextOutputExists','Choose a new context folder; prior evidence is preserved.');
 P=buildBOITemporalContextPreview(Review,Index);P.DisplaySelection=Selection;
 P.CreatedUTC=char(datetime('now','TimeZone','UTC','Format','yyyy-MM-dd''T''HH:mm:ssXXX'));
+P.ExportProvenance=createOxygenExportProvenance(Review);
 P.Implementation=struct('Function',{},'SHA256',{});
 for n={'computeBOITemporalContext','buildBOITemporalContextPreview','buildBOITemporalNativeContacts','buildBOITemporalHumanContacts','createBOITemporalContextPanel','exportBOITemporalContext','loadBOITemporalReview','attachBOITemporalSources','openBOITemporalContext'}
  P.Implementation(end+1)=struct('Function',n{1},'SHA256',oxygenFileSHA256(which(n{1})));

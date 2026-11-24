@@ -86,6 +86,7 @@ Cohort.TreatmentComparisonResults = TreatmentComparisonResults;
 Cohort.FactorialInteractionResults = FactorialInteractionResults;
 Cohort.AgeComparisonResults = AgeComparisonResults;
 Cohort.Options = Options;
+Cohort.CalculationSoftware = getOxygenPipelineVersion();
 save(fullfile(OutputFolder,'HypoxiaAmyloid_Cohort.mat'),'Cohort','-v7.3');
 writeCohortFigure(Cohort);
 writeMethodsSummary(Cohort);

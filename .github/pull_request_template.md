@@ -2,6 +2,13 @@
 
 Describe the problem and the focused change.
 
+Change type (select the matching Unreleased label)
+
+- [ ] Added
+- [ ] Changed output
+- [ ] Fixed
+- [ ] Removed
+
 ## Scientific Impact
 
 - [ ] No scientific outputs or definitions change.
