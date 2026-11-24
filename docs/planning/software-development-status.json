@@ -1,4 +1,5 @@
 {
+  "paired_sink_depth_20261124": {"id": "PAIR-DEPTH-01", "owner": "root", "approved": "2026-11-24", "issue": 16, "scope": "Pair outputs use the independent channel’s saved sink depth and reference.", "acceptance": "Synthetic single-versus-paired measurements, flags, event rate and recording mean plus portable and desktop MATLAB checks.", "stop": "Pull request for researcher review."},
   "coordination_checkpoint_20261123": {"id": "COORD-20261123", "owner": "coordinator", "state": "complete", "scope": "Repository audit, CI repair, check-set extension, multichannel integration, archive of unpublished work, record tidying", "pull_requests": [11, 14, 15], "open_decisions": ["issue 16: multichannel depth reference rule", "cutoff for linking pockets between channels", "next version number"], "shelved": ["whole-event and whole-episode previews", "Python detector prototypes", "event-first detector"], "archive_branches": ["archive/dev-checkout-20261123", "archive/event-first-20261123"], "calculations_changed": false, "active_implementation_milestone": null},
   "multichannel_integration_20261123": {
     "id": "PAIR-INTEGRATION-01",
