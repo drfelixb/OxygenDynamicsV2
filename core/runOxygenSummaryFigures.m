@@ -68,6 +68,12 @@ else
     writetable(FigureManifest,SummaryXlsx,'Sheet','FigureManifest');
 end
 
+if ~isempty(MetricSummary) || ~isempty(FigureManifestRows)
+    info = struct();
+    if isfield(Data,'StatsInfo'), info = Data.StatsInfo; end
+    writetable(oxygenSoftwareProvenanceTable(info),SummaryXlsx,'Sheet','SoftwareProvenance');
+end
+
 FigureResult = struct();
 FigureResult.DataOutputMat = DataOutputMat;
 FigureResult.OutputFolder = OutputFolder;

@@ -1,6 +1,7 @@
 function writeStatsRunSummarySheets(OutputXlsx,StatsInfo)
 %WRITESTATSRUNSUMMARYSHEETS Write run-level stats summary workbook sheets.
 
+writetable(oxygenSoftwareProvenanceTable(StatsInfo),OutputXlsx,'Sheet','SoftwareProvenance');
 StatsRunSummary = statsRecordingsToTable(StatsInfo);
 if ~isempty(StatsRunSummary)
     writetable(StatsRunSummary,OutputXlsx,'Sheet','StatsRunSummary');

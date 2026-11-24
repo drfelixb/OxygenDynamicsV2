@@ -21,6 +21,8 @@ assert(created&&isempty(messageID),'OxygenDynamics:RunOutputExists', ...
 started=tic;
 Status=struct('Schema','boi-run-status-1','Status','running','Stage','staging', ...
     'StartedUTC',char(datetime('now','TimeZone','UTC','Format',"yyyy-MM-dd'T'HH:mm:ss'Z'")));
+software=getOxygenPipelineVersion();
+Status.SoftwareVersion=software.Version;Status.SourceCommit=software.SourceCommit;Status.SourceState=software.SourceState;
 statusPath=fullfile(out,'RunStatus.json');writeBOIRunJSON(statusPath,Status);reportProgress();
 try
     save(fullfile(out,'RunRequest.mat'),'Request');
@@ -68,6 +70,7 @@ try
     Run=struct('Schema','boi-recording-run-1','Status','complete','SourceSHA256',Request.InputReview.RawSHA256, ...
         'SupportProfile',o.SupportProfile,'Artifacts',artifacts,'ElapsedSeconds',toc(started), ...
         'ScientificStatus','not_established');
+    Run.SoftwareVersion=software.Version;Run.SourceCommit=software.SourceCommit;Run.SourceState=software.SourceState;
     save(fullfile(out,'BOIRun.mat'),'Run');
     Status.Status='complete';Status.Stage='complete';Status.ElapsedSeconds=toc(started);writeBOIRunJSON(statusPath,Status);
     Run=loadBOIRecordingRun(fullfile(out,'BOIRun.mat'));

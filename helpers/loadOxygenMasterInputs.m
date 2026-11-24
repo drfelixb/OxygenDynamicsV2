@@ -17,6 +17,7 @@ AnalysisInfo = struct();
 AnalysisInfo.NFrames = size(IM_Raw,3);
 AnalysisInfo.FrameSize = [size(IM_Raw,1),size(IM_Raw,2)];
 AnalysisInfo.RecordingDurationSec = RecDur;
+AnalysisInfo.CalculationSoftware = getOxygenPipelineVersion();
 AnalysisInfo.PipelineContract=oxygenPipelineContract();
 AnalysisInfo.AnalysisSchemaVersion = AnalysisInfo.PipelineContract.Schema;
 AnalysisInfo.AnalysisDate = char(datetime('now','Format','yyyy-MM-dd HH:mm:ss'));

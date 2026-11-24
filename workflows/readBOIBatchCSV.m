@@ -81,7 +81,7 @@ for row=find(copied)'
 end
 defaults={'InputStatus','Unchecked';'AnalysisStatus','Not analyzed'; ...
     'ResultCheck','Unchecked';'ReviewStatus','Not reviewed';'RunID','';'RunFolder',''; ...
-    'StartedUTC','';'CompletedUTC','';'SoftwareVersion','';'Stage','';'ElapsedSeconds','';'Message','';'AttemptHistory','[]'};
+    'StartedUTC','';'CompletedUTC','';'SoftwareVersion','';'BOIBatchSourceCommit','';'BOIBatchSourceState','';'Stage','';'ElapsedSeconds','';'Message','';'AttemptHistory','[]'};
 for k=1:size(defaults,1)
     if ismember(defaults{k,1},rows.Properties.VariableNames)
         rows.(defaults{k,1})(copied)=string(defaults{k,2});

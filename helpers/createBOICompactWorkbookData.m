@@ -310,6 +310,9 @@ for sheet=string(fieldnames(D))'
     end
 end
 X=cell2table(rows,'VariableNames',{'Sheet','Field','Meaning','Units','Normalization','ComparisonScope','Missingness','ReferenceAndRole','SourceAnalysisID','ExportVersion','SourceColumn','Counterpart'});
+for name=string(S.SoftwareProvenance.Properties.VariableNames)
+    X.(name)=repmat(S.SoftwareProvenance.(name),height(X),1);
+end
 end
 function [unit,norm,desc,compare]=meaning(f)
 f=string(f);unit="source-specific";norm="none or not assessed";desc="saved "+f;

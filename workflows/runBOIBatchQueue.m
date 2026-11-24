@@ -86,11 +86,13 @@ for k=1:numel(Plan.RunRowIDs)
         'CreatedUTC',utcNow(),'Row',Plan.BatchSnapshot.Rows(planRow,:), ...
         'ResolvedRow',Plan.ResolvedRows(planRow,:),'SettingOrigins',Plan.Origins(planRow,:), ...
         'Request',request);
+    version=getOxygenPipelineVersion();Attempt.Software=version;
     snapshotHash=boiBatchWriteSnapshot(snapshotPath,'Attempt',Attempt);
     attemptState=struct('Schema','boi-batch-attempt-state-1','BatchRowID',Attempt.BatchRowID, ...
         'AttemptID',attemptID,'QueueID',Plan.QueueID,'RunFolder',Attempt.RunFolder, ...
         'SnapshotPath',snapshotPath,'SnapshotSHA256',snapshotHash,'Status','running','Stage','queued', ...
         'StartedUTC',utcNow(),'CompletedUTC','','ElapsedSeconds','','Message','','ErrorID','');
+    attemptState.Software=version;
     queueState.Attempts(end+1)=struct('BatchRowID',Attempt.BatchRowID,'AttemptID',attemptID, ...
         'SnapshotPath',snapshotPath,'RunFolder',Attempt.RunFolder);
     paths=boiBatchHistoryPaths(Batch.Rows.AttemptHistory(row),Batch.BaseFolder);paths(end+1)=string(snapshotPath);
@@ -98,7 +100,9 @@ for k=1:numel(Plan.RunRowIDs)
     Batch.Rows.RunFolder(row)=string(Attempt.RunFolder);Batch.Rows.RunID(row)=string(attemptID);
     Batch.Rows.AnalysisStatus(row)="Running";Batch.Rows.ResultCheck(row)="Unchecked";
     Batch.Rows.StartedUTC(row)=string(attemptState.StartedUTC);Batch.Rows.CompletedUTC(row)="";
-    version=getOxygenPipelineVersion();Batch.Rows.SoftwareVersion(row)=string(version.Version);
+    Batch.Rows.SoftwareVersion(row)=string(version.Version);
+    Batch.Rows.BOIBatchSourceCommit(row)=string(version.SourceCommit);
+    Batch.Rows.BOIBatchSourceState(row)=string(version.SourceState);
     Batch.Rows.Stage(row)="queued";Batch.Rows.ElapsedSeconds(row)="";Batch.Rows.Message(row)="Queued attempt prepared; no completion claimed.";
     queueState.CurrentRowID=Attempt.BatchRowID;queueState.Stage='queued';
     active=true;persistAttemptAndCSV();notifyProgress();

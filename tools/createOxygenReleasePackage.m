@@ -81,6 +81,8 @@ Cleaner = onCleanup(@() fclose(FileId));
 fprintf(FileId,'Oxygen Dynamics Pipeline Release\n');
 fprintf(FileId,'Version: %s\n',ReleaseInfo.PipelineVersion.Version);
 fprintf(FileId,'Build: %s\n',ReleaseInfo.PipelineVersion.BuildTimestamp);
+fprintf(FileId,'Checkout source commit: %s\n',ReleaseInfo.PipelineVersion.SourceCommit);
+fprintf(FileId,'Checkout source state: %s\n',ReleaseInfo.PipelineVersion.SourceState);
 fprintf(FileId,'Created: %s\n',ReleaseInfo.Created);
 fprintf(FileId,'Base commit: %s\n',ReleaseInfo.BaseCommit);
 fprintf(FileId,'Source state: %s\n',ReleaseInfo.SourceState);

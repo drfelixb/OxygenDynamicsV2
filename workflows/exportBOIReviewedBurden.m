@@ -15,6 +15,8 @@ S=Prepared.Source;Reviews=Prepared.Reviews;Events=Prepared.Events;HypoxicBurden=
 [ok,~,id]=mkdir(OutputFolder);assert(ok&&isempty(id),'OxygenDynamics:ReviewOutputExists','New export directory could not be claimed.');
 status=struct('Status','writing','SourceStatsMAT',StatsMAT,'SourceStatsSHA256',before,'ReviewSources',sources, ...
     'AutomaticResultsChanged',false,'DetectorReruns',0,'CorrectionReruns',0,'StatisticsReruns',0);
+software=oxygenSoftwareProvenanceTable(S.StatsInfo);
+status.SoftwareProvenance=table2struct(software);
 writeBOIRunJSON(fullfile(OutputFolder,'ReviewedBurdenStatus.json'),status);
 try
     workbook=fullfile(OutputFolder,'ReviewedHypoxicBurden.xlsx');
@@ -30,6 +32,7 @@ try
     writetable(HypoxicBurden.EventTable,fullfile(OutputFolder,'HypoxicBurden_EventBased.csv'));
     writetable(HypoxicBurden.RecordingTable,fullfile(OutputFolder,'HypoxicBurden_ByRecording.csv'));
     writetable(HypoxicBurden.TimeSeriesTable,fullfile(OutputFolder,'HypoxicBurden_TimeSeries.csv'));
+    writetable(software,workbook,'Sheet','SoftwareProvenance');
     Receipt=status;Receipt.Status='complete';Receipt.Workbook=workbook;
     Receipt.Policy=HypoxicBurden.ReviewPolicy;
     Receipt.BurdenSelectionPolicy=Plan.BurdenSelectionPolicy;

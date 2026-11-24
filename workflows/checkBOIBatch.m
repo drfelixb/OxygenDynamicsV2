@@ -26,8 +26,12 @@ Report=table(Rows.BatchRowID,Rows.Paths,repmat("Unchecked",n,1), ...
 Report.AnalysisStatus(indices)="Not analyzed";
 % CSV-owned descriptive fields survive; software outcome fields are reconciled.
 auto={'InputStatus','AnalysisStatus','ResultCheck','Message','RunID','StartedUTC', ...
-    'CompletedUTC','SoftwareVersion','Stage','ElapsedSeconds'};
-for k=1:numel(auto),Batch.Rows.(auto{k})(indices)=strings(numel(indices),1);end
+    'CompletedUTC','SoftwareVersion','BOIBatchSourceCommit','BOIBatchSourceState','Stage','ElapsedSeconds'};
+for k=1:numel(auto)
+    name=auto{k};
+    if ~ismember(name,Batch.Rows.Properties.VariableNames),Batch.Rows.(name)=strings(n,1);end
+    Batch.Rows.(name)(indices)=strings(numel(indices),1);
+end
 stimulationFields=intersect({'PuffsFile','Puff_2use'},Rows.Properties.VariableNames,'stable');
 settingFields={'SampleF','Pixelsize','BOISupportProfile'};
 settingLabels=["sampling rate","pixel size","detection support"];
@@ -175,6 +179,9 @@ try
     outcome.AnalysisStatus="Complete";
     [~,runName]=fileparts(run.Directory);outcome.RunID=string(runName);
     outcome.SoftwareVersion="unknown";
+    outcome.BOIBatchSourceCommit="unknown";outcome.BOIBatchSourceState="unknown";
+    if isfield(run,'SourceCommit'),outcome.BOIBatchSourceCommit=scalarText(run.SourceCommit);end
+    if isfield(run,'SourceState'),outcome.BOIBatchSourceState=scalarText(run.SourceState);end
     if isfield(run,'SoftwareVersion'),outcome.SoftwareVersion=scalarText(run.SoftwareVersion);end
     if isempty(request)
         outcome.ResultCheck="Unchecked";
@@ -212,7 +219,7 @@ end
 function text=compareMetadata(Row,request)
 software={'Paths','SampleF','Pixelsize','BOISupportProfile','BatchRowID','InputStatus', ...
     'AnalysisStatus','ResultCheck','ReviewStatus','RunFolder','Message','RunID','StartedUTC', ...
-    'CompletedUTC','SoftwareVersion','Stage','ElapsedSeconds','AttemptHistory'};
+    'CompletedUTC','SoftwareVersion','BOIBatchSourceCommit','BOIBatchSourceState','Stage','ElapsedSeconds','AttemptHistory'};
 if isfield(request,'BatchMetadata')
     snapshot=request.BatchMetadata;
     assert(isstruct(snapshot)&&isscalar(snapshot)&&all(isfield(snapshot,{'Schema','BatchRowID','Names','Values'}))&& ...
@@ -245,7 +252,7 @@ else,text="Metadata changed since run: "+strjoin(changed,', ')+". Saved labels/e
 additional={'RecordingLabel','RecordingDate','Session','Sex','AgeDays','BrainRegion','Project','Operator','Notes'};
 core=[labels {'Paths','SampleF','Pixelsize','BOISupportProfile','BatchRowID','InputStatus', ...
     'AnalysisStatus','ResultCheck','ReviewStatus','RunFolder','Message','RunID','StartedUTC', ...
-    'CompletedUTC','SoftwareVersion','Stage','ElapsedSeconds','AttemptHistory'}];
+    'CompletedUTC','SoftwareVersion','BOIBatchSourceCommit','BOIBatchSourceState','Stage','ElapsedSeconds','AttemptHistory'}];
 extra=setdiff(Row.Properties.VariableNames,core);
 extra=union(extra,intersect(additional,Row.Properties.VariableNames));
 extra=extra(~startsWith(extra,'BOIBatch'));

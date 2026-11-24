@@ -81,7 +81,7 @@ writeStatsMetricWorkbookSheets(OutputXlsx,ExportReady);
 if isfield(CoreData,'HypoxicEventSpecificMetrics')
     fprintf('[Stats %s] Exporting event-specific hypoxic metrics...\n',char(datetime('now','Format','HH:mm:ss')));
     EventSpecificExportInfo = exportHypoxicEventSpecificMetrics( ...
-        StatsOutputFolderPath,CoreData.HypoxicEventSpecificMetrics);
+        StatsOutputFolderPath,CoreData.HypoxicEventSpecificMetrics,CoreData.StatsInfo);
 else
     EventSpecificExportInfo = struct('OutputXlsx','','DataMat','');
 end

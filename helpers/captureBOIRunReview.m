@@ -37,5 +37,6 @@ Receipt=struct('Schema','boi-created-event-audit-1','AuditSHA256',oxygenFileSHA2
     'EventCount',height(Audit),'MeasurementMismatches',sum(~Audit.MeasurementMatches), ...
     'WrongDirectionCount',sum(Audit.WrongDirection),'DetectorReruns',0,'StatisticsReruns',0, ...
     'StageOrigin','existing_in_memory_full_precision_stages','ScientificStatus','not_established');
+Receipt.ExportProvenance=createOxygenExportProvenance(struct('AnalysisInfo',I));
 writeBOIRunJSON(fullfile(out,'AuditCreationReceipt.json'),Receipt);
 end

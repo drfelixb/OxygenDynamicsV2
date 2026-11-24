@@ -40,7 +40,9 @@ S.SourceDigest=boiCompactWorkbookDigest(struct('Method','boi-compact-source-bind
 end
 function S=readAutomatic(Source)
 S=struct('Tables',struct(),'Registry',table(),'Files',struct('Path',{},'SHA256',{}),'AutomaticSHA256','');
+S.SoftwareProvenance=oxygenSoftwareProvenanceTable(struct());
 if isstruct(Source)&&isfield(Source,'Tables')
+    if isfield(Source,'StatsInfo'),S.SoftwareProvenance=oxygenSoftwareProvenanceTable(Source.StatsInfo);end
     S.Tables=Source.Tables;S.Registry=Source.Registry;
     S.AutomaticSHA256=boiCompactWorkbookDigest(struct('Tables',S.Tables,'Registry',S.Registry));
 else
@@ -71,9 +73,14 @@ else
             if all(ismember(pairs(:,2),sheets)),workbookSubstitutions={'HypoxicBurden'};end
         end
         S.Files=addFile(S.Files,mat);S.AutomaticSHA256=S.Files(end).SHA256;
-        M=smallMAT(mat,{'RecordingRegistry','HypoxicBurden','StatsInfo','RecordingWindowMetrics', ...
+        M=smallMAT(mat,{'RecordingRegistry','HypoxicBurden','CalculationSoftware','StatsInfo','RecordingWindowMetrics', ...
             'SurgeRecordingWindowMetrics','WindowFrameIngredients','SurgeWindowFrameIngredients','EventMeasurementQC','EventBaselineStatusCounts', ...
             'NumOngoingOxysinks','NumOngoingOxysinksPerMm2','NumOngoingOxysurges'},workbookSubstitutions);
+        if isfield(M,'CalculationSoftware')
+            S.SoftwareProvenance=oxygenSoftwareProvenanceTable(M);
+        elseif isfield(M,'StatsInfo')
+            S.SoftwareProvenance=oxygenSoftwareProvenanceTable(M.StatsInfo);
+        end
         if isfield(M,'RecordingRegistry'),S.Registry=M.RecordingRegistry;end
         names=fieldnames(M);for i=1:numel(names)
             if istable(M.(names{i}))||startsWith(names{i},'NumOngoing'),S.Tables.(names{i})=M.(names{i});end
@@ -82,6 +89,13 @@ else
     end
     if ~isempty(book)
         S.Files=addFile(S.Files,book);if isempty(S.AutomaticSHA256),S.AutomaticSHA256=S.Files(end).SHA256;end
+        if ismember('SoftwareProvenance',sheets) && S.SoftwareProvenance.CalculationVersion=="unknown"
+            fields={'CalculationVersion','CalculationSourceCommit','CalculationSourceState'};
+            opts=detectImportOptions(book,'Sheet','SoftwareProvenance','VariableNamingRule','preserve');
+            opts=setvartype(opts,fields,'string');
+            saved=readtable(book,opts);
+            S.SoftwareProvenance(:,fields)=saved(:,fields);
+        end
         allowed={'RecordingRegistry','OxySinkEvents','OxySurgeEvents','HypoxicBurden_EventBased','HypoxicBurden_ByRecording', ...
             'HypoxicBurden_TimeSeries','HypoxicBurden_Basis','HypoxicBurden_ReferencePolicy','Burden_PreEpisodePolicy','Burden_SelectionPolicy', ...
             'RecordingWindowMetrics','SurgeRecordingWindowMetrics','WindowFrameIngredients','SurgeWindowFrameIngredients', ...
@@ -122,6 +136,11 @@ function M=smallMAT(path,allowed,workbookSubstitutions)
 if nargin<3,workbookSubstitutions={};end
 assert(isfile(path),'OxygenDynamics:CompactSource','Missing saved MAT: %s',path);
 w=whos('-file',path);names=intersect({w.name},allowed,'stable');
+% Original exports did not require StatsInfo. Read it only as a bounded
+% fallback for older calculators that saved the version inside this struct.
+if ismember('CalculationSoftware',names) || any(strcmp({w.name},'StatsInfo') & [w.bytes]>64*1024^2)
+    names(strcmp(names,'StatsInfo'))=[];
+end
 for i=1:numel(w)
     if ~ismember(w(i).name,names)||w(i).bytes<=64*1024^2,continue;end
     assert(ismember(w(i).name,workbookSubstitutions),'OxygenDynamics:CompactSourceSize', ...
