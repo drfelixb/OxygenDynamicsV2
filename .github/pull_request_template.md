@@ -11,6 +11,8 @@ Affected metrics, files, workbook sheets, saved variables, and compatibility:
 
 ## Validation
 
+Run `setupOxygenDynamicsPath` from the project folder before the MATLAB checks.
+
 - [ ] `runRepositoryChecks`
 - [ ] `runBOISoftwareChecks('portable','results-portable')`
 - [ ] `runBOISoftwareChecks('desktop','results-desktop')`

@@ -1,23 +1,22 @@
 function Summary = runRepositoryChecks()
 %RUNREPOSITORYCHECKS Inspect the MATLAB source tree and run the hypoxia-amyloid check.
 
-RepositoryRoot = fileparts(mfilename('fullpath'));
+RepositoryRoot = setupOxygenDynamicsPath();
 OriginalFolder = pwd;
 Cleanup = onCleanup(@() cd(OriginalFolder));
 cd(RepositoryRoot);
-setupOxygenDynamicsPath();
 
 RequiredFiles = {
     'openBOIBatchEditor.m'
     'openBOIMultichannelBatch.m'
-    'runBOIRecordingWorkflow.m'
-    'runBOIMultichannel.m'
-    'OxygenDynamics_Config.m'
-    'OxygenDynamics_Master.m'
-    'runOxygenDynamicsStats.m'
-    'runOxygenSummaryFigures.m'
-    'runBOISoftwareChecks.m'
-    'testHypoxiaAmyloidAnalysis.m'
+    fullfile('workflows','runBOIRecordingWorkflow.m')
+    fullfile('workflows','runBOIMultichannel.m')
+    fullfile('core','OxygenDynamics_Config.m')
+    fullfile('core','OxygenDynamics_Master.m')
+    fullfile('core','runOxygenDynamicsStats.m')
+    fullfile('core','runOxygenSummaryFigures.m')
+    fullfile('tools','runBOISoftwareChecks.m')
+    fullfile('hypoxia_amyloid','testHypoxiaAmyloidAnalysis.m')
     fullfile('external','loadtiff.m')
     fullfile('external','saveastiff.m')
     };

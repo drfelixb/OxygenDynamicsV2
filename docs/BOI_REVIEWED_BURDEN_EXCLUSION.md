@@ -38,7 +38,9 @@ revision for FB2317 sink site 13/event 5 (audit row 89), with Felix's explicit
 revision path and history were visually verified in the MATLAB Researcher
 boundaries tab. Automatic measurements and masks remain intact.
 
-`exportBOIReviewedBurden` now accepts explicit saved review files and an
+To call the export in a fresh MATLAB session, run `setupOxygenDynamicsPath` from the project folder first.
+
+`exportBOIReviewedBurden` accepts explicit saved review files and an
 existing stats MAT bundle. Its separate reviewed calculation excludes saved
 rejections before calling the existing burden calculator. Audit checksum,
 recording/raw-source identity, event identity, saved bounds, clock and revision

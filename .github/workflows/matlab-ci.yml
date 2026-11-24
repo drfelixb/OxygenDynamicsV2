@@ -38,7 +38,7 @@ jobs:
       - name: Run portable BOI checks
         uses: matlab-actions/run-command@v3
         with:
-          command: runBOISoftwareChecks('portable','ci-results')
+          command: setupOxygenDynamicsPath; runBOISoftwareChecks('portable','ci-results')
 
       - name: Upload BOI test results
         if: always()

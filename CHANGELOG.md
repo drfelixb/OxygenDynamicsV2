@@ -6,6 +6,8 @@ reconstructed into releases.
 
 ## Unreleased
 
+- Group MATLAB workflows, analysis code, developer tools, hypoxia-amyloid analysis and runtime definitions in named folders. Start either batch editor or pocket traces directly from the project folder, or run `setupOxygenDynamicsPath` before using other commands.
+
 - **Removed** the original launcher and wrapper, manual curation app, iOS and vascular analysis pathways, smoke and health checks, regression baselines and statistics acceptance tools. These pathways and earlier development records are preserved in the [pre-cleanup-20261124 tag](https://github.com/drfelixb/OxygenDynamicsV2/tree/pre-cleanup-20261124).
 - Paired sink depths now match single-channel automatic amplitudes, including flagged references and negative values. Both channel traces use the anchor sink’s saved reference frames. Paired summaries report the flagged and negative counts. Rerun earlier pairs to view or combine them.
 - Fix the compact workbook export on MATLAB installations that run Java 8: workbook formatting no longer needs Java 9 stream methods. Workbook values and calculations are unchanged.

@@ -35,7 +35,7 @@ The repository is tested with MATLAB R2025b. Core imaging work requires Image
 Processing Toolbox; some optional analyses require Statistics and Machine
 Learning Toolbox. Earlier MATLAB releases have not been formally verified.
 
-Run these commands from the repository root:
+In a fresh MATLAB session, run these commands in order from the repository root:
 
 ```matlab
 setupOxygenDynamicsPath

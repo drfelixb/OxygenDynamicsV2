@@ -24,7 +24,7 @@ Status=struct('Schema','boi-run-status-1','Status','running','Stage','staging', 
 statusPath=fullfile(out,'RunStatus.json');writeBOIRunJSON(statusPath,Status);reportProgress();
 try
     save(fullfile(out,'RunRequest.mat'),'Request');
-    writetable(createOxygenRegressionCodeManifest(fileparts(mfilename('fullpath'))),fullfile(out,'CodeManifest.csv'));
+    writetable(createOxygenRegressionCodeManifest(),fullfile(out,'CodeManifest.csv'));
     rec=fullfile(out,'Recording');mkdir(rec);
     for k=1:numel(Request.Sources)
         src=Request.Sources(k);copyfile(fullfile(o.RecordingFolder,src.Name),fullfile(rec,src.Name));

@@ -105,7 +105,7 @@ body:
     id: checks
     attributes:
       label: Validation results
-      description: Summarise runBOISoftwareChecks and runRepositoryChecks results.
+      description: From the project folder, run setupOxygenDynamicsPath before runBOISoftwareChecks and runRepositoryChecks. Summarise the results.
   - type: checkboxes
     id: privacy
     attributes:

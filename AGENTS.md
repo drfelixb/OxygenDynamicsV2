@@ -6,7 +6,7 @@ Develop the next usable, maintainable MATLAB version of the BOI analysis
 software. The researcher's 21 September 2026 scope correction supersedes older
 documents that direct cohort reanalysis, cohort completion or experimental
 comparison planning. Read `docs/SOFTWARE_DEVELOPMENT_PLAN.md` and the current
-`docs/planning/software-development-status.json` at the start of resumed work.
+`docs/software-development-status.json` at the start of resumed work.
 The researcher workflow/traceability contract and scientific measurement
 boundaries still apply. Preserve older records; do not execute their stale
 "next steps" as current authorization.

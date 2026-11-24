@@ -18,7 +18,6 @@ contains software, not recordings/results. Keep previous installations/results.
    Current Folder (older ZIP instructions remain historical), then run:
 
    ```matlab
-   addpath(pwd,'-begin');
    setupOxygenDynamicsPath;
    getOxygenPipelineVersion
    which openBOIEventReview -all

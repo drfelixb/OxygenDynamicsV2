@@ -33,7 +33,7 @@ custom containment and worker qualification are deferred to a possible v4.
 1. Work from the reviewed commit on `main`.
    Freeze the committed file list and hashes. Update version/build metadata only
    when the approved task calls for it; package creation time is separate.
-   From that checkout, run `runBOISoftwareChecks('portable','results-portable')`
+   In a fresh MATLAB session in that checkout, run `setupOxygenDynamicsPath` before `runBOISoftwareChecks('portable','results-portable')`
    and `runBOISoftwareChecks('desktop','results-desktop')`. Validate the source
    inventory with `getOxygenReleaseSourceList(pwd,true)`.
 2. Use `createOxygenReleasePackage` with the approved output root/name, actual
