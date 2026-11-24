@@ -8,8 +8,8 @@ episode/reference frames and suitability flags; displays the corrected signed
 trough with the raw signed trough alongside; and saves, reopens and exports the
 same values and provenance. The standalone viewer and native folder controls
 were accepted for the three saved examples at 1120 × 800 and 900 × 650.
-See the [numerical/integration delivery](docs/SOFTWARE_CC_02_COMPLETION_DELIVERY.md)
-and [usability delivery](docs/SOFTWARE_CC_02_USABILITY_COMPLETION_DELIVERY.md).
+See the numerical/integration delivery
+and usability delivery.
 
 These reviewed values are exploratory optical changes, expressed as percentages
 of the positive raw reference intensity. Conditional references, unresolved
@@ -38,7 +38,7 @@ event traces** opens the primary corrected trace with score support;
 another CSV. Legacy CSV tools remain available as a separate route.
 
 Batch uses the same `prepareBOIRecordingRequest` → `runBOIRecordingWorkflow`
-services. See [the bounded G2 workflow and limitations](docs/SOFTWARE_G2_WORKFLOW.md).
+services. See the bounded G2 workflow and limitations.
 The saved review routes now include the separate, versioned CC-02 pocket
 evidence workflow. Broader workflow and release acceptance remain bounded by
 the current development plan.
@@ -57,46 +57,46 @@ goals, completion gates and approval boundaries. Cohort reanalysis, KX whisker
 and stimulation-window work are deferred. Recordings are software examples and
 regression fixtures within an approved task, not an automatic analysis campaign.
 The roadmap and G1 were approved on 23 September 2026. The
-[G1 engineering baseline](docs/SOFTWARE_G1_BASELINE.md) and
-[original backlog / G2 proposal](docs/SOFTWARE_BACKLOG.md) remain historical
+G1 engineering baseline and
+original backlog / G2 proposal remain historical
 records. Subsequent bounded G3/G4 and CC-02 acceptances, G5 limits and the
 development pause are recorded in the current plan and status.
 
-The [earlier reanalysis plan](docs/REANALYSIS_UPDATE_PLAN.md) remains historical
+The earlier reanalysis plan remains historical
 context; its cohort next steps are superseded by the software direction. Its
 applicable scientific boundaries remain in force. [Researcher usability and result traceability](docs/RESEARCHER_WORKFLOW_AND_TRACEABILITY.md)
 are release requirements, including understandable calculations and preserved
-decision history. See the [cohort issue-resolution record](docs/BOI_COHORT_RESOLUTION.md)
+decision history. See the cohort issue-resolution record
 for current metadata corrections, source evidence and remaining holds.
-The [measurement dictionary](docs/BOI_MEASUREMENT_DICTIONARY.md) and
-[representative MATLAB workflow](docs/BOI_REPRESENTATIVE_WORKFLOW.md) begin the
-R0/R5 work; [current status](docs/REANALYSIS_STATUS.md) separates completed
+The measurement dictionary and
+representative MATLAB workflow begin the
+R0/R5 work; current status separates completed
 technical evidence from open scientific and researcher-workflow gates.
-The [recording input/QC contract](docs/BOI_RECORDING_INPUT_CONTRACT.md) adds
+The recording input/QC contract adds
 MATLAB preflight review and inspectable denominator exports.
-The [MATLAB import-review workflow](docs/BOI_IMPORT_REVIEW_WORKFLOW.md) displays
+The MATLAB import-review workflow displays
 source, timing and tissue evidence before analysis and retains it in verification
 exports, with input readiness separate from scientific eligibility.
-The [saved event-review workflow](docs/BOI_EVENT_REVIEW_WORKFLOW.md) connects
+The saved event-review workflow connects
 measurement definitions, both-sign event traces and baseline/footprint evidence
 to MATLAB, with reproducible local exports and no automatic analysis rerun.
-The [recording/window evidence viewer](docs/BOI_WINDOW_REVIEW_WORKFLOW.md)
+The recording/window evidence viewer
 connects saved summary values to frame exposure, tissue-time and event ingredients.
-The [reviewed tissue-support workflow](docs/BOI_REVIEWED_TISSUE_SUPPORT.md) adds
+The reviewed tissue-support workflow adds
 source-bound static masks, preserves the automatic mask and review evidence,
 and applies support consistently in a fresh master and export.
-The [HP local input review](docs/BOI_HP_LOCAL_INPUT_REVIEW.md) records the
+The HP local input review records the
 additional compartment-labelled sources, identity conflicts and first local
 acquisition preflight; biological transfer eligibility remains unresolved.
 With researcher-confirmed exact 1 Hz external triggering, the
-[full HP development workflow](docs/reference-results/boi-hp-workflow-20260910/README.md)
+full HP development workflow
 now demonstrates both-sign analysis, source-pixel audit and reproducible exports.
 
 > **Research software notice:** This software is intended for research use. Its
 > outputs require scientific review and should not be treated as clinical or
 > diagnostic results.
 
-Known-signal stress testing is described in [the validation protocol](docs/KNOWN_SIGNAL_VALIDATION.md), with [stage tracing and full-recording comparisons](docs/reference-results/known-signal-full-20260909/README.md).
+Known-signal stress testing is described in the validation protocol, with stage tracing and full-recording comparisons.
 
 ## Development version: existing analysis V3
 
@@ -108,7 +108,7 @@ Recording analysis requires its own approved scope. The alternative detector
 is maintained separately.
 
 - Temporal standardization now divides by SD, correcting the former sqrt(SD).
-- [Close sink runs are retained and flagged](docs/SINK_RECURRENCE.md); a short
+- Close sink runs are retained and flagged; a short
   gap no longer deletes an otherwise duration-qualified BOI detection. Counts
   describe native runs, with recurrence uncertainty separate from baseline QC.
 - Individual events, recurring spatial sites, recordings and animals have
@@ -116,13 +116,13 @@ is maintained separately.
 - Amplitudes use each event's fixed footprint in the preserved input movie and
   a complete pre-event baseline excluding overlapping detected events. Missing baselines produce
   unavailable amplitudes while retaining detections.
-- [Surge tracking follows motion and groups recurring sites explicitly](docs/SURGE_TRACKING.md).
+- Surge tracking follows motion and groups recurring sites explicitly.
   The minimum surge area is in µm²; adjacent-frame matching uses fractional
   coverage with bounded isolated growth/contraction. Outputs distinguish retained
   events from rejected short candidates and flag possible short-gap continuations
   without filling gaps. Possible split/merge contacts and ambiguous site assignments
   remain visible.
-- [Surge amplitude and detection audit](docs/SURGE_ANALYSIS_AUDIT.md): remove the
+- Surge amplitude and detection audit: remove the
   obsolete normalized-trace ratio export, correct terminal-event seeding for
   both trackers, and expose surge native timing/boundary and recurrence status.
   Surge experimental-baseline and mouse-summary analysis still needs parity.
@@ -139,122 +139,122 @@ is maintained separately.
 Current development validation: **185 focused tests** pass in MATLAB R2025a.
 Smoke checks and synthetic master-to-statistics integration passed for the
 unchanged production implementation. The
-[shape-continuity validation](docs/reference-results/surge-shape-continuity-20260909/README.md)
+shape-continuity validation
 adds 117 prescribed size-change/gap scenarios and repeats twenty full-movie cases
 on four source recordings: ID400, ID401, FB2312 and the separate FB2411
 fluorescence control. Candidate ledgers are retained separately from event
 statistics. All 3,905 event baseline/amplitude records agree with independent
 recalculation; all twenty same-input comparisons preserve sink masks/timing.
 These are four source recordings, not twenty independent samples.
-The preceding [physical tracking sweep](docs/reference-results/surge-physical-adjacent-20260909/README.md)
+The preceding physical tracking sweep
 remains a historical-contract result.
 
-The [experimental raw-trace onset rule](docs/SURGE_LOCAL_ONSET.md) evaluates all
+The experimental raw-trace onset rule evaluates all
 228 frozen surge supports on constructed and paired source traces (456 fits).
 It resolves none of the five preselected imposed surges. Only eight event rows
 resolve, identically on untouched source signals. The rule remains experimental;
 production amplitudes and baselines are unchanged. See the
-[results and next step](docs/reference-results/surge-local-onset-20260909/README.md).
+results and next step.
 
-The subsequent [onset trace panel](docs/SURGE_ONSET_TRACE_PANEL.md) varies rise
+The subsequent onset trace panel varies rise
 size, duration, shape and timing on 115 fixed source supports. Limiting the fit
 to available contiguous clean context increases estimates within five seconds
 of the known start from 564 to 856 of 5,136 constructible traces. This aggregate
 includes a separate fluorescence background; it is a conditional engineering
 comparison, not biological detection accuracy. A separate noiseless calibration
 also identifies a limitation of the rising-line model. Both methods remain
-experimental; see the [full comparison](docs/reference-results/surge-onset-trace-panel-20260909/README.md).
+experimental; see the full comparison.
 
-The [pulse-shaped onset fit](docs/SURGE_PULSE_ONSET.md) now allows a rise,
+The pulse-shaped onset fit now allows a rise,
 plateau and recovery while retaining the same available clean context and raw
 amplitude rule. It recovers exact starts in all 48 noiseless calibration recipes.
 On the same recorded-background panel, estimates within five seconds increase
 from 856 to 1,056, but some slow-rise estimates are lost. It remains experimental;
-the [paired comparison](docs/reference-results/surge-pulse-onset-20260910/README.md)
+the paired comparison
 reports gains, losses, source controls and remaining baseline errors.
 
-The [experimental model selector](docs/SURGE_MODEL_SELECTION.md) now preserves
+The experimental model selector now preserves
 uncertainty when competitive onset fits disagree. A new waveform panel covers
 308 frozen supports from six recordings, including ID13 awake/mobile and FB2316
 under ketamine/xylazine. On those two additional backgrounds, estimates within
 five seconds increase from 966 with pulse to 1,004 with selection, out of 6,588
 constructible cases. Some formerly accurate estimates are lost, and source-control
 resolutions increase. Baseline contamination and negative raw amplitudes remain;
-the [full report](docs/reference-results/surge-model-selection-20260910/README.md)
+the full report
 lists 89 measurements requiring review before production integration. Historical
 supports are reused here; this is not a new current-detector validation.
 
-The subsequent [amplitude eligibility audit](docs/SURGE_AMPLITUDE_ELIGIBILITY.md)
+The subsequent amplitude eligibility audit
 explains all 89 flagged cases and verifies 11,433 measurement/control rows.
 The experimental check preserves negative raw values as direction conflicts and
 leaves their positive-surge amplitude unavailable. All 18 negative recipes peak
 before the frozen native interval; reference-half agreement also fails to flag
 the 71 cases above the one-percent contamination screen. See
-[the mechanisms and next measurement-window test](docs/reference-results/surge-amplitude-eligibility-20260910/README.md).
+the mechanisms and next measurement-window test.
 Positive eligibility remains provisional; production amplitudes are unchanged.
 
-The [expanded peak interval experiment](docs/SURGE_EXPANDED_PEAK.md) now measures
+The expanded peak interval experiment now measures
 from estimated onset through native end, retaining the same reference and rejecting
 detected overlap or missing samples in added frames. Among 2,498 available
 recorded-background cases, peaks meeting the 90% imposed-envelope screen increase
 1,520 to 2,146, with 660 gains and 34 losses. All 18 previously negative recipes
 become positive, while 71 contaminated references remain. An undetected positive
 neighbor inflates the toy challenge amplitude; the rule remains experimental.
-See [the results and proposed full-movie validation](docs/reference-results/surge-expanded-peak-20260910/README.md).
+See the results and proposed full-movie validation.
 
-The [full-movie candidate measurement test](docs/SURGE_FULL_MOVIE_MEASUREMENT.md)
+The full-movie candidate measurement test
 now runs the existing master pipeline on control/challenge pairs from M400 awake
 and FB2316 KX. Ten imposed positive components intersect retained events, eight
 receive unique assignments, and only two yield candidate measurements. Six
 assigned cases lack clean context; both positive pairs share retained events.
 New pre-onset sink exclusions appear in both recordings despite identical raw
-frames before injection. The [report](docs/reference-results/surge-full-movie-measurement-20260910/README.md)
+frames before injection. The report
 prioritizes tracing normalization, tissue eligibility and blocking masks before
 production integration. All 1,102 production amplitudes/statuses reproduce.
 
-The [expanding/contracting signal audit](docs/SURGE_SIGNAL_EVIDENCE.md) adds eight
+The expanding/contracting signal audit adds eight
 full-movie challenges on those same four sources. All 1,508 additional event
 measurements match independent arithmetic. Detailed reconstruction identifies
 candidate split/merge identity, spatial averaging and undetected rising tails
 inside nominally valid baselines as separate limitations. Production rules remain
-unchanged during this experiment; see its [results](docs/reference-results/surge-shape-evidence-20260909/README.md).
+unchanged during this experiment; see its results.
 
-The [split/merge policy comparison](docs/SURGE_BRANCH_POLICY.md) replays six
+The split/merge policy comparison replays six
 complete challenge movies from the same four sources under four linking rules.
 A majority extension recovers the selected 14-second missed pulse, but controlled
 contacts can mix signal identities under both that extension and the current
 primary rule. All candidate branches, including rejected siblings, are exported
 in the comparison evidence. Production linking remains unchanged.
 
-[Contact records](docs/SURGE_CONTACT_PROVENANCE.md) are now integrated into normal
+Contact records are now integrated into normal
 master and statistics outputs: every candidate connection, contact endpoint
 frames, native-event exposure and contacts to rejected fragments. Six cached
 case replays preserve previous masks and identities; one full ID401 challenge
 rerun preserves both-sign measurements, with 141 event records independently
-checked. See the [integration evidence](docs/reference-results/surge-contact-provenance-20260909/README.md).
+checked. See the integration evidence.
 Measurement/statistics contracts advance, so reanalysis is required before
 pooling.
 
-The [local candidate-separation experiment](docs/SURGE_CONTACT_SEPARATION.md)
+The local candidate-separation experiment
 tests persistent, spatially resolved intensity peaks inside merged surge regions.
 It preserves all admitted pixels and keeps partition exposure explicit. The
 prototype is confined to validation code; it is not enabled in normal analysis.
 Full-image challenges compare stationary, approaching and crossing pairs with a
 single expanding profile and unchanged recordings. The scores describe imposed
 optical signals, not independently labelled physiological events.
-The [completed comparison](docs/reference-results/surge-separation-20260909/README.md)
+The completed comparison
 covers twenty full movies on four sources. Stationary-pair gains in ID400/ID401
 do not generalize across the tested geometries/acquisitions. Independent Python
 checks verify 2.62 billion constructed pixels and all 112 coverage records;
 its nineteen Python checks passed. The prototype remains experimental.
 
-The [amplitude/baseline audit](docs/SURGE_AMPLITUDE_SUPPORT.md) compares each
+The amplitude/baseline audit compares each
 surge's full footprint with fixed persistent cores using paired source movies.
 It reproduces all 228 stored amplitudes/statuses from eight frozen challenges
 and independently verifies 692 support/oracle rows. Tighter cores capture more
 imposed signal but can increase rising-phase contamination of the baseline;
 the normal amplitude definition remains unchanged. Current Python checks total
-26 tests. [Results and next onset/baseline work](docs/reference-results/surge-amplitude-support-20260909/README.md)
+26 tests. Results and next onset/baseline work
 distinguish spatial capture, background contribution and baseline bias.
 
 The branch verifier also passes **10 Python regression tests**, including
@@ -268,15 +268,15 @@ candidate geometry/dropouts and the ten-second minimum as causes of missed
 smooth signals. These unlabelled reference results do not establish biological
 accuracy. Earlier reference reports retain their original contracts and are not
 current reruns or additional independent biological samples.
-See [calculation definitions](docs/EXISTING_ANALYSIS_CORRECTIONS.md),
-[validation evidence](docs/EXISTING_ANALYSIS_VALIDATION.md),
-[remaining work](docs/PUBLICATION_READINESS.md),
-[DANDI metadata audit](docs/DANDI_METADATA_RECONCILIATION.md),
-[multi-recording reference protocol](docs/REFERENCE_SET_PHASE1.md),
-[per-recording results and limitations](docs/reference-results/phase1-20260909/README.md),
-[signal-audit findings](docs/reference-results/signal-audit-20260909/README.md),
-[event-local timing rules](docs/LOCAL_SINK_TIMING.md),
-[completed timing rerun and remaining limitations](docs/reference-results/local-timing-20260909/README.md)
+See calculation definitions,
+validation evidence,
+remaining work,
+DANDI metadata audit,
+multi-recording reference protocol,
+per-recording results and limitations,
+signal-audit findings,
+event-local timing rules,
+completed timing rerun and remaining limitations
 and [changelog](CHANGELOG.md).
 
 ## Overview
@@ -920,7 +920,7 @@ For a plain-language summary of this change, see `Amplitude_Definition_Compariso
 - Use `DetectionOxySinkAmp` only when you specifically want the denoised/detection-domain amplitude.
 - After analysing a small batch with denoised detection, run `compareRawDenoisedOutputs('metadata.csv')` to verify that each recording used the expected raw and denoised files and that raw-normalized amplitude summaries are in a plausible range.
 - To independently audit both signs, run `auditOxygenEventAmplitudeSource(recordingFolder)`. It verifies the source TIFF checksum and independently reconstructs each event footprint, clean pre-event baseline, missingness status and signed amplitude. Both saved sink and surge outputs are required to check contamination.
-- For diagnostic plots and full-precision detection reconstruction, use `auditOxygenEventAmplitudeSource(recordingFolder,'reconstructDetection',true,'outputFolder','/path/to/new/audit')`. The saved processed TIFFs are display-scaled and are not numerical audit inputs. See [signal audit definitions](docs/EVENT_SIGNAL_AUDIT.md).
+- For diagnostic plots and full-precision detection reconstruction, use `auditOxygenEventAmplitudeSource(recordingFolder,'reconstructDetection',true,'outputFolder','/path/to/new/audit')`. The saved processed TIFFs are display-scaled and are not numerical audit inputs. See signal audit definitions.
 - `auditOxygenSinkAmplitudeSource(recordingFolder,'writeXlsx',true)` uses the same corrected audit and exports sink rows to a new workbook. It no longer uses whole-site raw traces or post-event fallback baselines.
 - If passing recording folders directly to `compareRawDenoisedOutputs.m`, use the optional `baseFolder` setting when the paths are relative to a folder other than the current MATLAB folder. QC files are written to `QC_Output/` by default unless you pass an explicit `outputFolder`.
 - For batch runs, configure `RunConfig` in `OxygenDynamics_Wrapper.m` or `iOSDynamics_Wrapper.m`, and stats settings in `OxygenDynamics_Config.m`. Advanced batch code can also call `runOxygenDynamicsStats(configStruct)` directly.
@@ -928,38 +928,38 @@ For a plain-language summary of this change, see `Amplitude_Definition_Compariso
 - After code changes, run `runOxygenPipelineSmokeTest` in MATLAB to verify the shared TIFF handling, validation failure checks, and output-folder helpers still work.
 
 
-The [BOI window inspector](docs/BOI_WINDOW_REVIEW_WORKFLOW.md) supports separately
+The BOI window inspector supports separately
 saved sink and surge coverage, onset and concurrency measures. New statistics
 exports include surge frame/denominator ingredients; older exports retain
-explicit surge unavailability. [Development verification](docs/reference-results/boi-surge-windows-20260911/README.md)
+explicit surge unavailability. Development verification
 checks unchanged sink outputs and both-sign traceability without scientific
 acceptance or a detector rerun.
 
 
-The [connected BOI reviewer walkthrough](docs/BOI_RESEARCHER_WALKTHROUGH.md)
+The connected BOI reviewer walkthrough
 now links saved window events to checked source/trace/native-mask evidence and
 its exported provenance. BOI Measurements also creates missing source audits
-explicitly in new folders. [Phase evidence](docs/reference-results/boi-workflow-phase-20260911/README.md)
+explicitly in new folders. Phase evidence
 records developer completion and the independent-researcher/scientific release
 gates that remain open.
 
-The [saved measurement-support diagnostic](docs/reference-results/boi-measurement-support-20260912/README.md)
+The saved measurement-support diagnostic
 quantifies amplitude availability versus native coverage and timing in the two
 preserved development examples. It changes no detections or measurement rules.
-The [scientific decision queue](docs/BOI_SCIENTIFIC_DECISIONS.md) separates the
+The scientific decision queue separates the
 remaining evidence and researcher choices from completed technical checks.
 
-The fixed [baseline/timing challenge](docs/reference-results/boi-baseline-timing-20260912/README.md)
+The fixed baseline/timing challenge
 documents 34 supplied-mask amplitude cases, 10 sink timing cases and 23 existing
 regression checks. Current measurements are retained; reference/support effects,
 unavailability and physiological interpretation remain separate. See the
-[scientific decision queue](docs/BOI_SCIENTIFIC_DECISIONS.md) for remaining gates.
+scientific decision queue for remaining gates.
 
-The [measurement-policy proposal](docs/BOI_MEASUREMENT_POLICY_PROPOSAL.md)
+The measurement-policy proposal
 provides five concrete review decisions and a C02 candidate-pair ledger. It
 preserves current formulas, unresolved scientific choices and unapproved
 evaluation/eligibility status.
 
-The [prior-use audit](docs/BOI_PRIOR_USE_AUDIT.md) links analytical development,
+The prior-use audit links analytical development,
 source inspection and acquisition coverage to animal/asset identities. It
 includes earlier prototype use and preserves unresolved evaluation history.

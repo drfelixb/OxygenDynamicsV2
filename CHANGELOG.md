@@ -6,6 +6,7 @@ reconstructed into releases.
 
 ## Unreleased
 
+- Earlier development records are preserved in the [pre-cleanup-20261124 tag](https://github.com/drfelixb/OxygenDynamicsV2/tree/pre-cleanup-20261124).
 - Paired sink depths now match single-channel automatic amplitudes, including flagged references and negative values. Both channel traces use the anchor sink’s saved reference frames. Paired summaries report the flagged and negative counts. Rerun earlier pairs to view or combine them.
 - Fix the compact workbook export on MATLAB installations that run Java 8: workbook formatting no longer needs Java 9 stream methods. Workbook values and calculations are unchanged.
 - Run 24 existing test files that the automated check set previously skipped. No analysis code changes.
@@ -173,7 +174,7 @@ reconstructed into releases.
 - Independently verify all movie pixels, 334 component fits, 167 candidate
   measurements and 1,102 production amplitudes/statuses. Pass 185 MATLAB and
   68 Python tests, including optimized Python execution. Update the README,
-  roadmap and [full report](docs/reference-results/surge-full-movie-measurement-20260910/README.md).
+  roadmap and full report.
 
 ### Experimental peak interval from estimated onset
 
@@ -192,7 +193,7 @@ reconstructed into releases.
   of the existing detector, actual event intervals and candidate measurements.
 - Pass 182 MATLAB and 65 Python tests, including optimized Python execution.
   Update documentation, provenance and the
-  [complete comparison](docs/reference-results/surge-expanded-peak-20260910/README.md).
+  complete comparison.
 
 ### Experimental amplitude eligibility and failure decomposition
 
@@ -210,8 +211,8 @@ reconstructed into releases.
   contamination screen. Keep these checks diagnostic pending interval/reference
   validation; do not force positive values or discard detected events.
 - Pass 175 MATLAB and 61 Python tests, including optimized Python execution.
-  Update the README, roadmap, [protocol](docs/SURGE_AMPLITUDE_ELIGIBILITY.md), and
-  [results with trace examples](docs/reference-results/surge-amplitude-eligibility-20260910/README.md).
+  Update the README, roadmap, protocol, and
+  results with trace examples.
 
 ### Experimental onset selection and new waveform/background evaluation
 
@@ -231,7 +232,7 @@ reconstructed into releases.
   timing failures, 71 baseline-contamination flags and 18 negative raw amplitudes.
 - Keep the selector experimental pending an explicit amplitude/reportability
   definition. Update the README, roadmap and
-  [results and review list](docs/reference-results/surge-model-selection-20260910/README.md).
+  results and review list.
 
 ### Experimental rise, plateau and recovery fit
 
@@ -251,7 +252,7 @@ reconstructed into releases.
 - Keep the pulse fit experimental pending model-selection and out-of-family
   validation. Pass 151 MATLAB focused tests and 48 Python tests, including
   optimized execution. Update the README, roadmap and
-  [complete comparison](docs/reference-results/surge-pulse-onset-20260910/README.md).
+  complete comparison.
 
 ### Surge onset information and available clean context
 
@@ -273,8 +274,8 @@ reconstructed into releases.
   allowing rise, plateau and recovery, with the same clean-context safeguard.
 - Pass 145 MATLAB focused tests and 42 Python tests (also under optimization);
   keep README, provenance, result tables and a scientific overview plot current.
-  See the [protocol](docs/SURGE_ONSET_TRACE_PANEL.md) and
-  [results](docs/reference-results/surge-onset-trace-panel-20260909/README.md).
+  See the protocol and
+  results.
 
 ### Experimental bounded surge onset
 
@@ -290,8 +291,8 @@ reconstructed into releases.
   resolve on identical source signals; this does not validate physiological
   onset. Do not promote the rule or change production calculations.
 - Pass 135 MATLAB focused tests and 34 Python tests, including optimized Python
-  execution. See the [protocol](docs/SURGE_LOCAL_ONSET.md) and
-  [results](docs/reference-results/surge-local-onset-20260909/README.md).
+  execution. See the protocol and
+  results.
 
 ### Surge amplitude support and baseline decomposition
 
@@ -311,8 +312,8 @@ reconstructed into releases.
   Python checks. Results show that tighter support can worsen rising-phase
   baseline contamination. Prioritize event-local onset/reference validation
   before adopting a core amplitude. See the
-  [protocol](docs/SURGE_AMPLITUDE_SUPPORT.md) and
-  [complete evidence](docs/reference-results/surge-amplitude-support-20260909/README.md).
+  protocol and
+  complete evidence.
 
 ### Experimental local surge separation
 
@@ -323,7 +324,7 @@ reconstructed into releases.
 - Add a prespecified full-image protocol with stationary, approaching and crossing
   Gaussian pairs, a single expanding profile, and unchanged source controls. Score
   distinct retained runs against imposed light; one merged event cannot count as
-  recovery of both sources. See the [protocol](docs/SURGE_CONTACT_SEPARATION.md).
+  recovery of both sources. See the protocol.
 - Add twelve MATLAB checks and nine Python verifier tests. Independently rebuild
   challenge pixels, check full-frame candidate conservation and native run bounds,
   recalculate light inside saved masks, and verify distinct-run score assignment.
@@ -333,7 +334,7 @@ reconstructed into releases.
   960 prescribed peak-location frames. Stationary-pair gains do not generalize
   to contact trajectories or the finer source, so the prototype is not promoted.
   Document controls, admission limitations and the
-  [full comparison](docs/reference-results/surge-separation-20260909/README.md).
+  full comparison.
 
 ### Production surge contact provenance
 
@@ -346,7 +347,7 @@ reconstructed into releases.
 - Add explicit contact assessment and retained-event exposure totals to
   `EventMeasurementQC`; distinguish event-frames/event-seconds from recording
   time and keep rejected candidates outside event totals. Update workbook
-  definitions and [contact-output documentation](docs/SURGE_CONTACT_PROVENANCE.md).
+  definitions and contact-output documentation.
 - Advance measurement/statistics contracts to require complete reanalysis before
   pooling. The detector and normalization identities are unchanged.
 - Pass 102 MATLAB tests, smoke and synthetic master/statistics integration, and
@@ -355,7 +356,7 @@ reconstructed into releases.
   statistics rerun: 123 sink events and 18 surge events across 11 surge sites;
   all existing masks/timing/measurements match, and 141 event measurements pass
   independent checks. These scopes are distinguished in the
-  [integration report](docs/reference-results/surge-contact-provenance-20260909/README.md).
+  integration report.
 
 ### Branch verifier review corrections
 
@@ -388,8 +389,8 @@ reconstructed into releases.
 - Pass 94 focused tests and repository checks. Independently verify 44,193 run
   rows and 69,508 edge rows across 24 movie/policy comparisons. These are
   diagnostic replays, not new amplitude audits or biological accuracy estimates.
-- Update the [branch-policy decision and dependency plan](docs/SURGE_BRANCH_POLICY.md)
-  and retain [compact reproducible evidence](docs/reference-results/surge-branch-replay-20260909/README.md).
+- Update the branch-policy decision and dependency plan
+  and retain compact reproducible evidence.
 
 ### Full-movie shape and signal-attribution audit
 
@@ -407,7 +408,7 @@ reconstructed into releases.
   surge footprints and rules out imposed sink cancellation in those examples.
 - Document candidate identity breaks, event-footprint dilution and known rising
   tails inside production-valid baselines. Rank proposed corrections and their
-  dependencies in [the signal evidence report](docs/SURGE_SIGNAL_EVIDENCE.md).
+  dependencies in the signal evidence report.
 
 ### Bounded surge shape continuity and rejected-candidate provenance
 
@@ -433,7 +434,7 @@ reconstructed into releases.
 - Repeat the twenty complete movie cases on the same four archived sources;
   retain independent arithmetic, native-mask, candidate-ledger and overlap
   checks (3,905 event records, zero arithmetic mismatches; unchanged sink masks
-  and timing in all twenty comparisons) in the [continuity report](docs/reference-results/surge-shape-continuity-20260909/README.md).
+  and timing in all twenty comparisons) in the continuity report.
   This is development validation, not an estimate of biological accuracy.
 
 ### Physical surge tracking and explicit recurring sites
@@ -459,7 +460,7 @@ reconstructed into releases.
   constructed pixels, overlap scores, physical area, adjacent coverage, site
   anchors and unique pixel ownership. Reconstruct three cases to localize
   remaining failures to candidate continuity/geometry and duration qualification.
-  Full-movie results remain mixed; see [tracking rules and limitations](docs/SURGE_TRACKING.md).
+  Full-movie results remain mixed; see tracking rules and limitations.
 
 ### Surge-path audit and smooth-signal validation
 
