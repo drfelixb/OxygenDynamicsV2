@@ -37,6 +37,7 @@ statusPath=fullfile(Plan.OutputFolder,'BatchStatsStatus.json');
 status=struct('Schema','boi-batch-stats-status-1','Status','running','Stage','preparing', ...
     'StartedUTC',char(datetime('now','TimeZone','UTC','Format',"yyyy-MM-dd'T'HH:mm:ss'Z'")), ...
     'IncludedRecordings',Plan.Counts.Included,'ExcludedRecordings',Plan.Counts.Excluded);
+status.ExporterSoftware=getOxygenPipelineVersion();
 writeBOIRunJSON(statusPath,status);
 try
     emitProgress(progressEvent('preparing',1,1,''));
@@ -98,7 +99,7 @@ try
     Result=struct('Schema','boi-batch-stats-result-1','Status','complete','Directory',Plan.OutputFolder, ...
         'Workbook',stats.OutputXlsx,'DataOutput',stats.DataOutputMat,'AnalysisManifest',stats.AnalysisManifest, ...
         'Included',Plan.Included,'Excluded',Plan.Excluded,'StatsResult',stats,'PlanDigest',Plan.Digest);
-    Result.ExporterSoftware=getOxygenPipelineVersion();
+    Result.ExporterSoftware=status.ExporterSoftware;
     save(fullfile(Plan.OutputFolder,'BatchStatsResult.mat'),'Result');
     completed=status;
     completed.Status='complete';completed.Stage='complete';completed.Index=recordingCount;
