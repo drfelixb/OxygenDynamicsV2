@@ -1,6 +1,6 @@
 function D=getBOIReviewedOpticalDefinition(folder)
 %GETBOIREVIEWEDOPTICALDEFINITION Bind this implementation to its exact draft.
-if nargin<1,folder=fullfile(fileparts(fileparts(mfilename('fullpath'))),'docs','planning');end
+if nargin<1,folder=fullfile(fileparts(fileparts(mfilename('fullpath'))),'definitions');end
 contract=fullfile(folder,'boi-reviewed-optical-contract-0.1.0-draft.json');
 dictionary=fullfile(folder,'boi-reviewed-optical-dictionary-0.1.0-draft.json');
 ch=oxygenFileSHA256(contract);dh=oxygenFileSHA256(dictionary);

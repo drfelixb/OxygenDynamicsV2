@@ -7,7 +7,7 @@ The original Science_2024 software has an existing MIT grant. Its
 that release. Licensing of new V2 contributions remains unconfirmed; see
 [licensing and contributor credits](../LICENSING.md). The separate CC BY 4.0 label
 in the saved Zenodo metadata is retained in the
-[original-licence source record](planning/original-software-licence.json), without
+[original-licence source record](../licenses/original-software-licence.json), without
 inferring dual licensing or changing the published metadata.
 
 ## Reconciled dependency notices
@@ -43,7 +43,7 @@ licensing guide are the researcher's account and do not assign ownership.
 
 The package includes the exact original MIT notice, the five full reconciled
 upstream licence texts, original-licence source record and dependency
-[provenance/hash record](planning/third-party-licence-provenance.json).
+[provenance/hash record](../licenses/third-party-licence-provenance.json).
 `RELEASE_MANIFEST.txt` identifies the committed source and every packaged file;
 package creation time is separate from the retained software build timestamp.
 Earlier ZIPs and saved results are preserved. This candidate adds licence and

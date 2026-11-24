@@ -3,7 +3,7 @@ function [Definitions,Dictionary,SourcePath] = getBOIMeasurementDictionary(Sourc
 % Proposed outcome priorities do not imply scientific acceptance.
 if nargin<1 || isempty(SourcePath)
     root=fileparts(fileparts(mfilename('fullpath')));
-    SourcePath=fullfile(root,'docs','planning','boi-measurement-dictionary.json');
+    SourcePath=fullfile(root,'definitions','boi-measurement-dictionary.json');
 end
 Dictionary=jsondecode(fileread(SourcePath));
 assert(strcmp(Dictionary.Schema,'boi-measurement-dictionary-1'), ...

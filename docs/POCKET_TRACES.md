@@ -23,7 +23,7 @@ The recording-specific sampling rate defines the window from up to 20 seconds be
 
 ## MATLAB entry points
 
-From the project folder:
+Run `runPocketNearbyTissue` directly from the project folder. In a fresh session, run `setupOxygenDynamicsPath` before calling the preview or display functions on their own.
 
 ```matlab
 % Interactive selection and preview

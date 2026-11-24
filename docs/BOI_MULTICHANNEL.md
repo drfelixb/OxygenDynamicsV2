@@ -1,6 +1,6 @@
 # Multichannel recordings in MATLAB
 
-Open the extracted software folder in MATLAB and run `openBOIMultichannel`. Use **Two bioluminescent channels** for independent GeNL and Antares detection. Use **Oxygen plus fluorescence** with oxygen in A and the fluorescence reporter in B.
+For a single pair, open the project folder in MATLAB, run `setupOxygenDynamicsPath`, then run `openBOIMultichannel`. Use **Two bioluminescent channels** for independent GeNL and Antares detection. Use **Oxygen plus fluorescence** with oxygen in A and the fluorescence reporter in B.
 
 ## Run a batch from CSV
 

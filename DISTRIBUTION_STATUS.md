@@ -2,7 +2,7 @@
 
 The source tree includes the opt-in multichannel workflow from the RC1 handoff. Its synthetic checks cover two oxygen channels and oxygen plus fluorescence. The integration pull request records the MATLAB results for this revision, including the TIFF rescan. [Multichannel guide](docs/BOI_MULTICHANNEL.md)
 
-Open the Batch Editor with `openBOIBatchEditor`. The source checkout provides `runBOISoftwareChecks` in portable and desktop modes.
+Open the Batch Editor with `openBOIBatchEditor`. From a source checkout, start the editor or run `setupOxygenDynamicsPath` before calling `runBOISoftwareChecks` in portable or desktop mode.
 
 OxygenDynamicsV2 **3.1.0-rc.1** is a research software release candidate for the BOI Batch Editor. Its scope is recording setup, sequential analysis using the accepted BOI detector, saved results, and postprocessing exports. The [release notes](docs/RELEASE_NOTES_3.1.0_RC1.md) distinguish the workflow and measurement changes from both earlier releases and the original publication.
 

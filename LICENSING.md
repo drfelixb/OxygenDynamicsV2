@@ -44,7 +44,7 @@ citation and existing software citation remain in [CITATION.cff](CITATION.cff).
 The archived ZIP matches the checksum in the locally saved Zenodo record.
 The restored licence is an exact copy of the archive's `LICENSE`; its full
 commit, archive path and hashes are in the
-[original software licence record](docs/planning/original-software-licence.json).
+[original software licence record](licenses/original-software-licence.json).
 
 Zenodo's saved record metadata labels the deposit **CC BY 4.0**, while the code
 archive and pinned GitHub release contain **MIT**. Both observations are retained.

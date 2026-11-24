@@ -2,6 +2,8 @@
 
 MATLAB software for analysing sink and surge events in cerebral bioluminescence oxygen imaging. Version **3.1.0-rc.1** focuses on the BOI recording-to-workbook workflow.
 
+From the project folder, run `openBOIBatchEditor`, `openBOIMultichannelBatch` or `runPocketNearbyTissue` directly. For other commands in a fresh MATLAB session, run `setupOxygenDynamicsPath` first.
+
 For a multichannel CSV batch, run `openBOIMultichannelBatch` or choose **Imaging mode** in the Batch recordings window. For one pair, run `openBOIMultichannel`. The guide covers two oxygen channels, oxygen plus fluorescence, the paired workbook and reopening event traces. [Multichannel guide](docs/BOI_MULTICHANNEL.md)
 
 ## Start or resume a batch

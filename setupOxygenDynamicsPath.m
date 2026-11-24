@@ -4,7 +4,7 @@ function RootFolder = setupOxygenDynamicsPath()
 RootFolder = fileparts(mfilename('fullpath'));
 addpath(RootFolder);
 
-SupportFolders = {'helpers','external'};
+SupportFolders = {'workflows','core','tools','hypoxia_amyloid','helpers','external'};
 for folderi = 1:numel(SupportFolders)
     FolderPath = fullfile(RootFolder,SupportFolders{folderi});
     if isfolder(FolderPath)

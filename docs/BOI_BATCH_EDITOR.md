@@ -319,7 +319,7 @@ Every example folder is a placeholder. Replace it with an actual supported
 recording folder. Replace the illustrative **2 Hz** and **4.75 µm/pixel** with
 the values for your acquisition.
 
-For noninteractive preparation, assign `csvPath` to the input filename and
+For noninteractive preparation in a fresh session, run `setupOxygenDynamicsPath` from the project folder first. Assign `csvPath` to the input filename and
 `newCSVPath` to a new destination, then use the same contract/check services:
 
 ```matlab

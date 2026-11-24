@@ -18,6 +18,8 @@ The optional multichannel workflow analyzes two oxygen channels independently or
 - Decide whether to design a new vascular analysis feature.
 - Decide whether flagged sink references belong in between-channel comparisons.
 
+24 November 2026 (CLEANUP-03). The two batch editors and pocket traces start from the project folder. Other commands are grouped by purpose and are available after `setupOxygenDynamicsPath`. Recording manifests cover the whole project.
+
 24 November 2026 (CLEANUP-02). The researcher approved retirement of the original launcher, curation, iOS, vascular and legacy checking pathways. Use the BOI Batch Editor and its software checks.
 
 There is no active development milestone. The researcher approved the development-record cleanup on 24 November 2026. The complete earlier plan and evidence are preserved in the [pre-cleanup-20261124 tag](https://github.com/drfelixb/OxygenDynamicsV2/tree/pre-cleanup-20261124).

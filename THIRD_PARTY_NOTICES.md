@@ -13,7 +13,7 @@ components below retain their own terms.
 Reconciled on 5 October 2026 against author-maintained GitHub and official
 MathWorks File Exchange licence files. The versions below identify the evidence
 consulted, **not the exact historical versions of the bundled source**. Full
-licence texts follow; [provenance and SHA-256 records](docs/planning/third-party-licence-provenance.json)
+licence texts follow; [provenance and SHA-256 records](licenses/third-party-licence-provenance.json)
 identify the local files and downloaded licence bytes.
 
 | Local file | Retained attribution | Identifiable upstream evidence | Terms |
