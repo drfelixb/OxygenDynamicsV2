@@ -6,8 +6,8 @@ pipeline easier to validate, reproduce, understand, or reuse are welcome.
 ## Before Opening an Issue
 
 - Search existing issues for the same problem or proposal.
-- Run `setupOxygenDynamicsPath` and `checkOxygenPipelineHealth`.
-- For code problems, run `runOxygenPipelineSmokeTest` when possible.
+- Run `setupOxygenDynamicsPath` and open the recording workflow with `openBOIBatchEditor`.
+- For code problems, report the result of `runBOISoftwareChecks('portable','results-portable')` from the source checkout.
 - Remove personal, animal, experimental, institutional, and local filesystem
   information from logs and examples.
 
@@ -22,15 +22,12 @@ confidential data.
 
 ## Development Workflow
 
-1. Create a branch from `development`.
+1. Create a branch from `main`.
 2. Keep each change focused and avoid unrelated formatting or refactoring.
 3. Do not commit raw recordings, generated outputs, secrets, or local paths.
 4. Add or update tests and documentation for changed behaviour.
 5. Run the checks listed below.
-6. Open a pull request into `development`.
-
-Release candidates are promoted from `development` to `main` through a
-reviewed pull request.
+6. Open a pull request into `main`.
 
 ## Validation
 
@@ -43,12 +40,12 @@ Run these commands from the repository root:
 ```matlab
 setupOxygenDynamicsPath
 runRepositoryChecks
-runOxygenPipelineSmokeTest
+runBOISoftwareChecks('portable','results-portable')
+runBOISoftwareChecks('desktop','results-desktop')
 ```
 
-For changes that affect experimental results, also compare an accepted dataset
-against an existing regression baseline. Do not create or replace an accepted
-baseline solely to make a changed result pass.
+For changes that affect experimental results, document the numerical differences on a synthetic
+fixture or a recording approved for that comparison.
 
 ## Scientific Changes
 
@@ -59,7 +56,7 @@ normalisation, filtering, or statistical definitions must:
 - identify affected outputs, columns, and saved variables;
 - state whether results remain comparable with earlier versions;
 - include a synthetic test or a reviewed regression comparison;
-- update metric definitions, the manual, and compatibility notes as needed.
+- update metric definitions, the affected guides, and compatibility notes as needed.
 
 ## Code Style
 
@@ -83,7 +80,7 @@ changes that require extra review. A maintainer may ask for a smaller change,
 additional validation, or provenance information before merging.
 
 Before requesting review, confirm that the scope is explained, scientific
-changes are identified, the smoke test passes, regression testing was run where
+changes are identified, the BOI checks pass, regression testing was run where
 needed, documentation is current, and no generated or confidential files are
 included.
 

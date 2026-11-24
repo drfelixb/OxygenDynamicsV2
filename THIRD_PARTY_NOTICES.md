@@ -18,7 +18,6 @@ identify the local files and downloaded licence bytes.
 
 | Local file | Retained attribution | Identifiable upstream evidence | Terms |
 |---|---|---|---|
-| `external/abfload.m` | Harald Hentschke; Forrest Collman; local source also credits Ulrich Egert for `pvpmod.m` | [abfload](https://github.com/fcollman/abfload/tree/021c9ffb661978cc4d8a875e64dc3d696ebf40bc), commit `021c9ffb661978cc4d8a875e64dc3d696ebf40bc` | BSD-2-Clause |
 | `external/loadtiff.m` | Yoon-Oh Tak / YoonOh Tak; local header copyright 2012 | [Multipage TIFF stack](https://www.mathworks.com/matlabcentral/fileexchange/35684-multipage-tiff-stack), distribution 4.5.0; official source header and release licence retained below | BSD-3-Clause-style, GIST non-endorsement clause |
 | `external/saveastiff.m` | Adapted in this project from Multipage TIFF stack by Yoon-Oh Tak | Same upstream component; local adaptation attribution retained | Same TIFF terms |
 | `helpers/peakfinder.m` | Nathanael C. Yoder; local header copyright 2015 | [peakfinder](https://www.mathworks.com/matlabcentral/fileexchange/25500-peakfinder-x0-sel-thresh-extrema-includeendpoints-interpolate), distribution 2.0.2, licence copyright 2016 | BSD-2-Clause |
@@ -26,7 +25,7 @@ identify the local files and downloaded licence bytes.
 | `helpers/hex2rgb.m` | Chad Greene; upstream source identifies Chad A. Greene | [rgb2hex and hex2rgb](https://www.mathworks.com/matlabcentral/fileexchange/46289-rgb2hex-and-hex2rgb), distribution 1.1.1 | BSD-3-Clause, University of Texas at Austin non-endorsement clause |
 
 The exact original revisions and complete modification histories are not recorded
-for these bundled files. `abfload.m` differs from the pinned upstream file; TIFF
+for these bundled files. TIFF
 helpers and `hex2rgb.m` are adapted. The upstream licence pins provide identifiable
 licensing evidence, not proof of byte-identical source or exhaustive rights
 clearance. No additional permission requirement was identified in these BSD terms
@@ -40,48 +39,9 @@ also displayed in the [official source viewer](https://viewer.mathworks.com/addo
 alongside the official 2016 distribution notice. Names already credited by the
 local source are preserved; no contributor is assigned new copyright ownership.
 
-Local change, 10 September 2026: `abfload.m` uses the first backslash when
-extracting an ABF2 protocol path. Using all backslash positions as the start of
-a colon expression failed for ordinary nested Windows paths in original BOI
-acquisition files. Signal decoding and calibration formulas are unchanged.
-This documented historical change is preserved; this notice task changes no code.
-
 The full texts below reproduce the downloaded licence files verbatim inside
 text blocks, except the separately identified TIFF source-header transcription.
 Original local MATLAB headers and author attributions remain unchanged.
-
-## abfload
-
-Pinned author-maintained licence; copyright 2009 Forrest Collman and 2004 Harald Hentschke.
-[Upstream licence file](https://raw.githubusercontent.com/fcollman/abfload/021c9ffb661978cc4d8a875e64dc3d696ebf40bc/license.txt).
-
-```text
-Copyright (c) 2009, Forrest Collman
-Copyright (c) 2004, Harald Hentschke
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in
-      the documentation and/or other materials provided with the distribution
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-```
 
 ## Multipage TIFF stack — distribution notice
 

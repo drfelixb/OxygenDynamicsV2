@@ -127,5 +127,4 @@ measurement intervals and sign conventions can differ from your reviewed
 choice. Reviewed values do not automatically replace amplitudes in the
 recording-level statistics.
 
-For the step-by-step interface route, see the [main guide](../README.md).
-The [full manual](../USER_MANUAL.md) also covers older and optional analyses.
+For the step-by-step interface route, see the [Batch Editor guide](BOI_BATCH_EDITOR.md).

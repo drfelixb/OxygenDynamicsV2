@@ -2,7 +2,7 @@
 
 MATLAB software for analysing sink and surge events in cerebral bioluminescence oxygen imaging. Version **3.1.0-rc.1** focuses on the BOI recording-to-workbook workflow.
 
-For a multichannel CSV batch, run `openBOIMultichannelBatch` or choose **Imaging mode** in the Batch recordings window. For one pair, run `openBOIMultichannel` or choose **Multichannel recordings** in `OxygenDynamics_GUI`. The guide covers two oxygen channels, oxygen plus fluorescence, the paired workbook and reopening event traces. [Multichannel guide](docs/BOI_MULTICHANNEL.md)
+For a multichannel CSV batch, run `openBOIMultichannelBatch` or choose **Imaging mode** in the Batch recordings window. For one pair, run `openBOIMultichannel`. The guide covers two oxygen channels, oxygen plus fluorescence, the paired workbook and reopening event traces. [Multichannel guide](docs/BOI_MULTICHANNEL.md)
 
 ## Start or resume a batch
 
@@ -13,6 +13,8 @@ Open this folder in MATLAB and run `openBOIBatchEditor`. Open a recording CSV, c
 - [Installation](INSTALLATION.md) and [full Batch Editor guide](docs/BOI_BATCH_EDITOR.md)
 - [Release notes comparing v3.0 and Science_2024](docs/RELEASE_NOTES_3.1.0_RC1.md)
 - [Measurement definitions](docs/BOI_DURATION_AREA_AND_EVENT_RATES.md) and [distribution and validation status](DISTRIBUTION_STATUS.md)
+
+From a source checkout, run `runBOISoftwareChecks('portable','results-portable')` to check the installation with synthetic recordings.
 
 MATLAB with Image Processing Toolbox is required for imaging. Some optional analyses also require Statistics and Machine Learning Toolbox. For saved optical measurements and optional review, see the [measurement guide](docs/POCKET_MEASUREMENTS.md).
 

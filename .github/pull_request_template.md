@@ -12,7 +12,8 @@ Affected metrics, files, workbook sheets, saved variables, and compatibility:
 ## Validation
 
 - [ ] `runRepositoryChecks`
-- [ ] `runOxygenPipelineSmokeTest`
+- [ ] `runBOISoftwareChecks('portable','results-portable')`
+- [ ] `runBOISoftwareChecks('desktop','results-desktop')`
 - [ ] MATLAB Code Analyzer on changed MATLAB files
 - [ ] Regression comparison, when scientific outputs may change
 - [ ] Documentation updated

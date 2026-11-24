@@ -1,7 +1,6 @@
 # Run selected BOI recordings from the batch window
 
-Use **Batch recordings** in `OxygenDynamics_GUI`, or run
-`openBOIBatchEditor` in MATLAB. Open the batch CSV and check the rows. You can
+Run `openBOIBatchEditor` in MATLAB. Open the batch CSV and check the rows. You can
 review a queue from an imported source CSV. Use **Save as…** to create a
 separate working CSV before starting recordings. You can reopen that working
 CSV and use it for later queues.

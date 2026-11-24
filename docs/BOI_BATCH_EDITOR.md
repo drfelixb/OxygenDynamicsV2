@@ -114,13 +114,12 @@ with that saved workbook path if preferred. No file is saved by opening it.
 From the installation folder in MATLAB, replacing the path with your location:
 
 ```matlab
-cd('/path/to/OxygenDynamicsV2/existing-analysis');
+cd('/path/to/OxygenDynamicsV2');
 setupOxygenDynamicsPath;
 openBOIBatchEditor;
 ```
 
-Alternatively, open `OxygenDynamics_GUI` and choose **Batch recordings**. Use
-**Open CSV** to open an existing list. Opening a CSV does not start checking or
+Use **Open CSV** to open an existing list. Opening a CSV does not start checking or
 analysis. A CSV can also be supplied directly:
 
 ```matlab

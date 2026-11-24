@@ -30,9 +30,12 @@ custom containment and worker qualification are deferred to a possible v4.
 
 ## Prepare an approved candidate
 
-1. Work from the intended reviewed source on `development-existing-analysis-v3`.
+1. Work from the reviewed commit on `main`.
    Freeze the committed file list and hashes. Update version/build metadata only
    when the approved task calls for it; package creation time is separate.
+   From that checkout, run `runBOISoftwareChecks('portable','results-portable')`
+   and `runBOISoftwareChecks('desktop','results-desktop')`. Validate the source
+   inventory with `getOxygenReleaseSourceList(pwd,true)`.
 2. Use `createOxygenReleasePackage` with the approved output root/name, actual
    source commit and accurate source state. It copies the explicit source list;
    it does not recursively gather recordings, results or development evidence.
