@@ -1,0 +1,142 @@
+name: Prepare draft release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  package:
+    name: Test and verify source package
+    if: github.event_name == 'workflow_dispatch' || (github.ref_type == 'tag' && !github.event.deleted)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    outputs:
+      commit: ${{ steps.source.outputs.commit }}
+      artifact: ${{ steps.upload.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          path: source
+          persist-credentials: false
+
+      - name: Identify source and check the release version
+        id: source
+        working-directory: source
+        env:
+          TAG_PUSH: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+          NEW_TAG: ${{ github.event.created && !github.event.forced }}
+        run: |
+          version=$(sed -nE "s/^Info\.Version = '([^']+)';$/\1/p" core/getOxygenPipelineVersion.m)
+          number='(0|[1-9][0-9]*)'
+          [[ "$version" =~ ^${number}\.${number}\.${number}(-dev|-rc\.[1-9][0-9]*)?$ ]] || {
+            echo 'Invalid or missing pipeline version' >&2; exit 1;
+          }
+          mkdir "$RUNNER_TEMP/assets"
+          if [[ "$TAG_PUSH" == true ]]; then
+            [[ "$NEW_TAG" == true && "$GITHUB_REF_NAME" == "v$version" && "$version" != *-dev ]] || {
+              echo 'Expected a newly created tag matching a candidate or final version' >&2; exit 1;
+            }
+            notes="docs/releases/$version.md"
+            test -s "$notes"
+            cp "$notes" "$RUNNER_TEMP/assets/RELEASE_NOTES_$version.md"
+          fi
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "PACKAGE_VERSION=$version" >> "$GITHUB_ENV"
+
+      - uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2025b
+          products: >
+            Image_Processing_Toolbox
+            Statistics_and_Machine_Learning_Toolbox
+
+      - name: Run portable BOI checks
+        uses: matlab-actions/run-command@v3
+        with:
+          command: cd('source'); setupOxygenDynamicsPath; runBOISoftwareChecks('portable',fullfile(getenv('RUNNER_TEMP'),'portable'));
+
+      - name: Build from the checked source and save the expected inventory
+        uses: matlab-actions/run-command@v3
+        env:
+          SOURCE_COMMIT: ${{ steps.source.outputs.commit }}
+        with:
+          command: >-
+            cd('source'); setupOxygenDynamicsPath;
+            info = getOxygenPipelineVersion();
+            assert(strcmp(info.Version,getenv('PACKAGE_VERSION')) && strcmp(info.SourceCommit,getenv('SOURCE_COMMIT')) && strcmp(info.SourceState,'clean'),'Expected the clean, selected commit');
+            plan = getOxygenReleaseSourceList(pwd,true);
+            scratch = getenv('RUNNER_TEMP');
+            writelines(string(jsonencode(plan)),fullfile(scratch,'expected-sources.json'));
+            createOxygenReleasePackage('outputRoot',fullfile(scratch,'build'),'releaseName',['OxygenDynamicsV2-' info.Version],'baseCommit',info.SourceCommit,'sourceState',info.SourceState);
+
+      - name: Verify ZIP members and compute SHA-256 checksums
+        working-directory: source
+        run: |
+          archive="OxygenDynamicsV2-$PACKAGE_VERSION.zip"
+          python3 .github/scripts/verify_release_zip.py "$RUNNER_TEMP/build/$archive" "$RUNNER_TEMP/expected-sources.json"
+          mv "$RUNNER_TEMP/build/$archive" "$RUNNER_TEMP/assets/"
+          cd "$RUNNER_TEMP/assets"
+          sha256sum -- * > "$RUNNER_TEMP/SHA256SUMS"
+          mv "$RUNNER_TEMP/SHA256SUMS" .
+          sha256sum --check SHA256SUMS
+
+      - name: Upload verified package and checksums
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: oxygen-source-${{ steps.source.outputs.commit }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/assets/
+          if-no-files-found: error
+          retention-days: 14
+
+  draft:
+    name: Create draft for the existing tag
+    needs: package
+    if: github.event_name == 'push' && github.ref_type == 'tag' && github.event.created && !github.event.deleted && !github.event.forced
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: release-draft-${{ github.ref }}
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.package.outputs.artifact }}
+          path: assets
+          merge-multiple: true
+
+      - name: Create a new unpublished release
+        working-directory: assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          SOURCE_COMMIT: ${{ needs.package.outputs.commit }}
+        run: |
+          set -euo pipefail
+          sha256sum --check --strict SHA256SUMS
+          api="repos/$GITHUB_REPOSITORY"
+          tag_object=$(gh api "$api/git/ref/tags/$TAG" --jq 'select(.object.type == "tag") | .object.sha')
+          test -n "$tag_object"
+          target=$(gh api "$api/git/tags/$tag_object" --jq 'select(.object.type == "commit") | .object.sha')
+          [[ "$target" == "$SOURCE_COMMIT" ]] || { echo 'Annotated tag target changed' >&2; exit 1; }
+
+          # The authenticated list includes unpublished drafts and all pages.
+          gh api --paginate "$api/releases?per_page=100" --jq '.[].tag_name' > "$RUNNER_TEMP/used-tags"
+          if grep -Fxq -- "$TAG" "$RUNNER_TEMP/used-tags"; then
+            echo "A draft or published release already uses $TAG" >&2; exit 1
+          fi
+          version=${TAG#v}
+          notes="RELEASE_NOTES_$version.md"
+          flags=(--draft --verify-tag)
+          if [[ "$version" == *-rc.* ]]; then flags+=(--prerelease); fi
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" "${flags[@]}" \
+            --title "OxygenDynamicsV2 $version" --notes-file "$notes" \
+            "OxygenDynamicsV2-$version.zip" SHA256SUMS "$notes"

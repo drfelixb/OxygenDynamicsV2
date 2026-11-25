@@ -12,6 +12,8 @@ The optional multichannel workflow analyzes two oxygen channels independently or
 
 24 November 2026 (VERSION-01). The researcher approved 4.0.0 as the next release, with a candidate first. Saved calculations and exports record the development version, source commit and checkout state.
 
+24 November 2026 (RELEASE-AUTO-01). The researcher approved a fixed candidate and final release procedure. The implementation owner is the root Codex chat. Acceptance covers the Mac gates and a verified GitHub dry-run artifact. Delivery stops at a pull request for review. [Release runbook](../RELEASING.md)
+
 ## Open researcher decisions
 
 - Choose the cutoff for linking candidate pockets between channels.

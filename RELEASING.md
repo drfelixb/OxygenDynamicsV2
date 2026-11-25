@@ -38,33 +38,111 @@ finite approval. Preparing these instructions or a development archive does
 not authorize those activities or establish physiological validity. VM/watchdog/
 custom containment and worker qualification remain deferred pending a separate decision.
 
-## Prepare an approved candidate
+## Run the release runbook for version X
 
-1. Branch from the reviewed commit on `main` and set the approved candidate version on that release branch.
-   Freeze the committed file list and hashes. Update version/build metadata only
-   when the approved task calls for it; package creation time is separate.
-   In a fresh MATLAB session in that checkout, run `setupOxygenDynamicsPath` before `runBOISoftwareChecks('portable','results-portable')`
-   and `runBOISoftwareChecks('desktop','results-desktop')`. Validate the source
-   inventory with `getOxygenReleaseSourceList(pwd,true)`.
-2. Use `createOxygenReleasePackage` with the approved output root/name, actual
-   source commit and accurate source state. It copies the explicit source list;
-   it does not recursively gather recordings, results or development evidence.
-3. Compare exact source/folder/ZIP/extracted file sets and hashes, check local
-   reader links and retained notices, and verify exclusions.
-4. Record the archive hash, limitations and any implementation changes. A base
-   commit alone does not identify modified files. See [package contents](PACKAGE_CONTENTS.md).
+Use the exact researcher-approved version in place of `X`, without a leading
+`v`. A candidate uses `X.Y.Z-rc.N` and a final uses `X.Y.Z`. The instruction
+to run this procedure authorizes preparation through the branch review in step 4.
+The researcher authorizes tagging separately and decides when to publish.
 
-The preserved licensing candidate received static/package and definition-load
-checks. The later interface task uses focused saved-FB2311 checks and no recording
-rerun or package build. Publication claims must identify those scopes separately.
+1. **Start from reviewed main.** In a fresh clone, fetch `origin/main`, confirm
+   its tip is the latest reviewed main commit and record its full SHA. Confirm
+   that `release/X`, tag `vX` and a release or draft for `vX` are unused.
+   Stop on a collision. Run `git switch -c release/X origin/main`. In MATLAB
+   at the project root run `setupOxygenDynamicsPath`, then
+   `setOxygenVersion('X')`. Check the getter, build time, citation date and
+   version mirrors in the resulting diff. Cut every candidate and the final
+   this way, including the final after a successful candidate.
+2. **Prepare the changelog and notes.** In `CHANGELOG.md`, move the current
+   Unreleased entries under `## X — YYYY-MM-DD` using the release preparation
+   date. Leave an empty `## Unreleased` above it. Create
+   `docs/releases/X.md` from the template below. Use the dated entries to
+   describe changes. For a final or later candidate, also summarize the
+   relevant earlier candidate entries so the notes cover the intended comparison.
+3. **Verify on the Mac.** In a fresh MATLAB session at the release checkout
+   run the following block. Keep reports outside the repository. Enter the
+   actual counts, platform, MATLAB release and limitations in the notes.
+   Commit the version changes, changelog and notes on `release/X`. Revalidate
+   the source inventory from the clean commit and record its SHA and source
+   count in the review report. If code or inputs change after testing, repeat
+   the affected checks. Stop and report a failed or incomplete gate.
 
-## Publish only after a separate release decision
+   ```matlab
+   setupOxygenDynamicsPath
+   reports = tempname; mkdir(reports);
+   portable = runBOISoftwareChecks('portable',fullfile(reports,'portable'));
+   desktop = runBOISoftwareChecks('desktop',fullfile(reports,'desktop'));
+   repo = runRepositoryChecks()
+   plan = getOxygenReleaseSourceList(pwd,true);
+   fprintf('Validated %d source files\n',numel(plan.RelativePaths));
+   ```
 
-After the approved release review and any separately authorised integration:
-confirm the exact source and archive, then follow the approved tag and GitHub
-release procedure on the release branch. Include compatibility, evidence and limitation statements.
-Do not move existing tags or replace published archives; correct a publication
-with a newly identified version and archive.
+4. **Push the branch and stop.** Use `git push -u origin release/X`. Report
+   the base SHA, release commit SHA, branch and notes links, counts and
+   limitations. Wait for the researcher's explicit instruction to tag that
+   exact commit. If review finds a candidate problem, fix it on `main` through
+   a normal pull request. Start the next approved candidate at step 1 after
+   that fix has been reviewed and merged.
+5. **Tag only on explicit instruction.** Fetch the release branch and confirm
+   that its tip equals the SHA approved in step 4. Recheck the remote tag and
+   draft/release names. If any already exists, stop. From the approved commit
+   run `git tag -a vX APPROVED_SHA -m "OxygenDynamicsV2 X"` followed by
+   `git push origin refs/tags/vX`. Watch **Prepare draft release** to
+   completion. It validates the tag/version, runs portable checks on Linux
+   R2025b, builds and verifies the ZIP, and creates a draft with the notes and
+   checksums. Candidates carry GitHub's prerelease flag. Check the draft state,
+   flag, asset names and checksums, then report its URL. On failure inspect
+   the run and any partial draft before reporting. Preserve all existing tags,
+   releases and assets.
+6. **Carry the record back to main.** Once the draft exists, create a separate
+   branch from the latest `origin/main`. Copy the reviewed `docs/releases/X.md`
+   and add its dated heading and entries to `CHANGELOG.md`. Remove only the
+   entries carried into that heading from Unreleased, preserve intervening
+   changes and add an **Added** line recording the release notes, as required
+   by the pull request template. For a candidate, keep the current development
+   version. For a final, obtain the researcher's approved next `X.Y.Z-dev`
+   and run `setOxygenVersion` with that development version on the new branch.
+   Inspect the diff, confirm the getter and its mirrors all identify a
+   development version, and open the template pull request against `main`.
+   Never merge the release branch into `main`. Publishing the GitHub draft
+   remains a manual decision by the researcher.
+
+### Release note template
+
+Save as `docs/releases/X.md` on the release branch. The workflow uses this
+file verbatim as the draft body and attaches a copy. Fill in the Mac results
+before branch review. Report the subsequent hosted run and archive checksum
+alongside the draft once they exist.
+
+```markdown
+# OxygenDynamicsV2 X — YYYY-MM-DD
+
+## Changes
+[Summarize the dated changelog entries since the named comparison version.
+Describe affected workflows, changes in output meaning and any migration steps.]
+
+## Verification
+- macOS [version and architecture], MATLAB [release]. Portable [passed/failed/incomplete],
+  desktop [passed/failed/incomplete]. Include the total for each.
+- Repository checks inspected [count] MATLAB files, reported [count] Code
+  Analyzer messages, and ran [count and outcome] focused check(s).
+- Release source validation checked [count] paths. List any additional checks
+  actually performed, their results and any outstanding verification.
+
+## Limitations
+[State untested workflows, recordings, scientific claims and known issues.]
+Windows and MATLAB releases beyond the environments explicitly verified for
+this version remain outside the demonstrated scope.
+```
+
+### Dry run
+
+From a checkout of this repository, run
+`gh workflow run release.yml --ref BRANCH` and open the resulting Actions run.
+It accepts development versions. Download the `oxygen-source-…` artifact,
+enter its folder and run `shasum -a 256 -c SHA256SUMS` on macOS or
+`sha256sum --check SHA256SUMS` on Linux. A manual run ends at the artifact,
+even when its selected ref is a tag. The draft job runs only for a new tag push.
 
 A future release can be archived through Zenodo if maintainers approve and enable
 that integration. Confirm [CITATION.cff](CITATION.cff), author order, licensing
