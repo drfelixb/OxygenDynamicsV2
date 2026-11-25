@@ -6,6 +6,8 @@ reconstructed into releases.
 
 ## Unreleased
 
+- **Added** a release runbook and a GitHub workflow that verifies the source ZIP and checksums, prepares a draft for a version tag, and supports development-branch dry runs.
+
 - **Added** software version, source commit and checkout state to saved provenance. The checkout version is maintained by a single MATLAB command.
 - **Added** a folder layout that groups MATLAB workflows, analysis code, developer tools, hypoxia-amyloid analysis and runtime definitions in named folders. Start either batch editor or pocket traces directly from the project folder, or run `setupOxygenDynamicsPath` before using other commands.
 

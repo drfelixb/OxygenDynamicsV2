@@ -1,6 +1,6 @@
 {
   "schema": "oxygen-software-development-status-1",
-  "date": "2026-11-24",
+  "date": "2026-11-25",
   "active_implementation_milestone": null,
   "cleanup": {
     "id": "CLEANUP-01",
@@ -40,5 +40,13 @@
     "scope": "Identify the code used for calculations and exports. The approved next release is 4.0.0, with a candidate first.",
     "acceptance": "Portable and desktop checks, source inventory and software identity from a synthetic recording.",
     "stop": "Pull request for researcher review."
+  },
+  "release_automation": {
+    "id": "RELEASE-AUTO-01",
+    "approved": "2026-11-24",
+    "owner": "root",
+    "scope": "Prepare a verified draft from a version tag and provide a development-branch package dry run.",
+    "acceptance": "Mac portable and desktop checks and a hosted dry run whose source ZIP and checksums match the validated inventory.",
+    "stop": "Pull request for researcher review. Publication is manual."
   }
 }
