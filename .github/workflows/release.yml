@@ -2,6 +2,7 @@ name: Prepare draft release
 
 on:
   push:
+    branches: ['feature/release-automation']
     tags: ['v*']
   workflow_dispatch:
 
