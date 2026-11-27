@@ -2,7 +2,7 @@
 
 MATLAB software for analysing sink and surge events in cerebral bioluminescence oxygen imaging.
 
-Checkout version: **4.0.0-dev**.
+Checkout version: **4.0.0-rc.1**.
 
 From the project folder, run `openBOIBatchEditor`, `openBOIMultichannelBatch` or `runPocketNearbyTissue` directly. For other commands in a fresh MATLAB session, run `setupOxygenDynamicsPath` first.
 

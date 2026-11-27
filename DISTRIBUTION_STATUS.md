@@ -1,6 +1,6 @@
 # Distribution and validation status
 
-Checkout version: **4.0.0-dev**.
+Checkout version: **4.0.0-rc.1**.
 
 The source tree includes the opt-in multichannel workflow from the RC1 handoff. Its synthetic checks cover two oxygen channels and oxygen plus fluorescence. The integration pull request records the MATLAB results for this revision, including the TIFF rescan. [Multichannel guide](docs/BOI_MULTICHANNEL.md)
 

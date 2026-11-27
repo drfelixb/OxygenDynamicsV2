@@ -6,6 +6,8 @@ reconstructed into releases.
 
 ## Unreleased
 
+## 4.0.0-rc.1 — 2026-11-27
+
 - **Added** a release runbook and a GitHub workflow that verifies the source ZIP and checksums, prepares a draft for a version tag, and supports development-branch dry runs.
 
 - **Added** software version, source commit and checkout state to saved provenance. The checkout version is maintained by a single MATLAB command.

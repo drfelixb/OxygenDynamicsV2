@@ -8,7 +8,7 @@ getOxygenPipelineVersion
 openBOIBatchEditor
 ```
 
-The version should be `4.0.0-dev`. If MATLAB resolves an older installation, use `which openBOIBatchEditor -all` to find overlapping path entries. Close older BOI editor and viewer windows before switching versions.
+The version should be `4.0.0-rc.1`. If MATLAB resolves an older installation, use `which openBOIBatchEditor -all` to find overlapping path entries. Close older BOI editor and viewer windows before switching versions.
 
 In a new session, run one of the three entry points (`openBOIBatchEditor`, `openBOIMultichannelBatch`, `runPocketNearbyTissue`) or `setupOxygenDynamicsPath` before using commands in the code folders.
 

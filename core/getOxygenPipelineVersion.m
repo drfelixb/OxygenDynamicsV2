@@ -1,7 +1,7 @@
 function Info = getOxygenPipelineVersion()
 %GETOXYGENPIPELINEVERSION Identify the software actually running.
-Info.Version = '4.0.0-dev';
-Info.BuildTimestamp = '2026-11-24 15:51:20 +01:00';
+Info.Version = '4.0.0-rc.1';
+Info.BuildTimestamp = '2026-11-27 10:16:50 Z';
 Info.DisplayName = ['Oxygen Dynamics Pipeline v',Info.Version];
 Info.SourceCommit = 'unknown';
 Info.SourceState = 'unknown';
