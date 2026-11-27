@@ -1,6 +1,7 @@
-function [Audit,Traces]=auditOxygenEventFootprints(Sites,Events,OtherSites,Raw,baselineFrames,kind)
+function [Audit,Traces]=auditOxygenEventFootprints(Sites,Events,OtherSites,Raw,baselineFrames,kind,offset)
 % Independently audit the current event-footprint amplitude and baseline contract.
 % Do not call the measurement finalizer: disagreement must remain detectable.
+if nargin<7,offset=[];end
 kind=string(validatestring(kind,{'sink','surge'}));
 assert(baselineFrames>=1 && baselineFrames==round(baselineFrames));
 N=size(Raw,3);flat=reshape(Raw,[],N);prefix='Sink';if kind=="surge",prefix='Surge';end
@@ -36,10 +37,13 @@ for e=1:height(Events)
     clean=b(~overlap & isfinite(trace(b)));B=NaN;amp=NaN;status="insufficient_clean_prebaseline";
     if numel(clean)==baselineFrames
         B=mean(trace(clean));
-        if B>0&&isfinite(B)&&all(isfinite(trace(first:last)))
-            delta=(trace(first:last)-B)/B;
+        [denom,blocked]=boiIntensityDenominator(B,offset);
+        if denom>0&&isfinite(denom)&&all(isfinite(trace(first:last)))
+            delta=(trace(first:last)-B)/denom;
             if kind=="sink",amp=-min(delta);else,amp=max(delta);end
             status="valid";
+        elseif blocked
+            status="reference_at_or_below_camera_offset";
         else
             status="nonpositive_baseline_or_missing_event_signal";
         end

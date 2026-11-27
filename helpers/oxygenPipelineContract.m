@@ -1,10 +1,11 @@
-function C=oxygenPipelineContract(profile)
+function C=oxygenPipelineContract(profile,offset)
 if nargin<1,profile='whole-image';end
 profile=getBOISupportProfile(struct('BOISupportProfile',profile));
 % Bump the relevant identity whenever a calculation or detection rule changes.
 C=struct('Schema','3.0-dev','Detector','existing-v2-surge-shape-continuity-5', ...
     'Measurement','event-footprint-contact-ledger-7','Statistics','mouse-strict-contact-qc-8', ...
     'Normalization','spatial-sd_then_temporal-sd');
+if nargin>1 && ~isempty(offset),C.Measurement='event-footprint-contact-ledger-8-offset';end
 if strcmp(profile,'craniotomy-roi-1')
     C.Schema='3.1-roi-dev';
     C.Detector='existing-v2-surge-shape-continuity-5_roi-candidates-1';

@@ -14,6 +14,11 @@ for i=1:n
     keys=intersect({'RecordingID','Experiment','Mouse','Condition','DrugID','Genotype','Promoter','PuffStim'}, ...
         intersect(R.Properties.VariableNames,E.Properties.VariableNames),'stable');
     for f=keys,mask=mask & string(E.(f{1}))==string(R.(f{1})(i));end
+    if any(mask)
+        R.EventReferenceVersion(i)=strjoin(unique(string(E.EventReferenceVersion(mask))),", ");
+    elseif ismember('IntensityRatiosOffsetCorrected',R.Properties.VariableNames) && R.IntensityRatiosOffsetCorrected(i)
+        policy=boiEventReferencePolicy(0);R.EventReferenceVersion(i)=string(policy.Version);
+    end
     T=E(mask,:);a=getBOISinkBurdenAmplitude(T);flag=T.EventReferenceNeedsReview;
     if ismember('ReviewedBurdenValuesApplied',T.Properties.VariableNames)
         % Automatic quality fields remain evidence, not QC of reviewed references.

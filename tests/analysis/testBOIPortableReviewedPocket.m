@@ -75,3 +75,21 @@ end
 function write(p,v)
 f=fopen(p,'w');cleanup=onCleanup(@()fclose(f));fprintf(f,'%s\n',jsonencode(v,'PrettyPrint',true));
 end
+
+function testVersionedCameraOffsetReplay(t)
+[R,folder]=fixture('sink');t.addTeardown(@()rmdir(folder,'s'));
+[legacy,~]=preview(R,'accepted_local_state','recovery_observed');
+s=load(R.AuditPath);s.AnalysisInfo.CameraOffsetCounts=50;
+file=fullfile(folder,'offset-audit.mat');save(file,'-struct','s');R=loadBOIEventReview(file);
+[cal,~]=preview(R,'accepted_local_state','recovery_observed');
+t.verifyEqual(cal.Definition.ID,'boi-reviewed-pocket-optical-0.3.0-offset');
+t.verifyEqual(cal.Measures.CorrectedSignedTroughPercent,-50);
+t.verifyEqual(cal.Measures.RawSignedTroughPercent,-40);
+saved=saveBOIReviewedPocketEvidence(cal,fullfile(folder,'corrected'));
+t.verifyEqual(verifyBOIReviewedPocketArithmetic(saved.Document),cal.Measures);
+legacy=rmfield(legacy,{'CameraOffsetCounts','IntensityCalibration'});
+t.verifyEqual(verifyBOIReviewedPocketArithmetic(legacy),legacy.Measures);
+m=computeBOIReviewedOpticalInterval([125 125 105 115],1:2,3,4,1,'sink',25);
+t.verifyEqual(m.SignedFraction,[-0.2;-0.1],'AbsTol',eps);
+t.verifyEqual(m.SignedTraceIntegralSec,-0.3,'AbsTol',eps);
+end

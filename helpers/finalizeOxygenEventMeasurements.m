@@ -1,4 +1,4 @@
-function [Sites,Events] = finalizeOxygenEventMeasurements(Sites,Events,Pixels,Raw,fs,pixelSize,border,recordingID,kind,baselineSec,OtherPixels,otherBorder,contract,recordingReferenceOverride)
+function [Sites,Events] = finalizeOxygenEventMeasurements(Sites,Events,Pixels,Raw,fs,pixelSize,border,recordingID,kind,baselineSec,OtherPixels,otherBorder,contract,recordingReferenceOverride,offset)
 % Quantify existing detections from fixed per-event raw footprints.
 % Detection and trace-refined timing are preserved; no re-detection occurs.
 assert(isfinite(fs)&&fs>0&&isfinite(pixelSize)&&pixelSize>0&&round(baselineSec*fs)>=1, ...
@@ -12,6 +12,7 @@ Sites.FrameSize = repmat({frameSize},height(Sites),1);
 Sites.NFrames = repmat(N,height(Sites),1);
 Sites.SampleF = repmat(fs,height(Sites),1);
 if nargin<13,contract=oxygenPipelineContract();end
+if nargin<15,offset=[];end
 if nargin<14,recordingReferenceOverride=[];end
 Sites.AnalysisSchemaVersion = repmat(string(contract.Schema),height(Sites),1);
 for s=1:height(Sites)
@@ -87,12 +88,15 @@ for e=1:height(Events)
         B0=mean(trace(b));
         Events.BaselineValue(e)=B0;
         Events.BaselineStartFrame(e)=b(1); Events.BaselineEndFrame(e)=b(end);
-        if isfinite(B0) && B0>0 && all(isfinite(trace(frames)))
-            d=(trace(frames)-B0)/B0;
+        [denom,blocked]=boiIntensityDenominator(B0,offset);
+        if isfinite(denom) && denom>0 && all(isfinite(trace(frames)))
+            d=(trace(frames)-B0)/denom;
             if strcmp(kind,'sink'), amp=-min(d); else, amp=max(d); end
             Events.MeanSignedChangeFraction(e)=mean(d,'omitnan');
             Events.SignedTraceAUC_sec(e)=sum(d)/fs;
             Events.BaselineStatus(e)="valid";
+        elseif blocked
+            Events.BaselineStatus(e)="reference_at_or_below_camera_offset";
         else
             Events.BaselineStatus(e)="nonpositive_baseline_or_missing_event_signal";
         end
@@ -134,8 +138,8 @@ for e=1:height(Events)
     for j=1:4, Events.([prefix names{j}])(e)=mean(vals(:,j))*scales(j); end
 end
 if strcmp(kind,'sink')
-    Events=deriveBOIPreEpisodeReferences(Events,episodeEvidence,allPixels,fs,baselineSec);
+    Events=deriveBOIPreEpisodeReferences(Events,episodeEvidence,allPixels,fs,baselineSec,"preserved_input_event_footprint",offset);
     Events=deriveBOIEventReferences(Events,episodeEvidence,allPixels,fs,baselineSec, ...
-        "preserved_input_event_footprint",recordingReferenceOverride);
+        "preserved_input_event_footprint",recordingReferenceOverride,offset);
 end
 end

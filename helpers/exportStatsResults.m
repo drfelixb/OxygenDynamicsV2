@@ -33,6 +33,12 @@ if isfield(CoreData,'RecordingRegistry')
         'EventMeasurementQC','EventBaselineStatusCounts','-append');
     writetable(EventMeasurementQC,OutputXlsx,'Sheet','EventMeasurementQC');
     writetable(EventBaselineStatusCounts,OutputXlsx,'Sheet','EventBaselineStatusCounts');
+    if ~ismember('IntensityRatioDefinition',RecordingRegistry.Properties.VariableNames)
+        RecordingRegistry=boiIntensityRows(RecordingRegistry,[]);
+    end
+    CameraOffsetSummary=boiIntensitySummary(RecordingRegistry);
+    save(fullfile(StatsOutputFolderPath,'DataOutput.mat'),'CameraOffsetSummary','-append');
+    writetable(CameraOffsetSummary,OutputXlsx,'Sheet','CameraOffsetSummary');
     writetable(RecordingRegistry,OutputXlsx,'Sheet','RecordingRegistry');
     writetable(RecordingWindowMetrics,OutputXlsx,'Sheet','RecordingWindowMetrics');
     if ~isempty(WindowBaselineContrasts), writetable(WindowBaselineContrasts,OutputXlsx,'Sheet','WindowBaselineContrasts'); end

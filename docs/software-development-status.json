@@ -1,7 +1,14 @@
 {
   "schema": "oxygen-software-development-status-1",
-  "date": "2026-11-25",
+  "date": "2026-11-27",
   "active_implementation_milestone": null,
+  "camera_offset": {
+    "id": "OFFSET-01",
+    "approved": "2026-11-27",
+    "target": "4.0.0",
+    "scope": "Optional original-count offsets for optical ratios, per channel, with saved versions and recording-level provenance.",
+    "stop": "Pull request for researcher review."
+  },
   "cleanup": {
     "id": "CLEANUP-01",
     "owner": "root",

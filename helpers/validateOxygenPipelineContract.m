@@ -1,6 +1,6 @@
 function validateOxygenPipelineContract(Info,M)
 profile=getBOISupportProfile(Info);
-C=oxygenPipelineContract(profile);
+C=oxygenPipelineContract(profile,boiCameraOffset(Info));
 if ~isfield(Info,'PipelineContract') || ~isequaln(Info.PipelineContract,C) || ...
         ~isfield(Info,'AnalysisSchemaVersion') || ~strcmp(Info.AnalysisSchemaVersion,C.Schema)
     error('OxygenDynamics:ReanalysisRequired','Outputs do not match the current detection/measurement/statistics version. Rerun the master.');

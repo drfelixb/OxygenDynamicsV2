@@ -15,6 +15,8 @@ input.AmplitudeSignConvention=repmat("positive_drop_percent",height(E),1);
 eventIds=E.EventID;if ismember('EventIndex',E.Properties.VariableNames),eventIds=E.EventIndex;end
 refStart=nan(height(E),1);refEnd=refStart;refCount=refStart;revisionRows=cell(0,1);
 areas=E.BurdenArea_um2;areaStates=strings(height(E),1);areaFrames=nan(height(E),1);hasAreaRevision=false;
+E.ReviewedOpticalVersion=strings(height(E),1);
+E.ReviewedCameraOffsetCounts=nan(height(E),1);
 for k=1:numel(Events)
     V=Events{k};S=V.Document;
     artifact=table();
@@ -27,6 +29,9 @@ for k=1:numel(Events)
         'OxygenDynamics:BurdenSelectionPolicy','Reviewed event and automatic selection policies are incompatible.');
     K=table(string(S.RecordingID),S.SiteID,S.EventID,'VariableNames',{'RecordingID','SinkID','EventIndex'});
     [~,key]=oxygenEventJoinKeys(E,K);j=find(keys==key);assert(isscalar(j)&&~applied(j),id,'Missing, rejected or duplicate reviewed event.');
+    E.ReviewedOpticalVersion(j)=string(boiReviewedOpticalVersion(S));
+    reviewedOffset=boiCameraOffset(S);
+    if ~isempty(reviewedOffset),E.ReviewedCameraOffsetCounts(j)=reviewedOffset;end
     D=B.ReviewDecisions;di=find(string(D.RecordingID)==string(S.RecordingID)&D.SinkID==S.SiteID&D.EventIndex==S.EventID);
     assert(isscalar(di)&&D.RecognitionStatus(di)=="recognized"&&~D.ExcludedFromReviewedBurden(di)&& ...
         string(D.ReviewSHA256(di))==string(S.BoundarySHA256),id,'Choose the matching saved recognition/boundary revision.');
@@ -80,6 +85,13 @@ E.BurdenDurationSource(applied)={'saved approved reviewed onset/recovery'};
 E.BurdenStartFrame=input.StartFrame;E.BurdenEndFrame=input.EndFrame;
 E.ReviewedBurdenValuesApplied=applied;E.ReviewedBurdenArtifact=paths;E.ReviewedBurdenManifestSHA256=hashes;
 E.ReviewedReferenceStartFrame=refStart;E.ReviewedReferenceEndFrame=refEnd;E.ReviewedReferenceSamples=refCount;
+B.ReviewSummary.OriginalReviewedOpticalEvents=zeros(height(B.ReviewSummary),1);
+B.ReviewSummary.OffsetReviewedOpticalEvents=zeros(height(B.ReviewSummary),1);
+for k=1:height(B.ReviewSummary)
+    selected=string(E.RecordingID)==string(B.ReviewSummary.RecordingID(k));
+    B.ReviewSummary.OriginalReviewedOpticalEvents(k)=nnz(selected & E.ReviewedOpticalVersion=="0.1.0-draft");
+    B.ReviewSummary.OffsetReviewedOpticalEvents(k)=nnz(selected & E.ReviewedOpticalVersion=="0.2.0-offset");
+end
 B.EventTable=E;B.RecordingTable=appendBOIEpisodeReferenceSummary(N.RecordingTable,E);
 B.RecordingTable=appendBOIEventReferenceSummary(B.RecordingTable,E);
 B.GroupSummaryTable=summarizeOxygenMouseMetrics(B.RecordingTable);B.TimeSeriesTable=N.TimeSeriesTable;B.TimeSeriesBasis=N.TimeSeriesBasis;

@@ -29,6 +29,12 @@ D=struct('Schema','boi-baseline-diagnostic-2','MethodID','boi-baseline-linear-re
     'StabilityDecision','not_assigned', ...
     'Limitations','A short fluctuation can be extrapolated incorrectly. No substrate kinetics, correction or automatic exclusion is inferred.', ...
     'NumericalInterpretation','Negative and very small values are retained; numerical sign alone is not physiological evidence. No sign cutoff is applied.');
+offset=[];if isfield(Data,'IntensityCalibration'),offset=boiCameraOffset(Data.IntensityCalibration);end
+D.IntensityCalibration=boiIntensityCalibration(offset);
+if ~isempty(offset)
+    D.MethodID='boi-baseline-linear-review-2-offset';
+    D.AmplitudeFormula=strrep(D.AmplitudeFormula,'/reference)','/(reference-offset))');
+end
 % Older supported audits may omit the original stored baseline. Do not replace
 % that missing historical value with the independently recomputed mean.
 if ismember('StoredBaseline',row.Properties.VariableNames),D.SavedBaseline=row.StoredBaseline;end
@@ -44,7 +50,7 @@ end
 if any(~isfinite(raw(b)))
     D.Status='nonfinite_baseline';D.Message='At least one required baseline source sample is nonfinite.';return;
 end
-if row.RecomputedStatus~="valid"
+if ~ismember(row.RecomputedStatus,["valid","reference_at_or_below_camera_offset"])
     D.Status='saved_baseline_unavailable';D.Message=['Saved baseline status: ' char(row.RecomputedStatus) '. The diagnostic does not repair it.'];return;
 end
 if ~Data.BaselineReplayMatches||(~Data.ReplayMatches&&all(isfinite(raw(event))))
@@ -59,12 +65,14 @@ if n<2
 end
 time=F.ModeledTimeSec;x=time(b)-mean(time(b));beta=sum(x.*(y-B))/sum(x.^2);
 D.FitAvailable=true;D.BaselineStartFrame=b(1);D.BaselineEndFrame=b(end);D.BaselineMean=B;
-D.SlopeUnitsPerSec=beta;D.SlopePercentPerSec=100*beta/B;
+denom=boiIntensityDenominator(B,offset);
+if denom<=0,denom=NaN;end
+D.SlopeUnitsPerSec=beta;D.SlopePercentPerSec=100*beta/denom;
 half=floor(n/2);D.FirstHalfSamples=half;D.LastHalfSamples=n-half;
-D.FirstHalfSlopePercentPerSec=halfSlope(time(b(1:half)),y(1:half),B);
-D.LastHalfSlopePercentPerSec=halfSlope(time(b(half+1:end)),y(half+1:end),B);
-fit=B+beta*x;D.CVPercent=100*std(y)/B;D.PeakToTroughPercent=100*(max(y)-min(y))/B;
-D.ResidualRMSPercent=100*sqrt(mean((y-fit).^2))/B;
+D.FirstHalfSlopePercentPerSec=halfSlope(time(b(1:half)),y(1:half),denom);
+D.LastHalfSlopePercentPerSec=halfSlope(time(b(half+1:end)),y(half+1:end),denom);
+fit=B+beta*x;D.CVPercent=100*std(y)/denom;D.PeakToTroughPercent=100*(max(y)-min(y))/denom;
+D.ResidualRMSPercent=100*sqrt(mean((y-fit).^2))/denom;
 variance=sum((y-B).^2);if variance>0,D.DescriptiveR2=1-sum((y-fit).^2)/variance;end
 use=[b;event];Reference(use)=B+beta*(time(use)-mean(time(b)));
 D.FirstEventReference=Reference(event(1));D.LastEventReference=Reference(event(end));
@@ -72,10 +80,14 @@ D.MinimumEventReference=min(Reference(event));
 if any(~isfinite(raw(event)))||any(~isfinite(Reference(use)))
     D.Status='nonfinite_event_source_or_reference';D.Message='The fitted line is shown for inspection; the alternative amplitude is unavailable because event source or reference values are nonfinite.';return;
 end
+[eventDenom,blocked]=boiIntensityDenominator(Reference(event),offset);
+if any(blocked)
+    D.Status='reference_at_or_below_camera_offset';D.Message='The fitted event reference reaches the supplied offset.';return
+end
 if any(Reference(event)<=0)
     D.Status='nonpositive_event_reference';D.Message='The extrapolated line reaches a nonpositive event reference. Its amplitude and integral are unavailable; no clipping or fallback is applied.';return;
 end
-SignedFraction(event)=(raw(event)-Reference(event))./Reference(event);
+SignedFraction(event)=(raw(event)-Reference(event))./eventDenom;
 q=SignedFraction(event);if row.EventType=="sink",D.AmplitudeFraction=-min(q);else,D.AmplitudeFraction=max(q);end
 D.MeanSignedChangeFraction=mean(q);D.SignedAUC_sec=sum(q)/fs;
 D.DifferenceFromSavedAmplitude_pp=100*(D.AmplitudeFraction-row.StoredAmplitude);

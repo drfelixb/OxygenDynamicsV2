@@ -6,6 +6,7 @@ R=table(string(M.RecordingID),{M.DatafileID},{M.Mouse},{M.Condition},{M.DrugID},
     {M.Genotype},{M.Promoter},logical(M.PuffStim),N,M.SampleF,N/M.SampleF,A, ...
     'VariableNames',{'RecordingID','Experiment','Mouse','Condition','DrugID','Genotype','Promoter', ...
     'PuffStim','NFrames','SampleF','RecordingDuration_sec','RecordingArea_um2'});
+R=boiIntensityRows(R,info);
 R.PixelSize=M.PixelSize;
 R.AnalysisStatus="loaded";
 R.PipelineVersion=repmat(string(info.PipelineContract.Schema),height(R),1);

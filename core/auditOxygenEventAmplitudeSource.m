@@ -25,10 +25,10 @@ end
 [Raw,~,~]=loadtiff(I.RawFile);
 assert(size(Raw,3)==I.NFrames,'OxygenDynamics:AuditDimensions','Source frame count differs.');
 [A,T]=auditOxygenEventFootprints(S.Table_OxygenSinks_Out,S.Table_OxygenSinkEvents_Out, ...
-    G.Table_OxygenSurges_Out,Raw,round(I.AnalysisParams.quantBaselineWindowSec*I.AnalysisParams.fs),'sink');
+    G.Table_OxygenSurges_Out,Raw,round(I.AnalysisParams.quantBaselineWindowSec*I.AnalysisParams.fs),'sink',boiCameraOffset(I));
 [B,U]=auditOxygenEventFootprints(G.Table_OxygenSurges_Out,G.Table_OxygenSurgeEvents_Out, ...
-    S.Table_OxygenSinks_Out,Raw,round(I.AnalysisParams.surgeBaselineWindowSec*I.AnalysisParams.fs),'surge');
-Audit=[A;B];Traces=[T;U];
+    S.Table_OxygenSinks_Out,Raw,round(I.AnalysisParams.surgeBaselineWindowSec*I.AnalysisParams.fs),'surge',boiCameraOffset(I));
+Audit=boiIntensityRows([A;B],I);Traces=[T;U];
 Audit.Condition=[string(S.Table_OxygenSinkEvents_Out.Condition);string(G.Table_OxygenSurgeEvents_Out.Condition)];
 if o.reconstructDetection
     Detection=Raw;
@@ -76,7 +76,7 @@ if o.reconstructDetection
         if Audit.RecomputedStatus(e)=="valid"
             w=Audit.StartFrame(e):Audit.EndFrame(e);
             if Audit.EventType(e)=="sink",[~,idx]=min(t.Raw(w));else,[~,idx]=max(t.Raw(w));end
-            q=w(idx);b=t.CleanBaselineFrames;B0=Audit.RecomputedBaseline(e);
+            q=w(idx);b=t.CleanBaselineFrames;B0=boiIntensityDenominator(Audit.RecomputedBaseline(e),boiCameraOffset(I));
             total=100*(t.Raw(q)-mean(t.Raw(b)))/B0;
             trend=100*(t.RawCubicTrend(q)-mean(t.RawCubicTrend(b)))/B0;
             residual=t.Raw-t.RawCubicTrend;rem=100*(residual(q)-mean(residual(b)))/B0;

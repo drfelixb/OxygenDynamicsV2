@@ -36,7 +36,7 @@ try
     Status.Stage='analysis';writeBOIRunJSON(statusPath,Status);reportProgress();
     Master=runOxygenDynamicsMaster(rec,Request.Context);
     assert(isequaln(Master.AnalysisInfo.AnalysisParams,Request.AnalysisParams)&& ...
-        strcmp(getBOISupportProfile(Master.AnalysisInfo),o.SupportProfile), ...
+        strcmp(getBOISupportProfile(Master.AnalysisInfo),o.SupportProfile)&&isequal(boiCameraOffset(Master.AnalysisInfo),boiCameraOffset(o)), ...
         'OxygenDynamics:RunSettingsMismatch','Master effective settings differ from the confirmed request.');
     Status.Stage='statistics';writeBOIRunJSON(statusPath,Status);reportProgress();
     Paths={rec};PostureFile=NaN;PupilFile=NaN;PuffsFile=NaN;WhiskingFile=NaN;
@@ -44,6 +44,7 @@ try
     SampleF=o.SampleHz;Pixelsize=o.PixelSizeUm;Puff_2use=NaN;
     RecordingID=string(Master.AnalysisInfo.RecordingID);
     T=table(Paths,PostureFile,PupilFile,PuffsFile,WhiskingFile,Mouse,Genotype,Condition,DrugID,Promoter,SampleF,Pixelsize,Puff_2use,RecordingID);
+    if ~isempty(boiCameraOffset(o)),T.CameraOffsetCounts=boiCameraOffset(o);end
     csv=fullfile(out,'input.csv');writetable(T,csv);
     config=struct('inputCsv',csv,'masterFolder',out,'outputRoot',fullfile(out,'statistics'), ...
         'interactive',false,'imagingMode','BLI','useCuratedSinks',false,'chooseSpecificFolders',false, ...

@@ -108,3 +108,5 @@ For event/window evidence exports in 3.1.0-dev.3, the persistent **Last complete
 export folder** displays the full destination with **Open folder** and **Copy
 path**. Selection changes do not erase it. Cancellation/failure keeps the last
 completed destination; incomplete exports are not offered as completed folders.
+
+An optional camera dark offset adjusts the reference denominator of intensity-based ratios. Enter it in original counts for each recording or channel. [Camera offset, formulas and dark-frame measurements](CAMERA_OFFSET.md)

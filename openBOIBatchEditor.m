@@ -21,7 +21,7 @@ importActive=false;importConverted=0;importPathSummary=[];importLastPaths=string
 acquisition={'SampleF','Pixelsize','BOISupportProfile'};
 importSettings=acquisition(1:2);
 importLabels={'Sampling rate (Hz)','Pixel size (µm/pixel)'};
-essential={'Paths','InputStatus','AnalysisStatus','ResultCheck',acquisition{:}};
+essential={'Paths','InputStatus','AnalysisStatus','ResultCheck',acquisition{:},'CameraOffsetCounts'};
 optional={'Mouse','Condition','DrugID','Genotype','Promoter','RecordingLabel', ...
     'RecordingDate','Session','Sex','AgeDays','BrainRegion','Project','Operator','Notes'};
 reserved={'BatchRowID','InputStatus','AnalysisStatus','ResultCheck','ReviewStatus', ...
@@ -1255,6 +1255,7 @@ if isfield(Batch,'PathImport'),startImport();end
             case 'AnalysisStatus',label='Analysis status';
             case 'ResultCheck',label='Result check';
             case 'SampleF',label='Rate (Hz)';
+            case 'CameraOffsetCounts',label='Camera offset (counts)';
             case 'Pixelsize',label='Pixel (µm/px)';
             case 'BOISupportProfile',label='Detection support';
             case 'Mouse',label='Mouse ID';
@@ -1264,7 +1265,7 @@ if isfield(Batch,'PathImport'),startImport();end
         end
     end
     function names=metadataNames(names)
-        names=names(~ismember(names,[{'Paths'} acquisition reserved]));
+        names=names(~ismember(names,[{'Paths','CameraOffsetCounts'} acquisition reserved]));
         names=names(~startsWith(lower(string(names)),"boibatch"));
     end
     function cells=cellstrTable(t)

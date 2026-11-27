@@ -33,6 +33,8 @@ try
         'RawSourceSHA256',C.RawSourceSHA256,'BoundaryPath',C.BoundaryPath,'BoundarySHA256',C.BoundarySHA256, ...
         'ReferencePath',C.ReferencePath,'ReferenceSHA256',C.ReferenceSHA256,'OriginalResultsChanged',false, ...
         'GlobalDefaultsChanged',false,'RecordingTotalCalculated',false,'PartialSumCalculated',false);
+    S.ReviewedOpticalVersion=boiReviewedOpticalVersion(C); S.CameraOffsetCounts=boiCameraOffset(C);
+    cal=boiIntensityCalibration(C); S.CameraOffsetSource=cal.CameraOffsetSource; S.IntensityRatiosOffsetCorrected=cal.IntensityRatiosOffsetCorrected;
     M=computeBOIReviewedArea(D);ReviewedEventBurden=S;AreaReview=D; %#ok<NASGU>
     save(fullfile(Folder,'ReviewedEventBurden.mat'),'ReviewedEventBurden','AreaReview','M');
     writeBOIRunJSON(fullfile(Folder,'ReviewedEventBurden.json'),S);writetable(struct2table(S,'AsArray',true),fullfile(Folder,'ReviewedEventBurden.csv'));

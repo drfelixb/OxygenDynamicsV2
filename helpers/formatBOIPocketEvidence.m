@@ -26,6 +26,12 @@ lines=["# Researcher-reviewed pocket — exploratory optical evidence"; ...
     "Saved values reopen without arithmetic replay. Export embeds exact samples and footprint. NaN/null means unavailable, never zero."; ...
     "Automatic results, detector provenance and legacy raw reviewed definition remain separate. No recording, detector or statistics execution; no automatic relabelling."; ...
     "This artifact carries local paths; it is a local/portable scientific-review export, not an approved public release."];
+if ~isempty(boiCameraOffset(E))
+    lines=replace(lines,'positive raw reference intensity','positive offset-corrected reference intensity');
+    lines=replace(lines,'/mean(raw(R))','/(mean(raw(R))-offset)');
+    lines=replace(lines,'positive raw denominator','positive offset-corrected denominator');
+    lines(end+1)="User-supplied camera offset (counts) = "+E.CameraOffsetCounts+".";
+end
 text=char(strjoin(lines,newline));
 end
 function s=number(x)

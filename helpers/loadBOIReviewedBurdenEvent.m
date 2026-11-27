@@ -28,7 +28,9 @@ assert(string(a.RecordingID)==string(S.RecordingID)&&string(a.EventType)=="sink"
 f=R.ReferenceJudgments.Frames;
 assert(numel(f)==S.ReferenceSamples&&f(1)==S.ReferenceStartFrame&&f(end)==S.ReferenceEndFrame&& ...
     a.StartFrame==S.OriginalAutomaticStartFrame&&a.EndFrame==S.OriginalAutomaticEndFrame,id,'Reference or automatic identity differs.');
-M=computeBOIReviewedOpticalInterval(R.Traces{ix}.Raw,f,S.StartFrame,S.EndFrame,R.AnalysisInfo.AnalysisParams.fs,'sink');
+version=boiReviewedOpticalVersion(S);
+getBOIReviewedOpticalDefinition([],version);
+M=computeBOIReviewedOpticalInterval(R.Traces{ix}.Raw,f,S.StartFrame,S.EndFrame,R.AnalysisInfo.AnalysisParams.fs,'sink',boiCameraOffset(S));
 assert(strcmp(M.Status,'computed_exploratory'),id,'Reviewed arithmetic is unavailable.');
 amp=100*M.SavedSignDirectionalAmplitudeFraction;A=S.BurdenRecordingArea_um2;D=S.BurdenRecordingDuration_sec;
 if areaRevision

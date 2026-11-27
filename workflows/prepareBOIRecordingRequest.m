@@ -7,8 +7,14 @@ required={'RecordingFolder','OutputFolder','SampleHz','PixelSizeUm','SupportProf
 labels={'Mouse','Condition','DrugID','Genotype','Promoter'};
 assert(isstruct(Options)&&isscalar(Options)&&all(isfield(Options,required)), ...
     'OxygenDynamics:InvalidRunRequest','Supply one options struct with recording/output folders, sample rate, pixel size and support profile.');
-unknown=setdiff(fieldnames(Options),[required labels]);
+unknown=setdiff(fieldnames(Options),[required labels {'CameraOffsetCounts'}]);
 assert(isempty(unknown),'OxygenDynamics:InvalidRunRequest','Unsupported request fields: %s.',strjoin(unknown,', '));
+offset=boiCameraOffset(Options);
+if ~isempty(offset)
+    Options.CameraOffsetCounts=offset;
+elseif isfield(Options,'CameraOffsetCounts')
+    Options=rmfield(Options,'CameraOffsetCounts');
+end
 supplied=fieldnames(Options);
 for k=1:numel(labels)
     if ~isfield(Options,labels{k}),Options.(labels{k})='unspecified';end
@@ -65,6 +71,7 @@ end
 context=createLegacyRecordingContext(Options.SampleHz,Options.Mouse,Options.Condition, ...
     Options.PixelSizeUm,Options.Genotype,Options.Promoter,Options.DrugID,NaN,NaN,NaN,'N',profile);
 context.SaveBOIReviewEvidence=true;
+if ~isempty(offset),context.CameraOffsetCounts=offset;end
 provenance=struct();
 for f=fieldnames(Options)'
     provenance.(f{1})='explicit';

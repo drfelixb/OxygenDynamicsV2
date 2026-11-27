@@ -24,6 +24,8 @@ assert(O.Mode=="dual-bli" || O.DenoisedFiles(2)=="",'BOIPair:Detection','Fluores
 assert(strlength(string(O.OutputFolder))>0,'BOIPair:Destination','Choose a new output folder.');
 O.OutputFolder = char(java.io.File(char(O.OutputFolder)).getCanonicalPath());
 assert(~isfile(O.OutputFolder) && ~isfolder(O.OutputFolder),'BOIPair:Destination','Choose a new output folder.');
+O.CameraOffsetCountsA=boiPairCameraOffset(O,1);
+O.CameraOffsetCountsB=boiPairCameraOffset(O,2);
 shape = [];
 used = strings(0,1);
 for channel = 1:2

@@ -5,7 +5,8 @@ assert(isstruct(E)&&isscalar(E)&&isfield(E,'Schema')&&strcmp(E.Schema,'boi-revie
     'OxygenDynamics:UnsupportedPocketSchema','Unsupported reviewed pocket evidence version.');
 required={'Definition','AuditSHA256','RawSourceSHA256','AuditRow','OriginalAutomatic','Judgment','JudgmentSHA256', ...
     'FixedFootprint','FixedFootprintSHA256','EventFrames','ReferenceFrames','Correction','Ingredients','IngredientsSHA256','Measures'};
-assert(all(isfield(E,required)),id,'Incomplete pocket evidence.');D=getBOIReviewedPocketDefinition;
+assert(all(isfield(E,required)),id,'Incomplete pocket evidence.');D=getBOIReviewedPocketDefinition(E.Definition.ID);
+assert(endsWith(D.ID,'-offset')==~isempty(boiCameraOffset(E)),id,'Saved offset and definition disagree.');
 assert(isequaln(E.Definition,D),id,'Definition differs from the version-bound contract.');
 J=E.Judgment;
 assert(strcmp(E.JudgmentSHA256,boiPocketDigest(J)),'OxygenDynamics:PocketRevisionMismatch','Judgment revision changed; save a new result.');

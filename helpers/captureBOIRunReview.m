@@ -4,10 +4,10 @@ function AuditPath=captureBOIRunReview(D,I,MasterPaths)
 out=fullfile(D.RecordingFolder,'BOIReview');
 assert(~isfolder(out),'OxygenDynamics:AuditOutputExists','Use a new recording run for review capture.');
 [A,T]=auditOxygenEventFootprints(D.Table_OxygenSinks_Out,D.Table_OxygenSinkEvents_Out, ...
-    D.Table_OxygenSurges_Out,D.ReviewRaw,round(I.AnalysisParams.quantBaselineWindowSec*I.AnalysisParams.fs),'sink');
+    D.Table_OxygenSurges_Out,D.ReviewRaw,round(I.AnalysisParams.quantBaselineWindowSec*I.AnalysisParams.fs),'sink',boiCameraOffset(I));
 [B,U]=auditOxygenEventFootprints(D.Table_OxygenSurges_Out,D.Table_OxygenSurgeEvents_Out, ...
-    D.Table_OxygenSinks_Out,D.ReviewRaw,round(I.AnalysisParams.surgeBaselineWindowSec*I.AnalysisParams.fs),'surge');
-Audit=[A;B];Traces=[T;U];
+    D.Table_OxygenSinks_Out,D.ReviewRaw,round(I.AnalysisParams.surgeBaselineWindowSec*I.AnalysisParams.fs),'surge',boiCameraOffset(I));
+Audit=boiIntensityRows([A;B],I);Traces=[T;U];
 Audit.Condition=[string(D.Table_OxygenSinkEvents_Out.Condition);string(D.Table_OxygenSurgeEvents_Out.Condition)];
 Audit.SourceRawSHA256=repmat(string(I.RawSHA256),height(Audit),1);
 corrected=reshape(D.IM_Notrend,[],I.NFrames);

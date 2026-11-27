@@ -52,7 +52,9 @@ for c = oxygen
             if isfinite(e.ReferenceStartFrame(j)) && isfinite(e.ReferenceEndFrame(j))
                 ref = e.ReferenceStartFrame(j):e.ReferenceEndFrame(j);
             end
-            available = isfinite(e.OpticalDepthOrRisePct(j));
+            available = isfinite(e.OpticalDepthOrRisePct(j)) || ...
+                (e.RC1ReferenceStatus(j)=="reference_at_or_below_camera_offset" && all(isfinite(values)) && ...
+                 isfinite(positiveMean(own(j,ref),true)));
         else
             ref = data.Traces{j}.CleanBaselineFrames(:)';
             e.ReferenceSamples(j)=numel(ref);
@@ -65,12 +67,12 @@ for c = oxygen
         if available
             e.ReferenceMeanA(j)=positiveMean(raw{1}(j,ref),sink(j));
             e.ReferenceMeanB(j)=positiveMean(raw{2}(j,ref),sink(j));
-            e.MeanChangePctA(j)=100*(mean(raw{1}(j,frames))/e.ReferenceMeanA(j)-1);
-            e.MeanChangePctB(j)=100*(mean(raw{2}(j,frames))/e.ReferenceMeanB(j)-1);
+            e.MeanChangePctA(j)=boiPairPercent(mean(raw{1}(j,frames)),e.ReferenceMeanA(j),boiPairCameraOffset(O,1));
+            e.MeanChangePctB(j)=boiPairPercent(mean(raw{2}(j,frames)),e.ReferenceMeanB(j),boiPairCameraOffset(O,2));
             extreme=e.ExtremeFrame(j);
             if isfinite(extreme)
-                e.ChangeAtAnchorExtremePctA(j)=100*(raw{1}(j,extreme)/e.ReferenceMeanA(j)-1);
-                e.ChangeAtAnchorExtremePctB(j)=100*(raw{2}(j,extreme)/e.ReferenceMeanB(j)-1);
+                e.ChangeAtAnchorExtremePctA(j)=boiPairPercent(raw{1}(j,extreme),e.ReferenceMeanA(j),boiPairCameraOffset(O,1));
+                e.ChangeAtAnchorExtremePctB(j)=boiPairPercent(raw{2}(j,extreme),e.ReferenceMeanB(j),boiPairCameraOffset(O,2));
             end
         end
     end
@@ -116,6 +118,7 @@ else
     P.Links.CandidatesForA=zeros(0,1); P.Links.CandidatesForB=zeros(0,1);
 end
 P.Comparisons=compareChannels(P.Summary,O);
+P=boiPairCalibrationRows(P);
 end
 
 function v=positiveMean(x,finiteReference)

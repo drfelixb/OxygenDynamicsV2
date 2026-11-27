@@ -184,3 +184,23 @@ save(fullfile(folder,'BatchStatsResult.mat'),'Result');
 writeBOIRunJSON(fullfile(folder,'BatchStatsStatus.json'),struct('Schema','boi-batch-stats-status-1','Status','complete','Stage','complete', ...
     'Workbook',char(book),'IncludedRecordings',5,'ExcludedRecordings',0));
 end
+
+function testPocketAndNearbyOffsets(t)
+parent=string(tempname(t.TestData.Root)); mkdir(parent);
+p=preparePocketNearbyTissue(t.TestData.Folder,parent);
+s=load(p.EventFile,'Table_OxygenSinkEvents_OutCombo');e=s.Table_OxygenSinkEvents_OutCombo;
+row=p.Rows(1,:);R=loadBOIEventReview(row.AuditFile);
+e=e(string(e.RecordingID)==string(row.RecordingID),:);e.PocketKey=(1:height(e))';
+[e,match]=nearbyMatchEvents(R,e);
+[original,raw]=nearbyMeasure(R,e,match,row.VerifiedRawFile);
+R.AnalysisInfo.CameraOffsetCounts=20;
+[updated,cal]=nearbyMeasure(R,e,match,row.VerifiedRawFile);
+t.verifyEqual(updated.PocketBaseline,original.PocketBaseline);
+t.verifyEqual(cal.PocketRaw,raw.PocketRaw);t.verifyEqual(cal.NearRaw,raw.NearRaw);
+[~,ix]=ismember(cal.PocketKey,e.PocketKey);
+for region=["Pocket","Near","Far","TissueOnlyPocket"]
+    b=updated.(region+"Baseline")(ix);
+    t.verifyEqual(cal.(region+"Pct"),100*(raw.(region+"Raw")-b)./(b-20),'AbsTol',1e-12);
+end
+t.verifyTrue(all(cal.IntensityRatiosOffsetCorrected));
+end

@@ -77,6 +77,12 @@ else
     MasterRecordingFolder = pwd;
 end
 [InputData,AnalysisInfo] = loadOxygenMasterInputs(MasterRecordingFolder,AnalysisParams);
+if ~exist('CameraOffsetCounts','var'),CameraOffsetCounts=[];end
+calibration=boiIntensityCalibration(CameraOffsetCounts);
+AnalysisInfo.CameraOffsetCounts=calibration.CameraOffsetCounts;
+AnalysisInfo.CameraOffsetSource=calibration.CameraOffsetSource;
+AnalysisInfo.IntensityRatiosOffsetCorrected=calibration.IntensityRatiosOffsetCorrected;
+AnalysisInfo.IntensityRatioDefinition=calibration.IntensityRatioDefinition;
 if StrictROISupport
     AnalysisInfo.BOISupportProfile=BOISupportProfile;
     RequiredMask=resolveBOITissueSupport(AnalysisInfo.BOITissueSupport,AnalysisInfo.FrameSize,AnalysisInfo.RawSHA256);
@@ -446,7 +452,7 @@ Table_OxygenSurges_Out = createOxygenSurgeSummaryTable(Experiment_Surge,Mouse_Su
     MeanOxySurgePerimeter_um,MeanCircularity_Surge,MeanOxySurgeBoundingBox,NumOxySurgeEvents, ...
     Start_Surge,Duration_Surge,NormOxySurgeAmp,Size_Surge_modulation,OxySurge_Pxls_all);
 % Analysis schema 2.1: preserve native geometry and quantify each event independently.
-AnalysisInfo.PipelineContract=oxygenPipelineContract(BOISupportProfile);
+AnalysisInfo.PipelineContract=oxygenPipelineContract(BOISupportProfile,CameraOffsetCounts);
 AnalysisInfo.AnalysisSchemaVersion=AnalysisInfo.PipelineContract.Schema;
 AnalysisInfo.RecordingID = char(java.io.File(Tifffiles(1).folder).getCanonicalPath());
 AnalysisInfo.NFrames = size(IM_Raw,3);
@@ -458,16 +464,25 @@ SinkTissueMask(Pixel_frame+1:end-Pixel_frame,Pixel_frame+1:end-Pixel_frame)= ...
     RecAreaFilter(Pixel_frame+1:end-Pixel_frame,Pixel_frame+1:end-Pixel_frame);
 AnalysisInfo.SinkEligibleTissuePixels=find(SinkTissueMask);
 AnalysisInfo.SurgeEligibleTissuePixels=find(RecAreaFilter);
-AnalysisInfo.EpisodeReferencePolicy=boiEpisodeReferencePolicy();
-AnalysisInfo.EventReferencePolicy=boiEventReferencePolicy();
+AnalysisInfo.EpisodeReferencePolicy=boiEpisodeReferencePolicy(CameraOffsetCounts);
+AnalysisInfo.EventReferencePolicy=boiEventReferencePolicy(CameraOffsetCounts);
 AnalysisInfo.BurdenSelectionPolicy=boiBurdenSelectionPolicy();
 Table_OxygenSinks_Out.RecAreaSize=repmat({AnalysisInfo.RecordingAreaUm2},height(Table_OxygenSinks_Out),1);
 [Table_OxygenSinks_Out,Table_OxygenSinkEvents_Out] = finalizeOxygenEventMeasurements( ...
     Table_OxygenSinks_Out,Table_OxygenSinkEvents_Out,Overall_OxygenSinks_Pxllist, ...
-    IM_Raw,fs,PixelSize,Pixel_frame,AnalysisInfo.RecordingID,'sink',AnalysisParams.quantBaselineWindowSec,Overall_OxygenSurges_Pxllist,0,AnalysisInfo.PipelineContract,AnalysisParams.recordingReferenceOverride);
+    IM_Raw,fs,PixelSize,Pixel_frame,AnalysisInfo.RecordingID,'sink',AnalysisParams.quantBaselineWindowSec,Overall_OxygenSurges_Pxllist,0,AnalysisInfo.PipelineContract,AnalysisParams.recordingReferenceOverride,CameraOffsetCounts);
 [Table_OxygenSurges_Out,Table_OxygenSurgeEvents_Out] = finalizeOxygenEventMeasurements( ...
     Table_OxygenSurges_Out,Table_OxygenSurgeEvents_Out,Overall_OxygenSurges_Pxllist, ...
-    IM_Raw,fs,PixelSize,0,AnalysisInfo.RecordingID,'surge',AnalysisParams.surgeBaselineWindowSec,Overall_OxygenSinks_Pxllist,Pixel_frame,AnalysisInfo.PipelineContract);
+    IM_Raw,fs,PixelSize,0,AnalysisInfo.RecordingID,'surge',AnalysisParams.surgeBaselineWindowSec,Overall_OxygenSinks_Pxllist,Pixel_frame,AnalysisInfo.PipelineContract,[],CameraOffsetCounts);
+AnalysisInfo.ReferencesAtOrBelowOffset=0;
+if ~isempty(CameraOffsetCounts)
+    references=[Table_OxygenSinkEvents_Out.BaselineValue;Table_OxygenSurgeEvents_Out.BaselineValue; ...
+        Table_OxygenSinkEvents_Out.EventReferenceValue;Table_OxygenSinkEvents_Out.EpisodeReferenceValue; ...
+        Table_OxygenSinkEvents_Out.RecordingReferenceValue];
+    AnalysisInfo.ReferencesAtOrBelowOffset=nnz(isfinite(references)&references<=CameraOffsetCounts);
+end
+Table_OxygenSinkEvents_Out=boiIntensityRows(Table_OxygenSinkEvents_Out,AnalysisInfo);
+Table_OxygenSurgeEvents_Out=boiIntensityRows(Table_OxygenSurgeEvents_Out,AnalysisInfo);
 Table_OxygenSinks_Out.EligibleTissuePixels=repmat({AnalysisInfo.SinkEligibleTissuePixels},height(Table_OxygenSinks_Out),1);
 Table_OxygenSurges_Out.EligibleTissuePixels=repmat({AnalysisInfo.SurgeEligibleTissuePixels},height(Table_OxygenSurges_Out),1);
 if StrictROISupport

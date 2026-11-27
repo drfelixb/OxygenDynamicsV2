@@ -1,6 +1,5 @@
 function E=attachSavedBOIEpisodeReferences(E,SinkFile,SurgeFile,RecordingFolder,fs,recordingReferenceOverride)
 % Read-only adapter: derive from receipt-bound audits without reopening movies.
-P=boiEpisodeReferencePolicy;
 if nargin<6,recordingReferenceOverride=[];end
 if ~istable(E)
     assert(isempty(E),'OxygenDynamics:EpisodeEvidence','Expected a saved event table.');E=table();
@@ -64,14 +63,14 @@ assert(S.AnalysisInfo.NFrames==N&&U.AnalysisInfo.NFrames==N, ...
 native=collectBOINativePixels(S.Table_OxygenSinks_Out,U.Table_OxygenSurges_Out,N);
 if ~ismember('EpisodeReferenceVersion',F.Properties.VariableNames)
     F=deriveBOIPreEpisodeReferences(F,evidence,native,fs, ...
-        S.AnalysisInfo.AnalysisParams.quantBaselineWindowSec,"saved_audit_verified");
+        S.AnalysisInfo.AnalysisParams.quantBaselineWindowSec,"saved_audit_verified",boiCameraOffset(S.AnalysisInfo));
     F.EpisodeReferenceAuditSHA256(:)=string(auditSHA);
 end
 if isempty(recordingReferenceOverride)&&isfield(S.AnalysisInfo.AnalysisParams,'recordingReferenceOverride')
     recordingReferenceOverride=S.AnalysisInfo.AnalysisParams.recordingReferenceOverride;
 end
 F=deriveBOIEventReferences(F,evidence,native,fs, ...
-    S.AnalysisInfo.AnalysisParams.quantBaselineWindowSec,"saved_audit_verified",recordingReferenceOverride);
+    S.AnalysisInfo.AnalysisParams.quantBaselineWindowSec,"saved_audit_verified",recordingReferenceOverride,boiCameraOffset(S.AnalysisInfo));
 F.EventReferenceAuditSHA256(:)=string(auditSHA);
 for e=1:height(E)
     j=find(F.SinkID==E.SinkID(e)&F.EventID==E.EventID(e));
@@ -80,6 +79,7 @@ for e=1:height(E)
         'OxygenDynamics:EpisodeSourceMismatch','Statistics event differs from its saved source.');
     for f=fields,E.(f{1})(e,:)=F.(f{1})(j,:);end
 end
+P=boiEpisodeReferencePolicy(boiCameraOffset(S.AnalysisInfo));
 assert(all(E.EpisodeReferenceVersion==string(P.Version)));
 end
 function same=sameNumber(a,b)

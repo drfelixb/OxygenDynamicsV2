@@ -100,7 +100,9 @@ for i=1:numel(groups)
         if folderLayout
             letters='AB'; raw=value(['Raw' letters(c)],idx); detection=value(['Denoised' letters(c)],idx);
         else
-            row=idx(order(c)); raw=value('RawFile',row); detection=value('DenoisedFile',row);
+            letters='AB'; row=idx(order(c));
+            o.(['CameraOffsetCounts' letters(c)])=boiCameraOffset(value('CameraOffsetCounts',row));
+            raw=value('RawFile',row); detection=value('DenoisedFile',row);
         end
         if raw~=""
             chosen=resolve(raw,folder);
@@ -129,6 +131,8 @@ end
         for key=["Mouse","Condition","Genotype","DrugID"]
             o.(key)=value(key,rows);
         end
+        o.CameraOffsetCountsA=boiCameraOffset(value('CameraOffsetCountsA',rows));
+        o.CameraOffsetCountsB=boiCameraOffset(value('CameraOffsetCountsB',rows));
         if o.DrugID=="", o.DrugID=value('Group_Treatment',rows); end
     end
 end

@@ -7,6 +7,9 @@ if nargin<3,Origins=table();end
 o=struct('RecordingFolder',char(Row.Paths),'OutputFolder',char(OutputFolder), ...
     'SampleHz',str2double(Row.SampleF),'PixelSizeUm',str2double(Row.Pixelsize), ...
     'SupportProfile',char(Row.BOISupportProfile));
+if ismember('CameraOffsetCounts',Row.Properties.VariableNames)
+    o.CameraOffsetCounts=boiCameraOffset(Row.CameraOffsetCounts);
+end
 % PuffsFile/Puff_2use stay descriptive metadata; neither enters the BOI request.
 labels={'Mouse','Condition','DrugID','Genotype','Promoter'};
 for k=1:numel(labels)

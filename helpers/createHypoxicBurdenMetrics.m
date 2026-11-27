@@ -27,12 +27,12 @@ Burden.EventTable = table();
 Burden.RecordingTable = table();
 Burden.MetricBasis = createHypoxicBurdenBasisTable();
 if istable(TableOxygenSinkEvents)&&ismember('EpisodeReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
-    Burden.ReferencePolicy=struct2table(boiEpisodeReferencePolicy());
+    Burden.ReferencePolicy=referencePolicies(@boiEpisodeReferencePolicy,TableOxygenSinkEvents.EpisodeReferenceVersion);
 end
 if istable(TableOxygenSinkEvents)&&ismember('EventReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
-    Burden.ReferencePolicy=struct2table(boiEventReferencePolicy());
+    Burden.ReferencePolicy=referencePolicies(@boiEventReferencePolicy,TableOxygenSinkEvents.EventReferenceVersion);
     if ismember('EpisodeReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
-        Burden.PreEpisodeReferencePolicy=struct2table(boiEpisodeReferencePolicy());
+        Burden.PreEpisodeReferencePolicy=referencePolicies(@boiEpisodeReferencePolicy,TableOxygenSinkEvents.EpisodeReferenceVersion);
     end
 end
 
@@ -537,4 +537,10 @@ Notes = {'One row per oxygen sink event from OxySinkEvents'; ...
 
 BasisTable = table(WorkbookItem,MetricBasis,Notes);
 
+end
+
+function T=referencePolicies(policy,versions)
+original=policy([]); calibrated=policy(0);
+if isempty(versions),T=struct2table(original);return;end
+policies=[original;calibrated]; T=struct2table(policies(ismember(string({policies.Version}),string(versions))));
 end

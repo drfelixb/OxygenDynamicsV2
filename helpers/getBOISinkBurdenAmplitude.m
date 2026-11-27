@@ -4,13 +4,13 @@ if nargin<2,SelectionPolicy=[];end
 selection=boiBurdenSelectionPolicy(E,SelectionPolicy);
 amplitude=[];source=strings(height(E),1);signConvention='positive_drop_percent';
 if ismember('EventReferenceVersion',E.Properties.VariableNames)
-    P=boiEventReferencePolicy;
-    assert(all(string(E.EventReferenceVersion)==string(P.Version))&& ...
+    P=boiEventReferencePolicy; Q=boiEventReferencePolicy(0);
+    assert(all(ismember(string(E.EventReferenceVersion),[string(P.Version),string(Q.Version)]))&& ...
         all(ismember({'EventAmplitudePercent','EventAmplitudeAvailable'},E.Properties.VariableNames)), ...
         'OxygenDynamics:EventReferenceVersion','Unsupported or incomplete event-reference result.');
     amplitude=double(E.EventAmplitudePercent);
     amplitude(~E.EventAmplitudeAvailable)=NaN;
-    source(:)="EventAmplitudePercent ("+string(P.Version)+")";
+    source="EventAmplitudePercent ("+string(E.EventReferenceVersion)+")";
     if ~selection.IncludeFiniteNegative,amplitude(amplitude<0)=NaN;end
     if selection.IncludeFiniteNegative,amplitude(~isfinite(amplitude))=NaN;end
     return
@@ -25,13 +25,13 @@ if ismember('AmplitudeSignConvention',E.Properties.VariableNames)
     amplitude(neg)=-amplitude(neg);
 end
 if ismember('EpisodeReferenceVersion',E.Properties.VariableNames)
-    P=boiEpisodeReferencePolicy;
-    assert(all(string(E.EpisodeReferenceVersion)==string(P.Version)), ...
+    P=boiEpisodeReferencePolicy; Q=boiEpisodeReferencePolicy(0);
+    assert(all(ismember(string(E.EpisodeReferenceVersion),[string(P.Version),string(Q.Version)])), ...
         'OxygenDynamics:EpisodeVersion','Unsupported derived reference version.');
     amplitude=double(E.EpisodeAmplitudePercent);
     valid=string(E.EpisodeReferenceStatus)=="valid";
     amplitude(~valid)=NaN;
-    source(:)="EpisodeAmplitudePercent ("+string(P.Version)+")";
+    source="EpisodeAmplitudePercent ("+string(E.EpisodeReferenceVersion)+")";
 end
 if ~selection.IncludeFiniteNegative,amplitude(amplitude<0)=NaN;end
 if selection.IncludeFiniteNegative,amplitude(~isfinite(amplitude))=NaN;end
