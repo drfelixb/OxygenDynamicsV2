@@ -30,6 +30,11 @@ missing = unique(rows.SourceSHA256(rows.VerifiedRawFile==""));
 assert(isequal(sort(unique(confirmedOmissions(:))),sort(missing(:))), ...
     'OxygenDynamics:PocketOmission','Locate or retry missing TIFFs, or explicitly confirm exactly the listed omissions.');
 rows.Omitted = ismember(rows.SourceSHA256,missing);
+for index=find(rows.Omitted)'
+    if ~isfile(rows.AuditFile(index)),continue;end
+    info=load(rows.AuditFile(index),'AnalysisInfo');
+    rows(index,:)=boiIntensityRows(rows(index,:),info.AnalysisInfo);
+end
 keep = ~rows.Omitted;
 assert(any(keep),'OxygenDynamics:PocketOmission','At least one source TIFF must be available.');
 assert(all(~ismissing(rows.Mouse(keep)) & strlength(rows.Mouse(keep))>0), ...
@@ -101,7 +106,8 @@ for ci = 1:height(index)
         writetable(frames,fullfile(dest,rows.TraceFile(k)));
         eventParts{j} = events;
         traceParts{j} = frames(:,{'PocketKey','FromOnset_s','FromOffset_s','PocketPct','NearPct','FarPct', ...
-            'TissueOnlyPocketPct','PocketBaselineFlagged','NearPotentialEventDuringBaseline','NearPotentialEvent','AfterNextSameSiteSink'});
+            'TissueOnlyPocketPct','PocketOriginalPct','NearOriginalPct','FarOriginalPct','TissueOnlyPocketOriginalPct', ...
+            'PocketBaselineFlagged','NearPotentialEventDuringBaseline','NearPotentialEvent','AfterNextSameSiteSink'});
     end
     events = vertcat(eventParts{:});
     traces = vertcat(traceParts{:});

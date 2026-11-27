@@ -221,7 +221,8 @@ setappdata(Fig,'BOIAreaReviewUI',Panel);UI.Tabs.SelectedTab=Tab;render();figure(
         if dirty,savedLabel.Text=sprintf('Unsaved changes; saved revision %d',Previous.Document.Revision);end
         raw=strcmp(source.Value,'raw');images=Cache.Denoised;background=Cache.DenoisedBackground;lim=Cache.GrayLimits(2,:);
         if raw,images=Cache.Raw;background=Cache.RawBackground;lim=Cache.GrayLimits(1,:);end
-        j=find(Cache.Frames==F.Frame);plane=double(images(:,:,j));map=100*(plane-background)./background;map(background<=0)=NaN;
+        j=find(Cache.Frames==F.Frame);plane=double(images(:,:,j));denominator=boiIntensityDenominator(background,boiCameraOffset(C));
+        denominator(denominator<=0)=NaN;map=100*(plane-background)./denominator;
         cla(imageAx);imagesc(imageAx,Cache.Columns,Cache.Rows,plane,lim);colormap(imageAx,gray(256));
         title(imageAx,sprintf('%s frame %d - draw here',source.Value,F.Frame));finish(imageAx);
         cla(changeAx);h=imagesc(changeAx,Cache.Columns,Cache.Rows,map,[-15 15]);h.AlphaData=isfinite(map);

@@ -204,3 +204,19 @@ for region=["Pocket","Near","Far","TissueOnlyPocket"]
 end
 t.verifyTrue(all(cal.IntensityRatiosOffsetCorrected));
 end
+
+function testOriginalOrderingWithDifferentRegionalReferences(t)
+out=tempname;mkdir(out);t.addTeardown(@()rmdir(out,'s'));
+events=table(1,"mouse","group",1,"rec",'VariableNames',{'PocketKey','Mouse','Group','SampleF','RecordingID'});
+events=boiIntensityRows(events,80);
+f=table(1,0,0,50,25,25,50,false,false,false,false, ...
+    'VariableNames',{'PocketKey','FromOnset_s','FromOffset_s','PocketPct','NearPct','FarPct', ...
+    'TissueOnlyPocketPct','PocketBaselineFlagged','NearPotentialEventDuringBaseline','NearPotentialEvent','AfterNextSameSiteSink'});
+% Pocket 100->110, ring 200->230. Original ordering reverses after offset 80.
+f.PocketOriginalPct=10;f.NearOriginalPct=15;f.FarOriginalPct=f.NearOriginalPct;f.TissueOnlyPocketOriginalPct=10;
+nearbySummaries(events,f,out,"condition");
+T=readtable(fullfile(out,'Aligned_by_group.csv'),'TextType','string');
+r=T(T.Analysis=="Primary" & T.Group=="All" & T.Alignment=="Onset",:);
+t.verifyGreaterThan(r.ExcessPP,0);t.verifyEqual(r.PocketsAboveBaselineAndRing,0);
+t.verifyEqual(r.MiceAboveRing,0);t.verifyEqual(r.CorrectedRecordings,1);
+end

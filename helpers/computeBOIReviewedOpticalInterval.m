@@ -23,7 +23,11 @@ if ~all(isfinite(raw(C))),M.Status='unavailable_nonfinite_reference_samples';ret
 B=mean(raw(C));if isfinite(B),M.ReferenceMean=B;end
 [denom,blocked]=boiIntensityDenominator(B,offset);
 if blocked
-    M.Status='reference_at_or_below_camera_offset';M.Numerator=values-B;return
+    M.Status='reference_at_or_below_camera_offset';M.Numerator=values-B;
+    if B>0 && all(isfinite(values))
+        M.MinimumFrames=E(values==min(values)); M.MaximumFrames=E(values==max(values));
+    end
+    return
 end
 if ~isfinite(B)||B<=0,M.Status='unavailable_nonpositive_or_nonfinite_reference_mean';return;end
 if ~all(isfinite(values)),M.Status='unavailable_nonfinite_event_samples';return;end

@@ -34,11 +34,13 @@ try
         'ReferencePath',C.ReferencePath,'ReferenceSHA256',C.ReferenceSHA256,'OriginalResultsChanged',false, ...
         'GlobalDefaultsChanged',false,'RecordingTotalCalculated',false,'PartialSumCalculated',false);
     S.ReviewedOpticalVersion=boiReviewedOpticalVersion(C); S.CameraOffsetCounts=boiCameraOffset(C);
+    if isfield(C,'AmplitudeStatus'),S.AmplitudeStatus=C.AmplitudeStatus;end
+    if isempty(S.BurdenAmplitudePercent),S.BurdenAmplitudePercent=NaN;end
     cal=boiIntensityCalibration(C); S.CameraOffsetSource=cal.CameraOffsetSource; S.IntensityRatiosOffsetCorrected=cal.IntensityRatiosOffsetCorrected;
     M=computeBOIReviewedArea(D);ReviewedEventBurden=S;AreaReview=D; %#ok<NASGU>
     save(fullfile(Folder,'ReviewedEventBurden.mat'),'ReviewedEventBurden','AreaReview','M');
     writeBOIRunJSON(fullfile(Folder,'ReviewedEventBurden.json'),S);writetable(struct2table(S,'AsArray',true),fullfile(Folder,'ReviewedEventBurden.csv'));
-    writeBOIRunJSON(fullfile(Folder,'Status.json'),struct('Status','complete','AreaStatus',Q.Status,'BurdenAvailable',Q.Complete));
+    writeBOIRunJSON(fullfile(Folder,'Status.json'),struct('Status','complete','AreaStatus',Q.Status,'BurdenAvailable',isfinite(Q.Contribution)));
     files=dir(Folder);manifest=struct('Path',{},'SHA256',{});
     for k=1:numel(files)
         if files(k).isdir,continue;end

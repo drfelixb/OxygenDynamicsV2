@@ -200,3 +200,16 @@ receipt=struct('Schema','boi-created-event-audit-1','AuditSHA256',oxygenFileSHA2
     'MasterSHA256',{{oxygenFileSHA256(sf),oxygenFileSHA256(uf)}},'SourceSHA256','raw','EventCount',1);
 fid=fopen(fullfile(folder,'BOIReview','AuditCreationReceipt.json'),'w');fprintf(fid,'%s',jsonencode(receipt));fclose(fid);
 end
+
+function testHighOffsetPreservesRecordingReferenceFlag(t)
+[E,V,P,~]=fixture(31,34,100,1);
+V{1}.Raw(1:20)=60;V{1}.Raw(31:34)=80;
+original=deriveBOIEventReferences(E,V,P,1,20);
+blocked=deriveBOIEventReferences(E,V,P,1,20,"fixture",[],100);
+t.verifyEqual(original.AboveRecordingReference,1);
+fields=["AboveRecordingReference","RecordingReferenceStatus","RecordingReferenceValue", ...
+    "RecordingReferenceNeedsReview","RecordingReferenceVersion","EventMinimumValue","EventReferenceNeedsReview"];
+t.verifyEqual(blocked(:,fields),original(:,fields));
+t.verifyTrue(isnan(blocked.EventAmplitudePercent));
+t.verifyEqual(blocked.EventReferenceStatus,"reference_at_or_below_camera_offset");
+end

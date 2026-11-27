@@ -69,7 +69,7 @@ if ~isempty(ReviewedOpticalPreview.Intervals)
         [M.MinimumSignedChangeFraction]',[M.MaximumSignedChangeFraction]',[M.SavedSignDirectionalAmplitudeFraction]',[M.SignedTraceIntegralSec]', ...
         [M.DurationSec]',[M.EndpointSpanSec]','VariableNames',{'Interval','OnsetFrame','RecoveryFrame','Status','ReferenceSamples','ReferenceMean', ...
         'MinimumSignedFraction','MaximumSignedFraction','SavedSignAmplitudeFraction','SignedIntegralSec','DurationSec','EndpointSpanSec'});
-    rows=boiIntensityRows(rows,Review.AnalysisInfo);
+    rows=boiIntensityRows(rows,ReviewedOpticalPreview.IntensityCalibration);
     rows.ReviewedOpticalVersion=repmat(string(ReviewedOpticalPreview.ReviewedOpticalVersion),height(rows),1);
     writetable(rows,fullfile(OutputFolder,'ReviewedOpticalIntervals.csv'));
     frames=table();
@@ -79,7 +79,7 @@ if ~isempty(ReviewedOpticalPreview.Intervals)
         frames=[frames;table(repmat(j,numel(f),1),f,(f-1)/ReviewedOpticalPreview.SampleHz,isRef,v, ...
             repmat(m.ReferenceMean,numel(f),1),numerator,q,'VariableNames',{'Interval','Frame','ModeledTimeSec','AcceptedReference','PreservedInputMean','ReferenceMean','Numerator','SignedFraction'})]; %#ok<AGROW>
     end
-    frames=boiIntensityRows(frames,Review.AnalysisInfo);
+    frames=boiIntensityRows(frames,ReviewedOpticalPreview.IntensityCalibration);
     frames.ReviewedOpticalVersion=repmat(string(ReviewedOpticalPreview.ReviewedOpticalVersion),height(frames),1);
     writetable(frames,fullfile(OutputFolder,'ReviewedOpticalSamples.csv'));
 end

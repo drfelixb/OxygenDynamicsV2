@@ -7,6 +7,9 @@ required={'Definition','AuditSHA256','RawSourceSHA256','AuditRow','OriginalAutom
     'FixedFootprint','FixedFootprintSHA256','EventFrames','ReferenceFrames','Correction','Ingredients','IngredientsSHA256','Measures'};
 assert(all(isfield(E,required)),id,'Incomplete pocket evidence.');D=getBOIReviewedPocketDefinition(E.Definition.ID);
 assert(endsWith(D.ID,'-offset')==~isempty(boiCameraOffset(E)),id,'Saved offset and definition disagree.');
+if isfield(E,'IntensityCalibration')
+    assert(isequaln(boiIntensityCalibration(E),E.IntensityCalibration),id,'Saved offset provenance differs.');
+end
 assert(isequaln(E.Definition,D),id,'Definition differs from the version-bound contract.');
 J=E.Judgment;
 assert(strcmp(E.JudgmentSHA256,boiPocketDigest(J)),'OxygenDynamics:PocketRevisionMismatch','Judgment revision changed; save a new result.');

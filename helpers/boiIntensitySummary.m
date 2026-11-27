@@ -7,4 +7,8 @@ for k=1:2
 end
 T=table(versions,[false;true],counts,'VariableNames', ...
     {'IntensityRatioDefinition','IntensityRatiosOffsetCorrected','Recordings'});
+local=boiEventReferencePolicy;localOffset=boiEventReferencePolicy(0);
+episode=boiEpisodeReferencePolicy;episodeOffset=boiEpisodeReferencePolicy(0);
+T.EventReferenceVersion=string({local.Version;localOffset.Version});
+T.EpisodeReferenceVersion=string({episode.Version;episodeOffset.Version});
 end

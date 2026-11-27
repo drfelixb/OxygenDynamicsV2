@@ -102,6 +102,18 @@ EventTable.PerEventBurdenContribution_per_mm2_per_min = ...
 EventTable.BurdenContributionRateFormula = repmat( ...
     {'PerEventBurdenContribution divided by BurdenRecordingDuration_sec, optionally multiplied by 60 for per-minute rates'}, ...
     height(EventTable),1);
+if ~ismember('OriginalCountRankAmplitudePercent',EventTable.Properties.VariableNames)
+    EventTable.OriginalCountRankAmplitudePercent=EventTable.BurdenAmplitudePercent;
+    if all(ismember({'IntensityRatiosOffsetCorrected','EventReferenceValue','EventMinimumValue','EventSignalComplete'},EventTable.Properties.VariableNames))
+        B=EventTable.EventReferenceValue;
+        calibrated=EventTable.IntensityRatiosOffsetCorrected;
+        EventTable.OriginalCountRankAmplitudePercent(calibrated)=NaN;
+        use=calibrated & isfinite(B) & B>0 & EventTable.EventSignalComplete;
+        old=100*(B(use)-EventTable.EventMinimumValue(use))./B(use);
+        if ~selection.IncludeFiniteNegative,old(old<0)=NaN;end
+        EventTable.OriginalCountRankAmplitudePercent(use)=old;
+    end
+end
 EventTable.BurdenRankAmplitudeQuantile = computeWithinRecordingAmplitudeQuantile(EventTable);
 EventTable.PerEventBurdenOccupancy_per_mm2_per_min = EventTable.BurdenDuration_sec .* ...
     (1e6 ./ EventTable.BurdenRecordingArea_um2) .* (60 ./ EventTable.BurdenRecordingDuration_sec);
@@ -439,7 +451,7 @@ Keys=string(EventTable.RecordingID);
 UniqueKeys = unique(Keys,'stable');
 for KeyIdx = 1:numel(UniqueKeys)
     Mask = Keys==UniqueKeys(KeyIdx);
-    Quantile(Mask) = tiedQuantile(EventTable.BurdenAmplitudePercent(Mask));
+    Quantile(Mask) = tiedQuantile(EventTable.OriginalCountRankAmplitudePercent(Mask));
 end
 
 end

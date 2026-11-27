@@ -25,7 +25,9 @@ for k=1:numel(Events)
     end
     artifactPolicy=boiBurdenSelectionPolicy(artifact);
     assert(strcmp(selection.Version,artifactPolicy.Version)|| ...
-        (selection.IncludeFiniteNegative&&~artifactPolicy.IncludeFiniteNegative&&isfinite(S.BurdenAmplitudePercent)&&S.BurdenAmplitudePercent>=0), ...
+        (selection.IncludeFiniteNegative&&~artifactPolicy.IncludeFiniteNegative&& ...
+        ((isfinite(S.BurdenAmplitudePercent)&&S.BurdenAmplitudePercent>=0)|| ...
+        (isfield(S,'AmplitudeStatus')&&strcmp(S.AmplitudeStatus,'reference_at_or_below_camera_offset')))), ...
         'OxygenDynamics:BurdenSelectionPolicy','Reviewed event and automatic selection policies are incompatible.');
     K=table(string(S.RecordingID),S.SiteID,S.EventID,'VariableNames',{'RecordingID','SinkID','EventIndex'});
     [~,key]=oxygenEventJoinKeys(E,K);j=find(keys==key);assert(isscalar(j)&&~applied(j),id,'Missing, rejected or duplicate reviewed event.');
@@ -43,6 +45,13 @@ for k=1:numel(Events)
         E.StartFrame(j)==S.OriginalAutomaticStartFrame&&E.EndFrame(j)==S.OriginalAutomaticEndFrame&& ...
         sameSavedNumber(E.BurdenArea_um2(j),originalArea)&&sameSavedNumber(E.BurdenRecordingArea_um2(j),S.BurdenRecordingArea_um2)&& ...
         E.BurdenRecordingDuration_sec(j)==S.BurdenRecordingDuration_sec&&E.SampleF(j)==S.SampleHz,id,'Event area, clock, exposure or automatic identity differs.');
+    if ~ismember('OriginalCountRankAmplitudePercent',input.Properties.VariableNames)
+        input.OriginalCountRankAmplitudePercent=input.BurdenAmplitudePercent;
+    end
+    input.OriginalCountRankAmplitudePercent(j)=S.BurdenAmplitudePercent;
+    if ~isempty(reviewedOffset) && S.RawReferenceMean>0
+        input.OriginalCountRankAmplitudePercent(j)=100*(S.RawReferenceMean-S.RawMinimum)/S.RawReferenceMean;
+    end
     input.StartFrame(j)=S.StartFrame;input.EndFrame(j)=S.EndFrame;input.DurationSec(j)=S.DurationSec;
     input.NormOxySinkAmpPercent(j)=S.BurdenAmplitudePercent;applied(j)=true;paths(j)=string(V.Path);hashes(j)=string(V.ManifestSHA256);
     if reviewedArea
@@ -55,6 +64,7 @@ for k=1:numel(Events)
         string(S.AreaQualification),'VariableNames',{'RecordingID','SinkID','EventIndex','BurdenStartFrame','BurdenEndFrame','BurdenDurationSec', ...
         'ReferenceStartFrame','ReferenceEndFrame','ReferenceSamples','RawDropPercent','EventContribution','NormalizedEventContribution', ...
         'EventArtifact','ManifestSHA256','BoundarySHA256','ReferenceSHA256','AreaRemeasured','AreaQualification'});
+    row=boiIntensityRows(row,S); row.ReviewedOpticalVersion=string(boiReviewedOpticalVersion(S));
     revisionRows{end+1}=row; %#ok<AGROW>
 end
 specific=E(:,intersect({'RecordingID','SinkID','EventIndex','EventID'},E.Properties.VariableNames,'stable'));specific.Area_um=areas;
@@ -80,6 +90,7 @@ if hasAreaRevision
     E.ReviewedAreaStatus=areaStates;E.ReviewedAreaMeanFrames=areaFrames;
     E.BurdenAreaSource(areaStates~="")={'saved complete-interval reviewed area revision; missing area is withheld'};
 end
+E.OriginalCountRankAmplitudePercent=N.EventTable.OriginalCountRankAmplitudePercent;
 E.BurdenAmplitudeSource(applied)={'saved approved reviewed event reference'};
 E.BurdenDurationSource(applied)={'saved approved reviewed onset/recovery'};
 E.BurdenStartFrame=input.StartFrame;E.BurdenEndFrame=input.EndFrame;

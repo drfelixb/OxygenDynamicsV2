@@ -57,7 +57,12 @@ for e=1:height(Events)
     r.StoredAmplitude=E.(ampCol);r.RecomputedAmplitude=amp;r.AbsDifference=abs(r.StoredAmplitude-amp);
     r.MeasurementMatches=sameNumber(r.StoredAmplitude,amp)&&sameNumber(r.StoredBaseline,B) ...
         &&r.StoredStatus==status&&E.BaselineValidSamples==numel(clean);
-    r.WrongDirection=isfinite(amp)&&amp<0;rows(e)=r;
+    r.WrongDirection=isfinite(amp)&&amp<0;
+    if status=="reference_at_or_below_camera_offset" && B>0 && all(isfinite(trace(first:last)))
+        if kind=="sink",r.WrongDirection=min(trace(first:last))>B;
+        else,r.WrongDirection=max(trace(first:last))<B;end
+    end
+    rows(e)=r;
     Traces{e}=struct('Raw',trace,'Footprint',px,'CleanBaselineFrames',clean,'DetectedFrames',detected);
 end
 Audit=struct2table(rows);

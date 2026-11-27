@@ -4,8 +4,19 @@ for channel=1:2
     letters='AB'; suffix=letters(channel); offset=boiPairCameraOffset(P.Options,channel);
     ref=P.Events.(['ReferenceMean' suffix]);
     [~,blocked]=boiIntensityDenominator(ref,offset);
+    flag=['RatioReferenceBlocked' suffix];
+    if ismember(flag,P.Events.Properties.VariableNames)
+        blocked=P.Events.(flag);
+    else
+        P.Events.(flag)=blocked;
+    end
     calibration=boiIntensityCalibration(offset);
     calibration.ReferencesAtOrBelowOffset=nnz(blocked);
+    if ismember('IndependentReferencesAtOrBelowOffset',P.Channels.Properties.VariableNames)
+        calibration.ReferencesAtOrBelowOffset=calibration.ReferencesAtOrBelowOffset+P.Channels.IndependentReferencesAtOrBelowOffset(channel);
+    else
+        P.Channels.IndependentReferencesAtOrBelowOffset=zeros(height(P.Channels),1);
+    end
     calibrationRow=boiIntensityRows(table(1,'VariableNames',{'Index'}),calibration);
     for key=string(calibrationRow.Properties.VariableNames(2:end))
         value=calibrationRow.(key);

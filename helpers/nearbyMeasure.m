@@ -20,6 +20,7 @@ names={'FootprintPixels','NearRingPixels','FarRingPixels','NearRingTissueFractio
 for col=string(names),events.(col)=nan(ne,1);end
 events.PocketBaselineFlagged=logical(e.EventReferenceNeedsReview);
 events.NearPotentialEventDuringBaseline=false(ne,1);
+blockedRegions=false(ne,4);
 samples=cell(ne,1); masks=cell(ne,3);
 columns={'PocketKey','RecordingFrame','FromOnset_s','FromOffset_s','PocketRaw','NearRaw','FarRaw','PocketPct','NearPct','FarPct', ...
     'LocalExcess_pp','TissueOnlyPocketRaw','TissueOnlyPocketPct','PocketBaselineFlagged','NearPotentialEventDuringBaseline','NearPotentialEvent','AfterNextSameSiteSink'};
@@ -35,8 +36,8 @@ for j=1:ne
         'Raw source/footprint mismatch for site %d event %d.',e.SinkID(j),e.EventID(j));
     pre=ff<start; use=string(e.EventReferenceKind(j))=="immediate_pre_event" && ...
         isfinite(e.EventReferenceValue(j)) && e.EventReferenceValue(j)>0;
-    [bp,ip]=normalize(inside,pre,use,offset);[bn,rp]=normalize(ring,pre,use,offset);
-    [bf,op]=normalize(outer,pre,use,offset);[bc,cp]=normalize(common,pre,use,offset);
+    [bp,ip,blockedRegions(j,1)]=normalize(inside,pre,use,offset);[bn,rp,blockedRegions(j,2)]=normalize(ring,pre,use,offset);
+    [bf,op,blockedRegions(j,3)]=normalize(outer,pre,use,offset);[bc,cp,blockedRegions(j,4)]=normalize(common,pre,use,offset);
     if use
         assert(any(pre) && e.EventReferenceStartFrame(j)==ff(1) && e.EventReferenceEndFrame(j)==start-1 && ...
             abs(bp-e.EventReferenceValue(j))<=1e-8+1e-10*bp,'Saved pre-onset reference mismatch.');
@@ -58,8 +59,9 @@ frames=array2table(data,'VariableNames',columns);
 frames.FromNativeOnset_s=(frames.RecordingFrame-e.NativeStartFrame(row))/fs;
 frames.FromNativeOffset_s=(frames.RecordingFrame-e.NativeEndFrame(row))/fs;
 quality=boiIntensityCalibration(I);
-for name=["PocketBaseline","NearBaseline","FarBaseline","TissueOnlyPocketBaseline"]
-    [~,blocked]=boiIntensityDenominator(events.(name),offset);
+regions=["PocketBaseline","NearBaseline","FarBaseline","TissueOnlyPocketBaseline"];
+for k=1:numel(regions)
+    name=regions(k);blocked=blockedRegions(:,k);
     status=repmat("available",ne,1); status(~isfinite(events.(name)))="reference_unavailable";
     status(blocked)="reference_at_or_below_camera_offset";
     events.(name+"Status")=status;
@@ -68,6 +70,8 @@ end
 events=boiIntensityRows(events,quality); frames=boiIntensityRows(frames,quality);
 for role=["Pocket","Near","Far","TissueOnlyPocket"]
     frames.(role+"BaselineStatus")=events.(role+"BaselineStatus")(row);
+    baseline=events.(role+"Baseline")(row);
+    frames.(role+"OriginalPct")=100*(frames.(role+"Raw")-baseline)./baseline;
 end
 geom=struct('IntensityCalibration',quality, ...
     'FrameSize',shape,'PixelSize_um',px,'SampleHz',fs,'PocketKey',e.PocketKey,'Masks',{masks}, ...
@@ -96,12 +100,13 @@ end
 function v=meanRegion(stack,pixels,ff)
 if isempty(pixels),v=nan(numel(ff),1);else,v=mean(stack(pixels,ff),1,'double')';end
 end
-function [b,p]=normalize(v,pre,use,offset)
-b=NaN;p=nan(size(v));
+function [b,p,blocked]=normalize(v,pre,use,offset)
+blocked=false;b=NaN;p=nan(size(v));
 if use && any(pre)
     candidate=mean(v(pre));
+    [denom,blocked]=boiIntensityDenominator(candidate,offset);
     if isfinite(candidate)&&candidate>0
-        b=candidate; [denom,blocked]=boiIntensityDenominator(b,offset);
+        b=candidate;
         if ~blocked,p=100*(v-b)/denom;end
     end
 end

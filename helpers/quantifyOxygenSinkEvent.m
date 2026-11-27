@@ -1,7 +1,8 @@
 function EventMetrics = quantifyOxygenSinkEvent(eventPixelIdx,temptrace,tracetrend,rawtrace, ...
-    eventBaselineReturnTolerance,baselineWindowFrames,maxExtensionFrames,leftLimit,rightLimit)
+    eventBaselineReturnTolerance,baselineWindowFrames,maxExtensionFrames,leftLimit,rightLimit,offset)
 %QUANTIFYOXYGENSINKEVENT Calculate timing and raw-domain amplitude for one sink event.
 
+if nargin<10,offset=[];end
 Timing=resolveSinkEventTiming(eventPixelIdx,temptrace,tracetrend, ...
     eventBaselineReturnTolerance,maxExtensionFrames,leftLimit,rightLimit);
 StartIndx=Timing.StartFrame;EndIndx=Timing.EndFrame;
@@ -15,7 +16,8 @@ if BaselineStartIndx>=1 && BaselineEndIndx>=BaselineStartIndx
     if all(isfinite(baselineValues)), Baseline=mean(baselineValues); end
 end
 EventMin=min(rawtrace(StartIndx:EndIndx),[],'omitnan');
-if isfinite(Baseline) && Baseline>0, NormAmp=(Baseline-EventMin)/Baseline; end
+denominator=boiIntensityDenominator(Baseline,offset);
+if isfinite(denominator) && denominator>0, NormAmp=(Baseline-EventMin)/denominator; end
 
 EventMetrics = struct();
 EventMetrics.Timing=Timing;

@@ -100,7 +100,7 @@ refresh();
     function change(i,key,v)
         if isequaln(rows.(key)(i),v), return; end
         if strcmp(key,'Mode')
-            rows.RawB(i)=""; rows.DenoisedB(i)=""; rows.SensorB(i)=""; rows.PromoterB(i)="unspecified";
+            rows.RawB(i)=""; rows.DenoisedB(i)="";rows.CameraOffsetCountsB(i)=""; rows.SensorB(i)=""; rows.PromoterB(i)="unspecified";
             stage.Text='Channel B changed role. Select its preserved movie and enter its sensor and promoter.';
         elseif ismember(key,{'RawA','RawB'})
             rows.(['Denoised' key(end)])(i)="";

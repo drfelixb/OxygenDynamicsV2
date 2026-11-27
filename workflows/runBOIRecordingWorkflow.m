@@ -71,6 +71,7 @@ try
     Run=struct('Schema','boi-recording-run-1','Status','complete','SourceSHA256',Request.InputReview.RawSHA256, ...
         'SupportProfile',o.SupportProfile,'Artifacts',artifacts,'ElapsedSeconds',toc(started), ...
         'ScientificStatus','not_established');
+    Run.IntensityCalibration=boiIntensityCalibration(Master.AnalysisInfo);
     Run.SoftwareVersion=software.Version;Run.SourceCommit=software.SourceCommit;Run.SourceState=software.SourceState;
     save(fullfile(out,'BOIRun.mat'),'Run');
     Status.Status='complete';Status.Stage='complete';Status.ElapsedSeconds=toc(started);writeBOIRunJSON(statusPath,Status);

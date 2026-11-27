@@ -32,6 +32,17 @@ for onset=a.OnsetFrames(:)'
         records{end+1}=M; %#ok<AGROW>
     end
 end
-O.Intervals=vertcat(records{:});O.Status='available';O.Message='Exploratory reviewed optical results; original measurements and recognition are unchanged.';
+O.Intervals=vertcat(records{:});
+if ~isempty(offset)
+    keys=strings(numel(O.Intervals),1);
+    for k=1:numel(O.Intervals)
+        item=O.Intervals(k);
+        if isfinite(item.ReferenceMean) && item.ReferenceMean<=offset
+            keys(k)=join(string(item.ReferenceFrames(:))',",");
+        end
+    end
+    O.IntensityCalibration.ReferencesAtOrBelowOffset=O.IntensityCalibration.ReferencesAtOrBelowOffset+numel(unique(keys(keys~="")));
+end
+O.Status='available';O.Message='Exploratory reviewed optical results; original measurements and recognition are unchanged.';
 O.NewReferenceMeansOrAmplitudesCalculated=any(isfinite([O.Intervals.ReferenceMean]));
 end

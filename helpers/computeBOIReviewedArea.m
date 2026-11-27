@@ -14,6 +14,9 @@ if any(state=="uncertain"),Q.Status='uncertain';end
 if any(outside>0),Q.Status='spatial_mismatch';return;end
 if ~all(done),return;end
 Q.MeanAreaPixels=mean(counts);Q.MeanAreaUm2=Q.MeanAreaPixels*C.PixelSizeUm^2;
+if isfield(C,'AmplitudeStatus') && strcmp(C.AmplitudeStatus,'reference_at_or_below_camera_offset')
+    Q.Status='complete';Q.Complete=true;return
+end
 Q.Contribution=C.AmplitudePercent*Q.MeanAreaUm2*C.DurationSec;
 Q.NormalizedContribution=Q.Contribution*(1e6/C.RecordingAreaUm2)*(60/C.RecordingDurationSec);
 assert(all(isfinite([Q.MeanAreaUm2 Q.Contribution Q.NormalizedContribution])),'OxygenDynamics:InvalidAreaReview','Area/burden arithmetic overflowed.');

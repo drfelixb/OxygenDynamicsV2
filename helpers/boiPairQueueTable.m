@@ -12,7 +12,7 @@ for i=1:numel(pairs)
         o.Status,o.Message,o.ResultFolder,o.Mouse,o.Condition,o.Genotype,o.DrugID,o.SourceCSV,o.SourceCSVPath,o.SourceFolder, ...
         string(num2str(boiPairCameraOffset(o,1),17)),string(num2str(boiPairCameraOffset(o,2),17))};
     % An interruption can leave a completed pair between the two queue checkpoints.
-    if rows.Status(i)=="Running" && isfile(fullfile(rows.ResultFolder(i),'PairStatus.json'))
+    if ismember(rows.Status(i),["Running","Complete"]) && isfile(fullfile(rows.ResultFolder(i),'PairStatus.json'))
         try
             receipt=jsondecode(fileread(fullfile(rows.ResultFolder(i),'PairStatus.json')));
             if strcmp(receipt.Status,'complete')
@@ -24,11 +24,15 @@ for i=1:numel(pairs)
                         isequal(boiPairCameraOffset(saved.Options,2),boiPairCameraOffset(o,2)) && ...
                         saved.Options.SampleHz==o.SampleHz && saved.Options.PixelSizeUm==o.PixelSizeUm
                     rows.Status(i)="Complete"; rows.Include(i)=false; rows.Message(i)="";
+                else
+                    rows.Status(i)="Changed";rows.Message(i)="The saved pair and current calculation settings differ.";
                 end
             end
         catch err
-            rows.Message(i)="Could not verify the previous attempt: "+string(err.message);
+            rows.Status(i)="Unverified";rows.Message(i)="Could not verify the previous attempt: "+string(err.message);
         end
+    elseif rows.Status(i)=="Complete"
+        rows.Status(i)="Unverified";rows.Message(i)="The saved pair completion record is missing.";
     end
 end
 end

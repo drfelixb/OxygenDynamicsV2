@@ -210,3 +210,21 @@ S=table(["R";"R"],{1;1},{1;1},{8;8},{P;Q},{[1;2];[1;2]}, ...
 E=table(["R";"R"],[0;1],[1;1.5],[20;20],[4;4], ...
     'VariableNames',{'RecordingID','StartSec','EndSec','NormOxySinkAmpPercent','EventArea_um2'});
 end
+
+function testMixedOffsetInventory(t)
+root=tempname;mkdir(root);t.addTeardown(@()rmdir(root,'s'));
+[I,~]=info();I.FrameSize=[3 3];I.PipelineContract=oxygenPipelineContract;
+G=table(["blank";"cal"],repmat(string(I.RawSHA256),2,1),'VariableNames',{'RecordingID','RawSHA256'});
+for i=1:2
+    AnalysisInfo=I;
+    if i==2
+        AnalysisInfo.CameraOffsetCounts=10;AnalysisInfo.PipelineContract=oxygenPipelineContract('whole-image',10);
+    end
+    file=fullfile(root,sprintf('master%d.mat',i));save(file,'AnalysisInfo');
+    recordings(i)=struct('SinksMatFile',file,'SurgesMatFile',file,'Folder',root);
+end
+[~,contracts]=buildBOIRecordingInputContracts(G,recordings);
+t.verifyEqual(contracts{2}.IntensityCalibration.CameraOffsetCounts,10);
+rows=[boiIntensityRows(G(1,:),[]);boiIntensityRows(G(2,:),10)];
+t.verifyEqual(boiIntensitySummary(rows).Recordings,[1;1]);
+end

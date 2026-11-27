@@ -66,7 +66,9 @@ end
 time=F.ModeledTimeSec;x=time(b)-mean(time(b));beta=sum(x.*(y-B))/sum(x.^2);
 D.FitAvailable=true;D.BaselineStartFrame=b(1);D.BaselineEndFrame=b(end);D.BaselineMean=B;
 denom=boiIntensityDenominator(B,offset);
-if denom<=0,denom=NaN;end
+if denom<=0
+    denom=NaN; D.BaselineRatioStatus='reference_at_or_below_camera_offset';
+end
 D.SlopeUnitsPerSec=beta;D.SlopePercentPerSec=100*beta/denom;
 half=floor(n/2);D.FirstHalfSamples=half;D.LastHalfSamples=n-half;
 D.FirstHalfSlopePercentPerSec=halfSlope(time(b(1:half)),y(1:half),denom);
