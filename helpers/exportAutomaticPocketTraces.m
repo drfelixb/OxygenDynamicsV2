@@ -125,7 +125,7 @@ events = vertcat(eventsByCondition{:});
 assert(numel(unique(events.PocketKey))==height(events),'Duplicate pocket keys in output.');
 writetable(events,fullfile(stage,'Pocket_index.csv'));
 writetable(rows,fullfile(stage,'Recording_sources.csv'));
-writetable(boiIntensitySummary(rows(rows.DistinctSource,:)),fullfile(stage,'Camera_offset_summary.csv'));
+writetable(boiIntensitySummary(rows(rows.DistinctSource & ~rows.Omitted,:)),fullfile(stage,'Camera_offset_summary.csv'));
 writetable(rows(rows.Omitted,:),fullfile(stage,'Omitted_recordings.csv'));
 mapping = rows(rows.DistinctSource,{'SourceSHA256','Mouse'});
 mapping.SelectionDigest = repmat(plan.SelectionDigest,height(mapping),1);

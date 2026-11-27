@@ -25,12 +25,12 @@ if blocked
     reason='reference_at_or_below_camera_offset';
     M.ArithmeticStatus=reason; M.PrimaryStatus=reason; M.CompanionStatus=reason;
     if B>0 && all(isfinite(raw(W))),M.RawMinimumFrames=W(raw(W)==min(raw(W)));end
-    if ~isempty(corrected)
-        if B>0 && all(isfinite(raw(W))) && all(isfinite(corrected([R;W])))
-            M.CorrectedMinimumFrames=W(corrected(W)==min(corrected(W)));
-        end
+    if B>0 && all(isfinite(raw(W))) && ~isempty(corrected)
         M.CorrectedReferenceValues=corrected(R); M.CorrectedEventValues=corrected(W);
-        M.CorrectedReferenceMean=mean(corrected(R));
+        if all(isfinite(corrected([R;W])))
+            M.CorrectedMinimumFrames=W(corrected(W)==min(corrected(W)));
+            M.CorrectedReferenceMean=mean(corrected(R));
+        end
     end
     return
 end

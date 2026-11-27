@@ -29,8 +29,9 @@ D=struct('Schema','boi-baseline-diagnostic-2','MethodID','boi-baseline-linear-re
     'StabilityDecision','not_assigned', ...
     'Limitations','A short fluctuation can be extrapolated incorrectly. No substrate kinetics, correction or automatic exclusion is inferred.', ...
     'NumericalInterpretation','Negative and very small values are retained; numerical sign alone is not physiological evidence. No sign cutoff is applied.');
-offset=[];if isfield(Data,'IntensityCalibration'),offset=boiCameraOffset(Data.IntensityCalibration);end
-D.IntensityCalibration=boiIntensityCalibration(offset);
+D.IntensityCalibration=boiIntensityCalibration();
+if isfield(Data,'IntensityCalibration'),D.IntensityCalibration=Data.IntensityCalibration;end
+offset=boiCameraOffset(D.IntensityCalibration);
 if ~isempty(offset)
     D.MethodID='boi-baseline-linear-review-2-offset';
     D.AmplitudeFormula=strrep(D.AmplitudeFormula,'/reference)','/(reference-offset))');

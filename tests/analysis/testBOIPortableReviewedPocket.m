@@ -93,3 +93,25 @@ m=computeBOIReviewedOpticalInterval([125 125 105 115],1:2,3,4,1,'sink',25);
 t.verifyEqual(m.SignedFraction,[-0.2;-0.1],'AbsTol',eps);
 t.verifyEqual(m.SignedTraceIntegralSec,-0.3,'AbsTol',eps);
 end
+
+function testBlockedRatioKeepsOriginalCountValidity(t)
+event=[30 20 10]; driftCorrected=[3 2 1];
+for reference=[100 0]
+    for missing=[false true]
+        raw=[reference reference event];
+        if missing,raw(end)=NaN;end
+        args={raw,[4 4 driftCorrected],1:2,3:5,'accepted_local_state','external_trigger_1Hz'};
+        a=computeBOIReviewedPocketMeasures(args{:}); b=computeBOIReviewedPocketMeasures(args{:},100);
+        for name=["RawReferenceMean","CorrectedReferenceMean","RawReferenceValues","RawEventValues", ...
+                "CorrectedReferenceValues","CorrectedEventValues","RawMinimumFrames","CorrectedMinimumFrames"]
+            t.verifyEqual(b.(name),a.(name));
+        end
+        a=computeBOIReviewedOpticalInterval(raw,1:2,3,5,1,'sink');
+        b=computeBOIReviewedOpticalInterval(raw,1:2,3,5,1,'sink',100);
+        for name=["Numerator","ReferenceMean","EventValues","MinimumFrames","MaximumFrames","DurationSec","EndpointSpanSec"]
+            t.verifyEqual(b.(name),a.(name));
+        end
+        t.verifyEqual(b.Status,'reference_at_or_below_camera_offset');t.verifyTrue(isnan(b.MeanSignedChangeFraction));
+    end
+end
+end

@@ -30,7 +30,10 @@ if ~isempty(boiCameraOffset(E))
     lines=replace(lines,'positive raw reference intensity','positive offset-corrected reference intensity');
     lines=replace(lines,'/mean(raw(R))','/(mean(raw(R))-offset)');
     lines=replace(lines,'positive raw denominator','positive offset-corrected denominator');
-    lines(end+1)="User-supplied camera offset (counts) = "+E.CameraOffsetCounts+".";
+    lines(end+1)="User-supplied camera offset (counts) = "+E.CameraOffsetCounts+ ...
+        ". References at or below the offset = "+E.IntensityCalibration.ReferencesAtOrBelowOffset+".";
+else
+    lines(end+1)="Optical ratios use original counts. No camera offset was supplied.";
 end
 text=char(strjoin(lines,newline));
 end

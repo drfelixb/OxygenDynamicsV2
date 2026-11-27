@@ -92,6 +92,7 @@ t.verifyTrue(isfile(output));
 end
 function testLocalStagingAndDestinationCollision(t)
 [S,O]=fixture();
+S.Registry=[boiIntensityRows(S.Registry(1,:),20);boiIntensityRows(S.Registry(2:end,:),[])];
 root=char(java.io.File(tempname()).getCanonicalPath());mkdir(root);
 cleanup=onCleanup(@()rmdir(root,'s')); %#ok<NASGU>
 destination=fullfile(root,'compact workbook.xlsx');
@@ -102,6 +103,10 @@ stored=jsondecode(fileread(receiptPath));
 hash=oxygenFileSHA256(destination);
 t.verifyEqual(receipt.Status,'complete');
 t.verifyEqual(receipt.WorkbookSHA256,hash);
+recordings=readtable(destination,'Sheet','Recordings','TextType','string');
+t.verifyTrue(all(recordings.CorrectedRecordingsInExport==1 & recordings.UncorrectedRecordingsInExport==2));
+t.verifyTrue(all(recordings.IntensityRatioDefinition(recordings.CameraOffsetCounts==20)=="0.5.0-offset"));
+t.verifyTrue(any(recordings.CameraOffsetCounts==20));
 t.verifyEqual(stored.WorkbookSHA256,hash);
 
 collision=fullfile(root,'existing workbook.xlsx');sentinelHash='';

@@ -26,6 +26,9 @@ saveStatsCoreTables(StatsOutputFolderPath,CoreData.TableOxygenSinks,CoreData.Tab
 OutputXlsx = createStatsExcelOutputPath(StatsOutputFolderPath,InputCsv);
 if isfield(CoreData,'RecordingRegistry')
     RecordingRegistry=CoreData.RecordingRegistry; BaselineContrasts=CoreData.BaselineContrasts;
+    if ~ismember('IntensityRatioDefinition',RecordingRegistry.Properties.VariableNames)
+        RecordingRegistry=boiIntensityRows(RecordingRegistry,[]);
+    end
     RecordingWindowMetrics=CoreData.RecordingWindowMetrics;WindowBaselineContrasts=CoreData.WindowBaselineContrasts;
     [EventMeasurementQC,EventBaselineStatusCounts]=createOxygenMeasurementQC( ...
         RecordingRegistry,CoreData.TableOxygenSinkEvents,CoreData.TableOxygenSurgeEvents);
@@ -33,9 +36,6 @@ if isfield(CoreData,'RecordingRegistry')
         'EventMeasurementQC','EventBaselineStatusCounts','-append');
     writetable(EventMeasurementQC,OutputXlsx,'Sheet','EventMeasurementQC');
     writetable(EventBaselineStatusCounts,OutputXlsx,'Sheet','EventBaselineStatusCounts');
-    if ~ismember('IntensityRatioDefinition',RecordingRegistry.Properties.VariableNames)
-        RecordingRegistry=boiIntensityRows(RecordingRegistry,[]);
-    end
     CameraOffsetSummary=boiIntensitySummary(RecordingRegistry);
     save(fullfile(StatsOutputFolderPath,'DataOutput.mat'),'CameraOffsetSummary','-append');
     writetable(CameraOffsetSummary,OutputXlsx,'Sheet','CameraOffsetSummary');

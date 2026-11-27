@@ -1,6 +1,6 @@
 function fig=viewBOIMultichannel(file)
 % Inspect any anchor event, including events without a counterpart.
-P=loadBOIMultichannel(file); e=P.Events; O=P.Options;
+P=boiPairCalibrationRows(loadBOIMultichannel(file)); e=P.Events; O=P.Options;
 fig=uifigure('Name',char("Paired results · "+O.RecordingID),'Position',[100 80 1120 740]);
 g=uigridlayout(fig,[2 1]); g.RowHeight={36,'1x'};
 tabs=uitabgroup(g); tabs.Layout.Row=2;

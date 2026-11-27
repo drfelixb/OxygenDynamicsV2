@@ -79,6 +79,7 @@ end
 [InputData,AnalysisInfo] = loadOxygenMasterInputs(MasterRecordingFolder,AnalysisParams);
 if ~exist('CameraOffsetCounts','var'),CameraOffsetCounts=[];end
 calibration=boiIntensityCalibration(CameraOffsetCounts);
+CameraOffsetCounts=calibration.CameraOffsetCounts;
 AnalysisInfo.CameraOffsetCounts=calibration.CameraOffsetCounts;
 AnalysisInfo.CameraOffsetSource=calibration.CameraOffsetSource;
 AnalysisInfo.IntensityRatiosOffsetCorrected=calibration.IntensityRatiosOffsetCorrected;

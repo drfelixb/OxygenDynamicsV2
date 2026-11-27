@@ -44,6 +44,12 @@ C=struct('Schema','boi-reviewed-area-context-1','AuditPath',R.AuditPath,'AuditSH
 % Historical revisions hash the exact original context. Preserve that layout.
 if isfield(S,'ReviewedOpticalVersion') || ~isempty(boiCameraOffset(S))
     C.ReviewedOpticalVersion=version;C.CameraOffsetCounts=boiCameraOffset(S);C.AmplitudeStatus=M.Status;
+    if isfield(S,'ReferencesAtOrBelowOffset')
+        C.ReferencesAtOrBelowOffset=S.ReferencesAtOrBelowOffset;
+    else
+        calibration=boiIntensityCalibration(I);
+        C.ReferencesAtOrBelowOffset=calibration.ReferencesAtOrBelowOffset+double(blocked);
+    end
     if blocked,C.AmplitudePercent=[];end % Preserve the unavailable value across JSON hash replay.
 end
 F=repmat(struct('Frame',0,'Status','unreviewed','Pixels',[],'Origin','none','Note','','Reviewer','','DecidedUTC',''),numel(C.Frames),1);

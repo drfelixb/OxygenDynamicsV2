@@ -168,4 +168,5 @@ t.verifyEqual(s.AreaStatus,'complete');t.verifyEqual(s.BurdenArea_um2,3);
 t.verifyEqual(s.DurationSec,5);t.verifyTrue(isnan(s.BurdenAmplitudePercent));
 t.verifyTrue(isnan(s.PerEventBurdenContribution));
 t.verifyEqual(s.AmplitudeStatus,'reference_at_or_below_camera_offset');
+t.verifyEqual(s.ReferencesAtOrBelowOffset,1);
 end

@@ -23,8 +23,9 @@ if ~all(isfinite(raw(C))),M.Status='unavailable_nonfinite_reference_samples';ret
 B=mean(raw(C));if isfinite(B),M.ReferenceMean=B;end
 [denom,blocked]=boiIntensityDenominator(B,offset);
 if blocked
-    M.Status='reference_at_or_below_camera_offset';M.Numerator=values-B;
+    M.Status='reference_at_or_below_camera_offset';
     if B>0 && all(isfinite(values))
+        M.Numerator=values-B;
         M.MinimumFrames=E(values==min(values)); M.MaximumFrames=E(values==max(values));
     end
     return

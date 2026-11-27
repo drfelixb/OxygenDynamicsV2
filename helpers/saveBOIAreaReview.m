@@ -37,6 +37,7 @@ try
     if isfield(C,'AmplitudeStatus'),S.AmplitudeStatus=C.AmplitudeStatus;end
     if isempty(S.BurdenAmplitudePercent),S.BurdenAmplitudePercent=NaN;end
     cal=boiIntensityCalibration(C); S.CameraOffsetSource=cal.CameraOffsetSource; S.IntensityRatiosOffsetCorrected=cal.IntensityRatiosOffsetCorrected;
+    S.ReferencesAtOrBelowOffset=cal.ReferencesAtOrBelowOffset;
     M=computeBOIReviewedArea(D);ReviewedEventBurden=S;AreaReview=D; %#ok<NASGU>
     save(fullfile(Folder,'ReviewedEventBurden.mat'),'ReviewedEventBurden','AreaReview','M');
     writeBOIRunJSON(fullfile(Folder,'ReviewedEventBurden.json'),S);writetable(struct2table(S,'AsArray',true),fullfile(Folder,'ReviewedEventBurden.csv'));
