@@ -213,3 +213,30 @@ t.verifyEqual(blocked(:,fields),original(:,fields));
 t.verifyTrue(isnan(blocked.EventAmplitudePercent));
 t.verifyEqual(blocked.EventReferenceStatus,"reference_at_or_below_camera_offset");
 end
+
+function testRankWeightedBurdenFollowsSelectedDepth(t)
+[first,a,pixels,registry]=fixture(25,26,100,1);
+[second,b]=fixture(40,43,100,1);
+second.SinkID=2;b{1}.Footprint=2;
+a{1}.Raw(25:26)=90;                    % 100 to 90 counts
+b{1}.Raw(:)=200;b{1}.Raw(40:43)=170;  % 200 to 170 counts
+pixels(40:43)={2};
+for offset={[],80,100}
+    o=offset{1};
+    events=deriveBOIEventReferences([first;second],[a;b],pixels,1,20,"synthetic",[],o);
+    burden=createHypoxicBurdenMetrics(boiIntensityRows(events,o),table(),table(),boiIntensityRows(registry,o));
+    E=burden.EventTable;R=burden.RecordingTable;
+    t.verifyEqual(E.OriginalCountRankAmplitudePercent,[10;15]);
+    if isempty(o)
+        depths=[10;15];ranks=[.25;.75];total=2100;
+    elseif o==80
+        depths=[50;25];ranks=[.75;.25];total=1500;
+    else
+        depths=[NaN;30];ranks=[NaN;.5];total=NaN;
+    end
+    t.verifyEqual(E.BurdenAmplitudePercent,depths);
+    t.verifyEqual(E.BurdenRankAmplitudeQuantile,ranks);
+    t.verifyEqual(R.Burden_RankAmplitude,total,'AbsTol',1e-10);
+    t.verifyEqual(R.BurdenRankInput,"BurdenAmplitudePercent");
+end
+end

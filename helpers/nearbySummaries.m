@@ -1,26 +1,7 @@
 function nearbySummaries(events,frames,out,condition)
 files=["Windows_by_pocket","Aligned_by_mouse","Windows_by_mouse","Aligned_by_group","Windows_by_group"];
-tables=summarize(events,frames,condition,true);
+tables=summarize(events,frames,condition);
 if ismember('IntensityRatiosOffsetCorrected',events.Properties.VariableNames)
-    if any(events.IntensityRatiosOffsetCorrected)
-        % Descriptive above/below counts always compare original-count traces.
-        original=frames;
-        for role=["Pocket","Near","Far","TissueOnlyPocket"]
-            original.(role+"Pct")=frames.(role+"OriginalPct");
-        end
-        originalTables=summarize(events,original,condition,false);
-        for k=2:5
-            observed=originalTables{k}; measured=tables{k};
-            keys=intersect({'Group','Mouse','Seconds','Start_s','End_s','Analysis','Alignment','Condition'},observed.Properties.VariableNames);
-            [found,j]=ismember(observed(:,keys),measured(:,keys),'rows');
-            for key=string(setdiff(measured.Properties.VariableNames,keys))
-                if ismember(key,["PocketsAboveBaselineAndRing","MiceAboveRing","MiceAboveBaselineAndRing"]),continue;end
-                observed.(key)(found)=measured.(key)(j(found));
-                if ismember(key,["Mice","Pockets"]),observed.(key)(~found)=0;else,observed.(key)(~found)=NaN;end
-            end
-            tables{k}=observed;
-        end
-    end
     for k=1:5
         T=tables{k};T.CorrectedRecordings=zeros(height(T),1);T.UncorrectedRecordings=zeros(height(T),1);
         T.IntensityRatioDefinition=strings(height(T),1);
@@ -39,10 +20,16 @@ if ismember('IntensityRatiosOffsetCorrected',events.Properties.VariableNames)
         tables{k}=T;
     end
 end
-for k=1:numel(files),writetable(tables{k},fullfile(out,files(k)+".csv"));end
+for k=1:numel(files)
+    T=tables{k};
+    if ismember('PocketsAboveBaselineAndRing',T.Properties.VariableNames)
+        T.PocketRingCountBasis=repmat("reported_percentages",height(T),1);
+    end
+    writetable(T,fullfile(out,files(k)+".csv"));
+end
 end
 
-function tables=summarize(events,frames,condition,intervals)
+function tables=summarize(events,frames,condition)
 [found,i]=ismember(frames.PocketKey,events.PocketKey);assert(all(found));
 frames.Group=events.Group(i);frames.Mouse=events.Mouse(i);frames.SampleF=events.SampleF(i);
 screen=~logical(frames.PocketBaselineFlagged | frames.NearPotentialEventDuringBaseline | frames.NearPotentialEvent | frames.AfterNextSameSiteSink);
@@ -87,8 +74,8 @@ c=vertcat(curve{:});w=vertcat(windows{:});
 pw=vertcat(pocketWindows{:});
 pw.Condition=repmat(condition,height(pw),1);
 c.Condition=repmat(condition,height(c),1); w.Condition=repmat(condition,height(w),1);
-tables={pw,c,w,groupMeans(c,{'Analysis','Alignment','Seconds','Condition'},intervals), ...
-    groupMeans(w,{'Analysis','Start_s','End_s','Condition'},intervals)};
+tables={pw,c,w,groupMeans(c,{'Analysis','Alignment','Seconds','Condition'}), ...
+    groupMeans(w,{'Analysis','Start_s','End_s','Condition'})};
 end
 
 function v=mouseMeans(t,keys)
@@ -101,7 +88,7 @@ v.RingPct=accumarray(g,t.NearPct,[],@mean);v.ExcessPP=accumarray(g,diff,[],@mean
 v.PocketsAboveBaselineAndRing=accumarray(g,double(t.PocketPct>0&diff>0));
 end
 
-function grouped=groupMeans(mouse,period,intervals)
+function grouped=groupMeans(mouse,period)
 % Keep the ordering of the mouse-resampling design stable across operating systems.
 blocks={}; names=["All";unique(mouse.Group)];
 for i=1:numel(names)
@@ -125,7 +112,7 @@ for i=1:numel(names)
             else
                 ns=accumarray(findgroups(u.Group),1);
             end
-            ci=[NaN NaN];if intervals,ci=nearbyBootstrap(u.ExcessPP,ns);end
+            ci=nearbyBootstrap(u.ExcessPP,ns);
             vals(j,:)=[height(u),sum(u.Pockets),mean(u.PocketPct),mean(u.RingPct),mean(u.ExcessPP),ci, ...
                 nnz(u.ExcessPP>0),nnz(u.ExcessPP>0 & u.PocketPct>0),sum(u.PocketsAboveBaselineAndRing),min(u.ExcessPP),max(u.ExcessPP)];
         end

@@ -201,22 +201,43 @@ t.verifyEqual(cal.PocketRaw,raw.PocketRaw);t.verifyEqual(cal.NearRaw,raw.NearRaw
 for region=["Pocket","Near","Far","TissueOnlyPocket"]
     b=updated.(region+"Baseline")(ix);
     t.verifyEqual(cal.(region+"Pct"),100*(raw.(region+"Raw")-b)./(b-20),'AbsTol',1e-12);
+    t.verifyEqual(cal.(region+"OriginalPct"),raw.(region+"Pct"),'AbsTol',1e-12);
 end
 t.verifyTrue(all(cal.IntensityRatiosOffsetCorrected));
 end
 
-function testOriginalOrderingWithDifferentRegionalReferences(t)
+function testPocketRingCountsFollowReportedPercentages(t)
 out=tempname;mkdir(out);t.addTeardown(@()rmdir(out,'s'));
 events=table(1,"mouse","group",1,"rec",'VariableNames',{'PocketKey','Mouse','Group','SampleF','RecordingID'});
-events=boiIntensityRows(events,80);
-f=table(1,0,0,50,25,25,50,false,false,false,false, ...
-    'VariableNames',{'PocketKey','FromOnset_s','FromOffset_s','PocketPct','NearPct','FarPct', ...
-    'TissueOnlyPocketPct','PocketBaselineFlagged','NearPotentialEventDuringBaseline','NearPotentialEvent','AfterNextSameSiteSink'});
-% Pocket 100->110, ring 200->230. Original ordering reverses after offset 80.
-f.PocketOriginalPct=10;f.NearOriginalPct=15;f.FarOriginalPct=f.NearOriginalPct;f.TissueOnlyPocketOriginalPct=10;
-nearbySummaries(events,f,out,"condition");
-T=readtable(fullfile(out,'Aligned_by_group.csv'),'TextType','string');
-r=T(T.Analysis=="Primary" & T.Group=="All" & T.Alignment=="Onset",:);
-t.verifyGreaterThan(r.ExcessPP,0);t.verifyEqual(r.PocketsAboveBaselineAndRing,0);
-t.verifyEqual(r.MiceAboveRing,0);t.verifyEqual(r.CorrectedRecordings,1);
+% Pocket rises from 100 to 110 counts and ring from 200 to 230 counts.
+seconds=(1:10)';n=numel(seconds);
+for offset={[],80}
+    o=offset{1};
+    if isempty(o)
+        denomOffset=0;expectedExcess=-5;expectedCount=0;
+    else
+        denomOffset=o;expectedExcess=25;expectedCount=1;
+    end
+    pocket=repmat(100*10/(100-denomOffset),n,1);
+    ring=repmat(100*30/(200-denomOffset),n,1);
+    f=table(ones(n,1),seconds,seconds,pocket,ring,ring,pocket,false(n,1),false(n,1),false(n,1),false(n,1), ...
+        'VariableNames',{'PocketKey','FromOnset_s','FromOffset_s','PocketPct','NearPct','FarPct', ...
+        'TissueOnlyPocketPct','PocketBaselineFlagged','NearPotentialEventDuringBaseline','NearPotentialEvent','AfterNextSameSiteSink'});
+    f.PocketOriginalPct=10*ones(n,1);f.NearOriginalPct=15*ones(n,1);
+    f.FarOriginalPct=f.NearOriginalPct;f.TissueOnlyPocketOriginalPct=f.PocketOriginalPct;
+    nearbySummaries(boiIntensityRows(events,o),f,out,"condition");
+    for name=["Aligned_by_mouse","Windows_by_mouse","Aligned_by_group","Windows_by_group"]
+        T=readtable(fullfile(out,name+".csv"),'TextType','string');
+        rows=T(T.Analysis=="Primary",:);t.assertGreaterThan(height(rows),0);
+        t.verifyEqual(unique(rows.ExcessPP),expectedExcess);
+        t.verifyEqual(unique(rows.PocketsAboveBaselineAndRing),expectedCount);
+        t.verifyEqual(unique(rows.PocketRingCountBasis),"reported_percentages");
+        if endsWith(name,"group")
+            t.verifyEqual(unique(rows.MiceAboveRing),expectedCount);
+            t.verifyEqual(unique(rows.MiceAboveBaselineAndRing),expectedCount);
+            t.verifyEqual(unique(rows.Lower95ExcessPP),expectedExcess,'AbsTol',1e-12);
+            t.verifyEqual(unique(rows.Upper95ExcessPP),expectedExcess,'AbsTol',1e-12);
+        end
+    end
+end
 end
