@@ -44,3 +44,23 @@ R(2,1,15)=NaN;E.BaselineStatus(2)="nonpositive_baseline_or_missing_event_signal"
 A=auditOxygenEventFootprints(S,E,O,R,4,'sink');verifyTrue(t,all(A.MeasurementMatches));
 verifyEqual(t,A.CleanBaselineFrames,[4;4]);verifyTrue(t,all(isnan(A.RecomputedAmplitude)));
 end
+
+function testConstantAddedToOriginalCounts(t)
+[S,E,O,R]=fixture;
+for kind=["sink","surge"]
+    input=E;
+    if kind=="surge"
+        input=renamevars(input,{'SinkID','NormOxySinkAmp'},{'SurgeID','NormOxySurgeAmp'});
+    end
+    original=auditOxygenEventFootprints(S,input,O,R,4,kind);
+    calibrated=auditOxygenEventFootprints(S,input,O,R+73,4,kind,73);
+    t.verifyEqual(calibrated.RecomputedAmplitude,original.RecomputedAmplitude,'AbsTol',eps);
+    t.verifyEqual(calibrated.RecomputedBaseline,original.RecomputedBaseline+73);
+    t.verifyEqual(auditOxygenEventFootprints(S,input,O,R,4,kind,[]),original);
+end
+for offset=[100 101]
+    a=auditOxygenEventFootprints(S,E,O,R,4,'sink',offset);
+    t.verifyEqual(a.RecomputedStatus(1),"reference_at_or_below_camera_offset");
+    t.verifyTrue(isnan(a.RecomputedAmplitude(1)));
+end
+end

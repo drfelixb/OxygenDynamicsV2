@@ -144,3 +144,29 @@ end
 function H=originalHashes(~,before)
 H=before;for k=1:size(before,1),H(k,2)=string(oxygenFileSHA256(before(k,1)));end
 end
+
+function testBurdenReplaysItsSavedOffset(t)
+F=makeBOIReviewedExportFixture(tempname,'legacy');t.addTeardown(@()rmdir(F.Root,'s'));
+folder=F.EventFolders{1};
+v=loadBOIReviewedBurdenEvent(folder);s=v.Document;
+s.CameraOffsetCounts=40;s.ReviewedOpticalVersion='0.2.0-offset';
+s.BurdenAmplitudePercent=50;s.PerEventBurdenContribution=750;
+s.PerEventBurdenContribution_per_mm2_per_min=4500000;
+path=fullfile(folder,'ReviewedEventBurden.json');writeBOIRunJSON(path,s);
+manifest=fullfile(folder,'Checksums.json');writeBOIRunJSON(manifest,struct('Path','ReviewedEventBurden.json','SHA256',oxygenFileSHA256(path)));
+opened=loadBOIReviewedBurdenEvent(folder);
+t.verifyEqual(opened.Document.BurdenAmplitudePercent,50);
+s.ReviewedOpticalVersion='0.1.0-draft';writeBOIRunJSON(path,s);
+writeBOIRunJSON(manifest,struct('Path','ReviewedEventBurden.json','SHA256',oxygenFileSHA256(path)));
+t.verifyError(@()loadBOIReviewedBurdenEvent(folder),'OxygenDynamics:ReviewedOpticalDefinitionChanged');
+end
+
+function testHighOffsetReviewedAreaReplays(t)
+F=makeBOIReviewedExportFixture(tempname,'area-blocked');t.addTeardown(@()rmdir(F.Root,'s'));
+saved=loadBOIReviewedBurdenEvent(F.EventFolders{1});s=saved.Document;
+t.verifyEqual(s.AreaStatus,'complete');t.verifyEqual(s.BurdenArea_um2,3);
+t.verifyEqual(s.DurationSec,5);t.verifyTrue(isnan(s.BurdenAmplitudePercent));
+t.verifyTrue(isnan(s.PerEventBurdenContribution));
+t.verifyEqual(s.AmplitudeStatus,'reference_at_or_below_camera_offset');
+t.verifyEqual(s.ReferencesAtOrBelowOffset,1);
+end

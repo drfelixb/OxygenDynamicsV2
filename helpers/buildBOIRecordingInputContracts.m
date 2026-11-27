@@ -9,10 +9,19 @@ for i=1:height(Registry)
     info=loadRequiredMatVar(Recordings(i).SinksMatFile,'AnalysisInfo');
     surge=loadRequiredMatVar(Recordings(i).SurgesMatFile,'AnalysisInfo');
     profile=getBOISupportProfile(info);
-    assert(strcmp(profile,getBOISupportProfile(surge))&&isequaln(info.PipelineContract,surge.PipelineContract), ...
+    assert(strcmp(profile,getBOISupportProfile(surge))&&isequaln(info.PipelineContract,surge.PipelineContract)&& ...
+        isequal(boiCameraOffset(info),boiCameraOffset(surge)), ...
         'OxygenDynamics:MixedSupportProfiles','Sink and surge methods differ. Select a consistent run.');
     if i>1
-        assert(isequaln(info.PipelineContract,Contracts{1}.PipelineContract), ...
+        current=info.PipelineContract; first=Contracts{1}.PipelineContract;
+        % Only the two approved optical measurement versions can share this export.
+        if isfield(current,'Measurement') && isfield(first,'Measurement')
+            versions=["event-footprint-contact-ledger-7","event-footprint-contact-ledger-8-offset"];
+            if all(ismember([string(current.Measurement),string(first.Measurement)],versions))
+                first.Measurement=current.Measurement;
+            end
+        end
+        assert(isequaln(current,first), ...
             'OxygenDynamics:MixedSupportProfiles','Whole-image and restricted ROI methods cannot be pooled.');
     end
     a=[];b=[];
@@ -39,6 +48,7 @@ for i=1:height(Registry)
     assert(c.InputCompatible,'OxygenDynamics:UnsupportedBOIInput','Saved acquisition declarations require assessment before uniform-time statistics.');
     c.DetectionSupportProfile=profile;
     c.PipelineContract=info.PipelineContract;
+    c.IntensityCalibration=boiIntensityCalibration(info);
     c.DetectionSupportAudit=struct();
     if isfield(info,'DetectionSupportAudit')
         c.DetectionSupportAudit=rmfield(info.DetectionSupportAudit,'NeighborWeightMap');

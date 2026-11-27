@@ -2,8 +2,9 @@ function [NumOxySinkEvents,Start,Duration,NormOxySinkAmp,Size_modulation, ...
     Table_OxygenSinkEvents_Out,Trace_PotentialNoise] = collateOxygenSinkEvents( ...
     Overall_OxygenSinks_Pxllist,Overall_OxySinks_logical,Mean_OxySink_Trace_Convo, ...
     Mean_OxySink_Trace_Raw,Trace_PotentialNoise,metadata,morphology,fs,analysisParams, ...
-    eventBaselineReturnTolerance,sinkDetectionNoiseAmpThreshold)
+    eventBaselineReturnTolerance,sinkDetectionNoiseAmpThreshold,cameraOffset)
 %COLLATEOXYGENSINKEVENTS Build sink event summaries and event-level output table.
+if nargin<12,cameraOffset=[];end
 
 [NumOxySinkEvents,Start,Duration,NormOxySinkAmp,Size_modulation] = ...
     initializeEventMetricCells(size(Overall_OxygenSinks_Pxllist,1));
@@ -37,7 +38,7 @@ for i = 1:size(Overall_OxygenSinks_Pxllist,1)
         if q>1,leftLimit=floor((EventsTemp(q-1).PixelIdxList(end)+EventsTemp(q).PixelIdxList(1))/2)+1;end
         if q<numel(EventsTemp),rightLimit=floor((EventsTemp(q).PixelIdxList(end)+EventsTemp(q+1).PixelIdxList(1))/2);end
         EventMetrics = quantifyOxygenSinkEvent(EventsTemp(q).PixelIdxList,TempTrace,TraceTrend, ...
-            RawTrace,eventBaselineReturnTolerance,BaselineWindowFrames,MaxExtensionFrames,leftLimit,rightLimit);
+            RawTrace,eventBaselineReturnTolerance,BaselineWindowFrames,MaxExtensionFrames,leftLimit,rightLimit,cameraOffset);
         Start{i}(q) = EventMetrics.StartFrame;
         Duration{i}(q) = EventMetrics.DurationFrames;
         NormOxySinkAmp{i}(q) = EventMetrics.NormAmp;

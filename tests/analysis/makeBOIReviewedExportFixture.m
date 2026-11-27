@@ -29,7 +29,7 @@ R=loadBOIEventReview(audit);annotation=struct('Status','not_recognized','OnsetFr
 R.BoundaryReview=saveBOIBoundaryReview(R,1,annotation,fullfile(root,'review-01.json'));
 F=struct('Root',root,'StatsMAT',mat,'ReviewPaths',{{R.BoundaryReview.Path}},'EventFolders',{{}}, ...
     'OutputFolder',fullfile(root,'new reviewed export'),'Automatic',HypoxicBurden,'Registry',RecordingRegistry,'AuditPath',audit);
-if ismember(mode,{'legacy','area-incomplete','area-complete'})
+if ismember(mode,{'legacy','area-incomplete','area-complete','area-blocked'})
     annotation.Status='recognized';annotation.OnsetFrames=18;annotation.PreferredOnsetFrame=18;
     annotation.RecoveryFrames=22;annotation.PreferredRecoveryFrame=22;
     R.BoundaryReview=saveBOIBoundaryReview(R,2,annotation,fullfile(root,'review-02.json'),R.BoundaryReview);
@@ -62,12 +62,15 @@ if ismember(mode,{'legacy','area-incomplete','area-complete'})
             'ReferencePath',reference,'ReferenceSHA256',referenceHash,'StartFrame',18,'EndFrame',22, ...
             'DurationSec',5,'RawAmplitudePercent',30,'RawReferenceMean',100,'RawMinimum',70, ...
             'OriginalAutomaticStartFrame',20,'OriginalAutomaticEndFrame',21,'FixedTraceFootprintPixels',4);
+        if strcmp(mode,'area-blocked')
+            M.CameraOffsetCounts=100;M.ReviewedOpticalVersion='0.2.0-offset';M.RawAmplitudePercent=NaN;
+        end
         writeBOIRunJSON(fullfile(measurementFolder,'Status.json'),struct('Status','complete'));
         writeBOIRunJSON(fullfile(measurementFolder,'ReviewedMeasurement.json'),M);
         writeBOIRunJSON(fullfile(measurementFolder,'Checksums.json'),struct('Path','ReviewedMeasurement.json', ...
             'SHA256',oxygenFileSHA256(fullfile(measurementFolder,'ReviewedMeasurement.json'))));
         D=createBOIAreaReview(R,2,measurementFolder,[]);D.Reviewer='Synthetic software fixture';D.Reason='Synthetic test only';
-        if strcmp(mode,'area-complete')
+        if ismember(mode,{'area-complete','area-blocked'})
             for k=1:numel(D.FrameDecisions)
                 D.FrameDecisions(k).Status='accepted';D.FrameDecisions(k).Pixels=(1:3)';
                 D.FrameDecisions(k).Reviewer='Synthetic software fixture';D.FrameDecisions(k).DecidedUTC='2026-10-31T00:00:00Z';

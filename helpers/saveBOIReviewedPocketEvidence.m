@@ -14,8 +14,10 @@ try
     raw=E.Ingredients.Raw(F);corrected=nan(size(F));
     if ~isempty(E.Ingredients.Corrected),corrected=E.Ingredients.Corrected(F);end
     rawq=[nan(numel(R),1);E.Measures.RawSignedPercent];cq=[nan(numel(R),1);E.Measures.CorrectedSignedPercent];
-    writetable(table(F,F-1,kind,raw,corrected,rawq,cq,'VariableNames', ...
-        {'Frame','ModeledTimeSec','Role','RawInput','SavedCorrectedInput','RawSignedPercent','CorrectedSignedPercent'}), ...
+    samples=table(F,F-1,kind,raw,corrected,rawq,cq,'VariableNames', ...
+        {'Frame','ModeledTimeSec','Role','RawInput','SavedCorrectedInput','RawSignedPercent','CorrectedSignedPercent'});
+    samples=boiIntensityRows(samples,E);samples.DefinitionID=repmat(string(E.Definition.ID),height(samples),1);
+    writetable(samples, ...
         fullfile(OutputFolder,'ReviewedPocketSamples.csv'));
     [row,col]=ind2sub(E.FrameSize,E.FixedFootprint);
     writetable(table(E.FixedFootprint,row,col,'VariableNames',{'MatlabLinearPixel','PixelRow','PixelColumn'}),fullfile(OutputFolder,'ReviewedPocketFootprint.csv'));
@@ -23,6 +25,7 @@ try
         E.Measures.RawSignedTroughPercent,E.Measures.ReferenceSampleCount,string(E.Judgment.ReferenceSuitability), ...
         string(E.Judgment.EndpointStatus),string(E.FootprintOrigin),'VariableNames', ...
         {'PrimaryStatus','CompanionStatus','CorrectedSignedTroughPercent','RawSignedTroughPercent','ReferenceSamples','Suitability','EndpointStatus','SavedFootprintOrigin'});
+    summary=boiIntensityRows(summary,E); summary.DefinitionID=string(E.Definition.ID);
     writetable(summary,fullfile(OutputFolder,'ReviewedPocketMeasures.csv'));
     write(fullfile(OutputFolder,'Evidence.md'),formatBOIPocketEvidence(E));
     files=dir(OutputFolder);entries=struct('Name',{},'SHA256',{});

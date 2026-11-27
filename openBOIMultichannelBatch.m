@@ -25,8 +25,8 @@ editable=~ismember(names,{'Status','ResultFolder','Message','SourceCSV','SourceC
 sheet.ColumnEditable=editable;
 sheet.ColumnName={'Include','Recording ID','Status','Mode','A sensor','B sensor','A promoter','B promoter', ...
     'Hz','µm/pixel','A preserved TIFF','B preserved TIFF','A denoised TIFF','B denoised TIFF', ...
-    'Details','Result folder','Mouse','Condition','Genotype','Treatment','Source CSV','CSV path','Source folder'};
-sheet.ColumnWidth={55,115,90,135,95,95,85,85,50,70,220,220,180,180,250,240,110,110,110,110,220,220,220};
+    'Details','Result folder','Mouse','Condition','Genotype','Treatment','Source CSV','CSV path','Source folder','A offset (counts)','B offset (counts)'};
+sheet.ColumnWidth={55,115,90,135,95,95,85,85,50,70,220,220,180,180,250,240,110,110,110,110,220,220,220,100,100};
 actions=uigridlayout(grid,[1 5]); actions.Padding=[0 0 0 0]; actions.ColumnWidth={135,145,155,170,'1x'};
 choose=uibutton(actions,'Text','Choose TIFF for cell…','Enable','off','ButtonPushedFcn',@chooseMovie);
 check=uibutton(actions,'Text','Check included rows','ButtonPushedFcn',@checkRows);
@@ -100,7 +100,7 @@ refresh();
     function change(i,key,v)
         if isequaln(rows.(key)(i),v), return; end
         if strcmp(key,'Mode')
-            rows.RawB(i)=""; rows.DenoisedB(i)=""; rows.SensorB(i)=""; rows.PromoterB(i)="unspecified";
+            rows.RawB(i)=""; rows.DenoisedB(i)="";rows.CameraOffsetCountsB(i)=""; rows.SensorB(i)=""; rows.PromoterB(i)="unspecified";
             stage.Text='Channel B changed role. Select its preserved movie and enter its sensor and promoter.';
         elseif ismember(key,{'RawA','RawB'})
             rows.(['Denoised' key(end)])(i)="";

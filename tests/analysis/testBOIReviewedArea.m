@@ -86,3 +86,13 @@ Audit=table(["recording";"recording"],["sink";"sink"],[1;2],[1;1],[10;20],[11;21
 path=fullfile(root,'synthetic-audit.mat');save(path,'Audit');
 R=struct('AuditPath',path,'AuditSHA256',oxygenFileSHA256(path),'Audit',Audit,'AnalysisInfo',struct('RawSHA256','raw','NFrames',100,'AnalysisParams',struct('fs',1)));
 end
+
+function testAreaAndDurationSurviveUnavailableRatio(t)
+D=accept(fixture(),{10,10,10});original=computeBOIReviewedArea(D);
+D.Context.CameraOffsetCounts=100;D.Context.RawReferenceMean=100;
+D.Context.AmplitudePercent=NaN;D.Context.AmplitudeStatus='reference_at_or_below_camera_offset';
+D.ContextSHA256=boiPocketDigest(D.Context);updated=computeBOIReviewedArea(D);
+t.verifyEqual(updated.MeanAreaUm2,original.MeanAreaUm2);
+t.verifyEqual(updated.FramePixels,original.FramePixels);t.verifyTrue(updated.Complete);
+t.verifyTrue(isnan(updated.Contribution));t.verifyTrue(isnan(updated.NormalizedContribution));
+end

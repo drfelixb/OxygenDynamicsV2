@@ -1,6 +1,6 @@
 function fig=viewBOIMultichannel(file)
 % Inspect any anchor event, including events without a counterpart.
-P=loadBOIMultichannel(file); e=P.Events; O=P.Options;
+P=boiPairCalibrationRows(loadBOIMultichannel(file)); e=P.Events; O=P.Options;
 fig=uifigure('Name',char("Paired results · "+O.RecordingID),'Position',[100 80 1120 740]);
 g=uigridlayout(fig,[2 1]); g.RowHeight={36,'1x'};
 tabs=uitabgroup(g); tabs.Layout.Row=2;
@@ -45,8 +45,13 @@ selectEvent();
     function t=traceTable()
         t=table((1:O.NFrames)',P.TimeSec',P.RawA(row,:)',P.RawB(row,:)','VariableNames', ...
             {'Frame','TimeSec','IntensityA','IntensityB'});
-        t.ChangePctA=100*(t.IntensityA/e.ReferenceMeanA(row)-1);
-        t.ChangePctB=100*(t.IntensityB/e.ReferenceMeanB(row)-1);
+        t.ChangePctA=boiPairPercent(t.IntensityA,e.ReferenceMeanA(row),boiPairCameraOffset(O,1));
+        t.ChangePctB=boiPairPercent(t.IntensityB,e.ReferenceMeanB(row),boiPairCameraOffset(O,2));
+        for name=string(e.Properties.VariableNames)
+            if startsWith(name,["CameraOffset","IntensityRatio","ReferencesAtOrBelowOffset","RatioReferenceStatus"])
+                t.(name)=repmat(e.(name)(row),height(t),1);
+            end
+        end
         t.ReferenceFrame=ismember(t.Frame,P.ReferenceFrames{row});
         t.AnchorEvent=t.Frame>=e.StartFrame(row) & t.Frame<=e.EndFrame(row);
     end

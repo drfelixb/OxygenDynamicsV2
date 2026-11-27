@@ -1,4 +1,5 @@
-function M=computeBOIReviewedOpticalInterval(raw,reference,onset,recovery,fs,kind)
+function M=computeBOIReviewedOpticalInterval(raw,reference,onset,recovery,fs,kind,offset)
+if nargin<7,offset=[];end
 %COMPUTEBOIREVIEWEDOPTICALINTERVAL Exact selected-reference arithmetic only.
 % Caller binds audit, native support, saved judgment and definition provenance.
 id='OxygenDynamics:InvalidReviewedOpticalInput';
@@ -20,9 +21,18 @@ if isempty(C),return;end
 M.ReferenceSampleCount=numel(C);
 if ~all(isfinite(raw(C))),M.Status='unavailable_nonfinite_reference_samples';return;end
 B=mean(raw(C));if isfinite(B),M.ReferenceMean=B;end
+[denom,blocked]=boiIntensityDenominator(B,offset);
+if blocked
+    M.Status='reference_at_or_below_camera_offset';
+    if B>0 && all(isfinite(values))
+        M.Numerator=values-B;
+        M.MinimumFrames=E(values==min(values)); M.MaximumFrames=E(values==max(values));
+    end
+    return
+end
 if ~isfinite(B)||B<=0,M.Status='unavailable_nonpositive_or_nonfinite_reference_mean';return;end
 if ~all(isfinite(values)),M.Status='unavailable_nonfinite_event_samples';return;end
-numerator=values-B;q=numerator/B;
+numerator=values-B;q=numerator/denom;
 % Finite inputs can still overflow intermediate arithmetic; never export Inf.
 if ~all(isfinite(numerator))||~all(isfinite(q))||~all(isfinite(100*q))
     M.Status='unavailable_nonfinite_derived_arithmetic';return;

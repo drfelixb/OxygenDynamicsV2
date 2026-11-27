@@ -36,10 +36,12 @@ elseif sameInput&&isfield(t,'DetectionDetrended')&&isfield(Review,'AuditCreation
     end
 end
 W=(J.OnsetFrame:J.ObservedEndFrame)';R=double(J.ReferenceFrames(:));
-M=computeBOIReviewedPocketMeasures(raw,corrected,R,W,J.ReferenceSuitability,J.ClockAuthority);
+offset=boiCameraOffset(S.AnalysisInfo);
+M=computeBOIReviewedPocketMeasures(raw,corrected,R,W,J.ReferenceSuitability,J.ClockAuthority,offset);
 qualification='Measured on saved sink footprint; reviewed pocket extent is not independently established.';
 if row.EventType=="surge",qualification='Measured on saved surge footprint; pocket extent not independently established.';end
 D=getBOIReviewedPocketDefinition;
+if ~isempty(offset),D=getBOIReviewedPocketDefinition('boi-reviewed-pocket-optical-0.3.0-offset');end
 E=struct('Schema','boi-reviewed-pocket-evidence-1','Definition',D,'ScientificStatus','researcher_selected_exploratory_optical_measure_not_physiological_validation', ...
     'AuditPath',Review.AuditPath,'AuditSHA256',Review.AuditSHA256,'AuditRow',Index,'RawSourceSHA256',I.RawSHA256, ...
     'OriginalAutomatic',table2struct(row),'Judgment',J,'JudgmentSHA256',boiPocketDigest(J), ...
@@ -54,6 +56,10 @@ E=struct('Schema','boi-reviewed-pocket-evidence-1','Definition',D,'ScientificSta
     'AcquisitionEvidence',Review.Acquisition,'AcquisitionQC',table2struct(Review.QC),'AutomaticMeasurementsChanged',false, ...
     'DetectorRelabelled',false,'ExternalSourceVerification','saved_audit_association_only_source_recording_not_opened', ...
     'ImplementationSHA256',oxygenFileSHA256(which('buildBOIReviewedPocketEvidence')));
+E.CameraOffsetCounts=offset; E.IntensityCalibration=boiIntensityCalibration(S.AnalysisInfo);
+[~,blocked]=boiIntensityDenominator(M.RawReferenceMean,offset);
+E.ReferencesAtOrBelowOffset=E.IntensityCalibration.ReferencesAtOrBelowOffset+nnz(blocked);
+E.IntensityCalibration.ReferencesAtOrBelowOffset=E.ReferencesAtOrBelowOffset;
 if isfield(Review,'HistoricalMetadata'),E.HistoricalMetadata=Review.HistoricalMetadata;end
 % Full saved vectors support portable display/replay without the recording or fitting.
 E.Ingredients=struct('Raw',raw,'Corrected',corrected,'CorrectionSHA256',boiPocketDigest(corrected),'FootprintSHA256',J.FixedFootprintSHA256);

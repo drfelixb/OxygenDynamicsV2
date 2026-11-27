@@ -36,7 +36,7 @@ try
     Status.Stage='analysis';writeBOIRunJSON(statusPath,Status);reportProgress();
     Master=runOxygenDynamicsMaster(rec,Request.Context);
     assert(isequaln(Master.AnalysisInfo.AnalysisParams,Request.AnalysisParams)&& ...
-        strcmp(getBOISupportProfile(Master.AnalysisInfo),o.SupportProfile), ...
+        strcmp(getBOISupportProfile(Master.AnalysisInfo),o.SupportProfile)&&isequal(boiCameraOffset(Master.AnalysisInfo),boiCameraOffset(o)), ...
         'OxygenDynamics:RunSettingsMismatch','Master effective settings differ from the confirmed request.');
     Status.Stage='statistics';writeBOIRunJSON(statusPath,Status);reportProgress();
     Paths={rec};PostureFile=NaN;PupilFile=NaN;PuffsFile=NaN;WhiskingFile=NaN;
@@ -44,6 +44,7 @@ try
     SampleF=o.SampleHz;Pixelsize=o.PixelSizeUm;Puff_2use=NaN;
     RecordingID=string(Master.AnalysisInfo.RecordingID);
     T=table(Paths,PostureFile,PupilFile,PuffsFile,WhiskingFile,Mouse,Genotype,Condition,DrugID,Promoter,SampleF,Pixelsize,Puff_2use,RecordingID);
+    if ~isempty(boiCameraOffset(o)),T.CameraOffsetCounts=boiCameraOffset(o);end
     csv=fullfile(out,'input.csv');writetable(T,csv);
     config=struct('inputCsv',csv,'masterFolder',out,'outputRoot',fullfile(out,'statistics'), ...
         'interactive',false,'imagingMode','BLI','useCuratedSinks',false,'chooseSpecificFolders',false, ...
@@ -70,6 +71,7 @@ try
     Run=struct('Schema','boi-recording-run-1','Status','complete','SourceSHA256',Request.InputReview.RawSHA256, ...
         'SupportProfile',o.SupportProfile,'Artifacts',artifacts,'ElapsedSeconds',toc(started), ...
         'ScientificStatus','not_established');
+    Run.IntensityCalibration=boiIntensityCalibration(Master.AnalysisInfo);
     Run.SoftwareVersion=software.Version;Run.SourceCommit=software.SourceCommit;Run.SourceState=software.SourceState;
     save(fullfile(out,'BOIRun.mat'),'Run');
     Status.Status='complete';Status.Stage='complete';Status.ElapsedSeconds=toc(started);writeBOIRunJSON(statusPath,Status);

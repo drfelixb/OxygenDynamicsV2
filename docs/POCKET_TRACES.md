@@ -10,7 +10,7 @@ Each automatic sink contributes its saved fixed footprint. On the same original 
 
 **Figure time zero is the saved automatic measurement onset or offset.** Offset is the last inclusive measurement frame. The first and last native detector frames can differ. The raw CSV records both frame pairs and both pairs of relative time axes. At 1 Hz, if the measurement ends at frame 153 and detection ends at 152, frame 153 has measurement offset time 0 s and native offset time +1 s.
 
-The recording-specific sampling rate defines the window from up to 20 seconds before measurement onset through 60 seconds after measurement offset, clipped to the available frames. Each region’s percent change is 100 × (raw − pre-onset mean) / pre-onset mean. The pocket must have a valid positive immediate pre-event reference. Raw samples remain available when normalization is unavailable. Missing tissue support gives missing ring values. Positive local excess means the pocket rose more relative to its own baseline than the surrounding tissue did relative to its baseline. The signal is optical intensity in camera units. Converting it to an oxygen concentration requires an independent calibration.
+The recording-specific sampling rate defines the window from up to 20 seconds before measurement onset through 60 seconds after measurement offset, clipped to the available frames. Each region’s percent change is 100 × (raw − pre-onset mean) / (pre-onset mean − supplied camera offset). A blank uses the pre-onset mean as the denominator. The pocket must have a valid positive immediate pre-event reference. Raw samples remain available when normalization is unavailable. Missing tissue support gives missing ring values. Positive local excess means the pocket rose more relative to its own baseline than the surrounding tissue did relative to its baseline. The signal is optical intensity in camera units. Converting it to an oxygen concentration requires an independent calibration.
 
 ## Reading the output
 
@@ -43,3 +43,5 @@ showPocketNearbyTissue(output,pocket.Mouse,pocket.SinkID,pocket.EventID,pocket.S
 ```
 
 For a scripted correction, supply `Decisions` as a table with one `SourceSHA256` per affected movie and a `Mouse` or `RawFile` column (or both). Supply `ConfirmedOmissions` as the exact list of unavailable source digests only after reviewing the missing recordings. An optional existing output parent can be passed as the second positional argument. MATLAB with Image Processing Toolbox and Statistics and Machine Learning Toolbox is used. Memory must accommodate one uncompressed imaging volume plus its audit and the accumulated trace tables.
+
+An optional camera dark offset adjusts the reference denominator of intensity-based ratios. Enter it in original counts for each recording or channel. [Camera offset, formulas and dark-frame measurements](CAMERA_OFFSET.md)

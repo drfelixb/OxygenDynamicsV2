@@ -6,6 +6,8 @@ reconstructed into releases.
 
 ## Unreleased
 
+- **Added** an optional camera offset in original counts for single and paired recordings. Normalized optical measurements use the saved offset, and exports identify corrected recordings and unavailable references.
+
 - **Added** the [4.0.0-rc.1 release notes](docs/releases/4.0.0-rc.1.md).
 
 ## 4.0.0-rc.1 — 2026-11-27

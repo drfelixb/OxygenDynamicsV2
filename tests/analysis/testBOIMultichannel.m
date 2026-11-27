@@ -379,3 +379,87 @@ for frame=1:112
     imwrite(peerFrame,peer,'WriteMode',mode);
 end
 end
+
+function testCameraOffsetPreservesNativeOutputs(t)
+root=tempname;mkdir(root);t.addTeardown(@()rmdir(root,'s'));
+[raw,~,~]=pairDepthMovies(root);
+context=createLegacyRecordingContext(1,'fixture','baseline',2,'unknown','hSyn','none',NaN,NaN,NaN,'N');
+blank=runOxygenDynamicsMaster(fileparts(raw),context);
+context.CameraOffsetCounts=uint16(1000);
+calibrated=runOxygenDynamicsMaster(fileparts(raw),context);
+context.CameraOffsetCounts=3000;
+blocked=runOxygenDynamicsMaster(fileparts(raw),context);
+t.verifyGreaterThan(blocked.AnalysisInfo.ReferencesAtOrBelowOffset,0);
+for kind=["Sink","Surge"]
+    if kind=="Sink"
+        folder="OxySinksPath"; file="OxygenSinks_Urefined";
+    else
+        folder="OxySurgesPath"; file="OxygenSurges";
+    end
+    file=file+blank.DatafileID+".mat";
+    a=load(fullfile(blank.OutputFolders.(folder),file));
+    b=load(fullfile(calibrated.OutputFolders.(folder),file));
+    high=load(fullfile(blocked.OutputFolders.(folder),file));
+    site="Table_Oxygen"+kind+"s_Out"; event="Table_Oxygen"+kind+"Events_Out";
+    amp="NormOxy"+kind+"Amp";
+    t.verifyEqual(removevars(a.(site),amp),removevars(b.(site),amp));
+    e=a.(event); v=b.(event);
+    if kind=="Sink",t.assertGreaterThan(height(e),0);end
+    ratios=[amp,amp+"Percent","MeanSignedChangeFraction","SignedTraceAUC_sec", ...
+        "EpisodeAmplitudePercent","EventAmplitudePercent","EventReferenceVersion","EpisodeReferenceVersion", ...
+        "CameraOffsetCounts","CameraOffsetSource","IntensityRatioDefinition","IntensityRatiosOffsetCorrected","ReferencesAtOrBelowOffset"];
+    other=setdiff(string(e.Properties.VariableNames),ratios,'stable');
+    t.verifyEqual(e(:,other),v(:,other));
+    highOther=setdiff(other,["BaselineStatus","EventReferenceStatus","EpisodeReferenceStatus","EventAmplitudeAvailable"],'stable');
+    t.verifyEqual(high.(event)(:,highOther),e(:,highOther));
+    t.verifyEqual(removevars(high.(site),amp),removevars(a.(site),amp));
+    valid=isfinite(e.(amp));
+    t.verifyEqual(v.(amp)(valid),e.(amp)(valid).*e.BaselineValue(valid)./(e.BaselineValue(valid)-1000),'AbsTol',1e-12);
+    payload=setdiff(fieldnames(a),{char(site),char(event),'AnalysisInfo'});
+    for j=1:numel(payload)
+        t.verifyEqual(a.(payload{j}),b.(payload{j}));t.verifyEqual(a.(payload{j}),high.(payload{j}));
+    end
+end
+end
+
+function testOffsetForEachChannel(t)
+[o,d,f,r]=fixture();t.addTeardown(@()rmdir(r,'s'));
+plain=buildBOIMultichannelResult(o,d,f);
+o.CameraOffsetCountsA=20; o.CameraOffsetCountsB=100;
+p=buildBOIMultichannelResult(o,d,f);
+t.verifyEqual(p.Channels.CameraOffsetCounts,[20;100]);
+t.verifyEqual(p.Events.ChangeAtAnchorExtremePctA(1),100*(60-100)/80,'AbsTol',1e-12);
+t.verifyEqual(p.Events.ChangeAtAnchorExtremePctB(1),100*(180-200)/100,'AbsTol',1e-12);
+t.verifyEqual(p.Links,plain.Links);t.verifyEqual(p.RawB,plain.RawB);
+o.CameraOffsetCountsB=200;p=buildBOIMultichannelResult(o,d,f);
+t.verifyTrue(isnan(p.Events.MeanChangePctB(1)));
+t.verifyEqual(p.Events.RatioReferenceStatusB(1),"reference_at_or_below_camera_offset");
+t.verifyGreaterThan(p.Channels.ReferencesAtOrBelowOffset(2),0);
+end
+
+function testMixedPairWorkbookIncludesLegacyResults(t)
+[o,data,files,root]=fixture();t.addTeardown(@()rmdir(root,'s'));
+folders=fullfile(string(root),["legacy","calibrated"]);
+for i=1:2
+    o.RecordingID="recording"+i;
+    if i==2,o.CameraOffsetCountsA=20; o.CameraOffsetCountsB=100;end
+    Pair=buildBOIMultichannelResult(o,data,files);
+    if i==1
+        Pair.Options=rmfield(Pair.Options,{'CameraOffsetCountsA','CameraOffsetCountsB'});
+        for role=["Channels","Events","Summary","Comparisons"]
+            names=string(Pair.(role).Properties.VariableNames);
+            added=startsWith(names,["CameraOffset","IntensityRatio","ReferencesAtOrBelowOffset", ...
+                "IndependentReferencesAtOrBelowOffset","RatioReference"]);
+            Pair.(role)=removevars(Pair.(role),names(added));
+        end
+    end
+    mkdir(folders(i));file=fullfile(folders(i),'Multichannel.mat');save(file,'Pair');
+    writeBOIRunJSON(fullfile(folders(i),'PairStatus.json'),struct('Status','complete','ResultSHA256',oxygenFileSHA256(file)));
+end
+book=fullfile(root,'mixed.xlsx');exportBOIMultichannelComparison(folders,book);
+summary=readtable(book,'Sheet','Camera offset summary','TextType','string');
+t.verifyEqual(summary.Recordings,[1;1]);
+c=readtable(book,'Sheet','Channels','TextType','string');
+t.verifyEqual(c.CameraOffsetCounts(c.RecordingID=="recording2"),[20;100]);
+t.verifyTrue(all(c.CameraOffsetSource(c.RecordingID=="recording1")=="not_supplied"));
+end

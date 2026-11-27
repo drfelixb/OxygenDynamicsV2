@@ -138,7 +138,8 @@ setappdata(Fig,'BOIAreaComparisonUI',View);Tab.Parent.SelectedTab=Tab;render();f
         raw=strcmp(source.Value,'raw');images=Cache.Denoised;background=Cache.DenoisedBackground;lim=Cache.GrayLimits(2,:);
         if raw,images=Cache.Raw;background=Cache.RawBackground;lim=Cache.GrayLimits(1,:);end
         j=find(Cache.Frames==currentFrame);assert(isscalar(j),id,'Frame is not cached.');
-        plane=double(images(:,:,j));map=100*(plane-background)./background;map(background<=0)=NaN;
+        plane=double(images(:,:,j));denominator=boiIntensityDenominator(background,boiCameraOffset(C));
+        denominator(denominator<=0)=NaN;map=100*(plane-background)./denominator;
         baselineImage.CData=background;currentImage.CData=plane;changeImage.CData=map;changeImage.AlphaData=isfinite(map);
         baselineAx.CLim=lim;currentAx.CLim=lim;changeAx.CLim=[-15 15];
         title(baselineAx,sprintf('Reference mean %d-%d',C.ReferenceFrames(1),C.ReferenceFrames(end)));

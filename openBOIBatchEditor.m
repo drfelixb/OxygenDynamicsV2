@@ -21,7 +21,7 @@ importActive=false;importConverted=0;importPathSummary=[];importLastPaths=string
 acquisition={'SampleF','Pixelsize','BOISupportProfile'};
 importSettings=acquisition(1:2);
 importLabels={'Sampling rate (Hz)','Pixel size (µm/pixel)'};
-essential={'Paths','InputStatus','AnalysisStatus','ResultCheck',acquisition{:}};
+essential={'Paths','InputStatus','AnalysisStatus','ResultCheck',acquisition{:},'CameraOffsetCounts'};
 optional={'Mouse','Condition','DrugID','Genotype','Promoter','RecordingLabel', ...
     'RecordingDate','Session','Sex','AgeDays','BrainRegion','Project','Operator','Notes'};
 reserved={'BatchRowID','InputStatus','AnalysisStatus','ResultCheck','ReviewStatus', ...
@@ -498,7 +498,7 @@ if isfield(Batch,'PathImport'),startImport();end
     end
     function applyMetadata(name,value,indices)
         assertIdle();
-        name=char(string(name));assert(~ismember(name,[{'Paths'} acquisition]), ...
+        name=char(string(name));assert(~ismember(name,[{'Paths','CameraOffsetCounts'} acquisition]), ...
             'OxygenDynamics:BatchMetadata','Edit acquisition values per row or use shared settings.');
         if nargin<3,indices=State.SelectedRows;end
         requireSelection(indices);addColumn(name);
@@ -1091,7 +1091,7 @@ if isfield(Batch,'PathImport'),startImport();end
     function assertEditable(name)
         assert(~any(strcmpi(name,reserved))&&~startsWith(lower(string(name)),"boibatch"), ...
             'OxygenDynamics:BatchOwnedColumn','%s is maintained by the software and cannot be edited as metadata.',name);
-        canonical=[{'Paths'} acquisition optional {'PostureFile','PupilFile','PuffsFile'}];
+        canonical=[{'Paths','CameraOffsetCounts'} acquisition optional {'PostureFile','PupilFile','PuffsFile'}];
         match=find(strcmpi(name,canonical),1);
         assert(isempty(match)||strcmp(name,canonical{match}), ...
             'OxygenDynamics:BatchColumnCollision','Use the exact spelling of the reserved field %s.',name);
@@ -1149,7 +1149,7 @@ if isfield(Batch,'PathImport'),startImport();end
         formats{strcmp(columns,'BOISupportProfile')}=unique([supportChoices imported],'stable');
         rowsTable.ColumnFormat=formats;
         widths=repmat({140},1,numel(columns));
-        baseWidths={235,105,115,108,85,110,176};
+        baseWidths={235,105,115,108,85,110,176,140};
         for wi=1:numel(essential),widths{strcmp(columns,essential{wi})}=baseWidths{wi};end
         if ismember('Mouse',columns),widths{1}=108;end
         rowsTable.ColumnWidth=widths;
@@ -1255,6 +1255,7 @@ if isfield(Batch,'PathImport'),startImport();end
             case 'AnalysisStatus',label='Analysis status';
             case 'ResultCheck',label='Result check';
             case 'SampleF',label='Rate (Hz)';
+            case 'CameraOffsetCounts',label='Camera offset (counts)';
             case 'Pixelsize',label='Pixel (µm/px)';
             case 'BOISupportProfile',label='Detection support';
             case 'Mouse',label='Mouse ID';
@@ -1264,7 +1265,7 @@ if isfield(Batch,'PathImport'),startImport();end
         end
     end
     function names=metadataNames(names)
-        names=names(~ismember(names,[{'Paths'} acquisition reserved]));
+        names=names(~ismember(names,[{'Paths','CameraOffsetCounts'} acquisition reserved]));
         names=names(~startsWith(lower(string(names)),"boibatch"));
     end
     function cells=cellstrTable(t)

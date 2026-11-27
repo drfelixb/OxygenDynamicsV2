@@ -8,6 +8,11 @@ if O.Mode=="bli-fluorescence", modality(2)="Fluorescence"; end
 P.Channels = table(repmat(O.RecordingID,2,1),(1:2)',modality,O.Sensors(:),O.Promoters(:), ...
     O.RawFiles(:),O.DenoisedFiles(:),'VariableNames', ...
     {'RecordingID','Channel','Modality','Sensor','Promoter','PreservedMovie','DetectionDenoised'});
+P.Channels.IndependentReferencesAtOrBelowOffset=zeros(2,1);
+for c=oxygen
+    cal=boiIntensityCalibration(D{c}.AnalysisInfo);
+    P.Channels.IndependentReferencesAtOrBelowOffset(c)=cal.ReferencesAtOrBelowOffset;
+end
 eventTables = cell(1,numel(oxygen)); P.Footprints = cell(0,1); P.ReferenceFrames = cell(0,1);
 P.RawA = zeros(0,n); P.RawB = zeros(0,n);
 summaries = cell(0,1); native = cell(0,1);
@@ -22,6 +27,7 @@ for c = oxygen
         'RC1ReferenceStatus','FootprintPixels'});
     e.SharedTissuePixels = nan(count,1); e.ExtremeFrame = nan(count,1); e.TiedExtreme = false(count,1);
     e.ReferenceMeanA = nan(count,1); e.ReferenceMeanB = nan(count,1);
+    e.RatioReferenceBlockedA=false(count,1); e.RatioReferenceBlockedB=false(count,1);
     sink = e.Sign=="sink"; surge = e.Sign=="surge";
     e.OpticalDepthOrRisePct(sink)=data.Sinks.Depth;
     e.RC1ReferenceStatus(sink)=data.Sinks.EventReferenceStatus;
@@ -52,7 +58,9 @@ for c = oxygen
             if isfinite(e.ReferenceStartFrame(j)) && isfinite(e.ReferenceEndFrame(j))
                 ref = e.ReferenceStartFrame(j):e.ReferenceEndFrame(j);
             end
-            available = isfinite(e.OpticalDepthOrRisePct(j));
+            available = isfinite(e.OpticalDepthOrRisePct(j)) || ...
+                (e.RC1ReferenceStatus(j)=="reference_at_or_below_camera_offset" && all(isfinite(values)) && ...
+                 isfinite(positiveMean(own(j,ref),true)));
         else
             ref = data.Traces{j}.CleanBaselineFrames(:)';
             e.ReferenceSamples(j)=numel(ref);
@@ -65,12 +73,18 @@ for c = oxygen
         if available
             e.ReferenceMeanA(j)=positiveMean(raw{1}(j,ref),sink(j));
             e.ReferenceMeanB(j)=positiveMean(raw{2}(j,ref),sink(j));
-            e.MeanChangePctA(j)=100*(mean(raw{1}(j,frames))/e.ReferenceMeanA(j)-1);
-            e.MeanChangePctB(j)=100*(mean(raw{2}(j,frames))/e.ReferenceMeanB(j)-1);
+            e.MeanChangePctA(j)=boiPairPercent(mean(raw{1}(j,frames)),e.ReferenceMeanA(j),boiPairCameraOffset(O,1));
+            e.MeanChangePctB(j)=boiPairPercent(mean(raw{2}(j,frames)),e.ReferenceMeanB(j),boiPairCameraOffset(O,2));
+            for channel=1:2
+                labels='AB'; values=raw{channel}(j,ref);
+                if sink(j),values=values(isfinite(values));end
+                [~,blocked]=boiIntensityDenominator(mean(values),boiPairCameraOffset(O,channel));
+                e.(['RatioReferenceBlocked' labels(channel)])(j)=blocked;
+            end
             extreme=e.ExtremeFrame(j);
             if isfinite(extreme)
-                e.ChangeAtAnchorExtremePctA(j)=100*(raw{1}(j,extreme)/e.ReferenceMeanA(j)-1);
-                e.ChangeAtAnchorExtremePctB(j)=100*(raw{2}(j,extreme)/e.ReferenceMeanB(j)-1);
+                e.ChangeAtAnchorExtremePctA(j)=boiPairPercent(raw{1}(j,extreme),e.ReferenceMeanA(j),boiPairCameraOffset(O,1));
+                e.ChangeAtAnchorExtremePctB(j)=boiPairPercent(raw{2}(j,extreme),e.ReferenceMeanB(j),boiPairCameraOffset(O,2));
             end
         end
     end
@@ -116,6 +130,7 @@ else
     P.Links.CandidatesForA=zeros(0,1); P.Links.CandidatesForB=zeros(0,1);
 end
 P.Comparisons=compareChannels(P.Summary,O);
+P=boiPairCalibrationRows(P);
 end
 
 function v=positiveMean(x,finiteReference)

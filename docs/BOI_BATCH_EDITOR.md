@@ -385,3 +385,5 @@ exports, supply metadata or phase annotations from CSV, or restore or remember
 review choices for the batch.
 
 Use Events and Recordings for event/whole-recording postprocessing, Sites and TimeSeries for their saved inventories/series, Availability for grouped status counts with exact source-row locators, and Definitions for units/references/normalization. Every primary value and flag stays in the main tables. Reviewed values require a selected compatible saved review snapshot. Source-row locators describe the unchanged export; explicit recording/event/frame identities support sorting and cross-export joins.
+
+An optional camera dark offset adjusts the reference denominator of intensity-based ratios. Enter it in original counts for each recording or channel. [Camera offset, formulas and dark-frame measurements](CAMERA_OFFSET.md)

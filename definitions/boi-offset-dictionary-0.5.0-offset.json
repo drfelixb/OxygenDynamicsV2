@@ -1,0 +1,40 @@
+{
+  "Schema": "boi-measurement-dictionary-1",
+  "Version": "0.5.0-offset",
+  "Scope": "BOI only; both signs. IOSI excluded. Outcome priorities are proposed, not scientifically accepted.",
+  "AggregationRule": "Record per-recording ingredients first; animal-level inference requires a comparison-specific plan.",
+  "Measurements": [
+    {
+      "MeasurementID": "BOI-M06",
+      "DefinitionVersion": "0.5.0-offset",
+      "Name": "Relative optical event amplitude",
+      "ProposedTier": "secondary explanatory; both signs",
+      "Question": "How pronounced is the preserved-input optical change?",
+      "Formula": "q(t)=(mean preserved-input intensity on fixed event footprint - B0)/(B0-O); sink=-min(q); surge=max(q); percent=100*fraction",
+      "Units": "fraction or percent (explicit)",
+      "SignalAndBaseline": "Fixed union of native event pixels, traced through preserved input TIFF. B0 is mean of immediately preceding round(baselineSec*SampleF) clean samples; default 20 seconds. Original automatic fields keep their immediate-window reference. EpisodeAmplitudePercent is a separate derived sink measurement: intersecting consecutive native runs at one site with empty gaps <20 s share the first event reference interval, sampled on each event footprint. The configured full baseline length and both-sign native exclusion remain. Shift >20 s, unclear recording-start recovery, contamination or missing signal withholds the derived reference. O is the user-supplied camera offset in original counts. Only the denominator is offset-corrected.",
+      "SupportAndExposure": "Exclude baseline frames overlapping detected support of either sign. All requested clean pre-event samples are required; no post-event replacement. Peak uses saved event bounds.",
+      "MissingnessAndIdentity": "BaselineStatus and BaselineValidSamples distinguish missing clean context from zero. Negative directional amplitude stays negative; hypoxic composite rejects it. A reference at or below O makes the ratio unavailable.",
+      "ClaimLimits": "Relative optical signal only. Clean means free of detected overlap, not proven free of biological change. Smooth/subthreshold predecessors may contaminate it.",
+      "Implementation": "helpers/finalizeOxygenEventMeasurements.m: NormOxySinkAmp / NormOxySurgeAmp and percent columns; helpers/deriveBOIPreEpisodeReferences.m; helpers/attachSavedBOIEpisodeReferences.m",
+      "ImplementationStatus": "implemented with baseline availability; scientific validity conditional; original automatic amplitude retained; separate versioned pre-episode sink reference available for burden",
+      "WorkedExample": "With an explicitly supplied zero offset, the original worked example applies. Teaching only: B0=100, minimum=80 gives sink amplitude 0.2 or 20%; signed change remains -0.2."
+    },
+    {
+      "MeasurementID": "BOI-M07",
+      "DefinitionVersion": "0.5.0-offset",
+      "Name": "Signed trace integral",
+      "ProposedTier": "secondary explanatory; both signs",
+      "Question": "What signed optical change accumulates over the event interval?",
+      "Formula": "sum over saved event frames((I(t)-B0)/(B0-O)) / SampleF",
+      "Units": "fraction*seconds",
+      "SignalAndBaseline": "Same preserved-input fixed footprint and clean pre-event baseline as BOI-M06. O is the user-supplied camera offset in original counts. Only the denominator is offset-corrected.",
+      "SupportAndExposure": "Uniform frame-interval rectangle sum, not trapezoidal endpoint integration. Saved event bounds, not area-time weighting.",
+      "MissingnessAndIdentity": "Unavailable baseline/event signal gives NaN. Preserve signed results and sign-specific summaries separately. A reference at or below O makes the ratio unavailable.",
+      "ClaimLimits": "Relative optical trace integral; not oxygen deficit, delivered oxygen or damage. Within-event sign cancellation is visible in its trace.",
+      "Implementation": "helpers/finalizeOxygenEventMeasurements.m: SignedTraceAUC_sec; MeanSignedChangeFraction",
+      "ImplementationStatus": "implemented",
+      "WorkedExample": "With an explicitly supplied zero offset, the original worked example applies. Teaching only: two -0.2 samples at 2 Hz integrate to -0.2 fraction*seconds."
+    }
+  ]
+}

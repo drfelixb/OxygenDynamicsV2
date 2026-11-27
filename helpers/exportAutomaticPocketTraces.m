@@ -3,7 +3,7 @@ function output = exportAutomaticPocketTraces(plan,parent,decisions,confirmedOmi
 if nargin<6, progress=[]; end
 assert(isfolder(parent),'Choose an existing output folder.');
 assert(~isempty(which('bwdist')) && ~isempty(which('tiffreadVolume')),'Image Processing Toolbox is required.');
-rows = plan.Rows;
+rows = boiIntensityRows(plan.Rows,[]);
 hashes = unique(rows.SourceSHA256,'stable');
 if ~isempty(decisions)
     assert(ismember('SourceSHA256',decisions.Properties.VariableNames),'Decisions need a SourceSHA256 column.');
@@ -30,6 +30,11 @@ missing = unique(rows.SourceSHA256(rows.VerifiedRawFile==""));
 assert(isequal(sort(unique(confirmedOmissions(:))),sort(missing(:))), ...
     'OxygenDynamics:PocketOmission','Locate or retry missing TIFFs, or explicitly confirm exactly the listed omissions.');
 rows.Omitted = ismember(rows.SourceSHA256,missing);
+for index=find(rows.Omitted)'
+    if ~isfile(rows.AuditFile(index)),continue;end
+    info=load(rows.AuditFile(index),'AnalysisInfo');
+    rows(index,:)=boiIntensityRows(rows(index,:),info.AnalysisInfo);
+end
 keep = ~rows.Omitted;
 assert(any(keep),'OxygenDynamics:PocketOmission','At least one source TIFF must be available.');
 assert(all(~ismissing(rows.Mouse(keep)) & strlength(rows.Mouse(keep))>0), ...
@@ -84,6 +89,8 @@ for ci = 1:height(index)
         file = rows.VerifiedRawFile(k);
         assert(strcmpi(oxygenFileSHA256(file),hash),'OxygenDynamics:PocketSource','TIFF changed since preview: %s',file);
         [events,frames,geom] = nearbyMeasure(R,e,match,file);
+        calibrated=boiIntensityRows(rows(aliases,:),geom.IntensityCalibration);
+        rows(aliases,:)=calibrated;
         assert(strcmpi(oxygenFileSHA256(file),hash),'OxygenDynamics:PocketSource','TIFF changed during extraction: %s',file);
         events.Mouse(:) = rows.Mouse(k);
         events.Group(:) = rows.Group(k);
@@ -99,7 +106,8 @@ for ci = 1:height(index)
         writetable(frames,fullfile(dest,rows.TraceFile(k)));
         eventParts{j} = events;
         traceParts{j} = frames(:,{'PocketKey','FromOnset_s','FromOffset_s','PocketPct','NearPct','FarPct', ...
-            'TissueOnlyPocketPct','PocketBaselineFlagged','NearPotentialEventDuringBaseline','NearPotentialEvent','AfterNextSameSiteSink'});
+            'TissueOnlyPocketPct','PocketOriginalPct','NearOriginalPct','FarOriginalPct','TissueOnlyPocketOriginalPct', ...
+            'PocketBaselineFlagged','NearPotentialEventDuringBaseline','NearPotentialEvent','AfterNextSameSiteSink'});
     end
     events = vertcat(eventParts{:});
     traces = vertcat(traceParts{:});
@@ -117,6 +125,7 @@ events = vertcat(eventsByCondition{:});
 assert(numel(unique(events.PocketKey))==height(events),'Duplicate pocket keys in output.');
 writetable(events,fullfile(stage,'Pocket_index.csv'));
 writetable(rows,fullfile(stage,'Recording_sources.csv'));
+writetable(boiIntensitySummary(rows(rows.DistinctSource & ~rows.Omitted,:)),fullfile(stage,'Camera_offset_summary.csv'));
 writetable(rows(rows.Omitted,:),fullfile(stage,'Omitted_recordings.csv'));
 mapping = rows(rows.DistinctSource,{'SourceSHA256','Mouse'});
 mapping.SelectionDigest = repmat(plan.SelectionDigest,height(mapping),1);
@@ -152,11 +161,11 @@ cols=[keys,{'StartFrame','EndFrame','DetectedStartFrame','DetectedEndFrame'}];
 [a,ia]=sortrows(first.Audit(:,cols),keys); [b,ib]=sortrows(second.Audit(:,cols),keys);
 i=first.AnalysisInfo; j=second.AnalysisInfo;
 refs={'SinkID','EventID','EventReferenceKind','EventReferenceValue','EventReferenceNeedsReview','EventReferenceStartFrame','EventReferenceEndFrame'};
-assert(isequal(a,b) && isequal(i.FrameSize,j.FrameSize) && i.NFrames==j.NFrames && ...
+assert(isequal(boiCameraOffset(i),boiCameraOffset(j)) && isequal(a,b) && isequal(i.FrameSize,j.FrameSize) && i.NFrames==j.NFrames && ...
     i.AnalysisParams.fs==j.AnalysisParams.fs && i.AnalysisParams.PixelSize==j.AnalysisParams.PixelSize && ...
     isequal(sort(i.SinkEligibleTissuePixels(:)),sort(j.SinkEligibleTissuePixels(:))) && ...
     isequaln(sortrows(e1(:,refs),refs(1:2)),sortrows(e2(:,refs),refs(1:2))), ...
-    'OxygenDynamics:PocketDuplicate','Repeated TIFF has different event bounds, tissue support, scale or references.');
+    'OxygenDynamics:PocketDuplicate','Repeated TIFF has different event bounds, tissue support, camera offset, scale or references.');
 for k=1:numel(ia)
     assert(isequal(sort(first.Traces{ia(k)}.Footprint(:)),sort(second.Traces{ib(k)}.Footprint(:))), ...
         'OxygenDynamics:PocketDuplicate','Repeated TIFF has different event footprints.');

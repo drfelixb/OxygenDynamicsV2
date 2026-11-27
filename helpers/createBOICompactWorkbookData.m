@@ -1,6 +1,8 @@
 function D=createBOICompactWorkbookData(S)
 %CREATEBOICOMPACTWORKBOOKDATA Flat saved-value projection; no scientific estimators.
-R=metadata(S.Registry,S.Metadata);D=struct();events=cell(2,1);records=cell(2,1);times=cell(2,1);
+R=metadata(S.Registry,S.Metadata);
+if ~ismember('IntensityRatioDefinition',R.Properties.VariableNames),R=boiIntensityRows(R,[]);end
+D=struct();events=cell(2,1);records=cell(2,1);times=cell(2,1);
 for ki=1:2
     kind=string({'sink','surge'});kind=kind(ki);
     nativeName=char("Oxy"+upper(extractBefore(kind,2))+extractAfter(kind,1)+"Events");
@@ -36,6 +38,8 @@ for ki=1:2
     E.ReviewedAmplitudePercent=nan(height(E),1);E.ReviewedMeanArea_um2=nan(height(E),1);
     E.ReviewedDuration_sec=nan(height(E),1);E.ReviewedStartFrame=nan(height(E),1);E.ReviewedEndFrame=nan(height(E),1);
     E=burden(E,table(),'Reviewed',true);
+    E.ReviewedOpticalVersion=strings(height(E),1);
+    E.ReviewedCameraOffsetCounts=nan(height(E),1);
     E.ReviewedBurdenPolicy=strings(height(E),1);
     for j=1:numel(S.Reviews)
         Q=S.Reviews{j};Q=Q.HypoxicBurden;
@@ -69,6 +73,12 @@ for ki=1:2
             E.(['Reviewed' cols{z,1}])(match)=v(idx(match));
         end
         E.ReviewedBurdenPolicy(scope)=policy(struct('Burden_SelectionPolicy',get(Q,'SelectionPolicy')));
+        if ismember('ReviewedOpticalVersion',V.Properties.VariableNames)
+            E.ReviewedOpticalVersion(match)=V.ReviewedOpticalVersion(idx(match));
+            E.ReviewedCameraOffsetCounts(match)=V.ReviewedCameraOffsetCounts(idx(match));
+        elseif ismember('ReviewedBurdenValuesApplied',V.Properties.VariableNames)
+            E.ReviewedOpticalVersion(match & ismember(K,vk(V.ReviewedBurdenValuesApplied)))="0.1.0-draft";
+        end
         E=reviewQuality(E,V,match,idx);
     end
     E.SourceAnalysisID=repmat(string(S.AutomaticSHA256),height(E),1);
@@ -132,6 +142,16 @@ front={'RecordingID','Experiment','Mouse','SessionID','Condition','EventType','S
     'AutomaticContribution_per_mm2_per_min','ReviewedContribution_per_mm2_per_min','ReviewStatus','ReviewedExcluded'};
 D.Events=D.Events(:,[front setdiff(D.Events.Properties.VariableNames,front,'stable')]);
 D.Recordings=unionTables(records);D.Sites=siteData(D.Events,R,S);D.TimeSeries=unionTables(times);
+D.Recordings.OriginalReviewedOpticalEvents=zeros(height(D.Recordings),1);
+D.Recordings.OffsetReviewedOpticalEvents=zeros(height(D.Recordings),1);
+for k=1:height(D.Recordings)
+    selected=D.Events.RecordingID==D.Recordings.RecordingID(k) & D.Events.EventType==D.Recordings.EventType(k);
+    D.Recordings.OriginalReviewedOpticalEvents(k)=nnz(selected & D.Events.ReviewedOpticalVersion=="0.1.0-draft");
+    D.Recordings.OffsetReviewedOpticalEvents(k)=nnz(selected & D.Events.ReviewedOpticalVersion=="0.2.0-offset");
+end
+counts=boiIntensitySummary(R);
+D.Recordings.UncorrectedRecordingsInExport=repmat(counts.Recordings(1),height(D.Recordings),1);
+D.Recordings.CorrectedRecordingsInExport=repmat(counts.Recordings(2),height(D.Recordings),1);
 D.Phases=table();if ~isempty(S.Phases)
     assert(all(ismember({'RecordingID','Phase','StartSec','EndSec'},S.Phases.Properties.VariableNames)), ...
         'OxygenDynamics:CompactPhases','Phases require RecordingID, Phase, StartSec and EndSec.');

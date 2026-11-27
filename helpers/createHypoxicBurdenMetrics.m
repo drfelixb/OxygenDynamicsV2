@@ -27,12 +27,12 @@ Burden.EventTable = table();
 Burden.RecordingTable = table();
 Burden.MetricBasis = createHypoxicBurdenBasisTable();
 if istable(TableOxygenSinkEvents)&&ismember('EpisodeReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
-    Burden.ReferencePolicy=struct2table(boiEpisodeReferencePolicy());
+    Burden.ReferencePolicy=referencePolicies(@boiEpisodeReferencePolicy,TableOxygenSinkEvents.EpisodeReferenceVersion);
 end
 if istable(TableOxygenSinkEvents)&&ismember('EventReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
-    Burden.ReferencePolicy=struct2table(boiEventReferencePolicy());
+    Burden.ReferencePolicy=referencePolicies(@boiEventReferencePolicy,TableOxygenSinkEvents.EventReferenceVersion);
     if ismember('EpisodeReferenceVersion',TableOxygenSinkEvents.Properties.VariableNames)
-        Burden.PreEpisodeReferencePolicy=struct2table(boiEpisodeReferencePolicy());
+        Burden.PreEpisodeReferencePolicy=referencePolicies(@boiEpisodeReferencePolicy,TableOxygenSinkEvents.EpisodeReferenceVersion);
     end
 end
 
@@ -102,6 +102,18 @@ EventTable.PerEventBurdenContribution_per_mm2_per_min = ...
 EventTable.BurdenContributionRateFormula = repmat( ...
     {'PerEventBurdenContribution divided by BurdenRecordingDuration_sec, optionally multiplied by 60 for per-minute rates'}, ...
     height(EventTable),1);
+if ~ismember('OriginalCountRankAmplitudePercent',EventTable.Properties.VariableNames)
+    EventTable.OriginalCountRankAmplitudePercent=EventTable.BurdenAmplitudePercent;
+    if all(ismember({'IntensityRatiosOffsetCorrected','EventReferenceValue','EventMinimumValue','EventSignalComplete'},EventTable.Properties.VariableNames))
+        B=EventTable.EventReferenceValue;
+        calibrated=EventTable.IntensityRatiosOffsetCorrected;
+        EventTable.OriginalCountRankAmplitudePercent(calibrated)=NaN;
+        use=calibrated & isfinite(B) & B>0 & EventTable.EventSignalComplete;
+        old=100*(B(use)-EventTable.EventMinimumValue(use))./B(use);
+        if ~selection.IncludeFiniteNegative,old(old<0)=NaN;end
+        EventTable.OriginalCountRankAmplitudePercent(use)=old;
+    end
+end
 EventTable.BurdenRankAmplitudeQuantile = computeWithinRecordingAmplitudeQuantile(EventTable);
 EventTable.PerEventBurdenOccupancy_per_mm2_per_min = EventTable.BurdenDuration_sec .* ...
     (1e6 ./ EventTable.BurdenRecordingArea_um2) .* (60 ./ EventTable.BurdenRecordingDuration_sec);
@@ -513,7 +525,7 @@ MetricBasis = {'Event-based'; 'Recording-level sum of true event rows'; ...
     'sum(active PerEventBurdenContribution / event duration)'; ...
     'sum(active PerEventBurdenContribution_per_mm2 / event duration)'; ...
     'event frequency x mean event duration, normalized per mm2 and per minute'; ...
-    'count x duration x within-recording rank/quantile-transformed amplitude, normalized per mm2 and per minute'; ...
+    'duration weighted by within-recording quantiles of BurdenAmplitudePercent, normalized per mm2 and per minute'; ...
     'original amplitude x area x duration composite'};
 Notes = {'One row per oxygen sink event from OxySinkEvents'; ...
     'Strict event sum: an unavailable included contribution withholds the total and every normalized total. Blank/NaN means unavailable, not zero; no partial sums'; ...
@@ -532,9 +544,15 @@ Notes = {'One row per oxygen sink event from OxySinkEvents'; ...
     'Raw recorded-FOV burden signal over time; not FOV-normalized and not per-minute normalized'; ...
     'Recommended frame-aligned burden signal for recordings with different FOV sizes'; ...
     'Concurrent event-time density; not tissue occupancy or a calibrated oxygen deficit.'; ...
-    'Interface-contract sensitivity variant; relative within recording only, not absolutely comparable across animals.'; ...
+    'Ranks are relative within each recording. BurdenAmplitudePercent uses the saved offset when supplied. OriginalCountRankAmplitudePercent preserves original-count depth as evidence.'; ...
     'Interface-contract original composite; valid within matched-acquisition cohorts only.'};
 
 BasisTable = table(WorkbookItem,MetricBasis,Notes);
 
+end
+
+function T=referencePolicies(policy,versions)
+original=policy([]); calibrated=policy(0);
+if isempty(versions),T=struct2table(original);return;end
+policies=[original;calibrated]; T=struct2table(policies(ismember(string({policies.Version}),string(versions))));
 end

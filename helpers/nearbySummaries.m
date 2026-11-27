@@ -1,4 +1,35 @@
 function nearbySummaries(events,frames,out,condition)
+files=["Windows_by_pocket","Aligned_by_mouse","Windows_by_mouse","Aligned_by_group","Windows_by_group"];
+tables=summarize(events,frames,condition);
+if ismember('IntensityRatiosOffsetCorrected',events.Properties.VariableNames)
+    for k=1:5
+        T=tables{k};T.CorrectedRecordings=zeros(height(T),1);T.UncorrectedRecordings=zeros(height(T),1);
+        T.IntensityRatioDefinition=strings(height(T),1);
+        for row=1:height(T)
+            selected=true(height(events),1);
+            for key=["Mouse","Group","PocketKey"]
+                if ismember(key,T.Properties.VariableNames) && ~isequal(string(T.(key)(row)),"All")
+                    selected=selected & events.(key)==T.(key)(row);
+                end
+            end
+            corrected=events.IntensityRatiosOffsetCorrected;
+            T.CorrectedRecordings(row)=numel(unique(events.RecordingID(selected & corrected)));
+            T.UncorrectedRecordings(row)=numel(unique(events.RecordingID(selected & ~corrected)));
+            T.IntensityRatioDefinition(row)=strjoin(unique(events.IntensityRatioDefinition(selected)),", ");
+        end
+        tables{k}=T;
+    end
+end
+for k=1:numel(files)
+    T=tables{k};
+    if ismember('PocketsAboveBaselineAndRing',T.Properties.VariableNames)
+        T.PocketRingCountBasis=repmat("reported_percentages",height(T),1);
+    end
+    writetable(T,fullfile(out,files(k)+".csv"));
+end
+end
+
+function tables=summarize(events,frames,condition)
 [found,i]=ismember(frames.PocketKey,events.PocketKey);assert(all(found));
 frames.Group=events.Group(i);frames.Mouse=events.Mouse(i);frames.SampleF=events.SampleF(i);
 screen=~logical(frames.PocketBaselineFlagged | frames.NearPotentialEventDuringBaseline | frames.NearPotentialEvent | frames.AfterNextSameSiteSink);
@@ -43,10 +74,8 @@ c=vertcat(curve{:});w=vertcat(windows{:});
 pw=vertcat(pocketWindows{:});
 pw.Condition=repmat(condition,height(pw),1);
 c.Condition=repmat(condition,height(c),1); w.Condition=repmat(condition,height(w),1);
-writetable(pw,fullfile(out,'Windows_by_pocket.csv'));
-writetable(c,fullfile(out,'Aligned_by_mouse.csv'));writetable(w,fullfile(out,'Windows_by_mouse.csv'));
-writetable(groupMeans(c,{'Analysis','Alignment','Seconds','Condition'}),fullfile(out,'Aligned_by_group.csv'));
-writetable(groupMeans(w,{'Analysis','Start_s','End_s','Condition'}),fullfile(out,'Windows_by_group.csv'));
+tables={pw,c,w,groupMeans(c,{'Analysis','Alignment','Seconds','Condition'}), ...
+    groupMeans(w,{'Analysis','Start_s','End_s','Condition'})};
 end
 
 function v=mouseMeans(t,keys)

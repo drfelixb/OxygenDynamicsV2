@@ -14,6 +14,8 @@ The optional multichannel workflow analyzes two oxygen channels independently or
 
 24 November 2026 (RELEASE-AUTO-01). The researcher approved a fixed candidate and final release procedure. The implementation owner is the root Codex chat. Acceptance covers the Mac gates and a verified GitHub dry-run artifact. Delivery stops at a pull request for review. [Release runbook](../RELEASING.md)
 
+27 November 2026 (OFFSET-01, issue #25). Add optional per-recording and per-channel camera offsets to optical ratios for 4.0.0. Verify original-count detection, saved-definition replay and mixed exports on synthetic recordings. [Measurement guide](CAMERA_OFFSET.md)
+
 ## Open researcher decisions
 
 - Choose the cutoff for linking candidate pockets between channels.

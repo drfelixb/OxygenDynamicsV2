@@ -50,6 +50,7 @@ try
         for field = ["Mouse","Condition","Genotype","DrugID"]
             if isfield(O,field) && strlength(string(O.(field)))>0, options.(field)=char(O.(field)); end
         end
+        options.CameraOffsetCounts=boiPairCameraOffset(O,c);
         request = prepareBOIRecordingRequest(options);
         run = runBOIRecordingWorkflow(request,@(child,~)progress(boiPairChannelStage(c,O.Sensors(c),child.Stage)));
         assert(string(run.SourceSHA256)==rawHash(c),'BOIPair:Source','Independent run used a different source.');

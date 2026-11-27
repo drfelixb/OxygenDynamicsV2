@@ -6,9 +6,14 @@ C=D.Context;assert(strcmp(C.Schema,'boi-reviewed-area-context-1')&&strcmp(D.Cont
 frames=double(C.Frames(:));sz=double(C.FrameSize(:)');foot=double(C.FixedFootprint(:));
 assert(numel(sz)==2&&all(isfinite(sz)&sz>=1&sz==fix(sz))&&~isempty(frames)&&all(isfinite(frames)&frames==fix(frames)&frames>=1)&&all(diff(frames)==1),id,'Invalid spatial/time grid.');
 assert(~isempty(foot)&&all(isfinite(foot)&foot>=1&foot<=prod(sz)&foot==fix(foot))&&isequal(foot,unique(foot)),id,'Invalid accepted footprint.');
+ampValid=isscalar(C.AmplitudePercent)&&isfinite(C.AmplitudePercent)&&C.AmplitudePercent>=0;
+offset=boiCameraOffset(C);
+blocked=~isempty(offset) && isfinite(C.RawReferenceMean) && C.RawReferenceMean<=offset && ...
+    isfield(C,'AmplitudeStatus') && strcmp(C.AmplitudeStatus,'reference_at_or_below_camera_offset') && ...
+    (isempty(C.AmplitudePercent)||(isscalar(C.AmplitudePercent)&&isnan(C.AmplitudePercent)));
 assert(C.SampleHz==1&&C.FrameOrigin==1&&C.DurationSec==numel(frames)/C.SampleHz&& ...
-    all(isfinite([C.PixelSizeUm C.RecordingAreaUm2 C.RecordingDurationSec C.AmplitudePercent]))&& ...
-    all([C.PixelSizeUm C.RecordingAreaUm2 C.RecordingDurationSec]>0)&&C.AmplitudePercent>=0,id,'Invalid approved scales or amplitude.');
+    all(isfinite([C.PixelSizeUm C.RecordingAreaUm2 C.RecordingDurationSec]))&& ...
+    all([C.PixelSizeUm C.RecordingAreaUm2 C.RecordingDurationSec]>0)&&(ampValid || blocked),id,'Invalid approved scales or amplitude.');
 assert(isnumeric(D.Revision)&&isscalar(D.Revision)&&D.Revision>=0&&D.Revision==fix(D.Revision),id,'Invalid revision.');
 assert(numel(D.FrameDecisions)==numel(frames),id,'Require exactly one decision for every reviewed frame.');
 for k=1:numel(frames)

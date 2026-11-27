@@ -33,8 +33,9 @@ a=uilabel(g,'Text','Mouse / condition');place(a,5,3);
 identity=uigridlayout(g,[1 2]);identity.Padding=[0 0 0 0];place(identity,5,4);
 mouse=uieditfield(identity,'text','Placeholder','Mouse (optional)','ValueChangedFcn',@invalidate);
 condition=uieditfield(identity,'text','Placeholder','Condition (optional)','ValueChangedFcn',@invalidate);
-a=uilabel(g,'Text','Other labels (optional)');place(a,6,1);
-labels=uigridlayout(g,[1 3]);labels.Padding=[0 0 0 0];place(labels,6,[2 4]);
+a=uilabel(g,'Text','Camera offset (counts)');place(a,6,1);
+offsetInput=uieditfield(g,'text','ValueChangedFcn',@invalidate,'Placeholder','Optional');place(offsetInput,6,2);
+labels=uigridlayout(g,[1 3]);labels.Padding=[0 0 0 0];place(labels,6,[3 4]);
 drug=uieditfield(labels,'text','Placeholder','Drug ID','ValueChangedFcn',@invalidate);
 genotype=uieditfield(labels,'text','Placeholder','Genotype','ValueChangedFcn',@invalidate);
 promoter=uieditfield(labels,'text','Placeholder','Promoter','ValueChangedFcn',@invalidate);
@@ -48,19 +49,20 @@ status=uilabel(g,'Text','Choose New analysis or Open saved run.','WordWrap','on'
 eventButton=uibutton(g,'Text','Inspect event traces','Enable','off','ButtonPushedFcn',@eventCallback);place(eventButton,10,[1 2]);
 windowButton=uibutton(g,'Text','Inspect recording results','Enable','off','ButtonPushedFcn',@windowCallback);place(windowButton,10,3);
 workbookButton=uibutton(g,'Text','Open saved workbook','Enable','off','ButtonPushedFcn',@workbookCallback);place(workbookButton,10,4);
-controls={source,output,fs,px,profile,mouse,condition,drug,genotype,promoter,choose,outButton,newButton,reopen,preflight};
+controls={source,output,fs,px,offsetInput,profile,mouse,condition,drug,genotype,promoter,choose,outButton,newButton,reopen,preflight};
 UI=struct('Prepare',@prepare,'Run',@execute,'OpenRun',@selectRun,'OpenLatest',@openLatest, ...
     'ListRuns',@listRuns,'NewAnalysis',@newAnalysis,'SelectedTargets',@selectedTargets,'OpenEvents',@openEvents, ...
     'OpenWindows',@openWindows,'State',@getState,'Confirm',confirm,'RunButton',runButton, ...
     'NewButton',newButton,'ReopenButton',reopen,'EventButton',eventButton, ...
     'WindowButton',windowButton,'WorkbookButton',workbookButton,'Details',details,'Status',status, ...
-    'Source',source,'Output',output,'SampleHz',fs,'PixelSizeUm',px,'SupportProfile',profile);
+    'Source',source,'Output',output,'SampleHz',fs,'PixelSizeUm',px,'CameraOffsetCounts',offsetInput,'SupportProfile',profile);
 for initialField=fieldnames(InitialOptions)'
     value=InitialOptions.(initialField{1});
     switch initialField{1}
         case 'RecordingFolder',source.Value=char(value);
         case 'OutputFolder',output.Value=char(value);
         case 'SampleHz',fs.Value=num2str(value,17);
+        case 'CameraOffsetCounts',offsetInput.Value=num2str(boiCameraOffset(value),17);
         case 'PixelSizeUm',px.Value=num2str(value,17);
         case 'SupportProfile',profile.Value=char(value);
         case 'Mouse',mouse.Value=char(value);
@@ -76,7 +78,7 @@ end
     end
     function newAnalysis(~,~)
         assert(~State.Busy,'OxygenDynamics:RunBusy','Wait for the current operation.');
-        source.Value='';output.Value='';fs.Value='';px.Value='';profile.Value='';
+        source.Value='';output.Value='';fs.Value='';px.Value='';offsetInput.Value='';profile.Value='';
         for control=[mouse condition drug genotype promoter],control.Value='';end
         invalidate([],[]);State.Status='idle';
         status.Text='New analysis: choose one recording and a new output location, then review settings.';
@@ -93,7 +95,7 @@ end
     end
     function o=options()
         o=struct('RecordingFolder',source.Value,'OutputFolder',output.Value,'SampleHz',str2double(fs.Value), ...
-            'PixelSizeUm',str2double(px.Value),'SupportProfile',profile.Value);
+            'PixelSizeUm',str2double(px.Value),'CameraOffsetCounts',offsetInput.Value,'SupportProfile',profile.Value);
         names={'Mouse','Condition','DrugID','Genotype','Promoter'};values={mouse.Value,condition.Value,drug.Value,genotype.Value,promoter.Value};
         for k=1:numel(names),if ~isempty(strtrim(values{k})),o.(names{k})=values{k};end,end
     end
@@ -188,7 +190,7 @@ end
         for fieldIndex=1:numel(textFields)
             textControls{fieldIndex}.Value=char(savedOptions.(textFields{fieldIndex}));
         end
-        fs.Value=num2str(savedOptions.SampleHz,17);px.Value=num2str(savedOptions.PixelSizeUm,17);
+        fs.Value=num2str(savedOptions.SampleHz,17);px.Value=num2str(savedOptions.PixelSizeUm,17);offsetInput.Value=num2str(boiCameraOffset(savedOptions),17);
         profile.Value=savedOptions.SupportProfile;
         showTissue(r.Request.InputReview);
         confirm.Enable='off';confirm.Value=false;runButton.Enable='off';
@@ -196,6 +198,8 @@ end
         status.Text=sprintf('Selected completed run | %d automatic events | saved traces: %s',r.EventCount,r.CorrectedTraceStatus);
         details.Value={['Selected run: ' r.ManifestPath],['Recording: ' savedOptions.RecordingFolder], ...
             sprintf('Support: %s | %.9g Hz | %.9g µm/pixel',r.SupportProfile,savedOptions.SampleHz,savedOptions.PixelSizeUm), ...
+            sprintf('Camera offset: %s | references at or below offset: %d', ...
+                r.IntensityCalibration.CameraOffsetSource,r.IntensityCalibration.ReferencesAtOrBelowOffset), ...
             ['Output folder: ' r.Directory],['Workbook target: ' r.Paths.Workbook], ...
             ['Event evidence target: ' r.Paths.EventAudit],['Recording results target: ' r.Paths.DataOutput], ...
             'Inspect event traces: choose an automatic sink or surge event, then view corrected intensity and supporting score.', ...

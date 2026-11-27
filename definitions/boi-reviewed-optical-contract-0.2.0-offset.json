@@ -1,0 +1,79 @@
+{
+  "Schema": "boi-reviewed-optical-contract-1",
+  "Version": "0.2.0-offset",
+  "DecisionID": "OFFSET-01",
+  "Status": "proposed_not_implemented",
+  "ScientificAdoption": null,
+  "Scope": "separate exploratory BOI optical calculation for the four source-bound reviewed development events; no cohort admission",
+  "ReferencePolicy": "explicit_researcher_selected_frames",
+  "Source": "preserved-input mean over original fixed native-event union footprint; Review.Traces{row}.Raw",
+  "SourceForHumanJudgment": "saved corrected intensity primary; filtered score supporting; raw/removed trend correction QA",
+  "Clock": {
+    "SampleHz": 1,
+    "FrameOrigin": 1,
+    "ModeledTimeFormula": "(frame-1)/fs",
+    "Authority": "external trigger",
+    "ExposureEqualsFrameInterval": false
+  },
+  "ReferenceRule": {
+    "UseExactAcceptedFrames": true,
+    "RequireEverySelectedFrameFinite": true,
+    "AutomaticallyRemoveNativeOverlap": false,
+    "AutomaticallyExtendShortReference": false,
+    "MinimumGeneralPhysiologicalSampleCount": null,
+    "EmptySelection": "unavailable",
+    "ShortReference": "use its actual count for this explicitly selected exploratory reference; never relabel it as satisfying the original 20-sample rule",
+    "ApplyJudgmentToOtherOnsets": false,
+    "ExistingNativeEligibility": "preserve separately as context, with both-sign contributors and reviewed contact flags"
+  },
+  "Formula": {
+    "BaselineMean": "B=mean(r(C))",
+    "SignedFraction": "q=(r(a:b)-B)/(B-O), O is the supplied camera offset in original counts",
+    "MinimumSignedChangeFraction": "min(q)",
+    "MaximumSignedChangeFraction": "max(q)",
+    "ExtremumFrames": "all recorded frames attaining each exact extremum; no snapping or interpolation",
+    "SavedSignDirectionalAmplitudeFraction": "sink: -min(q); surge: max(q)",
+    "SignedTraceIntegralSec": "sum(q)/fs",
+    "MeanSignedChangeFraction": "mean(q)",
+    "Percent": "100*fraction",
+    "DurationSec": "(b-a+1)/fs",
+    "EndpointSpanSec": "(b-a)/fs",
+    "NegativeValues": "retain; no abs, sign clipping, automatic relabeling or choosing the larger magnitude"
+  },
+  "Guards": {
+    "PreflightFailure": "changed source/hash/revision, malformed or mismatched identity/bounds stops calculation/export",
+    "NoJudgmentForOnset": "unavailable_no_accepted_reference",
+    "NonfiniteSelectedReference": "unavailable_nonfinite_reference_samples; never omit samples",
+    "NonpositiveOrNonfiniteB": "unavailable_nonpositive_or_nonfinite_reference_mean",
+    "NonfiniteEvent": "unavailable_nonfinite_event_samples; retain a separately valid B but withhold all interval optical summaries",
+    "NumericallyComplete": "computed_exploratory; not valid physiology or recognition",
+    "ReferenceAtOrBelowOffset": "reference_at_or_below_camera_offset"
+  },
+  "Alternatives": "one record for every saved discrete onset/recovery combination; no averaged alternatives or invented preferred recovery; unjudged onset gets an unavailable record",
+  "DefinitionDictionary": "boi-reviewed-optical-dictionary-0.2.0-offset.json",
+  "ProductionDictionaryChanged": false,
+  "ProductionPipelineContractChanged": false,
+  "RequiredProvenance": [
+    "source/raw/audit hashes and paths",
+    "native master association and known historical checksum limitation",
+    "original fixed footprint pixel identities",
+    "exact accepted reference frames and raw sample values",
+    "exact event frames and raw sample values",
+    "boundary artifact/hash/event revision and alternatives/preferences",
+    "reference judgment artifact/hash/exact document/actor/date/reason",
+    "reference and event sample counts; native overlap contributors; reviewed contacts",
+    "numerator r-B and denominator B-O; units; numerical status",
+    "reviewed policy/definition/software versions and new output identity",
+    "original automatic result retained separately; no overwrite"
+  ],
+  "OpenScientificQuestions": [
+    "whether this exploratory optical definition supports the intended biological claim",
+    "direction and event recognition when native labels disagree with corrected trace morphology",
+    "general minimum reference duration/precision and temporal dependence",
+    "anatomical support, normalization, cohort eligibility and independent evaluation",
+    "reference for onset alternative 1149"
+  ],
+  "NextImplementation": "separate read-only reviewed optical preview/export using this draft contract and dictionary; label proposed/exploratory, do not promote automatic outputs or global scientific adoption",
+  "NewRealDataCalculationsPerformed": false,
+  "OriginalContract": "boi-reviewed-optical-contract-0.1.0-draft.json"
+}

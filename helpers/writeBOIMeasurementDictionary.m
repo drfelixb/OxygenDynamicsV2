@@ -23,5 +23,9 @@ cleanup=onCleanup(@()fclose(fid));
 fprintf(fid,'%s\n',lines);
 if nargin>1 && ~isempty(OutputXlsx)
     writetable(Definitions,OutputXlsx,'Sheet','BOIMeasurementDictionary');
+    offsetFile=fullfile(fileparts(source),'boi-offset-dictionary-0.5.0-offset.json');
+    supplement=getBOIMeasurementDictionary(offsetFile);
+    copyfile(offsetFile,fullfile(OutputFolder,'BOIOffsetMeasurementDictionary.json'));
+    writetable(supplement,OutputXlsx,'Sheet','OffsetMeasurementDictionary');
 end
 end

@@ -43,6 +43,9 @@ SurgeData = loadStatsSurgeRecordingData(RecordingInfo.SurgesDataFolder,Recording
 SurgeInfo=loadRequiredMatVar(SurgeData.MatFile,'AnalysisInfo');
 assert(strcmp(SourceInfo.RawSHA256,SurgeInfo.RawSHA256) && strcmp(SourceInfo.DenoisedSHA256,SurgeInfo.DenoisedSHA256), ...
     'OxygenDynamics:MixedSourceRuns','Sink and surge outputs refer to different source data. Rerun the master.');
+assert(isequal(boiCameraOffset(SourceInfo),boiCameraOffset(SurgeInfo)),'OxygenDynamics:MixedSourceRuns','Sink and surge camera offsets differ.');
+SinkData.EventTable=boiIntensityRows(SinkData.EventTable,SourceInfo);
+SurgeData.EventTable=boiIntensityRows(SurgeData.EventTable,SurgeInfo);
 if strcmp(ImagingMode,'BLI')
     SinkData.EventTable=attachSavedBOIEpisodeReferences(SinkData.EventTable, ...
         SinkData.MatFile,SurgeData.MatFile,RecordingFolder,RecordingMetadata.SampleF);

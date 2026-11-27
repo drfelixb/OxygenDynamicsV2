@@ -1,15 +1,17 @@
-function E=deriveBOIPreEpisodeReferences(E,Evidence,AllNativePixels,fs,baselineSec,source)
+function E=deriveBOIPreEpisodeReferences(E,Evidence,AllNativePixels,fs,baselineSec,source,offset)
 % Derived sink reference on unchanged fixed footprints and measurement intervals.
 % Evidence is one {Raw,Footprint,DetectedFrames} struct per event; AllNativePixels
 % includes ALL sites of BOTH signs, before any statistics curation/filtering.
+if nargin<7,offset=[];end
 if nargin<6,source="preserved_input_event_footprint";end
-P=boiEpisodeReferencePolicy;E=initializeBOIEpisodeReferences(E,"unavailable",source);
+P=boiEpisodeReferencePolicy(offset);E=initializeBOIEpisodeReferences(E,"unavailable",source);
 assert(isscalar(fs)&&isfinite(fs)&&fs>0&&isscalar(baselineSec)&&isfinite(baselineSec)&&baselineSec>0, ...
     'OxygenDynamics:EpisodeScale','Positive sample rate and baseline duration are required.');
 assert(iscell(AllNativePixels)&&iscell(Evidence)&&numel(Evidence)==height(E), ...
     'OxygenDynamics:EpisodeEvidence','Full native support and per-event evidence are required.');
 N=numel(AllNativePixels);required=round(baselineSec*fs);
 assert(required>=1,'OxygenDynamics:EpisodeScale','Baseline requires at least one sample.');
+E.EpisodeReferenceVersion(:)=string(P.Version);
 if isempty(E),return;end
 assert(all(ismember({'SinkID','EventID','StartFrame','EndFrame'},E.Properties.VariableNames)), ...
     'OxygenDynamics:EpisodeEvidence','Event identity and measurement frames are required.');
@@ -74,11 +76,17 @@ for e=1:height(E)
     end
     B=mean(raw(b));E.EpisodeReferenceValue(e)=B;
     signal=raw(E.StartFrame(e):E.EndFrame(e));
+    [denom,blocked]=boiIntensityDenominator(B,offset);
+    if blocked
+        E.EpisodeReferenceStatus(e)="reference_at_or_below_camera_offset";
+        if B>0 && all(isfinite(signal)),E.EpisodeReferenceNeedsReview(e)=min(signal)>B;end
+        continue
+    end
     if ~isfinite(B)||B<=0||any(~isfinite(signal))
         E.EpisodeReferenceStatus(e)="nonpositive_reference_or_missing_event_signal";continue
     end
     % Preserve direction; a negative drop is flagged, never made positive.
-    E.EpisodeAmplitudePercent(e)=-100*min((signal-B)/B);
+    E.EpisodeAmplitudePercent(e)=-100*min((signal-B)/denom);
     E.EpisodeReferenceStatus(e)="valid";E.EpisodeReferenceNeedsReview(e)=false;
     if E.EpisodeAmplitudePercent(e)<0
         E.EpisodeReferenceStatus(e)="wrong_direction";E.EpisodeReferenceNeedsReview(e)=true;

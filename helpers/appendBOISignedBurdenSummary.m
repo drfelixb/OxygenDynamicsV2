@@ -4,6 +4,12 @@ if nargin<2
     if isfield(B,'SelectionPolicy'),P=boiBurdenSelectionPolicy(B.EventTable,B.SelectionPolicy);
     else,P=boiBurdenSelectionPolicy(B.EventTable);end
 end
+% Both automatic and reviewed calculations rank their selected event depths.
+for field=["EventTable","RecordingTable","GroupSummaryTable"]
+    if isfield(B,field)
+        B.(field).BurdenRankInput=repmat("BurdenAmplitudePercent",height(B.(field)),1);
+    end
+end
 if ~P.IncludeFiniteNegative,return;end
 B.SelectionPolicy=struct2table(P);E=B.EventTable;
 E.BurdenSelectionPolicyVersion=repmat(string(P.Version),height(E),1);

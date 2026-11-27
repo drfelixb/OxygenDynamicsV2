@@ -128,3 +128,5 @@ choice. Reviewed values do not automatically replace amplitudes in the
 recording-level statistics.
 
 For the step-by-step interface route, see the [Batch Editor guide](BOI_BATCH_EDITOR.md).
+
+An optional camera dark offset adjusts the reference denominator of intensity-based ratios. Enter it in original counts for each recording or channel. [Camera offset, formulas and dark-frame measurements](CAMERA_OFFSET.md)

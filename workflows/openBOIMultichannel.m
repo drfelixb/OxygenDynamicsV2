@@ -19,6 +19,8 @@ label('Promoter',6); promoters={field(6,2,2,'unspecified'),field(6,3,3,'unspecif
 raw={movieField('A preserved TIFF',7),movieField('B preserved TIFF',8)};
 den={movieField('A denoised (optional)',9),movieField('B denoised (optional)',10)};
 label('Frame rate (Hz)',11); hz=field(11,2,2,''); scale=field(12,2,2,''); label('Grid size (µm/pixel)',12);
+aOffset=uilabel(grid,'Text','Camera offsets A / B (counts)'); place(aOffset,11,3,3);
+offsets={field(12,3,3,''),field(12,4,4,'')};
 sync=uicheckbox(grid,'Text','I confirm the movies share the aligned grid and corresponding frames.'); place(sync,13,1,4);
 stage=uilabel(grid,'Text','Ready to set up a recording','FontWeight','bold','FontSize',15, ...
     'Interpreter','none','WordWrap','on','Tag','PairStage'); place(stage,14,1,4);
@@ -75,6 +77,7 @@ imported=struct();
                 'PromptString','Select one recording'); if ~ok, return; end
             o=list{k}; imported=o; mode.Value=char(o.Mode); switchMode(); identifier.Value=char(o.RecordingID);
             for c=1:2
+                offsets{c}.Value=num2str(boiPairCameraOffset(o,c),17);
                 raw{c}.Value=char(o.RawFiles(c)); den{c}.Value=char(o.DenoisedFiles(c));
                 sensors{c}.Value=char(o.Sensors(c)); promoters{c}.Value=char(o.Promoters(c));
             end
@@ -91,6 +94,7 @@ imported=struct();
         o.DenoisedFiles=string(cellfun(@(v)v.Value,den,'UniformOutput',false));
         o.Sensors=string(cellfun(@(v)v.Value,sensors,'UniformOutput',false));
         o.Promoters=string(cellfun(@(v)v.Value,promoters,'UniformOutput',false));
+        o.CameraOffsetCountsA=offsets{1}.Value; o.CameraOffsetCountsB=offsets{2}.Value;
         o.SampleHz=str2double(hz.Value); o.PixelSizeUm=str2double(scale.Value); o.AlignedAndSynchronized=sync.Value;
         [~,suffix]=fileparts(tempname(parent));
         o.OutputFolder=fullfile(parent,['Multichannel_' regexprep(char(o.RecordingID),'[^a-zA-Z0-9_-]','_') '_' suffix]);

@@ -1,4 +1,5 @@
-function M=computeBOIReviewedPocketMeasures(raw,corrected,R,W,referenceState,clock)
+function M=computeBOIReviewedPocketMeasures(raw,corrected,R,W,referenceState,clock,offset)
+if nargin<7,offset=[];end
 %COMPUTEBOIREVIEWEDPOCKETMEASURES Two signed troughs; no sign repair or fitting.
 id='OxygenDynamics:InvalidPocketFrames';raw=double(raw(:));corrected=double(corrected(:));N=numel(raw);
 assert(isnumeric(R)&&isreal(R)&&(isempty(R)||isvector(R))&&all(isfinite(R(:)))&& ...
@@ -19,16 +20,30 @@ if ismember(referenceState,{'unsuitable','not_assessed'}),M.ArithmeticStatus=['u
 if isempty(R),M.ArithmeticStatus='unavailable_empty_reference';return;end
 if ~all(isfinite(raw(R))),M.ArithmeticStatus='unavailable_nonfinite_reference';return;end
 B=mean(raw(R));M.RawReferenceMean=B;
+[denom,blocked]=boiIntensityDenominator(B,offset);
+if blocked
+    reason='reference_at_or_below_camera_offset';
+    M.ArithmeticStatus=reason; M.PrimaryStatus=reason; M.CompanionStatus=reason;
+    if B>0 && all(isfinite(raw(W))),M.RawMinimumFrames=W(raw(W)==min(raw(W)));end
+    if B>0 && all(isfinite(raw(W))) && ~isempty(corrected)
+        M.CorrectedReferenceValues=corrected(R); M.CorrectedEventValues=corrected(W);
+        if all(isfinite(corrected([R;W])))
+            M.CorrectedMinimumFrames=W(corrected(W)==min(corrected(W)));
+            M.CorrectedReferenceMean=mean(corrected(R));
+        end
+    end
+    return
+end
 if ~isfinite(B)||B<=0,M.ArithmeticStatus='unavailable_nonpositive_reference_mean';return;end
 if ~all(isfinite(raw(W))),M.ArithmeticStatus='unavailable_nonfinite_event';return;end
-q=100*(raw(W)-B)/B;
+q=100*(raw(W)-B)/denom;
 if ~all(isfinite(q)),M.ArithmeticStatus='unavailable_nonfinite_arithmetic';return;end
 status='computed_exploratory';if strcmp(referenceState,'provisional_local_state'),status='conditional_exploratory';end
 M.RawSignedPercent=q;M.RawSignedTroughPercent=min(q);M.RawMinimumFrames=W(q==min(q));M.CompanionStatus=status;
 if isempty(corrected),M.PrimaryStatus='unavailable_missing_saved_correction';M.ArithmeticStatus='raw_only_missing_correction';return;end
 M.CorrectedReferenceValues=corrected(R);M.CorrectedEventValues=corrected(W);
 if ~all(isfinite(corrected([R;W]))),M.PrimaryStatus='unavailable_nonfinite_saved_correction';M.ArithmeticStatus='raw_only_nonfinite_correction';return;end
-C=mean(corrected(R));M.CorrectedReferenceMean=C;q=100*(corrected(W)-C)/B;
+C=mean(corrected(R));M.CorrectedReferenceMean=C;q=100*(corrected(W)-C)/denom;
 if ~isfinite(C)||~all(isfinite(q)),M.PrimaryStatus='unavailable_nonfinite_corrected_arithmetic';M.ArithmeticStatus='raw_only_nonfinite_correction';return;end
 M.CorrectedSignedPercent=q;M.CorrectedSignedTroughPercent=min(q);M.CorrectedMinimumFrames=W(q==min(q));M.PrimaryStatus=status;M.ArithmeticStatus=status;
 end

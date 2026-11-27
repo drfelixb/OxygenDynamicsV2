@@ -15,8 +15,14 @@ assert(strcmp(S.Schema,'boi-reviewed-amplitude-duration-evidence-1')&&strcmp(S.A
 R.BoundaryReview=loadBOIBoundaryReview(R,S.BoundaryPath);assert(strcmp(R.BoundaryReview.SHA256,S.BoundarySHA256),id,'Approved boundary changed.');
 R=loadBOIReferenceJudgments(R,{S.ReferencePath});assert(strcmp(R.ReferenceJudgments.SHA256,S.ReferenceSHA256),id,'Approved reference changed.');
 B=getBOIBoundaryReview(R,Index);assert(strcmp(B.Status,'recognized')&&B.Annotation.PreferredOnsetFrame==S.StartFrame&&B.Annotation.PreferredRecoveryFrame==S.EndFrame,id,'Save explicit recognized endpoints first.');
-M=computeBOIReviewedOpticalInterval(R.Traces{Index}.Raw,R.ReferenceJudgments.Frames,S.StartFrame,S.EndFrame,R.AnalysisInfo.AnalysisParams.fs,'sink');
-assert(strcmp(M.Status,'computed_exploratory')&&abs(100*M.SavedSignDirectionalAmplitudeFraction-S.RawAmplitudePercent)<1e-9&&M.DurationSec==S.DurationSec,id,'Approved amplitude does not replay.');
+version=boiReviewedOpticalVersion(S,true);
+getBOIReviewedOpticalDefinition([],version);
+M=computeBOIReviewedOpticalInterval(R.Traces{Index}.Raw,R.ReferenceJudgments.Frames,S.StartFrame,S.EndFrame,R.AnalysisInfo.AnalysisParams.fs,'sink',boiCameraOffset(S));
+blocked=strcmp(M.Status,'reference_at_or_below_camera_offset');
+if blocked && isempty(S.RawAmplitudePercent),S.RawAmplitudePercent=NaN;end
+computed=strcmp(M.Status,'computed_exploratory') && abs(100*M.SavedSignDirectionalAmplitudeFraction-S.RawAmplitudePercent)<1e-9;
+assert((computed || (blocked && isscalar(S.RawAmplitudePercent) && isnan(S.RawAmplitudePercent))) && ...
+    M.DurationSec==S.DurationSec,id,'Approved amplitude does not replay.');
 I=R.AnalysisInfo;master=R.AuditCreationReceipt.MasterPaths{1};masterHash=char(string(R.AuditCreationReceipt.MasterSHA256(1)));
 assert(strcmp(oxygenFileSHA256(master),masterHash),id,'Native master differs from the audit receipt.');
 native=load(master,'AnalysisInfo','Table_OxygenSinkEvents_Out');E=native.Table_OxygenSinkEvents_Out;
@@ -35,6 +41,17 @@ C=struct('Schema','boi-reviewed-area-context-1','AuditPath',R.AuditPath,'AuditSH
     'BoundaryPath',S.BoundaryPath,'BoundarySHA256',S.BoundarySHA256,'ReferencePath',S.ReferencePath,'ReferenceSHA256',S.ReferenceSHA256, ...
     'OriginalAutomaticStartFrame',S.OriginalAutomaticStartFrame,'OriginalAutomaticEndFrame',S.OriginalAutomaticEndFrame, ...
     'OriginalAutomaticAreaUm2',E.EventArea_um2(j));
+% Historical revisions hash the exact original context. Preserve that layout.
+if isfield(S,'ReviewedOpticalVersion') || ~isempty(boiCameraOffset(S))
+    C.ReviewedOpticalVersion=version;C.CameraOffsetCounts=boiCameraOffset(S);C.AmplitudeStatus=M.Status;
+    if isfield(S,'ReferencesAtOrBelowOffset')
+        C.ReferencesAtOrBelowOffset=S.ReferencesAtOrBelowOffset;
+    else
+        calibration=boiIntensityCalibration(I);
+        C.ReferencesAtOrBelowOffset=calibration.ReferencesAtOrBelowOffset+double(blocked);
+    end
+    if blocked,C.AmplitudePercent=[];end % Preserve the unavailable value across JSON hash replay.
+end
 F=repmat(struct('Frame',0,'Status','unreviewed','Pixels',[],'Origin','none','Note','','Reviewer','','DecidedUTC',''),numel(C.Frames),1);
 for k=1:numel(F),F(k).Frame=C.Frames(k);end
 D=struct('Schema','boi-reviewed-event-area-1','Context',C,'ContextSHA256',boiPocketDigest(C), ...

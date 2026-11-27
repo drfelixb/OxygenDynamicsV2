@@ -200,3 +200,43 @@ receipt=struct('Schema','boi-created-event-audit-1','AuditSHA256',oxygenFileSHA2
     'MasterSHA256',{{oxygenFileSHA256(sf),oxygenFileSHA256(uf)}},'SourceSHA256','raw','EventCount',1);
 fid=fopen(fullfile(folder,'BOIReview','AuditCreationReceipt.json'),'w');fprintf(fid,'%s',jsonencode(receipt));fclose(fid);
 end
+
+function testHighOffsetPreservesRecordingReferenceFlag(t)
+[E,V,P,~]=fixture(31,34,100,1);
+V{1}.Raw(1:20)=60;V{1}.Raw(31:34)=80;
+original=deriveBOIEventReferences(E,V,P,1,20);
+blocked=deriveBOIEventReferences(E,V,P,1,20,"fixture",[],100);
+t.verifyEqual(original.AboveRecordingReference,1);
+fields=["AboveRecordingReference","RecordingReferenceStatus","RecordingReferenceValue", ...
+    "RecordingReferenceNeedsReview","RecordingReferenceVersion","EventMinimumValue","EventReferenceNeedsReview"];
+t.verifyEqual(blocked(:,fields),original(:,fields));
+t.verifyTrue(isnan(blocked.EventAmplitudePercent));
+t.verifyEqual(blocked.EventReferenceStatus,"reference_at_or_below_camera_offset");
+end
+
+function testRankWeightedBurdenFollowsSelectedDepth(t)
+[first,a,pixels,registry]=fixture(25,26,100,1);
+[second,b]=fixture(40,43,100,1);
+second.SinkID=2;b{1}.Footprint=2;
+a{1}.Raw(25:26)=90;                    % 100 to 90 counts
+b{1}.Raw(:)=200;b{1}.Raw(40:43)=170;  % 200 to 170 counts
+pixels(40:43)={2};
+for offset={[],80,100}
+    o=offset{1};
+    events=deriveBOIEventReferences([first;second],[a;b],pixels,1,20,"synthetic",[],o);
+    burden=createHypoxicBurdenMetrics(boiIntensityRows(events,o),table(),table(),boiIntensityRows(registry,o));
+    E=burden.EventTable;R=burden.RecordingTable;
+    t.verifyEqual(E.OriginalCountRankAmplitudePercent,[10;15]);
+    if isempty(o)
+        depths=[10;15];ranks=[.25;.75];total=2100;
+    elseif o==80
+        depths=[50;25];ranks=[.75;.25];total=1500;
+    else
+        depths=[NaN;30];ranks=[NaN;.5];total=NaN;
+    end
+    t.verifyEqual(E.BurdenAmplitudePercent,depths);
+    t.verifyEqual(E.BurdenRankAmplitudeQuantile,ranks);
+    t.verifyEqual(R.Burden_RankAmplitude,total,'AbsTol',1e-10);
+    t.verifyEqual(R.BurdenRankInput,"BurdenAmplitudePercent");
+end
+end

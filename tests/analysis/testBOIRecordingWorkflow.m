@@ -330,3 +330,20 @@ verifyError(t,@()ui.SelectedTargets(),'OxygenDynamics:IncompleteRun');
 writeBOIRunJSON(fullfile(root,'RunStatus.json'),struct('Status','failed'));
 verifyEmpty(t,ui.ListRuns(root));
 end
+
+function testCameraOffsetIsAnOptionalCalculationSetting(t)
+[o,root]=inputFixture();t.addTeardown(@()rmdir(root,'s'));
+original=prepareBOIRecordingRequest(o);
+o.CameraOffsetCounts=" ";blank=prepareBOIRecordingRequest(o);
+t.verifyEqual(original.Options,blank.Options);t.verifyEqual(original.Context,blank.Context);
+o.CameraOffsetCounts=0;zero=prepareBOIRecordingRequest(o);
+t.verifyEqual(zero.Context.CameraOffsetCounts,0);
+for bad={-1,Inf,NaN,"not a number",[0 1]}
+    o.CameraOffsetCounts=bad{1};
+    try
+        prepareBOIRecordingRequest(o); t.assertFail('Invalid offset was accepted.');
+    catch err
+        t.verifyTrue(contains(err.message,'CameraOffsetCounts'));
+    end
+end
+end
