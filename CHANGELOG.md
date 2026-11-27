@@ -8,6 +8,8 @@ reconstructed into releases.
 
 ## 4.0.0-rc.1 — 2026-11-27
 
+- **Added** automatic pocket and nearby-tissue traces from a completed automatic export. `runPocketNearbyTissue` produces per-frame traces, aligned curves, window summaries and figures.
+- **Added** a multichannel workflow for two oxygen channels or one oxygen channel with a fluorescence channel measured on oxygen footprints. It includes a CSV batch, per-recording and combined workbooks, and a paired viewer.
 - **Added** a release runbook and a GitHub workflow that verifies the source ZIP and checksums, prepares a draft for a version tag, and supports development-branch dry runs.
 
 - **Added** software version, source commit and checkout state to saved provenance. The checkout version is maintained by a single MATLAB command.
